@@ -37,7 +37,7 @@ Devise.setup do |config|
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
-  config.parent_controller = 'TurboController'
+  config.parent_controller = 'TurboDevise'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -323,7 +323,7 @@ Devise.setup do |config|
   # Note: These might become the new default in future versions of Devise.
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
-
+  
   # ==> Configuration for :registerable
 
   # When set to false, does not sign a user in automatically after their password is
