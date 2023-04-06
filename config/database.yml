@@ -98,5 +98,6 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  #url: postgres://andrei:UMXcEBmB0HojyLF341vJLLdUDchEp1lO@dpg-cgnf1ubldisfgrunqlv0-a.frankfurt-postgres.render.com/ia_production_3f1s
-  url: postgres://andrei:UMXcEBmB0HojyLF341vJLLdUDchEp1lO@dpg-cgnf1ubldisfgrunqlv0-a/ia_production_3f1s  #asta e intern
+  url: postgres://andrei:UMXcEBmB0HojyLF341vJLLdUDchEp1lO@dpg-cgnf1ubldisfgrunqlv0-a.frankfurt-postgres.render.com/ia_production_3f1s
+  #url: postgres://andrei:UMXcEBmB0HojyLF341vJLLdUDchEp1lO@dpg-cgnf1ubldisfgrunqlv0-a/ia_production_3f1s  #asta e intern
+  
