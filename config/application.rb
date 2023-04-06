@@ -9,7 +9,11 @@ Bundler.require(*Rails.groups)
 module Ia
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    config.eager_load_paths << Rails.root.join('app', 'controllers', 'concerns')
+    config.autoload_paths += Dir["#{config.root}/app/controllers/**/"]
+
     config.load_defaults 7.0
+    #config.autoload_paths += %W(#{config.root}/app/controllers/concerns)
 
     # Configuration for the application, engines, and railties goes here.
     #
