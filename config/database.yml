@@ -98,5 +98,5 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  url: postgres://andrei:hOVPoefNAHmV5ppgASJuudD5krhjl0GK@dpg-cgi4lj8rjenrd3n52lrg-a/ia_production_rpvb
+  url: postgres://andrei:UMXcEBmB0HojyLF341vJLLdUDchEp1lO@dpg-cgnf1ubldisfgrunqlv0-a.frankfurt-postgres.render.com/ia_production_3f1s
   
