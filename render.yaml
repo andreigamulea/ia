@@ -1,0 +1,25 @@
+databases:
+  - name: ia_production
+    databaseName: ia_production
+    user: andrei
+    plan: Starter
+    region: frankfurt
+
+
+services:
+  - type: web
+    name: ia
+    domains:
+      - ia.onrender.com
+    env: ruby
+    plan: Starter
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ia_production
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        value: 677f2ef25e3f9fbbff559835f64a83f8
+    region: frankfurt
