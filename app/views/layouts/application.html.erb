@@ -2,33 +2,27 @@
 <html>
   <head>
     <title>Index Ayurvedic Selectiv</title>
-     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    
-
-
-    <!-- Inclusiunea fișierelor JavaScript necesare pentru Bootstrap -->
-  
+    <!-- Inclusiunea fișierelor CSS necesare pentru Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@baianat/turbo@0.0.0/dist/js/turbo.min.js"></script>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    
+    <!-- Inclusiunea fișierelor JavaScript necesare pentru Bootstrap și Turbo -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-oBqDVmM717MhzRdJ8G1LRm5f2P8MqypyRs2ZyE7KWUhbkDl79F9oT+ocxT9Ubdbz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-rbsA8goHUTXdJyNj2lD9GfT6zvbT7FGoT/8Fdq+eYq8T3t7m3q4fEjc0JJ4WAWc" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@baianat/turbo@0.0.0/dist/js/turbo.min.js"></script>
     <%= javascript_importmap_tags %> 
     <%= javascript_include_tag "turbo" %>
 
   </head>
 
   <body>
-  <%= render 'layouts/header' %>
+    <%= render 'layouts/header' %>
     <p class="notice"><%= notice %></p>
-   
-    
     <%= yield %>
   </body>
-</html> 
+</html>
