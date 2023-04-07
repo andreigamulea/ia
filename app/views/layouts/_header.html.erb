@@ -6,7 +6,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto px-2">
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <%= link_to 'Home', root_path, class: "nav-link text-light" %>
         </li>
@@ -17,10 +17,10 @@
         <% end %>
         <% if current_user && current_user.role == 1 %>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               XlsxToPg
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
               <%= link_to 'Plante', plantes_path, class: "dropdown-item" %>
               <%= link_to 'Plante-Parti', plante_partis_path, class: "dropdown-item" %>
               <%= link_to 'Recomandari', recomandaris_path, class: "dropdown-item" %>
@@ -33,40 +33,39 @@
           </li>
 
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Manager
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
               <%= link_to 'Valorinutritionale', valorinutritionales_path, class: "dropdown-item" %>
               <%= link_to 'Lista Cursuri', listacursuris_path, class: "dropdown-item" %>
-              <%= link_to 'Cursuri', cursuris_path, class: "dropdown-item" %>
-              <%= link_to 'Lista Users', admin_index_path, class: "dropdown-item" %>
-              <%= link_to 'Gestionare Cursuri', gestionare_useri_cursuri_index_path, class: "dropdown-item" %>
-              
-            </div>
-            </li>
-            <% end %>
-            </ul>
-            <ul class="navbar-nav">
-            <% if user_signed_in? %>
-            <li class="nav-item">
-            <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-dark" %>
-            </li>
-                <li class="nav-item">
-            <%= link_to 'Edit Profile', edit_user_registration_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Salut <%= current_user.name %></a>
-          </li>
-        <% else %>
-          <li class="nav-item">
-            <%= link_to 'Login', new_user_session_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'Sign Up', new_user_registration_path, class: "nav-link" %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-    </div>
+<%= link_to 'Cursuri', cursuris_path, class: "dropdown-item" %>
+<%= link_to 'Lista Users', admin_index_path, class: "dropdown-item" %>
+<%= link_to 'Gestionare Cursuri', gestionare_useri_cursuri_index_path, class: "dropdown-item" %>
+</div>
+</li>
+<% end %>
+</ul>
+<ul class="navbar-nav">
+<% if user_signed_in? %>
+<li class="nav-item">
+<%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-dark" %>
+</li>
+      <li class="nav-item">
+        <%= link_to 'Edit Profile', edit_user_registration_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Salut <%= current_user.name %></a>
+      </li>
+    <% else %>
+      <li class="nav-item">
+        <%= link_to 'Login', new_user_session_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Sign Up', new_user_registration_path, class: "nav-link" %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+</div>
 </nav>
