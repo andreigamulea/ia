@@ -6,6 +6,10 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
+      
+      
+    </div>
+    <ul class="navbar-nav ml-auto px-2"> 
       <ul class="navbar-nav ml-auto px-2">
         <li class="nav-item">
             <%= link_to 'Home', root_path, class: "nav-link text-light"%>
@@ -51,13 +55,11 @@
 
         
       </ul>
-      
-    </div>
-    <ul class="navbar-nav ml-auto px-2"> 
+
+
+
       <%if user_signed_in?%>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Hello <%=current_user.name%></a>
-        </li> 
+       
                
         
         <li class="nav-item">        
@@ -67,7 +69,9 @@
         <li class="nav-item">          
         <%= link_to 'Edit Profile', edit_user_registration_path, class: "nav-link" %>
         </li>
-        
+         <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Salut <%=current_user.name%></a>
+        </li> 
         <%else%>
         <li class="nav-item">          
         <%= link_to 'Login', new_user_session_path, class: "nav-link" %>
