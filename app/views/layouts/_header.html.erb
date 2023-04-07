@@ -1,71 +1,78 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3" style="top: 0;width: 100%;">
-  <div class="container">
-    <%= image_tag asset_path('ayus_logo.jpg'), alt: "Ayus grup", width: "64", height: "64" %>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3" style="top: 0;width: 100%;">
+  <div class="container"  >
+    <%= image_tag asset_path('ayus_logo.jpg'), alt: "Ayus grup", width: "64", height: "64" %>
+   
+    
+    <ul class="navbar-nav ml-auto px-2"> 
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-auto px-2">
         <li class="nav-item">
-          <%= link_to 'Home', root_path, class: "nav-link text-light" %>
+            <%= link_to 'Home', root_path, class: "nav-link text-light"%>
         </li>
-        <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1) %>
-          <li class="nav-item">
-            <%= link_to 'Valori Nutritionale', valorinutritionales_path, class: "nav-link text-light" %>
-          </li>
-        <% end %>
-        <% if current_user && current_user.role == 1 %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              XlsxToPg
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
-              <%= link_to 'Plante', plantes_path, class: "dropdown-item" %>
-              <%= link_to 'Plante-Parti', plante_partis_path, class: "dropdown-item" %>
-              <%= link_to 'Recomandari', recomandaris_path, class: "dropdown-item" %>
-              <%= link_to 'Lista Proprietati', listaproprietatis_path, class: "dropdown-item" %>
-              <%= link_to 'Importanta', importanta_path, class: "dropdown-item" %>
-              <%= link_to 'Tipuri Proprietati', tipuri_props_path, class: "dropdown-item" %>
-              <%= link_to 'Srota', srota_path, class: "dropdown-item" %>
-              <%= link_to 'XlsxToPostgres', xlsxtopg_index_path, class: "dropdown-item" %>
-            </div>
-          </li>
+        <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1) %>  
+        <li class="nav-item">
+            <%= link_to 'Valori Nutritionale', valorinutritionales_path, class: "nav-link text-light"%>
+        </li> 
+        <%end%>
+        <% if current_user && current_user.role == 1 %>  
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            XlsxToPg
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <%= link_to 'Plante', plantes_path, class: "dropdown-item"%>
+            <%= link_to 'Plante-Parti', plante_partis_path, class: "dropdown-item"%>
+            <%= link_to 'Recomandari', recomandaris_path, class: "dropdown-item"%>
+            <%= link_to 'Lista Proprietati', listaproprietatis_path, class: "dropdown-item"%>
+            <%= link_to 'Importanta', importanta_path, class: "dropdown-item"%>
+            <%= link_to 'Tipuri Proprietati', tipuri_props_path, class: "dropdown-item"%>
+            <%= link_to 'Srota', srota_path, class: "dropdown-item"%>
+            
+            <%= link_to 'XlsxToPostgres', xlsxtopg_index_path, class: "dropdown-item"%>
+          </div>
+        </li>  
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Manager
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-              <%= link_to 'Valorinutritionale', valorinutritionales_path, class: "dropdown-item" %>
-              <%= link_to 'Lista Cursuri', listacursuris_path, class: "dropdown-item" %>
-<%= link_to 'Cursuri', cursuris_path, class: "dropdown-item" %>
-<%= link_to 'Lista Users', admin_index_path, class: "dropdown-item" %>
-<%= link_to 'Gestionare Cursuri', gestionare_useri_cursuri_index_path, class: "dropdown-item" %>
-</div>
-</li>
-<% end %>
-</ul>
-<ul class="navbar-nav">
-<% if user_signed_in? %>
-<li class="nav-item">
-<%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-dark" %>
-</li>
-      <li class="nav-item">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Manager
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <%= link_to 'Valorinutritionale', valorinutritionales_path, class: "dropdown-item"%>
+            <%= link_to 'Lista Cursuri', listacursuris_path, class: "dropdown-item"%>
+            <%= link_to 'Cursuri', cursuris_path, class: "dropdown-item"%>
+            <%= link_to 'Lista Users', admin_index_path, class: "dropdown-item" %>
+            <%= link_to 'Gestionare Cursuri', gestionare_useri_cursuri_index_path, class: "dropdown-item"%>
+
+          </div>
+        </li>
+        <%end%>
+        
+      </ul>
+      <%if user_signed_in?%>
+         <li class="nav-item">        
+        <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-dark" %>
+        </li>
+        
+        <li class="nav-item">          
         <%= link_to 'Edit Profile', edit_user_registration_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Salut <%= current_user.name %></a>
-      </li>
-    <% else %>
-      <li class="nav-item">
+        </li>
+         <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Salut <%=current_user.name%></a>
+        </li> 
+        <%else%>
+        <li class="nav-item">          
         <%= link_to 'Login', new_user_session_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
+        </li>
+        <li class="nav-item">          
         <%= link_to 'Sign Up', new_user_registration_path, class: "nav-link" %>
-      </li>
-    <% end %>
-  </ul>
-</div>
-</div>
+        </li>
+        <%end%>
+      </ul>
+      </div>
+  </div>
 </nav>
+
