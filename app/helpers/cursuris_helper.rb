@@ -1,0 +1,2 @@
+module CursurisHelper
+end

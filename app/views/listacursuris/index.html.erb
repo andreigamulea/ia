@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Listacursuris</h1>
+
+<div id="listacursuris">
+  <% @listacursuris.each do |listacursuri| %>
+    <%= render listacursuri %>
+    <p>
+      <%= link_to "Show this listacursuri", listacursuri %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New listacursuri", new_listacursuri_path %>

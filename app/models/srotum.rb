@@ -1,0 +1,2 @@
+class Srotum < ApplicationRecord
+end

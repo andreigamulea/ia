@@ -1,0 +1,62 @@
+<%= form_with(model: plante) do |form| %>
+  <% if plante.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(plante.errors.count, "error") %> prohibited this plante from being saved:</h2>
+
+      <ul>
+        <% plante.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :idp, style: "display: block" %>
+    <%= form.number_field :idp %>
+  </div>
+
+  <div>
+    <%= form.label :tip, style: "display: block" %>
+    <%= form.text_field :tip %>
+  </div>
+
+  <div>
+    <%= form.label :subt, style: "display: block" %>
+    <%= form.text_field :subt %>
+  </div>
+
+  <div>
+    <%= form.label :nume, style: "display: block" %>
+    <%= form.text_field :nume %>
+  </div>
+
+  <div>
+    <%= form.label :denbot, style: "display: block" %>
+    <%= form.text_field :denbot %>
+  </div>
+
+  <div>
+    <%= form.label :numesec, style: "display: block" %>
+    <%= form.text_field :numesec %>
+  </div>
+
+  <div>
+    <%= form.label :numesec2, style: "display: block" %>
+    <%= form.text_field :numesec2 %>
+  </div>
+
+  <div>
+    <%= form.label :numeayu, style: "display: block" %>
+    <%= form.text_field :numeayu %>
+  </div>
+
+  <div>
+    <%= form.label :fam, style: "display: block" %>
+    <%= form.text_field :fam %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

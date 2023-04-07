@@ -1,0 +1,62 @@
+<%= form_with(model: srotum) do |form| %>
+  <% if srotum.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(srotum.errors.count, "error") %> prohibited this srotum from being saved:</h2>
+
+      <ul>
+        <% srotum.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :codsrota, style: "display: block" %>
+    <%= form.number_field :codsrota %>
+  </div>
+
+  <div>
+    <%= form.label :codsr, style: "display: block" %>
+    <%= form.number_field :codsr %>
+  </div>
+
+  <div>
+    <%= form.label :numesrota, style: "display: block" %>
+    <%= form.text_field :numesrota %>
+  </div>
+
+  <div>
+    <%= form.label :numescurt, style: "display: block" %>
+    <%= form.text_field :numescurt %>
+  </div>
+
+  <div>
+    <%= form.label :explicatie, style: "display: block" %>
+    <%= form.text_field :explicatie %>
+  </div>
+
+  <div>
+    <%= form.label :origine, style: "display: block" %>
+    <%= form.text_field :origine %>
+  </div>
+
+  <div>
+    <%= form.label :parti, style: "display: block" %>
+    <%= form.text_field :parti %>
+  </div>
+
+  <div>
+    <%= form.label :functii, style: "display: block" %>
+    <%= form.text_field :functii %>
+  </div>
+
+  <div>
+    <%= form.label :observatie, style: "display: block" %>
+    <%= form.text_field :observatie %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -71,3 +71,7 @@ group :test do
   gem "webdrivers"
 end
 gem 'devise', '~> 4.9', '>= 4.9.2'
+gem 'bootstrap'
+gem 'roo', '~> 2.10'
+
+gem 'kaminari', '~> 1.2', '>= 1.2.2'

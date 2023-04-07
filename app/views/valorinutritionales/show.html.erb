@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @valorinutritionale %>
+
+<div>
+  <%= link_to "Edit this valorinutritionale", edit_valorinutritionale_path(@valorinutritionale) %> |
+  <%= link_to "Back to valorinutritionales", valorinutritionales_path %>
+
+  <%= button_to "Destroy this valorinutritionale", @valorinutritionale, method: :delete %>
+</div>

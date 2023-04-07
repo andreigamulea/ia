@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Tipuri props</h1>
+
+<div id="tipuri_props">
+  <% @tipuri_props.each do |tipuri_prop| %>
+    <%= render tipuri_prop %>
+    <p>
+      <%= link_to "Show this tipuri prop", tipuri_prop %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New tipuri prop", new_tipuri_prop_path %>

@@ -1,0 +1,32 @@
+<%= form_with(model: importantum) do |form| %>
+  <% if importantum.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(importantum.errors.count, "error") %> prohibited this importantum from being saved:</h2>
+
+      <ul>
+        <% importantum.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :codimp, style: "display: block" %>
+    <%= form.number_field :codimp %>
+  </div>
+
+  <div>
+    <%= form.label :grad, style: "display: block" %>
+    <%= form.text_field :grad %>
+  </div>
+
+  <div>
+    <%= form.label :descgrad, style: "display: block" %>
+    <%= form.text_field :descgrad %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

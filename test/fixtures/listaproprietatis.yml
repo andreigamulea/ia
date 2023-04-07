@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  idx: 1
+  proprietateter: MyString
+  tipp: MyString
+  srota: 1
+  definire: MyText
+  sinonime: MyText
+  selectie: MyString
+  sel: 1
+
+two:
+  idx: 1
+  proprietateter: MyString
+  tipp: MyString
+  srota: 1
+  definire: MyText
+  sinonime: MyText
+  selectie: MyString
+  sel: 1

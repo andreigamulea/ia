@@ -1,12 +1,10 @@
-class Admin::UsersController < ApplicationController
+class AdminController < ApplicationController
   before_action :authenticate_user!, only: %i[index edit update]
   before_action :require_admin, only: %i[index edit update]
   before_action :set_user, only: [:edit, :update]
 
   def index
     @users = User.all
-    #@user = User.last
-    #render turbo_frame: "hello"
   end
     
   def edit
@@ -14,7 +12,7 @@ class Admin::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to admin_users_path, notice: "User updated successfully."
+      redirect_to admin_index_path, notice: "User updated successfully."
     else
       render :edit
     end

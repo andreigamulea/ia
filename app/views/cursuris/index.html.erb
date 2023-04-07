@@ -1,0 +1,29 @@
+<div class="container">
+  <p class="text-success"><%= notice %></p>
+
+  <h1 class="text-center mb-4 text-primary">Cursuri</h1>
+
+
+  <div id="cursuris">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>User</th>
+          <th>Nume Curs</th>
+          <th>Data inceput</th>
+          <th>Data sfarsit</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cursuris.each do |cursuri| %>
+          <%= render cursuri %>
+          
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <%= link_to "New Cursuri", new_cursuri_path, class: "btn btn-success" %>
+</div>
+

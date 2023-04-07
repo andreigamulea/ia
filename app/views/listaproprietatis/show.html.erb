@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @listaproprietati %>
+
+<div>
+  <%= link_to "Edit this listaproprietati", edit_listaproprietati_path(@listaproprietati) %> |
+  <%= link_to "Back to listaproprietatis", listaproprietatis_path %>
+
+  <%= button_to "Destroy this listaproprietati", @listaproprietati, method: :delete %>
+</div>

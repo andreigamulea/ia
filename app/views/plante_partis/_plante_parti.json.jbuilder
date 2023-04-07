@@ -1,0 +1,2 @@
+json.extract! plante_parti, :id, :idx, :cpl, :parte, :part, :clasa, :invpp, :tippp, :recomandari, :textsursa, :starereprez, :z, :healthrel, :compozitie, :etich, :healthrelrom, :propspeciale, :selectie, :lucru, :s, :sel, :index2, :ordvol, :selpz, :selpzn, :sels, :selz, :selnr, :t10, :t11, :t12, :t13, :t14, :t15, :t16, :b, :r, :c, :imp, :testat, :g1, :g2, :g3, :g4, :g5, :g6, :vir, :vip, :imaginepp, :created_at, :updated_at
+json.url plante_parti_url(plante_parti, format: :json)

@@ -1,0 +1,64 @@
+<div class="jumbotron" style="background-color: #e9ecef;padding: 30px;margin: 40px;">
+  <%= button_to 'Copiere in toate tabelele', preluaredate_xlsxtopg_path, class: "btn btn-primary", method: :get %><br>
+  <%= button_to 'Copiere Plante', preluaredate1_xlsxtopg_path, class: "btn btn-danger", method: :get %><br>
+  <%= button_to 'Copiere Plante-Parti', preluaredate2_xlsxtopg_path, class: "btn btn-warning", method: :get %><br>
+  <%= button_to 'Copiere Recomandari', preluaredate3_xlsxtopg_path, class: "btn btn-info", method: :get %><br>
+  <%= button_to 'Copiere Lista Proprietati', preluaredate4_xlsxtopg_path, class: "btn btn-primary", method: :get %><br>
+  <%= button_to 'Importanta', preluaredate5_xlsxtopg_path, class: "btn btn-danger", method: :get %><br>
+  <%= button_to 'Tipuri Proprietati', preluaredate6_xlsxtopg_path, class: "btn btn-warning", method: :get %><br>
+  <%= button_to 'Srota', preluaredate7_xlsxtopg_path, class: "btn btn-info", method: :get %><br>
+  <%= button_to 'Valori Nutritionale', preluaredate8_xlsxtopg_path, class: "btn btn-info", method: :get %><br>
+<%= link_to 'Sterge toate înregistrările din toate tabelele', sterge_inregistrari_xlsxtopg_path, class: "text-red-500 hover:text-red-700" %><br>
+<%= link_to 'Sterge toate înregistrările din tabela Plante', sterge_inregistrari1_xlsxtopg_path, class: "text-red-500 hover:text-red-700" %>
+<% if Plante.count > 0 %>
+<span style="color: green;">"Are <%= Plante.count %> inregistrari"</span>
+<% else %>
+<span style="color: red;">"Nu are inregistrari"</span>
+<% end %><br>
+<%= link_to 'Sterge toate înregistrările din tabela plante-parti', sterge_inregistrari2_xlsxtopg_path, class: "text-red-500 hover:text-red-700" %>
+<% if PlanteParti.count > 0 %>
+<span style="color: green;">"Are <%= PlanteParti.count %> inregistrari"</span>
+<% else %>
+<span style="color: red;">"Nu are inregistrari"</span>
+<% end %><br>
+<%= link_to 'Sterge toate înregistrările din tabela Recomandari', sterge_inregistrari3_xlsxtopg_path, class: "text-red-500 hover:text-red-700" %>
+<% if Recomandari.count > 0 %>
+<span style="color: green;">"Are <%= Recomandari.count %> inregistrari"</span>
+<% else %>
+<span style="color: red;">"Nu are inregistrari"</span>
+<% end %><br>
+
+<%= link_to 'Sterge toate înregistrările din tabela Lista Proprietati', sterge_inregistrari4_xlsxtopg_path, class: "text-red-500 hover:text-red-700" %>
+<% if Listaproprietati.count > 0 %>
+<span style="color: green;">"Are <%= Listaproprietati.count %> inregistrari"</span>
+<% else %>
+<span style="color: red;">"Nu are inregistrari"</span>
+<% end %><br>
+<%= link_to 'Sterge toate înregistrările din tabela Importanta', sterge_inregistrari5_xlsxtopg_path, class: "text-red-500 hover:text-red-700" %>
+<% if Importantum.count > 0 %>
+<span style="color: green;">"Are <%= Importantum.count %> inregistrari"</span>
+<% else %>
+<span style="color: red;">"Nu are inregistrari"</span>
+<% end %><br>
+<%= link_to 'Sterge toate înregistrările din tabela Tipuri Proprietati', sterge_inregistrari6_xlsxtopg_path, class: "text-red-500 hover:text-red-700" %>
+<% if TipuriProp.count > 0 %>
+<span style="color: green;">"Are <%= TipuriProp.count %> inregistrari"</span>
+<% else %>
+<span style="color: red;">"Nu are inregistrari"</span>
+<% end %><br>
+<%= link_to 'Sterge toate înregistrările din tabela Srota', sterge_inregistrari7_xlsxtopg_path, class: "text-red-500 hover:text-red-700" %>
+<% if Srotum.count > 0 %>
+<span style="color: green;">"Are <%= Srotum.count %> inregistrari"</span>
+<% else %>
+<span style="color: red;">"Nu are inregistrari"</span>
+<% end %><br>
+
+<%= link_to 'Sterge toate înregistrările din tabela Valori Nutritionale', sterge_inregistrari8_xlsxtopg_path, class: "text-red-500 hover:text-red-700" %>
+<% if Valorinutritionale.count > 0 %>
+<span style="color: green;">"Are <%= Valorinutritionale.count %> inregistrari"</span>
+<% else %>
+<span style="color: red;">"Nu are inregistrari"</span>
+<% end %><br>
+
+<%= link_to 'Test', xlsxtopg_test_path, class: "text-blue-500 hover:text-blue-700" %>
+</div>

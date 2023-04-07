@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @listacursuri %>
+
+<div>
+  <%= link_to "Edit this listacursuri", edit_listacursuri_path(@listacursuri) %> |
+  <%= link_to "Back to listacursuris", listacursuris_path %>
+
+  <%= button_to "Destroy this listacursuri", @listacursuri, method: :delete %>
+</div>

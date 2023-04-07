@@ -1,0 +1,69 @@
+<p style="color: green"><%= notice %></p>
+<div class="container">
+  <h1 class="text-center mb-4" style="color:green;">Valoarea nutritionala a alimentelor</h1>
+  <div id="valorinutritionales" class="table-responsive" style="width:1200px; margin:0 auto;">
+    <table class='table table-striped table-bordered table-hover'>
+      <thead class="table-dark">
+        <tr>
+          <th>Cod</th>
+          <th>Aliment</th>
+          <th>Calorii</th>
+          <th>Proteine</th>
+          <th>Lipide</th>
+          <th>Carbohidrati</th>
+          <th>Fibre</th>
+          <th style="width: 20%">Select</th>
+        </tr>
+      </thead>
+
+      <%= form_with(url: process_selected_valorinutritionales_path, method: :post, local: false) do %>
+        <%= turbo_frame_tag 'valorinutritionales_table' do %>
+          <%= render 'valorinutritionales_table' %>
+        <% end %>
+      </table>   
+      <%= turbo_frame_tag 'pagination' do %>
+        <%= paginate @valorinutritionales, params: {controller: 'valorinutritionales', action: 'index'} %>
+      <% end %>
+      <%= submit_tag "Calculează", class: "btn btn-primary" , id: "calculeazaButton"%>
+    <% end %>
+
+  </div>
+
+  <script>
+    function updateValueField(checkbox) {
+      var valueField = checkbox.parentNode.querySelector('.selected_values-value');
+      if (checkbox.checked) {
+        valueField.disabled = false;
+      } else {
+        valueField.disabled = true;
+        valueField.value = null;
+      }
+    }
+  </script>      
+  <script>
+    if (valorinutritionalesTable) {
+  valorinutritionalesTable.addEventListener("turbo:frame-load", function(event) {
+    // Aici puteți adăuga orice cod de care aveți nevoie după încărcarea parțială cu turbo-frame
+    // Verificați dacă frame-ul încărcat este cel de paginare
+    if (event.detail.frameElement.id === "valorinutritionales_table") {
+      // Aici puteți adăuga codul dvs. pentru manipularea paginării
+      // de exemplu, actualizarea paginii curente cu noua pagină încărcată în turbo-frame
+      window.location.reload();
+    }
+  });
+}
+  </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+  const calculeazaButton = document.getElementById("calculeazaButton"); // înlocuiește "calculeazaButton" cu ID-ul butonului tău
+console.log("nu este");
+  // Verificăm dacă butonul există în pagină
+  if (calculeazaButton) {
+    calculeazaButton.disabled = false; // activăm butonul
+    console.log("da este");
+  }
+});
+
+  </script>
+  
+</div>

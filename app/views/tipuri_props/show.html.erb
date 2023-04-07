@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @tipuri_prop %>
+
+<div>
+  <%= link_to "Edit this tipuri prop", edit_tipuri_prop_path(@tipuri_prop) %> |
+  <%= link_to "Back to tipuri props", tipuri_props_path %>
+
+  <%= button_to "Destroy this tipuri prop", @tipuri_prop, method: :delete %>
+</div>

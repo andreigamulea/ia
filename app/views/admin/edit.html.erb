@@ -1,0 +1,22 @@
+<h1>Edit User</h1>
+<%= form_with(model: [:admin, @user], url: update_admin_path(@user), method: :put) do |form| %>
+
+
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  <div>
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+  </div>
+  <% if current_user && current_user.role == 1 %>
+    <div>
+      <%= form.label :role %>
+      <%= form.select :role, options_for_select([['User', 0], ['Admin', 1]], @user.role) %>
+    </div>
+  <% end %>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %> 

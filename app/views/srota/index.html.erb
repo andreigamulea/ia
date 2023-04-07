@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Srota</h1>
+
+<div id="srota">
+  <% @srota.each do |srotum| %>
+    <%= render srotum %>
+    <p>
+      <%= link_to "Show this srotum", srotum %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New srotum", new_srotum_path %>

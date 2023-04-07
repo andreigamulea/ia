@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  numecurs: MyString
+  datainceput: 2023-04-07
+  datasfarsit: 2023-04-07
+  user: one
+
+two:
+  numecurs: MyString
+  datainceput: 2023-04-07
+  datasfarsit: 2023-04-07
+  user: two

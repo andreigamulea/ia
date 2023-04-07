@@ -1,0 +1,2 @@
+class TipuriProp < ApplicationRecord
+end

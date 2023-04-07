@@ -1,0 +1,2 @@
+class PlanteParti < ApplicationRecord
+end

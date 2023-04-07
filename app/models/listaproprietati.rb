@@ -1,0 +1,2 @@
+class Listaproprietati < ApplicationRecord
+end

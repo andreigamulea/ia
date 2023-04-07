@@ -1,0 +1,2 @@
+class Importantum < ApplicationRecord
+end

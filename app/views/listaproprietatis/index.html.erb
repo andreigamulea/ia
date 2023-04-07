@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Listaproprietatis</h1>
+
+<div id="listaproprietatis">
+  <% @listaproprietatis.each do |listaproprietati| %>
+    <%= render listaproprietati %>
+    <p>
+      <%= link_to "Show this listaproprietati", listaproprietati %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New listaproprietati", new_listaproprietati_path %>

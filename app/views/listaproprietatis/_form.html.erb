@@ -1,0 +1,57 @@
+<%= form_with(model: listaproprietati) do |form| %>
+  <% if listaproprietati.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(listaproprietati.errors.count, "error") %> prohibited this listaproprietati from being saved:</h2>
+
+      <ul>
+        <% listaproprietati.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :idx, style: "display: block" %>
+    <%= form.number_field :idx %>
+  </div>
+
+  <div>
+    <%= form.label :proprietateter, style: "display: block" %>
+    <%= form.text_field :proprietateter %>
+  </div>
+
+  <div>
+    <%= form.label :tipp, style: "display: block" %>
+    <%= form.text_field :tipp %>
+  </div>
+
+  <div>
+    <%= form.label :srota, style: "display: block" %>
+    <%= form.number_field :srota %>
+  </div>
+
+  <div>
+    <%= form.label :definire, style: "display: block" %>
+    <%= form.text_area :definire %>
+  </div>
+
+  <div>
+    <%= form.label :sinonime, style: "display: block" %>
+    <%= form.text_area :sinonime %>
+  </div>
+
+  <div>
+    <%= form.label :selectie, style: "display: block" %>
+    <%= form.text_field :selectie %>
+  </div>
+
+  <div>
+    <%= form.label :sel, style: "display: block" %>
+    <%= form.number_field :sel %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

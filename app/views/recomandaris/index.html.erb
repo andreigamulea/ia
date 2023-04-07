@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Recomandaris</h1>
+
+<div id="recomandaris">
+  <% @recomandaris.each do |recomandari| %>
+    <%= render recomandari %>
+    <p>
+      <%= link_to "Show this recomandari", recomandari %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New recomandari", new_recomandari_path %>

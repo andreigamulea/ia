@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Importanta</h1>
+
+<div id="importanta">
+  <% @importanta.each do |importantum| %>
+    <%= render importantum %>
+    <p>
+      <%= link_to "Show this importantum", importantum %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New importantum", new_importantum_path %>

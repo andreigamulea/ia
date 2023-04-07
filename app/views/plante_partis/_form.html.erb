@@ -1,0 +1,257 @@
+<%= form_with(model: plante_parti) do |form| %>
+  <% if plante_parti.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(plante_parti.errors.count, "error") %> prohibited this plante_parti from being saved:</h2>
+
+      <ul>
+        <% plante_parti.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :idx, style: "display: block" %>
+    <%= form.number_field :idx %>
+  </div>
+
+  <div>
+    <%= form.label :cpl, style: "display: block" %>
+    <%= form.number_field :cpl %>
+  </div>
+
+  <div>
+    <%= form.label :parte, style: "display: block" %>
+    <%= form.text_field :parte %>
+  </div>
+
+  <div>
+    <%= form.label :part, style: "display: block" %>
+    <%= form.text_field :part %>
+  </div>
+
+  <div>
+    <%= form.label :clasa, style: "display: block" %>
+    <%= form.text_field :clasa %>
+  </div>
+
+  <div>
+    <%= form.label :invpp, style: "display: block" %>
+    <%= form.text_field :invpp %>
+  </div>
+
+  <div>
+    <%= form.label :tippp, style: "display: block" %>
+    <%= form.text_field :tippp %>
+  </div>
+
+  <div>
+    <%= form.label :recomandari, style: "display: block" %>
+    <%= form.text_field :recomandari %>
+  </div>
+
+  <div>
+    <%= form.label :textsursa, style: "display: block" %>
+    <%= form.text_field :textsursa %>
+  </div>
+
+  <div>
+    <%= form.label :starereprez, style: "display: block" %>
+    <%= form.text_field :starereprez %>
+  </div>
+
+  <div>
+    <%= form.label :z, style: "display: block" %>
+    <%= form.text_field :z %>
+  </div>
+
+  <div>
+    <%= form.label :healthrel, style: "display: block" %>
+    <%= form.text_field :healthrel %>
+  </div>
+
+  <div>
+    <%= form.label :compozitie, style: "display: block" %>
+    <%= form.text_field :compozitie %>
+  </div>
+
+  <div>
+    <%= form.label :etich, style: "display: block" %>
+    <%= form.text_field :etich %>
+  </div>
+
+  <div>
+    <%= form.label :healthrelrom, style: "display: block" %>
+    <%= form.text_field :healthrelrom %>
+  </div>
+
+  <div>
+    <%= form.label :propspeciale, style: "display: block" %>
+    <%= form.text_field :propspeciale %>
+  </div>
+
+  <div>
+    <%= form.label :selectie, style: "display: block" %>
+    <%= form.text_field :selectie %>
+  </div>
+
+  <div>
+    <%= form.label :lucru, style: "display: block" %>
+    <%= form.text_field :lucru %>
+  </div>
+
+  <div>
+    <%= form.label :s, style: "display: block" %>
+    <%= form.text_field :s %>
+  </div>
+
+  <div>
+    <%= form.label :sel, style: "display: block" %>
+    <%= form.text_field :sel %>
+  </div>
+
+  <div>
+    <%= form.label :index2, style: "display: block" %>
+    <%= form.number_field :index2 %>
+  </div>
+
+  <div>
+    <%= form.label :ordvol, style: "display: block" %>
+    <%= form.text_field :ordvol %>
+  </div>
+
+  <div>
+    <%= form.label :selpz, style: "display: block" %>
+    <%= form.text_field :selpz %>
+  </div>
+
+  <div>
+    <%= form.label :selpzn, style: "display: block" %>
+    <%= form.text_field :selpzn %>
+  </div>
+
+  <div>
+    <%= form.label :sels, style: "display: block" %>
+    <%= form.text_field :sels %>
+  </div>
+
+  <div>
+    <%= form.label :selz, style: "display: block" %>
+    <%= form.text_field :selz %>
+  </div>
+
+  <div>
+    <%= form.label :selnr, style: "display: block" %>
+    <%= form.text_field :selnr %>
+  </div>
+
+  <div>
+    <%= form.label :t10, style: "display: block" %>
+    <%= form.text_field :t10 %>
+  </div>
+
+  <div>
+    <%= form.label :t11, style: "display: block" %>
+    <%= form.text_field :t11 %>
+  </div>
+
+  <div>
+    <%= form.label :t12, style: "display: block" %>
+    <%= form.text_field :t12 %>
+  </div>
+
+  <div>
+    <%= form.label :t13, style: "display: block" %>
+    <%= form.text_field :t13 %>
+  </div>
+
+  <div>
+    <%= form.label :t14, style: "display: block" %>
+    <%= form.text_field :t14 %>
+  </div>
+
+  <div>
+    <%= form.label :t15, style: "display: block" %>
+    <%= form.text_field :t15 %>
+  </div>
+
+  <div>
+    <%= form.label :t16, style: "display: block" %>
+    <%= form.text_field :t16 %>
+  </div>
+
+  <div>
+    <%= form.label :b, style: "display: block" %>
+    <%= form.text_field :b %>
+  </div>
+
+  <div>
+    <%= form.label :r, style: "display: block" %>
+    <%= form.text_field :r %>
+  </div>
+
+  <div>
+    <%= form.label :c, style: "display: block" %>
+    <%= form.text_field :c %>
+  </div>
+
+  <div>
+    <%= form.label :imp, style: "display: block" %>
+    <%= form.text_field :imp %>
+  </div>
+
+  <div>
+    <%= form.label :testat, style: "display: block" %>
+    <%= form.text_field :testat %>
+  </div>
+
+  <div>
+    <%= form.label :g1, style: "display: block" %>
+    <%= form.text_field :g1 %>
+  </div>
+
+  <div>
+    <%= form.label :g2, style: "display: block" %>
+    <%= form.text_field :g2 %>
+  </div>
+
+  <div>
+    <%= form.label :g3, style: "display: block" %>
+    <%= form.text_field :g3 %>
+  </div>
+
+  <div>
+    <%= form.label :g4, style: "display: block" %>
+    <%= form.text_field :g4 %>
+  </div>
+
+  <div>
+    <%= form.label :g5, style: "display: block" %>
+    <%= form.text_field :g5 %>
+  </div>
+
+  <div>
+    <%= form.label :g6, style: "display: block" %>
+    <%= form.text_field :g6 %>
+  </div>
+
+  <div>
+    <%= form.label :vir, style: "display: block" %>
+    <%= form.text_field :vir %>
+  </div>
+
+  <div>
+    <%= form.label :vip, style: "display: block" %>
+    <%= form.text_field :vip %>
+  </div>
+
+  <div>
+    <%= form.label :imaginepp, style: "display: block" %>
+    <%= form.text_field :imaginepp %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @importantum %>
+
+<div>
+  <%= link_to "Edit this importantum", edit_importantum_path(@importantum) %> |
+  <%= link_to "Back to importanta", importanta_path %>
+
+  <%= button_to "Destroy this importantum", @importantum, method: :delete %>
+</div>

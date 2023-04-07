@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  codsrota: 1
+  codsr: 1
+  numesrota: MyString
+  numescurt: MyString
+  explicatie: MyString
+  origine: MyString
+  parti: MyString
+  functii: MyString
+  observatie: MyString
+
+two:
+  codsrota: 1
+  codsr: 1
+  numesrota: MyString
+  numescurt: MyString
+  explicatie: MyString
+  origine: MyString
+  parti: MyString
+  functii: MyString
+  observatie: MyString

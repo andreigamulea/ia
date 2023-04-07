@@ -1,0 +1,52 @@
+<%= form_with(model: valorinutritionale) do |form| %>
+  <% if valorinutritionale.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(valorinutritionale.errors.count, "error") %> prohibited this valorinutritionale from being saved:</h2>
+
+      <ul>
+        <% valorinutritionale.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :cod, style: "display: block" %>
+    <%= form.number_field :cod %>
+  </div>
+
+  <div>
+    <%= form.label :aliment, style: "display: block" %>
+    <%= form.text_field :aliment %>
+  </div>
+
+  <div>
+    <%= form.label :calorii, style: "display: block" %>
+    <%= form.text_field :calorii %>
+  </div>
+
+  <div>
+    <%= form.label :proteine, style: "display: block" %>
+    <%= form.text_field :proteine %>
+  </div>
+
+  <div>
+    <%= form.label :lipide, style: "display: block" %>
+    <%= form.text_field :lipide %>
+  </div>
+
+  <div>
+    <%= form.label :carbohidrati, style: "display: block" %>
+    <%= form.text_field :carbohidrati %>
+  </div>
+
+  <div>
+    <%= form.label :fibre, style: "display: block" %>
+    <%= form.text_field :fibre %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
