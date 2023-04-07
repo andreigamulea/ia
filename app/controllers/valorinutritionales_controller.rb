@@ -3,7 +3,7 @@ class ValorinutritionalesController < ApplicationController
   before_action :authenticate_user!, only: %i[index ] #verifica daca utilizatorul este autentificat
   before_action :set_user, only: %i[index show edit update destroy]
 
-  # GET /valorinutritionales or /valorinutritionales.json
+  ## GET /valorinutritionales or /valorinutritionales.json
   def index
     
     @valorinutritionales = Valorinutritionale.order(:aliment).page(params[:page]).per(15)
