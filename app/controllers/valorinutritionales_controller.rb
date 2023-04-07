@@ -5,7 +5,8 @@ class ValorinutritionalesController < ApplicationController
 
   # GET /valorinutritionales or /valorinutritionales.json
   def index
-    @valorinutritionales = Valorinutritionale.order(:aliment).page(params[:page])
+    
+    @valorinutritionales = Valorinutritionale.order(:aliment).page(params[:page]).per(15)
     respond_to do |format|
       format.html
       format.turbo_stream { render turbo_stream: turbo_stream.replace("valorinutritionales_table", partial: "valorinutritionales_table", locals: { valorinutritionales: @valorinutritionales }) }
