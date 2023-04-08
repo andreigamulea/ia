@@ -1,0 +1,73 @@
+<%= turbo_frame_tag "valorinutritionales_results" do %>
+  <h1>Rezultate</h1>
+  <table class='table table-striped table-bordered table-hover'>
+    <thead class="table-dark">
+      <tr>
+        <th>Aliment</th>
+        <th>Calorii</th>
+        <th>Proteine</th>
+        <th>Lipide</th>
+        <th>Carbohidrati</th>
+        <th>Fibre</th>
+       
+      </tr>
+    </thead>
+    <<tbody id="valorinutritionales_results">>
+      <% total_values = { proteine: 0, lipide: 0, carbohidrati: 0, fibre: 0 } %>
+
+<% if session[:selected_valorinutritionales] %>
+  
+<% total_values = {
+  proteine: 0,
+  lipide: 0,
+  carbohidrati: 0,
+  fibre: 0,
+  calorii: 0
+} %>
+
+  <% session[:selected_valorinutritionales].each do |selected| %>
+    <% id = selected[:id] || selected["id"] %>
+    <% valorinutritional = Valorinutritionale.find_by(id: id) %>
+    <% next if valorinutritional.nil? %>
+    <tr>
+      <td><%= valorinutritional.aliment %></td>
+      <td><%= ((valorinutritional.calorii * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
+      <td><%= ((valorinutritional.proteine * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
+      <td><%= ((valorinutritional.lipide * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
+      <td><%= ((valorinutritional.carbohidrati * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
+      <td><%= ((valorinutritional.fibre * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
+    </tr>
+  
+    <% total_values[:calorii] += (valorinutritional.calorii * (selected[:value] || selected["value"]).to_f/100).round(2) %>
+    <% total_values[:proteine] += (valorinutritional.proteine * (selected[:value] || selected["value"]).to_f/100).round(2) %>
+    <% total_values[:lipide] += (valorinutritional.lipide * (selected[:value] || selected["value"]).to_f/100).round(2) %>
+    <% total_values[:carbohidrati] += (valorinutritional.carbohidrati * (selected[:value] || selected["value"]).to_f/100).round(2) %>
+    <% total_values[:fibre] += (valorinutritional.fibre * (selected[:value] || selected["value"]).to_f/100).round(2) %>
+  <% end %>
+  <tr>
+  <td>Total</td>
+  <td><%=total_values[:calorii]%></td>
+  <td><%=total_values[:proteine]%></td>
+  <td><%=total_values[:lipide]%></td>
+  <td><%=total_values[:carbohidrati]%></td>
+  <td><%=total_values[:fibre]%></td>
+  </tr>
+<% end %>
+
+
+    </tbody>
+  </table>
+  
+ 
+  <%= button_to "Reseteaza", reset_session_data_valorinutritionales_path, method: :post, class: "btn btn-primary" %>
+  
+
+<% end %>
+
+
+
+
+    
+
+
+

@@ -1,22 +1,81 @@
 class ValorinutritionalesController < ApplicationController
+  include ApplicationHelper
   before_action :set_valorinutritionale, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, only: %i[index ] #verifica daca utilizatorul este autentificat
   before_action :set_user, only: %i[index show edit update destroy]
 
   ## GET /valorinutritionales or /valorinutritionales.json
+  
   def index
+    @valorinutritionales = Valorinutritionale.page(params[:page]).per(3)
+    @selected_valorinutritionales = session[:selected_values]&.map { |v| Valorinutritionale.find_by(id: v[:id]) }&.compact || []
     
-    @valorinutritionales = Valorinutritionale.order(:aliment).page(params[:page]).per(15)
+    @total_values = {
+      calorii: 0,
+      proteine: 0,
+      lipide: 0,
+      carbohidrati: 0,
+      fibre: 0
+    }
+  
+    @selected_valorinutritionales.each do |valorinutritionale|
+      value = session[:selected_values].find { |v| v[:id] == valorinutritionale.id.to_s }[:value]
+      @total_values[:calorii] += value * valorinutritionale.calorii / 100
+      @total_values[:proteine] += value * valorinutritionale.proteine / 100
+      @total_values[:lipide] += value * valorinutritionale.lipide / 100
+      @total_values[:carbohidrati] += value * valorinutritionale.carbohidrati / 100
+      @total_values[:fibre] += value * valorinutritionale.fibre / 100
+    end
+  end 
+  
+  def select_valorinutritionales
+    id = params[:id].to_i
+    value = params[:value]
+  
+    if session[:selected_valorinutritionales].nil?
+      session[:selected_valorinutritionales] = []
+    end
+  
+    # Verificați dacă ID-ul există deja în sesiune și actualizați valoarea
+    found = false
+    session[:selected_valorinutritionales].each do |item|
+      if item[:id] == id
+        item[:value] = value
+        found = true
+        break
+      end
+    end
+  
+    # Dacă ID-ul nu există în sesiune, adăugați-l
+    unless found
+      session[:selected_valorinutritionales] << { id: id, value: value }
+    end
+  
+    @valorinutritional = Valorinutritionale.find(id)
     respond_to do |format|
-      format.html
-      format.turbo_stream { render turbo_stream: turbo_stream.replace("valorinutritionales_table", partial: "valorinutritionales_table", locals: { valorinutritionales: @valorinutritionales }) }
+      format.turbo_stream
+      format.html { redirect_to valorinutritionales_url, notice: "Valoarea a fost adăugată cu succes." }
     end
   end
   
-  def pagination_turbo_stream
-    @valorinutritionales = Valorinutritionale.order(:aliment).page params[:page]
+  
+ 
+  def reset_session_data
+    session[:selected_valorinutritionales] = []
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.replace("pagination", partial: "pagination", locals: { valorinutritionales: @valorinutritionales }) }
+      format.turbo_stream { render turbo_stream: turbo_stream.replace(:valorinutritionales_results, partial: 'valorinutritionales/valorinutritionales_results') }
+    end
+  end
+  
+  
+  
+  
+  def pagination_turbo_stream
+    set_selected_values_to_session(params[:selected_values]) if params[:selected_values].present?
+    @valorinutritionales = Valorinutritionale.order(:aliment).page params[:page]
+
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("valorinutritionales_table", partial: "valorinutritionales_table", locals: { valorinutritionales: @valorinutritionales }) }
     end
   end
   def valorinutritionales_table
@@ -173,6 +232,11 @@ class ValorinutritionalesController < ApplicationController
   
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_selected_values_to_session(selected_values)
+      session[:selected_values] = selected_values.map do |value|
+        { id: value[:id], value: value[:value] }
+      end
+    end
     def set_valorinutritionale
       @valorinutritionale = Valorinutritionale.find(params[:id])
       @selected_values = params[:selected_values]
