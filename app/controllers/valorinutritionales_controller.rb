@@ -67,6 +67,14 @@ class ValorinutritionalesController < ApplicationController
     end
   end
   
+  def delete_selected
+    id = params[:id].to_i
+    session[:selected_valorinutritionales].delete_if { |item| item[:id] == id || item["id"] == id }
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("valorinutritionales_results", partial: "valorinutritionales/valorinutritionales_results") }
+      format.html { redirect_to valorinutritionales_path }
+    end
+  end
   
   
   

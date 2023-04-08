@@ -1,16 +1,14 @@
 Rails.application.routes.draw do
-  resources :valorinutritionales
-  post 'valorinutritionales/reset_session_data', to: 'valorinutritionales#reset_session_data', as: 'reset_session_data_valorinutritionales'
-
   get 'admin/index'
-
   put 'admin/update/:id', to: 'admin#update', as: 'update_admin'
-
   get 'admin/edit/:id', to: 'admin#edit', as: 'edit_admin'
-  post 'valorinutritionales/select', to: 'valorinutritionales#select_valorinutritionales', as: :select_valorinutritionales
+
   resources :valorinutritionales, only: [:index] do
     collection do
       post :calculate
+      post :select_valorinutritionales, path: 'select' # modificat aici
+      post :reset_session_data, path: 'reset_session_data'
+      post :delete_selected
     end
   end
 

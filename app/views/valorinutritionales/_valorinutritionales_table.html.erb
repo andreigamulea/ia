@@ -24,7 +24,8 @@
           <td><%= valorinutritionale.carbohidrati %></td>
           <td><%= valorinutritionale.fibre %></td>
           <td>
-          <%= form_with(url: select_valorinutritionales_path, method: :post, remote: true, data: { turbo_action: "replace" }, id: "select-form-#{valorinutritionale.id}") do |form| %>
+          <%= form_with(url: select_valorinutritionales_valorinutritionales_path, method: :post, remote: true, data: { turbo_action: "replace" }, id: "select-form-#{valorinutritionale.id}") do |form| %>
+
 
           
             <%= form.hidden_field :id, value: valorinutritionale.id %>

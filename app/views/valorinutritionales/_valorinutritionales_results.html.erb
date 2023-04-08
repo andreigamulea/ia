@@ -1,18 +1,20 @@
 <%= turbo_frame_tag "valorinutritionales_results" do %>
   <h1>Rezultate</h1>
-  <table class='table table-striped table-bordered table-hover'>
+   <table class='table table-striped table-bordered table-hover'>
     <thead class="table-dark">
       <tr>
+        
         <th>Aliment</th>
         <th>Calorii</th>
         <th>Proteine</th>
         <th>Lipide</th>
         <th>Carbohidrati</th>
         <th>Fibre</th>
+        <th>Actiune</th>
        
       </tr>
     </thead>
-    <<tbody id="valorinutritionales_results">>
+    <tbody id="valorinutritionales_results">
       <% total_values = { proteine: 0, lipide: 0, carbohidrati: 0, fibre: 0 } %>
 
 <% if session[:selected_valorinutritionales] %>
@@ -36,6 +38,7 @@
       <td><%= ((valorinutritional.lipide * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
       <td><%= ((valorinutritional.carbohidrati * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
       <td><%= ((valorinutritional.fibre * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
+      <td><%= button_to "Șterge", { action: "delete_selected", id: valorinutritional.id }, method: :post, data: { turbo_action: "replace" }, class: "btn btn-danger btn-sm" %></td>
     </tr>
   
     <% total_values[:calorii] += (valorinutritional.calorii * (selected[:value] || selected["value"]).to_f/100).round(2) %>
