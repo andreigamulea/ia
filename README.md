@@ -1,24 +1,10 @@
-# README
+Merge bine pana aici, cele 2 tabele functioneaza bine, paginarea si mutatul de pe o pagina pe alta butoanele DELETE merg la Results
+La Menu am pus Sign Out cu link_to si am scos button_to
+am dat bundle exec rails assets:precompile   #aceasta  va face ca siteul sa aiba preinstalat css
+acum pot seta in production: config.assets.compile = false   
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Merge f bine dupa ce am dat bundle exec rails assets:precompile    pt server render  si
 
-Things you may want to cover:
+rails assets:precompile  pt server local 
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+setez Enviromentul: set RAILS_ENV=production      set RAILS_ENV=development

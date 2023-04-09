@@ -57,7 +57,7 @@
         border: none;
     }
 }
-a:hover { background-color: rgb(238, 196, 144); } 
+.tabel-container a:hover { background-color: rgb(238, 196, 144); } 
 .selected_values-value {
     width: 30%;
   }

@@ -1,0 +1,164 @@
+            .has-submenu::after {
+                content: "";
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                border-top: 5px solid transparent;
+                border-bottom: 5px solid transparent;
+                border-left: 5px solid black;
+            }
+
+            body {
+                font-family: "Roboto", sans-serif;
+                margin: 0 auto;
+            }
+            header {
+                background-color: white;
+                color: black;
+                max-width: 1250px;
+                margin: 0 auto;
+            }
+            .header-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .navcontainer {
+                display: flex;
+                align-items: center;
+                padding-right: 20px;
+            }
+            .logo-container {
+                display: flex;
+                align-items: center;
+            }
+            .logo {
+                width: 256px;
+                height: auto;
+            }
+            .menu-toggler {
+                display: none;
+                cursor: pointer;
+            }
+            .nav-menu {
+                display: flex;
+                list-style: none;
+                padding: 0;
+            }
+            .nav-menu li {
+                padding: 10px 20px;
+            }
+            .nav-menu a {
+                text-decoration: none;
+                color: black;
+                text-transform: uppercase;
+                position: relative;
+            }
+            .nav-menu a:hover::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                bottom: -3px;
+                width: 100%;
+                height: 1px;
+                background-color: black;
+                transform: translateX(-50%);
+            }
+            .has-submenu {
+                position: relative;
+            }
+
+            .submenu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: -70px;
+                background: linear-gradient(to bottom, white, #9025c02b);
+                border-bottom: 1px solid #ccc;
+                padding: 10px;
+                z-index: 1000;
+                border-radius: 10px;
+            }
+            .submenu li {
+                list-style: none;
+            }
+
+            .has-submenu:hover .submenu {
+                display: block;
+            }
+
+            .showicosubmenu:after {
+                content: "";
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                border-top: 5px solid transparent;
+                border-bottom: 5px solid transparent;
+                border-left: 5px solid black;
+            }
+
+            @media (max-width: 992px) {
+                .submenu {
+                    position: static;
+                    display: none;
+                    padding: 0;
+                    border: none;
+                    background-color: transparent;
+                }
+
+                .has-submenu:hover > .submenu {
+                    display: block;
+                }
+            }
+
+            @media (max-width: 992px) {
+                .header-content {
+                    position: relative;
+                }
+                .menu-toggler {
+                    display: block;
+                }
+                .nav-menu {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    background-color: white;
+                    z-index: 1000;
+                    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+                }
+                .nav-menu.show {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 20px;
+                }
+                .nav-menu li {
+                    border-bottom: 1px solid #ccc;
+                }
+                .nav-menu a:hover::after {
+                    display: none;
+                }
+                .nav-menu a:hover {
+                    color: blue;
+                }
+                .submenu {
+                    right: 0;
+                }
+                .has-submenu::after {
+                    display: none;
+                }
+                .has-submenu > a::after {
+                    content: "";
+                    position: absolute;
+                    right: -8px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    border-top: 5px solid transparent;
+                    border-bottom: 5px solid transparent;
+                    border-left: 5px solid black;
+                }
+            }
+    

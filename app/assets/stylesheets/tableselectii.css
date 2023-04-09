@@ -1,0 +1,57 @@
+  .tabel-container {
+    margin: 0 auto;
+    max-width: 1250px;
+  }
+.tabel-container table {
+border-collapse: collapse;
+width: 100%;
+font-family: Arial, sans-serif;
+}
+
+.tabel-container th, .tabel-container td {
+text-align: left;
+padding: 8px;
+}
+
+.tabel-container th {
+background-color: #64025e;
+color: white;
+}
+
+.tabel-container tr:nth-child(even) {
+background-color: white;
+}
+
+.tabel-container tr:hover {
+background-color: #ddd;
+}
+
+.tabel-container .form-container .btn {
+display: inline-block;
+padding: 6px 12px;
+font-size: 14px;
+font-weight: 400;
+line-height: 1.42857143;
+text-align: center;
+white-space: nowrap;
+vertical-align: middle;
+cursor: pointer;
+border: 1px solid transparent;
+border-radius: 4px;
+background-color: #64025e;
+color: #fff;
+}
+
+/* Media Queries pentru dispozitive mobile */
+@media screen and (max-width: 767px) {
+.tabel-container table {
+font-size: 12px;
+}.tabel-container .form-container .btn {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.tabel-container th, .tabel-container td {
+  padding: 4px;
+}
+}
