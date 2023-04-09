@@ -7,8 +7,9 @@ class ValorinutritionalesController < ApplicationController
   ## GET /valorinutritionales or /valorinutritionales.json
   
   def index
-    @q = Valorinutritionale.ransack(params[:q])
-    @valorinutritionales = @q.result.page(params[:page]).per(3)
+    @valorinutritionales = Valorinutritionale.order(:aliment).page(params[:page]).per(15)
+    #@q = Valorinutritionale.ransack(params[:q])
+    #@valorinutritionales = @q.result.page(params[:page]).per(3)
    
     #@valorinutritionales = Valorinutritionale.page(params[:page]).per(3)
     @selected_valorinutritionales = session[:selected_values]&.map { |v| Valorinutritionale.find_by(id: v[:id]) }&.compact || []
