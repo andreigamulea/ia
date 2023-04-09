@@ -1,9 +1,11 @@
-import { Application } from "stimulus";
-import { importmap } from "@hotwired/stimulus-importmap-autoloader";
-import DebounceController from "./debounce_controller";
+// Import and register all your controllers from the importmap under controllers/*
 
-const application = Application.start();
-const context = import.meta.globEager("./*_controller.js");
-application.load(importmap(context, (moduleName) => moduleName.replace(/\.js$/, "")));
+import { application } from "controllers/application"
 
-application.register("debounce", DebounceController);
+// Eager load all controllers defined in the import map under controllers/**/*_controller
+import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
+eagerLoadControllersFrom("controllers", application)
+
+// Lazy load controllers as they appear in the DOM (remember not to preload controllers in import map!)
+// import { lazyLoadControllersFrom } from "@hotwired/stimulus-loading"
+// lazyLoadControllersFrom("controllers", application)
