@@ -1,30 +1,26 @@
-<header> <div class="headercontainer">
-  <div class="logo-container"> <a href="/" class="navbar-brand"> <img src="https://nutritie.amnromania.ro/wp-content/uploads/2022/08/logo_transparent_background.png" alt="Ayus grup"
-    class="logo"> </a> </div> <!-- Meniu --> <button class="navbar-toggler" id="menu-toggler-button"
-      type="button" onclick="toggleMobileMenu()" aria-label="Toggle mobile menu" style="border: none;
-      outline: none;" data-target="#navbarNav">
-        <img src="https://amnromania.ro/wp-content/uploads/2023/04/mbico1.png" class="menu-toggler-icon" id="menuTogglerIconInactive"
-        style="display: block; width: 60px;"> <img src="https://amnromania.ro/wp-content/uploads/2023/04/mbico2.png" class="menu-toggler-icon" id="menuTogglerIconActive" style="display: none;
-      width: 60px;"> 
-      </button> 
-    </div>
-   <nav class="navbar navbar-expand-lg py-3" style="top: 0; width: 100%;"> 
-   <div class="container"> 
- <!-- Logo -->
- 
-  <div class="collapse navbar-collapse" id="navbarNav">
-   <ul class="navbar-nav ms-auto px-2"> 
-      <li class="nav-item"> <%= link_to 'Home', root_path, class: "nav-link "%> </li> 
-          <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1) %>  
-      <li class="nav-item">
-            <%= link_to 'Valori Nutritionale', valorinutritionales_path, class: "nav-link "%>
-      </li> 
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3" style="top: 0;width: 100%;">
+  <div class="container"  >
+    <%= image_tag asset_path('ayus_logo.jpg'), alt: "Ayus grup", width: "64", height: "64" %>    
+    <ul class="navbar-nav ml-auto px-2"> 
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto px-2">
+        <li class="nav-item">
+            <%= link_to 'Home', root_path, class: "nav-link text-light"%>
+        </li>
+        <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1) %>  
+        <li class="nav-item">
+            <%= link_to 'Valori Nutritionale', valorinutritionales_path, class: "nav-link text-light"%>
+        </li> 
         <%end%>
         <% if current_user && current_user.role == 1 %>  
       <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            XlsxToPg 
-          </a>  
+          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            XlsxToPg
+          </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <%= link_to 'Plante', plantes_path, class: "dropdown-item"%>
             <%= link_to 'Plante-Parti', plante_partis_path, class: "dropdown-item"%>
@@ -39,7 +35,7 @@
         </li>  
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Manager
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -53,13 +49,10 @@
         </li>
         <%end%>
         
-      
+      </ul>
       <%if user_signed_in?%>
          <li class="nav-item">        
-         <%= link_to 'Sign Out', destroy_user_session_path, data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %>
-
-
-
+        <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-dark" %>
         </li>
         
         <li class="nav-item">          
@@ -69,15 +62,15 @@
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Salut <%=current_user.name%></a>
         </li> 
         <%else%>
-       <li class="nav-item"> <a class="nav-link" href="/users/sign_in">Login</a> </li>
-  
-      <li class="nav-item"> <a class="nav-link" href="/users/sign_up">Sign Up</a> </li> 
+        <li class="nav-item">          
+        <%= link_to 'Login', new_user_session_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">          
+        <%= link_to 'Sign Up', new_user_registration_path, class: "nav-link" %>
+        </li>
         <%end%>
       </ul>
       </div>
   </div>
 </nav>
 
-
-   
-   </header>
