@@ -5,6 +5,7 @@
       <tr>
         
         <th>Aliment</th>
+        <th>Cantitate</th>
         <th>Calorii</th>
         <th>Proteine</th>
         <th>Lipide</th>
@@ -26,13 +27,17 @@
   fibre: 0,
   calorii: 0
 } %>
-
+<% total_grame = 0 %>
   <% session[:selected_valorinutritionales].each do |selected| %>
+    
     <% id = selected[:id] || selected["id"] %>
+    <% selected_value = selected[:value] || selected["value"] %>
     <% valorinutritional = Valorinutritionale.find_by(id: id) %>
     <% next if valorinutritional.nil? %>
+    
     <tr>
       <td><%= valorinutritional.aliment %></td>
+      <td><%=selected_value%> grame</td>
       <td><%= ((valorinutritional.calorii * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
       <td><%= ((valorinutritional.proteine * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
       <td><%= ((valorinutritional.lipide * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
@@ -40,7 +45,7 @@
       <td><%= ((valorinutritional.fibre * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
       <td><%= button_to "Șterge", { action: "delete_selected", id: valorinutritional.id }, method: :post, data: { turbo_action: "replace" }, class: "btn btn-danger btn-sm" %></td>
     </tr>
-  
+    <% total_grame += selected_value.to_i %>
     <% total_values[:calorii] += (valorinutritional.calorii * (selected[:value] || selected["value"]).to_f/100).round(2) %>
     <% total_values[:proteine] += (valorinutritional.proteine * (selected[:value] || selected["value"]).to_f/100).round(2) %>
     <% total_values[:lipide] += (valorinutritional.lipide * (selected[:value] || selected["value"]).to_f/100).round(2) %>
@@ -48,12 +53,13 @@
     <% total_values[:fibre] += (valorinutritional.fibre * (selected[:value] || selected["value"]).to_f/100).round(2) %>
   <% end %>
   <tr>
-  <td>Total</td>
-  <td><%=total_values[:calorii]%></td>
-  <td><%=total_values[:proteine]%></td>
-  <td><%=total_values[:lipide]%></td>
-  <td><%=total_values[:carbohidrati]%></td>
-  <td><%=total_values[:fibre]%></td>
+  <td><b>Total</b></td>
+  <td><b><%= total_grame %> grame</b></td>
+  <td><b><%=total_values[:calorii]%></b></td>
+  <td><b><%=total_values[:proteine]%></b></td>
+  <td><b><%=total_values[:lipide]%></b></td>
+  <td><b><%=total_values[:carbohidrati]%></b></td>
+  <td><b><%=total_values[:fibre]%></b></td>
   </tr>
 <% end %>
 

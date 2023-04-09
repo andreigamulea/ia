@@ -1,4 +1,13 @@
 <%= turbo_frame_tag "valorinutritionales_table" do %>
+<%= form_with(url: valorinutritionales_path, method: :get, format: :turbo_stream, data: { turbo_action: "replace" }, id: "search-form") do |form| %>
+  <%= form.search_field :q_cont, placeholder: "Caută aliment...", class: "form-control", autocomplete: "off" %>
+  <%= form.submit "Caută", class: "btn btn-primary" %>
+<% end %>
+
+
+
+
+
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
@@ -24,8 +33,8 @@
           <td><%= valorinutritionale.carbohidrati %></td>
           <td><%= valorinutritionale.fibre %></td>
           <td>
+         
           <%= form_with(url: select_valorinutritionales_valorinutritionales_path, method: :post, remote: true, data: { turbo_action: "replace" }, id: "select-form-#{valorinutritionale.id}") do |form| %>
-
 
           
             <%= form.hidden_field :id, value: valorinutritionale.id %>

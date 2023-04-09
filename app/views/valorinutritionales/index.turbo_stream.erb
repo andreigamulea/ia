@@ -1,53 +1,6 @@
-<p style="color: green"><%= notice %></p>
-<div class="container" >
-<h1 class="text-center mb-4" style="color:green;">Valoarea nutritionala a alimentelor</h1></br>
-<div id="valorinutritionales" class="table-responsive" style="width:1200px; margin:0 auto;">
- 
- 
- <%= form_tag '/valorinutritionales/process_selected', method: :post, remote: true do %>
-    <table class='table table-striped table-bordered table-hover'>
-      <thead class="table-dark">
-        <tr>
-          <th>Cod</th>
-          <th>Aliment</th>
-          <th>Calorii</th>
-          <th>Proteine</th>
-          <th>Lipide</th>
-          <th>Carbohidrati</th>
-          <th>Fibre</th>
-          <th>Select</th>
-        </tr>
-      </thead>
-      
-    <%= turbo_frame_tag "valorinutritionales" do %>
-      <%= render partial: "valorinutritionales", locals: { valorinutritionales: @valorinutritionales } %>
-    <% end %>
-
-    </table>
-    <%= submit_tag "Calculeaza", class: "btn btn-primary" %>
-  <% end %>
-  
-  <%= paginate @valorinutritionales, params: {controller: 'valorinutritionales', action: 'index'}, data: {turbo: true} %></br>
-  
-</div>
-
-
-
-
-      <script>
-        function updateValueField(checkbox) {
-          var valueField = checkbox.parentNode.querySelector('.selected_values-value');
-          if (checkbox.checked) {
-            valueField.disabled = false;
-          } else {
-            valueField.disabled = true;
-            valueField.value = null;
-          }
-        }
-      </script>      
-        <%if current_user && current_user.role==1%>
-        <%= link_to "New valorinutritionale", new_valorinutritionale_path, class: "btn btn-primary" %>
-        <%end%>
-      </div>
-
+<turbo-stream action="replace" target="valorinutritionales_table">
+  <template>
+    <%= render partial: "valorinutritionales/valorinutritionales_table", locals: { valorinutritionales: @valorinutritionales }, formats: [:html] %>
+  </template>
+</turbo-stream>
 
