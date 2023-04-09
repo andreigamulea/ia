@@ -4,13 +4,13 @@
     <thead class="table-dark">
       <tr>
         
-        <th>Aliment</th>
-        <th>Cantitate</th>
+        <th>Aliment</th>        
         <th>Calorii</th>
         <th>Proteine</th>
         <th>Lipide</th>
         <th>Carbohidrati</th>
         <th>Fibre</th>
+        <th>Cantitate(g)</th>
         <th>Actiune</th>
        
       </tr>
@@ -37,12 +37,13 @@
     
     <tr>
       <td><%= valorinutritional.aliment %></td>
-      <td><%=selected_value%> grame</td>
+      
       <td><%= ((valorinutritional.calorii * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
       <td><%= ((valorinutritional.proteine * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
       <td><%= ((valorinutritional.lipide * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
       <td><%= ((valorinutritional.carbohidrati * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
       <td><%= ((valorinutritional.fibre * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
+      <td><%=selected_value%></td>
       <td><%= button_to "Șterge", { action: "delete_selected", id: valorinutritional.id }, method: :post, data: { turbo_action: "replace" }, class: "btn btn-danger btn-sm" %></td>
     </tr>
     <% total_grame += selected_value.to_i %>
@@ -54,12 +55,13 @@
   <% end %>
   <tr>
   <td><b>Total</b></td>
-  <td><b><%= total_grame %> grame</b></td>
+  
   <td><b><%=total_values[:calorii]%></b></td>
   <td><b><%=total_values[:proteine]%></b></td>
-  <td><b><%=total_values[:lipide]%></b></td>
+  <td><b><%=total_values[:lipide].round(2)%></b></td>
   <td><b><%=total_values[:carbohidrati]%></b></td>
   <td><b><%=total_values[:fibre]%></b></td>
+  <td><b><%= total_grame %></b></td>
   </tr>
 <% end %>
 

@@ -96,14 +96,7 @@ class ValorinutritionalesController < ApplicationController
   
   
   
-  def pagination_turbo_stream
-    set_selected_values_to_session(params[:selected_values]) if params[:selected_values].present?
-    @valorinutritionales = Valorinutritionale.order(:aliment).page params[:page]
-
-    respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.replace("valorinutritionales_table", partial: "valorinutritionales_table", locals: { valorinutritionales: @valorinutritionales }) }
-    end
-  end
+ 
   def valorinutritionales_table
     @valorinutritionales = Valorinutritionale.all
     render partial: 'valorinutritionales_table'
