@@ -57,7 +57,7 @@
       <%if user_signed_in?%>
          <li class="nav-item">        
          <%= link_to 'Sign Out', destroy_user_session_path, data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %>
-
+         <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn-light" %>
 
 
         </li>

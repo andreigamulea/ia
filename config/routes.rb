@@ -61,7 +61,7 @@ Rails.application.routes.draw do
  
   resources :listacursuris
   resources :cursuris
- get 'users/sign_out'
+ 
  #devise_for :users, skip: :all
   devise_for :users, controllers: {
     sessions: 'devise/sessions',
