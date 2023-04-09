@@ -19,7 +19,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/@baianat/turbo@0.0.0/dist/js/turbo.min.js"></script>
-    <script> function toggleMobileMenu() {
+    
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "style", "data-turbo-track": "reload" %> <%# Adăugați această linie %>
+    <%= javascript_importmap_tags %> 
+    <%= javascript_include_tag "turbo" %>
+
+
+   <script> function toggleMobileMenu() {
          const menu = document.getElementById("navbarNav");
          const iconInactive = document.getElementById("menuTogglerIconInactive");
          const iconActive = document.getElementById("menuTogglerIconActive");
@@ -36,16 +43,11 @@
     }
      </script>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "style", "data-turbo-track": "reload" %> <%# Adăugați această linie %>
-    <%= javascript_importmap_tags %> 
-    <%= javascript_include_tag "turbo" %>
-   
-
+    
   </head>
 
   <body>
-  <%= render 'layouts/header' %>
+    <%= render 'layouts/header' %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     

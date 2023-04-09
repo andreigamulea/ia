@@ -37,6 +37,9 @@ a.nav-link{
 text-transform: uppercase;
 }
 @media (min-width: 992px) {
+    #menu-toggler-button {
+        display: none;
+    }
     a.nav-link {
         display: inline-block;
         position: relative;
@@ -59,7 +62,7 @@ text-transform: uppercase;
         border-bottom: 1px solid #ccc;
    }
 }
-.head {
+.headercontainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,7 +70,10 @@ text-transform: uppercase;
     padding-bottom:10px;
 }
 @media (max-width: 992px) {
-    .head {
+    #menu-toggler-button {
+        display: block;
+    }
+    .headercontainer {
         width:100%;
    }
     .logo-container {
@@ -85,3 +91,6 @@ text-transform: uppercase;
        }
    }
 }
+
+
+
