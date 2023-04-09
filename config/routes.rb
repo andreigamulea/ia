@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       post :select_valorinutritionales, path: 'select' # modificat aici
       post :reset_session_data, path: 'reset_session_data'
       post :delete_selected
-      get :search
+      #get :search
     end
   end
 

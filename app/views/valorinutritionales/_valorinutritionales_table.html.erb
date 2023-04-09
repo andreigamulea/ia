@@ -1,8 +1,5 @@
 <%= turbo_frame_tag "valorinutritionales_table" do %>
-<%= form_with(url: valorinutritionales_path, method: :get, format: :turbo_stream, data: { turbo_action: "replace" }, id: "search-form") do |form| %>
-  <%= form.search_field :q_cont, placeholder: "Caută aliment...", class: "form-control", autocomplete: "off" %>
-  <%= form.submit "Caută", class: "btn btn-primary" %>
-<% end %>
+
 
 
 
