@@ -10,24 +10,20 @@
      </button> 
   </div> 
   <div class="collapse navbar-collapse" id="navbarNav"> <ul class="navbar-nav ms-auto px-2"> 
-  <li class="nav-item"> <%= link_to 'Home', root_path, class: "nav-link text-light"%> </li> 
-  
-  
-
-
+  <li class="nav-item"> <%= link_to 'Home', root_path, class: "nav-link "%> </li> 
  
      
     
      
         <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1) %>  
         <li class="nav-item">
-            <%= link_to 'Valori Nutritionale', valorinutritionales_path, class: "nav-link text-light"%>
+            <%= link_to 'Valori Nutritionale', valorinutritionales_path, class: "nav-link "%>
         </li> 
         <%end%>
         <% if current_user && current_user.role == 1 %>  
       <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            XlsxToPg
+          <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            XlsxToPg 
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <%= link_to 'Plante', plantes_path, class: "dropdown-item"%>
@@ -43,7 +39,7 @@
         </li>  
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Manager
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
