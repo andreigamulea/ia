@@ -1,0 +1,2 @@
+<%= turbo_stream.replace "valorinutritionales_table", partial: "valorinutritionales/valorinutritionales_table", locals: { valorinutritionales: @valorinutritionales } %>
+<%= turbo_stream.replace "valorinutritionales_results", partial: "valorinutritionales/valorinutritionales_results", locals: { selected_valorinutritionales: @selected_valorinutritionales, valorinutritionale_values: @valorinutritionale_values, total_values: @total_values } %>

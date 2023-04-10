@@ -1,0 +1,26 @@
+<% if valorinutritionales.present? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Nume</th>
+        <th>Proteine</th>
+        <th>Grăsimi</th>
+        <th>Carbohidrați</th>
+        <!-- Alte coloane relevante -->
+      </tr>
+    </thead>
+    <tbody>
+      <% valorinutritionales.each do |valorinutritionale| %>
+        <tr>
+          <td><%= valorinutritionale.aliment %></td>
+          <td><%= valorinutritionale.proteine %></td>
+          <td><%= valorinutritionale.lipide %></td>
+          <td><%= valorinutritionale.carbohidrati %></td>
+          <!-- Alte valori relevante -->
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Nu s-au găsit rezultate pentru căutarea dvs.</p>
+<% end %>

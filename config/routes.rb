@@ -6,10 +6,15 @@ Rails.application.routes.draw do
   resources :valorinutritionales, only: [:index] do
     collection do
       post :calculate
-      post :select_valorinutritionales, path: 'select' # modificat aici
+      post :select_valorinutritionales, path: 'select'
       post :reset_session_data, path: 'reset_session_data'
       post :delete_selected
-      #get :search
+      get :show_selected
+      get :valorinutritionales_table
+      get :index_turbo_stream
+      post :selected_records
+      get :pagination_turbo_stream
+      post :process_selected
     end
   end
 
@@ -19,10 +24,7 @@ Rails.application.routes.draw do
   get 'gestionare_useri_cursuri/index'
   get '/gestionare_useri_cursuri/import_from_xlsx_cursantinutritie', to: 'gestionare_useri_cursuri#import_from_xlsx_cursantinutritie', as: 'import_from_xlsx_cursantinutritie_gestionare_useri_cursuri'
   get 'gestionare_useri_cursuri/stergecursntinutritie', to: 'gestionare_useri_cursuri#stergecursntinutritie', as: 'stergecursntinutritie_gestionare_useri_cursuri'
-  get '/valorinutritionales/show_selected', to: 'valorinutritionales#show_selected', as: 'show_selected_valorinutritionales'
-  get 'valorinutritionales/show_selected', to: 'valorinutritionales#show_selected', as: 'show_selected'  
-  get 'valorinutritionales/index', format: :turbo_stream
-  get 'valorinutritionales_table', to: 'valorinutritionales#valorinutritionales_table'
+ 
   get '/xlsxtopg/preluaredate', to: 'xlsxtopg#preluaredate', as: 'preluaredate_xlsxtopg'
   get '/xlsxtopg/preluaredate1', to: 'xlsxtopg#preluaredate1', as: 'preluaredate1_xlsxtopg'
   get '/xlsxtopg/preluaredate2', to: 'xlsxtopg#preluaredate2', as: 'preluaredate2_xlsxtopg'
@@ -42,21 +44,8 @@ Rails.application.routes.draw do
   get 'xlsxtopg/sterge_inregistrari7', to: 'xlsxtopg#sterge_inregistrari7', as: 'sterge_inregistrari7_xlsxtopg'
   get 'xlsxtopg/sterge_inregistrari8', to: 'xlsxtopg#sterge_inregistrari8', as: 'sterge_inregistrari8_xlsxtopg'
   get 'xlsxtopg/test'
-  resources :valorinutritionales do
-    collection do
-      get 'pagination_turbo_stream'
-    end
-  end
-  resources :valorinutritionales do
-    collection do
-      get 'pagination_turbo_stream'
-      post 'process_selected'
-    end
-  end
-  resources :valorinutritionales do
-    get 'index_turbo_stream', on: :collection
-    post 'selected_records', on: :collection
-  end
+ 
+  
 
  
   resources :listacursuris
@@ -72,7 +61,7 @@ Rails.application.routes.draw do
   }
 
 
-  resources :valorinutritionales
+  
   resources :srota
   resources :tipuri_props
   resources :importanta
