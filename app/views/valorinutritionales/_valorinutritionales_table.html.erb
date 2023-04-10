@@ -1,6 +1,13 @@
 <section class="tabel-container">
 <%= turbo_frame_tag "valorinutritionales_table" do %>
 <h1>Valorile Nutriționale</h1>
+
+<%= search_form_for @q, data: { turbo_frame: :results } do |f| %>
+  <%= f.label "Cauta aliment" %>
+  <%= f.search_field :aliment_cont,
+                     oninput: 'this.form.requestSubmit()', autofocus: true, autocomplete: 'off' %>
+<% end %>
+
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>

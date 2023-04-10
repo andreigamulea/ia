@@ -4,7 +4,7 @@
    <table class='table table-striped table-bordered table-hover'>
     <thead class="table-dark">
       <tr>
-        
+        <th>Nr.</th>
         <th>Aliment</th>        
         <th>Calorii</th>
         <th>Proteine</th>
@@ -29,16 +29,17 @@
   calorii: 0
 } %>
 <% total_grame = 0 %>
+<%i=0%>
   <% session[:selected_valorinutritionales].each do |selected| %>
-    
+    <%i=i+1%>
     <% id = selected[:id] || selected["id"] %>
     <% selected_value = selected[:value] || selected["value"] %>
     <% valorinutritional = Valorinutritionale.find_by(id: id) %>
     <% next if valorinutritional.nil? %>
     
     <tr>
-      <td><%= valorinutritional.aliment %></td>
-      
+      <td><%=i%></td>
+      <td><%= valorinutritional.aliment %></td>      
       <td><%= ((valorinutritional.calorii * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
       <td><%= ((valorinutritional.proteine * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
       <td><%= ((valorinutritional.lipide * (selected[:value] || selected["value"]).to_f)/100).round(2) %></td>
