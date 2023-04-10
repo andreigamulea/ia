@@ -7,11 +7,8 @@ class ValorinutritionalesController < ApplicationController
   ## GET /valorinutritionales or /valorinutritionales.json
   
   def index
-   
-
     @q = Valorinutritionale.ransack(params[:q])
-    @valorinutritionales = @q.result.page(params[:page]).per(3)
-
+    @valorinutritionales = @q.result.page(params[:page]).per(10)
     #@valorinutritionales = Valorinutritionale.page(params[:page]).per(3)
     @selected_valorinutritionales = session[:selected_values]&.map { |v| @valorinutritionales.find_by(id: v[:id]) }&.compact || []
   
@@ -36,16 +33,7 @@ class ValorinutritionalesController < ApplicationController
       format.html
     end
   end 
-  def search
-    query = params[:query]
-    @valorinutritionales = Valorinutritionale.where("aliment ILIKE ?", "%#{query}%").page(params[:page]).per(3)
-    
-    respond_to do |format|
-      #format.turbo_stream { render turbo_stream: turbo_stream.replace("valorinutritionales_table", partial: "valorinutritionales/valorinutritionales_table") }
-      format.turbo_stream { render turbo_stream: turbo_stream.replace("valorinutritionales_table", partial: "valorinutritionales_table", locals: { valorinutritionales: @valorinutritionales }) }
-      format.html { redirect_to valorinutritionales_path }
-    end
-  end
+  
   
   
   def select_valorinutritionales
