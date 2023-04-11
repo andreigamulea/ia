@@ -1,7 +1,10 @@
-  .tabel-container {
-    margin: 0 auto;
-    max-width: 1250px;
-  }
+.tabel-container {
+  margin: 0 auto;
+  max-width: 1250px;
+  padding: 0 10px;
+  overflow-x: auto;
+  width:100%;
+}
 .tabel-container table {
 border-collapse: collapse;
 width: 100%;
@@ -47,11 +50,80 @@ color: #fff;
 .tabel-container table {
 font-size: 12px;
 }.tabel-container .form-container .btn {
-  font-size: 12px;
-  padding: 4px 8px;
+font-size: 12px;
+padding: 4px 8px;
 }
 
 .tabel-container th, .tabel-container td {
-  padding: 4px;
+padding: 4px;
 }
 }
+
+.alimente-nutritionale {
+  font-size: 2.5rem;
+  padding-bottom: 35px;
+  padding-top: 10px;
+  margin: 0 auto;
+  text-align: center;
+}
+@media screen and (max-width: 992px) {
+  .alimente-nutritionale {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 35px;
+}
+}
+.valorile-nutritionale {
+  padding-bottom: 15px;
+}
+.selectie{
+  padding: 45px 0 15px 0;
+  }
+  
+  
+  .tabel-container .btn {
+      background-color: #64025e;
+      color: #fff;
+      padding: 3px 10px;
+  }
+  
+  @media only screen and (min-width: 992px) {
+    .tabel-container .btn {
+      margin-left: 10px;
+    }
+  }
+  .tabel-container .btn {
+   margin-left: 5px;
+  }
+
+  .tabel-container .btn:hover {
+    background-color: #50024c;
+  }
+  
+  .tabel-container td {
+    vertical-align: middle;
+  }
+  .tabel-container form {
+    display: inline-flex;
+    align-items: center;
+  }
+  @media only screen and (min-width: 992px) {
+    .trdesk{ display: table-row;}
+    .trmob{display:none;}
+      }
+  @media only screen and (max-width: 991px) {
+    .trdesk{ display: none;}
+    .trmob{display:table-row;}
+  }
+  .tabel-container input[type="number"] {
+    width: auto; /* Lățimea implicită pentru desktop */
+  }
+  
+  /* Media query pentru dispozitive mobile */
+  @media screen and (max-width: 767px) {
+    .tabel-container input[type="number"] {
+      width: 30px; /* Lățimea pentru dispozitive mobile */
+      max-width: 30px; /* Max lățimea pentru dispozitive mobile */
+    }
+  }
+  

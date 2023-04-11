@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'admin/index'
   put 'admin/update/:id', to: 'admin#update', as: 'update_admin'
   get 'admin/edit/:id', to: 'admin#edit', as: 'edit_admin'
+  
 
   resources :valorinutritionales, only: [:index] do
     collection do
