@@ -9,7 +9,9 @@
         <div class="input-group-append">
          
           <%= f.submit 'Cauta', class: "btn btn-primary" %>
+          <button id="reset-and-submit" type="button" class="btn btn-secondary">Reseteaza cautarea</button>
         </div>
+        
       </div>
     </div>
   <% end %>
@@ -79,5 +81,17 @@
  
 </section>
 
+<script>
+$(document).ready(function() {
+  const resetAndSubmitBtn = $('#reset-and-submit');
+  const form = $('#pas form');
+  const textField = form.find('input[type="text"]');
 
+  resetAndSubmitBtn.on('click', function() {
+    textField.val('');
+    form.submit();
+  });
+});
+
+</script>
 
