@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'admin/edit/:id', to: 'admin#edit', as: 'edit_admin'
   
 
-  resources :valorinutritionales, only: [:index] do
+  resources :valorinutritionales, only: [:index], path: 'valorinutritionale' do
     collection do
       post :calculate
       post :select_valorinutritionales, path: 'select'
@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       post :process_selected
     end
   end
+  
 
   
   get 'home/index'
