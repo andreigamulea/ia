@@ -8,3 +8,4 @@ Merge f bine dupa ce am dat bundle exec rails assets:precompile    pt server ren
 rails assets:precompile  pt server local 
 
 setez Enviromentul: set RAILS_ENV=production      set RAILS_ENV=development
+git commit -m "merge 1 Cauta si 2 Reseteaza cautarea (la 2 se goleste campul, nu se face tabelul cu toate row dar merge bine) este no refresh"
