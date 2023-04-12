@@ -1,9 +1,9 @@
+
+
 .tabel-container {
   margin: 0 auto;
   max-width: 1250px;
-  padding: 0 10px;
-
-}
+ }
 .tabel-container table {
 border-collapse: collapse;
 width: 100%;
@@ -12,12 +12,13 @@ font-family: Arial, sans-serif;
 
 .tabel-container th, .tabel-container td {
 text-align: left;
-padding: 8px;
+padding: 3px 5px;
 }
 
 .tabel-container th {
 background-color: #64025e;
 color: white;
+
 }
 
 .tabel-container tr:nth-child(even) {
@@ -31,7 +32,7 @@ background-color: #ddd;
 .tabel-container .form-container .btn {
 display: inline-block;
 padding: 6px 12px;
-font-size: 14px;
+font-size: 13px;
 font-weight: 400;
 line-height: 1.42857143;
 text-align: center;
@@ -52,14 +53,16 @@ font-size: 12px;
 font-size: 12px;
 padding: 4px 8px;
 }
-
 .tabel-container th, .tabel-container td {
 padding: 4px;
+}
+.tabel-container .btn{
+  font-size: 12px;
 }
 }
 
 .alimente-nutritionale {
-  font-size: 2.5rem;
+  font-size: 12px;
   padding-bottom: 35px;
   padding-top: 10px;
   margin: 0 auto;
@@ -94,11 +97,18 @@ padding: 4px;
   .tabel-container .btn {
    margin-left: 5px;
   }
-
+  .mw100{max-width: 10%;
+    width: 10%;
+}
   .tabel-container .btn:hover {
     background-color: #50024c;
   }
-  
+  #valorinutritionales_results form{
+    width: 100%;
+  }
+ #valorinutritionales_results .btn{
+    width: -webkit-fill-available;
+  }
   .tabel-container td {
     vertical-align: middle;
   }
@@ -107,12 +117,20 @@ padding: 4px;
     align-items: center;
   }
   @media only screen and (min-width: 992px) {
-    .trdesk{ display: table-row;}
+    .trdesk{ display: table-row;
+    }
+    .trdesk th{
+      text-align: center;
+    }
     .trmob{display:none;}
       }
   @media only screen and (max-width: 991px) {
     .trdesk{ display: none;}
-    .trmob{display:table-row;}
+    .trmob th{
+      text-align: center;
+    }
+    .trmob{display:table-row;
+    }
   }
   .tabel-container input[type="number"] {
     width: auto; /* Lățimea implicită pentru desktop */
@@ -125,4 +143,36 @@ padding: 4px;
       max-width: 30px; /* Max lățimea pentru dispozitive mobile */
     }
   }
+
+  /* Cautare aliment */
+
+  #pas .input-group-append { 
+    margin: 4px 10px 0 10px;
+}
+
+#pas {
+    margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 500px) {   
+  form .valorinutritionale_search {
+    width: 100%;
+  }
+  
+  #pas input {
+        width: 100%;
+    }
+    #pas form {
+      width: 100%;
+  }
+    #pas .input-group-append {
+      margin: auto;
+      text-align: center;
+      margin-top: 10px;
+    }
+    #pas button{
+      margin-top: 10px;
+    }
+}
+
   

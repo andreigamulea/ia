@@ -15,60 +15,31 @@
  */
  
  body {
- overflow-x: auto;
+ padding: 0 10px;
  width:100%;
  }
- .pagination a, .pagination span.current, .pagination span.gap {
-    float: left;
-    padding: 0 7px;
-    line-height: 38px;
-    text-decoration: none;
-    background-color: white;
-    border: 1px solid #DDD;
-    border-left-width: 0;
+ .rotate-landscape {
+    transform: rotate(-90deg) translate(-100%);
+    transform-origin: top left;
+    position: absolute;
+    width: 100vh;
+    height: 100vw;
+    overflow: auto;
+    background: white;
 }
 
-
-
-.pagination {
-    border-left: 1px solid #ddd;
-    .first{
-        padding : 0;
-        float: none;
-        border: none;
-    }
-    .prev {
-        padding : 0;
-        float: none;
-        border: none;
-    }
-    .page{
-        padding : 0;
-        float: none;
-        border: none;
-    }
-    .next{
-        padding : 0;
-        float: none;
-        border: none;
-    }
-    .last{
-        padding : 0;
-        float: none;
-        border: none;
+@media only screen and (min-width: 601px) {
+    .rotate-landscape {
+        transform: none;
+        position: static;
+        width: 100%;
+        height: auto;
     }
 }
-.tabel-container a:hover { background-color: rgb(238, 196, 144); } 
-.selected_values-value {
-    width: 30%;
-  }
-  
-  .form-inline input[type="checkbox"],
-.form-inline input[type="number"] {
-  display: inline-block;
-  vertical-align: middle;
-}
-.narrow-checkbox {
-    max-width: 10%;
-  }
-  
+ .pagination a{
+    padding: 0 10px;
+    color: #64025e;
+ }
+ .pagination{
+    justify-content: center;
+ }

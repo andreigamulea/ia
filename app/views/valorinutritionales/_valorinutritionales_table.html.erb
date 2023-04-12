@@ -1,11 +1,11 @@
 
-<section class="tabel-container">
+<section class="tabel-container .rotate-landscape">
 
 <div id="pas">
   <%= search_form_for @q do |f|%>
     <div style="width:100%;" class="form-group">
       <div class="input-group">
-        <%= f.text_field :aliment_cont, placeholder: "Aliment...", class: "form-control" %>
+        <%= f.text_field :aliment_cont, placeholder: "Cautare Aliment", class: "form-control" %>
         <div class="input-group-append">
          
           <%= f.submit 'Cauta', class: "btn btn-primary" %>
@@ -57,7 +57,7 @@
           <td><%= valorinutritionale.lipide %></td>
           <td><%= valorinutritionale.carbohidrati %></td>
           <td><%= valorinutritionale.fibre %></td>
-          <td>
+          <td class= "mw100";>
          
           <%= form_with(url: select_valorinutritionales_valorinutritionales_path, method: :post, remote: true, data: { turbo_action: "replace" }, id: "select-form-#{valorinutritionale.id}") do |form| %>
 
