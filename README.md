@@ -9,3 +9,5 @@ rails assets:precompile  pt server local
 
 setez Enviromentul: set RAILS_ENV=production      set RAILS_ENV=development
 git commit -m "merge 1 Cauta si 2 Reseteaza cautarea (la 2 se goleste campul, nu se face tabelul cu toate row dar merge bine) este no refresh"
+
+13.4.2023 git commit -m "root home/index redirectioneaza catre Log-in daca nu e logat design modern pt toate Devise"
