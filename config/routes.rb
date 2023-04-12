@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'authentication/login'
   get 'admin/index'
   put 'admin/update/:id', to: 'admin#update', as: 'update_admin'
   get 'admin/edit/:id', to: 'admin#edit', as: 'edit_admin'
@@ -60,6 +61,7 @@ Rails.application.routes.draw do
     passwords: 'devise/passwords',
     confirmations: 'devise/confirmations',
     unlocks: 'devise/unlocks'
+   
   }
 
 
@@ -75,4 +77,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
+  #devise_scope :user do
+    #root to: "devise/sessions#new"
+  #end
 end

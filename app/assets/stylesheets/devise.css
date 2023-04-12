@@ -1,0 +1,234 @@
+.login{
+    margin: 0 auto;
+    max-width: 1250px;
+
+}
+.login h1{
+    padding: 35px 0 35px 0;
+}
+.login * {
+    box-sizing: border-box;
+  }
+  
+  .login body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .login .login-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 35px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login h2 {
+    padding: 35px 0;
+    text-align: center;
+  }
+  
+  .login .field {
+    margin-bottom: 20px;
+  }
+  
+  .login label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .login input[type="email"],
+  .login input[type="password"],
+  .login input[type="checkbox"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .login .actions {
+    text-align: center;
+  }
+  
+  .login .actions input[type="submit"] {
+    background-color:#9025c0;
+    color: white;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .login .actions input[type="submit"]:hover{
+    background-color:#3c0056;
+  }
+  
+  .login .links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .login a {
+    text-decoration: none;
+    color: #9025c0;
+  }
+  
+  .login a:hover {
+    color: #9025c0;
+  }
+  /* ... restul stilurilor ... */
+
+
+.login .remember-me {
+    display: flex;
+    align-items: center;
+  }
+  
+  .login .remember-me label {
+    width: auto;
+    min-width: 110px;
+    padding-top: 7px;
+  }
+  
+  .login .remember-me input[type="checkbox"] {
+    margin-left: 5px;
+    height: 14px;
+    width: 14px;
+    vertical-align: middle;
+  }
+  
+/* Resetare stiluri */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.edituser {
+  width: 100%;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #f4f4f4;
+  border-radius: 5px;
+}
+
+.edituser h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.edituser .field {
+  margin-bottom: 15px;
+}
+
+.edituser label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.edituser input[type="email"],
+.edituser input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.edituser input[type="submit"] {
+  display: inline-block;
+  background: #9025c0;
+  color: #fff;
+  padding: 10px 45px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edituser input[type="submit"]:hover {
+  background: #3c0056;
+}
+
+.edituser i {
+  font-style: italic;
+  font-size: 14px;
+}
+
+.edituser em {
+  display: block;
+  font-style: italic;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.edituser h3 {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.edituser .button_to {
+  display: inline-block;
+}
+
+.edituser .button_to button {
+  background: #f00;
+  color: #fff;
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edituser .button_to button:hover {
+  background: #c00;
+}
+
+.edituser a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #333;
+}
+
+.edituser a:hover {
+  color: #555;
+}
+
+.inapoi {
+    display: inline-block;
+    background: #9025c0;
+    color: #fff;
+    padding: 10px 45px;
+    font-size: 14px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin: 25px 0 50px 0;
+  }
+  .inapoi a{
+    color: white;
+  }
+  
+  .inapoi:hover {
+    background: #3c0056;
+  }
+  

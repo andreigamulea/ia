@@ -1,1 +1,5 @@
-<h1 style="color:green;text-align:center">Ayurveda Romania</h1>
+<% if current_user.nil? %>
+  <script>
+    window.location.href = '<%= new_user_session_path %>';
+  </script>
+<% end %>

@@ -11,9 +11,7 @@
                         <img src="https://amnromania.ro/wp-content/uploads/2023/04/mbico2.png" width="60px" id="menuTogglerIconActive" style="display: none;" />
                     </div>
                     <ul class="nav-menu" id="navMenu">
-                        <li class="nav-item">
-                            <%= link_to 'Home', root_path%>
-                        </li>
+                       
                         <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1) %>  
                         <li class="nav-item">
                             <%= link_to 'Valori Nutritionale', valorinutritionales_path%>
@@ -36,7 +34,7 @@
                         <li class="nav-item has-submenu">
                             <a class="nav-link" href="#"> Manager</a>
                             <ul class="submenu">
-                              <li><%= link_to 'Valorinutritionale', valorinutritionales_path%></li>
+                              <li><%= link_to 'Valori Nutritionale', valorinutritionales_path%></li>
                               <li><%= link_to 'Lista Cursuri', listacursuris_path%></li>
                               <li><%= link_to 'Cursuri', cursuris_path%></li>
                               <li><%= link_to 'Lista Users', admin_index_path %></li>
@@ -46,12 +44,12 @@
                          <%end%>
                        
                         <%if user_signed_in?%>
-                            <li><%= link_to 'Sign Out', destroy_user_session_path, data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %></li>
-                            <li><%= link_to 'Edit Profile', edit_user_registration_path, class: "nav-link" %></li>
-                            <li>Salut <%=current_user.name%></li>
+                            <li><%= link_to 'Delogare', destroy_user_session_path, data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %></li>
+                            <li><%= link_to 'Cont', edit_user_registration_path, class: "nav-link" %></li>
+                           
                         <%else%>
                             <li><%= link_to 'Login', new_user_session_path %></li>
-                            <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+                            <li><%= link_to 'Creaza cont', new_user_registration_path %></li>
                          <%end%>
                           
                        

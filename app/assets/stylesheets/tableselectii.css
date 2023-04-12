@@ -62,7 +62,7 @@ padding: 4px;
 }
 
 .alimente-nutritionale {
-  font-size: 12px;
+  font-size: 32px;
   padding-bottom: 35px;
   padding-top: 10px;
   margin: 0 auto;
@@ -174,5 +174,11 @@ padding: 4px;
       margin-top: 10px;
     }
 }
+
+  .btnmobile {
+    margin-bottom: 20px;
+    width: 110px!important;
+
+  }
 
   

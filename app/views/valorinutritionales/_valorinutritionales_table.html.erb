@@ -1,4 +1,3 @@
-
 <section class="tabel-container .rotate-landscape">
 
 <div id="pas">
@@ -64,7 +63,7 @@
           
             <%= form.hidden_field :id, value: valorinutritionale.id %>
             <%= form.number_field :value, min: 0, max: 1000, step: 1, value: selected_value&.dig(:value) || 0 %>
-            <%= form.submit "Adaugă", class: "btn" %>
+            <%= form.submit "Adaugă", class: "btn"  %>
           <% end %>
 
           </td>
