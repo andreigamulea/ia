@@ -17,6 +17,12 @@ class User < ApplicationRecord
   def downcase_email
     self.email = email.downcase if email.present?
   end       
-
+  def full_message(attribute, message)
+    if attribute == :password_confirmation && message == I18n.t('activerecord.errors.messages.confirmation')
+      I18n.t('activerecord.errors.models.user.attributes.password_confirmation.custom_confirmation')
+    else
+      super
+    end
+  end
   
 end

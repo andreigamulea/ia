@@ -1,0 +1,20 @@
+ro:
+  errors:
+    messages:
+      not_saved: "nu a putut fi salvat"
+  activerecord:
+    errors:
+      messages:
+        too_short: "este prea scurtă (minim %{count} caractere)"
+        blank: "nu poate fi gol"
+        invalid: "este invalid"
+        confirmation: "nu se potrivește cu parola"
+      models:
+        user:
+          attributes:
+            email:
+              blank: "nu poate fi gol"
+              invalid: "este invalid"
+            password_confirmation:
+              custom_confirmation: "Parola de confirmare nu se potrivește cu parola"
+  # Adăugați aici alte mesaje de eroare personalizate

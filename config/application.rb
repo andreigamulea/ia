@@ -8,6 +8,8 @@ Bundler.require(*Rails.groups)
 
 module Ia
   class Application < Rails::Application
+    #config.i18n.default_locale = :ro
+
     # Initialize configuration defaults for originally generated Rails version.
     config.eager_load_paths << Rails.root.join('app', 'controllers', 'concerns')
     config.autoload_paths += Dir["#{config.root}/app/controllers/**/"]
