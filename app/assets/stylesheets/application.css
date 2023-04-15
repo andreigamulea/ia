@@ -32,6 +32,7 @@
 .firstpage a {
     text-decoration: none;
     color: #64025e;
+    text-decoration: underline;
 }
 
 .firstpage a:hover {
