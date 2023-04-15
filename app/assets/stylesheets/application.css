@@ -18,6 +18,32 @@
  padding: 0 10px;
  width:100%;
  }
+ .home {
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+.firstpage {
+    font-size: 2rem;
+    padding-top: 50px;
+    text-align: center;
+}
+
+.firstpage a {
+    text-decoration: none;
+    color: #64025e;
+}
+
+.firstpage a:hover {
+    color: #50024c;
+}
+
+@media (max-width: 768px) {
+    .firstpage {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+}
  .rotate-landscape {
     transform: rotate(-90deg) translate(-100%);
     transform-origin: top left;
