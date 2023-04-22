@@ -2,8 +2,8 @@
 <div class="jumbotron" style="background-color: #e9ecef;padding: 30px;margin: 40px;">
     
     
-    <%= link_to 'Copie Useri si asociere cu Nutritie', import_from_xlsx_cursantinutritie_gestionare_useri_cursuri_path, class: "btn btn-primary", method: :get %>
-    <%= link_to 'Sterge toate înregistrările din tabela User si Cursuri', stergecursntinutritie_gestionare_useri_cursuri_path,  class: "btn btn-primary" %>
+    <%= link_to 'Copie Useri,Cursuri asociere cu Nutritie si CursuriHistory', import_from_xlsx_cursantinutritie_gestionare_useri_cursuri_path, class: "btn btn-primary", method: :get %>
+    <%= link_to 'Sterge toate înregistrările din tabela User Cursuri si CursuriHistory', stergecursntinutritie_gestionare_useri_cursuri_path,  class: "btn btn-primary" %>
 <% if User.count > 0 %>
 <span style="color: green;">"Tabela User are:  <%= User.count %>
  inregistrari Tabela Cursuri are <%=Cursuri.count%> inregistrari Tabela CursuriHistory are <%=CursuriHistory.count%> inregistrari"</span>
