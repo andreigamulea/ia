@@ -1,43 +1,99 @@
-<h1>Edit User</h1>
-<%= form_with(model: [:admin, @user], url: update_admin_path(@user), method: :put) do |form| %>
+<div class="container">
+  <div class="row justify-content-left">
+    <div class="col-md-6">
+      <h1>Edit User <%= @user.name %></h1>
+      <%= form_with(model: [:admin, @user], url: update_admin_path(@user), method: :put, class: 'form-horizontal') do |form| %>
 
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, class: 'control-label col-sm-2' %>
+    <div class="col-sm-10">
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
   </div>
-  <div>
-    <%= form.label :email %>
-    <%= form.email_field :email %>
+  <div class="form-group">
+    <%= form.label :email, class: 'control-label col-sm-2' %>
+    <div class="col-sm-10">
+      <%= form.email_field :email, class: 'form-control' %>
+    </div>
   </div>
   <% if current_user && current_user.role == 1 %>
-    <div>
-      <%= form.label :role %>
-      <%= form.select :role, options_for_select([['User', 0], ['Admin', 1]], @user.role) %>
+    <div class="form-group">
+      <%= form.label :role, class: 'control-label col-sm-2' %>
+      <div class="col-sm-10">
+        <%= form.select :role, options_for_select([['User', 0], ['Admin', 1]], @user.role), {}, class: 'form-control' %>
+      </div>
     </div>
   <% end %>
-  <div>
-    <%= form.label :cursuri %>
-    <%= form.fields_for :cursuri do |curs_form| %>
-      <% Listacursuri.all.each do |lc| %>
-        <% curs = @user.cursuri.find { |curs| curs.listacursuri_id == lc.id } %>
-        <div>
-          <%= check_box_tag "user[cursuri][#{lc.id}][selected]", 1, curs.present? %>
-          <%= label_tag "user[cursuri][#{lc.id}][listacursuri_id]", lc.nume %>
-          <%= curs_form.hidden_field :listacursuri_id, value: lc.id %>
-          <div>
-            <%= label_tag "user[cursuri][#{lc.id}][datainceput]", "Data inceput" %>
-            <%= date_field_tag "user[cursuri][#{lc.id}][datainceput]", curs&.datainceput %>
+  <div class="form-group">
+    <%= form.label :cursuri, class: 'control-label col-sm-2' %>
+    <div class="col-sm-10">
+      <%= form.fields_for :cursuri do |curs_form| %>
+        <% Listacursuri.all.each do |lc| %>
+          <% curs = @user.cursuri.find { |curs| curs.listacursuri_id == lc.id } %>
+          <div class="checkbox">
+            <%= check_box_tag "user[cursuri][#{lc.id}][selected]", 1, curs.present? %>
+            <b><%= label_tag "user[cursuri][#{lc.id}][listacursuri_id]", lc.nume %></b>
+            <%= curs_form.hidden_field :listacursuri_id, value: lc.id %>
+            <div class="form-group">
+              <%= label_tag "user[cursuri][#{lc.id}][datainceput]", "Data inceput", class: 'control-label' %>
+              <%= date_field_tag "user[cursuri][#{lc.id}][datainceput]", curs&.datainceput, class: 'form-control' %>
+            </div>
+            <div class="form-group">
+              <%= label_tag "user[cursuri][#{lc.id}][datasfarsit]", "Data sfarsit", class: 'control-label' %>
+              <%= date_field_tag "user[cursuri][#{lc.id}][datasfarsit]", curs&.datasfarsit, class: 'form-control' %>
+            </div>
           </div>
-          <div>
-            <%= label_tag "user[cursuri][#{lc.id}][datasfarsit]", "Data sfarsit" %>
-            <%= date_field_tag "user[cursuri][#{lc.id}][datasfarsit]", curs&.datasfarsit %>
-          </div>
-        </div>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= form.submit class: 'btn btn-primary' %>
+    </div>
   </div>
 <% end %>
 
+      <h2>Istoric pentru <%= @user.name %></h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nume curs</th>
+            <th>Data inceput</th>
+            <th>Data sfarsit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @user.cursuri_history.each do |ch| %>
+            <tr>
+              <td><%= ch.id %></td>
+              <td><%= ch.listacursuri.nume %></td>
+              <td><%= ch.datainceput %></td>
+              <td><%= ch.datasfarsit %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-6">
+      <h2>Explicatie functionalitate:</h2>
+      <p>Se poate schimba "role" pentru User care poate fi "Admin" sau "User" </p>
+      <p>daca se bifeaza o casuta aceasta va permite acces nelimitat la acel curs sau limitat pana la datasfarsit</p>
+      <p>daca se debifeaza o casuta aceasta nu va permite sau nu va mai permite accesul la acel curs</p>
+      <p>In cazul in care o casuta  nebifata devine bifata sau o casuta bifata isi schimba cel putin una din date,
+          se va actualiza acest status in tabela Cursuri si in plus se va crea o inregistrare noua in tabela CursuriHistory
+           pentru a avea un istoric al fiecarui utilizator</p>
+      <p>Daca sunt mai multe casute in situatia de mai sus se va crea pentru fiecare o inregistrare noua in
+         tabela CursuriHistory</p>
+      <p>In tabela Cursuri fiecare user poate avea  pentru fiecare curs doar o singura inregistrare sau niciuna.
+         Acea inregistrare spune daca userul are acces la respectivul curs daca casuta e bifata si limita de acces 
+         care este in intervalul dintre data de inceput si data de sfarsit. Daca casuta e bifata si nu sunt trecute
+          datele, userul are acces permanent</p>
+      <p>In tabela CursuriHistory - Istoric este trecut tot istoricul pt acel User  - daca userul a avut acces de 3 ori 
+         la acelasi curs in intervale diferite vor fi 3 inregistrari si la fel pentru orice curs</p>           
+      <%= link_to "Back to Lista Useri", admin_index_path, class: "btn btn-primary" %>
+
+    </div>
+  </div>
+</div>

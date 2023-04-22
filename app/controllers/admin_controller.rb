@@ -4,7 +4,8 @@ class AdminController < ApplicationController
   before_action :set_user, only: [:edit, :update]
 
   def index
-    @users = User.all
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true)
   end
     
   def edit
@@ -64,12 +65,18 @@ class AdminController < ApplicationController
           end
         end
   
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(@user, partial: "users/user", locals: { user: @user }) }
-        format.html { redirect_to admin_edit_path(@user), notice: "User was successfully updated." }
+        format.js
+        #format.html { redirect_to edit_admin_user_path(@user), notice: "User was successfully updated." }
+        format.html { redirect_to update_admin_path(@user), notice: "User was successfully updated." }
+
+
       else
-        format.turbo_stream { render turbo_stream: turbo_stream.replace(@user, partial: "users/user", locals: { user: @user }) }
+        format.js
         format.html { render :edit, status: :unprocessable_entity }
       end
+
+      
+
     end
   end
   
