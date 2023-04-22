@@ -12,11 +12,11 @@ class AdminController < ApplicationController
 
   def update
     respond_to do |format|
-      if @user.update(user_params)
+      if @user.update(user_params.except(:cursuri))
         listacursuris = Listacursuri.all
   
-        # Debugging: afișează informațiile cursurilor găsite
-        puts "Found courses: #{listacursuris.to_a}"
+        @user_cursuri_original = @user.cursuri.map { |curs| [curs.listacursuri_id, [curs.datainceput, curs.datasfarsit]] }.to_h
+  
   
         @user.cursuri.destroy_all
         listacursuris.each do |lc|
@@ -29,6 +29,41 @@ class AdminController < ApplicationController
             curs.save
           end
         end
+  
+        @user_cursuri_nou = @user.cursuri.map { |curs| [curs.listacursuri_id, [curs.datainceput, curs.datasfarsit]] }.to_h
+  
+        @user_cursuri_nou.each do |listacursuri_id, (datainceput_nou, datasfarsit_nou)|
+          if @user_cursuri_original[listacursuri_id].present?
+            datainceput_vechi, datasfarsit_vechi = @user_cursuri_original[listacursuri_id]
+          else
+            datainceput_vechi, datasfarsit_vechi = nil, nil
+          end
+        
+          puts "Checking Listacursuri ID: #{listacursuri_id}"
+          puts "Original datainceput: #{datainceput_vechi}, Original datasfarsit: #{datasfarsit_vechi}"
+          puts "New datainceput: #{datainceput_nou}, New datasfarsit: #{datasfarsit_nou}"
+        
+          if @user_cursuri_original[listacursuri_id] != [datainceput_nou, datasfarsit_nou] || (datainceput_vechi.present? && datainceput_nou.blank?) || (datasfarsit_vechi.present? && datasfarsit_nou.blank?)
+            if params[:user][:cursuri][listacursuri_id.to_s][:selected] == '1'
+              puts "Difference found. Creating a new entry in CursuriHistory."
+              curs = @user.cursuri.find_by(listacursuri_id: listacursuri_id)
+              cursuri_history = CursuriHistory.new(
+                user_id: @user.id,
+                listacursuri_id: listacursuri_id,
+                cursuri_id: curs.id,
+                datainceput: datainceput_nou,
+                datasfarsit: datasfarsit_nou
+              )
+          
+              if cursuri_history.valid?
+                cursuri_history.save
+              else
+                puts "CursuriHistory is not valid. Errors: #{cursuri_history.errors.full_messages}"
+              end
+            end
+          end
+        end
+  
         format.turbo_stream { render turbo_stream: turbo_stream.replace(@user, partial: "users/user", locals: { user: @user }) }
         format.html { redirect_to admin_edit_path(@user), notice: "User was successfully updated." }
       else
@@ -37,6 +72,8 @@ class AdminController < ApplicationController
       end
     end
   end
+  
+  
   
   
   
@@ -55,7 +92,11 @@ class AdminController < ApplicationController
     @user = User.find(params[:id])
   end
 
+ 
   def user_params
-    params.require(:user).permit(:name, :email, :role)
+    params.require(:user).permit(:name, :email, :role, cursuri: {})
   end
+  
+  
+  
 end
