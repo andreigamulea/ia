@@ -11,12 +11,35 @@ class AdminController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
-      redirect_to admin_index_path, notice: "User updated successfully."
-    else
-      render :edit
+    respond_to do |format|
+      if @user.update(user_params)
+        listacursuris = Listacursuri.all
+  
+        # Debugging: afișează informațiile cursurilor găsite
+        puts "Found courses: #{listacursuris.to_a}"
+  
+        @user.cursuri.destroy_all
+        listacursuris.each do |lc|
+          if params[:user][:cursuri][lc.id.to_s].present? && params[:user][:cursuri][lc.id.to_s][:selected] == '1'
+            curs = @user.cursuri.new(
+              listacursuri: lc,
+              datainceput: params[:user][:cursuri][lc.id.to_s][:datainceput],
+              datasfarsit: params[:user][:cursuri][lc.id.to_s][:datasfarsit]
+            )
+            curs.save
+          end
+        end
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@user, partial: "users/user", locals: { user: @user }) }
+        format.html { redirect_to admin_edit_path(@user), notice: "User was successfully updated." }
+      else
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@user, partial: "users/user", locals: { user: @user }) }
+        format.html { render :edit, status: :unprocessable_entity }
+      end
     end
   end
+  
+  
+  
   
 
   private

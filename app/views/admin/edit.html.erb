@@ -1,7 +1,6 @@
 <h1>Edit User</h1>
 <%= form_with(model: [:admin, @user], url: update_admin_path(@user), method: :put) do |form| %>
 
-
   <div>
     <%= form.label :name %>
     <%= form.text_field :name %>
@@ -17,6 +16,27 @@
     </div>
   <% end %>
   <div>
+    <%= form.label :cursuri %>
+    <%= form.fields_for :cursuri do |curs_form| %>
+      <% Listacursuri.all.each do |lc| %>
+        <% curs = @user.cursuri.find { |curs| curs.listacursuri_id == lc.id } %>
+        <div>
+          <%= check_box_tag "user[cursuri][#{lc.id}][selected]", 1, curs.present? %>
+          <%= label_tag "user[cursuri][#{lc.id}][listacursuri_id]", lc.nume %>
+          <%= curs_form.hidden_field :listacursuri_id, value: lc.id %>
+          <div>
+            <%= label_tag "user[cursuri][#{lc.id}][datainceput]", "Data inceput" %>
+            <%= date_field_tag "user[cursuri][#{lc.id}][datainceput]", curs&.datainceput %>
+          </div>
+          <div>
+            <%= label_tag "user[cursuri][#{lc.id}][datasfarsit]", "Data sfarsit" %>
+            <%= date_field_tag "user[cursuri][#{lc.id}][datasfarsit]", curs&.datasfarsit %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div>
     <%= form.submit %>
   </div>
-<% end %> 
+<% end %>

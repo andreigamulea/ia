@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_07_090243) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_20_200242) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cursuri_history", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "listacursuri_id", null: false
+    t.integer "cursuri_id", null: false
+    t.date "datainceput"
+    t.date "datasfarsit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["listacursuri_id"], name: "index_cursuri_history_on_listacursuri_id"
+    t.index ["user_id"], name: "index_cursuri_history_on_user_id"
+  end
 
   create_table "cursuris", force: :cascade do |t|
     t.date "datainceput"
@@ -208,4 +220,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_07_090243) do
     t.index ["proteine"], name: "index_valorinutritionales_on_proteine"
   end
 
+  add_foreign_key "cursuri_history", "listacursuris"
+  add_foreign_key "cursuri_history", "users"
 end
