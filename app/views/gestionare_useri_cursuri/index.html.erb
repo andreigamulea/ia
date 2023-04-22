@@ -5,10 +5,12 @@
     <%= link_to 'Copie Useri si asociere cu Nutritie', import_from_xlsx_cursantinutritie_gestionare_useri_cursuri_path, class: "btn btn-primary", method: :get %>
     <%= link_to 'Sterge toate înregistrările din tabela User si Cursuri', stergecursntinutritie_gestionare_useri_cursuri_path,  class: "btn btn-primary" %>
 <% if User.count > 0 %>
-<span style="color: green;">"Tabela User are:  <%= User.count %> inregistrari Tabela Cursuri are <%=Cursuri.count%> inregistrari"</span>
+<span style="color: green;">"Tabela User are:  <%= User.count %>
+ inregistrari Tabela Cursuri are <%=Cursuri.count%> inregistrari Tabela CursuriHistory are <%=CursuriHistory.count%> inregistrari"</span>
 <% else %>
 <span style="color: red;">"Nu are inregistrari"</span>
 <% end %><br>
+
 
 </div>
 
