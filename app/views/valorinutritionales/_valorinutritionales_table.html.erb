@@ -25,7 +25,7 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr class= "trdesk">
-        <th>Nr.</th>
+        <th>Info</th>
         <th>Aliment</th>
         <th>Calorii</th>
         <th>Proteine</th>
@@ -35,7 +35,7 @@
         <th>Cantitate(g)</th>
       </tr>
       <tr  class= "trmob">
-        <th>Nr.</th>
+        <th>Info</th>
         <th>Aliment</th>
         <th>Cal.</th>
         <th>Prot.</th>
@@ -50,7 +50,7 @@
         <% selected_value = session[:selected_values]&.find { |v| v[:id] == valorinutritionale.id.to_s } %>
         <tr data-observatii="<%= valorinutritionale.observatii %>">
 
-          <td><%= valorinutritionale.cod %></td>
+          <td style= "color: green;text-align: center;text-decoration:underline;font-style: italic;font-weight: bold;">i</td>
           <td><%= valorinutritionale.aliment %></td>
           <td><%= valorinutritionale.calorii %></td>
           <td><%= valorinutritionale.proteine %></td>
@@ -85,5 +85,6 @@
 
 </section>
 <%= javascript_include_tag "tooltip", "data-turbo-track": "reload" %>
+
 
 
