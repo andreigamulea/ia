@@ -23,7 +23,7 @@ function initializeTooltips() {
     row.appendChild(tooltip);
 
     const nrCell = row.cells[0];
-
+    nrCell.style.userSelect = "none";
     function showTooltip(e) {
       const tableRect = row.closest('table').getBoundingClientRect();
       const tooltipWidth = tooltip.getBoundingClientRect().width;
