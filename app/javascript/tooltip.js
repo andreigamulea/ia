@@ -4,7 +4,7 @@ function initializeTooltips() {
   console.log("Initializing tooltips");
 
    const tableRows = document.querySelectorAll("tbody tr:not(.processed)");
-
+   
   tableRows.forEach(row => {
     row.classList.add("processed");
     const tooltip = document.createElement("span");
@@ -43,14 +43,34 @@ function initializeTooltips() {
       tooltip.style.display = "none";
     }
 
+    // Adaugă un stadiu vizibil pentru tooltip
+    let tooltipVisible = false;
+        
+    function toggleTooltip(e) {
+      if (tooltipVisible) {
+        hideTooltip();
+        tooltipVisible = false;
+      } else {
+        showTooltip(e);
+        tooltipVisible = true;
+      }
+    }
+
+ 
+
+
+
     nrCell.addEventListener("mouseenter", showTooltip);
     nrCell.addEventListener("mousemove", showTooltip);
     nrCell.addEventListener("mouseleave", hideTooltip);
 
-    // Pentru dispozitive mobile
-    nrCell.addEventListener("touchstart", showTooltip);
-    nrCell.addEventListener("touchmove", showTooltip);
-    nrCell.addEventListener("touchend", hideTooltip);
+    
+
+    // Utilizează noua funcție de comutare pentru evenimentul "touchstart"
+    nrCell.addEventListener("touchstart", toggleTooltip, { passive: true });
+    nrCell.addEventListener("touchmove", showTooltip, { passive: true });
+
+
   });
 }
 
