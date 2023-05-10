@@ -74,11 +74,14 @@
                 position: absolute;
                 top: 100%;
                 left: -70px;
-                background: linear-gradient(to bottom, white, #9025c02b);
+                background-color:#9025c0;
                 border-bottom: 1px solid #ccc;
                 padding: 10px;
                 z-index: 1000;
                 border-radius: 10px;
+            }
+            .submenu a{
+                color:white;
             }
             .submenu li {
                 list-style: none;

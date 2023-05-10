@@ -14,8 +14,23 @@
                        
                         <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1) %>  
                         <li class="nav-item">
-                            <%= link_to 'Valori Nutritionale', valorinutritionales_path%>
-                        </li> 
+                            <%= link_to 'Valori Nutritionale', valorinutritionales_path, id: 'valorinutritionales_link' %>
+                        </li>
+
+                        <script>
+                            document.addEventListener('turbo:load', function() {
+                            const valorinutritionalesLink = document.getElementById('valorinutritionales_link');
+
+                            if (valorinutritionalesLink) {
+                                valorinutritionalesLink.addEventListener('click', function(event) {
+                                event.preventDefault();
+                                window.location.href = '<%= valorinutritionales_path %>';
+                                });
+                            }
+                            });
+                        </script>
+
+
                         <%end%>
                         <% if current_user && current_user.role == 1 %>  
                         <li class="nav-item has-submenu">
@@ -57,3 +72,10 @@
                 </nav>
             </div>
         </header>
+
+<script>
+  document.getElementById('valorinutritionales_link').addEventListener('click', function(event) {
+    event.preventDefault();
+    window.location.href = '<%= valorinutritionales_path %>';
+  });
+</script>

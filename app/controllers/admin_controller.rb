@@ -1,12 +1,56 @@
 class AdminController < ApplicationController
   before_action :authenticate_user!, only: %i[index edit update]
-  before_action :require_admin, only: %i[index edit update]
+  before_action :require_admin, only: %i[index new edit update create]
   before_action :set_user, only: [:edit, :update]
 
   def index
     @q = User.ransack(params[:q])
-    @users = @q.result(distinct: true)
+    @users = @q.result.page(params[:page]).per(15)
+
+   
   end
+  def new #se creaza un utilizator nou
+    @user = User.new
+  end
+  
+  def create #se inregistreaza in tabela utilizatorul nou
+    @user = User.new(user_params.except(:cursuri))
+  
+    if @user.save
+      listacursuris = Listacursuri.all
+  
+      listacursuris.each do |lc|
+        if params[:user][:cursuri][lc.id.to_s].present? && params[:user][:cursuri][lc.id.to_s][:selected] == '1'
+          curs = @user.cursuri.new(
+            listacursuri: lc,
+            datainceput: params[:user][:cursuri][lc.id.to_s][:datainceput],
+            datasfarsit: params[:user][:cursuri][lc.id.to_s][:datasfarsit]
+          )
+          curs.save
+  
+          # Creează o înregistrare nouă în CursuriHistory
+          cursuri_history = CursuriHistory.new(
+            user_id: @user.id,
+            listacursuri_id: lc.id,
+            cursuri_id: curs.id,
+            datainceput: curs.datainceput,
+            datasfarsit: curs.datasfarsit
+          )
+  
+          if cursuri_history.valid?
+            cursuri_history.save
+          else
+            puts "CursuriHistory is not valid. Errors: #{cursuri_history.errors.full_messages}"
+          end
+        end
+      end
+  
+      redirect_to admin_index_path, notice: "User was successfully created."
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+  
     
   def edit
   end
@@ -79,12 +123,7 @@ class AdminController < ApplicationController
 
     end
   end
-  
-  
-  
-  
-  
-  
+    
 
   private
 
@@ -101,8 +140,9 @@ class AdminController < ApplicationController
 
  
   def user_params
-    params.require(:user).permit(:name, :email, :role, cursuri: {})
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :active, cursuri: {})
   end
+  
   
   
   

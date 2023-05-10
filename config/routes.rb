@@ -3,6 +3,11 @@ Rails.application.routes.draw do
   get 'admin/index'
   put 'admin/update/:id', to: 'admin#update', as: 'update_admin'
   get 'admin/edit/:id', to: 'admin#edit', as: 'edit_admin'
+  get 'admin/new', to: 'admin#new', as: 'new_admin'
+  post 'admin/create', to: 'admin#create', as: 'create_admin'
+  
+
+  
   
 
   resources :valorinutritionales, only: [:index], path: 'valori-nutritionale' do
@@ -63,7 +68,13 @@ Rails.application.routes.draw do
     unlocks: 'devise/unlocks'
    
   }
-
+ 
+  # config/routes.rb
+  resources :users, only: [] do
+    member do
+      put :set_inactive
+    end
+  end
 
   
   resources :srota

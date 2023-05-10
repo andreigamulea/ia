@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :cursuri
   has_many :listacursuri, through: :cursuri
   has_many :cursuri_history
+  attribute :active, :boolean, default: true
   def admin?
     # Verifică dacă rolul este 1 (admin)
     role == 1

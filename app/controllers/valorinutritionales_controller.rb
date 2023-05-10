@@ -7,8 +7,10 @@ class ValorinutritionalesController < ApplicationController
   ## GET /valorinutritionales or /valorinutritionales.json
   
   def index
+    @page_title = "Valori Nutritionale"
     @q = Valorinutritionale.ransack(params[:q])
-    @valorinutritionales = @q.result.page(params[:page]).per(10)
+    @valorinutritionales = @q.result.order(:id).page(params[:page]).per(10)
+
     #@valorinutritionales = Valorinutritionale.page(params[:page]).per(3)
     @selected_valorinutritionales = session[:selected_values]&.map { |v| @valorinutritionales.find_by(id: v[:id]) }&.compact || []
   
@@ -272,6 +274,7 @@ class ValorinutritionalesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def valorinutritionale_params
-      params.require(:valorinutritionale).permit(:cod, :aliment, :calorii, :proteine, :lipide, :carbohidrati, :fibre)
+      params.require(:valorinutritionale).permit(:cod, :aliment, :calorii, :proteine, :lipide, :carbohidrati, :fibre, :observatii)
     end
+    
 end

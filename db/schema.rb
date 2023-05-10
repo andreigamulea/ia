@@ -10,18 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_20_200242) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_26_121235) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "cursuri_history", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.bigint "listacursuri_id", null: false
     t.integer "cursuri_id", null: false
     t.date "datainceput"
     t.date "datasfarsit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
+    t.text "observatii"
     t.index ["listacursuri_id"], name: "index_cursuri_history_on_listacursuri_id"
     t.index ["user_id"], name: "index_cursuri_history_on_user_id"
   end
@@ -185,6 +187,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_200242) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_unhappies", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "name"
+    t.string "email"
+    t.integer "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -195,6 +206,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_200242) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -211,6 +223,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_200242) do
     t.float "fibre"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "observatii"
     t.index ["aliment"], name: "index_valorinutritionales_on_aliment"
     t.index ["calorii"], name: "index_valorinutritionales_on_calorii"
     t.index ["carbohidrati"], name: "index_valorinutritionales_on_carbohidrati"
@@ -221,5 +234,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_200242) do
   end
 
   add_foreign_key "cursuri_history", "listacursuris"
-  add_foreign_key "cursuri_history", "users"
+  add_foreign_key "cursuri_history", "users", on_delete: :nullify
 end
