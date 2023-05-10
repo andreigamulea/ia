@@ -45,8 +45,15 @@ function initializeTooltips() {
 
     // Adaugă un stadiu vizibil pentru tooltip
     let tooltipVisible = false;
-        
+    
     function toggleTooltip(e) {
+      // Anulăm orice selecție de text
+      if (window.getSelection) {
+        window.getSelection().removeAllRanges();
+      } else if (document.selection) {
+        document.selection.empty();
+      }
+      
       if (tooltipVisible) {
         hideTooltip();
         tooltipVisible = false;
@@ -56,17 +63,10 @@ function initializeTooltips() {
       }
     }
 
- 
-
-
-
     nrCell.addEventListener("mouseenter", showTooltip);
     nrCell.addEventListener("mousemove", showTooltip);
     nrCell.addEventListener("mouseleave", hideTooltip);
 
-    
-
-    // Utilizează noua funcție de comutare pentru evenimentul "touchstart"
     nrCell.addEventListener("touchstart", toggleTooltip, { passive: true });
     nrCell.addEventListener("touchmove", showTooltip, { passive: true });
 
