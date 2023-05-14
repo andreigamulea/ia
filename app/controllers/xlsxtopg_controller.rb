@@ -529,6 +529,9 @@ def preluaredate8 #valorinutritionale
     end  
   
 end
+def preluaredate9 #valorinutritionale update la campul observatii
+  Valorinutritionale.update_all(observatii: 'Informatiile din aceasta aplicatie sunt cele oferite public de catre producator')
+end  
 ######################################
   def sterge_inregistrari
     Plante.destroy_all
