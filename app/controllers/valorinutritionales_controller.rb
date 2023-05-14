@@ -10,6 +10,7 @@ class ValorinutritionalesController < ApplicationController
     @page_title = "Valori Nutritionale"
     @q = Valorinutritionale.ransack(params[:q])
     @valorinutritionales = @q.result.order(:id).page(params[:page]).per(10)
+    @nrpag=@valorinutritionales.total_count
 
     #@valorinutritionales = Valorinutritionale.page(params[:page]).per(3)
     @selected_valorinutritionales = session[:selected_values]&.map { |v| @valorinutritionales.find_by(id: v[:id]) }&.compact || []

@@ -18,10 +18,10 @@
 
 
 <%= turbo_frame_tag "valorinutritionales_table" do %>
-
-<h2 class="valori-nutritionale">Valori Nutriționale</h2>
-
-
+<div style="overflow: auto;">
+  <span style= "font-size: 30px;font-family: Times New Roman, Times, serif;font-weight: bold;float: left;">Valori Nutriționale</span>
+  <span style= "float: right;">Total <%=Valorinutritionale.count%> produse</span>
+</div>
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr class= "trdesk">
@@ -78,7 +78,14 @@
  
 
 <% end %>
-<%= paginate valorinutritionales, data: { turbo_action: "replace", turbo_frame: "valorinutritionales-page" } %>
+<div style="overflow: auto;">
+  <span style= "padding-left:50%; float: left;"><%= paginate valorinutritionales, data: { turbo_action: "replace", turbo_frame: "valorinutritionales-page",
+             class: "pagina"  } %></span>
+  <span id="pagina-curenta" style= "float: right;">Pagina <%= params[:page] || 1 %> din <%= @nrpag/10+1%></span>
+  
+  
+</div> 
+
 <%= turbo_stream.update "tooltip_update" do %>
   <%= turbo_stream_action_tag "replace", target: "tooltip_update" %>
 <% end %>
@@ -86,5 +93,20 @@
 </section>
 <%= javascript_include_tag "tooltip", "data-turbo-track": "reload" %>
 
+<script>
+function addPaginationClickHandlers() {
+  const pagini = document.querySelectorAll('.pagination a');
+  const paginaCurenta = document.querySelector('#pagina-curenta');
+  console.log(pagini)
+  pagini.forEach(pagina => {
+    pagina.addEventListener('click', () => {
+      const numarPagina = pagina.innerText.trim();
+      paginaCurenta.innerText = numarPagina;
+    });
+  });
+}
+
+addPaginationClickHandlers();
+</script>
 
 

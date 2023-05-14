@@ -73,6 +73,8 @@
         <thead>
           <tr>
             <th>Id</th>
+            <th>Modificat de</th>
+            <th>La data de</th>
             <th>Nume curs</th>
             <th>Data inceput</th>
             <th>Data sfarsit</th>
@@ -82,6 +84,8 @@
           <% @user.cursuri_history.each do |ch| %>
             <tr>
               <td><%= ch.id %></td>
+              <td><%=current_user.name %></td>
+              <td><%=ch.listacursuri.created_at.strftime('%d-%m-%Y')%></td>
               <td><%= ch.listacursuri.nume %></td>
               <td><%= ch.datainceput %></td>
               <td><%= ch.datasfarsit %></td>

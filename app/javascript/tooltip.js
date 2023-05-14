@@ -43,7 +43,7 @@ function initializeTooltips() {
       tooltip.style.display = "none";
     }
 
-    // Adaugă un stadiu vizibil pentru tooltipp
+    // Adaugă un stadiu vizibil pentru tooltip
     let tooltipVisible = false;
     
     function toggleTooltip(e) {
