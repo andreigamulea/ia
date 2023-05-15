@@ -1,0 +1,26 @@
+<h1>Contact</h1>
+
+<% if flash[:error] %>
+  <div class="alert alert-danger">
+    <%= flash[:error] %>
+  </div>
+<% end %>
+
+<%= form_with(url: contact_path, method: :post) do |form| %>
+  <div class="form-group">
+    <%= form.label :name, "Nume" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :email, "Email" %>
+    <%= form.email_field :email, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :message, "Mesaj" %>
+    <%= form.text_area :message, class: "form-control" %>
+  </div>
+
+  <%= form.submit "Trimite", class: "btn btn-primary" %>
+<% end %>

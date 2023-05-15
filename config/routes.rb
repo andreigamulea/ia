@@ -30,6 +30,8 @@ Rails.application.routes.draw do
 
   
   get 'home/index'
+  get '/contact', to: 'home#contact'
+  post '/contact', to: 'home#contact'
   get 'xlsxtopg/index'
   get 'gestionare_useri_cursuri/index'
   get '/gestionare_useri_cursuri/import_from_xlsx_cursantinutritie', to: 'gestionare_useri_cursuri#import_from_xlsx_cursantinutritie', as: 'import_from_xlsx_cursantinutritie_gestionare_useri_cursuri'

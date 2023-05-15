@@ -40,6 +40,17 @@
     </head>
 
   <body> 
+  <% if flash[:notice].present? %>
+      <div class="notice">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <% if flash[:error].present? %>
+      <div class="error">
+        <%= flash[:error] %>
+      </div>
+    <% end %>
   <%= render 'layouts/header' %>  
    
     <%= yield %>
