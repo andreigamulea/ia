@@ -58,7 +58,7 @@ class PaginisitesController < ApplicationController
   end
   def userilogati
     # Încarcăm toate înregistrările din UserPaginisite unde numele paginii este 'Login'
-    @user_paginisite = UserPaginisite.includes(:user, :paginisite).where(paginisites: { nume: 'Login' })
+    @user_paginisite = UserPaginisite.includes(:user, :paginisite).where(paginisites: { nume: 'Login' }).order('user_paginisites.created_at DESC')
   
     # Acum @user_paginisite conține toate înregistrările UserPaginisite unde numele paginii este 'Login', împreună cu detaliile corespunzătoare ale user-ilor și ale paginilor.
   end
