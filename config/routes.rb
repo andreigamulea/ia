@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :paginisites
+  get 'userilogati', to: 'paginisites#userilogati'
   get 'authentication/login'
   get 'admin/index'
   put 'admin/update/:id', to: 'admin#update', as: 'update_admin'

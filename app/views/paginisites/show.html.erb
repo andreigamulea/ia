@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @paginisite %>
+
+<div>
+  <%= link_to "Edit this paginisite", edit_paginisite_path(@paginisite) %> |
+  <%= link_to "Back to paginisites", paginisites_path %>
+
+  <%= button_to "Destroy this paginisite", @paginisite, method: :delete %>
+</div>

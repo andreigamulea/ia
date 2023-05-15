@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Paginisites</h1>
+
+<div id="paginisites">
+  <% @paginisites.each do |paginisite| %>
+    <%= render paginisite %>
+    <p>
+      <%= link_to "Show this paginisite", paginisite %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New paginisite", new_paginisite_path %>

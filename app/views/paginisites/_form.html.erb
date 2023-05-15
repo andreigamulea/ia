@@ -1,0 +1,22 @@
+<%= form_with(model: paginisite) do |form| %>
+  <% if paginisite.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(paginisite.errors.count, "error") %> prohibited this paginisite from being saved:</h2>
+
+      <ul>
+        <% paginisite.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :nume, style: "display: block" %>
+    <%= form.text_field :nume %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

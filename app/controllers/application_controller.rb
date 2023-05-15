@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
     before_action :configure_permitted_parameters, if: :devise_controller?
     #before_action :authenticate_user!
     before_action :check_user_active
-
+    skip_before_action :check_user_active, only: [:after_sign_in_path_for]
 
        
     protected
@@ -23,5 +23,20 @@ class ApplicationController < ActionController::Base
           flash[:alert] = "Your account has been deactivated. Please contact support if you have any questions."
           redirect_to root_path
         end
+      end
+      def after_sign_in_path_for(resource)
+        Rails.logger.info "In after_sign_in_path_for, user id: #{resource.id}"
+        pagina = Paginisite.find_by(nume: "Login")
+        if pagina
+          user_pagina = UserPaginisite.new(user_id: resource.id, paginisite_id: pagina.id)
+          if user_pagina.save
+            Rails.logger.info "Created UserPaginisite record for user id: #{resource.id} and pagina id: #{pagina.id}"
+          else
+            Rails.logger.error "Failed to create UserPaginisite record: #{user_pagina.errors.full_messages.join(", ")}"
+          end
+        else
+          Rails.logger.info "Pagina with name 'Login' not found"
+        end
+        super
       end
 end

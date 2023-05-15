@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_26_121235) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_15_004537) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_121235) do
     t.index ["idx"], name: "index_listaproprietatis_on_idx"
     t.index ["proprietateter"], name: "index_listaproprietatis_on_proprietateter"
     t.index ["srota"], name: "index_listaproprietatis_on_srota"
+  end
+
+  create_table "paginisites", force: :cascade do |t|
+    t.string "nume"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "plante_partis", force: :cascade do |t|
@@ -187,6 +193,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_121235) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_paginisites", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "paginisite_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["paginisite_id"], name: "index_user_paginisites_on_paginisite_id"
+    t.index ["user_id"], name: "index_user_paginisites_on_user_id"
+  end
+
   create_table "user_unhappies", force: :cascade do |t|
     t.integer "user_id"
     t.string "name"
@@ -235,4 +250,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_121235) do
 
   add_foreign_key "cursuri_history", "listacursuris"
   add_foreign_key "cursuri_history", "users", on_delete: :nullify
+  add_foreign_key "user_paginisites", "paginisites"
+  add_foreign_key "user_paginisites", "users"
 end

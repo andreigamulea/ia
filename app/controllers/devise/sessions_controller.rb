@@ -1,4 +1,6 @@
 class Devise::SessionsController < ::Devise::SessionsController
+ 
+
   class Responder < ActionController::Responder
     def to_turbo_stream
       controller.render(options.merge(formats: :html))
@@ -15,4 +17,7 @@ class Devise::SessionsController < ::Devise::SessionsController
 
   self.responder = Responder
   respond_to :html, :turbo_stream
+
+  
+  
 end

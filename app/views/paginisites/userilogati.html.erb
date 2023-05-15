@@ -1,0 +1,22 @@
+<h1>Useri care s-au logat</h1>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Nume</th>
+      <th>Email</th>
+      <th>Pagina accesata</th>
+      <th>Data si ora</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @user_paginisite.each do |up| %>
+      <tr>
+        <td><%= up.user.name %></td>
+        <td><%= up.user.email %></td>
+        <td><%= up.paginisite.nume %></td>
+        <td><%= up.created_at.in_time_zone('Eastern Time (US & Canada)').advance(hours: 7).strftime('%d-%m-%Y %H:%M:%S') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
