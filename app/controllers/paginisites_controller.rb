@@ -58,10 +58,28 @@ class PaginisitesController < ApplicationController
   end
   def userilogati
     # Încarcăm toate înregistrările din UserPaginisite unde numele paginii este 'Login'
-    @user_paginisite = UserPaginisite.includes(:user, :paginisite).where(paginisites: { nume: 'Login' }).order('user_paginisites.created_at DESC')
-  
+    @q = UserPaginisite.includes(:user, :paginisite).
+    where(paginisites: { nume: 'Login' }).order('user_paginisites.created_at DESC').ransack(params[:q])
+    @user_paginisite = @q.result.order(:id).page(params[:page]).per(15)
     # Acum @user_paginisite conține toate înregistrările UserPaginisite unde numele paginii este 'Login', împreună cu detaliile corespunzătoare ale user-ilor și ale paginilor.
   end
+  def useriunici_logati
+    # Folosim SQL direct pentru a putea folosi 'DISTINCT ON'
+    @q = UserPaginisite.includes(:user, :paginisite)
+                                     .where(paginisites: { nume: 'Login' })
+                                     .order('users.email, user_paginisites.created_at DESC')
+                                     .select('DISTINCT ON (users.email) user_paginisites.*').ransack(params[:q])
+
+    @user_paginisite = @q.result.order(:id).page(params[:page]).per(15)
+
+  
+    # Acum @user_paginisite conține înregistrările unice în funcție de email ale UserPaginisite unde numele paginii este 'Login', împreună cu cea mai recentă dată de creare pentru fiecare utilizator.
+  end
+  
+  
+  
+    
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.
