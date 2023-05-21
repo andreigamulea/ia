@@ -57,24 +57,36 @@ class PaginisitesController < ApplicationController
     end
   end
   def userilogati
-    # Încarcăm toate înregistrările din UserPaginisite unde numele paginii este 'Login'
-    @q = UserPaginisite.includes(:user, :paginisite).
-    where(paginisites: { nume: 'Login' }).order('user_paginisites.created_at DESC').ransack(params[:q])
-    @user_paginisite = @q.result.order(:id).page(params[:page]).per(15)
-    # Acum @user_paginisite conține toate înregistrările UserPaginisite unde numele paginii este 'Login', împreună cu detaliile corespunzătoare ale user-ilor și ale paginilor.
+    search_term = params[:search]
+    @q = UserPaginisite.includes(:user, :paginisite).where(paginisites: { nume: 'Login' }).ransack(
+      user_email_cont: search_term, 
+      user_name_cont: search_term, 
+      m: 'or'
+    )
+    @user_paginisite = @q.result.order('user_paginisites.created_at DESC').page(params[:page]).per(15)
   end
-  def useriunici_logati
-    # Folosim SQL direct pentru a putea folosi 'DISTINCT ON'
-    @q = UserPaginisite.includes(:user, :paginisite)
-                                     .where(paginisites: { nume: 'Login' })
-                                     .order('users.email, user_paginisites.created_at DESC')
-                                     .select('DISTINCT ON (users.email) user_paginisites.*').ransack(params[:q])
-
-    @user_paginisite = @q.result.order(:id).page(params[:page]).per(15)
-
   
-    # Acum @user_paginisite conține înregistrările unice în funcție de email ale UserPaginisite unde numele paginii este 'Login', împreună cu cea mai recentă dată de creare pentru fiecare utilizator.
+  
+  def useriunici_logati
+    search_term = params[:search]
+    
+    # Subquery to get the max created_at for each user_id
+    subquery = UserPaginisite.group(:user_id).select('user_id, MAX(created_at) as max_created_at')
+    
+    # Main query to get the UserPaginisite records where each user_id has the latest created_at
+    @q = UserPaginisite.joins("INNER JOIN (#{subquery.to_sql}) sub ON user_paginisites.user_id = sub.user_id AND user_paginisites.created_at = sub.max_created_at")
+                       .includes(:user, :paginisite)
+                       .where(paginisites: { nume: 'Login' })
+                       .ransack(
+                         user_email_cont: search_term, 
+                         user_name_cont: search_term, 
+                         m: 'or'
+                       )
+  
+    @user_paginisite = @q.result.order('user_paginisites.created_at DESC').page(params[:page]).per(15)
   end
+  
+  
   
   
   
