@@ -1,6 +1,14 @@
 class HomeController < ApplicationController
   def index
   end
+  def termeni_conditii
+  end
+  def politica_confidentialitate
+  end    
+  def politica_cookie
+  end 
+  def politica_gdpr
+  end 
   def contact
     if request.post?
       name = params[:name]

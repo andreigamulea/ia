@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   
   get 'home/index'
+  get '/politica-confidentialitate', to: 'home#politica_confidentialitate'
   get '/contact', to: 'home#contact'
   post '/contact', to: 'home#contact'
   get 'xlsxtopg/index'
