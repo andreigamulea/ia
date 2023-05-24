@@ -1,8 +1,11 @@
 
-
+turbo-frame#valorinutritionales_table,turbo-frame#valorinutritionales_results {
+  padding: 0 10px;
+}
 .tabel-container {
   margin: 0 auto;
   max-width: 1250px;
+  padding: 0 10px;
  }
 .tabel-container table {
 border-collapse: collapse;
@@ -63,8 +66,8 @@ padding: 4px;
 
 .alimente-nutritionale {
   font-size: 32px;
-  padding-bottom: 35px;
-  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-top: 50px;
   margin: 0 auto;
   text-align: center;
 }

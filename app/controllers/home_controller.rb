@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   end
   def politica_confidentialitate
   end    
-  def politica_cookie
+  def politica_cookies
   end 
   def politica_gdpr
   end 

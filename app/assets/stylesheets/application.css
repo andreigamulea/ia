@@ -15,7 +15,6 @@
  */
  
  body {
- padding: 0 10px;
  width:100%;
  }
  .home {
@@ -25,7 +24,7 @@
 
 .firstpage {
     font-size: 2rem;
-    padding-top: 50px;
+    padding: 50px 0 30px 0;
     text-align: center;
 }
 
@@ -87,3 +86,110 @@
 color:black
 }
 }  
+footer {
+    background-color: #6B1463;
+    padding: 20px;
+    color: #ffffff;
+    font-size: 16px;
+  }
+      
+  
+  .footer-row1 {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .footer-row2 {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .footer-row2 .footer-column {
+    box-sizing: border-box;
+    width: calc(33.33% - 20px);  /* scădem marjele stânga și dreapta de 10px fiecare */
+    margin: 10px;
+    padding: 10px;
+  }
+  
+  
+  
+  .img-right {
+    justify-content: right;
+    width: 50%;
+    padding: 10px 20px;
+    display: flex;
+  }
+  
+  .img-left {
+    justify-content: left;
+    width: 50%;
+    padding: 10px 20px;
+    display: flex;
+}
+  
+  .footer-content{
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  
+  footer img {
+    width: auto;
+    height: auto;
+  }
+  
+  .footer-column ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: -10px;
+  }
+  .footer-column a{ 
+    color: white;
+    text-decoration: none;
+   }
+   .footer-column a:hover{ 
+    font-weight: 700;
+   }
+   .center{
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .center h1{
+    padding: 50px 10px 20px 10px;
+  }
+  .center p, .center h2{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .center h2{
+    font-size: 25px;
+  }
+
+  
+  @media screen and (max-width: 920px) {
+        .footer-row1{
+          display: inline;
+        }
+        .footer-row2 .footer-column {
+            width: 100%;
+        }
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .footer-column {
+      width: 100%;
+      text-align: center;
+    }
+
+    .img-left,
+    .img-right {
+      justify-content: center;
+      width: 100%;
+    }
+    .center h1{
+      text-align: center;
+    }
+  }
+ 

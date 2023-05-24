@@ -1,1 +1,41 @@
 
+<footer>
+  <div class="footer-content">
+    <div class="footer-row1">
+      <div class="img-right">
+      <a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home.chooseLanguage" target="_blank"><img src="<%= asset_path 'image1.png' %>"></a>
+
+      </div>
+      <div class="img-left">
+      <a href="https://anpc.ro/ce-este-sal/" target="_blank"><img src="<%= asset_path 'image2.png' %>"></a>
+      </div>
+    </div>
+    <div class="footer-row2">
+      <div class="footer-column">
+        <ul>
+          <li><h2>Contul meu</h2></li>
+          <li>Autentificare</li>
+          <li>Cos cumpărături</li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <ul>
+          <li><h2>AyushCell Romania</h2></li>
+          <li><%= link_to 'Termeni si conditii', termeni_conditii_path %></li>
+          <li><%= link_to 'Politica de confidentialitate', politica_confidentialitate_path %></li>
+          <li><%= link_to 'Politica de cookies', politica_cookies_path %></li>
+          <li><%= link_to 'Politica de prelucrare a datelor', politica_gdpr_path %></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <ul>
+          <li><h2>Contact</h2></li>
+          <li>Adresa: str. Ferentari nr. 72, sector 5, </li>
+          <li>București, România</li>
+          <li>Tel. 0749 079 619 Luni-Vineri 09-16;</li>
+          <li>Email: ayusgrup@gmail.com</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
