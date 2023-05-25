@@ -76,3 +76,4 @@ gem 'roo', '~> 2.10'
 
 gem 'kaminari', '~> 1.2', '>= 1.2.2'
 gem 'ransack', '~> 2.4'
+gem 'rubyXL', '~> 3.4', '>= 3.4.25'

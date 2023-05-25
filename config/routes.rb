@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   resources :paginisites
   get 'userilogati', to: 'paginisites#userilogati'
   get '/useriunici_logati', to: 'paginisites#useriunici_logati', as: 'useriunici_logati_paginisites'
-  
+  get '/useriunici_logati/export', to: 'paginisites#export_to_xlsx', as: 'export_useriunici_logati'
+
  
   
   get 'authentication/login'

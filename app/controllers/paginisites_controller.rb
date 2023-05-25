@@ -69,10 +69,32 @@ class PaginisitesController < ApplicationController
   
   def useriunici_logati
     search_term = params[:search]
-    
+      
     # Subquery to get the max created_at for each user_id
     subquery = UserPaginisite.group(:user_id).select('user_id, MAX(created_at) as max_created_at')
+      
+    # Query to get count of visits for each user
+    @visit_counts = UserPaginisite.group(:user_id).count
+  
+    # Main query to get the UserPaginisite records where each user_id has the latest created_at
+    @q = UserPaginisite.joins("INNER JOIN (#{subquery.to_sql}) sub ON user_paginisites.user_id = sub.user_id AND user_paginisites.created_at = sub.max_created_at")
+                         .includes(:user, :paginisite)
+                         .where(paginisites: { nume: 'Login' })
+                         .ransack(
+                           user_email_cont: search_term, 
+                           user_name_cont: search_term, 
+                           m: 'or'
+                         )
     
+    @user_paginisite = @q.result.order('user_paginisites.created_at DESC').page(params[:page]).per(15)
+  end
+  
+  def export_to_xlsx
+    search_term = params[:search]
+
+    # Subquery to get the max created_at for each user_id
+    subquery = UserPaginisite.group(:user_id).select('user_id, MAX(created_at) as max_created_at')
+  
     # Main query to get the UserPaginisite records where each user_id has the latest created_at
     @q = UserPaginisite.joins("INNER JOIN (#{subquery.to_sql}) sub ON user_paginisites.user_id = sub.user_id AND user_paginisites.created_at = sub.max_created_at")
                        .includes(:user, :paginisite)
@@ -83,8 +105,39 @@ class PaginisitesController < ApplicationController
                          m: 'or'
                        )
   
-    @user_paginisite = @q.result.order('user_paginisites.created_at DESC').page(params[:page]).per(15)
+    @user_paginisite = @q.result.order('user_paginisites.created_at DESC')
+  
+    # Calculate the visit_counts
+    @visit_counts = UserPaginisite.group(:user_id).count
+
+  # restul codului ta
+    workbook = RubyXL::Workbook.new
+  
+    # Select the first worksheet
+    worksheet = workbook[0]
+  
+    # Add the headers
+    worksheet.add_cell(0, 0, 'Nume')
+    worksheet.add_cell(0, 1, 'Email')
+    worksheet.add_cell(0, 2, 'Pagina accesata')
+    worksheet.add_cell(0, 3, 'Numar accesari')
+    worksheet.add_cell(0, 4, 'Ultima data si ora')
+  
+    # Add the data
+    @user_paginisite.each_with_index do |up, index|
+      worksheet.add_cell(index + 1, 0, up.user.name)
+      worksheet.add_cell(index + 1, 1, up.user.email)
+      worksheet.add_cell(index + 1, 2, up.paginisite.nume)
+      worksheet.add_cell(index + 1, 3, @visit_counts[up.user_id] || 0)
+      worksheet.add_cell(index + 1, 4, up.created_at.in_time_zone('Eastern Time (US & Canada)').advance(hours: 7).strftime('%d-%m-%Y %H:%M:%S'))
+    end
+  
+    file_path = Rails.root.join('tmp', 'user_paginisite.xlsx')
+    workbook.write(file_path)
+    send_file(file_path)
+
   end
+  
   
   
   

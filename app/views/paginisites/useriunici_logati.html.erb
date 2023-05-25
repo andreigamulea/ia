@@ -21,18 +21,21 @@
       <th>Nume</th>
       <th>Email</th>
       <th>Pagina accesata</th>
+      <th>Numar accesari</th>
       <th>Ultima dată și oră</th>
     </tr>
   </thead>
   <tbody>
-    <% @user_paginisite.each do |up| %>
-      <tr>
-        <td><%= up.user.name %></td>
-        <td><%= up.user.email %></td>
-        <td><%= up.paginisite.nume %></td>
-        <td><%= up.created_at.in_time_zone('Eastern Time (US & Canada)').advance(hours: 7).strftime('%d-%m-%Y %H:%M:%S') %></td>
-      </tr>
-    <% end %>
-  </tbody>
+  <% @user_paginisite.each do |up| %>
+    <tr>
+      <td><%= up.user.name %></td>
+      <td><%= up.user.email %></td>
+      <td><%= up.paginisite.nume %></td>
+      <td><%= @visit_counts[up.user_id] || 0 %></td>
+      <td><%= up.created_at.in_time_zone('Eastern Time (US & Canada)').advance(hours: 7).strftime('%d-%m-%Y %H:%M:%S') %></td>
+    </tr>
+  <% end %>
+</tbody>
 </table>
 <%= paginate @user_paginisite %>
+<%= link_to "Export", export_useriunici_logati_path, class: "btn btn-primary" %>
