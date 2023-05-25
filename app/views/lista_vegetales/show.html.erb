@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @lista_vegetale %>
+
+<div>
+  <%= link_to "Edit this lista vegetale", edit_lista_vegetale_path(@lista_vegetale) %> |
+  <%= link_to "Back to lista vegetales", lista_vegetales_path %>
+
+  <%= button_to "Destroy this lista vegetale", @lista_vegetale, method: :delete %>
+</div>

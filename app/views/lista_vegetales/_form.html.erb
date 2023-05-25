@@ -1,0 +1,37 @@
+<%= form_with(model: lista_vegetale) do |form| %>
+  <% if lista_vegetale.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(lista_vegetale.errors.count, "error") %> prohibited this lista_vegetale from being saved:</h2>
+
+      <ul>
+        <% lista_vegetale.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :specie, style: "display: block" %>
+    <%= form.text_field :specie %>
+  </div>
+
+  <div>
+    <%= form.label :sinonime, style: "display: block" %>
+    <%= form.text_field :sinonime %>
+  </div>
+
+  <div>
+    <%= form.label :parteutilizata, style: "display: block" %>
+    <%= form.text_field :parteutilizata %>
+  </div>
+
+  <div>
+    <%= form.label :mentiunirestrictii, style: "display: block" %>
+    <%= form.text_field :mentiunirestrictii %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

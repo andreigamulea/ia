@@ -1,0 +1,2 @@
+class ListaVegetale < ApplicationRecord
+end

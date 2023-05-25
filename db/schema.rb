@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_15_004537) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_24_200141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,6 +45,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_15_004537) do
     t.string "descgrad"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "lista_vegetales", force: :cascade do |t|
+    t.string "specie"
+    t.string "sinonime"
+    t.string "parteutilizata"
+    t.string "mentiunirestrictii"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mentiunirestrictii"], name: "index_lista_vegetales_on_mentiunirestrictii"
+    t.index ["parteutilizata"], name: "index_lista_vegetales_on_parteutilizata"
+    t.index ["sinonime"], name: "index_lista_vegetales_on_sinonime"
+    t.index ["specie"], name: "index_lista_vegetales_on_specie"
   end
 
   create_table "listacursuris", force: :cascade do |t|

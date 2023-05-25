@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Lista vegetales</h1>
+
+<div id="lista_vegetales">
+  <% @lista_vegetales.each do |lista_vegetale| %>
+    <%= render lista_vegetale %>
+    <p>
+      <%= link_to "Show this lista vegetale", lista_vegetale %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New lista vegetale", new_lista_vegetale_path %>
