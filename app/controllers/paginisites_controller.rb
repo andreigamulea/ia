@@ -1,6 +1,7 @@
 class PaginisitesController < ApplicationController
   before_action :set_paginisite, only: %i[ show edit update destroy ]
-
+  before_action :authenticate_user!, only: %i[index userilogati useriunici_logati export_to_xlsx] #verifica daca utilizatorul este autentificat
+  before_action :set_user, only: %i[index userilogati useriunici_logati export_to_xlsx]
   # GET /paginisites or /paginisites.json
   def index
     @paginisites = Paginisite.all
@@ -156,4 +157,21 @@ class PaginisitesController < ApplicationController
     def paginisite_params
       params.require(:paginisite).permit(:nume)
     end
-end
+    def set_user
+      # Verifica daca userul este logat
+      if current_user
+        # Verifica daca userul este admin sau asociat cu cursul "Nutritie"
+        if current_user.role == 1 
+          # Utilizatorul are acces la resursa
+        else
+          # Utilizatorul nu are acces la resursa
+          flash[:alert] = "Nu ai acces la această resursă."
+          redirect_to root_path
+        end
+      else
+        # Utilizatorul nu este logat
+        flash[:alert] = "Trebuie să te autentifici pentru a accesa această resursă."
+        redirect_to login_path
+      end
+    end
+  end

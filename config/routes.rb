@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get '/useriunici_logati', to: 'paginisites#useriunici_logati', as: 'useriunici_logati_paginisites'
   get '/useriunici_logati/export', to: 'paginisites#export_to_xlsx', as: 'export_useriunici_logati'
 
- 
+  resources :statistics, only: [:index]
   
   get 'authentication/login'
   get 'admin/index'
