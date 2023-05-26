@@ -5,6 +5,7 @@ class StatisticsController < ApplicationController
         @most_visited_pages = Ahoy::Event.where(name: '$view').group(:properties).count
         @os_stats = Ahoy::Visit.group(:os).count
         @device_stats = Ahoy::Visit.group(:device_type).count
+        @browsers = Ahoy::Visit.group(:browser).count
 
       end
 end
