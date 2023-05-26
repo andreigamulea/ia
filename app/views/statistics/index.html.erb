@@ -5,5 +5,10 @@
     <p><%= os %>: <%= count %></p>
   <% end %>
   <h3>Tipul de dispozitiv:</h3> <% @device_stats.each do |device_type, count| %>
-    <p><%= device_type %>: <%= count %></p>
+    <%if device_type=="Phablet"%>
+       device_type="Tableta"
+       <p><%= device_type %>: <%= count %></p>
+    <%else%>   
+       <p><%= device_type %>: <%= count %></p>
+    <%end%>   
   <% end %>
