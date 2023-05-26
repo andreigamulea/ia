@@ -6,7 +6,7 @@
   <% end %>
   <h3>Tipul de dispozitiv:</h3> <% @device_stats.each do |device_type, count| %>
     <%if device_type=="Phablet"%>
-       device_type="Tableta"
+       <%device_type="Tableta"%>
        <p><%= device_type %>: <%= count %></p>
     <%else%>   
        <p><%= device_type %>: <%= count %></p>
