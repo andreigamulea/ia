@@ -91,7 +91,7 @@ class PaginisitesController < ApplicationController
   end
   def statistici_utilizator
     user_id = params[:id]
-  
+    @user_name = params[:user_name]
     @user_page_visit_times_by_date = Ahoy::Event
       .where(user_id: user_id)
       .group_by { |event| event.time.to_date }

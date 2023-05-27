@@ -34,7 +34,8 @@
       <td><%= up.paginisite.nume %></td>
       <td><%= @visit_counts[up.user_id] || 0 %></td>
       <td><%= up.created_at.in_time_zone('Eastern Time (US & Canada)').advance(hours: 7).strftime('%d-%m-%Y %H:%M:%S') %></td>
-      <td><%= link_to 'Statistici', statistici_utilizator_paginisite_path(up.user_id), class: 'btn btn-primary' %></td>
+      <td><%= link_to 'Statistici', statistici_utilizator_paginisite_path(id: up.user_id, user_name: up.user.name), class: 'btn btn-primary' %></td>
+
 
     </tr>
   <% end %>
