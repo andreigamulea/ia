@@ -7,6 +7,12 @@
     <li><%= browser %></li>
   <% end %>
 </ul>
+<h3>Dispozitivele folosite de <%= @user_name %> sunt:</h3>
+<ul>
+  <% @user_platforms.each do |platform| %>
+    <li><%= platform %></li>
+  <% end %>
+</ul>
 
       
   <span><%= link_to "Inapoi", useriunici_logati_paginisites_path, class: "btn btn-primary" %></span> </br></br></br>

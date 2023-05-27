@@ -127,6 +127,7 @@ class PaginisitesController < ApplicationController
       .pluck(:browser)
       .uniq
 
+      @user_platforms = Ahoy::Visit.where(user_id: user_id).pluck(:platform).uniq
 
 
   #@user_page_visit_times_by_date = Ahoy::Event
