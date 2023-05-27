@@ -93,7 +93,7 @@ class PaginisitesController < ApplicationController
     user_id = params[:id]
     @user_name = params[:user_name]
     @user_page_visit_times_by_date = Ahoy::Event
-      .where(user_id: user_id)   # <--- schimbat aici
+      .where(user_id: user_id) # Aici am făcut modificarea
       .where("properties ->> 'page' = '/valori-nutritionale'")
       .order(:time)
       .group_by { |event| event.time.to_date }
@@ -102,12 +102,15 @@ class PaginisitesController < ApplicationController
           .transform_values do |events_on_same_page|
             total_time = 0
             load_event = nil
-
+  
             events_on_same_page.each do |event|
               if event.name == "$page_load"
                 load_event = event
               elsif event.name == "$page_unload" && load_event
                 total_seconds = (event.time.to_i - load_event.time.to_i).abs
+                if load_event.time.to_date < event.time.to_date
+                  total_seconds = (event.time.beginning_of_day - load_event.time).abs.to_i
+                end
                 minutes = total_seconds / 60
                 seconds = total_seconds % 60
                 total_time += minutes * 60 + seconds
