@@ -93,7 +93,7 @@ class PaginisitesController < ApplicationController
     user_id = params[:id]
     @user_name = params[:user_name]
     @user_page_visit_times_by_date = Ahoy::Event
-      .where(user_id: current_user.id)
+      .where(user_id: user_id)   # <--- schimbat aici
       .where("properties ->> 'page' = '/valori-nutritionale'")
       .order(:time)
       .group_by { |event| event.time.to_date }
@@ -117,6 +117,8 @@ class PaginisitesController < ApplicationController
             total_time
           end
       end
+end
+
 
 
 
