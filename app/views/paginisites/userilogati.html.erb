@@ -36,6 +36,7 @@
       <th>Email</th>
       <th>Pagina accesata</th>
       <th>Data si ora</th>
+      <th>Statistici</th> <!-- noua coloana -->
     </tr>
   </thead>
   <tbody>
@@ -45,8 +46,10 @@
         <td><%= up.user.email %></td>
         <td><%= up.paginisite.nume %></td>
         <td><%= up.created_at.in_time_zone('Eastern Time (US & Canada)').advance(hours: 7).strftime('%d-%m-%Y %H:%M:%S') %></td>
+        <td><%= link_to 'Statistici', statistici_utilizator_paginisite_path(up.user_id), class: 'btn btn-primary' %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <%= paginate @user_paginisite %>
+<%= link_to "Export fisier xlsx utilizatori care s-au logat", export_useriunici_logati_path, class: "btn btn-secondary" %></br></br></br>

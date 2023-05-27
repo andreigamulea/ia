@@ -11,3 +11,25 @@
   <%= render partial: "valorinutritionales/valorinutritionales_results", locals: { selected_valorinutritionales: @selected_valorinutritionales, valorinutritionale_values: @valorinutritionale_values, total_values: @total_values } %>
 <% end %>
 </section>
+<script>
+
+document.addEventListener("turbo:load", function() {
+  ahoy.track("$page_load", { page: window.location.pathname });
+  console.log("page load");
+});
+
+document.addEventListener("turbo:before-visit", function() {
+  ahoy.track("$page_unload", { page: window.location.pathname });
+  console.log("page unload");
+});
+
+window.addEventListener("beforeunload", function() {
+  ahoy.track("$page_unload", { page: window.location.pathname });
+  console.log("page unload");
+});
+
+
+</script>
+
+
+

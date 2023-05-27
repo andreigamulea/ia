@@ -35,6 +35,19 @@ class ValorinutritionalesController < ApplicationController
       format.turbo_stream
       format.html
     end
+    @user_page_visit_times = {}
+
+    Ahoy::Event.where(name: "$page_load", user_id: current_user.id).find_each do |load_event|
+      unload_event = Ahoy::Event.where(name: "$page_unload", user_id: current_user.id, properties: load_event.properties).first
+      if unload_event
+        page_name = load_event.properties["page"]
+        visit_time = unload_event.time - load_event.time
+        @user_page_visit_times[page_name] ||= 0
+        @user_page_visit_times[page_name] += visit_time
+      end
+    end
+
+
   end 
   
   

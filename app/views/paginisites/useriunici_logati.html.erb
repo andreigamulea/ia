@@ -23,6 +23,7 @@
       <th>Pagina accesata</th>
       <th>Numar accesari</th>
       <th>Ultima accesare</th>
+      <th>Statistici</th> <!-- noua coloana -->
     </tr>
   </thead>
   <tbody>
@@ -33,9 +34,12 @@
       <td><%= up.paginisite.nume %></td>
       <td><%= @visit_counts[up.user_id] || 0 %></td>
       <td><%= up.created_at.in_time_zone('Eastern Time (US & Canada)').advance(hours: 7).strftime('%d-%m-%Y %H:%M:%S') %></td>
+      <td><%= link_to 'Statistici', statistici_utilizator_paginisite_path(up.user_id), class: 'btn btn-primary' %></td>
+
     </tr>
   <% end %>
-</tbody>
+  </tbody>
 </table>
+
 <%= paginate @user_paginisite %>
-<%= link_to "Export", export_useriunici_logati_path, class: "btn btn-primary" %>
+<%= link_to "Export fisier xlsx utilizatori care s-au logat", export_useriunici_logati_path, class: "btn btn-secondary" %></br></br></br>

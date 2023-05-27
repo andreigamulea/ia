@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
+  mount Ahoy::Engine => "/ahoy"
   resources :lista_vegetales
   resources :paginisites
   get 'userilogati', to: 'paginisites#userilogati'
   get '/useriunici_logati', to: 'paginisites#useriunici_logati', as: 'useriunici_logati_paginisites'
   get '/useriunici_logati/export', to: 'paginisites#export_to_xlsx', as: 'export_useriunici_logati'
-
+  get '/paginisites/:id/statistici_utilizator', to: 'paginisites#statistici_utilizator', as: 'statistici_utilizator_paginisite'
   resources :statistics, only: [:index]
   
   get 'authentication/login'
