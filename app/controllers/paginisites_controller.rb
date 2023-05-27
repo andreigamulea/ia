@@ -117,7 +117,7 @@ class PaginisitesController < ApplicationController
             total_time
           end
       end
-end
+
 
 
 
