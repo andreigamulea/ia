@@ -2,7 +2,8 @@ class StatisticsController < ApplicationController
     def index
         @visits_per_day = Ahoy::Visit.group_by_day(:started_at).distinct.count(:user_id)
         
-        @unique_visitors_per_day = Ahoy::Visit.where("user_id IS NOT NULL").group_by_day(:started_at).distinct.count(:user_id)
+        @unique_users_per_day = Ahoy::Event.where(name: "$visit").where("properties ->> 'user_id' IS NOT NULL").group_by_day(:time).distinct.count("properties ->> 'user_id'")
+
 
 
         
