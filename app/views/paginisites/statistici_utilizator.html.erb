@@ -1,5 +1,13 @@
 </br></br><h3>Timp petrecut in pagina Calculator valori nutritionale (valoarea este in minute) de catre <%= @user_name %>:</h3>  </br>
   <%= line_chart @valori_nutritionale_page_visit_times_by_date %></br></br></br>
+
+  <h3>Browserele folosite de <%= @user_name %> sunt:</h3>
+<ul>
+  <% @user_browsers.each do |browser| %>
+    <li><%= browser %></li>
+  <% end %>
+</ul>
+
       
   <span><%= link_to "Inapoi", useriunici_logati_paginisites_path, class: "btn btn-primary" %></span> </br></br></br>
 

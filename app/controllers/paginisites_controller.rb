@@ -122,7 +122,10 @@ class PaginisitesController < ApplicationController
       end
 
 
-
+      @user_browsers = Ahoy::Visit
+      .where(user_id: user_id)
+      .pluck(:browser)
+      .uniq
 
 
 
