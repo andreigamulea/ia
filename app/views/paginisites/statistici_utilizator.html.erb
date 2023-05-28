@@ -14,7 +14,12 @@
   <% end %>
 </ul>
 
-      
+<h3>Sisteme de operare folosite de <%= @user_name %>:</h3>
+<ul>
+  <% @user_os.each do |os| %>
+    <li><%= os %></li>
+  <% end %>
+</ul>     
   <span><%= link_to "Inapoi", useriunici_logati_paginisites_path, class: "btn btn-primary" %></span> </br></br></br>
 
 

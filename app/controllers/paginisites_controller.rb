@@ -126,6 +126,7 @@ class PaginisitesController < ApplicationController
       
       @user_platforms = Ahoy::Visit.where(user_id: user_id).pluck(:device_type).uniq
 
+      @user_os = Ahoy::Visit.where(user_id: user_id).pluck(:os).uniq
 
   #@user_page_visit_times_by_date = Ahoy::Event
   #.where(user_id: user_id)
