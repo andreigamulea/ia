@@ -16,7 +16,7 @@
     <% @ahoy_visits.each do |visit| %>
       <tr>
         <td><%= visit.user_id %></td>
-        <td><%= visit.user.name %></td> <!-- Presupunand ca numele este un atribut al modelului User -->
+        <td><%= visit.user&.name %></td> <!-- Presupunand ca numele este un atribut al modelului User -->
         <td><%= visit.user_agent %></td>
         <td><%= visit.landing_page %></td>
         <td><%= visit.browser %></td>
