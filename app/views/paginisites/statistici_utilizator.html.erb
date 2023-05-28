@@ -10,6 +10,10 @@
 <h3>Dispozitivele folosite de <%= @user_name %> sunt:</h3>
 <ul>
   <% @user_platforms.each do |platform| %>
+    
+    <%if platform=="Phablet"%>
+      <%platform="Tableta"%> 
+    <% end %>
     <li><%= platform %></li>
   <% end %>
 </ul>
