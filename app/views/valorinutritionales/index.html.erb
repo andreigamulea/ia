@@ -11,15 +11,18 @@
   <%= render partial: "valorinutritionales/valorinutritionales_results", locals: { selected_valorinutritionales: @selected_valorinutritionales, valorinutritionale_values: @valorinutritionale_values, total_values: @total_values } %>
 <% end %>
 </section>
-<script>
 
+<script>
+console.log("Salut Costel din inceput script");
 document.addEventListener("turbo:load", function() {
   ahoy.track("$page_load", { page: window.location.pathname });
+  console.log("Salut Costel din load");
   console.log("page load");
 });
 
 document.addEventListener("turbo:before-visit", function() {
   ahoy.track("$page_unload", { page: window.location.pathname });
+  console.log("Salut din unload");
   console.log("page unload");
 });
 
