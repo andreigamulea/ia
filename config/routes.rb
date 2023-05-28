@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   get '/politica-confidentialitate', to: 'home#politica_confidentialitate'
   get '/politica-cookies', to: 'home#politica_cookies'
   get '/politica-gdpr', to: 'home#politica_gdpr'
+  get '/panouadmin', to: 'home#panouadmin'
+  get '/tabeleahoy', to: 'home#tabeleahoy', as: 'tabeleahoy_home'
 
   get '/contact', to: 'home#contact'
   post '/contact', to: 'home#contact'

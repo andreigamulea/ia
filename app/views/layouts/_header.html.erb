@@ -33,6 +33,9 @@
 
                         <%end%>
                         <% if current_user && current_user.role == 1 %>  
+                        <li class="nav-item">
+                            <%= link_to 'Admin', panouadmin_path %>
+                        </li>
                         <li class="nav-item has-submenu">
                             <a class="nav-link" href="#"> XlsxToPg</a>
                             <ul class="submenu">
