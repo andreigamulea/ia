@@ -13,22 +13,26 @@
 </section>
 
 <script>
-console.log("Salut Costel din inceput script");
+
 document.addEventListener("turbo:load", function() {
-  ahoy.track("$page_load", { page: window.location.pathname });
-  console.log("Salut Costel din load");
-  console.log("page load");
+  if (window.location.pathname == '/valori-nutritionale') {
+    ahoy.track("$page_load", { page: window.location.pathname });
+    console.log("page load");
+  }
 });
 
 document.addEventListener("turbo:before-visit", function() {
-  ahoy.track("$page_unload", { page: window.location.pathname });
-  console.log("Salut din unload");
-  console.log("page unload");
+  if (window.location.pathname == '/valori-nutritionale') {
+    ahoy.track("$page_unload", { page: window.location.pathname });
+    console.log("page unload");
+  }
 });
 
 window.addEventListener("beforeunload", function() {
-  ahoy.track("$page_unload", { page: window.location.pathname });
-  console.log("page unload");
+  if (window.location.pathname == '/valori-nutritionale') {
+    ahoy.track("$page_unload", { page: window.location.pathname });
+    console.log("page unload");
+  }
 });
 
 
