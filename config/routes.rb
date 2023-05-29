@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       post :selected_records
       get :pagination_turbo_stream
       post :process_selected
+      post :track
     end
   end
   

@@ -13,30 +13,50 @@
 </section>
 
 <script>
-
 document.addEventListener("turbo:load", function() {
   if (window.location.pathname == '/valori-nutritionale') {
-    ahoy.track("$page_load", { page: window.location.pathname });
-    console.log("page load");
+    var pageLoadData = {
+      event: "$page_load",
+      page: window.location.pathname,
+      time: new Date()
+    };
+
+    sendDataToServer(pageLoadData);
   }
 });
 
 document.addEventListener("turbo:before-visit", function() {
   if (window.location.pathname == '/valori-nutritionale') {
-    ahoy.track("$page_unload", { page: window.location.pathname });
-    console.log("page unload");
+    var pageUnloadData = {
+      event: "$page_unload",
+      page: window.location.pathname,
+      time: new Date()
+    };
+
+    sendDataToServer(pageUnloadData);
   }
 });
 
 window.addEventListener("beforeunload", function() {
   if (window.location.pathname == '/valori-nutritionale') {
-    ahoy.track("$page_unload", { page: window.location.pathname });
-    console.log("page unload");
+    var pageUnloadData = {
+      event: "$page_unload",
+      page: window.location.pathname,
+      time: new Date()
+    };
+
+    sendDataToServer(pageUnloadData);
   }
 });
 
-
+function sendDataToServer(data) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/valori-nutritionale/track", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(JSON.stringify(data));
+}
 </script>
+
 
 
 

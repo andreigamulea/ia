@@ -3,8 +3,42 @@ class ValorinutritionalesController < ApplicationController
   before_action :set_valorinutritionale, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, only: %i[index ] #verifica daca utilizatorul este autentificat
   before_action :set_user, only: %i[index show edit update destroy]
+  before_action :track_ahoy_visit
+  skip_before_action :verify_authenticity_token, only: [:track]
+  protect_from_forgery except: :track
 
   ## GET /valorinutritionales or /valorinutritionales.json
+  def track
+    # prelucrează datele primite
+    event_data = JSON.parse(request.body.read)
+    event_name = event_data["event"]
+    event_properties = { "page" => event_data["page"] }
+    
+    # obtinem tokenul de vizită al utilizatorului curent
+    visit_token = ahoy.visit_token
+    
+    # căutăm obiectul Visit asociat cu tokenul de vizită
+    visit = Ahoy::Visit.find_by(visit_token: visit_token)
+    
+    if visit.nil?
+      # nu am putut găsi un obiect Visit asociat cu acest utilizator
+      # aici puteți decide cum să gestionați această situație, de exemplu prin crearea unui nou obiect Visit
+      head :unprocessable_entity
+    else
+      # avem un obiect Visit, acum putem crea un eveniment
+      Ahoy::Event.create!(
+        visit_id: visit.id,
+        user_id: current_user.id,  # presupunem că există o metodă current_user care returnează utilizatorul curent
+        name: event_name,
+        properties: event_properties,
+        time: Time.current
+      )
+    
+      head :ok  # răspunde cu status 200 OK
+    end
+  end
+  
+  
   
   def index
     @page_title = "Valori Nutritionale"
@@ -289,6 +323,11 @@ class ValorinutritionalesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def valorinutritionale_params
       params.require(:valorinutritionale).permit(:cod, :aliment, :calorii, :proteine, :lipide, :carbohidrati, :fibre, :observatii)
+    end
+    def track_ahoy_visit
+      unless ahoy.visit
+        ahoy.track_visit
+      end
     end
     
 end
