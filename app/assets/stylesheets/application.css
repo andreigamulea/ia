@@ -268,5 +268,8 @@ footer {
       display: block;
       text-align: center;
     }
+    .nutritie .column:last-child {
+      padding: 20px;
+    }
   }
   
