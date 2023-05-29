@@ -1,10 +1,20 @@
-<% if current_user.nil? %>
-  <script>
-    window.location.href = '<%= new_user_session_path %>';
-  </script>
-<% end %>
 <section class="home">
-    <h1 class="firstpage">
-        <a href="../valori-nutritionale">Aplicatie pentru calculul valorilor nutriționale</a>
-    </h1>
+
+<div class="nutritie">
+   <div class="row">
+      <div class="column">
+         <a href="/valori-nutritionale">
+         <img src="<%= image_path('nutritie-ayushcell.jpg') %>" alt="Imagine">
+         </a>
+      </div>
+      <div class="column">
+         <h1>Aplicație Nutriție</h1>
+         <div class="description">Aplicație pentru calculul valorilor nutriționale.</div>
+         <div class="button">
+            <a href="/valori-nutritionale">Intră în aplicație</a>
+         </div>
+      </div>
+   </div>
+</div>
+
 </section>

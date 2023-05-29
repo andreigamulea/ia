@@ -192,4 +192,81 @@ footer {
       text-align: center;
     }
   }
- 
+
+  .nutritie{
+    margin: 0 auto;
+  }
+  .nutritie .row {
+    display: flex;
+  }
+  
+  .nutritie .column {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nutritie .description {
+    margin-top: 5px;
+    font-size: 18px;
+  }
+
+  .nutritie .button {
+    margin:30px 0 20px 0;
+  }
+
+  .nutritie .button a {
+    background-color: #64025e;
+    color: #fff;
+    padding: 12px 40px;
+    font-size: 18px;
+    border-radius: 15px;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .nutritie .button a:hover{
+    background-color: #50024c;
+  }
+  
+ .nutritie img{
+  max-width: 600px;
+  width: -webkit-fill-available;
+  padding: 10px;
+  }
+
+
+  .nutritie .column:last-child {
+    flex-direction: column;
+    align-items: flex-start; /* Aliniere la stânga pentru conținutul coloanei pe desktop */
+    padding-left: 60px;
+  }
+  
+   
+  /* Restul stilurilor media queries pentru diferite dimensiuni */
+  @media only screen and (min-width: 992px) {
+    .nutritie .row {
+      flex-wrap: nowrap;
+    }
+  
+    .nutritie .column {
+      width: 50%;
+    }
+  }
+  
+
+  
+  @media only screen and (max-width: 991px) {
+    .nutritie .row {
+      flex-direction: column;
+    }
+    .nutritie .button {
+      margin: 20px 10px 20px 10px;
+    }
+    .nutritie .column {
+      flex-basis: auto;
+      display: block;
+      text-align: center;
+    }
+  }
+  

@@ -11,24 +11,13 @@
                         <img src="https://amnromania.ro/wp-content/uploads/2023/04/mbico2.png" width="60px" id="menuTogglerIconActive" style="display: none;" />
                     </div>
                     <ul class="nav-menu" id="navMenu">
-                       
+                        <li><%= link_to 'Acasa', root_path%></li>
                         <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1) %>  
                         <li class="nav-item">
                             <%= link_to 'Valori Nutritionale', valorinutritionales_path, id: 'valorinutritionales_link' %>
                         </li>
 
-                        <script>
-                            document.addEventListener('turbo:load', function() {
-                            const valorinutritionalesLink = document.getElementById('valorinutritionales_link');
-
-                            if (valorinutritionalesLink) {
-                                valorinutritionalesLink.addEventListener('click', function(event) {
-                                event.preventDefault();
-                                window.location.href = '<%= valorinutritionales_path %>';
-                                });
-                            }
-                            });
-                        </script>
+                        
 
 
                         <%end%>

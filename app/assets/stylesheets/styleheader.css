@@ -37,6 +37,11 @@
                 width: 256px;
                 height: auto;
             }
+            @media (max-width: 323px) {
+                .logo {
+                    width: 200px;
+                      }
+            }
             .menu-toggler {
                 display: none;
                 cursor: pointer;
