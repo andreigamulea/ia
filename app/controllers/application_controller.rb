@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
     before_action :track_ahoy_visit
     before_action :configure_permitted_parameters, if: :devise_controller?
     #before_action :authenticate_user!
-    before_action :check_user_active
+    #before_action :check_user_active
     skip_before_action :check_user_active, only: [:after_sign_in_path_for]
 
     def track_ahoy_visit
