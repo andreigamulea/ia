@@ -11,8 +11,16 @@
          <h1>Aplicație Nutriție</h1>
          <div class="description">Descoperă conținutul nutritiv al alimentelor și calculează numărul de calorii, proteine, lipide, carbohidrați și fibre la fiecare masă! Alege în fiecare zi o alimentație sănătoasă și echilibrată.</div>
          <div class="button">
+          <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1) %>
             <a href="/valori-nutritionale">Intră în aplicație</a>
-         </div>
+          <% elsif current_user %>   
+            <%= link_to 'Intră în aplicație', root_path, class: 'button-link' %>
+          <% else %>   
+            <%= link_to 'Intră în aplicație', new_user_session_path, class: 'button-link' %>
+          <% end %>
+        </div>
+
+
       </div>
    </div>
 </div>

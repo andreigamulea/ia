@@ -23,6 +23,21 @@ document.addEventListener("turbo:load", function() {
 
     sendDataToServer(pageLoadData);
   }
+
+  var logoutLink = document.getElementById('logout_link');
+  if (logoutLink) {
+    logoutLink.addEventListener('click', function() {
+      if (window.location.pathname == '/valori-nutritionale') {
+        var pageUnloadData = {
+          event: "$page_unload",
+          page: window.location.pathname,
+          time: new Date()
+        };
+
+        sendDataToServer(pageUnloadData);
+      }
+    });
+  }
 });
 
 document.addEventListener("turbo:before-visit", function() {
@@ -56,6 +71,7 @@ function sendDataToServer(data) {
   xhr.send(JSON.stringify(data));
 }
 </script>
+
 
 
 
