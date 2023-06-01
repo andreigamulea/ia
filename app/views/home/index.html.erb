@@ -18,8 +18,7 @@
           <% elsif current_user %>   
             <%= link_to 'Intră în aplicație', root_path, class: 'button-link' %>
           <% else %>   
-            <%= link_to 'Intră în aplicație', new_user_session_path(return_to: "vn"), class: 'button-link' %>
-            
+            <%= link_to 'Intră în aplicație', new_user_session_with_return_path('vn'), class: 'button-link' %>
           <% end %>
         </div>
 

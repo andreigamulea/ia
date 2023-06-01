@@ -85,9 +85,11 @@ Rails.application.routes.draw do
     registrations: 'devise/registrations',
     passwords: 'devise/passwords',
     confirmations: 'devise/confirmations',
-    unlocks: 'devise/unlocks'
-   
+    unlocks: 'devise/unlocks'   
   }
+  devise_scope :user do
+    get 'users/sign_in/:return_to', to: 'devise/sessions#new', as: :new_user_session_with_return
+end
  
   # config/routes.rb
   resources :users, only: [] do
