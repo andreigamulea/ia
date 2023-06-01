@@ -2,12 +2,12 @@
 <div class="login-container">
 <h1>Log in</h1>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true, data: { turbo: false }) do |f| %>
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
-
+  
   <div class="field">
     <%= f.label "parola" %><br />
     <%= f.password_field :password, autocomplete: "current-password" %>
@@ -22,6 +22,7 @@
   <% end %>
 
   <div class="actions">
+  <%= hidden_field_tag 'return_to', params[:return_to] %>
     <%= f.submit "Log in" %>
   </div>
 <% end %>

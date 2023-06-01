@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
       def after_sign_in_path_for(resource)
         Rails.logger.info "In after_sign_in_path_for, user id: #{resource.id}"
         pagina = Paginisite.find_by(nume: "Login")
+      
         if pagina
           user_pagina = UserPaginisite.new(user_id: resource.id, paginisite_id: pagina.id)
           if user_pagina.save
@@ -40,6 +41,21 @@ class ApplicationController < ActionController::Base
         else
           Rails.logger.info "Pagina with name 'Login' not found"
         end
-        super
+        puts "aici"
+        
+        Rails.logger.info "Aici, return_to: #{params[:return_to]}"
+        if params[:return_to] == "menu"
+          # Cod pentru cazul în care sursa este meniul
+          root_path # Înlocuiește cu calea corespunzătoare
+        elsif params[:return_to] == "vn"
+          # Cod pentru cazul în care sursa este butonul
+          valorinutritionales_path # Înlocuiește cu calea corespunzătoare
+        else
+          # Dacă nu există parametru return_to, sau dacă valoarea acestuia nu este recunoscută, redirectează către o cale implicită
+          root_path # Înlocuiește cu calea implicită
+        end
       end
+      
+      
+      
 end

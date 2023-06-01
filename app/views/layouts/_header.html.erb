@@ -59,7 +59,10 @@
                             <li><%= link_to 'Cont', edit_user_registration_path, class: "nav-link" %></li>
                            
                         <%else%>
-                            <li><%= link_to 'Login', new_user_session_path %></li>
+                        <li><%= link_to 'Login', new_user_session_path(return_to: 'menu') %></li>
+
+
+
                             <li><%= link_to 'Creaza cont', new_user_registration_path %></li>
                          <%end%>
                          <%if current_user!=nil &&  current_user.role == 1%>
