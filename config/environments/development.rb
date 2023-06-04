@@ -19,6 +19,20 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   #config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.delivery_method = :smtp
+
+  
+  config.action_mailer.smtp_settings = {
+    :address => 'smtp-relay.sendinblue.com',
+    :port => 587,
+    :authentication => :plain,
+    :user_name => ayushcellromania@gmail.com,
+    :password => Rails.application.secrets.brevio_api_key,
+    :domain => 'ayushcell.ro',  # schimba acest domeniu cu domeniul tău
+    :enable_starttls_auto => true
+  }
+  
+
+
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?

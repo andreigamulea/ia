@@ -32,15 +32,17 @@ Rails.application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
   #config.assets.compile = true
-  config.action_mailer.delivery_method = :smtp  
+  config.action_mailer.delivery_method = :smtp
+
+  
   config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
-    port:                 587,
-    domain:               'ayushcell.ro',
-    user_name:            'ayushcellromania@gmail.com',
-    password:             'andrei555andrei555',
-    authentication:       'plain',
-    enable_starttls_auto: true 
+    :address => 'smtp-relay.sendinblue.com',
+    :port => 587,
+    :authentication => :plain,
+    :user_name => ayushcellromania@gmail.com,
+    :password => Rails.application.secrets.brevio_api_key,
+    :domain => 'ayushcell.ro',  # schimba acest domeniu cu domeniul tău
+    :enable_starttls_auto => true
   }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
