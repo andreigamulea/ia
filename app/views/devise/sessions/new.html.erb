@@ -2,7 +2,13 @@
 <div class="login-container">
 <h1>Log in</h1>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true, data: { turbo: false }) do |f| %>
+<% turbo_option = request.path.ends_with?('/vn') ? false : true %>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true, data: { turbo: turbo_option }) do |f| %> 
+  <!-- form fields here -->
+
+
+
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>

@@ -88,8 +88,8 @@ Rails.application.routes.draw do
     unlocks: 'devise/unlocks'   
   }
   devise_scope :user do
-    get 'users/sign_in/:return_to', to: 'devise/sessions#new', as: :new_user_session_with_return
-end
+    get 'users/sign_in/:return_to', to: 'devise/sessions#new', as: :new_user_session_with_return #face ruta frumoasa la login
+  end
  
   # config/routes.rb
   resources :users, only: [] do
