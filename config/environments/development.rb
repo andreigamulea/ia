@@ -19,15 +19,13 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   #config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.delivery_method = :smtp
-
-  
   config.action_mailer.smtp_settings = {
     :address => 'smtp-relay.sendinblue.com',
     :port => 587,
     :authentication => :plain,
-    :user_name => ayushcellromania@gmail.com,
-    
+    :user_name => 'ayushcellromania@gmail.com',
     :password => Rails.application.credentials[:sendinblue_api_key],
+    
     :domain => 'ayushcell.ro',  # schimba acest domeniu cu domeniul tău
     :enable_starttls_auto => true
   }
