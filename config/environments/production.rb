@@ -41,6 +41,7 @@ Rails.application.configure do
     :authentication => :plain,
     :user_name => 'ayushcellromania@gmail.com',
     :password => Rails.application.credentials[:sendinblue_api_key],
+    
     :domain => 'ayushcell.ro',  # schimba acest domeniu cu domeniul tău
     :enable_starttls_auto => true
   }
