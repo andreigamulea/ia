@@ -26,7 +26,8 @@ Rails.application.configure do
     :port => 587,
     :authentication => :plain,
     :user_name => ayushcellromania@gmail.com,
-    :password => Rails.application.secrets.brevio_api_key,
+    
+    :password => Rails.application.credentials[:sendinblue_api_key],
     :domain => 'ayushcell.ro',  # schimba acest domeniu cu domeniul tău
     :enable_starttls_auto => true
   }
