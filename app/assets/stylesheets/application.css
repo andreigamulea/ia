@@ -273,3 +273,49 @@ footer {
     }
   }
   
+  .c1{
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .cform{
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
+
+  .ch1{
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 30px;
+    color: #6B1463;
+  }
+
+  .btncontact {
+    margin: 30px 0 20px 0;
+    background-color: #64025e;
+    color: #fff;
+    padding: 6px 30px;
+    font-size: 18px;
+    border-radius: 15px;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border: none; /* Pentru a elimina bordura implicită a butonului */
+    cursor: pointer; /* Pentru a arăta că este un buton clicabil */
+}
+
+@media only screen and (max-width: 768px) {
+  .btncontact {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+}
+
+.btncontact:hover {
+    background-color: #50024c;
+}
+
+  .cform textarea {
+    height: 150px;
+  }

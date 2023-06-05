@@ -1,11 +1,12 @@
-<h1>Contact</h1>
+<section class="c1">
+<h1 class="ch1">Contact</h1>
 
 <% if flash[:error] %>
   <div class="alert alert-danger">
     <%= flash[:error] %>
   </div>
 <% end %>
-
+<div class="cform">
 <%= form_with(url: contact_path, method: :post) do |form| %>
   <div class="form-group">
     <%= form.label :name, "Nume" %>
@@ -22,5 +23,7 @@
     <%= form.text_area :message, class: "form-control" %>
   </div>
 
-  <%= form.submit "Trimite", class: "btn btn-primary" %>
+  <%= form.submit "Trimite", class: "btncontact" %>
 <% end %>
+</div>
+</section>

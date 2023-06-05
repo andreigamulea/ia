@@ -4,7 +4,7 @@ class ContactMailer < ApplicationMailer
     @message = message
     @email = email
   
-    mail(to: 'ayushcellromania@gmail.com', from: 'ayushcell@ayushcell.ro', subject: 'Mesaj de la ayushcell.ro')
+    mail(to: 'ayushcellromania@gmail.com', from: 'contact-ayushcell@ayushcell.ro', subject: 'Mesaj Contact Ayushcell.ro')
   end
   
 end
