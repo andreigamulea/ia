@@ -13,7 +13,7 @@ class HomeController < ApplicationController
   end
   def tabeleahoy
     @ahoy_visits = Ahoy::Visit.order(started_at: :desc).limit(30).includes(:user).reverse
-    @ahoy_events = Ahoy::Event.order(time: :desc).limit(70).includes(:user).reverse
+    @ahoy_events = Ahoy::Event.order(time: :desc).limit(2000).includes(:user).reverse
 
 
   end
