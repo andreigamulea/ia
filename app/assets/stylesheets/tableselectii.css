@@ -183,4 +183,34 @@ padding: 4px;
 
   }
 
-  
+  /* Ascunde butoanele radio originale */
+.form-check-input {
+  display: none;
+}
+
+/* Crează un pseudo-buton pentru fiecare buton radio */
+.form-check-input + label::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: bottom;
+}
+
+/* Când butonul radio este selectat, adăugați un cerc în interiorul pseudo-butonului */
+.form-check-input:checked + label::before {
+  background: radial-gradient(circle, #000 30%, transparent 40%);
+  background-color: #ddd;
+}
+.radio{
+  display: grid;
+  margin-top: 10px;
+}
+
+.radio .form-check-input + label::before {
+  vertical-align: middle;
+  margin-top: -3px;
+}

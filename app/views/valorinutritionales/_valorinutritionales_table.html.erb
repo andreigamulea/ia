@@ -4,17 +4,29 @@
   <%= search_form_for @q do |f|%>
     <div style="width:100%;" class="form-group">
       <div class="input-group">
-        <%= f.text_field :aliment_cont, placeholder: "Cautare Aliment", class: "form-control" %>
+        
+      <%= f.text_field :aliment_cont, value: @search_term, placeholder: "Cautare Aliment", class: "form-control", name: "search_term" %>
+      
+        
         <div class="input-group-append">
-         
           <%= f.submit 'Cauta', class: "btn btn-primary" %>
           <button id="reset-and-submit" type="button" class="btn btn-secondary">Cautare noua</button>
         </div>
-        
       </div>
+        <div class="radio">
+          <%= radio_button_tag :search_type, "cont", params[:search_type] == 'cont' || params[:search_type].nil?, class: "form-check-input" %>
+          <label class="form-check-label" for="search_type_cont">Căutare după text</label>
+
+          <%= radio_button_tag :search_type, "eq", params[:search_type] == 'eq', class: "form-check-input" %>
+          <label class="form-check-label" for="search_type_eq">Căutare cuvânt complet</label>
+        </div>
+
+
     </div>
+   
   <% end %>
 </div>
+
 
 
 <%= turbo_frame_tag "valorinutritionales_table" do %>

@@ -40,15 +40,20 @@ class ValorinutritionalesController < ApplicationController
   
   
   
-  def index
+  def index 
     @page_title = "Valori Nutritionale"
-    @q = Valorinutritionale.ransack(params[:q])
-    @valorinutritionales = @q.result.order(:id).page(params[:page]).per(10)
-    @nrpag=@valorinutritionales.total_count
 
-    #@valorinutritionales = Valorinutritionale.page(params[:page]).per(3)
-    @selected_valorinutritionales = session[:selected_values]&.map { |v| @valorinutritionales.find_by(id: v[:id]) }&.compact || []
-  
+    if params[:search_type] == "eq"
+      @valorinutritionales = Valorinutritionale.where('aliment ~* ?', "\\y#{params[:search_term]}\\y").page(params[:page]).per(10)
+      @q = @valorinutritionales.ransack(params[:q])
+      @search_term = params[:search_term] # add this line
+    else
+      @q = Valorinutritionale.ransack(aliment_cont: params[:search_term])
+      @valorinutritionales = @q.result.distinct.order(:id).page(params[:page]).per(10)
+      @search_term = params[:search_term] # add this line
+    end
+    
+    @nrpag=@valorinutritionales.total_count
     @total_values = {
       calorii: 0,
       proteine: 0,
@@ -57,14 +62,17 @@ class ValorinutritionalesController < ApplicationController
       fibre: 0
     }
   
-    @selected_valorinutritionales.each do |valorinutritionale|
-      value = session[:selected_values].find { |v| v[:id] == valorinutritionale.id.to_s }[:value]
-      @total_values[:calorii] += value * valorinutritionale.calorii / 100
-      @total_values[:proteine] += value * valorinutritionale.proteine / 100
-      @total_values[:lipide] += value * valorinutritionale.lipide / 100
-      @total_values[:carbohidrati] += value * valorinutritionale.carbohidrati / 100
-      @total_values[:fibre] += value * valorinutritionale.fibre / 100
+    if @selected_valorinutritionales.present?
+      @selected_valorinutritionales.each do |valorinutritionale|
+        value = session[:selected_values].find { |v| v[:id] == valorinutritionale.id.to_s }[:value]
+        @total_values[:calorii] += value * valorinutritionale.calorii / 100
+        @total_values[:proteine] += value * valorinutritionale.proteine / 100
+        @total_values[:lipide] += value * valorinutritionale.lipide / 100
+        @total_values[:carbohidrati] += value * valorinutritionale.carbohidrati / 100
+        @total_values[:fibre] += value * valorinutritionale.fibre / 100
+      end
     end
+    
     respond_to do |format|
       format.turbo_stream
       format.html
