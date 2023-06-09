@@ -164,7 +164,7 @@ class PaginisitesController < ApplicationController
       
     end
   
-  def export_to_xlsx
+  def export_to_xlsx # export in xlsx lista utilizatori care s-au logat macar odata 
     search_term = params[:search]
 
     # Subquery to get the max created_at for each user_id
@@ -213,13 +213,48 @@ class PaginisitesController < ApplicationController
 
   end
   
+  # export in xlsx lista utilizatori care NU s-au logat nici macar odata
+  def export_to_xlsx_no_login
+    search_term = params[:search]
   
+    # Get all user ids that have logged in
+    logged_in_user_ids = UserPaginisite.joins(:paginisite)
+                                       .where(paginisites: { nume: 'Login' })
+                                       .distinct
+                                       .pluck(:user_id)
+
+                                       
   
+    # Get the users that have not logged in
+    @q = User.where.not(id: logged_in_user_ids)
+             .ransack(
+               email_cont: search_term, 
+               name_cont: search_term, 
+               m: 'or'
+             )
   
+    @users = @q.result.distinct.order('created_at DESC')
   
-  
+    workbook = RubyXL::Workbook.new
+    worksheet = workbook[0]
     
+    # Add the headers
+    worksheet.add_cell(0, 0, 'Nume')
+    worksheet.add_cell(0, 1, 'Email')
+    worksheet.add_cell(0, 2, 'Pagina neaccesata')
   
+    # Add the data
+    @users.each_with_index do |user, index|
+      worksheet.add_cell(index + 1, 0, user.name)
+      worksheet.add_cell(index + 1, 1, user.email)
+      worksheet.add_cell(index + 1, 2, 'Login')
+    end
+    
+    file_path = Rails.root.join('tmp', 'users_no_login.xlsx')
+    workbook.write(file_path)
+    send_file(file_path)
+  end
+   
 
   private
     # Use callbacks to share common setup or constraints between actions.
