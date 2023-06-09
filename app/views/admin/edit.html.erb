@@ -21,6 +21,7 @@
       <div class="form-check">
         <%= form.check_box :active, class: 'form-check-input' %>
         <%= form.label "Activ? Status Actual: ", class: 'form-check-label' %>
+        
         <%if @user.active==nil%><b>Cont activ nativ</b>
          <% elsif @user.active==true %><b>Cont activ</b>
          <%else%><b style="color: red;">Cont dezactivat</b>

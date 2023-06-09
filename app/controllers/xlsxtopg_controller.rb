@@ -535,56 +535,26 @@ end
 def preluaredate10 #listavegetale
   if Rails.env.production?
     xlsx = Roo::Spreadsheet.open('/opt/render/project/src/app/fisierele/listavegetale.xlsx')
-  else  
+  else 
     xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'listavegetale.xlsx'))
   end
-  cap_tabel = xlsx.sheet(0).row(2).map { |col| col.to_s.downcase } # array cu fieldurile din prima linie a fisierului xlsx
-  @cap_tabel=cap_tabel
-  
-  xlsx.each_row_streaming(offset: 2,pad_cells: true) do |row|
-    # verificam daca id-ul exista deja in baza de date
-    next if Lista_vegetale.exists?(cod: row[cap_tabel.index('cod')]&.value) if cap_tabel.include?('cod') 
-    next if row[cap_tabel.index('cod')].value==nil
 
+  xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row|
+    specie = row[0]&.value
+    sinonime = row[1]&.value
+    parteutilizata = row[2]&.value
+    mentiunirestrictii = row[3]&.value
 
+    lista_vegetale = ListaVegetale.new(specie: specie, sinonime: sinonime, parteutilizata: parteutilizata, mentiunirestrictii: mentiunirestrictii)
+    lista_vegetale.save
+  end
 
-
-    cod_index = cap_tabel.index('cod')
-    cod = cod_index ? row[cod_index]&.value : nil 
-
-    aliment_index = cap_tabel.index('aliment')
-    aliment = aliment_index ? row[aliment_index]&.value : nil
-
-    calorii_index = cap_tabel.index('calorii')
-    calorii = calorii_index ? row[calorii_index]&.value : nil
-
-    proteine_index = cap_tabel.index('proteine')
-    proteine = proteine_index ? row[proteine_index]&.value : nil
-
-    lipide_index = cap_tabel.index('lipide')
-    lipide = lipide_index ? row[lipide_index]&.value : nil
-
-    carbohidrati_index = cap_tabel.index('carbohidrati')
-    carbohidrati = carbohidrati_index ? row[carbohidrati_index]&.value : nil
-
-    fibre_index = cap_tabel.index('fibre')
-    fibre = fibre_index ? row[fibre_index]&.value : nil
-
-    
-
-    valorinutritionale = Valorinutritionale.new(cod: cod, aliment: aliment, calorii: calorii, proteine: proteine,
-                      lipide: lipide, carbohidrati: carbohidrati, fibre: fibre)
-    valorinutritionale.save
-    end
-    
-   
-    
-    
-    if !defined?(@verificare_apelare) || (@verificare_apelare.nil? && !caller.find { |c| c.include?("preluaredate") })
-      redirect_to xlsxtopg_index_path, notice: 'Datele au fost preluate cu succes!'
-    end  
-  
+  if !defined?(@verificare_apelare) || (@verificare_apelare.nil? && !caller.find { |c| c.include?("preluaredate") })
+    redirect_to xlsxtopg_index_path, notice: 'Datele au fost preluate cu succes!'
+  end  
 end
+
+
 ######################################
   def sterge_inregistrari
     Plante.destroy_all
@@ -628,6 +598,11 @@ end
     Valorinutritionale.destroy_all
     redirect_to xlsxtopg_index_path, notice: 'Toate înregistrările din tabela Valori Nutritionale au fost șterse!'
   end
+  def sterge_inregistrari10
+    ListaVegetale.destroy_all
+    redirect_to xlsxtopg_index_path, notice: 'Toate înregistrările din tabela Lista Vegetale au fost șterse!'
+  end
+  
   def test
     xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'Lista_proprietati.xlsx'))
     #@row0=xlsx.sheet(0).row(1)   

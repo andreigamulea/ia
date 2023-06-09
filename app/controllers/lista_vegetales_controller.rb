@@ -3,7 +3,15 @@ class ListaVegetalesController < ApplicationController
 
   # GET /lista_vegetales or /lista_vegetales.json
   def index
-    @lista_vegetales = ListaVegetale.all
+    if params[:search_type] == "eq"
+      @lista_vegetales = ListaVegetale.where('specie ~* ? OR sinonime ~* ? OR parteutilizata ~* ? OR mentiunirestrictii ~* ?', "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y").page(params[:page]).per(10)
+      @q = @lista_vegetales.ransack(params[:q])
+      @search_term = params[:search_term] 
+    else
+      @q = ListaVegetale.ransack(specie_cont: params[:search_term], sinonime_cont: params[:search_term], parteutilizata_cont: params[:search_term], mentiunirestrictii_cont: params[:search_term])
+      @lista_vegetales = @q.result.distinct.order(:id).page(params[:page]).per(2843)
+      @search_term = params[:search_term] 
+    end
   end
 
   # GET /lista_vegetales/1 or /lista_vegetales/1.json

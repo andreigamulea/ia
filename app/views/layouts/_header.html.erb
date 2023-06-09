@@ -18,6 +18,12 @@
                 </li>
                 <% end %>
                 <% if current_user && current_user.role == 1 %>  
+                    <li class="nav-item">
+                        <%= link_to 'Lista Vegetale', lista_vegetales_path, id: 'lista_vegetales_link' %>
+                    </li>
+                <% end %>
+
+                <% if current_user && current_user.role == 1 %>  
                 <li class="nav-item">
                     <%= link_to 'Admin', panouadmin_path %>
                 </li>

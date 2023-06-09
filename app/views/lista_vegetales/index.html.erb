@@ -1,14 +1,33 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Lista vegetales</h1>
+<h1>Lista vegetale</h1>
 
-<div id="lista_vegetales">
-  <% @lista_vegetales.each do |lista_vegetale| %>
-    <%= render lista_vegetale %>
-    <p>
-      <%= link_to "Show this lista vegetale", lista_vegetale %>
-    </p>
-  <% end %>
+<div class="table-responsive">
+   <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Specie</th>
+        <th>Sinonime</th>
+        <th>Parte Utilizata</th>
+        <th>Mentiuni Restrictii</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody id="lista_vegetales">
+      <% @lista_vegetales.each do |lista_vegetale| %>
+        <tr>
+          <td><%= lista_vegetale.specie %></td>
+          <td><%= lista_vegetale.sinonime %></td>
+          <td><%= lista_vegetale.parteutilizata %></td>
+          <td><%= lista_vegetale.mentiunirestrictii %></td>
+          <td><%= link_to "Edit", edit_lista_vegetale_path(lista_vegetale), class: "btn btn-warning" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
 
-<%= link_to "New lista vegetale", new_lista_vegetale_path %>
+<%= link_to "New lista vegetale", new_lista_vegetale_path, class: "btn btn-success" %>
+
+
+
