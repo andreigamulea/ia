@@ -17,7 +17,7 @@
                     <%= link_to 'Valori Nutritionale', valorinutritionales_path, id: 'valorinutritionales_link' %>
                 </li>
                 <% end %>
-                <% if current_user && current_user.role == 1 %>  
+                <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Lista vegetale" }) || (current_user && current_user.role == 1) %>  
                     <li class="nav-item">
                         <%= link_to 'Lista Vegetale', lista_vegetales_path, id: 'lista_vegetales_link' %>
                     </li>

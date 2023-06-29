@@ -1,6 +1,8 @@
 class ListaVegetalesController < ApplicationController
   before_action :set_lista_vegetale, only: %i[ show edit update destroy ]
-
+  before_action :authenticate_user!, only: %i[index ] #verifica daca utilizatorul este autentificat
+  before_action :set_user, only: %i[index show]
+  before_action :set_user1, only: %i[edit update destroy]
   # GET /lista_vegetales or /lista_vegetales.json
   def index
     if params[:search_type] == "eq"
@@ -74,5 +76,39 @@ class ListaVegetalesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def lista_vegetale_params
       params.require(:lista_vegetale).permit(:specie, :sinonime, :parteutilizata, :mentiunirestrictii)
+    end
+    def set_user
+      # Verifica daca userul este logat
+      if current_user
+        # Verifica daca userul este admin sau asociat cu cursul "Nutritie"
+        if current_user.role == 1 || current_user.listacursuri.any? { |curs| curs.nume == "Lista vegetale" }
+          # Utilizatorul are acces la resursa
+        else
+          # Utilizatorul nu are acces la resursa
+          flash[:alert] = "Nu ai acces la această resursă."
+          redirect_to root_path
+        end
+      else
+        # Utilizatorul nu este logat
+        flash[:alert] = "Trebuie să te autentifici pentru a accesa această resursă."
+        redirect_to login_path
+      end
+    end
+    def set_user1
+      # Verifica daca userul este logat
+      if current_user
+        # Verifica daca userul este admin sau asociat cu cursul "Nutritie"
+        if current_user.role == 1 
+          # Utilizatorul are acces la resursa
+        else
+          # Utilizatorul nu are acces la resursa
+          flash[:alert] = "Nu ai acces la această resursă."
+          redirect_to lista_vegetales_path
+        end
+      else
+        # Utilizatorul nu este logat
+        flash[:alert] = "Trebuie să te autentifici pentru a accesa această resursă."
+        redirect_to root_path
+      end
     end
 end

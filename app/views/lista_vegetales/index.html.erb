@@ -1,6 +1,7 @@
+<section class="tabel-container .rotate-landscape">
 <p style="color: green"><%= notice %></p>
 
-<h1>Lista vegetale</h1>
+<h1 class="alimente-nutritionale">Lista vegetale</h1></br>
 
 <div class="table-responsive">
    <table class="table table-striped">
@@ -10,7 +11,9 @@
         <th>Sinonime</th>
         <th>Parte Utilizata</th>
         <th>Mentiuni Restrictii</th>
+        <%if current_user.role==1%>
         <th>Edit</th>
+        <%end%>
       </tr>
     </thead>
     <tbody id="lista_vegetales">
@@ -20,7 +23,9 @@
           <td><%= lista_vegetale.sinonime %></td>
           <td><%= lista_vegetale.parteutilizata %></td>
           <td><%= lista_vegetale.mentiunirestrictii %></td>
+          <%if current_user.role==1%>
           <td><%= link_to "Edit", edit_lista_vegetale_path(lista_vegetale), class: "btn btn-warning" %></td>
+          <%end%>
         </tr>
       <% end %>
     </tbody>
@@ -29,5 +34,5 @@
 
 <%= link_to "New lista vegetale", new_lista_vegetale_path, class: "btn btn-success" %>
 
-
+</section>
 
