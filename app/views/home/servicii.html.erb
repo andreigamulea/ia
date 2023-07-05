@@ -9,9 +9,9 @@
             <thead class="thead-dark">
                 <tr class= "trdesk">
                     <th>Servicii</th>
-                    <th>Pret</th>
+                    
                     <th>Detalii</th>
-                    <th>Mai multe informații</th>
+                    <th>Pret</th>
                     <th>Actiune</th>
                 </tr>      
             </thead>
@@ -19,10 +19,10 @@
                 <% @prods.each do |prod| %>
                     <tr>
                         <td> <%= prod.nume %> </td>
-                        <td><%= prod.pret.to_i %> lei</td>
+                       
  
                         <td><%= prod.detalii %></td> 
-                        <td><a href="<%= prod.curslegatura %>">Vizualizează Detalii</a></td>
+                         <td><%= prod.pret.to_i %> lei</td>
 
                         <td> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
                     </tr>  
