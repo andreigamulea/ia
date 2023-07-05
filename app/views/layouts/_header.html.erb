@@ -35,9 +35,9 @@
                 <li><%= link_to 'Login', new_user_session_with_return_path('menu') %></li>
                 <li><%= link_to 'Creaza cont', new_user_registration_path %></li>
                 <% end %>
-                <% if current_user && current_user.role == 1 %>  
+                
                 <li><%= link_to 'Servicii', servicii_path %></li>
-                <% end %>
+                
                 <li><%= link_to 'Contact', contact_path %></li> 
                
             </ul>

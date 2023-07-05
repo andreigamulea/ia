@@ -15,7 +15,8 @@ class DetaliifacturaresController < ApplicationController
   end
   def create     
     puts("sunt in createeeeeeeeeeeeeeeeeeeeee")
-    @detaliifacturare = current_user.detaliifacturares.first_or_initialize
+    @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare
+
     @prod = Prod.find(detaliifacturare_params[:s])
     
     detaliifacturare_params_without_s = detaliifacturare_params.except(:s)
