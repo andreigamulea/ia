@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nume: MyString
+  detalii: MyText
+  info: MyText
+  pret: 9.99
+  valabilitatezile: 1
+  curslegatura: MyString
+
+two:
+  nume: MyString
+  detalii: MyText
+  info: MyText
+  pret: 9.99
+  valabilitatezile: 1
+  curslegatura: MyString

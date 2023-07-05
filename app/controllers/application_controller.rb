@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
     #before_action :authenticate_user!
     before_action :check_user_active
     skip_before_action :check_user_active, only: [:after_sign_in_path_for]
-
+    before_action :set_stripe_key
     def track_ahoy_visit
       ahoy.track "Processed #{controller_name}##{action_name}", request.filtered_parameters
     end   
@@ -55,7 +55,9 @@ class ApplicationController < ActionController::Base
           root_path # Înlocuiește cu calea implicită
         end
       end
-      
+      def set_stripe_key
+        @stripe_public_key = Rails.application.credentials.dig(:stripe, :publishable_key)
+      end
       
       
 end

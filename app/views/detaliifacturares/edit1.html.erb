@@ -1,0 +1,103 @@
+<% if user_signed_in? %>
+<div class="container">
+  <div class="row">
+  <div class="col-5">
+  <%= form_with(model: @detaliifacturare, url: detaliifacturare_update1_path(@detaliifacturare), method: :patch, remote: true, class: 'needs-validation', data: { turbo: false }) do |f| %>
+  
+    <% if @detaliifacturare.errors.any? %>
+      <div class="alert alert-danger">
+        <h4>Urmatoarele campuri nu sunt completate</h4>
+
+        <ul>
+          <% @detaliifacturare.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:prenume].any? %>">
+        <%= f.label "Prenume*", class: "form-label" %>
+        <%= f.text_field :prenume, class: "form-control" %>
+    </div>
+
+    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:nume].any? %>">
+        <%= f.label "Nume*", class: "form-label" %>
+        <%= f.text_field :nume, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+        <%= f.label "Nume companie (optional)", class: "form-label" %>
+        <%= f.text_field :numecompanie, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+        <%= f.label "Cui (optional)", class: "form-label" %>
+        <%= f.text_field :cui, class: "form-control" %>
+    </div>
+
+    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:tara].any? %>">
+        <%= f.label :tara, class: "form-label" %>
+        <%= f.text_field :tara, class: "form-control", value: f.object.tara.presence || "România" %>
+    </div>
+            
+    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:localitate].any? %>">
+      <%= f.label :localitate, class: "form-label" %>
+      <%= f.text_field :localitate, class: "form-control" %>
+    </div>
+
+    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:judet].any? %>">
+      <%= f.label :judet, "Judet / Sector".titleize, class: "form-label" %>
+      <%= f.text_field :judet, class: "form-control" %>
+    </div>
+
+    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:codpostal].any? %>">
+      <%= f.label "Cod postal*", class: "form-label" %>
+      <%= f.text_field :codpostal, class: "form-control" %>
+    </div>
+
+    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:strada].any? %>">
+      <%= f.label "Strada*",     class: "form-label" %>
+      <%= f.text_field :strada, class: "form-control" %>
+    </div>
+
+    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:numar].any? %>">
+      <%= f.label "Numar*", class: "form-label" %>
+      <%= f.text_field :numar, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label "Bloc, Etaj, Apartament (optional)", class: "form-label" %>
+      <%= f.text_area :altedate, class: "form-control", rows: 3 %>
+    </div>
+
+    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:telefon].any? %>">
+      <%= f.label "Telefon*", class: "form-label" %>
+      <%= f.text_field :telefon, class: "form-control" %>
+    </div>
+
+    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:adresaemail].any? %>">
+      <%= f.label "Email*", class: "form-label" %>
+      <%= f.text_field :adresaemail, class: "form-control", value: f.object.adresaemail.presence || current_user.email %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.submit "Actualizeaza", class: "btn btn-primary" %>
+    </div>
+
+  <% end %>
+  </div>
+  <div class="col-2">
+    <!-- spațiul gol din mijloc, puteți lăsa acest div gol -->
+  </div>
+  <div class="col-5">
+    <!-- Puteți adăuga aici conținutul pe care doriți să-l afișați în partea dreaptă a paginii -->
+  </div>
+  </div>
+</div>
+<% else %>
+  <h1 class="mb-3">Trebuie să te loghezi pentru a vedea această pagină.</h1>
+  <%= link_to "Loghează-te aici", new_user_session_path, class: "btn btn-primary" %>
+<% end %>
+<%= link_to 'Inapoi', detaliifacturares_path, class: 'btn btn-secondary mt-3' %>
+

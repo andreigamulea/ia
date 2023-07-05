@@ -11,6 +11,12 @@ class HomeController < ApplicationController
   end 
   def panouadmin
   end
+  def servicii
+    @prods = Prod.order(:id)
+    if params[:payment] == "success"
+      flash[:notice] = "Plata a fost efectuată cu succes!"
+    end
+  end  
   def tabeleahoy
     @ahoy_visits = Ahoy::Visit.order(started_at: :desc).limit(30).includes(:user).reverse
     @ahoy_events = Ahoy::Event.order(time: :desc).limit(200).includes(:user).reverse

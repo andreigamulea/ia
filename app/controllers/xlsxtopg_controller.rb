@@ -544,15 +544,22 @@ def preluaredate10 #listavegetale
     sinonime = row[1]&.value
     parteutilizata = row[2]&.value
     mentiunirestrictii = row[3]&.value
+    numar = row[4]&.value  # Adaugăm această linie
+    dataa = row[5]&.value  # Adaugăm această linie
 
-    lista_vegetale = ListaVegetale.new(specie: specie, sinonime: sinonime, parteutilizata: parteutilizata, mentiunirestrictii: mentiunirestrictii)
-    lista_vegetale.save
+    # Doar dacă cel puțin o valoare nu este goală sau nulă, salvează înregistrarea
+    if [specie, sinonime, parteutilizata, mentiunirestrictii, numar, dataa].any?(&:present?)
+      lista_vegetale = ListaVegetale.new(specie: specie, sinonime: sinonime, parteutilizata: parteutilizata, mentiunirestrictii: mentiunirestrictii, numar: numar, dataa: dataa)
+      lista_vegetale.save
+    end
   end
 
   if !defined?(@verificare_apelare) || (@verificare_apelare.nil? && !caller.find { |c| c.include?("preluaredate") })
     redirect_to xlsxtopg_index_path, notice: 'Datele au fost preluate cu succes!'
   end  
 end
+
+
 
 
 ######################################

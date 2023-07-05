@@ -1,0 +1,67 @@
+<p style="color: green"><%= notice %></p>
+
+
+  <h1 class="my-4">Comenzi</h1>
+
+  <table class="table table-sm table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Data Comenzii</th>
+        <th scope="col">Numar</th>
+        <th scope="col">Statecomanda1</th>
+        <th scope="col">Statecomanda2</th>
+        <th scope="col">Stateplata1</th>
+        <th scope="col">Stateplata2</th>
+        <th scope="col">Stateplata3</th>
+        <th scope="col">User</th>
+        <th scope="col">Emailcurrent</th>
+        <th scope="col">Emailplata</th>
+        <th scope="col">Total</th>
+        <th scope="col">Plataprin</th>
+        <th scope="col">Produs</th>
+        <th scope="col">Actions</th>
+        <th scope="col">Detalii factura</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @comandas.each do |comanda| %>
+        <tr>
+          <td style="width: 10%;"><%= comanda.datacomenzii %></td>
+          <td style="width: 5%;"><%= comanda.numar %></td>
+          <td style="width: 8%;"><%= comanda.statecomanda1 %></td>
+          <td style="width: 8%;"><%= comanda.statecomanda2 %></td>
+          <td style="width: 8%;"><%= comanda.stateplata1 %></td>
+          <td style="width: 8%;"><%= comanda.stateplata2 %></td>
+          <td style="width: 8%;"><%= comanda.stateplata3 %></td>
+          <td style="width: 5%;"><%= comanda.user_id %></td>
+          <td style="width: 10%;"><%= comanda.emailcurrent %></td>
+          <td style="width: 10%;"><%= comanda.emailplata %></td>
+          <td style="width: 5%;"><%= comanda.total %></td>
+          <td style="width: 8%;"><%= comanda.plataprin %></td>
+          <td style="width: 10%;">
+  <% comanda.prods.each do |prod| %>
+    <%= prod.nume %>
+  <% end %>
+</td>
+          <td style="width: 10%;">
+            <%= link_to "Show", comanda, class: "btn btn-primary btn-sm" %>
+            <%= link_to "Edit", edit_comanda_path(comanda), class: "btn btn-secondary btn-sm" %>
+            <%= link_to "Delete", comanda, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>            
+          </td>
+          <% if comanda.user_id.present? %>
+          <td>
+            <%= link_to 'Detalii facturare', detaliifacturare_path(comanda.user_id), class: "btn btn-info" %>
+          </td>
+        <% else %>
+          <td>No user associated</td>
+        <% end %>
+        
+
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% link_to "New Comanda", new_comanda_path, class: "btn btn-success mt-3" %>
+

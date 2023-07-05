@@ -1,0 +1,62 @@
+<h1>Detalii Facturare</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>User_id</th>
+      <th>Prenume</th>
+      <th>Nume</th>
+      <th>Nume companie</th>
+      <th>CUI</th>
+      <th>Tara</th>
+      <th>Localitate</th>
+      <th>Judet/Sector</th>
+      <th>Cod postal</th>
+      <th>Strada</th>
+      <th>Numar</th>
+      <th>Alte date</th>
+      <th>Telefon</th>
+      <th>Adresa email</th>
+      <th>Creat la data</th>
+      <th>Update la data</th>
+     
+
+      <th>Acțiuni</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @detaliifacturare.each do |detaliifacturare| %>
+      <tr>
+        <td><%= detaliifacturare.user_id %></td>
+        <td><%= detaliifacturare.prenume %></td>
+        <td><%= detaliifacturare.nume %></td>
+
+
+        
+       
+        <td><%= detaliifacturare.numecompanie %></td>
+        <td><%= detaliifacturare.cui %></td>
+        <td><%= detaliifacturare.tara %></td>
+        <td><%= detaliifacturare.localitate %></td>
+        <td><%= detaliifacturare.judet %></td>
+        <td><%= detaliifacturare.codpostal %></td>
+        <td><%= detaliifacturare.strada %></td>
+        <td><%= detaliifacturare.numar %></td>
+        <td><%= detaliifacturare.altedate %></td>
+        <td><%= detaliifacturare.telefon %></td>
+        <td><%= detaliifacturare.adresaemail %></td>
+        <td><%= detaliifacturare.created_at %></td>
+        <td><%= detaliifacturare.updated_at %></td>
+
+        <!-- Adauga aici restul campurilor pe care doresti sa le afisezi -->
+        <td>
+        <%= link_to 'Edit', detaliifacturare_edit1_path(detaliifacturare), method: :patch, class: 'btn btn-primary' %>
+        
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

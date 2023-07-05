@@ -52,7 +52,7 @@ class ValorinutritionalesController < ApplicationController
       @valorinutritionales = @q.result.distinct.order(:id).page(params[:page]).per(10)
       @search_term = params[:search_term] # add this line
     end
-    
+    @total_records = @valorinutritionales.total_count
     @nrpag=@valorinutritionales.total_count
     @total_values = {
       calorii: 0,

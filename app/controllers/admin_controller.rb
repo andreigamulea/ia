@@ -2,7 +2,7 @@ class AdminController < ApplicationController
   before_action :authenticate_user!, only: %i[index edit update]
   before_action :require_admin, only: %i[index new edit update create]
   before_action :set_user, only: [:edit, :update]
-
+  
   def index
     @q = User.ransack(params[:q])
     @users = @q.result.page(params[:page]).per(15)
@@ -15,7 +15,7 @@ class AdminController < ApplicationController
   
   def create #se inregistreaza in tabela utilizatorul nou
     @user = User.new(user_params.except(:cursuri))
-  
+    
     if @user.save
       listacursuris = Listacursuri.all
   
@@ -123,7 +123,7 @@ class AdminController < ApplicationController
 
     end
   end
-    
+ 
 
   private
 
@@ -143,7 +143,7 @@ class AdminController < ApplicationController
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :active, cursuri: {})
   end
   
-  
+ 
   
   
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_25_163219) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_05_182138) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,6 +56,34 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_163219) do
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
   end
 
+  create_table "comandas", force: :cascade do |t|
+    t.date "datacomenzii"
+    t.integer "numar"
+    t.string "statecomanda1"
+    t.string "statecomanda2"
+    t.string "stateplata1"
+    t.string "stateplata2"
+    t.string "stateplata3"
+    t.integer "user_id"
+    t.string "emailcurrent"
+    t.string "emailplata"
+    t.decimal "total"
+    t.string "plataprin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "comenzi_prods", force: :cascade do |t|
+    t.bigint "prod_id", null: false
+    t.bigint "comanda_id", null: false
+    t.date "datainceput"
+    t.date "datasfarsit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comanda_id"], name: "index_comenzi_prods_on_comanda_id"
+    t.index ["prod_id"], name: "index_comenzi_prods_on_prod_id"
+  end
+
   create_table "cursuri_history", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "listacursuri_id", null: false
@@ -77,8 +105,28 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_163219) do
     t.datetime "updated_at", null: false
     t.integer "listacursuri_id"
     t.integer "user_id"
+    t.string "sursa"
     t.index ["listacursuri_id"], name: "index_cursuris_on_listacursuri_id"
     t.index ["user_id"], name: "index_cursuris_on_user_id"
+  end
+
+  create_table "detaliifacturares", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "prenume"
+    t.string "nume"
+    t.string "numecompanie"
+    t.string "cui"
+    t.string "tara"
+    t.string "codpostal"
+    t.string "strada"
+    t.string "numar"
+    t.text "altedate"
+    t.string "telefon"
+    t.string "adresaemail"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "localitate"
+    t.string "judet"
   end
 
   create_table "importanta", force: :cascade do |t|
@@ -96,6 +144,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_163219) do
     t.string "mentiunirestrictii"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "numar"
+    t.date "dataa"
+    t.index ["dataa"], name: "index_lista_vegetales_on_dataa"
     t.index ["mentiunirestrictii"], name: "index_lista_vegetales_on_mentiunirestrictii"
     t.index ["parteutilizata"], name: "index_lista_vegetales_on_parteutilizata"
     t.index ["sinonime"], name: "index_lista_vegetales_on_sinonime"
@@ -202,6 +253,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_163219) do
     t.index ["nume"], name: "index_plantes_on_nume", unique: true
   end
 
+  create_table "prods", force: :cascade do |t|
+    t.string "nume"
+    t.text "detalii"
+    t.text "info"
+    t.decimal "pret"
+    t.integer "valabilitatezile"
+    t.string "curslegatura"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "linkstripe"
+  end
+
   create_table "recomandaris", force: :cascade do |t|
     t.integer "listaproprietati_id"
     t.integer "idpr"
@@ -277,6 +340,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_163219) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active"
+    t.string "stripe_customer_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -303,6 +367,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_163219) do
     t.index ["proteine"], name: "index_valorinutritionales_on_proteine"
   end
 
+  add_foreign_key "comenzi_prods", "comandas"
+  add_foreign_key "comenzi_prods", "prods"
   add_foreign_key "cursuri_history", "listacursuris"
   add_foreign_key "cursuri_history", "users", on_delete: :nullify
   add_foreign_key "user_paginisites", "paginisites"

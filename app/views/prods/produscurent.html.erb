@@ -1,0 +1,48 @@
+<h1><%= @prod.nume %></h1>
+<p>Pret: <%= @prod.pret %> RON</p>
+
+
+
+<button id="pay-button">Plătește</button> 
+
+
+<script>
+console.log("da1");
+  document.getElementById('pay-button').addEventListener('click', function(e) {
+    e.preventDefault();
+    console.log("da2");
+    fetch('/prods/' + "<%= @prod.id %>" + '/pay')    
+    .then(function(response) {
+        console.log("da3");
+        if (response.ok) {
+            console.log("da4");
+            return response.json();
+        } else {
+            console.log("da5");
+            throw new Error('Eroare la crearea sesiunii de plată');
+        }
+    })
+    .then(function(data) {
+        console.log("Răspunsul JSON:", data);  // Loghează datele rezultate după ce s-a rezolvat promisiunea
+        return data;  // Întoarce datele pentru a fi utilizate în următorul `.then()`
+    })
+    .then(function(data) {
+        console.log(data.message);  // Afișează mesajul în consola browserului
+        console.log("da7");
+
+        
+        var stripe = Stripe("<%= @stripe_public_key %>");
+
+        stripe.redirectToCheckout({ sessionId: data.session_id });
+    })
+    .catch(function(error) {
+        console.error('Eroare:', error);
+        console.log("da6");
+    });
+    
+  });
+
+  </script>
+
+
+  

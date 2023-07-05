@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+ get '/detaliifacturares/:id/pay', to: 'detaliifacturares#pay', as: 'detaliifacturare_pay'
+ get 'detaliifacturares/:id/get_stripe_session_id', to: 'detaliifacturares#get_stripe_session_id', as: 'get_stripe_session_id'
+ patch 'detaliifacturares/:id/update1', to: 'detaliifacturares#update1', as: 'detaliifacturare_update1'
+ get 'detaliifacturares/:id/edit1', to: 'detaliifacturares#edit1', as: 'detaliifacturare_edit1'
+
+  get 'prods/produscurent'
+  
+  resources :prods
+  resources :comandas
+  
+  #post 'detaliifacturares/create'
   mount Ahoy::Engine => "/ahoy"
   resources :lista_vegetales
   resources :paginisites
@@ -15,6 +26,16 @@ Rails.application.routes.draw do
   put 'admin/update/:id', to: 'admin#update', as: 'update_admin'
   get 'admin/edit/:id', to: 'admin#edit', as: 'edit_admin'
   get 'admin/new', to: 'admin#new', as: 'new_admin'
+  
+ # în routes.rb
+ 
+  get 'detaliifacturare', to: 'detaliifacturares#datefacturare', as: 'datefacturare'  
+  resources :detaliifacturares, only: [:index, :edit, :create, :update, :datefacturare, :show]
+  
+  
+  
+
+
   post 'admin/create', to: 'admin#create', as: 'create_admin'
   
 
@@ -44,6 +65,7 @@ Rails.application.routes.draw do
   get '/politica-confidentialitate', to: 'home#politica_confidentialitate'
   get '/politica-cookies', to: 'home#politica_cookies'
   get '/politica-gdpr', to: 'home#politica_gdpr'
+  get '/servicii', to: 'home#servicii'
   get '/panouadmin', to: 'home#panouadmin'
   get '/tabeleahoy', to: 'home#tabeleahoy', as: 'tabeleahoy_home'
 

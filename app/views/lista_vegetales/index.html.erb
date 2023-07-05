@@ -1,16 +1,44 @@
 <section class="tabel-container .rotate-landscape">
+<div id="pas">
+  <%= search_form_for @q do |f|%>
+    <div style="width:100%;" class="form-group">
+      <div class="input-group">
+        
+        <%= f.text_field :specie_or_sinonime_cont, value: @search_term, placeholder: "Cautare Vegetale", class: "form-control", name: "search_term" %>
+        
+        <div class="input-group-append">
+          <%= f.submit 'Cauta', class: "btn btn-primary" %>
+          <button id="reset-and-submit" type="button" class="btn btn-secondary">Cautare noua</button>
+        </div>
+      </div>
+      <div class="radio">
+        <%= radio_button_tag :search_type, "cont", params[:search_type] == 'cont' || params[:search_type].nil?, class: "form-check-input" %>
+        <label class="form-check-label" for="search_type_cont">Căutare după text</label>
+
+        <%= radio_button_tag :search_type, "eq", params[:search_type] == 'eq', class: "form-check-input" %>
+        <label class="form-check-label" for="search_type_eq">Căutare cuvânt complet</label>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+
 <p style="color: green"><%= notice %></p>
 
 <h1 class="alimente-nutritionale">Lista vegetale</h1></br>
-
+<span style= "float: right;"><%=@total_records%> records gasite</span></br>
 <div class="table-responsive">
-   <table class="table table-striped">
+
+<table class="table table-striped table-bordered table-hover">
     <thead class="thead-dark">
-      <tr>
-        <th>Specie</th>
-        <th>Sinonime</th>
-        <th>Parte Utilizata</th>
-        <th>Mentiuni Restrictii</th>
+      <tr> 
+        <th>Nr.</th>
+        <th>Data</th>
+        <th>Denumirea botanică actuală</th>
+        <th>Denumiri botanice sinonime</th>
+        <th>Partea utilizată</th>
+        <th>Atenționări cu privire la utilizare (*)</th>
+       
         <%if current_user.role==1%>
         <th>Edit</th>
         <%end%>
@@ -19,10 +47,12 @@
     <tbody id="lista_vegetales">
       <% @lista_vegetales.each do |lista_vegetale| %>
         <tr>
+          <td><%= lista_vegetale.numar %></td>
+          <td style="white-space: nowrap;"><%= lista_vegetale.dataa %></td>
           <td><%= lista_vegetale.specie %></td>
           <td><%= lista_vegetale.sinonime %></td>
           <td><%= lista_vegetale.parteutilizata %></td>
-          <td><%= lista_vegetale.mentiunirestrictii %></td>
+          <td><%= lista_vegetale.mentiunirestrictii %></td>          
           <%if current_user.role==1%>
           <td><%= link_to "Edit", edit_lista_vegetale_path(lista_vegetale), class: "btn btn-warning" %></td>
           <%end%>
@@ -30,9 +60,13 @@
       <% end %>
     </tbody>
   </table>
+  <%= paginate @lista_vegetales %>
+
 </div>
 
-<%= link_to "New lista vegetale", new_lista_vegetale_path, class: "btn btn-success" %>
 
+<%if current_user.role==1%>
+<%= link_to "New lista vegetale", new_lista_vegetale_path, class: "btn btn-success" %>
+<%end%>
 </section>
 

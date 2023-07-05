@@ -1,0 +1,11 @@
+<section class="container">
+  <% if user_signed_in? %>
+    <h1 class="mb-3 text-center">Detalii facturare pentru <%= current_user.email %></h1>
+    <%= turbo_frame_tag 'detaliifacturare_form' do %>
+      <%= render 'form', detaliifacturare: @detaliifacturare %>
+    <% end %>
+  <% else %>
+    <h1 class="mb-3">Trebuie să te loghezi pentru a vedea această pagină.</h1>
+    <%= link_to "Loghează-te aici", new_user_session_path, class: "btn btn-primary" %>
+  <% end %>
+</section>

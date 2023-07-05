@@ -1,0 +1,37 @@
+<div class="column" style="display: flex; justify-content: center;">        
+  <img src="<%= image_path('nutritie-ayushcell.jpg') %>" alt="Imagine">       
+</div>
+
+<script>
+console.log("da11");
+
+fetch('/detaliifacturares/' + "<%= @prod.id %>" + '/pay')   
+.then(function(response) {
+    console.log("da33");
+    if (response.ok) {
+        console.log("da44");
+        return response.json();
+    } else {
+        console.log("da55");
+        throw new Error('Eroare la crearea sesiunii de plată');
+    }
+})
+.then(function(data) {
+    console.log("Răspunsul JSON:", data);  // Loghează datele rezultate după ce s-a rezolvat promisiunea
+    return data;  // Întoarce datele pentru a fi utilizate în următorul `.then()`
+})
+.then(function(data) {
+    console.log(data.message);  // Afișează mesajul în consola browserului
+    console.log("da77");
+
+    
+    var stripe = Stripe("<%= @stripe_public_key %>");
+
+    stripe.redirectToCheckout({ sessionId: data.session_id });
+})
+.catch(function(error) {
+    console.error('Eroare:', error);
+    console.log("da66");
+});
+
+</script>

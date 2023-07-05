@@ -1,0 +1,77 @@
+<%= form_with(model: comanda) do |form| %>
+  <% if comanda.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(comanda.errors.count, "error") %> prohibited this comanda from being saved:</h2>
+
+      <ul>
+        <% comanda.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :datacomenzii, style: "display: block" %>
+    <%= form.date_field :datacomenzii %>
+  </div>
+
+  <div>
+    <%= form.label :numar, style: "display: block" %>
+    <%= form.number_field :numar %>
+  </div>
+
+  <div>
+    <%= form.label :statecomanda1, style: "display: block" %>
+    <%= form.text_field :statecomanda1 %>
+  </div>
+
+  <div>
+    <%= form.label :statecomanda2, style: "display: block" %>
+    <%= form.text_field :statecomanda2 %>
+  </div>
+
+  <div>
+    <%= form.label :stateplata1, style: "display: block" %>
+    <%= form.text_field :stateplata1 %>
+  </div>
+
+  <div>
+    <%= form.label :stateplata2, style: "display: block" %>
+    <%= form.text_field :stateplata2 %>
+  </div>
+
+  <div>
+    <%= form.label :stateplata3, style: "display: block" %>
+    <%= form.text_field :stateplata3 %>
+  </div>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.number_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :emailcurrent, style: "display: block" %>
+    <%= form.text_field :emailcurrent %>
+  </div>
+
+  <div>
+    <%= form.label :emailplata, style: "display: block" %>
+    <%= form.text_field :emailplata %>
+  </div>
+
+  <div>
+    <%= form.label :total, style: "display: block" %>
+    <%= form.text_field :total %>
+  </div>
+
+  <div>
+    <%= form.label :plataprin, style: "display: block" %>
+    <%= form.text_field :plataprin %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

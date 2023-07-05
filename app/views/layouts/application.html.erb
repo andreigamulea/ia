@@ -22,7 +22,7 @@
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-      
+      <script src="https://js.stripe.com/v3/"></script>
       <%= javascript_importmap_tags %> 
       <%= javascript_include_tag "turbo" %>
       <%= javascript_include_tag "headermobil", "data-turbo-track": "reload" %>
@@ -34,6 +34,7 @@
       <script src="https://cdn.jsdelivr.net/npm/@baianat/turbo@0.0.0/dist/js/turbo.min.js"></script>
       <%= javascript_include_tag "main", "data-turbo-track": "reload" %>
       
+
 
 
        
@@ -53,7 +54,7 @@
       </div>
     <% end %>
   <%= render 'layouts/header' %>  
-   
+  
   <%= yield %>
     
   <%= render 'layouts/footer' %> 

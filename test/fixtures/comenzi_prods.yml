@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  prod: one
+  comanda: one
+  datainceput: 2023-07-02
+  datasfarsit: 2023-07-02
+
+two:
+  prod: two
+  comanda: two
+  datainceput: 2023-07-02
+  datasfarsit: 2023-07-02

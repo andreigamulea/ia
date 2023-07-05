@@ -5,16 +5,26 @@ class ListaVegetalesController < ApplicationController
   before_action :set_user1, only: %i[edit update destroy]
   # GET /lista_vegetales or /lista_vegetales.json
   def index
+    @page_title = "Lista vegetale"
+
     if params[:search_type] == "eq"
-      @lista_vegetales = ListaVegetale.where('specie ~* ? OR sinonime ~* ? OR parteutilizata ~* ? OR mentiunirestrictii ~* ?', "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y").page(params[:page]).per(10)
-      @q = @lista_vegetales.ransack(params[:q])
-      @search_term = params[:search_term] 
+        @lista_vegetales = ListaVegetale.where('specie ~* ? OR sinonime ~* ?', "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y").page(params[:page]).per(10)
+        @q = @lista_vegetales.ransack(params[:q])
+        @search_term = params[:search_term] 
     else
-      @q = ListaVegetale.ransack(specie_cont: params[:search_term], sinonime_cont: params[:search_term], parteutilizata_cont: params[:search_term], mentiunirestrictii_cont: params[:search_term])
-      @lista_vegetales = @q.result.distinct.order(:id).page(params[:page]).per(2843)
-      @search_term = params[:search_term] 
+        @q = ListaVegetale.ransack({specie_cont: params[:search_term], sinonime_cont: params[:search_term], m: 'or'})
+        @lista_vegetales = @q.result.distinct.order(:id).page(params[:page]).per(10)
+        @search_term = params[:search_term]
     end
-  end
+    # Numărul total de înregistrări și numărul de pagini
+    @total_records = @lista_vegetales.total_count
+
+    @total_pages = (@total_records / 10.0).ceil
+end
+
+
+  
+  
 
   # GET /lista_vegetales/1 or /lista_vegetales/1.json
   def show
@@ -75,7 +85,7 @@ class ListaVegetalesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def lista_vegetale_params
-      params.require(:lista_vegetale).permit(:specie, :sinonime, :parteutilizata, :mentiunirestrictii)
+      params.require(:lista_vegetale).permit(:specie, :sinonime, :parteutilizata, :mentiunirestrictii, :numar, :dataa)
     end
     def set_user
       # Verifica daca userul este logat
