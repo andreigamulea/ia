@@ -8,12 +8,8 @@ class StripeWebhooksController < ApplicationController
 
     begin
       event = Stripe::Webhook.construct_event(
-        payload, sig_header, Rails.application.credentials.dig(:stripe, :secret_key)
+        payload, sig_header, Rails.application.credentials.dig(:stripe, :webhook_secret)
       )
-
-      
-      
-
     rescue JSON::ParserError => e
       # Invalid payload
       status 400
@@ -23,6 +19,7 @@ class StripeWebhooksController < ApplicationController
       status 400
       return
     end
+    
 
     # Handle the event
     case event.type
