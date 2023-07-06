@@ -55,8 +55,10 @@ class ApplicationController < ActionController::Base
           root_path # Înlocuiește cu calea implicită
         end
       end
+     
       def set_stripe_key
-        @stripe_public_key = Rails.application.credentials.dig(:stripe, :publishable_key, :webhook_secret)
+        @stripe_public_key = Rails.application.credentials.dig(:stripe, :publishable_key)
+        @stripe_webhook_secret = Rails.application.credentials.dig(:stripe, :secret_key)
       end
       
       
