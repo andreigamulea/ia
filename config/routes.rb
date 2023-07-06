@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
  post '/stripe-webhooks', to: 'stripe_webhooks#create'
 
+
  get '/detaliifacturares/:id/pay', to: 'detaliifacturares#pay', as: 'detaliifacturare_pay'
  get 'detaliifacturares/:id/get_stripe_session_id', to: 'detaliifacturares#get_stripe_session_id', as: 'get_stripe_session_id'
  patch 'detaliifacturares/:id/update1', to: 'detaliifacturares#update1', as: 'detaliifacturare_update1'

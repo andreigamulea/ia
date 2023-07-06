@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
         end
       end
       def set_stripe_key
-        @stripe_public_key = Rails.application.credentials.dig(:stripe, :publishable_key)
+        @stripe_public_key = Rails.application.credentials.dig(:stripe, :publishable_key, :webhook_secret)
       end
       
       
