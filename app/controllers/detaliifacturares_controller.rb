@@ -13,6 +13,18 @@ class DetaliifacturaresController < ApplicationController
   def show
     @detaliifacturare = User.find(params[:id]).detaliifacturare
   end
+  def edit1
+    @detaliifacturare = Detaliifacturare.find(params[:id])
+  end
+  
+  def update1
+    @detaliifacturare = Detaliifacturare.find(params[:id])
+    if @detaliifacturare.update(detaliifacturare_params)
+      redirect_to detaliifacturares_path
+    else
+      render 'edit1'
+    end
+  end
   def create     
     puts("sunt in createeeeeeeeeeeeeeeeeeeeee")
     @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare
@@ -40,18 +52,7 @@ class DetaliifacturaresController < ApplicationController
     end
 
   end  
-  def edit1
-    @detaliifacturare = Detaliifacturare.find(params[:id])
-  end
-  
-  def update1
-    @detaliifacturare = Detaliifacturare.find(params[:id])
-    if @detaliifacturare.update(detaliifacturare_params)
-      redirect_to detaliifacturares_path
-    else
-      render 'edit1'
-    end
-  end
+ 
   
   def update
     puts("sunt in updateeeeeeeeeeeeeeeeeeeeee")
@@ -89,7 +90,9 @@ class DetaliifacturaresController < ApplicationController
   
   
   def pay
+    puts("sunt in payeeeeeeeeeeeeeeeeeeeeee")
     @prod = Prod.find(params[:id])
+    @detaliifacturare = current_user.detaliifacturare
     # Asigura-te că utilizatorul are un client Stripe
     if current_user.stripe_customer_id.nil?
       begin
@@ -146,7 +149,24 @@ class DetaliifacturaresController < ApplicationController
           metadata: {
             user_id: current_user.id.to_s,
             email: current_user.email,
-            numar_comanda: numar_comanda
+            numar_comanda: numar_comanda,
+
+            nume: @detaliifacturare.nume,
+            prenume: @detaliifacturare.prenume,
+            numecompanie: @detaliifacturare.numecompanie,
+            cui: @detaliifacturare.cui,            
+            tara: @detaliifacturare.tara,
+            
+            
+            strada: @detaliifacturare.strada,
+            numar: @detaliifacturare.numar,
+            altedate: @detaliifacturare.altedate,
+            adresaemail: @detaliifacturare.adresaemail,            
+            judet: @detaliifacturare.judet,
+            localitate: @detaliifacturare.localitate,
+            codpostal: @detaliifacturare.codpostal,
+            telefon: @detaliifacturare.telefon,
+            updated_at: @detaliifacturare.updated_at
           }
         },
         mode: 'payment',
