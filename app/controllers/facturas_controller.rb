@@ -29,20 +29,19 @@ class FacturasController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = WickedPdf.new.pdf_from_string(
-          render_to_string(
-            template: 'facturas/show',
-            locals: { factura: @factura },
-            encoding: 'UTF8'
-          )
+        html = render_to_string(
+          template: 'facturas/show',
+          locals: { factura: @factura },
+          encoding: 'UTF8'
         )
+        pdf = PDFKit.new(html).to_pdf
         send_data pdf, filename: "Factura_#{@factura.id}.pdf",
           type: 'application/pdf',
           disposition: 'attachment'
       end
-      
     end
-  end 
+  end
+  
 
   # GET /facturas/new
   def new
