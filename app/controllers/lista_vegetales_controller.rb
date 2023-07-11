@@ -8,11 +8,11 @@ class ListaVegetalesController < ApplicationController
     @page_title = "Lista vegetale"
 
     if params[:search_type] == "eq"
-        @lista_vegetales = ListaVegetale.where('specie ~* ? OR sinonime ~* ?', "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y").page(params[:page]).per(25)
+        @lista_vegetales = ListaVegetale.where('specie ~* ? OR sinonime ~* ? OR parteutilizata ~* ?', "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y").page(params[:page]).per(25)
         @q = @lista_vegetales.ransack(params[:q])
         @search_term = params[:search_term] 
     else
-        @q = ListaVegetale.ransack({specie_cont: params[:search_term], sinonime_cont: params[:search_term], m: 'or'})
+        @q = ListaVegetale.ransack({specie_cont: params[:search_term], sinonime_cont: params[:search_term], parteutilizata_cont: params[:search_term], m: 'or'})
         @lista_vegetales = @q.result.distinct.order(:id).page(params[:page]).per(25)
         @search_term = params[:search_term]
     end
@@ -21,6 +21,7 @@ class ListaVegetalesController < ApplicationController
 
     @total_pages = (@total_records / 10.0).ceil
 end
+
 
 
   
@@ -96,7 +97,7 @@ end
         else
           # Utilizatorul nu are acces la resursa
           flash[:alert] = "Nu ai acces la această resursă."
-          redirect_to root_path
+          redirect_to servicii_path
         end
       else
         # Utilizatorul nu este logat

@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
     end   
     protected
     def configure_permitted_parameters
-        devise_parameter_sanitizer.permit(:sign_up, keys: [:email,:name, :role])
-        devise_parameter_sanitizer.permit(:account_update, keys: [:email,:name, :role])
+        devise_parameter_sanitizer.permit(:sign_up, keys: [:email,:name, :role, :gdpr])
+        devise_parameter_sanitizer.permit(:account_update, keys: [:email,:name, :role, :gdpr])
     end
     private
     def require_admin
@@ -50,16 +50,29 @@ class ApplicationController < ActionController::Base
         elsif params[:return_to] == "vn"
           # Cod pentru cazul în care sursa este butonul
           valorinutritionales_path # Înlocuiește cu calea corespunzătoare
+        elsif params[:return_to] == "lg"
+          # Cod pentru cazul în care sursa este butonul
+          lista_vegetales_path # Înlocuiește cu calea corespunzătoare
         else
           # Dacă nu există parametru return_to, sau dacă valoarea acestuia nu este recunoscută, redirectează către o cale implicită
-          root_path # Înlocuiește cu calea implicită
+          servicii_path # Înlocuiește cu calea implicită
         end
       end
      
+     
+
       def set_stripe_key
-        @stripe_public_key = Rails.application.credentials.dig(:stripe, :publishable_key)
-        @stripe_webhook_secret = Rails.application.credentials.dig(:stripe, :secret_key)
+        if Rails.env.development?
+          @stripe_public_key = Rails.application.credentials.dig(:stripe, :development,  :publishable_key)
+          @stripe_secret_key = Rails.application.credentials.dig(:stripe, :development,  :secret_key)
+        elsif Rails.env.production?
+          @stripe_public_key = Rails.application.credentials.dig(:stripe, :production,  :publishable_key)
+          @stripe_secret_key = Rails.application.credentials.dig(:stripe, :production,  :secret_key)
+        end
       end
+      
+
+     
       
       
 end

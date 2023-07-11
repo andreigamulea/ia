@@ -4,7 +4,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
          validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }
-  
+  has_many :comandas
+  has_many :facturas
   has_many :cursuri
   has_many :listacursuri, through: :cursuri
   has_many :cursuri_history

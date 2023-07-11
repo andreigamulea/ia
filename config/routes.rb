@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
- post '/stripe-webhooks', to: 'stripe_webhooks#create'
+  resources :facturas
+get 'facturas/:id/download', to: 'facturas#download', as: 'download_factura'
+get 'facturas/:id', to: 'facturas#show', format: 'pdf'
+
+post '/stripe-webhooks', to: 'stripe_webhooks#create'
 
 
  get '/detaliifacturares/:id/pay', to: 'detaliifacturares#pay', as: 'detaliifacturare_pay'
@@ -64,6 +68,8 @@ Rails.application.routes.draw do
 
   
   get 'home/index'
+  get 'successtripe', to: 'home#successtripe', as: 'successtripe'
+
   get '/termeni-conditii', to: 'home#termeni_conditii'
   get '/politica-confidentialitate', to: 'home#politica_confidentialitate'
   get '/politica-cookies', to: 'home#politica_cookies'

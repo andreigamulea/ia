@@ -12,6 +12,7 @@
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li><%= link_to 'Acasa', root_path %></li>
+                
                 <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1) %>  
                 <li class="nav-item">
                     <%= link_to 'Valori Nutritionale', valorinutritionales_path, id: 'valorinutritionales_link' %>
@@ -22,7 +23,7 @@
                         <%= link_to 'Lista Vegetale', lista_vegetales_path, id: 'lista_vegetales_link' %>
                     </li>
                 <% end %>
-
+                <li><%= link_to 'Servicii', servicii_path %></li>
                 <% if current_user && current_user.role == 1 %>  
                 <li class="nav-item">
                     <%= link_to 'Admin', panouadmin_path %>
@@ -36,10 +37,10 @@
                 <li><%= link_to 'Creaza cont', new_user_registration_path %></li>
                 <% end %>
                 
-                <li><%= link_to 'Servicii', servicii_path %></li>
-                
                 <li><%= link_to 'Contact', contact_path %></li> 
-               
+                <%if current_user%>
+                <li><%= link_to 'Facturile mele', facturas_path %></li>
+                <% end %>
             </ul>
         </nav>
     </div>

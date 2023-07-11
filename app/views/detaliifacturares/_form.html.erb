@@ -1,3 +1,4 @@
+
 <% if user_signed_in? %>
 <div class="container">
   <div class="row">
@@ -112,7 +113,7 @@
       <!-- spațiul gol din mijloc, puteți lăsa acest div gol -->
 </div>
 <div class="col-5">
-  <h2><%= @prod.nume %></h2>
+  <h2 style="font-size:1.5em;"><%= @prod.nume %></h2>
   <p><%= @prod.detalii %></p>
   <p>Pret: <%= @prod.pret.to_i %> lei</p></br></br></br></br>
   <div class="column" style="display: flex; justify-content: center;">        

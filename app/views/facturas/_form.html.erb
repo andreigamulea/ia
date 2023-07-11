@@ -1,0 +1,117 @@
+<%= form_with(model: factura) do |form| %>
+  <% if factura.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(factura.errors.count, "error") %> prohibited this factura from being saved:</h2>
+
+      <ul>
+        <% factura.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :comanda_id, style: "display: block" %>
+    <%= form.text_field :comanda_id %>
+  </div>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :numar, style: "display: block" %>
+    <%= form.number_field :numar %>
+  </div>
+
+  <div>
+    <%= form.label :numar_comanda, style: "display: block" %>
+    <%= form.number_field :numar_comanda %>
+  </div>
+
+  <div>
+    <%= form.label :data_emiterii, style: "display: block" %>
+    <%= form.date_field :data_emiterii %>
+  </div>
+
+  <div>
+    <%= form.label :prenume, style: "display: block" %>
+    <%= form.text_field :prenume %>
+  </div>
+
+  <div>
+    <%= form.label :nume, style: "display: block" %>
+    <%= form.text_field :nume %>
+  </div>
+
+  <div>
+    <%= form.label :nume_companie, style: "display: block" %>
+    <%= form.text_field :nume_companie %>
+  </div>
+
+  <div>
+    <%= form.label :cui, style: "display: block" %>
+    <%= form.text_field :cui %>
+  </div>
+
+  <div>
+    <%= form.label :tara, style: "display: block" %>
+    <%= form.text_field :tara %>
+  </div>
+
+  <div>
+    <%= form.label :localitate, style: "display: block" %>
+    <%= form.text_field :localitate %>
+  </div>
+
+  <div>
+    <%= form.label :judet, style: "display: block" %>
+    <%= form.text_field :judet %>
+  </div>
+
+  <div>
+    <%= form.label :cod_postal, style: "display: block" %>
+    <%= form.text_field :cod_postal %>
+  </div>
+
+  <div>
+    <%= form.label :strada, style: "display: block" %>
+    <%= form.text_field :strada %>
+  </div>
+
+  <div>
+    <%= form.label :numar_adresa, style: "display: block" %>
+    <%= form.text_field :numar_adresa %>
+  </div>
+
+  <div>
+    <%= form.label :produs, style: "display: block" %>
+    <%= form.text_field :produs %>
+  </div>
+
+  <div>
+    <%= form.label :cantitate, style: "display: block" %>
+    <%= form.number_field :cantitate %>
+  </div>
+
+  <div>
+    <%= form.label :pret_unitar, style: "display: block" %>
+    <%= form.text_field :pret_unitar %>
+  </div>
+
+  <div>
+    <%= form.label :valoare_tva, style: "display: block" %>
+    <%= form.text_field :valoare_tva %>
+  </div>
+
+  <div>
+    <%= form.label :valoare_totala, style: "display: block" %>
+    <%= form.text_field :valoare_totala %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

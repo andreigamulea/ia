@@ -13,6 +13,10 @@
  *= require_tree .
  *= require_self
  */
+ input[type="submit"]:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
  .alert {
   background-color: #f8d7da;
   color: #721c24;
@@ -241,9 +245,30 @@ footer {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
-  .nutritie .button a:hover{
+.stripe .button a:hover{
     background-color: #50024c;
   }
+
+
+  .stripe .button {
+    margin:30px 0 20px 0;
+  }
+
+  .stripe .button a {
+    background-color: #64025e;
+    color: #fff;
+    padding: 12px 40px;
+    font-size: 18px;
+    border-radius: 15px;
+    text-decoration: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .stripe .button a:hover{
+    background-color: #50024c;
+  }
+
+  
   
  .nutritie img{
   max-width: 600px;
@@ -258,7 +283,34 @@ footer {
     padding-left: 60px;
   }
   
-   
+  @media only screen and (min-width: 993px) {
+.ivl{
+  display: flex!important; 
+  flex-direction: column; 
+  align-items: flex-start!important;
+  padding-left: 50px!important;
+}
+.endrow{
+  margin-bottom: 50px;
+}
+  }
+
+
+  @media only screen and (max-width: 992px) {
+    .nutritie .row {
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    
+    .nutritie .ivl {
+      order: 2;
+    }
+    
+    .nutritie .ivl1 {
+      order: 1;
+    }
+
+}
   /* Restul stilurilor media queries pentru diferite dimensiuni */
   @media only screen and (min-width: 992px) {
     .nutritie .row {
@@ -338,3 +390,24 @@ footer {
   .cform label{    
     padding-top: 10px;
   }
+
+
+.confirmation{
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 10px;
+}
+@media only screen and (min-width:992px) {
+  .confirmation{
+  margin-top: 50px!important;
+}
+}
+@media only screen and (max-width:991px) {
+  .confirmation{
+  margin-top: 10px!important;
+  text-align: center;
+}
+.confirmation li{
+  text-align: justify;
+}
+}

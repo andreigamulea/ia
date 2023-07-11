@@ -318,7 +318,7 @@ class ValorinutritionalesController < ApplicationController
         else
           # Utilizatorul nu are acces la resursa
           flash[:alert] = "Nu ai acces la această resursă."
-          redirect_to root_path
+          redirect_to servicii_path
         end
       else
         # Utilizatorul nu este logat

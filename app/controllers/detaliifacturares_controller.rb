@@ -3,7 +3,7 @@ class DetaliifacturaresController < ApplicationController
   before_action :new, only: [:datefacturare] # remove :create
   skip_before_action :verify_authenticity_token, only: [:pay]
   def index
-    @detaliifacturare = Detaliifacturare.all
+    @detaliifacturare = Detaliifacturare.all.order(id: :desc)
   end
   def edit
     @detaliifacturare = Detaliifacturare.find(params[:id])
@@ -26,6 +26,7 @@ class DetaliifacturaresController < ApplicationController
     end
   end
   def create     
+    @hide_header = true
     puts("sunt in createeeeeeeeeeeeeeeeeeeeee")
     @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare
 
@@ -55,6 +56,7 @@ class DetaliifacturaresController < ApplicationController
  
   
   def update
+    @hide_header = true
     puts("sunt in updateeeeeeeeeeeeeeeeeeeeee")
     @detaliifacturare = current_user.detaliifacturare
     @prod = Prod.find(detaliifacturare_params[:s])
@@ -108,7 +110,6 @@ class DetaliifacturaresController < ApplicationController
 
     comanda = Comanda.create!(
       datacomenzii: Time.now,
-      #numar: numar_comanda,
       statecomanda1: 'Initiata',
       statecomanda2: 'Asteptare',
       stateplata1: 'Asteptare',
@@ -116,7 +117,7 @@ class DetaliifacturaresController < ApplicationController
       stateplata3: 'Asteptare',
       user_id: current_user.id,
       emailcurrent: current_user.email,
-      emailplata: 'Email_Plata',
+      emailplata: @detaliifacturare.adresaemail,
       total: @prod.pret,
       plataprin: 'Stripe'
     )
@@ -131,7 +132,29 @@ class DetaliifacturaresController < ApplicationController
     )
     puts "@prod.valabilitatezile: #{@prod.valabilitatezile}"
 
-    # Creează PaymentIntent   
+    # Creare metadata
+    metadata = {
+      user_id: current_user.id.to_s,
+      email: current_user.email,
+      numar_comanda: numar_comanda,
+      id_produs: @prod.id,
+      nume: @detaliifacturare.nume,
+      prenume: @detaliifacturare.prenume,
+      numecompanie: @detaliifacturare.numecompanie,
+      cui: @detaliifacturare.cui,            
+      tara: @detaliifacturare.tara,
+      strada: @detaliifacturare.strada,
+      numar: @detaliifacturare.numar,
+      altedate: @detaliifacturare.altedate,
+      adresaemail: @detaliifacturare.adresaemail,            
+      judet: @detaliifacturare.judet,
+      localitate: @detaliifacturare.localitate,
+      codpostal: @detaliifacturare.codpostal,
+      telefon: @detaliifacturare.telefon,
+      updated_at: @detaliifacturare.updated_at
+    }
+  
+    # Creează PaymentIntent
     begin
       @session = Stripe::Checkout::Session.create({
         payment_method_types: ['card'],
@@ -146,32 +169,13 @@ class DetaliifacturaresController < ApplicationController
           quantity: 1,          
         }],
         payment_intent_data: {
-          metadata: {
-            user_id: current_user.id.to_s,
-            email: current_user.email,
-            numar_comanda: numar_comanda,
-
-            nume: @detaliifacturare.nume,
-            prenume: @detaliifacturare.prenume,
-            numecompanie: @detaliifacturare.numecompanie,
-            cui: @detaliifacturare.cui,            
-            tara: @detaliifacturare.tara,
-            
-            
-            strada: @detaliifacturare.strada,
-            numar: @detaliifacturare.numar,
-            altedate: @detaliifacturare.altedate,
-            adresaemail: @detaliifacturare.adresaemail,            
-            judet: @detaliifacturare.judet,
-            localitate: @detaliifacturare.localitate,
-            codpostal: @detaliifacturare.codpostal,
-            telefon: @detaliifacturare.telefon,
-            updated_at: @detaliifacturare.updated_at
-          }
+          metadata: metadata
         },
         mode: 'payment',
-        success_url: "#{servicii_url}?payment=success",
-        cancel_url: root_url
+        success_url: "#{successtripe_url}?session_id={CHECKOUT_SESSION_ID}",
+
+        cancel_url: root_url,
+        metadata: metadata
       })
       render json: {message: "sunt in create s-a creat", session_id: @session.id}
     rescue => e
@@ -179,9 +183,8 @@ class DetaliifacturaresController < ApplicationController
       render json: {error: e.message}, status: :internal_server_error
       return
     end
-    
-  end
-  
+end
+
   
   
   def datefacturare

@@ -2,9 +2,14 @@ class ProdsController < ApplicationController
   before_action :set_prod, only: %i[ show edit update destroy produscurent]
   
   # GET /prods or /prods.json
-  def index
-    @prods = Prod.all.order(:id)
+  def index   
+    if current_user.role == 1
+      @prods = Prod.order(:id)
+    else
+      @prods = Prod.where(status: 'activ').order(:id)
+    end
   end
+  
 
   # GET /prods/1 or /prods/1.json
   def show
@@ -66,7 +71,7 @@ class ProdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def prod_params
-      params.require(:prod).permit(:nume, :detalii, :info, :pret, :valabilitatezile, :curslegatura, :linkstripe)
+      params.require(:prod).permit(:nume, :detalii, :info, :pret, :valabilitatezile, :curslegatura, :linkstripe, :status)
     end
     
 end

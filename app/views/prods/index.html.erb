@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <h1>Produse</h1>
-
+<%= link_to 'Inapoi la Panou administrare', panouadmin_path, class: "btn btn-primary" %>
 <table class="table">
   <thead>
     <tr>
@@ -13,6 +13,7 @@
       <th scope="col">Legatura</th>
       <th scope="col">Zile</th>
       <th scope="col">Link stripe </th>
+      <th scope="col">Status </th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,7 @@
         <td><%= prod.curslegatura %></td>
         <td><%= prod.valabilitatezile %></td>
         <td><%= prod.linkstripe %></td>
+        <td><%= prod.status %></td>
         <td>
           <%= link_to "Show", prod, class: "btn btn-primary" %>
           <%= link_to "Edit", edit_prod_path(prod), class: "btn btn-secondary" %>

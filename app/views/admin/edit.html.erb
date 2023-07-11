@@ -85,7 +85,7 @@
           <% @user.cursuri_history.each do |ch| %>
             <tr>
               <td><%= ch.id %></td>
-              <td><%=current_user.name %></td>
+              <td><%=ch.modificatde %></td>
               <td><%=ch.listacursuri.created_at.strftime('%d-%m-%Y')%></td>
               <td><%= ch.listacursuri.nume %></td>
               <td><%= ch.datainceput %></td>

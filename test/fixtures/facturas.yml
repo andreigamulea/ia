@@ -1,0 +1,45 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  comanda: one
+  user: one
+  numar: 1
+  numar_comanda: 1
+  data_emiterii: 2023-07-08
+  prenume: MyString
+  nume: MyString
+  nume_companie: MyString
+  cui: MyString
+  tara: MyString
+  localitate: MyString
+  judet: MyString
+  cod_postal: MyString
+  strada: MyString
+  numar_adresa: MyString
+  produs: MyString
+  cantitate: 1
+  pret_unitar: 9.99
+  valoare_tva: 9.99
+  valoare_totala: 9.99
+
+two:
+  comanda: two
+  user: two
+  numar: 1
+  numar_comanda: 1
+  data_emiterii: 2023-07-08
+  prenume: MyString
+  nume: MyString
+  nume_companie: MyString
+  cui: MyString
+  tara: MyString
+  localitate: MyString
+  judet: MyString
+  cod_postal: MyString
+  strada: MyString
+  numar_adresa: MyString
+  produs: MyString
+  cantitate: 1
+  pret_unitar: 9.99
+  valoare_tva: 9.99
+  valoare_totala: 9.99

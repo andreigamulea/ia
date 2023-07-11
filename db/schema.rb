@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_05_182138) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_09_153010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -94,6 +94,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_182138) do
     t.datetime "updated_at", null: false
     t.string "email"
     t.text "observatii"
+    t.string "modificatde"
     t.index ["listacursuri_id"], name: "index_cursuri_history_on_listacursuri_id"
     t.index ["user_id"], name: "index_cursuri_history_on_user_id"
   end
@@ -127,6 +128,33 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_182138) do
     t.datetime "updated_at", null: false
     t.string "localitate"
     t.string "judet"
+  end
+
+  create_table "facturas", force: :cascade do |t|
+    t.bigint "comanda_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "numar"
+    t.integer "numar_comanda"
+    t.date "data_emiterii"
+    t.string "prenume"
+    t.string "nume"
+    t.string "nume_companie"
+    t.string "cui"
+    t.string "tara"
+    t.string "localitate"
+    t.string "judet"
+    t.string "cod_postal"
+    t.string "strada"
+    t.string "numar_adresa"
+    t.string "produs"
+    t.integer "cantitate"
+    t.decimal "pret_unitar"
+    t.decimal "valoare_tva"
+    t.decimal "valoare_totala"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comanda_id"], name: "index_facturas_on_comanda_id"
+    t.index ["user_id"], name: "index_facturas_on_user_id"
   end
 
   create_table "importanta", force: :cascade do |t|
@@ -263,6 +291,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_182138) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "linkstripe"
+    t.string "status"
   end
 
   create_table "recomandaris", force: :cascade do |t|
@@ -341,6 +370,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_182138) do
     t.datetime "updated_at", null: false
     t.boolean "active"
     t.string "stripe_customer_id"
+    t.boolean "gdpr", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -371,6 +401,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_05_182138) do
   add_foreign_key "comenzi_prods", "prods"
   add_foreign_key "cursuri_history", "listacursuris"
   add_foreign_key "cursuri_history", "users", on_delete: :nullify
+  add_foreign_key "facturas", "comandas"
+  add_foreign_key "facturas", "users"
   add_foreign_key "user_paginisites", "paginisites"
   add_foreign_key "user_paginisites", "users"
 end

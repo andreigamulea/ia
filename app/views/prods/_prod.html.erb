@@ -33,4 +33,13 @@
     <strong>Link la stripe:</strong>
     <%= prod.linkstripe %>
   </p>
+  <p>
+  <strong>Status:</strong>
+  <% if prod.status.present? %>
+    <%= prod.status %>
+  <% else %>
+    Nu a fost setat încă un status
+  <% end %>
+</p>
+
 </div>

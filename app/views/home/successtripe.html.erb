@@ -1,0 +1,41 @@
+
+
+<section class="confirmation">
+<h1>Confirmare de plată</h1>
+
+<p>Vă mulțumim că ați ales serviciile noastre. Suntem încântați să vă confirmăm că plata dvs. a fost procesată și finalizată cu succes.</p>
+
+<h2>Detaliile tranzacției sunt următoarele:</h2>
+
+<ul>
+    <li>Data și ora tranzacției: <span id="data_tranzactiei"><%=@data_creare_formatata%></span></li>
+    <li>Suma achitată: <span id="suma_achitata"><%=@suma_achitata%> lei</span></li>
+    <li>Metoda de plată utilizată: <span id="metoda_plata"><%=@metoda_plata%></span></li>
+    <li>Numărul de referință al tranzacției: <span id="numar_referinta"><%=@numar_referinta%></span></li>
+</ul>
+
+<p>Suntem onorați că ne-ați ales pentru serviciile noastre și ne străduim să vă oferim întotdeauna cele mai bune servicii. Dacă aveți întrebări sau aveți nevoie de asistență suplimentară, vă rugăm să nu ezitați să ne contactați.</p>
+
+<div class="stripe" style="text-align:center; margin-bottom:50px;">
+<%if @redirect_spre == 'Nutritie'%>
+    <div class="button">
+
+    <%= link_to 'Intră în aplicație', valorinutritionales_path, id: 'valorinutritionales_link', class: 'button-link' %>
+            </div>
+    </div>
+<%elsif%>
+    <div class="button">
+
+    <%= link_to 'Intră în aplicație', lista_vegetales_path, id: 'lista_vegetales_link', class: 'button-link' %>
+            </div>
+    </div>
+<%else%>
+    <div class="button">
+
+    <li><%= link_to 'Acasa', root_path %></li>
+            </div>
+    </div>
+
+<%end%>
+</section>
+

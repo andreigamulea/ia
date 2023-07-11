@@ -3,8 +3,9 @@ class ComandasController < ApplicationController
 
   # GET /comandas or /comandas.json
   def index
-    @comandas = Comanda.all.order(:id)
+    @comandas = Comanda.all.order(id: :desc)
   end
+  
 
   # GET /comandas/1 or /comandas/1.json
   def show

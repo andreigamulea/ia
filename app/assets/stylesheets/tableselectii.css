@@ -15,6 +15,7 @@ font-family: Arial, sans-serif;
 .tabel-container th, .tabel-container td {
 text-align: left;
 padding: 3px 5px;
+line-height: 1.2;
 }
 
 .tabel-container th {

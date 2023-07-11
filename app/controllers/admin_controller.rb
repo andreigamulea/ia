@@ -7,7 +7,7 @@ class AdminController < ApplicationController
     @q = User.ransack(params[:q])
     @users = @q.result.page(params[:page]).per(15)
 
-   
+    
   end
   def new #se creaza un utilizator nou
     @user = User.new
@@ -27,14 +27,15 @@ class AdminController < ApplicationController
             datasfarsit: params[:user][:cursuri][lc.id.to_s][:datasfarsit]
           )
           curs.save
-  
+          
           # Creează o înregistrare nouă în CursuriHistory
           cursuri_history = CursuriHistory.new(
             user_id: @user.id,
             listacursuri_id: lc.id,
             cursuri_id: curs.id,
             datainceput: curs.datainceput,
-            datasfarsit: curs.datasfarsit
+            datasfarsit: curs.datasfarsit,
+            modificatde: current_user.name
           )
   
           if cursuri_history.valid?
@@ -97,7 +98,8 @@ class AdminController < ApplicationController
                 listacursuri_id: listacursuri_id,
                 cursuri_id: curs.id,
                 datainceput: datainceput_nou,
-                datasfarsit: datasfarsit_nou
+                datasfarsit: datasfarsit_nou,
+                modificatde: current_user.name
               )
           
               if cursuri_history.valid?
@@ -140,7 +142,7 @@ class AdminController < ApplicationController
 
  
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :active, cursuri: {})
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :active, :gdpr, cursuri: {})
   end
   
  
