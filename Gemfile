@@ -85,4 +85,5 @@ gem 'stripe', '~> 8.5'
 gem 'stripe_event', '~> 2.7'
 gem 'wicked_pdf', '~> 2.6', '>= 2.6.3'
 gem 'wkhtmltopdf-binary', '~> 0.12.6.6'
-gem 'pdfkit', '~> 0.8.7.3'
+gem 'pdfkit', '~> 0.8.7.3'  #asta il folosesc pt ca wicked_pdf nu merge pe render.com de fapt nu are 
+                            # wkhtmltopdf-binary  incorporat ca pdfkit
