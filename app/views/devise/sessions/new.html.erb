@@ -1,4 +1,11 @@
 <section class="login">
+<% if flash[:alert] %>
+  <div class="alert">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+
 <div class="login-container">
 <h1>Log in</h1>
 

@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
     before_action :track_ahoy_visit
     before_action :configure_permitted_parameters, if: :devise_controller?
-    #before_action :authenticate_user!
     before_action :check_user_active
     skip_before_action :check_user_active, only: [:after_sign_in_path_for]
+    before_action :check_sign_in_token
     before_action :set_stripe_key
     def track_ahoy_visit
       ahoy.track "Processed #{controller_name}##{action_name}", request.filtered_parameters
@@ -70,8 +70,15 @@ class ApplicationController < ActionController::Base
           @stripe_secret_key = Rails.application.credentials.dig(:stripe, :production,  :secret_key)
         end
       end
+      def check_sign_in_token
+        if user_signed_in? && !current_user.signed_in_on_this_device?(session[:user_token])
+          sign_out(current_user)
+          flash[:alert] = "Ai fost deconectat deoarece te-ai autentificat pe un alt dispozitiv."
+          redirect_to new_user_session_path
+        end
+      end
       
-
+      
      
       
       

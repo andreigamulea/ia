@@ -18,8 +18,14 @@ class User < ApplicationRecord
     # Verifică dacă rolul este 1 (admin)
     role == 1
   end
-
+  def active?
+    active.nil? || active
+  end
+ def signed_in_on_this_device?(session_token)
+    self.current_sign_in_token == session_token
+  end
   private
+ 
 
   def downcase_email
     self.email = email.downcase if email.present?
@@ -43,5 +49,8 @@ class User < ApplicationRecord
       # Aici poți adăuga cod adițional pentru a gestiona eroarea, dacă este necesar
     end
   end
+  
+  
+ 
   
 end

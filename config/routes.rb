@@ -118,7 +118,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
  
  #devise_for :users, skip: :all
   devise_for :users, controllers: {
-    sessions: 'devise/sessions',
+    sessions: 'authentication',  # aici se schimba
     registrations: 'devise/registrations',
     passwords: 'devise/passwords',
     confirmations: 'devise/confirmations',
