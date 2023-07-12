@@ -73,7 +73,7 @@ class ApplicationController < ActionController::Base
       def check_sign_in_token
         if user_signed_in? && !current_user.signed_in_on_this_device?(session[:user_token])
           sign_out(current_user)
-          flash[:alert] = "Ai fost deconectat deoarece te-ai autentificat pe un alt dispozitiv."
+          flash[:alert] = "Ati fost deconectat deoarece v-ati autentificat pe un alt dispozitiv."
           redirect_to new_user_session_path
         end
       end
