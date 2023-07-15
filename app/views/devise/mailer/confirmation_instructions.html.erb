@@ -1,5 +1,5 @@
-<p>Welcome <%= @email %>!</p>
+<p>Bun venit <%= @email %>!</p>
 
-<p>You can confirm your account email through the link below:</p>
+<p>Poți confirma adresa de e-mail a contului tău prin linkul de mai jos:</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p><%= link_to 'Confirmă contul meu', confirmation_url(@resource, confirmation_token: @token) %></p>
