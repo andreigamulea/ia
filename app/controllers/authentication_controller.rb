@@ -15,6 +15,7 @@ class AuthenticationController < Devise::SessionsController
       new_token = SecureRandom.hex
       resource.update!(current_sign_in_token: new_token)  # genereaza un nou token la fiecare autentificare
       session[:user_token] = new_token  # actualizeaza tokenul in sesiune
+      session[:password_reset] = nil if user_signed_in?
       yield resource if block_given?
       respond_with resource, location: after_sign_in_path_for(resource)
     else

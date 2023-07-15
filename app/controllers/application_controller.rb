@@ -71,12 +71,21 @@ class ApplicationController < ActionController::Base
         end
       end
       def check_sign_in_token
-        if user_signed_in? && !current_user.signed_in_on_this_device?(session[:user_token])
+        Rails.logger.info("Inside check_sign_in_token. password reset: #{session[:password_reset]}")
+        Rails.logger.info("Checking sign in token. User signed in: #{user_signed_in?}, password reset: #{session[:password_reset]}")
+        if user_signed_in? && !session[:password_reset] && !current_user.signed_in_on_this_device?(session[:user_token])
+          Rails.logger.info("Signing out user due to sign in on different device.")
           sign_out(current_user)
           flash[:alert] = "Ati fost deconectat deoarece v-ati autentificat pe un alt dispozitiv."
           redirect_to new_user_session_path
         end
       end
+      
+      
+      
+      
+      
+      
       
       
      
