@@ -1,8 +1,5 @@
-<section class="tabel-container .rotate-landscape">
 
-
-
-
+<section class="tabel-container .rotate-landscape" style="padding:0 10px;">
 
 <h1 class="alimente-nutritionale">Lista servicii consultare selectiva online</h1></br>
 <div id="pas">
@@ -36,15 +33,15 @@
 <table class="table table-striped table-bordered table-hover">
     <thead class="thead-dark">
       <tr> 
-        <th>Nr.</th>
-        <th>Data</th>
-        <th>Denumirea botanică actuală</th>
-        <th>Denumiri botanice sinonime</th>
-        <th>Partea utilizată</th>
-        <th>Atenționări cu privire la utilizare (*)</th>
+        <th style="text-align:center; vertical-align: middle;">Nr.</th>
+        <th style="text-align:center; vertical-align: middle;">Data</th>
+        <th style="text-align:center; vertical-align: middle;">Denumirea botanică actuală</th>
+        <th style="text-align:center; vertical-align: middle;">Denumiri botanice sinonime</th>
+        <th style="text-align:center; vertical-align: middle;">Partea utilizată</th>
+        <th style="text-align:center; vertical-align: middle;">Atenționări cu privire la utilizare (*)</th>
        
         <%if current_user.role==1%>
-        <th>Edit</th>
+        <th style="text-align:center; vertical-align: middle;">Edit</th>
         <%end%>
       </tr>
     </thead>

@@ -75,6 +75,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get '/politica-cookies', to: 'home#politica_cookies'
   get '/politica-gdpr', to: 'home#politica_gdpr'
   get '/servicii', to: 'home#servicii'
+  get '/resetareparola', to: 'home#resetareparola'
   get '/panouadmin', to: 'home#panouadmin'
   get '/tabeleahoy', to: 'home#tabeleahoy', as: 'tabeleahoy_home'
 
@@ -120,7 +121,8 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   devise_for :users, controllers: {
     sessions: 'authentication',  # aici se schimba
     registrations: 'devise/registrations',
-    passwords: 'devise/passwords',
+    #passwords: 'devise/passwords',
+    passwords: 'custom_passwords',
     confirmations: 'devise/confirmations',
     unlocks: 'devise/unlocks'   
   }

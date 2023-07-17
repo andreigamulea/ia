@@ -12,7 +12,8 @@ class HomeController < ApplicationController
   def panouadmin
   end
  
-
+  def resetareparola    
+  end
 
   def successtripe
     session_id = params[:session_id]
