@@ -69,7 +69,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   
   get 'home/index'
   get 'successtripe', to: 'home#successtripe', as: 'successtripe'
-
+  get 'home/cookiestest', to: 'home#cookiestest'
   get '/termeni-conditii', to: 'home#termeni_conditii'
   get '/politica-confidentialitate', to: 'home#politica_confidentialitate'
   get '/politica-cookies', to: 'home#politica_cookies'

@@ -8,18 +8,51 @@ import "Chart.bundle";
 import "ahoy";
 
 document.addEventListener("DOMContentLoaded", function() {
-    // Verifică dacă utilizatorul a acceptat cookie-urile
-    if (!Cookies.get('cookiesAccepted')) {
-        // Dacă utilizatorul nu a acceptat cookie-urile, afișează banner-ul
-        document.getElementById('cookie-law-banner').style.display = 'block';
-    }
+    // Verificăm dacă există deja cookie-urile setate
+    var cookiesExist = Cookies.get('cookiesAccepted');
 
-    // Atunci când utilizatorul dă click pe butonul "Accept",
-    // ascunde banner-ul și setează un cookie pentru a ține minte că utilizatorul a acceptat cookie-urile
+    var necessaryAccepted = Cookies.get('necessaryCookiesAccepted') === 'true';
+    var functionalityAccepted = Cookies.get('functionalityCookiesAccepted') === 'true';
+    var performanceAccepted = Cookies.get('performanceCookiesAccepted') === 'true';
+    var analyticsAccepted = Cookies.get('analyticsCookiesAccepted') === 'true';
+    var marketingAccepted = Cookies.get('marketingCookiesAccepted') === 'true';
+    var otherAccepted = Cookies.get('otherCookiesAccepted') === 'true';
+
+    // Dacă cookie-urile nu au fost setate încă, setăm toate casetele de selectare ca fiind bifate
+    if (!cookiesExist) {
+        document.getElementById('cookie-settings-necessary').checked = true;
+        document.getElementById('cookie-settings-functionality').checked = true;
+        document.getElementById('cookie-settings-performance').checked = true;
+        document.getElementById('cookie-settings-analytics').checked = true;
+        document.getElementById('cookie-settings-marketing').checked = true;
+        document.getElementById('cookie-settings-other').checked = true;
+
+        // De asemenea, afișăm bannerul
+        document.getElementById('cookie-law-banner').style.display = 'block';
+    } else {
+        document.getElementById('cookie-settings-necessary').checked = necessaryAccepted;
+        document.getElementById('cookie-settings-functionality').checked = functionalityAccepted;
+        document.getElementById('cookie-settings-performance').checked = performanceAccepted;
+        document.getElementById('cookie-settings-analytics').checked = analyticsAccepted;
+        document.getElementById('cookie-settings-marketing').checked = marketingAccepted;
+        document.getElementById('cookie-settings-other').checked = otherAccepted;
+
+        // Dacă cookie-urile au fost deja setate, ascundem bannerul
+        document.getElementById('cookie-law-banner').style.display = 'none';
+    }
     document.getElementById('cookie-law-accept').addEventListener('click', function() {
         document.getElementById('cookie-law-banner').style.display = 'none';
+        
+        Cookies.set('necessaryCookiesAccepted', 'true', { expires: 365 });
+        Cookies.set('functionalityCookiesAccepted', 'true', { expires: 365 });
+        Cookies.set('performanceCookiesAccepted', 'true', { expires: 365 });
+        Cookies.set('analyticsCookiesAccepted', 'true', { expires: 365 });
+        Cookies.set('marketingCookiesAccepted', 'true', { expires: 365 });
+        Cookies.set('otherCookiesAccepted', 'true', { expires: 365 });
+        
         Cookies.set('cookiesAccepted', 'true', { expires: 365 });
     });
+    
 
     // Atunci când utilizatorul dă click pe butonul "Setări",
     // afișează fereastra de setări a cookie-urilor

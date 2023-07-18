@@ -1,0 +1,28 @@
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    var necessaryAccepted = Cookies.get('necessaryCookiesAccepted');
+    var functionalityAccepted = Cookies.get('functionalityCookiesAccepted');
+    var performanceAccepted = Cookies.get('performanceCookiesAccepted');
+    var analyticsAccepted = Cookies.get('analyticsCookiesAccepted');
+    var marketingAccepted = Cookies.get('marketingCookiesAccepted');
+    var otherAccepted = Cookies.get('otherCookiesAccepted');
+
+    document.getElementById('cookie-info').innerHTML = 
+        "Necessary: " + necessaryAccepted + "<br>" +
+        "Functionality: " + functionalityAccepted + "<br>" +
+        "Performance: " + performanceAccepted + "<br>" +
+        "Analytics: " + analyticsAccepted + "<br>" +
+        "Marketing: " + marketingAccepted + "<br>" +
+        "Other: " + otherAccepted + "<br>";
+});
+</script>
+<div id="cookie-info">
+<h2>Setările dvs. pentru cookie-uri:</h2>
+<p>Cookie-uri necesare acceptate: <span id="necessary-cookie-value"></span></p>
+<p>Cookie-uri de funcționalitate acceptate: <span id="functionality-cookie-value"></span></p>
+<p>Cookie-uri de performanță acceptate: <span id="performance-cookie-value"></span></p>
+<p>Cookie-uri de analiză acceptate: <span id="analytics-cookie-value"></span></p>
+<p>Cookie-uri de marketing acceptate: <span id="marketing-cookie-value"></span></p>
+<p>Alte cookie-uri acceptate: <span id="other-cookie-value"></span></p>
+</div>

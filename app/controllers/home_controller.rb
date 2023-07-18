@@ -14,6 +14,8 @@ class HomeController < ApplicationController
  
   def resetareparola    
   end
+  def cookiestest
+  end
 
   def successtripe
     session_id = params[:session_id]
