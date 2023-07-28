@@ -89,22 +89,23 @@ end
       params.require(:lista_vegetale).permit(:specie, :sinonime, :parteutilizata, :mentiunirestrictii, :numar, :dataa)
     end
     def set_user
-      # Verifica daca userul este logat
-      if current_user
-        # Verifica daca userul este admin sau asociat cu cursul "Nutritie"
-        if current_user.role == 1 || current_user.listacursuri.any? { |curs| curs.nume == "Lista vegetale" }
-          # Utilizatorul are acces la resursa
-        else
-          # Utilizatorul nu are acces la resursa
-          flash[:alert] = "Nu ai acces la această resursă."
-          redirect_to servicii_path
-        end
+    # Verifica daca userul este logat
+    if current_user
+      # Verifica daca userul este admin sau asociat cu cursul "Nutritie"
+      if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })
+
+        # Utilizatorul are acces la resursa
       else
-        # Utilizatorul nu este logat
-        flash[:alert] = "Trebuie să te autentifici pentru a accesa această resursă."
-        redirect_to login_path
+        # Utilizatorul nu are acces la resursa
+        flash[:alert] = "Nu ai acces la această resursă."
+        redirect_to servicii_path
       end
+    else
+      # Utilizatorul nu este logat
+      flash[:alert] = "Trebuie să te autentifici pentru a accesa această resursă."
+      redirect_to login_path
     end
+  end
     def set_user1
       # Verifica daca userul este logat
       if current_user

@@ -313,8 +313,8 @@ class ValorinutritionalesController < ApplicationController
       # Verifica daca userul este logat
       if current_user
         # Verifica daca userul este admin sau asociat cu cursul "Nutritie"
-        if current_user.role == 1 || current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }
-          # Utilizatorul are acces la resursa
+        if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Nutritie" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })
+        # Utilizatorul are acces la resursa
         else
           # Utilizatorul nu are acces la resursa
           flash[:alert] = "Nu ai acces la această resursă."

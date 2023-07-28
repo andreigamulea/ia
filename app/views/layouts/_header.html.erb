@@ -13,16 +13,48 @@
             <ul class="nav-menu" id="navMenu">
                 <li><%= link_to 'Acasa', root_path %></li>
                 
-                <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1) %>  
+                
+                
+                
+                
+                <%if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Nutritie" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })%>
                 <li class="nav-item">
-                    <%= link_to 'Valori Nutritionale', valorinutritionales_path, id: 'valorinutritionales_link' %>
+                <%= link_to 'Valori Nutritionale', valorinutritionales_path, id: 'valorinutritionales_link' %>
+                </li>
+                <% elsif current_user %>   
+                <li class="nav-item">
+                <%= link_to 'Valori Nutritionale', servicii_path, class: 'button-link' %>
+                </li>
+                <% else %>   
+                <li class="nav-item">
+                <%= link_to 'Valori Nutritionale', new_user_session_with_return_path('vn'), class: 'button-link' %>
                 </li>
                 <% end %>
-                <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Lista vegetale" }) || (current_user && current_user.role == 1) %>  
+
+
+
+                    
+                    <%if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })%>
                     <li class="nav-item">
-                        <%= link_to 'Lista Vegetale', lista_vegetales_path, id: 'lista_vegetales_link' %>
+                    <%= link_to 'Lista Vegetale', lista_vegetales_path, id: 'lista_vegetales_link' %>
                     </li>
-                <% end %>
+                    <% elsif current_user %>   
+                    <li class="nav-item">
+                    <%= link_to 'Lista Vegetale', servicii_path, class: 'button-link' %>
+                    </li>
+                    <% else %>   
+                    <li class="nav-item">
+                    <%= link_to 'Lista Vegetale', new_user_session_with_return_path('lg'), class: 'button-link' %>
+                    </li>
+                    <% end %>
+              
+
+
+
+
+
+
+              
                 <li><%= link_to 'Servicii', servicii_path %></li>
                 <% if current_user && current_user.role == 1 %>  
                 <li class="nav-item">
@@ -36,7 +68,9 @@
                 <li><%= link_to 'Login', new_user_session_with_return_path('menu') %></li>
                 <li><%= link_to 'Creaza cont', new_user_registration_path %></li>
                 <% end %>
-                
+                <% if current_user && current_user.role == 1 %>  
+                <li><%= link_to 'Video', videos_path %></li> 
+                <%end%>
                 <li><%= link_to 'Contact', contact_path %></li> 
                 <%if current_user%>
                 <li><%= link_to 'Facturile mele', facturas_path %></li>

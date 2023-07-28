@@ -1,9 +1,10 @@
 class User < ApplicationRecord
   before_validation :downcase_email
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :trackable
 
-         validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }
+  
   has_many :comandas
   has_many :facturas
   has_many :cursuri
@@ -11,6 +12,7 @@ class User < ApplicationRecord
   has_many :cursuri_history
   has_many :userpaginisite
   has_many :paginisite, through: :userpaginisite
+  has_many :user_ips
   #has_many :detaliifacturares, dependent: :destroy
   has_one :detaliifacturare, dependent: :destroy
   attribute :active, :boolean, default: true

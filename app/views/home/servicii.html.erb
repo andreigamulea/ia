@@ -40,8 +40,33 @@
                     <th  style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
                 </tr>      
             </thead>
+            <!-- Primul tbody pentru produsele cu pret = 0 -->
             <tbody>
-            <% @prods.select{ |prod| prod.curslegatura == 'Lista vegetale' }.each do |prod| %>
+                <% @prods.select{ |prod| prod.curslegatura == 'Lista vegetale' && prod.pret == 0 }.each do |prod| %>
+                <tr>
+                <td> <%= prod.nume %> </td>                        
+                <td><%= prod.detalii %></td> 
+                <td><%= (prod.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                <td><%= prod.pret.to_i %> lei</td>
+                <td>
+                <% if (current_user && current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) }) || (current_user && current_user.role == 1) %>
+
+
+                <%= link_to 'Comanda', listavegetalegratis_home_path(acces: "da"), class: 'btn btn-primary' %>
+
+
+                    <% elsif current_user %>   
+                    <%= link_to 'Comanda', listavegetalegratis_home_path(acces: "nu"), class: 'btn btn-primary' %>
+
+                    <% else %>   
+                    <%= link_to 'Comanda', new_user_session_with_return_path('lg'), class: 'btn btn-primary' %>
+                    <% end %>
+                </td>      
+                </tr>
+                <% end %>
+            </tbody>
+            <tbody>
+            <% @prods.select{ |prod| prod.curslegatura == 'Lista vegetale' && prod.pret > 0 }.each do |prod| %>
                     <tr>
                         <td> <%= prod.nume %> </td>                        
                         <td><%= prod.detalii %></td> 

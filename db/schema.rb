@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_12_091947) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_24_184552) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -340,6 +340,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_091947) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_ips", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "ip_address"
+    t.string "curspromo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_ips_on_user_id"
+  end
+
   create_table "user_paginisites", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "paginisite_id", null: false
@@ -372,6 +381,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_091947) do
     t.string "stripe_customer_id"
     t.boolean "gdpr", default: false
     t.string "current_sign_in_token"
+    t.string "google_token"
+    t.string "provider"
+    t.string "uid"
+    t.string "google_refresh_token"
+    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at"
+    t.string "last_sign_in_ip"
+    t.string "current_sign_in_ip"
+    t.integer "sign_in_count"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -398,12 +416,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_091947) do
     t.index ["proteine"], name: "index_valorinutritionales_on_proteine"
   end
 
+  create_table "videos", force: :cascade do |t|
+    t.string "nume"
+    t.text "descriere"
+    t.string "sursa"
+    t.string "link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "comenzi_prods", "comandas"
   add_foreign_key "comenzi_prods", "prods"
   add_foreign_key "cursuri_history", "listacursuris"
   add_foreign_key "cursuri_history", "users", on_delete: :nullify
   add_foreign_key "facturas", "comandas"
   add_foreign_key "facturas", "users"
+  add_foreign_key "user_ips", "users"
   add_foreign_key "user_paginisites", "paginisites"
   add_foreign_key "user_paginisites", "users"
 end

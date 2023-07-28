@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nume: MyString
+  descriere: MyText
+  sursa: MyString
+  link: MyString
+
+two:
+  nume: MyString
+  descriere: MyText
+  sursa: MyString
+  link: MyString

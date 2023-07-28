@@ -16,7 +16,50 @@ class HomeController < ApplicationController
   end
   def cookiestest
   end
-
+  def listavegetalegratis
+    @acces = params[:acces]
+    @mesaj1 = "Acces gratuit 24h"
+    @mesaj2 = "Cautare selectiva in lista de ingrediente vegetale"
+    if @acces == "da"
+      redirect_to lista_vegetales_path
+    elsif @acces == "nu" && current_user
+      produs = "Lista vegetale"
+  
+      curs_exists = current_user.cursuri.any? { |curs| curs.listacursuri.nume == produs && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) }
+      Rails.logger.info "Curs exists?: #{curs_exists}"
+  
+      unless curs_exists || UserIp.exists?(user_id: current_user.id, curspromo: produs) || UserIp.exists?(ip_address: current_user.last_sign_in_ip, curspromo: produs)
+        curs_id = Listacursuri.find_by(nume: produs).id
+        curs = Cursuri.find_or_initialize_by(listacursuri_id: curs_id, user_id: current_user.id)
+        curs.update!(
+          datainceput: Time.now,
+          datasfarsit: Time.now + 1.day,
+          sursa: 'Promo 24h'
+        )
+        UserIp.create!(user_id: current_user.id, ip_address: current_user.last_sign_in_ip, curspromo: produs)
+  
+        # Adding entry to CursuriHistory
+        CursuriHistory.create!(
+          user_id: current_user.id,
+          listacursuri_id: curs_id,
+          cursuri_id: curs.id,
+          datainceput: curs.datainceput,
+          datasfarsit: curs.datasfarsit,
+          email: current_user.email, # assuming the user model has an email attribute
+          modificatde: 'Promo 24h'
+        )
+      else
+        redirect_to servicii_path
+      end
+    end
+  end
+  
+  
+  
+  
+  def mergi
+     @mesaj = params[:mesaj]
+  end  
   def successtripe
     session_id = params[:session_id]
     @stripe_session = Stripe::Checkout::Session.retrieve(session_id)  

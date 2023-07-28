@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :videos
   resources :facturas
 get 'facturas/:id/download', to: 'facturas#download', as: 'download_factura'
 get 'facturas/:id', to: 'facturas#show', format: 'pdf'
@@ -68,6 +69,12 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
 
   
   get 'home/index'
+  #get 'home/listavegetalegratis', to: 'home#listavegetalegratis', as: :listavegetalegratis_home
+  get 'home/listavegetalegratis/:acces', to: 'home#listavegetalegratis', as: :listavegetalegratis_home
+  
+  get 'home/mergi/:mesaj', to: 'home#mergi', as: 'home_mergi'
+
+
   get 'successtripe', to: 'home#successtripe', as: 'successtripe'
   get 'home/cookiestest', to: 'home#cookiestest'
   get '/termeni-conditii', to: 'home#termeni_conditii'
@@ -122,6 +129,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
     sessions: 'authentication',  # aici se schimba
     registrations: 'devise/registrations',
     #passwords: 'devise/passwords',
+    #sessions: 'sessions',
     passwords: 'custom_passwords',
     confirmations: 'devise/confirmations',
     unlocks: 'devise/unlocks'   

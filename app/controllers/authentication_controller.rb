@@ -17,6 +17,14 @@ class AuthenticationController < Devise::SessionsController
       session[:user_token] = new_token  # actualizeaza tokenul in sesiune
       session[:password_reset] = nil if user_signed_in?
       yield resource if block_given?
+      puts "IP:ip-ul meu aici!!!! #{request.remote_ip}"
+      # Update the IP address directly on the User object
+      resource.update!(
+        last_sign_in_at: DateTime.now,
+        last_sign_in_ip: request.remote_ip,
+        sign_in_count: resource.sign_in_count + 1
+      )
+
       respond_with resource, location: after_sign_in_path_for(resource)
     else
       Rails.logger.info("User #{resource.email} is inactive.")
@@ -24,5 +32,4 @@ class AuthenticationController < Devise::SessionsController
       redirect_to new_user_session_path, alert: "Contul dvs. este dezactivat. Vă rugăm să contactați administratorul."
     end
   end
-  
 end
