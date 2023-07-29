@@ -129,16 +129,18 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
  
  #devise_for :users, skip: :all
   devise_for :users, controllers: {
-    sessions: 'authentication',  # aici se schimba
-    registrations: 'devise/registrations',
-    #passwords: 'devise/passwords',
-    #sessions: 'sessions',
+    sessions: 'authentication',  # controler de sesiuni
+    registrations: 'devise/registrations',    
+        
     passwords: 'custom_passwords',
     confirmations: 'devise/confirmations',
+    #omniauth_callbacks: 'users/omniauth_callbacks',
+    omniauth_callbacks: 'omniauth_callbacks',
     unlocks: 'devise/unlocks'   
   }
   devise_scope :user do
     get 'users/sign_in/:return_to', to: 'devise/sessions#new', as: :new_user_session_with_return #face ruta frumoasa la login
+    get 'users/sign_up/:return_to', to: 'devise/registrations#new', as: :new_user_registration_with_return
   end
  
   # config/routes.rb

@@ -44,13 +44,17 @@ class ApplicationController < ActionController::Base
         puts "aici"
         
         Rails.logger.info "Aici, return_to: #{params[:return_to]}"
-        if params[:return_to] == "menu"
+        return_to = params[:return_to] || request.env['omniauth.params']['return_to']
+
+        Rails.logger.info "Aici, return_to: #{return_to}"
+
+        if return_to == "menu"
           # Cod pentru cazul în care sursa este meniul
           root_path # Înlocuiește cu calea corespunzătoare
-        elsif params[:return_to] == "vn"
+        elsif return_to == "vn"
           # Cod pentru cazul în care sursa este butonul
           valorinutritionales_path # Înlocuiește cu calea corespunzătoare
-        elsif params[:return_to] == "lg"
+        elsif return_to == "lg"
           # Cod pentru cazul în care sursa este butonul
           lista_vegetales_path # Înlocuiește cu calea corespunzătoare
         else

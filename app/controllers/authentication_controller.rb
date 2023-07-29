@@ -2,6 +2,7 @@ class AuthenticationController < Devise::SessionsController
   skip_before_action :check_sign_in_token, only: :create
 
   def create
+    session[:return_to] = params[:return_to]
     self.resource = warden.authenticate!(auth_options)
     if resource.nil?
       Rails.logger.info("Authentication failed for email #{params[:user][:email]}")
@@ -17,7 +18,7 @@ class AuthenticationController < Devise::SessionsController
       session[:user_token] = new_token  # actualizeaza tokenul in sesiune
       session[:password_reset] = nil if user_signed_in?
       yield resource if block_given?
-      puts "IP:ip-ul meu aici!!!! #{request.remote_ip}"
+      
       # Update the IP address directly on the User object
       resource.update!(
         last_sign_in_at: DateTime.now,

@@ -1,8 +1,6 @@
 
 
-<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "Sign up", new_registration_path(resource_name) %>
-<% end %>
+
 
 <%#- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
   <%#= link_to "Ati uitat parola?", new_password_path(resource_name) %><br />
@@ -18,6 +16,12 @@
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
-  <% end %>
+<%= button_to omniauth_authorize_path(resource_name, provider, return_to: request.params[:return_to]), class: "google-button", data: { turbo: false }, form: { method: :post } do %>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo" width="20" height="20">
+  Sign in with Google
 <% end %>
+    <% end %>
+<% end %></br>
+<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+  <%= link_to "Sign up", new_registration_path(resource_name) %>
+<% end %></br>

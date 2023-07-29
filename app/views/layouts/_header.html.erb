@@ -66,7 +66,8 @@
                 <li><%= link_to 'Cont', edit_user_registration_path, class: "nav-link" %></li>
                 <% else %>
                 <li><%= link_to 'Login', new_user_session_with_return_path('menu') %></li>
-                <li><%= link_to 'Creaza cont', new_user_registration_path %></li>
+                <li><%= link_to 'Creaza cont', new_user_registration_with_return_path('menu') %></li>
+
                 <% end %>
                 <% if current_user && current_user.role == 1 %>  
                 <li><%= link_to 'Video', videos_path %></li> 

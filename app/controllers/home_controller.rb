@@ -31,10 +31,12 @@ class HomeController < ApplicationController
   
       curs_exists = current_user.cursuri.any? { |curs| curs.listacursuri.nume == produs && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) }
       Rails.logger.info "Curs exists?: #{curs_exists}"
-  
+      puts("intraaaaaaa")
+      puts(current_user.id)
       unless curs_exists || UserIp.exists?(user_id: current_user.id, curspromo: produs) || UserIp.exists?(ip_address: current_user.last_sign_in_ip, curspromo: produs)
         curs_id = Listacursuri.find_by(nume: produs).id
         curs = Cursuri.find_or_initialize_by(listacursuri_id: curs_id, user_id: current_user.id)
+        puts("daaaaaaaaaaa")
         curs.update!(
           datainceput: Time.now,
           datasfarsit: Time.now + 1.day,
