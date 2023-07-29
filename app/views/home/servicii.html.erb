@@ -42,9 +42,10 @@
             </thead>
             <!-- Primul tbody pentru produsele cu pret = 0 -->
             <tbody>
-                <% @prods.select{ |prod| prod.curslegatura == 'Lista vegetale' && prod.pret == 0 }.each do |prod| %>
+            <% @prods.select{ |prod| prod.curslegatura == 'Lista vegetale' && prod.pret == 0 }.each do |prod| %>
                 <tr>
-                <td> <%= prod.nume %> </td>                        
+                  <td> <%= raw prod.nume.gsub('promo acces 24h', '<span class="text-danger">promo acces 24h</span>') %> </td>
+                                   
                 <td><%= prod.detalii %></td> 
                 <td><%= (prod.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
                 <td><%= prod.pret.to_i %> lei</td>
