@@ -5,11 +5,12 @@
     <tr>
       <th>ID</th>
       <th>User ID</th>
-      <th>IP Address</th>
+      <th>Adresa Ip</th>
       <th>Curs Promo</th>
-      <th>Created At</th>
-      <th>Updated At</th>
-      <th>User Name</th>
+      <th>Creat</th>
+      
+      <th>Email User</th>
+      <th>Nume User</th>
     </tr>
   </thead>
 
@@ -21,8 +22,9 @@
         <td><%= userip.ip_address %></td>
         <td><%= userip.curspromo %></td>
         <td><%= userip.created_at %></td>
-        <td><%= userip.updated_at %></td>
-        <td><%= userip.user&.email %></td> <!-- presupunând că există o asociere între UserIp și User -->
+        
+        <td><%= userip.user&.email %></td> 
+        <td><%= userip.user&.name %></td> 
       </tr>
     <% end %>
   </tbody>
