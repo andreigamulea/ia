@@ -16,6 +16,10 @@ class HomeController < ApplicationController
   end
   def cookiestest
   end
+  def userip
+    @userip= UserIp.all
+  end  
+
   def listavegetalegratis
     @acces = params[:acces]
     @mesaj1 = "Acces gratuit 24h"

@@ -72,6 +72,9 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   #get 'home/listavegetalegratis', to: 'home#listavegetalegratis', as: :listavegetalegratis_home
   get 'home/listavegetalegratis/:acces', to: 'home#listavegetalegratis', as: :listavegetalegratis_home
   
+  get 'home/userip', to: 'home#userip', as: 'userip'
+
+
   get 'home/mergi/:mesaj', to: 'home#mergi', as: 'home_mergi'
 
 

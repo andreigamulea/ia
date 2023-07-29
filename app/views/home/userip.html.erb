@@ -1,0 +1,29 @@
+<h1>User IPs</h1>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>User ID</th>
+      <th>IP Address</th>
+      <th>Curs Promo</th>
+      <th>Created At</th>
+      <th>Updated At</th>
+      <th>User Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @userip.each do |userip| %>
+      <tr>
+        <td><%= userip.id %></td>
+        <td><%= userip.user_id %></td>
+        <td><%= userip.ip_address %></td>
+        <td><%= userip.curspromo %></td>
+        <td><%= userip.created_at %></td>
+        <td><%= userip.updated_at %></td>
+        <td><%= userip.user&.email %></td> <!-- presupunând că există o asociere între UserIp și User -->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
