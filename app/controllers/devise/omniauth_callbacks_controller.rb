@@ -6,6 +6,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         request.env['omniauth.params']
         return_to = request.env['omniauth.params']['return_to']
         puts("aaaaaaaaaaa")
+        puts request.env["omniauth.auth"].to_yaml
+
         puts(return_to)
         puts("aaaaaaaaaaa")
          # You need to implement the method below in your model (e.g. app/models/user.rb)
@@ -27,7 +29,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         end
     end  
     def failure
-        redirect_to root_path
+        #redirect_to root_path
+        redirect_to new_user_session_path
       end
       def passthru
         session[:return_to] = params[:return_to]

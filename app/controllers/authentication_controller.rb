@@ -33,4 +33,5 @@ class AuthenticationController < Devise::SessionsController
       redirect_to new_user_session_path, alert: "Contul dvs. este dezactivat. Vă rugăm să contactați administratorul."
     end
   end
+  
 end

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'myvideo', to: 'videos#myvideo'
+  get 'myvideo1', to: 'videos#myvideo1'
   resources :videos
   resources :facturas
 get 'facturas/:id/download', to: 'facturas#download', as: 'download_factura'
@@ -141,6 +143,8 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   devise_scope :user do
     get 'users/sign_in/:return_to', to: 'devise/sessions#new', as: :new_user_session_with_return #face ruta frumoasa la login
     get 'users/sign_up/:return_to', to: 'devise/registrations#new', as: :new_user_registration_with_return
+    get "/users/sign_out" => "devise/sessions#destroy"
+
   end
  
   # config/routes.rb

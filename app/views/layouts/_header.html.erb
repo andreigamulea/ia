@@ -53,8 +53,9 @@
 
 
 
-
-              
+                    <% if current_user %>
+              <%=current_user.email%>
+              <%end%>
                 <li><%= link_to 'Servicii', servicii_path %></li>
                 <% if current_user && current_user.role == 1 %>  
                 <li class="nav-item">
@@ -69,9 +70,9 @@
                 <li><%= link_to 'Creaza cont', new_user_registration_with_return_path('menu') %></li>
 
                 <% end %>
-                <% if current_user && current_user.role == 1 %>  
-                <li><%= link_to 'Video', videos_path %></li> 
-                <%end%>
+                
+                <li><%= link_to 'Video', myvideo_path %></li>
+                <li><%= link_to 'Video1', myvideo1_path %></li>
                 <li><%= link_to 'Contact', contact_path %></li> 
                 <%if current_user%>
                 <li><%= link_to 'Facturile mele', facturas_path %></li>

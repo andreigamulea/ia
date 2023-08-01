@@ -91,5 +91,6 @@ gem 'wkhtmltopdf-binary', '~> 0.12.6.6'
 gem 'pdfkit', '~> 0.8.7.3'  #asta il folosesc pt ca wicked_pdf nu merge pe render.com de fapt nu are 
                             # wkhtmltopdf-binary  incorporat ca pdfkit
 gem 'cookie_law', '~> 0.1.2'
-#gem 'youtube_it', '~> 2.4', '>= 2.4.2'
+gem 'google-apis-youtube_v3', '~> 0.30.0'
 gem 'nokogiri', '~> 1.15', '>= 1.15.3'
+gem 'video_player', '~> 1.0'

@@ -1,0 +1,8 @@
+<% if @video %>
+  <%= @video.player.embed_html.html_safe %>
+  
+<% else %>
+  <p>Nu a fost găsit niciun video.</p>
+<% end %>
+
+

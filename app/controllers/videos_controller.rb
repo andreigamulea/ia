@@ -5,7 +5,41 @@ class VideosController < ApplicationController
   def index
     @videos = Video.all
   end
+  def myvideo
+    begin
+      youtube = Google::Apis::YoutubeV3::YouTubeService.new
+      #u = User.find_by(email: 'ayushcellromania@gmail.com')
+      u=current_user
+      youtube.authorization = u.google_token
+      puts("bbbbbbbbbbbbbb")
+      puts(youtube.authorization)
 
+      puts("bbbbbbbbbbbbbb")
+      #video_id = 'cyZrBoF7bjs'  # ID-ul unui videoclip privat ayusch
+      video_id = 'PqvgPC8u7eQ'  # ID-ul unui videoclip privat ayusch1
+      #video_id = 'lp_SV-kmLmc'  # ID-ul unui videoclip public
+      @video = youtube.list_videos('snippet, contentDetails, player', id: video_id).items.first
+  
+    rescue Google::Apis::ClientError => e
+      puts "Caught error #{e.message}: #{e.status_code}"
+  
+      if e.status_code == 401
+        # Dacă tokenul este expirat, reîmprospătează-l și reîncearcă
+        current_user.refresh_google_token!
+        retry
+      else
+        redirect_to videos_path
+      end
+    end
+  end
+  def myvideo1
+    
+    #@video=VideoPlayer::player("https://youtu.be/pqKdFhDoJfQ", "1200", "800", true)
+    #@video=VideoPlayer::player("https://youtu.be/lp_SV-kmLmc", "1200", "800", true)
+    #@video=VideoPlayer::player("https://youtu.be/vNkSkUYdxG0", "1200", "800", true)
+    #@video=VideoPlayer::player("https://www.youtube.com/watch?v=7gb-odOHPRo&t=5s", "1200", "800", true)
+    
+  end  
   # GET /videos/1 or /videos/1.json
   def show
   end

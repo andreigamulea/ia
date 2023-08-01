@@ -287,15 +287,16 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth(
-      :google_oauth2,
-      Rails.application.credentials.dig(:google, :client_id),
-      Rails.application.credentials.dig(:google, :client_secret),
-      scope: 'email',
-      name: 'google_oauth2',    
-      access_type: 'offline',
-      strategy_class: OmniAuth::Strategies::GoogleOauth2,
-      image_aspect_ratio: 'square',
-      callback_path: '/users/auth/google_oauth2/callback')
+  :google_oauth2,
+  Rails.application.credentials.dig(:google, :client_id),
+  Rails.application.credentials.dig(:google, :client_secret),
+  scope: 'email,https://www.googleapis.com/auth/youtube',
+  #scope: 'email',
+  name: 'google_oauth2',    
+  access_type: 'offline',
+  strategy_class: OmniAuth::Strategies::GoogleOauth2,
+  image_aspect_ratio: 'square',
+  callback_path: '/users/auth/google_oauth2/callback')
 
 
   # ==> Warden configuration
