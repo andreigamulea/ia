@@ -8,16 +8,6 @@
     </div>
 </div></br></br>
 
-<!-- for non autoplay video //-->
-<div style="width: 80%; max-width: 640px; max-height: 360px; margin: 0 auto;">
-    <div class="epyv-video-container" id="epyv-container[@myvideo]">
-        <div id="epytvPlayButton[@myvideo]" class="play-button" onClick="clickToPlay('@myvideo');"></div>
-        <img id="epytvImage[@myvideo]" src="/thumbnails/video-thumbnail-filename" /> 
-        <div class="epyv-video-player" id="@myvideo" data-params="controls=1,rel=1,autoplay=0"></div>
-        <div id="epytvPlayerCounter[@myvideo]" class="playerCounter" style="visibility: hidden;">10</div>
-    </div>
-</div></br></br>
-
 
 <!-- for non autoplay video //-->
 <div style="width: 80%; max-width: 640px; max-height: 360px; margin: 0 auto;">
@@ -26,6 +16,17 @@
         <img id="epytvImage-<%= @myvideo %>" src="/thumbnails/video-thumbnail-filename" />
         <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
         <div id="epytvPlayerCounter-<%= @myvideo %>" class="playerCounter" style="visibility: hidden;">10</div>
+    </div>
+</div>
+</br></br>
+
+<!-- for non autoplay video //-->
+<div style="width: 80%; max-width: 640px; max-height: 360px; margin: 0 auto;">
+    <div class="epyv-video-container" id="epyv-container-<%= @myvideo1 %>">
+        <div id="epytvPlayButton-<%= @myvideo1 %>" class="play-button" onClick="clickToPlay('<%= @myvideo1 %>');"></div>
+        <img id="epytvImage-<%= @myvideo1 %>" src="/thumbnails/video-thumbnail-filename" />
+        <div class="epyv-video-player" id="<%= @myvideo1 %>" data-params="controls=1,rel=1,autoplay=0"></div>
+        <div id="epytvPlayerCounter-<%= @myvideo1 %>" class="playerCounter" style="visibility: hidden;">10</div>
     </div>
 </div>
 </br></br>

@@ -5,9 +5,9 @@ class VideosController < ApplicationController
   def index
     @videos = Video.all
   end
-  def myvideo
-    @myvideo = 'pqKdFhDoJfQ'
-    
+  def myvideo    
+    @myvideo = 'wFsOFLPw3V8'
+    @myvideo1 = 'pqKdFhDoJfQ'
   end
   
   # GET /videos/1 or /videos/1.json
