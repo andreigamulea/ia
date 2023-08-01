@@ -1,5 +1,5 @@
 
-  # config/initializers/pdfkit.rb
+  ##config/initializers/pdfkit.rb
 PDFKit.configure do |config|
     if Rails.env.production?
       config.wkhtmltopdf = `which wkhtmltopdf`.chomp
