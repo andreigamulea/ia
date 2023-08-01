@@ -53,9 +53,7 @@
 
 
 
-                    <% if current_user %>
-              <%=current_user.email%>
-              <%end%>
+                   
                 <li><%= link_to 'Servicii', servicii_path %></li>
                 <% if current_user && current_user.role == 1 %>  
                 <li class="nav-item">
@@ -71,8 +69,8 @@
 
                 <% end %>
                 
-                <li><%= link_to 'Video', myvideo_path %></li>
-                <li><%= link_to 'Video1', myvideo1_path %></li>
+               
+                <li><%= link_to 'Video', myvideo1_path %></li>
                 <li><%= link_to 'Contact', contact_path %></li> 
                 <%if current_user%>
                 <li><%= link_to 'Facturile mele', facturas_path %></li>
