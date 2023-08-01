@@ -8,8 +8,8 @@ class VideosController < ApplicationController
   def myvideo
     begin
       youtube = Google::Apis::YoutubeV3::YouTubeService.new
-      #u = User.find_by(email: 'ayushcellromania@gmail.com')
-      u=current_user
+      u = User.find_by(email: 'ayushcellromania@gmail.com')
+      #u=current_user
       youtube.authorization = u.google_token
       puts("bbbbbbbbbbbbbb")
       puts(youtube.authorization)
@@ -33,11 +33,8 @@ class VideosController < ApplicationController
     end
   end
   def myvideo1
-    
-    #@video=VideoPlayer::player("https://youtu.be/pqKdFhDoJfQ", "1200", "800", true)
-    #@video=VideoPlayer::player("https://youtu.be/lp_SV-kmLmc", "1200", "800", true)
-    #@video=VideoPlayer::player("https://youtu.be/vNkSkUYdxG0", "1200", "800", true)
-    #@video=VideoPlayer::player("https://www.youtube.com/watch?v=7gb-odOHPRo&t=5s", "1200", "800", true)
+    #@video=VideoPlayer::player("https://youtu.be/pqKdFhDoJfQ", "1200", "800", true) #public
+    @video=VideoPlayer::player("https://youtu.be/wFsOFLPw3V8", "1200", "800", true) #privat
     
   end  
   # GET /videos/1 or /videos/1.json
