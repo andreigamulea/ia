@@ -6,11 +6,10 @@ class VideosController < ApplicationController
     @videos = Video.all
   end
   def myvideo
+    @myvideo = 'pqKdFhDoJfQ'
     
   end
-  def myvideo1    
-    
-  end  
+  
   # GET /videos/1 or /videos/1.json
   def show
   end
