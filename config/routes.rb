@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   get 'myvideo', to: 'videos#myvideo'
+  get 'videos/:id/myvideo1', to: 'videos#myvideo1', as: 'myvideo1'
+
   
   resources :videos
   resources :facturas
