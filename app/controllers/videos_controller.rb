@@ -5,17 +5,11 @@ class VideosController < ApplicationController
   def index
     @videos = Video.all
   end
-  def myvideo    
-
-    
+  def myvideo   
     @myvideo = Video.first.link    
-    @myvideo1 =  Video.last.link
-
   end
   def myvideo1
-    #@video = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
-    # foloseste @link cum este necesar
   end
   
   # GET /videos/1 or /videos/1.json
