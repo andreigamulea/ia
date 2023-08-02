@@ -7,15 +7,14 @@ class VideosController < ApplicationController
   end
   def myvideo    
 
-    @video = Video.first
-    @myvideo = @video.link
-    @video1 = Video.last
-    @myvideo1 =  @video1.link
+    
+    @myvideo = Video.first.link    
+    @myvideo1 =  Video.last.link
 
   end
   def myvideo1
-    @video = Video.find(params[:id])
-    @myvideo = params[:link]
+    #@video = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
     # foloseste @link cum este necesar
   end
   
