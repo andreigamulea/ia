@@ -1,6 +1,6 @@
 class VideosController < ApplicationController
   before_action :set_video, only: %i[ show edit update destroy ]
-
+  before_action :set_user, only: %i[ show edit update destroy myvideo1]
   # GET /videos or /videos.json
   def index
     @videos = Video.all
@@ -72,5 +72,17 @@ class VideosController < ApplicationController
     # Only allow a list of trusted parameters through.
     def video_params
       params.require(:video).permit(:nume, :descriere, :sursa, :link, :tip)
+    end
+
+    def set_user
+      # Verifica daca userul este logat
+      if current_user && current_user.role == 1
+       
+        else
+          # Utilizatorul nu are acces la resursa
+          flash[:alert] = "Nu ai acces la această resursă."
+          redirect_to root_path
+      end
+    
     end
 end
