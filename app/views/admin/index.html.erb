@@ -13,6 +13,7 @@
       <%= button_to 'Show All Users', url_for(controller: 'admin', action: 'index'), method: :get, class: 'btn btn-secondary ml-2' %>
     </div>
   </div>
+  Numar useri: <%=User.count%>
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
