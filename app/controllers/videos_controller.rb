@@ -11,6 +11,11 @@ class VideosController < ApplicationController
   def myvideo1
     @myvideo = Video.find(params[:id])[:link]
   end
+
+  def tayv2
+    @myvideo = Video.where(tip: 'tayv2')
+  end
+  
   
   # GET /videos/1 or /videos/1.json
   def show

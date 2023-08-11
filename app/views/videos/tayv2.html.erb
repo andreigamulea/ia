@@ -1,0 +1,23 @@
+<p class="text-success"><%= notice %></p>
+
+<h1>Videos</h1>
+
+<div id="videos">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nume</th>
+        <th>Descriere</th>
+       
+        <th>Actiune</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @myvideo.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link_to "New video", new_video_path, class: "btn btn-success" %>
