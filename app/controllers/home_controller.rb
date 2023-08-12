@@ -98,8 +98,8 @@ class HomeController < ApplicationController
     
     if current_user && current_user.role == 1
       
-      special_prod = Prod.find(special_prod_id)
-      @prods << special_prod # Convertirea la array
+    
+      @prods = Prod.order(:id).to_a
     else
       # Exclude produsul special pentru utilizatorii obișnuiți
       @prods = Prod.where(status: 'activ').where.not(id: special_prod_id).order(:id).to_a # Convertirea la array
