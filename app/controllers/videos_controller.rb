@@ -115,7 +115,7 @@ class VideosController < ApplicationController
     
       unless user_course
         flash[:alert] = "Nu aveți acces la acest curs."
-        redirect_to root_path
+        redirect_to servicii_path
         return
       end
     
