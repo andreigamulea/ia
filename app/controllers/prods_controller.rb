@@ -71,7 +71,7 @@ class ProdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def prod_params
-      params.require(:prod).permit(:nume, :detalii, :info, :pret, :valabilitatezile, :curslegatura, :linkstripe, :status)
+      params.require(:prod).permit(:nume, :detalii, :info, :pret, :valabilitatezile, :curslegatura, :linkstripe, :status, :cod)
     end
     
 end

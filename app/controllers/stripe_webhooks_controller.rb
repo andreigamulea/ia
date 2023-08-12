@@ -119,16 +119,38 @@ class StripeWebhooksController < ApplicationController
     }
   end
   def populeaza_cursuri(user_id, produs)
+    # Logarea datelor de intrare
+    Rails.logger.info("Populeaza cursuri pentru user_id: #{user_id}, produs: #{produs.inspect}")
+  
     # Cautam id-ul cursului cu numele specificat in produs.curslegatura
     curs_id = Listacursuri.find_by(nume: produs.curslegatura).id
   
-    # Cream sau actualizam recordul in tabela Cursuri
+    # Verificăm dacă am găsit curs_id
+    if curs_id.nil?
+      Rails.logger.error("Nu s-a găsit Listacursuri cu numele: #{produs.curslegatura}")
+      return
+    end
+  
+    # Cream sau găsim înregistrarea în tabela Cursuri
     curs = Cursuri.find_or_initialize_by(listacursuri_id: curs_id, user_id: user_id)
-    curs.update!(
+    
+    curs = Cursuri.find_or_create_by(listacursuri_id: curs_id, user_id: user_id)
+    if curs.update(
       datainceput: Time.now,
       datasfarsit: Time.now + produs.valabilitatezile.to_i.days,
-      sursa: 'Stripe'
+      sursa: 'Stripe',
+      updated_at: Time.now
     )
+      #Rails.logger.info("Curs actualizat: #{curs.inspect}")
+      
+    else
+     
+      #Rails.logger.error("Eroare la actualizarea cursului: #{curs.errors.full_messages}")
+    end
+    
+  
+    # Logarea stării înregistrării după salvare
+    #Rails.logger.info("Curs salvat: #{curs.inspect}")
   
     # Apelam noua metoda dupa ce am reusit sa actualizam sau sa cream inregistrarea in tabela Cursuri
     populeaza_cursuri_history(user_id, curs_id, curs, User.find(user_id).email)

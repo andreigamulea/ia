@@ -559,6 +559,75 @@ def preluaredate10 #listavegetale
   end  
 end
 
+def preluaredate11 #preluare useri noi (doar noi ) doar atat. email,name,pass,role,limba
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+
+  xlsx.each_row_streaming(offset: 0) do |row|
+    email = row[0]&.value&.strip&.downcase # Adăugat downcase
+    name = row[1]&.value&.strip
+    limba = row[2]&.value&.strip
+
+    # Sari peste rând dacă email este nul
+    next if email.nil?
+
+    # Verifică dacă email-ul există deja în tabel
+    next if User.exists?(email: email.downcase) # Adăugat downcase și aici, pentru consistență
+
+    # Crează un nou utilizator
+    user = User.new(email: email, name: name, limba: limba, password: "7777777", role: 0)
+
+    # Salvează utilizatorul
+    if user.save
+      puts "Utilizatorul #{email} a fost adăugat cu succes."
+    else
+      puts "Eroare la adăugarea utilizatorului #{email}: #{user.errors.full_messages.join(', ')}"
+    end
+  end
+end
+
+def preluaredate12 # pune in tabela Userprod userii din tabela preluata mai sus user_id si prod_id (pt a controla userii 
+  #userii care sa aiba acces sa cumpere un produs aici produsul care are cod=cod9 )
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+
+  # Găsește produsul cu codul 'cod9'
+  prod = Prod.find_by(cod: 'cod9')
+
+  # Dacă produsul nu există, iesi din metodă
+  return unless prod
+
+  xlsx.each_row_streaming(offset: 0) do |row|
+    email = row[0]&.value&.strip&.downcase # Adăugat downcase aici
+    next unless email
+
+    # Caută userul cu email-ul dat
+    user = User.find_by(email: email)
+    next unless user
+
+    # Creează o înregistrare în Userprod doar dacă nu există deja
+    Userprod.find_or_create_by(user: user, prod: prod)
+  end
+end
+#preluaredate11 12 si 13 sunt legate  am 3 butoane poti apasa aoricat pe ele pt ca se preia doar ce nu e deja bagat
+def preluaredate13  #verifica daca s-au preluat toti userii din tabela de mai sus si afiseaza userii nepreluati
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+  @emails_negasite = []
+
+  xlsx.each_row_streaming(offset: 0) do |row|
+    email = row[0]&.value&.strip&.downcase # Adăugat downcase aici
+    next unless email
+
+    # Verifică dacă userul cu email-ul dat există
+    unless User.exists?(email: email)
+      @emails_negasite << email
+    end
+  end
+
+  if @emails_negasite.any?
+    flash[:alert] = "Următoarele adrese de email nu au fost găsite: #{@emails_negasite.join(', ')}"
+  else
+    flash[:notice] = "Toate adresele de email din fișierul XLSX sunt în tabela User."
+  end
+end
 
 
 

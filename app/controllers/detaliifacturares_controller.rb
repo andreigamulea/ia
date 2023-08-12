@@ -1,7 +1,9 @@
 class DetaliifacturaresController < ApplicationController
   before_action :authenticate_user!
+  before_action :restrict_access_to_special_page, only: [:datefacturare]
   before_action :new, only: [:datefacturare] # remove :create
   skip_before_action :verify_authenticity_token, only: [:pay]
+
   def index
     @detaliifacturare = Detaliifacturare.all.order(id: :desc)
   end
@@ -207,5 +209,13 @@ end
     params.require(:detaliifacturare).permit(:prenume, :nume, :numecompanie, :cui, :tara, :judet, :localitate, :codpostal, :strada, :numar, :altedate, :telefon, :adresaemail,:s)
 end
 
-
+def restrict_access_to_special_page  #da acces doar la userii care sunt in tabela UserProd cu prod_id=9
+  # Verifică dacă parametrul 's' este 9
+  if params[:s] == '9'
+    unless Userprod.exists?(user_id: current_user.id, prod_id: 9)
+      flash[:alert] = "Nu aveți acces la această pagină."
+      redirect_to root_path # sau orice altă cale unde doriți să redirecționați utilizatorul
+    end
+  end
+end
 end

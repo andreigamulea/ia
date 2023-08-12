@@ -1,6 +1,7 @@
 class VideosController < ApplicationController
   before_action :set_video, only: %i[ show edit update destroy ]
-  before_action :set_user, only: %i[ show edit update destroy myvideo1]
+  before_action :set_user, only: %i[ show edit update destroy]
+  before_action :set_user1, only: %i[tayv2 myvideo1]
   # GET /videos or /videos.json
   def index
     @videos = Video.all
@@ -90,4 +91,39 @@ class VideosController < ApplicationController
       end
     
     end
+    def set_user1
+      # Verifică dacă userul este logat
+      unless user_signed_in?
+        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+        redirect_to new_user_session_path # Presupunând că aceasta este calea către login
+        return
+      end
+    
+      # Dacă userul are rolul 1, îi dăm acces direct
+      return true if current_user.role == 1
+    
+      tayv2_course = Listacursuri.find_by(nume: 'tayv2')
+    
+      if tayv2_course.nil?
+        flash[:alert] = "Cursul nu a fost găsit."
+        redirect_to root_path
+        return
+      end
+    
+      # Găsim înregistrarea din tabelul Cursuri pentru utilizatorul și cursul curent
+      user_course = Cursuri.find_by(user_id: current_user.id, listacursuri_id: tayv2_course.id)
+    
+      unless user_course
+        flash[:alert] = "Nu aveți acces la acest curs."
+        redirect_to root_path
+        return
+      end
+    
+      # Verificăm dacă datasfarsit este nil sau dacă data curentă este mai mică sau egală cu datasfarsit
+      if user_course.datasfarsit && user_course.datasfarsit < Date.today
+        flash[:alert] = "Accesul la acest curs a expirat."
+        redirect_to root_path
+      end
+    end
+    
 end

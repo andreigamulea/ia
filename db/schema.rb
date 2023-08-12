@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_02_115657) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_12_180855) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -292,6 +292,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_115657) do
     t.datetime "updated_at", null: false
     t.string "linkstripe"
     t.string "status"
+    t.string "cod"
   end
 
   create_table "recomandaris", force: :cascade do |t|
@@ -367,6 +368,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_115657) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "userprods", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "prod_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["prod_id"], name: "index_userprods_on_prod_id"
+    t.index ["user_id"], name: "index_userprods_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -390,7 +400,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_115657) do
     t.string "last_sign_in_ip"
     t.string "current_sign_in_ip"
     t.integer "sign_in_count"
+    t.string "limba"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["limba"], name: "index_users_on_limba"
     t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["role"], name: "index_users_on_role"
@@ -435,4 +447,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_115657) do
   add_foreign_key "user_ips", "users"
   add_foreign_key "user_paginisites", "paginisites"
   add_foreign_key "user_paginisites", "users"
+  add_foreign_key "userprods", "prods"
+  add_foreign_key "userprods", "users"
 end

@@ -30,7 +30,8 @@ class User < ApplicationRecord
   
   
 
-
+  has_many :userprods
+  has_many :prods, through: :userprods
   has_many :comandas
   has_many :facturas
   has_many :cursuri
