@@ -95,14 +95,12 @@ class HomeController < ApplicationController
   
   def servicii
     special_prod_id = 9
-    
+  
     if current_user && current_user.role == 1
-      
-    
       @prods = Prod.order(:id).to_a
     else
       # Exclude produsul special pentru utilizatorii obișnuiți
-      @prods = Prod.where(status: 'activ').where.not(id: special_prod_id).order(:id).to_a # Convertirea la array
+      @prods = Prod.where(status: 'activ').where.not(id: special_prod_id).order(:id).to_a
     end
   
     if params[:payment] == "success"
@@ -110,11 +108,12 @@ class HomeController < ApplicationController
     end
   
     # Verifică dacă utilizatorul curent există în Userprod cu prod_id special_prod_id și adaugă produsul la lista de afișat
-    if current_user && Userprod.exists?(user_id: current_user.id, prod_id: special_prod_id)
+    if current_user && Userprod.exists?(user_id: current_user.id, prod_id: special_prod_id) && !@prods.find { |prod| prod.id == special_prod_id }
       special_prod = Prod.find(special_prod_id)
       @prods << special_prod
     end
   end
+  
   
   
   
