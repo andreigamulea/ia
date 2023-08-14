@@ -14,8 +14,13 @@
       <div class="footer-column">
         <ul>
           <li><h2>Contul meu</h2></li>
-          <li>Autentificare</li>
-          <li>Cos cumpărături</li>
+          <li><%= link_to 'Login', new_user_session_with_return_path('menu') %></li>
+          <li><%= link_to 'Creaza cont', new_user_registration_with_return_path('menu') %></li>
+          <% if current_user %>
+          <li><%= link_to 'Contul meu', edit_user_registration_path, class: 'nav-item' %></li>
+          <%end%>
+          <li>Iesi din cont</li>
+          
         </ul>
       </div>
       <div class="footer-column">
