@@ -602,8 +602,9 @@ footer {
     color: #337ab7;
     text-shadow: #000000 0.02em 0.02em 0.2em;
     z-index: 1000;
-    top: 30%;
-    left: 42%;
-    position: absolute;    
+    top: 50%;
+    left: 50%;
+    position: absolute;   
+    transform: translate(-50%, -50%); 
 }
 

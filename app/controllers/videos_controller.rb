@@ -10,13 +10,15 @@ class VideosController < ApplicationController
     @myvideo = Video.first.link    
   end
   def myvideo1
-    @myvideo1 = Video.find(params[:id])
+    @myvideo1 = Video.find(params[:id]).nume
     @myvideo = Video.find(params[:id])[:link]
   end
 
   def tayv2
-    @myvideo = Video.where(tip: 'tayv2')
+    @myvideo = Video.where(tip: 'tayv2').order(ordine: :asc)
   end
+  
+  
   
   
   # GET /videos/1 or /videos/1.json
@@ -78,7 +80,7 @@ class VideosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def video_params
-      params.require(:video).permit(:nume, :descriere, :sursa, :link, :tip)
+      params.require(:video).permit(:nume, :descriere, :sursa, :link, :tip, :ordine)
     end
 
     def set_user
