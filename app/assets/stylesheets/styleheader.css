@@ -185,4 +185,6 @@
                     border-left: 5px solid black;
                 }
             }
-    
+            .submenu a:hover {
+                font-weight: 700;
+            }
