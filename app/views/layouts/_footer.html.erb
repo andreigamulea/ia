@@ -14,12 +14,15 @@
       <div class="footer-column">
         <ul>
           <li><h2>Contul meu</h2></li>
+          <% if user_signed_in? %>
+          <li><%= link_to 'Contul meu', edit_user_registration_path, class: 'nav-item' %></li>          
+          <li><%= link_to 'Iesi din cont', destroy_user_session_path, id: 'logout_link', data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %></li>
+          <%else%>
           <li><%= link_to 'Login', new_user_session_with_return_path('menu') %></li>
           <li><%= link_to 'Creaza cont', new_user_registration_with_return_path('menu') %></li>
-          <% if current_user %>
-          <li><%= link_to 'Contul meu', edit_user_registration_path, class: 'nav-item' %></li>
           <%end%>
-          <li>Iesi din cont</li>
+          
+          
           
         </ul>
       </div>
