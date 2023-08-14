@@ -57,6 +57,9 @@ class ApplicationController < ActionController::Base
         elsif return_to == "lg"
           # Cod pentru cazul în care sursa este butonul
           lista_vegetales_path # Înlocuiește cu calea corespunzătoare
+        elsif return_to == "tayv2"
+          # Cod pentru cazul în care sursa este butonul
+          tayv2_path # Înlocuiește cu calea corespunzătoare  
         else
           # Dacă nu există parametru return_to, sau dacă valoarea acestuia nu este recunoscută, redirectează către o cale implicită
           servicii_path # Înlocuiește cu calea implicită

@@ -43,7 +43,32 @@
       <img src="<%= image_path('listavegetale.jpg') %>" alt="Imagine"></a>
    </div>
    </div>
-</div>
+</div></br>
 
+
+<div class="nutritie">
+   <div class="row">
+      <div class="column">
+         <a href="<%= tayv2_path %>">
+         <img src="<%= image_path('tayv2.jpg') %>" alt="Imagine">
+         </a>
+      </div>
+ 
+      <div class="column">
+      <h1>Prezentari Video</h1>
+      <div class="description">Acces prezentari video din Tabara de ayurveda etapa de vara 2023 partea a 2-a</div>
+      <div class="button">
+        <%if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "tayv2" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })%>
+          <%= link_to 'Vezi prezentari video', tayv2_path, id: 'tayv2_link' %>
+        <% elsif current_user %>   
+          <%= link_to 'Vezi prezentari video', servicii_path, class: 'button-link' %>
+        <% else %>   
+          <%= link_to 'Vezi prezentari video', new_user_session_with_return_path('tayv2'), class: 'button-link' %>
+        <% end %> 
+      </div>
+    </div>
+    
+   </div>
+</div></br>
 
 </section>
