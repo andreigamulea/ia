@@ -105,15 +105,15 @@
 
                 <%if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "tayv2" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })%>
                 <li class="nav-item">
-                <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2 1', tayv2_path, id: 'tayv2_link' %>
+                <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', tayv2_path, id: 'tayv2_link' %>
                 </li>
                 <% elsif current_user %>   
                 <li class="nav-item">
-                <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2 2', servicii_path, class: 'button-link' %>
+                <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', servicii_path, class: 'button-link' %>
                 </li>
                 <% else %>   
                 <li class="nav-item">
-                <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2 3', new_user_session_with_return_path('tayv2'), class: 'button-link' %>
+                <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', new_user_session_with_return_path('tayv2'), class: 'button-link' %>
                 </li>
                 <% end %> 
 
