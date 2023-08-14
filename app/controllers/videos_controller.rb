@@ -10,7 +10,7 @@ class VideosController < ApplicationController
     @myvideo = Video.first.link    
   end
   def myvideo1
-    @myvideo1 = Video.find(params[:id]).nume
+    @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
   end
 
