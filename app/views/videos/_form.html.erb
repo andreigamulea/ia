@@ -1,3 +1,5 @@
+<section class="c1">
+<div class="cform">
 <%= form_with(model: video) do |form| %>
   <% if video.errors.any? %>
     <div style="color: red">
@@ -11,31 +13,33 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :nume, style: "display: block" %>
-    <%= form.text_field :nume %>
+  <div class="form-group">
+    <%= form.label :nume, style: "display: block; width: 400px;" %>
+    <%= form.text_field :nume, style: "display: block; width: 700px;" %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :descriere, style: "display: block" %>
-    <%= form.text_area :descriere %>
+    <%= form.text_area :descriere, style: "display: block; width: 700px;" %>
   </div>
 
   <div>
     <%= form.label :sursa, style: "display: block" %>
-    <%= form.text_field :sursa %>
+    <%= form.text_field :sursa, style: "display: block; width: 700px;" %>
   </div>
 
   <div>
     <%= form.label :link, style: "display: block" %>
-    <%= form.text_field :link %>
+    <%= form.text_field :link, style: "display: block; width: 700px;" %>
   </div>
 
   <div>
   <%= form.label :tip, style: "display: block" %>
-  <%= form.text_field :tip %>
+  <%= form.text_field :tip, style: "display: block; width: 700px;" %>
 </div>
   <div>
     <%= form.submit %>
   </div>
 <% end %>
+</div>
+</section>

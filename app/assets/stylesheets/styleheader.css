@@ -74,6 +74,18 @@
                 background-color: black;
                 transform: translateX(-50%);
             }
+            .nav-menu .submenu a:hover::after{
+                content: "";
+                position: absolute;
+                left: 50%;
+                bottom: -3px;
+                width: 100%;
+                height: 1px;
+                background-color: transparent;
+                transform: translateX(-50%);
+
+            }
+
             .has-submenu {
                 position: relative;
             }
@@ -88,6 +100,7 @@
                 padding: 10px;
                 z-index: 1000;
                 border-radius: 10px;
+                line-height: 1.3;
             }
             .submenu a{
                 color:white;
