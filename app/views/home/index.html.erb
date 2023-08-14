@@ -2,8 +2,16 @@
 
 <div class="nutritie">
    <div class="row">
+      <% link_path = if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1)
+         "/valori-nutritionale"
+      elsif current_user
+         servicii_path
+      else
+         new_user_session_with_return_path('vn')
+      end %>
+
       <div class="column">
-         <a href="/valori-nutritionale">
+         <a href="<%= link_path %>">
          <img src="<%= image_path('nutritie-ayushcell.jpg') %>" alt="Imagine">
          </a>
       </div>
@@ -11,54 +19,67 @@
          <h1>Aplicație Nutriție</h1>
          <div class="description">Descoperă conținutul nutritiv al alimentelor și calculează numărul de calorii, proteine, lipide, carbohidrați și fibre la fiecare masă! Alege în fiecare zi o alimentație sănătoasă și echilibrată.</div>
          <div class="button">
-            <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1) %>
-            <a href="/valori-nutritionale">Intră în aplicație</a>
-            <% elsif current_user %>   
-            <%= link_to 'Intră în aplicație', servicii_path, class: 'button-link' %>
-            <% else %>   
-            <%= link_to 'Intră în aplicație', new_user_session_with_return_path('vn'), class: 'button-link' %>
-            <% end %>
+            <%= link_to 'Intră în aplicație', link_path, class: 'button-link' %>
          </div>
       </div>
    </div>
 </div>
+
 <div class="nutritie endrow">
    <div class="row">
+      <% link_path = if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Lista vegetale" }) || (current_user && current_user.role == 1)
+         "/lista_vegetales"
+      elsif current_user
+         servicii_path
+      else
+         new_user_session_with_return_path('lg')
+      end %>
+
       <div class="column ivl">
          <h1>Lista ingrediente vegetale</h1>
          <div class="description">Accesează lista ingredientelor vegetale ce pot fi utilizate in suplimentele alimentare.</div>
          <div class="button">
             <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Lista vegetale" }) || (current_user && current_user.role == 1) %>
-            <a href="/lista_vegetales">Intră în aplicație</a>
+            <a href="<%= link_path %>">Intră în aplicație</a>
             <% elsif current_user %>   
-            <%= link_to 'Intră în aplicație', servicii_path, class: 'button-link' %>
+            <%= link_to 'Intră în aplicație', link_path, class: 'button-link' %>
             <% else %>   
-            <%= link_to 'Intră în aplicație', new_user_session_with_return_path('lg'), class: 'button-link' %>
+            <%= link_to 'Intră în aplicație', link_path, class: 'button-link' %>
             <% end %>
          </div>
-
       </div>
+      
       <div class="column ivl1">
-      <a href="/lista_vegetales">
-      <img src="<%= image_path('listavegetale.jpg') %>" alt="Imagine"></a>
+         <a href="<%= link_path %>">
+         <img src="<%= image_path('listavegetale.jpg') %>" alt="Imagine"></a>
+      </div>
    </div>
-   </div>
-</div></br>
+</div></br></br>
 
 
-<div class="nutritie">
-   <div class="row">
+
+      <div class="nutritie">
+         <div class="row">
+         <% link_path = if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "tayv2" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })
+         tayv2_path
+      elsif current_user
+         servicii_path
+      else
+         new_user_session_with_return_path('tayv2') # Același lucru ca la buton
+      end %>
+
       <div class="column">
-         <a href="<%= tayv2_path %>">
+         <a href="<%= link_path %>">
          <img src="<%= image_path('tayv2.jpg') %>" alt="Imagine">
          </a>
       </div>
+
  
       <div class="column">
       <h1>Prezentari Video</h1>
       <div class="description">Acces prezentari video din Tabara de ayurveda etapa de vara 2023 partea a 2-a</div>
       <div class="button">
-        <%if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "tayv2" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })%>
+        <% if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "tayv2" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) }) %>
           <%= link_to 'Vezi prezentari video', tayv2_path, id: 'tayv2_link' %>
         <% elsif current_user %>   
           <%= link_to 'Vezi prezentari video', servicii_path, class: 'button-link' %>
@@ -69,6 +90,7 @@
     </div>
     
    </div>
-</div></br>
+</div></br></br>
+
 
 </section>
