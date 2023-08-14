@@ -1,7 +1,7 @@
 <section class="c1"></br>
 <h1 style= "text-align: center;"><%=@myvideo1.nume%></h1></br>
 <!-- for non autoplay video //-->
-<div style="width: 80%; max-width: 640px; max-height: 360px; margin: 0 auto;background-image: url(<%= asset_path 'player.png'); %>">
+<div style="width: 80%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
         <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
         <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
