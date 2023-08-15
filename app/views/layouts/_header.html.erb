@@ -79,7 +79,6 @@
                 </li>
                 <% end %>
                 <% if user_signed_in? %>
-                <li><%= link_to 'Delogare', destroy_user_session_path, id: 'logout_link', data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %></li>
                 
                 <li class="nav-item has-submenu">
                     <a class="nav-link" href="#">Cont</a>
@@ -88,6 +87,8 @@
                         <% if current_user %>
                         <li><%= link_to 'Facturile mele', facturas_path, class: 'nav-item' %></li>
                         <% end %>
+                        <li><%= link_to 'Delogare', destroy_user_session_path, id: 'logout_link', data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %></li>
+                
                     </ul>
                 </li>
 
