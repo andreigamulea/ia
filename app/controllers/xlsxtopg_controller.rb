@@ -590,7 +590,7 @@ def preluaredate12 # pune in tabela Userprod userii din tabela preluata mai sus 
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
 
   # Găsește produsul cu codul 'cod9'
-  prod = Prod.find_by(cod: 'cod9')
+  prod = Prod.find_by(cod: 'cod11')
 
   # Dacă produsul nu există, iesi din metodă
   return unless prod
