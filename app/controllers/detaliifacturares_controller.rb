@@ -209,13 +209,32 @@ end
     params.require(:detaliifacturare).permit(:prenume, :nume, :numecompanie, :cui, :tara, :judet, :localitate, :codpostal, :strada, :numar, :altedate, :telefon, :adresaemail,:s)
 end
 
-def restrict_access_to_special_page  #da acces doar la userii care sunt in tabela UserProd cu prod_id=9
-  # Verifică dacă parametrul 's' este 9
-  if params[:s] == '9'
-    unless Userprod.exists?(user_id: current_user.id, prod_id: 9)
-      flash[:alert] = "Nu aveți acces la această pagină."
-      redirect_to root_path # sau orice altă cale unde doriți să redirecționați utilizatorul
+def restrict_access_to_special_page
+  # Dacă utilizatorul este admin, nu aplica restricții
+  return if current_user && current_user.role == 1
+  
+  # Aici, 's' este parametrul URL care indică produsul
+  target_prod_id = params[:s].to_i
+
+  # Verifică dacă ID-ul produsului din parametru este 9, 11 sau 12
+  if [9, 11, 12].include?(target_prod_id)
+    if target_prod_id == 9
+      unless Userprod.exists?(user_id: current_user.id, prod_id: 9)
+        deny_access
+      end
+    else
+      # Aici, verificăm doar pentru produsul cu ID-ul 11, deoarece oricine are acces la 11 are, de asemenea, acces implicit la 12
+      unless Userprod.exists?(user_id: current_user.id, prod_id: 11)
+        deny_access
+      end
     end
   end
 end
+
+def deny_access
+  flash[:alert] = "Nu aveți acces la această pagină."
+  redirect_to root_path # sau orice altă cale unde doriți să redirecționați utilizatorul
+end
+
+
 end

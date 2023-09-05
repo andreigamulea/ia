@@ -36,11 +36,17 @@
             </div>
     </div>
 
+<%elsif @redirect_spre == 'Nutritie3'%>
+    <div class="button">
+
+    <%= link_to 'Veti primi un email cu detaliile de acces', root_path %>
+            </div>
+    </div>
     
 <%else%>
     <div class="button">
 
-    <li><%= link_to 'Acasa', root_path %></li>
+    <%= link_to 'Acasa', root_path %>
             </div>
     </div>
 

@@ -95,12 +95,13 @@ class HomeController < ApplicationController
   
   def servicii
     special_prod_id = 9
-  
+    another_special_prod_id = 11
+
     if current_user && current_user.role == 1
       @prods = Prod.order(:id).to_a
     else
-      # Exclude produsul special pentru utilizatorii obișnuiți
-      @prods = Prod.where(status: 'activ').where.not(id: special_prod_id).order(:id).to_a
+      @prods = Prod.where(status: 'activ').where.not(id: [special_prod_id, another_special_prod_id, 12]).order(:id).to_a
+
     end
   
     if params[:payment] == "success"
@@ -108,11 +109,30 @@ class HomeController < ApplicationController
     end
   
     # Verifică dacă utilizatorul curent există în Userprod cu prod_id special_prod_id și adaugă produsul la lista de afișat
-    if current_user && Userprod.exists?(user_id: current_user.id, prod_id: special_prod_id) && !@prods.find { |prod| prod.id == special_prod_id }
-      special_prod = Prod.find(special_prod_id)
-      @prods << special_prod
+    if current_user
+      if Userprod.exists?(user_id: current_user.id, prod_id: another_special_prod_id)
+        # Dacă utilizatorul are acces la produsul cu ID-ul 11
+        if !@prods.find { |prod| prod.id == another_special_prod_id }
+          another_special_prod = Prod.find(another_special_prod_id)
+          @prods << another_special_prod
+        end
+        
+        # Dă-le și acces la produsul cu ID-ul 12
+        if !@prods.find { |prod| prod.id == 12 }
+          prod_12 = Prod.find(12)
+          @prods << prod_12
+        end
+      end
+    
+      # Logica pentru produsul special cu ID-ul 9 (ca mai înainte)
+      if Userprod.exists?(user_id: current_user.id, prod_id: special_prod_id) && !@prods.find { |prod| prod.id == special_prod_id }
+        special_prod = Prod.find(special_prod_id)
+        @prods << special_prod
+      end
     end
-  end
+    
+end
+
   
   
   
