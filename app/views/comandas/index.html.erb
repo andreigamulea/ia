@@ -19,7 +19,9 @@
         <th scope="col">Email Stripe</th>
         <th scope="col">Total</th>
         <th scope="col">Plataprin</th>
-        <th scope="col">Produs</th>
+        <th scope="col">Prodid</th>
+        <th scope="col">Prodcod</th>
+        <th scope="col">Produs</th>        
         <th scope="col">Actions</th>
         <th scope="col">Detalii factura</th>
       </tr>
@@ -40,6 +42,9 @@
           <td style="width: 10%;"><%= comanda.emailplata %></td>
           <td style="width: 5%;"><%= comanda.total %></td>
           <td style="width: 8%;"><%= comanda.plataprin %></td>
+          <td style="width: 8%;"><%= comanda.prodid %></td>
+          <td style="width: 8%;"><%= comanda.prodcod %></td>
+
           <td style="width: 10%;">
   <% comanda.prods.each do |prod| %>
     <%= prod.nume %>

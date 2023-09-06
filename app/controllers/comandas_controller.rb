@@ -66,6 +66,6 @@ class ComandasController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comanda_params
-      params.require(:comanda).permit(:datacomenzii, :numar, :statecomanda1, :statecomanda2, :stateplata1, :stateplata2, :stateplata3, :user_id, :emailcurrent, :emailplata, :total, :plataprin)
+      params.require(:comanda).permit(:datacomenzii, :numar, :statecomanda1, :statecomanda2, :stateplata1, :stateplata2, :stateplata3, :user_id, :emailcurrent, :emailplata, :total, :plataprin, :prodid, :prodcod)
     end
 end
