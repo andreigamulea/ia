@@ -121,7 +121,9 @@ class DetaliifacturaresController < ApplicationController
       emailcurrent: current_user.email,
       emailplata: @detaliifacturare.adresaemail,
       total: @prod.pret,
-      plataprin: 'Stripe'
+      plataprin: 'Stripe',
+      prodid: @prod.id,
+      prodcod: @prod.cod
     )
     numar_comanda = Comanda.maximum(:id).to_i
     comanda.update(numar: numar_comanda)

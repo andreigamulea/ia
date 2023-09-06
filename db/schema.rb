@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_14_124815) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_06_140249) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -71,6 +71,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_124815) do
     t.string "plataprin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "prodid"
+    t.string "prodcod"
+    t.index ["prodcod"], name: "index_comandas_on_prodcod"
+    t.index ["prodid"], name: "index_comandas_on_prodid"
   end
 
   create_table "comenzi_prods", force: :cascade do |t|
