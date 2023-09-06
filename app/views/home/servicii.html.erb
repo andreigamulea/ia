@@ -131,9 +131,12 @@
             <% @prods.select{ |prod| prod.curslegatura == 'Nutritie3' }.each do |prod| %>
                     <tr>
                     <td>
-                        <%= raw prod.nume.gsub('pentru participanti deja inscrisi', '<span class="text-danger">pentru participanti deja inscrisi</span>').gsub('cu inscriere', '<span class="text-danger">cu inscriere</span>') %>
+                        <%= raw prod.nume.gsub('înscrieri până pe 20 septembrie 2023', '<span class="text-danger">înscrieri până pe 20 septembrie 2023</span>').gsub('înscrieri începând cu 21 septembrie 2023', '<span class="text-danger">înscrieri începând cu 21 septembrie 2023</span>') %>
                     </td>                      
-                        <td><%= prod.detalii %></td> 
+                    <td>
+                    <%= raw prod.detalii.gsub('Înscrieri până pe 20 septembrie 2023', '<span class="text-danger">Înscrieri până pe 20 septembrie 2023</span>').gsub('Înscrieri începând cu 21 septembrie 2023', '<span class="text-danger">Înscrieri începând cu 21 septembrie 2023</span>') %>
+                </td>
+                 
                         <td><%= (prod.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
                          <td><%= prod.pret.to_i %> lei</td>
 
