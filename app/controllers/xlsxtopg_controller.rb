@@ -631,6 +631,35 @@ end
 
 
 
+def preluaredate14 #preia din tabela excel telefoanele si le pune la useri
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+
+  xlsx.each_row_streaming(offset: 0) do |row|
+    email = row[0]&.value&.strip&.downcase # Adăugat downcase
+    name = row[1]&.value&.strip
+    telefon = row[2]&.value&.strip
+
+    # Sari peste rând dacă email sau telefon este nul
+    next if email.nil? || telefon.nil?
+
+    # Găsește utilizatorul cu email-ul specificat
+    user = User.find_by(email: email.downcase)
+
+    # Dacă utilizatorul există, actualizează numărul de telefon
+    if user
+      if user.update(telefon: telefon)
+        puts "Numărul de telefon pentru utilizatorul #{email} a fost actualizat cu succes."
+      else
+        puts "Eroare la actualizarea numărului de telefon pentru utilizatorul #{email}: #{user.errors.full_messages.join(', ')}"
+      end
+    else
+      puts "Nu s-a găsit niciun utilizator cu email-ul #{email}."
+    end
+  end
+end
+
+
+
 ######################################
   def sterge_inregistrari
     Plante.destroy_all
