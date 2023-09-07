@@ -21,7 +21,8 @@
         <th scope="col">Plataprin</th>
         <th scope="col">Prodid</th>
         <th scope="col">Prodcod</th>
-        <th scope="col">Produs</th>        
+        <th scope="col">Telefon</th>
+        <th scope="col">Produs</th>                
         <th scope="col">Actions</th>
         <th scope="col">Detalii factura</th>
       </tr>
@@ -44,7 +45,7 @@
           <td style="width: 8%;"><%= comanda.plataprin %></td>
           <td style="width: 8%;"><%= comanda.prodid %></td>
           <td style="width: 8%;"><%= comanda.prodcod %></td>
-
+          <td style="width: 8%;"><%= comanda.telefon %></td>
           <td style="width: 10%;">
   <% comanda.prods.each do |prod| %>
     <%= prod.nume %>
