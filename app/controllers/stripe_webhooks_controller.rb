@@ -183,7 +183,12 @@ class StripeWebhooksController < ApplicationController
     # Calculați valoarea fără TVA
     pret_unitar_fara_tva = produs.pret / (1 + TVA / 100.0)
     dt = produs.valabilitatezile
-    produsul = produs.nume + ' (' + Date.current.strftime("%d-%m-%Y") + ' - ' + (Date.current + dt.days).strftime("%d-%m-%Y") + ' )'
+    if !['cod11', 'cod12', 'cod13'].include?(produs.cod)
+      produsul = produs.nume + ' (' + Date.current.strftime("%d-%m-%Y") + ' - ' + (Date.current + dt.days).strftime("%d-%m-%Y") + ' )'
+    else
+      produsul = produs.nume
+    end
+    
 
     # Creați o nouă factură
     Factura.create(
