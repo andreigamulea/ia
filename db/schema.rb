@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_06_140249) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_07_074233) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -73,6 +73,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_140249) do
     t.datetime "updated_at", null: false
     t.integer "prodid"
     t.string "prodcod"
+    t.string "telefon"
     t.index ["prodcod"], name: "index_comandas_on_prodcod"
     t.index ["prodid"], name: "index_comandas_on_prodid"
   end
@@ -405,6 +406,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_06_140249) do
     t.string "current_sign_in_ip"
     t.integer "sign_in_count"
     t.string "limba"
+    t.string "telefon"
+    t.string "telefon2"
+    t.string "telefon3"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["limba"], name: "index_users_on_limba"
     t.index ["name"], name: "index_users_on_name"

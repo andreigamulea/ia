@@ -120,6 +120,7 @@ class DetaliifacturaresController < ApplicationController
       user_id: current_user.id,
       emailcurrent: current_user.email,
       emailplata: @detaliifacturare.adresaemail,
+      telefon: @detaliifacturare.telefon,
       total: @prod.pret,
       plataprin: 'Stripe',
       prodid: @prod.id,
