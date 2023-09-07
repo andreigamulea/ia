@@ -2,7 +2,8 @@
 
 
   <h1 class="my-4">Comenzi</h1>
-  <%= link_to 'Inapoi la Panou administrare', panouadmin_path, class: "btn btn-primary" %>
+  <%= link_to 'Inapoi la Panou administrare', panouadmin_path, class: "btn btn-primary" %></br>
+  <%= link_to "Comanda noua folosim doar pentru cei care au achitat prin banca pt acces viitor - pentru a fi inregistrati si ei ca au platit", new_comanda_path, class: "btn btn-success mt-3" %>
   <table class="table table-sm table-striped">
     <thead>
       <tr>
@@ -71,5 +72,4 @@
     </tbody>
   </table>
 
-<% link_to "New Comanda", new_comanda_path, class: "btn btn-success mt-3" %>
 

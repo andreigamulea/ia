@@ -1,3 +1,4 @@
+<div class="cform">
 <%= form_with(model: prod) do |form| %>
   <% if prod.errors.any? %>
     <div style="color: red">
@@ -10,51 +11,52 @@
       </ul>
     </div>
   <% end %>
-
+ 
   <div>
     <%= form.label :nume, style: "display: block" %>
-    <%= form.text_field :nume %>
+    <%= form.text_area :nume, class: "form-control" %>
   </div>
 
   <div>
     <%= form.label :detalii, style: "display: block" %>
-    <%= form.text_area :detalii %>
+    <%= form.text_area :detalii, class: "form-control" %>
   </div>
 
   <div>
     <%= form.label :info, style: "display: block" %>
-    <%= form.text_area :info %>
+    <%= form.text_area :info, class: "form-control" %>
   </div>
 
   <div>
     <%= form.label :pret, style: "display: block" %>
-    <%= form.text_field :pret %>
+    <%= form.text_field :pret, class: "form-control" %>
   </div>
 
   <div>
     <%= form.label :valabilitatezile, style: "display: block" %>
-    <%= form.number_field :valabilitatezile %>
+    <%= form.number_field :valabilitatezile, class: "form-control" %>
   </div>
 
   <div>
     <%= form.label :curslegatura, style: "display: block" %>
-    <%= form.text_field :curslegatura %>
+    <%= form.text_field :curslegatura, class: "form-control" %>
   </div>
 
   <div>
     <%= form.label :linkstripe, style: "display: block" %>
-    <%= form.text_field :linkstripe %>
+    <%= form.text_field :linkstripe, class: "form-control" %>
   </div>
   <div>
     <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
+    <%= form.text_field :status, class: "form-control" %>
   </div>
   <div>
   <%= form.label :cod, style: "display: block" %>
-  <%= form.text_field :cod %>
+  <%= form.text_field :cod, class: "form-control" %>
 </div>
   
   <div>
-    <%= form.submit %>
+  <%= form.submit "Submit", class: "btncontact" %>
   </div>
 <% end %>
+</div>

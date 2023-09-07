@@ -11,65 +11,86 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :datacomenzii, style: "display: block" %>
-    <%= form.date_field :datacomenzii %>
-  </div>
+  <div style="display: none;">
+  <%= form.label :datacomenzii, style: "display: none;" %>
+  <%= form.date_field :datacomenzii, style: "display: none;" %>
+</div>
 
-  <div>
-    <%= form.label :numar, style: "display: block" %>
-    <%= form.number_field :numar %>
-  </div>
 
-  <div>
-    <%= form.label :statecomanda1, style: "display: block" %>
-    <%= form.text_field :statecomanda1 %>
-  </div>
+<div style="display: none;">
+<%= form.label :numar, style: "display: none;" %>
+<%= form.number_field :numar, style: "display: none;" %>
+</div>
 
-  <div>
-    <%= form.label :statecomanda2, style: "display: block" %>
-    <%= form.text_field :statecomanda2 %>
-  </div>
 
-  <div>
-    <%= form.label :stateplata1, style: "display: block" %>
-    <%= form.text_field :stateplata1 %>
-  </div>
+<div style="display: none;">
+<%= form.label :statecomanda1, style: "display: none;" %>
+<%= form.text_field :statecomanda1, style: "display: none;" %>
+</div>
 
-  <div>
-    <%= form.label :stateplata2, style: "display: block" %>
-    <%= form.text_field :stateplata2 %>
-  </div>
+<div style="display: none;">
+<%= form.label :statecomanda2, style: "display: none;" %>
+<%= form.text_field :statecomanda2, style: "display: none;" %>
+</div>
 
-  <div>
-    <%= form.label :stateplata3, style: "display: block" %>
-    <%= form.text_field :stateplata3 %>
-  </div>
+<div style="display: none;">
+<%= form.label :stateplata1, style: "display: none;" %>
+<%= form.text_field :stateplata1, style: "display: none;" %>
+</div>
 
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.number_field :user_id %>
-  </div>
+<div style="display: none;">
+<%= form.label :stateplata2, style: "display: none;" %>
+<%= form.text_field :stateplata2, style: "display: none;" %>
+</div>
+
+<div style="display: none;">
+<%= form.label :stateplata3, style: "display: none;" %>
+<%= form.text_field :stateplata3, style: "display: none;" %>
+</div>
+
+<div style="display: none;">
+<%= form.label :user_id, style: "display: none;" %>
+<%= form.number_field :user_id, style: "display: none;" %>
+</div>
+
+
+ 
 
   <div>
     <%= form.label :emailcurrent, style: "display: block" %>
     <%= form.text_field :emailcurrent %>
   </div>
 
-  <div>
-    <%= form.label :emailplata, style: "display: block" %>
-    <%= form.text_field :emailplata %>
-  </div>
+  <div style="display: none;">
+  <%= form.label :emailplata, style: "display: none;" %>
+  <%= form.text_field :emailplata, style: "display: none;" %>
+</div>
+
+<div style="display: none;">
+  <%= form.label :total, style: "display: none;" %>
+  <%= form.text_field :total, style: "display: none;" %>
+</div>
+
+<div style="display: none;">
+  <%= form.label :plataprin, style: "display: none;" %>
+  <%= form.text_field :plataprin, style: "display: none;" %>
+</div>
 
   <div>
-    <%= form.label :total, style: "display: block" %>
-    <%= form.text_field :total %>
+  <%= form.label :prodid, style: "display: block" %>
+  <%= form.text_field :prodid %>
+</div>
+
+<div>
+    <%= form.label :prodcod, style: "display: block" %>
+    <%= form.text_field :prodcod %>
   </div>
 
-  <div>
-    <%= form.label :plataprin, style: "display: block" %>
-    <%= form.text_field :plataprin %>
-  </div>
+  <div style="display: none;">
+  <%= form.label :telefon, style: "display: none;" %>
+  <%= form.text_field :telefon, style: "display: none;" %>
+</div>
+
 
   <div>
     <%= form.submit %>

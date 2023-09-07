@@ -23,6 +23,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   resources :prods
   resources :comandas
   
+  
   #post 'detaliifacturares/create'
   mount Ahoy::Engine => "/ahoy"
   resources :lista_vegetales
