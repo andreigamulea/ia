@@ -19,6 +19,7 @@
       <tr>
         <th>Nume</th>
         <th>Email</th>
+        <th>Telefon</th>
         <th>Role</th>
         <th>Cont activ</th>
         <th>Curs</th>
@@ -30,6 +31,7 @@
         <tr>
           <td><%= user.name %></td>
           <td><%= user.email %></td>
+          <td><%= user.telefon %></td>
           <td><%= user.role %></td>
           <td><%= user.active %></td>
           <td><%= user.listacursuri.map(&:nume).join(', ') %></td>
