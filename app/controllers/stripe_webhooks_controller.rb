@@ -49,7 +49,7 @@ class StripeWebhooksController < ApplicationController
     # Aici, presupunem că ai stocat `user_id` și `numar_comanda` în metadata 
     metadata = extract_metadata(payment_intent)
     user_id = metadata[:user_id]
-    numar_comanda = metadata[:numar_comanda]
+    numar_comanda = metadata[:numar_comanda] #am verificat: id este la fel cu numar_comanda in orice situatie chiar daca sterg records!!
     produs = Prod.find_by(id: metadata[:id_produs])
     emailplata = metadata[:adresaemail]
     # Acum, găsești comanda în baza de date folosind numar_comanda și o actualizezi
@@ -70,6 +70,8 @@ class StripeWebhooksController < ApplicationController
         emailcurrent: emailplata,
         emailplata: customer_email
       )
+      cp = ComenziProd.find_by(comanda_id: numar_comanda)
+      cp.update(validat: 'Finalizata')
     
       populeaza_cursuri(user_id, produs)
       creaza_factura(payment_intent)

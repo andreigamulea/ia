@@ -126,12 +126,14 @@ class DetaliifacturaresController < ApplicationController
       prodid: @prod.id,
       prodcod: @prod.cod
     )
-    numar_comanda = Comanda.maximum(:id).to_i
+    numar_comanda = Comanda.maximum(:id).to_i #asta asigura ca id este la fel cu numar_comanda
     comanda.update(numar: numar_comanda)
     # Adaugă produsul la comandă
     ComenziProd.create!(
       comanda_id: comanda.id,
       prod_id: @prod.id,
+      user_id: current_user.id,
+      validat: "Initiata",
       datainceput: Time.now,
       datasfarsit: Time.now + @prod.valabilitatezile.to_i.days
     )

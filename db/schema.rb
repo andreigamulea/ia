@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_07_074233) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_08_162957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -85,8 +85,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_074233) do
     t.date "datasfarsit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.string "validat"
     t.index ["comanda_id"], name: "index_comenzi_prods_on_comanda_id"
     t.index ["prod_id"], name: "index_comenzi_prods_on_prod_id"
+    t.index ["user_id"], name: "index_comenzi_prods_on_user_id"
+    t.index ["validat"], name: "index_comenzi_prods_on_validat"
   end
 
   create_table "cursuri_history", force: :cascade do |t|
@@ -373,6 +377,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_074233) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_videos", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "video_id"
+    t.datetime "datainceput"
+    t.datetime "datasfarsit"
+    t.string "nume"
+    t.string "tip"
+    t.index ["user_id"], name: "index_user_videos_on_user_id"
+    t.index ["video_id"], name: "index_user_videos_on_video_id"
+  end
+
   create_table "userprods", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "prod_id", null: false
@@ -456,6 +473,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_074233) do
   add_foreign_key "user_ips", "users"
   add_foreign_key "user_paginisites", "paginisites"
   add_foreign_key "user_paginisites", "users"
+  add_foreign_key "user_videos", "users"
+  add_foreign_key "user_videos", "videos"
   add_foreign_key "userprods", "prods"
   add_foreign_key "userprods", "users"
 end

@@ -22,17 +22,20 @@ class User < ApplicationRecord
   end
   
   
+ 
   
+ 
 
 
-
+  has_many :user_videos
+  has_many :videos, through: :user_videos
   
   
-  
-
+ 
   has_many :userprods
   has_many :prods, through: :userprods
   has_many :comandas
+  has_many :comenzi_prods#asta e noua
   has_many :facturas
   has_many :cursuri
   has_many :listacursuri, through: :cursuri

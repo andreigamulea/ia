@@ -74,9 +74,12 @@ class ComandasController < ApplicationController
         ComenziProd.create!(
           comanda_id: @comanda.id,
           prod_id: @comanda.prodid,
+          user_id: @comanda.user_id,
           datainceput: Time.now,
           datasfarsit: Time.now + Prod.find(@comanda.prodid).valabilitatezile.to_i.days
         )
+
+        
         
         format.html { redirect_to comanda_url(@comanda), notice: "Comanda a fost creată cu succes." }
         format.json { render :show, status: :created, location: @comanda }
