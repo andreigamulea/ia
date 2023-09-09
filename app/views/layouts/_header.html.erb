@@ -50,6 +50,7 @@
                     </li>
                     <% end %>
 
+
                     <%if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })%>
                     <li class="nav-item">
                     <%= link_to 'Lista Vegetale', lista_vegetales_path, id: 'lista_vegetales_link' %>
@@ -77,6 +78,12 @@
                     <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', new_user_session_with_return_path('tayv2'), class: 'button-link' %>
                     </li>
                     <% end %> 
+
+                    <%if current_user && (current_user.role == 1) %>
+                    <li class="nav-item">
+                    <%= link_to 'Nutritie modulul 3', nutritie3_path %>
+                    </li>
+                    <%end%>
                   
                 </ul>
             </li>
