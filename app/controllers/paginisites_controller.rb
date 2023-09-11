@@ -261,7 +261,7 @@ class PaginisitesController < ApplicationController
     search_term = params[:search]
   
     # Interogarea pentru a obține înregistrările necesare
-    @comenzi_prod = ComenziProd.includes(:user)
+    @comenzi_prod = ComenziProd.includes(:user, :prod)
                                .where(prod_id: [11, 12], validat: "Finalizata")
                                .order(:comanda_id)
     
@@ -272,24 +272,28 @@ class PaginisitesController < ApplicationController
     # Adăugarea headerelor
     worksheet.add_cell(0, 0, 'Comanda ID')
     worksheet.add_cell(0, 1, 'Nume User')
-    worksheet.add_cell(0, 2, 'Produs ID')
-    worksheet.add_cell(0, 3, 'Validat')
-    worksheet.add_cell(0, 4, 'Data Început')
-    worksheet.add_cell(0, 5, 'Data Sfârșit')
-    worksheet.add_cell(0, 6, 'Valoare')
+    worksheet.add_cell(0, 2, 'Email')
+    worksheet.add_cell(0, 3, 'Telefon')
+    worksheet.add_cell(0, 4, 'Nume Produs')
+    worksheet.add_cell(0, 5, 'Validat')
+    worksheet.add_cell(0, 6, 'Data Platii')
+   
+    worksheet.add_cell(0, 7, 'Valoare')
   
     # Adăugarea datelor în fiecare rând
     @comenzi_prod.each_with_index do |comanda, index|
       worksheet.add_cell(index + 1, 0, comanda.comanda_id)
       worksheet.add_cell(index + 1, 1, comanda.user.name) # Presupunând că relația este setată corect
-      worksheet.add_cell(index + 1, 2, comanda.prod_id)
-      worksheet.add_cell(index + 1, 3, comanda.validat)
-      worksheet.add_cell(index + 1, 4, comanda.datainceput)
-      worksheet.add_cell(index + 1, 5, comanda.datasfarsit)
+      worksheet.add_cell(index + 1, 2, comanda.user.email) # Presupunând că există un câmp de email
+      worksheet.add_cell(index + 1, 3, comanda.user.telefon) # Presupunând că există un câmp de telefon
+      worksheet.add_cell(index + 1, 4, comanda.prod.nume) # Afișează numele produsului
+      worksheet.add_cell(index + 1, 5, comanda.validat)
+      worksheet.add_cell(index + 1, 6, comanda.datainceput.strftime('%d-%m-%Y')) if comanda.datainceput
+     
   
       # Adăugarea valorii în funcție de prod_id
       valoare = comanda.prod_id == 11 ? 580 : 780
-      worksheet.add_cell(index + 1, 6, valoare)
+      worksheet.add_cell(index + 1, 7, valoare)
     end
   
     # Stabilirea căii pentru fișierul XLSX și scrierea acestuia pe disc
