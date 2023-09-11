@@ -1,5 +1,5 @@
 class Nutritie3Controller < ApplicationController
     def index
-        # Logica ta va veni aici
+        @myvideo = Video.where(tip: 'nutritie3').order(ordine: :asc)
     end
 end

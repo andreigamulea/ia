@@ -1,3 +1,37 @@
 <section class="c1">
 <h1 class="ch1">Bun venit la cursul de Nutritie modulul 3</h1>
+<h2 class="ch1">In curand vor fi afisate datele de logare pe platforma ZOOM:</h2></br></br>
+<h3 class="ch1">Meeting ID:</h3>
+<h3 class="ch1">Passcode:</h3></br>
+
+
+<p class="text-success"><%= notice %></p>
+
+
+<% if current_user %>
+  <% if current_user.role == 1 || (current_user.role == 0 && ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod12" }).exists?) %>
+<h1 style= "text-align: center;padding: 0 10px;">Inregistrari video Curs Nutritie modulul 3 </h1></br>
+
+
+
+<div id="videos">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nr</th>
+        <th>Nume</th>
+        <th>Descriere</th>
+       
+        <th>Actiune</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @myvideo.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %><% end %>
 </section>
+
