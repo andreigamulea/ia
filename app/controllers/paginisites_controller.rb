@@ -256,6 +256,54 @@ class PaginisitesController < ApplicationController
   end
    
 
+  def export_to_xlsx_plata_nutritie3
+    # Preia termenul de căutare din parametrii cererii
+    search_term = params[:search]
+  
+    # Interogarea pentru a obține înregistrările necesare
+    @comenzi_prod = ComenziProd.includes(:user)
+                               .where(prod_id: [11, 12], validat: "Finalizata")
+                               .order(:comanda_id)
+    
+    # Crearea unui nou document XLSX
+    workbook = RubyXL::Workbook.new
+    worksheet = workbook[0]
+  
+    # Adăugarea headerelor
+    worksheet.add_cell(0, 0, 'Comanda ID')
+    worksheet.add_cell(0, 1, 'Nume User')
+    worksheet.add_cell(0, 2, 'Produs ID')
+    worksheet.add_cell(0, 3, 'Validat')
+    worksheet.add_cell(0, 4, 'Data Început')
+    worksheet.add_cell(0, 5, 'Data Sfârșit')
+    worksheet.add_cell(0, 6, 'Valoare')
+  
+    # Adăugarea datelor în fiecare rând
+    @comenzi_prod.each_with_index do |comanda, index|
+      worksheet.add_cell(index + 1, 0, comanda.comanda_id)
+      worksheet.add_cell(index + 1, 1, comanda.user.name) # Presupunând că relația este setată corect
+      worksheet.add_cell(index + 1, 2, comanda.prod_id)
+      worksheet.add_cell(index + 1, 3, comanda.validat)
+      worksheet.add_cell(index + 1, 4, comanda.datainceput)
+      worksheet.add_cell(index + 1, 5, comanda.datasfarsit)
+  
+      # Adăugarea valorii în funcție de prod_id
+      valoare = comanda.prod_id == 11 ? 580 : 780
+      worksheet.add_cell(index + 1, 6, valoare)
+    end
+  
+    # Stabilirea căii pentru fișierul XLSX și scrierea acestuia pe disc
+    file_path = Rails.root.join('tmp', 'comenzi_prod.xlsx')
+    workbook.write(file_path)
+  
+    # Trimite fișierul clientului
+    send_file(file_path)
+  end
+  
+
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_paginisite
