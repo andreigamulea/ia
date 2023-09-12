@@ -1,6 +1,7 @@
 class FacturasController < ApplicationController
   before_action :set_factura, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[index show edit update destroy]
+
   # GET /facturas or /facturas.json
   def index
     if @user.role == 1
@@ -17,6 +18,29 @@ class FacturasController < ApplicationController
     factura = Factura.find(params[:id])
     # logica pentru generarea PDF-ului aici
   end
+  def download1
+    if current_user.role==1
+    @facturas = Factura.all # Aici obținem toate facturile
+    # Adaugă orice alte verificări de securitate necesare aici
+    #puts @facturas.inspect
+    respond_to do |format|
+      format.html
+      format.pdf do
+        html = render_to_string(
+          template: 'facturas/download1',
+          locals: { facturas: @facturas },
+          encoding: 'UTF8'
+        )
+        pdf = PDFKit.new(html).to_pdf
+        send_data pdf, filename: "Toate_Facturile.pdf",
+          type: 'application/pdf',
+          disposition: 'attachment'
+      end
+    end
+  end
+  end
+  
+  
   
   # GET /facturas/1 or /facturas/1.json
   def show
