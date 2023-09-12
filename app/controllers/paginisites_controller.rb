@@ -365,7 +365,7 @@ class PaginisitesController < ApplicationController
       comanda = Comanda.find_by(id: comenzi_prod.comanda_id)
   
       if comanda&.stateplata1 == "Achitata"
-        comenzi_prod.update(validat: "Finalizata")
+        comenzi_prod.update(validat: "Finalizata", user_id: comanda.user_id)
       end
     end
   
