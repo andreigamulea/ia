@@ -348,7 +348,7 @@ class PaginisitesController < ApplicationController
      
   
       # Adăugarea valorii în funcție de prod_id
-      valoare = comanda.prod_id == 11 ? 80 : 215
+      valoare = comanda.prod_id == 9 ? 80 : 215
       worksheet.add_cell(index + 1, 7, valoare)
     end
   
