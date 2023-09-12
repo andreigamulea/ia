@@ -308,6 +308,59 @@ class PaginisitesController < ApplicationController
 
 
 
+
+
+
+
+  def export_to_xlsx_plata_tayv2
+    # Preia termenul de căutare din parametrii cererii
+    search_term = params[:search]
+  
+    # Interogarea pentru a obține înregistrările necesare
+    @comenzi_prod = ComenziProd.includes(:user, :prod)
+                               .where(prod_id: [9,10], validat: "Finalizata")
+                               .order(:comanda_id)
+    
+    # Crearea unui nou document XLSX
+    workbook = RubyXL::Workbook.new
+    worksheet = workbook[0]
+  
+    # Adăugarea headerelor
+    worksheet.add_cell(0, 0, 'Comanda ID')
+    worksheet.add_cell(0, 1, 'Nume User')
+    worksheet.add_cell(0, 2, 'Email')
+    worksheet.add_cell(0, 3, 'Telefon')
+    worksheet.add_cell(0, 4, 'Nume Produs')
+    worksheet.add_cell(0, 5, 'Validat')
+    worksheet.add_cell(0, 6, 'Data Platii')
+   
+    worksheet.add_cell(0, 7, 'Valoare')
+  
+    # Adăugarea datelor în fiecare rând
+    @comenzi_prod.each_with_index do |comanda, index|
+      worksheet.add_cell(index + 1, 0, comanda.comanda_id)
+      worksheet.add_cell(index + 1, 1, comanda.user.name) # Presupunând că relația este setată corect
+      worksheet.add_cell(index + 1, 2, comanda.user.email) # Presupunând că există un câmp de email
+      worksheet.add_cell(index + 1, 3, comanda.user.telefon) # Presupunând că există un câmp de telefon
+      worksheet.add_cell(index + 1, 4, comanda.prod.nume) # Afișează numele produsului
+      worksheet.add_cell(index + 1, 5, comanda.validat)
+      worksheet.add_cell(index + 1, 6, comanda.datainceput.strftime('%d-%m-%Y')) if comanda.datainceput
+     
+  
+      # Adăugarea valorii în funcție de prod_id
+      valoare = comanda.prod_id == 11 ? 80 : 215
+      worksheet.add_cell(index + 1, 7, valoare)
+    end
+  
+    # Stabilirea căii pentru fișierul XLSX și scrierea acestuia pe disc
+    file_path = Rails.root.join('tmp', 'comenzi_prod.xlsx')
+    workbook.write(file_path)
+  
+    # Trimite fișierul clientului
+    send_file(file_path)
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_paginisite
