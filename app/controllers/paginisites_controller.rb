@@ -360,17 +360,7 @@ class PaginisitesController < ApplicationController
     send_file(file_path)
   end
 
-  def valida_comenzi
-    ComenziProd.all.each do |comenzi_prod|
-      comanda = Comanda.find_by(id: comenzi_prod.comanda_id)
   
-      if comanda&.stateplata1 == "Achitata"
-        comenzi_prod.update(validat: "Finalizata", user_id: comanda.user_id)
-      end
-    end
-  
-    redirect_to root_path, notice: "Comenzile au fost validate"
-  end
   
   
 

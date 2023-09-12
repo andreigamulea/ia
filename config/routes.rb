@@ -35,7 +35,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get '/useriunici_nelogati/export', to: 'paginisites#export_to_xlsx_no_login', as: 'export_useriunici_nelogati'
   get '/plata_nutritie3/export', to: 'paginisites#export_to_xlsx_plata_nutritie3', as: 'export_plata_nutritie3'
   get '/plata_tayv2/export', to: 'paginisites#export_to_xlsx_plata_tayv2', as: 'export_plata_tayv2'
-  get 'valida_comenzi', to: 'paginisites#valida_comenzi'
+  
 
   get '/paginisites/:id/statistici_utilizator', to: 'paginisites#statistici_utilizator', as: 'statistici_utilizator_paginisite'
   resources :statistics, only: [:index]
