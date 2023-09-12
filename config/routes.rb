@@ -7,7 +7,8 @@ Rails.application.routes.draw do
 
   
   resources :videos
-  resources :facturas
+  resources :facturas, path: 'factura', except: :index
+  get 'factura', to: 'facturas#index'
 get 'facturas/:id/download', to: 'facturas#download', as: 'download_factura'
 get 'facturas/:id', to: 'facturas#show', format: 'pdf'
 
