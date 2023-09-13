@@ -611,11 +611,21 @@ footer {
 .col10{
   width: 50%;
 }
+.rowrev{
+  flex-direction: row-reverse;
+    }
 @media (max-width: 768px) {
   .col10{
     width: 100%;
   }
   .rowrev{
     flex-direction: column-reverse;
-  }
+      }
+  .dn{
+    display: none;
+      }
+  .col10m{
+    margin-top: -30px;
+    text-align: center;
+      }
 }

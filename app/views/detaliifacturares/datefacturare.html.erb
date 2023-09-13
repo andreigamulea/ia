@@ -1,6 +1,6 @@
 <section class="c1">
   <% if user_signed_in? %>
-    <h1 class="text-center" style="margin: 50px 0 50px 0;font-size:1.5em;">Te rog să introduci datele de facturare pentru: </br> <%= @prod.nume %></h1>
+    <h1 class="text-center" style="margin: 50px 0 50px 0;font-size:1.5em;">Te rog să introduci datele de facturare pentru: </br> <span class= "dn"><%= @prod.nume %></span></h1>
     <%= turbo_frame_tag 'detaliifacturare_form' do %>
       <%= render 'form', detaliifacturare: @detaliifacturare %>
     <% end %>
