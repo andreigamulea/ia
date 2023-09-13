@@ -1,8 +1,8 @@
 
 <% if user_signed_in? %>
-<div class="container">
-  <div class="row">
-  <div class="col-5">
+<div class="c1">
+  <div class="row rowrev c1">
+  <div class="col10">
   <%= form_with(model: @detaliifacturare, url: @detaliifacturare.new_record? ? detaliifacturares_path(s: @prod.id) 
 : detaliifacturare_path(@detaliifacturare, s: @prod.id), method: @detaliifacturare.new_record? ?
  :post : :patch, remote: true, class: 'needs-validation', data: { turbo: false }) do |f| %>
@@ -109,15 +109,13 @@
     </div>
 <% end %>
 </div>
-<div class="col-2">
-      <!-- spațiul gol din mijloc, puteți lăsa acest div gol -->
-</div>
-<div class="col-5">
+
+<div class="col10">
   <h2 style="font-size:1.5em;"><%= @prod.nume %></h2>
   <p><%= @prod.detalii %></p>
-  <p>Pret: <%= @prod.pret.to_i %> lei</p></br></br></br></br>
+  <p>Pret: <%= @prod.pret.to_i %> lei</p></br>
   <div class="column" style="display: flex; justify-content: center;">        
-    <img src="<%= image_path('nutritie-ayushcell.jpg') %>" alt="Imagine" style="width: 500px;">       
+    <img src="<%= image_path('nutritie-ayushcell.jpg') %>" alt="Imagine" style="width: 100%; max-width:500px;">       
   </div>
 </div>
 

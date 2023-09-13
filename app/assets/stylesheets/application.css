@@ -608,3 +608,14 @@ footer {
     transform: translate(-50%, -50%); 
 }
 
+.col10{
+  width: 50%;
+}
+@media (max-width: 768px) {
+  .col10{
+    width: 100%;
+  }
+  .rowrev{
+    flex-direction: column-reverse;
+  }
+}
