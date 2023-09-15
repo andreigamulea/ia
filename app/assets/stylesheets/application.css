@@ -246,6 +246,9 @@ footer {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
+  .stripe{
+    display: inline-block;
+  }
 .stripe .button a:hover{
     background-color: #50024c;
   }
@@ -253,17 +256,19 @@ footer {
 
   .stripe .button {
     margin:30px 0 20px 0;
-  }
-
-  .stripe .button a {
     background-color: #64025e;
     color: #fff;
     padding: 12px 40px;
     font-size: 18px;
     border-radius: 15px;
     text-decoration: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
   }
+
+  .stripe .button a {
+    color: #fff;
+    text-decoration: none;
+   }
 
   .stripe .button a:hover{
     background-color: #50024c;
