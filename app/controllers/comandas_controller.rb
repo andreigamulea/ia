@@ -48,7 +48,7 @@ class ComandasController < ApplicationController
     @comanda.statecomanda2 = 'Finalizata'
     @comanda.stateplata1 = 'Achitata'
     @comanda.telefon = user.telefon
-    @comanda.plataprin = 'banca'
+    @comanda.plataprin = 'alta modalitate'
     @prod = Prod.find_by(id: comanda_params[:prodid]) # presupunem că Prod este numele modelului tău
     if @prod
       @comanda.stateplata3 = "acces #{@prod.valabilitatezile} zile"

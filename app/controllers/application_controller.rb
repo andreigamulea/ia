@@ -44,7 +44,8 @@ class ApplicationController < ActionController::Base
         puts "aici"
         
         Rails.logger.info "Aici, return_to: #{params[:return_to]}"
-        return_to = params[:return_to] || request.env['omniauth.params']['return_to']
+        #return_to = params[:return_to] || request.env['omniauth.params']['return_to'] 
+        return_to = params[:return_to] || request.env.dig('omniauth.params', 'return_to') || "menu"
 
         Rails.logger.info "Aici, return_to: #{return_to}"
 
