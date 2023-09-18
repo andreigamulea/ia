@@ -139,13 +139,15 @@ end
   
   
   def tabeleahoy
+    if current_user.role==1
     @ahoy_visits = Ahoy::Visit.order(started_at: :desc).limit(30).includes(:user).reverse
     @ahoy_events = Ahoy::Event.order(time: :desc).limit(200).includes(:user).reverse
-
+    end
 
   end
   
   def contact
+    
     if request.post?
       name = params[:name]
       email = params[:email]
@@ -162,6 +164,7 @@ end
         flash.now[:error] = "Toate câmpurile trebuie completate!"
       end
     end
+  
   end
 
   private
