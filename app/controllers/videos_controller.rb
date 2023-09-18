@@ -2,6 +2,7 @@ class VideosController < ApplicationController
   before_action :set_video, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[ show edit update destroy]
   before_action :set_user1, only: %i[tayv2 myvideo1]
+  before_action :require_admin, only: %i[index new edit update create]
   # GET /videos or /videos.json
   def index
     @videos = Video.all
@@ -128,5 +129,10 @@ class VideosController < ApplicationController
         redirect_to root_path
       end
     end
-    
+    def require_admin
+      unless current_user && current_user.role == 1
+        flash[:error] = "Only admins are allowed to access this page."
+        redirect_to root_path
+      end
+    end
 end
