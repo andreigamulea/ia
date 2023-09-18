@@ -3,6 +3,7 @@ class DetaliifacturaresController < ApplicationController
   before_action :restrict_access_to_special_page, only: [:datefacturare]
   before_action :new, only: [:datefacturare] # remove :create
   skip_before_action :verify_authenticity_token, only: [:pay]
+  before_action :require_admin, only: %i[index edit edit1 show]
 
   def index
     @detaliifacturare = Detaliifacturare.all.order(id: :desc)
