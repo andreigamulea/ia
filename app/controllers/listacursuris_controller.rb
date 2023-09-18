@@ -1,6 +1,6 @@
 class ListacursurisController < ApplicationController
   before_action :set_listacursuri, only: %i[ show edit update destroy ]
-
+  before_action :require_admin, only: %i[index new edit update create]
   # GET /listacursuris or /listacursuris.json
   def index
     @listacursuris = Listacursuri.all
@@ -66,5 +66,11 @@ class ListacursurisController < ApplicationController
     # Only allow a list of trusted parameters through.
     def listacursuri_params
       params.require(:listacursuri).permit(:nume)
+    end
+    def require_admin
+      unless current_user && current_user.role == 1
+        flash[:error] = "Only admins are allowed to access this page."
+        redirect_to root_path
+      end
     end
 end

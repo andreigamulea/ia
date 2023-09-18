@@ -1,6 +1,6 @@
 class CursurisController < ApplicationController
   before_action :set_cursuri, only: %i[ show edit update destroy ]
-
+  before_action :require_admin, only: %i[index new edit update create]
   # GET /cursuris or /cursuris.json
   def index
     @cursuris = Cursuri.all
@@ -66,5 +66,11 @@ class CursurisController < ApplicationController
     # Only allow a list of trusted parameters through.
     def cursuri_params
       params.require(:cursuri).permit(:numecurs, :datainceput, :datasfarsit, :user_id)
+    end
+    def require_admin
+      unless current_user && current_user.role == 1
+        flash[:error] = "Only admins are allowed to access this page."
+        redirect_to root_path
+      end
     end
 end

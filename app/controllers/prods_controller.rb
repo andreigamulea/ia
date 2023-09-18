@@ -1,6 +1,6 @@
 class ProdsController < ApplicationController
   before_action :set_prod, only: %i[ show edit update destroy produscurent]
-  
+  before_action :require_admin, only: %i[index edit show]
   # GET /prods or /prods.json
   def index   
     if current_user.role == 1
@@ -73,5 +73,10 @@ class ProdsController < ApplicationController
     def prod_params
       params.require(:prod).permit(:nume, :detalii, :info, :pret, :valabilitatezile, :curslegatura, :linkstripe, :status, :cod)
     end
-    
+    def require_admin
+      unless current_user && current_user.role == 1
+        flash[:error] = "Only admins are allowed to access this page."
+        redirect_to root_path
+      end
+    end
 end
