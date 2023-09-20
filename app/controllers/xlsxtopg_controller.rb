@@ -657,6 +657,171 @@ def preluaredate14 #preia din tabela excel telefoanele si le pune la useri
     end
   end
 end
+############################################################
+#an1 
+#vezi modelul de fisier xlsx adaugauseri.xlsx in G:\Index A\fisiere excel\cursanti cursuri ayurveda\an 1
+# este cu cap de tabel: Grupa	Adresa de e-mail	Nume	Telefon	Plata inscr	Plata oct 2023	Plata nov 2023	Plata dec 2023	Plata ian 2024	
+#Plata feb 2024	Plata mar 2024	Plata apr 2024	Plata mai 2024	Plata iun 2024	Plata iul 2024
+
+###############################################################
+def preluaredate15 #preluare useri noi (doar noi ) doar atat. grupa email,name,pass,role,telefon
+  #pot prelua de mai multe ori daca deja exista nu se petrece nimic; sunt pusi doar cei noi
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+
+  xlsx.each_row_streaming(offset: 1) do |row|
+    grupa = row[0]&.value&.to_s&.strip
+    email = row[1]&.value&.strip&.downcase # Adăugat downcase
+    name = row[2]&.value&.strip
+    telefon = row[3]&.value&.to_s&.strip
+
+    # Sari peste rând dacă email este nul
+    next if email.nil?
+
+    # Verifică dacă email-ul există deja în tabel
+    next if User.exists?(email: email.downcase) # Adăugat downcase și aici, pentru consistență
+
+    # Crează un nou utilizator
+    user = User.new(grupa: grupa, email: email, name: name,telefon: telefon, password: "7777777", role: 0)
+
+    # Salvează utilizatorul
+    if user.save
+      puts "Utilizatorul #{email} a fost adăugat cu succes."
+    else
+      puts "Eroare la adăugarea utilizatorului #{email}: #{user.errors.full_messages.join(', ')}"
+    end
+  end
+end
+##########################################################################
+def preluaredate16  #fac update la grupa pentru toti userii din tabela xlsx cu ce este gasit in xlsx
+
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+
+  xlsx.each_row_streaming(offset: 1) do |row|
+    grupa_noua = row[0]&.value&.to_s&.strip
+    email = row[1]&.value&.to_s&.strip&.downcase
+
+    next if email.blank? || grupa_noua.blank?
+
+    # Caută utilizatorul cu emailul specificat
+    user = User.find_by(email: email)
+
+    # Dacă utilizatorul există, actualizează grupa
+    if user
+      user.update(grupa: grupa_noua)
+      puts "Grupa utilizatorului #{email} a fost actualizată cu succes la #{grupa_noua}."
+    else
+      puts "Nu s-a găsit niciun utilizator cu emailul #{email}."
+    end
+  end
+end
+##########################################################################
+def preluaredate17 # fac update la telefon pentru toti userii din tabela xlsx cu ce este gasit in xlsx
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+
+  xlsx.each_row_streaming(offset: 1) do |row|
+    telefon_nou = row[3]&.value&.to_s&.strip
+    email = row[1]&.value&.to_s&.strip&.downcase
+
+    next if email.blank? || telefon_nou.blank?
+
+    # Caută utilizatorul cu emailul specificat
+    user = User.find_by(email: email)
+
+    # Dacă utilizatorul există, actualizează telefonul
+    if user
+      user.update(telefon: telefon_nou)
+      puts "Telefonul utilizatorului #{email} a fost actualizat cu succes la #{telefon_nou}."
+    else
+      puts "Nu s-a găsit niciun utilizator cu emailul #{email}."
+    end
+  end
+end
+##########################################################################
+
+#an2
+############################################################
+#an1 
+#vezi modelul de fisier xlsx adaugauseri.xlsx in G:\Index A\fisiere excel\cursanti cursuri ayurveda\an 1
+# este cu cap de tabel: Grupa	Adresa de e-mail	Nume	Telefon	Plata inscr	Plata oct 2023	Plata nov 2023	Plata dec 2023	Plata ian 2024	
+#Plata feb 2024	Plata mar 2024	Plata apr 2024	Plata mai 2024	Plata iun 2024	Plata iul 2024
+
+###############################################################
+def preluaredate18 #preluare useri noi (doar noi ) doar atat. grupa email,name,pass,role,telefon
+  #pot prelua de mai multe ori daca deja exista nu se petrece nimic; sunt pusi doar cei noi
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+
+  xlsx.each_row_streaming(offset: 1) do |row|
+    grupa = row[0]&.value&.to_s&.strip
+    email = row[1]&.value&.strip&.downcase # Adăugat downcase
+    name = row[2]&.value&.strip
+    telefon = row[3]&.value&.to_s&.strip
+
+    # Sari peste rând dacă email este nul
+    next if email.nil?
+
+    # Verifică dacă email-ul există deja în tabel
+    next if User.exists?(email: email.downcase) # Adăugat downcase și aici, pentru consistență
+
+    # Crează un nou utilizator
+    user = User.new(grupa: grupa, email: email, name: name,telefon: telefon, password: "7777777", role: 0)
+
+    # Salvează utilizatorul
+    if user.save
+      puts "Utilizatorul #{email} a fost adăugat cu succes."
+    else
+      puts "Eroare la adăugarea utilizatorului #{email}: #{user.errors.full_messages.join(', ')}"
+    end
+  end
+end
+##########################################################################
+def preluaredate19  #fac update la grupa pentru toti userii din tabela xlsx cu ce este gasit in xlsx
+
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+
+  xlsx.each_row_streaming(offset: 1) do |row|
+    grupa_noua = row[0]&.value&.to_s&.strip
+    email = row[1]&.value&.to_s&.strip&.downcase
+
+    next if email.blank? || grupa_noua.blank?
+
+    # Caută utilizatorul cu emailul specificat
+    user = User.find_by(email: email)
+
+    # Dacă utilizatorul există, actualizează grupa
+    if user
+      user.update(grupa: grupa_noua)
+      puts "Grupa utilizatorului #{email} a fost actualizată cu succes la #{grupa_noua}."
+    else
+      puts "Nu s-a găsit niciun utilizator cu emailul #{email}."
+    end
+  end
+end
+##########################################################################
+def preluaredate20 # fac update la telefon pentru toti userii din tabela xlsx cu ce este gasit in xlsx
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+
+  xlsx.each_row_streaming(offset: 1) do |row|
+    telefon_nou = row[3]&.value&.to_s&.strip
+    email = row[1]&.value&.to_s&.strip&.downcase
+
+    next if email.blank? || telefon_nou.blank?
+
+    # Caută utilizatorul cu emailul specificat
+    user = User.find_by(email: email)
+
+    # Dacă utilizatorul există, actualizează telefonul
+    if user
+      user.update(telefon: telefon_nou)
+      puts "Telefonul utilizatorului #{email} a fost actualizat cu succes la #{telefon_nou}."
+    else
+      puts "Nu s-a găsit niciun utilizator cu emailul #{email}."
+    end
+  end
+end
+##########################################################################
+
+
+
 
 
 
