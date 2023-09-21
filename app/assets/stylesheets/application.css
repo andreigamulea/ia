@@ -70,6 +70,7 @@
     transform-origin: top left;
     position: absolute;
     width: 100%;
+    min-width: 100vh;
     height: 100vw;
     overflow: auto;
     background: white;
