@@ -717,20 +717,25 @@ end
 ##########################################################################
 def preluaredate17 # fac update la telefon pentru toti userii din tabela xlsx cu ce este gasit in xlsx
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+  
 
   xlsx.each_row_streaming(offset: 1) do |row|
     telefon_nou = row[3]&.value&.to_s&.strip
     email = row[1]&.value&.to_s&.strip&.downcase
 
-    next if email.blank? || telefon_nou.blank?
+    next if email.blank?
 
     # Caută utilizatorul cu emailul specificat
     user = User.find_by(email: email)
 
-    # Dacă utilizatorul există, actualizează telefonul
+    # Dacă utilizatorul există, și telefon_nou este prezent, actualizează telefonul
     if user
-      user.update(telefon: telefon_nou)
-      puts "Telefonul utilizatorului #{email} a fost actualizat cu succes la #{telefon_nou}."
+      if telefon_nou.present?
+        user.update(telefon: telefon_nou)
+        puts "Telefonul utilizatorului #{email} a fost actualizat cu succes la #{telefon_nou}."
+      else
+        puts "Telefonul utilizatorului #{email} nu a fost modificat deoarece nu a fost furnizată o valoare nouă."
+      end
     else
       puts "Nu s-a găsit niciun utilizator cu emailul #{email}."
     end
@@ -799,20 +804,25 @@ end
 ##########################################################################
 def preluaredate20 # fac update la telefon pentru toti userii din tabela xlsx cu ce este gasit in xlsx
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+  
 
   xlsx.each_row_streaming(offset: 1) do |row|
     telefon_nou = row[3]&.value&.to_s&.strip
     email = row[1]&.value&.to_s&.strip&.downcase
 
-    next if email.blank? || telefon_nou.blank?
+    next if email.blank?
 
     # Caută utilizatorul cu emailul specificat
     user = User.find_by(email: email)
 
-    # Dacă utilizatorul există, actualizează telefonul
+    # Dacă utilizatorul există, și telefon_nou este prezent, actualizează telefonul
     if user
-      user.update(telefon: telefon_nou)
-      puts "Telefonul utilizatorului #{email} a fost actualizat cu succes la #{telefon_nou}."
+      if telefon_nou.present?
+        user.update(telefon: telefon_nou)
+        puts "Telefonul utilizatorului #{email} a fost actualizat cu succes la #{telefon_nou}."
+      else
+        puts "Telefonul utilizatorului #{email} nu a fost modificat deoarece nu a fost furnizată o valoare nouă."
+      end
     else
       puts "Nu s-a găsit niciun utilizator cu emailul #{email}."
     end
