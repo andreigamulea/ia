@@ -7,8 +7,10 @@ class DetaliifacturaresController < ApplicationController
 
   def index
     @detaliifacturare = Detaliifacturare.all.order(id: :desc)
+    
   end
   def edit
+    
     @detaliifacturare = Detaliifacturare.find(params[:id])
   end
   
@@ -17,22 +19,26 @@ class DetaliifacturaresController < ApplicationController
     @detaliifacturare = User.find(params[:id]).detaliifacturare
   end
   def edit1
+    
     @detaliifacturare = Detaliifacturare.find(params[:id])
   end
   
   def update1
     @detaliifacturare = Detaliifacturare.find(params[:id])
+    
     if @detaliifacturare.update(detaliifacturare_params)
       redirect_to detaliifacturares_path
     else
       render 'edit1'
     end
   end
-  def create     
-    @hide_header = true
+  def create    
+   
+ 
+    
     puts("sunt in createeeeeeeeeeeeeeeeeeeeee")
     @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare
-
+   
     @prod = Prod.find(detaliifacturare_params[:s])
     
     detaliifacturare_params_without_s = detaliifacturare_params.except(:s)
@@ -59,11 +65,12 @@ class DetaliifacturaresController < ApplicationController
  
   
   def update
-    @hide_header = true
+    
     puts("sunt in updateeeeeeeeeeeeeeeeeeeeee")
     @detaliifacturare = current_user.detaliifacturare
+    
     @prod = Prod.find(detaliifacturare_params[:s])
-
+    
     if @detaliifacturare.update(detaliifacturare_params.except(:s))
       puts("are client stripe")
       # Asigura-te că utilizatorul are un client Stripe
@@ -95,8 +102,10 @@ class DetaliifacturaresController < ApplicationController
   
   
   def pay
+   
     puts("sunt in payeeeeeeeeeeeeeeeeeeeeee")
     @prod = Prod.find(params[:id])
+   
     @detaliifacturare = current_user.detaliifacturare
     # Asigura-te că utilizatorul are un client Stripe
     if current_user.stripe_customer_id.nil?

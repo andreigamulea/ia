@@ -44,3 +44,7 @@
         an: 1550
         }.freeze
 
+        taxaay1 = ['Octombrie', 'Noiembrie', 'Decembrie', 'Ianuarie', 'Februarie', 
+        'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie']
+        taxaay2 = ['Septembrie','Octombrie', 'Noiembrie', 'Decembrie', 'Ianuarie', 'Februarie', 
+        'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie']        

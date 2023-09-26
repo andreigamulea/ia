@@ -164,6 +164,117 @@
 
 
 
+<% if @prodgrupa1_taxainscriere  %>  
+<a name="nutritie-modul3"></a>
+<h1 class="alimente-nutritionale">Contributie Curs Ayurveda</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr class= "trdesk">
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (fara tva)</th>
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (cu tva)</th>
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
+            </tr>      
+        </thead>
+        <tbody>
+        <% if @prodgrupa1_taxainscriere && @prodgrupa1_taxainscriere.curslegatura == 'Curs Ayurveda an 1' %>
+            
+                <tr>
+                    <td> <%= @prodgrupa1_taxainscriere.nume %> </td>                        
+                    <td><%= @prodgrupa1_taxainscriere.detalii %></td> 
+                    <td><%= (@prodgrupa1_taxainscriere.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                     <td><%= @prodgrupa1_taxainscriere.pret.to_i %> lei</td>
+
+                    <td> <%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxainscriere.id), class: 'btn btn-primary' %> </td>      
+                </tr>  
+            <% end %>  
+        </tbody>
+    </table>
+</div>
+
+<%end%>
+
+
+
+<% if @prodgrupa1_taxaanuala!=nil %>  
+<a name="nutritie-modul3"></a>
+<h1 class="alimente-nutritionale">Contributie integrala Curs Ayurveda 2023-2024</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr class= "trdesk">
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (fara tva)</th>
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (cu tva)</th>
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
+            </tr>      
+        </thead>
+        <tbody>
+        
+            
+        <tr>
+            <td> <%= @prodgrupa1_taxaanuala.nume %> </td>                        
+            <td><%= @prodgrupa1_taxaanuala.detalii %></td> 
+            <td><%= (@prodgrupa1_taxaanuala.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+             <td><%= @prodgrupa1_taxaanuala.pret.to_i %> lei</td>
+
+            <td> <%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxaanuala.id), class: 'btn btn-primary' %> </td>      
+        </tr>  
+    
+        </tbody>
+    </table>
+</div>
+<% end %>
+
+
+
+<% if @prodgrupa1_taxalunara!=nil %>  
+<a name="nutritie-modul3"></a>
+<h1 class="alimente-nutritionale">Contributie Curs Ayurveda</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr class= "trdesk">
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (fara tva)</th>
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (cu tva)</th>
+                <th style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
+            </tr>      
+        </thead>
+        <tbody>
+        
+            
+        <tr>
+            <td> <%= @prodgrupa1_taxalunara.nume %> </td>                        
+            <td><%= @prodgrupa1_taxalunara.detalii %></td> 
+            <td><%= (@prodgrupa1_taxalunara.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+             <td><%= @prodgrupa1_taxalunara.pret.to_i %> lei</td>
+
+            <td> <%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxalunara.id), class: 'btn btn-primary' %> </td>      
+        </tr>  
+    
+        </tbody>
+    </table>
+</div>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

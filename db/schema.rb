@@ -10,9 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_20_132434) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_26_123054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accescurs2324s", force: :cascade do |t|
+    t.integer "user_id"
+    t.boolean "septembrie"
+    t.boolean "octombrie"
+    t.boolean "noiembrie"
+    t.boolean "decembrie"
+    t.boolean "ianuarie"
+    t.boolean "februarie"
+    t.boolean "martie"
+    t.boolean "aprilie"
+    t.boolean "mai"
+    t.boolean "iunie"
+    t.boolean "iulie"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "all"
+    t.boolean "all1"
+    t.boolean "septembrie1"
+    t.boolean "octombrie1"
+    t.boolean "noiembrie1"
+    t.boolean "decembrie1"
+    t.boolean "ianuarie1"
+    t.boolean "februarie1"
+    t.boolean "martie1"
+    t.boolean "aprilie1"
+    t.boolean "mai1"
+    t.boolean "iunie1"
+    t.boolean "iulie1"
+    t.index ["user_id"], name: "index_accescurs2324s_on_user_id"
+  end
 
   create_table "ahoy_events", force: :cascade do |t|
     t.bigint "visit_id"
@@ -87,8 +118,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_20_132434) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.string "validat"
+    t.integer "taxa2324"
     t.index ["comanda_id"], name: "index_comenzi_prods_on_comanda_id"
     t.index ["prod_id"], name: "index_comenzi_prods_on_prod_id"
+    t.index ["taxa2324"], name: "index_comenzi_prods_on_taxa2324"
     t.index ["user_id"], name: "index_comenzi_prods_on_user_id"
     t.index ["validat"], name: "index_comenzi_prods_on_validat"
   end
@@ -118,6 +151,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_20_132434) do
     t.string "sursa"
     t.index ["listacursuri_id"], name: "index_cursuris_on_listacursuri_id"
     t.index ["user_id"], name: "index_cursuris_on_user_id"
+  end
+
+  create_table "descriereeroris", force: :cascade do |t|
+    t.text "descriere"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "detaliifacturares", force: :cascade do |t|
@@ -466,6 +505,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_20_132434) do
     t.integer "ordine"
   end
 
+  add_foreign_key "accescurs2324s", "users"
   add_foreign_key "comenzi_prods", "comandas"
   add_foreign_key "comenzi_prods", "prods"
   add_foreign_key "cursuri_history", "listacursuris"

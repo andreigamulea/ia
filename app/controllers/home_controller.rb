@@ -130,6 +130,50 @@ class HomeController < ApplicationController
         @prods << special_prod
       end
     end
+##################################grupa 1
+    
+    if current_user && current_user.grupa == 1
+      # Verificăm dacă există o înregistrare în ComenziProd unde user_id corespunde cu current_user și taxa2324 este 1
+      comanda = ComenziProd.find_by(user_id: current_user.id, taxa2324: 1)
+    
+      # Dacă nu există astfel de înregistrare, setăm @prodgrupa1_taxainscriere
+      @prodgrupa1_taxainscriere = comanda.nil? ? Prod.find_by(cod: "cod14") : nil
+    else
+      @prodgrupa1_taxainscriere = nil
+    end
+    if current_user && current_user.grupa == 1
+          # Verificăm dacă există o înregistrare în ComenziProd unde user_id corespunde cu current_user și taxa2324 este 1
+      exista_taxa2324_cu_1 = ComenziProd.exists?(user_id: current_user.id, taxa2324: 1)
+
+      # Verificăm dacă există vreo înregistrare în ComenziProd unde user_id corespunde cu current_user și taxa2324 NU este 1
+      exista_taxa2324_diferit_de_1 = ComenziProd.where(user_id: current_user.id).where.not(taxa2324: 1).exists?
+
+      # Dacă există înregistrare cu taxa2324 setată ca 1 și nicio înregistrare cu valoare diferită de 1, setăm @prodgrupa1_taxaanuala
+      if exista_taxa2324_cu_1 && !exista_taxa2324_diferit_de_1
+        @prodgrupa1_taxaanuala = Prod.find_by(cod: "cod15")
+      end
+
+    end
+    ###aici fac pentru lunile de la Octombrie la Iulie
+    if current_user && current_user.grupa == 1
+      valori_taxa2324 = ComenziProd.where(user_id: current_user.id).pluck(:taxa2324)
+      
+      # Verificăm dacă există valoarea 12
+      if valori_taxa2324.include?(12)
+        @prodgrupa1_taxalunara = nil
+      elsif valori_taxa2324.empty? || !valori_taxa2324.include?(1)
+        @prodgrupa1_taxalunara = nil
+      else
+        # Numărăm câte valori unice avem pentru a determina produsul corespunzător
+        numar_valori = valori_taxa2324.uniq.count
+        cod_produs = "cod#{15 + numar_valori}"  # Se adaugă 15 pentru că cod16 corespunde cu 1 valoare, cod17 cu 2 valori, etc.
+        @prodgrupa1_taxalunara = Prod.find_by(cod: cod_produs)
+      end
+    end
+    ####################final aici fac pentru lunile de la Octombrie la Iulie
+
+
+##################################end grupa1
     
 end
 

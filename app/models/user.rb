@@ -30,7 +30,7 @@ class User < ApplicationRecord
   has_many :user_videos
   has_many :videos, through: :user_videos
   
-  
+  has_many :accescurs2324s
  
   has_many :userprods
   has_many :prods, through: :userprods
