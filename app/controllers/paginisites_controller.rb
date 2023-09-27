@@ -292,7 +292,14 @@ class PaginisitesController < ApplicationController
      
   
       # Adăugarea valorii în funcție de prod_id
-      valoare = comanda.prod_id == 11 ? 580 : 780
+      mapare_valori = {
+        11 => 580,
+        12 => 780,
+        13 => 690
+      }
+
+      valoare = mapare_valori[comanda.prod_id] || 0 # 0 este o valoare default, în cazul în care prod_id nu există în hash
+
       worksheet.add_cell(index + 1, 7, valoare)
     end
   
