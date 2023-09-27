@@ -1,0 +1,22 @@
+<%= form_with(model: cursuriayurveda) do |form| %>
+  <% if cursuriayurveda.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(cursuriayurveda.errors.count, "error") %> prohibited this cursuriayurveda from being saved:</h2>
+
+      <ul>
+        <% cursuriayurveda.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :grupa, style: "display: block" %>
+    <%= form.text_field :grupa %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,131 @@
+<div class="cont">
+  <h1 class="name"><%=@titlu_pagina%></h1>
+  <div class="row1">
+    <div class="r1c1">
+      
+      <img src="<%= image_url('bradut.jpg') %>" alt="Curs de Ayurveda">
+    </div>
+    <div class="r1c2">
+   
+      <h2>Subiecte abordate</h2>
+      <p>- Expunerea sistematică a unor învăţături tradiţionale fundamentale despre viaţă, bazată pe scrierile autentice de AYURVEDA, realizată în cadrul acestui curs într-o manieră originală şi unică, ce este mereu actualizată necesităţilor vieţii omului modern.</p>
+<p>- Prezentarea şi descrierea detaliată a tipologiilor constituţionale umane, cu multiple aplicaţii imediate în viaţa de zi cu zi, în multe dintre domeniile curente.</p>
+<p>- Prezentarea unor modalităţi practice naturale de armonizare constituţională, specifice sistemului AYURVEDA: alimentaţie naturală, folosirea înţeleaptă a plantelor medicinale şi aromatice, cromoterapie, meloterapie, digitopunctură, modalităţi simple de automasaj, etc.</p>
+<p>- Expunerea unor modalităţi tradiţionale de reîntinerire, de revitalizare şi de redobândire a tonusului erotic-amoros, precum şi de purificare a trupului, toate acestea realizate prin folosirea unor mijloace naturale, bazate în principal pe folosirea plantelor cu proprietăţi vindecătoare ori afrodiziace</p>
+<p>- Descrierea multiplelor efecte binefăcătoare ale plantelor medicinale şi aromatice atat romanesti cat si indiene, împreună cu prezentarea unor modalităţi practice inedite şi foarte eficiente de utilizare a acestora.</p>
+      <h2>De ce Ayurveda</h2>
+      <p>Urmând în mod consecvent cursul de Ayurveda AMN din România, fiecare participant poate să îşi dea seama în scurt timp că Ayurveda reprezintă chiar mai mult decât o ştiinţă şi o artă a vindecării. Ayurveda reprezintă în realitate un veritabil mod de a trăi înţelept sau, cu alte cuvinte, un mod de viaţă profund spiritual, simplu şi firesc, care restabileşte armonia deplină a oricărei fiinţei umane, atât cu ea însăşi, cât şi cu Dumnezeu şi cu tot ceea ce o înconjoară. Privind din această perspectivă putem înţelege de ce Ayurveda este considerată de către cei înţelepţi “Ştiinţa Vieţii”.</p>
+    </div>
+  </div>
+  <div class="r2">
+    <p style="text-align:center;">Participa acum la acest curs și descopera beneficiile acestei cunoasteri traditionale!
+    </br>
+    <%if !current_user || current_user.grupa!=1%>
+    Pentru mai multe informatii, vă invităm să vizitati pagina: 🌿
+      <a href="https://amnromania.ro/activitate/cursuri-de-ayurveda/inscrieri/" target="_blank">Inscrieri cursuri Ayurveda</a>
+      </br></br>
+    <%else%>
+    </br>  
+    <%end%>
+
+      </p>
+
+
+  </div>
+  <% if @prodgrupa1_taxainscriere  %>  
+  <div class="tbland">
+  <div class="tbr">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th style="width: auto;">Servicii</th>
+                <th style="width: auto;">Detalii</th>
+                <th style="width: auto;">Pret (fara tva)</th>
+                <th style="width: auto;">Pret (cu tva)</th>
+                <th style="width: auto;">Selecție</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% if @prodgrupa1_taxainscriere && @prodgrupa1_taxainscriere.curslegatura == 'Curs Ayurveda an 1' %>
+           
+            <tr>
+                <td> <%= @prodgrupa1_taxainscriere.nume %> </td>                        
+                <td><%= @prodgrupa1_taxainscriere.detalii %></td> 
+                <td><%= (@prodgrupa1_taxainscriere.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                <td><%= @prodgrupa1_taxainscriere.pret.to_i %> lei</td>
+                <td> <%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxainscriere.id), class: 'btn' %> </td>      
+            </tr>  
+            
+        <% end %>  
+        </tbody>
+
+        
+
+
+    </table>
+</div>
+</div>
+
+
+<%end%>
+
+
+
+<%if @ultima_luna_platita!= nil%>
+
+<p style="padding: 0 25px;">Ultima luna pentru care a fost achitata participarea: <%=@ultima_luna_platita%></p>
+<%end%>
+<% if @prodgrupa1_taxaanuala!=nil || @prodgrupa1_taxalunara!=nil %>
+<div class="tbland">
+  <div class="tbr">
+    <table class="table table-striped table-hover">
+        <thead>
+        
+            <tr>
+                <th style="width: auto;">Servicii</th>
+                <th style="width: auto;">Detalii</th>
+                <th style="width: auto;">Pret (fara tva)</th>
+                <th style="width: auto;">Pret (cu tva)</th>
+                <th style="width: auto;">Selecție</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% if @prodgrupa1_taxaanuala!=nil %>
+            <tr>
+                <td> <%= @prodgrupa1_taxaanuala.nume %> </td>                        
+                <td><%= @prodgrupa1_taxaanuala.detalii %></td> 
+                <td><%= (@prodgrupa1_taxaanuala.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                <td><%= @prodgrupa1_taxaanuala.pret.to_i %> lei</td>
+
+                <td> <%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxaanuala.id), class: 'btn' %> </td>      
+            </tr>  
+            <%end%>
+            <%if @prodgrupa1_taxalunara!=nil %>
+            <tr>
+                <td> <%= @prodgrupa1_taxalunara.nume %> </td>                        
+                <td><%= @prodgrupa1_taxalunara.detalii %></td> 
+                <td><%= (@prodgrupa1_taxalunara.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                <td><%= @prodgrupa1_taxalunara.pret.to_i %> lei</td>
+
+                <td> <%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxalunara.id), class: 'btn' %> </td>      
+            </tr>  
+            <%end%>
+        </tbody>
+    </table>
+</div>
+</div>
+
+<%end%>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+

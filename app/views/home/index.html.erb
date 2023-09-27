@@ -1,5 +1,35 @@
 <section class="home">
 
+
+<div class="nutritie endrow">
+   <div class="row">
+      
+
+      <div class="column ivl">
+         <h1>Cursuri de Ayurveda</h1>
+         <div class="description">Participa la cursurile de Ayurveda organizate de catre Ayush Cell Romania & AMN-Romania</div>
+         <div class="button">
+           <a href="<%= cursayurveda_path %>">Vezi mai mult..</a>
+         </div>
+      </div>
+      
+      <div class="column ivl1">
+         <a href="<%= cursayurveda_path %>">
+         <img src="<%= image_path('bradut.jpg') %>" alt="Imagine"></a>
+      </div>
+   </div>
+</div></br></br>
+
+
+
+
+
+
+
+
+
+
+
 <div class="nutritie">
    <div class="row">
       <% link_path = if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1)

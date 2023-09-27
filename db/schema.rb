@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_26_123054) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_27_154820) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -139,6 +139,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_26_123054) do
     t.string "modificatde"
     t.index ["listacursuri_id"], name: "index_cursuri_history_on_listacursuri_id"
     t.index ["user_id"], name: "index_cursuri_history_on_user_id"
+  end
+
+  create_table "cursuriayurvedas", force: :cascade do |t|
+    t.string "grupa"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cursuris", force: :cascade do |t|

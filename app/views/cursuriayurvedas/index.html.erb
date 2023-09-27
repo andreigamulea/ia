@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Cursuriayurvedas</h1>
+
+<div id="cursuriayurvedas">
+  <% @cursuriayurvedas.each do |cursuriayurveda| %>
+    <%= render cursuriayurveda %>
+    <p>
+      <%= link_to "Show this cursuriayurveda", cursuriayurveda %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New cursuriayurveda", new_cursuriayurveda_path %>

@@ -1,0 +1,2 @@
+class Cursuriayurveda < ApplicationRecord
+end

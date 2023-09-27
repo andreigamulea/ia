@@ -1,0 +1,164 @@
+
+body {
+  margin: 0;
+  padding: 0;
+
+}
+
+.cont {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 1280px;
+  padding: 10px;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.name {
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top:20px;
+  color: #333;
+}
+
+.row1 {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.r1c1 {
+    width: 50%;
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.r1c1 img {
+  max-width: 100%;
+  max-height: 100%;
+  padding-right: 40px;
+}
+
+.r1c2 {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.r1c2 h2 {
+  margin: 20px 0;
+  font-size: 1.3em;
+  color: #333;
+}
+
+.r1c2 p, .r2 p {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+}
+.r1c2 h2:first-of-type {
+  margin-top: 20px;
+}
+
+.r2 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+  color: #555;
+}
+.table th {
+    background-color: #64025e;
+    color: #fff;
+}
+.table th, .table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+    vertical-align: middle;
+}
+.tbr{
+    padding:20px;
+}
+.tbr .tbland {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+
+
+
+.table .btn {
+    background-color: #64025e;
+    color: #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.table .btn:hover {
+    background-color: #4a003d;
+}
+
+.tbr .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, .05);
+}
+
+.tbr .table-hover tbody tr:hover {
+    background-color: rgba(0, 0, 0, .075);
+}
+.processed span {
+    display: none;
+}
+
+@media (max-width: 720px) {
+  .cont, .row1 {
+    flex-direction: column;
+  }
+  .r1c1, .r1c2 {
+    width: 100%;
+  }
+  .name {
+    text-align: center;
+  }
+  .r1c2 h2, .r1c2 p, .r2 p {
+      text-align:center;
+  }
+  .table td {
+      padding:5px;
+  }
+  .r1c1 img {
+    padding-right: 0;
+  }
+}
+
+
+@media (max-width: 580px) {
+    .tbland {
+        transform: rotate(-90deg) translate(-100%);
+        transform-origin: top left;
+        width: 100%;
+        min-width: 100vh;
+        height: 100vw;
+        position:relative;
+        overflow: auto;
+        background: white;
+    }
+}
+
