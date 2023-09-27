@@ -262,7 +262,7 @@ class PaginisitesController < ApplicationController
   
     # Interogarea pentru a obține înregistrările necesare
     @comenzi_prod = ComenziProd.includes(:user, :prod)
-                               .where(prod_id: [11, 12], validat: "Finalizata")
+                               .where(prod_id: [11, 12,13], validat: "Finalizata")
                                .order(:comanda_id)
     
     # Crearea unui nou document XLSX
