@@ -89,7 +89,7 @@ class DetaliifacturaresController < ApplicationController
       end  
       puts("im here inainte de format js")
       respond_to do |format|
-        format.html { render :update } # Răspunde cu HTML
+        format.html { render :update } ## Răspunde cu HTML
         format.js { render :update } # Răspunde cu js   
                
       end
