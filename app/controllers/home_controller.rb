@@ -79,7 +79,9 @@ class HomeController < ApplicationController
     produs = Prod.find(id_produs)  # Presupunem că modelul 'Prod' are o coloană 'pret'
     @suma_achitata = produs.pret.round(0)
     @redirect_spre = produs.curslegatura
-  
+    if ('cod14'..'cod37').include?(produs.cod)
+      @redirect_spre='cursayurveda'
+    end  
     # Metoda de plată utilizată:
     @metoda_plata = @stripe_session.payment_method_types[0]  # Presupunem că există o singură metodă de plată
   

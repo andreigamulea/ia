@@ -42,6 +42,12 @@
     <%= link_to 'Înainte de începerea cursului, veți primi un email cu toate detaliile necesare pentru a putea paricipa', nutritie3_path, id: 'nutritie3_link' %>
             </div>
     </div>
+<%elsif @redirect_spre == 'cursayurveda'%>
+    <div class="button">
+
+    <%= link_to 'Curs Ayurveda', cursayurveda_path, id: 'cursayurveda_link' %>
+            </div>
+    </div>   
     
 <%else%>
     <div class="button">

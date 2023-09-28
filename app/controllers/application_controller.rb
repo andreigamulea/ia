@@ -60,7 +60,9 @@ class ApplicationController < ActionController::Base
           lista_vegetales_path # Înlocuiește cu calea corespunzătoare
         elsif return_to == "tayv2"
           # Cod pentru cazul în care sursa este butonul
-          tayv2_path # Înlocuiește cu calea corespunzătoare  
+          tayv2_path # Înlocuiește cu calea corespunzătoare  taxainscriere
+        elsif return_to == "taxainscriere" 
+          cursayurveda_path
         else
           # Dacă nu există parametru return_to, sau dacă valoarea acestuia nu este recunoscută, redirectează către o cale implicită
           servicii_path # Înlocuiește cu calea implicită

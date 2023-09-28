@@ -32,6 +32,58 @@
 
 
   </div>
+
+
+
+
+
+  <% if !current_user || current_user.grupa==nil  %>  
+  <h2 style="padding: 0 25px;">Inscrieri curs Ayurveda grupa 1 octombrie 2023 - iulie 2024 </h2>
+  <div class="tbland">
+  <div class="tbr">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th style="width: auto;">Servicii</th>
+                <th style="width: auto;">Detalii</th>
+                <th style="width: auto;">Pret (fara tva)</th>
+                <th style="width: auto;">Pret (cu tva)</th>
+                <th style="width: auto;">Selecție</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% if @prodgrupa1_taxainscriere_all && @prodgrupa1_taxainscriere_all.curslegatura == 'Curs Ayurveda an 1' %>
+           
+            <tr>
+                <td> <%= @prodgrupa1_taxainscriere_all.nume %> </td>                        
+                <td><%= @prodgrupa1_taxainscriere_all.detalii %></td> 
+                <td><%= (@prodgrupa1_taxainscriere_all.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                <td><%= @prodgrupa1_taxainscriere_all.pret.to_i %> lei</td>
+
+                <% if current_user %>
+                <td><%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxainscriere_all.id), class: 'btn' %> </td>   
+                <% else %>
+                <td><%= link_to 'Comanda', new_user_session_path(return_to: 'taxainscriere'), class: 'btn btn-primary' %></td>   
+                <% end %>
+
+              
+
+
+
+
+
+
+            </tr>  
+            
+        <% end %>  
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <%end%>
+
+
+
   <% if @prodgrupa1_taxainscriere  %>  
   <div class="tbland">
   <div class="tbr">
@@ -58,16 +110,10 @@
             
         <% end %>  
         </tbody>
-
-        
-
-
-    </table>
-</div>
-</div>
-
-
-<%end%>
+      </table>
+    </div>
+  </div>
+  <%end%>
 
 
 
@@ -92,7 +138,7 @@
         <tbody>
         <% if @prodgrupa1_taxaanuala!=nil %>
             <tr>
-                <td> <%= @prodgrupa1_taxaanuala.nume %> </td>                        
+                <td><%= @prodgrupa1_taxaanuala.nume %> </td>                        
                 <td><%= @prodgrupa1_taxaanuala.detalii %></td> 
                 <td><%= (@prodgrupa1_taxaanuala.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
                 <td><%= @prodgrupa1_taxaanuala.pret.to_i %> lei</td>

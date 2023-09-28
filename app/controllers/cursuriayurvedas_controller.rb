@@ -59,6 +59,7 @@ class CursuriayurvedasController < ApplicationController
 
   def cursayurveda
     ##################################grupa 1
+    @prodgrupa1_taxainscriere_all = Prod.find_by(cod: "cod14")
     if current_user && current_user.grupa == 1
     @titlu_pagina = 'Curs de Ayurveda - Grupa 1'
     luni = [nil, nil, "Octombrie", "Noiembrie", "Decembrie", "Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "Iulie"]
@@ -105,7 +106,9 @@ class CursuriayurvedasController < ApplicationController
         @prodgrupa1_taxalunara = nil
       else
         # Numărăm câte valori unice avem pentru a determina produsul corespunzător
-        numar_valori = valori_taxa2324.uniq.count
+        numar_valori = valori_taxa2324.compact.max
+
+
         cod_produs = "cod#{15 + numar_valori}"  # Se adaugă 15 pentru că cod16 corespunde cu 1 valoare, cod17 cu 2 valori, etc.
         @prodgrupa1_taxalunara = Prod.find_by(cod: cod_produs)
       end

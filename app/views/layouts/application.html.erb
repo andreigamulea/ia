@@ -12,7 +12,13 @@
     
       gtag('config', 'G-BL087D432V');
     </script>
-    <title><%= @page_title || "Index Ayurvedic Selectiv" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "Titlu default pentru site-ul tău" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Descriere default pentru site-ul tău" %>">
+    <meta name="keywords" content="<%= content_for?(:keywords) ? yield(:keywords) : "Cuvinte cheie default" %>">
+    <%= yield(:canonical) if content_for?(:canonical) %>
+
+
+    
     
      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />

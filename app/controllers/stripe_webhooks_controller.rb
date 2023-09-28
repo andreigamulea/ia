@@ -99,6 +99,9 @@ class StripeWebhooksController < ApplicationController
       cp.update(validat: 'Finalizata')
       #1start creaza o inregistrare in accescurs2324 dc nu exista iar daca exista fa doar update (pt taxa inscriere an 1)      
       if produs.cod == "cod14"
+        user = User.find_by(id: user_id)
+
+        user.update(grupa: 1)
         unless cp.update(taxa2324: 1)
           # Cod pentru tratamentul erorilor
           Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2324 pt taxa inscriere nu a fost pusa  #{produs.cod}
