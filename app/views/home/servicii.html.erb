@@ -177,7 +177,8 @@
         <tbody>
             <% @prod_tayt12.select{ |prod| prod.curslegatura == 'tayt12' && prod.pret > 0 }.each do |prod| %>
                     <tr>
-                        <td> <%= prod.nume %> </td>                        
+                        <td> <%= prod.nume %> </td>         
+                                       
                         <td><%= prod.detalii %></td> 
                         <td><%= (prod.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
                          <td><%= prod.pret.to_i %> lei</td>
