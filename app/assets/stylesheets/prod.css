@@ -162,3 +162,7 @@ body {
     }
 }
 
+r1c1, .r1c2 {
+  width: 100%;
+  height: auto;
+} .tbr {padding:20px 0;}
