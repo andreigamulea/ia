@@ -86,7 +86,7 @@ body {
     vertical-align: middle;
 }
 .tbr{
-    padding:20px;
+    padding:20px 0;
 }
 .tbr .tbland {
     max-width: 1280px;
@@ -127,12 +127,14 @@ body {
     display: none;
 }
 
-@media (max-width: 720px) {
+@media screen and (max-width: 720px) {
+
   .cont, .row1 {
     flex-direction: column;
   }
   .r1c1, .r1c2 {
     width: 100%;
+    height: auto;
   }
   .name {
     text-align: center;
@@ -149,7 +151,7 @@ body {
 }
 
 
-@media (max-width: 580px) {
+@media screen and (max-width: 580px) {
     .tbland {
         transform: rotate(-90deg) translate(-100%);
         transform-origin: top left;
@@ -162,7 +164,3 @@ body {
     }
 }
 
-r1c1, .r1c2 {
-  width: 100%;
-  height: auto;
-} .tbr {padding:20px 0;}
