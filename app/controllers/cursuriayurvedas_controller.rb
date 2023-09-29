@@ -58,6 +58,7 @@ class CursuriayurvedasController < ApplicationController
   end
 
   def cursayurveda
+    if current_user.role==1
     ##################################grupa 1
     @prodgrupa1_taxainscriere_all = Prod.find_by(cod: "cod14")
     if current_user && current_user.grupa == 1
@@ -115,8 +116,10 @@ class CursuriayurvedasController < ApplicationController
     end
     ####################final aici fac pentru lunile de la Octombrie la Iulie
 
-
+  end
 ##################################end grupa1
+ 
+
   end
 
   private

@@ -1,3 +1,4 @@
+<%if current_user==1%>
 <div class="cont">
   <h1 class="name"><%=@titlu_pagina%></h1>
   <div class="row1">
@@ -167,7 +168,9 @@
 
 </div>
 
-
+<%else%>
+<h1>Pagina in mentenanta. Revenim curand</h1>
+<%end%>
 
 
 
