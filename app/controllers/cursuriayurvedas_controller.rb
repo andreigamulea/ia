@@ -58,7 +58,7 @@ class CursuriayurvedasController < ApplicationController
   end
 
   def cursayurveda
-    if current_user.role==1
+    
     ##################################grupa 1
     @prodgrupa1_taxainscriere_all = Prod.find_by(cod: "cod14")
     if current_user && current_user.grupa == 1
@@ -113,7 +113,7 @@ class CursuriayurvedasController < ApplicationController
         cod_produs = "cod#{15 + numar_valori}"  # Se adaugă 15 pentru că cod16 corespunde cu 1 valoare, cod17 cu 2 valori, etc.
         @prodgrupa1_taxalunara = Prod.find_by(cod: cod_produs)
       end
-    end
+    
     ####################final aici fac pentru lunile de la Octombrie la Iulie
 
   end
