@@ -559,13 +559,15 @@ def preluaredate10 #listavegetale
   end  
 end
 
-def preluaredate11 #preluare useri noi (doar noi ) doar atat. email,name,pass,role,limba
+def preluaredate11 #preluare useri noi (doar noi ) doar atat. email,name,pass,role,telefon
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
 
   xlsx.each_row_streaming(offset: 0) do |row|
     email = row[0]&.value&.strip&.downcase # Adăugat downcase
     name = row[1]&.value&.strip
-    limba = row[2]&.value&.strip
+    #limba = row[2]&.value&.strip
+    telefon = row[2]&.value&.to_s&.strip
+
 
     # Sari peste rând dacă email este nul
     next if email.nil?
@@ -574,7 +576,7 @@ def preluaredate11 #preluare useri noi (doar noi ) doar atat. email,name,pass,ro
     next if User.exists?(email: email.downcase) # Adăugat downcase și aici, pentru consistență
 
     # Crează un nou utilizator
-    user = User.new(email: email, name: name, limba: limba, password: "7777777", role: 0)
+    user = User.new(email: email, name: name, telefon: telefon, password: "7777777", role: 0)
 
     # Salvează utilizatorul
     if user.save
