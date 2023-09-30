@@ -245,6 +245,7 @@ class StripeWebhooksController < ApplicationController
     # Verificăm dacă am găsit curs_id
     if curs_id.nil?
       Rails.logger.error("Nu s-a găsit Listacursuri cu numele: #{produs.curslegatura}")
+      puts("nu am gasit curslegatura! pune in Listacursuris acest curs")
       return
     end
   
