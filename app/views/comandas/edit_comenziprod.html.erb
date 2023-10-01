@@ -1,0 +1,47 @@
+<h3>Editare ComenziProd cu ID-ul Comenzii: <%= @comenziprod.comanda_id %></h3>
+<% if @comenziprod.errors.any? %>
+  <ul>
+    <% @comenziprod.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_for @comenziprod, url: update_comenziprod_path(@comenziprod.comanda_id), method: :patch do |f| %>
+    <%= f.label :user_id, "Alege User" %>
+  <%= f.collection_select :user_id, User.all, :id, :id %>
+  
+
+  <div class="form-group">
+    <%= f.label :prod_id, "ID Produs:" %>
+    <%= f.text_field :prod_id, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :comanda_id, "ID Comandă:" %>
+    <%= f.text_field :comanda_id, class: 'form-control', readonly: true %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :datainceput, "Data Început:" %>
+    <%= f.date_field :datainceput, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :datasfarsit, "Data Sfârșit:" %>
+    <%= f.date_field :datasfarsit, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :validat, "Validat:" %>
+    <%= f.text_field :validat, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :taxa2324, "Taxa 2324:" %>
+    <%= f.text_field :taxa2324, class: 'form-control' %>
+  </div>
+
+  <%= f.submit "Salvează Modificările", class: 'btn btn-primary' %>
+
+<% end %>

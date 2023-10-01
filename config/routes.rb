@@ -29,8 +29,15 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
 
   get 'prods/produscurent'
   
+
+  get 'edit_comenziprod/:comanda_id', to: 'comandas#edit_comenziprod', as: :edit_comenziprod
+  patch 'comandas/:id/update_comenziprod', to: 'comandas#update_comenziprod', as: :update_comenziprod
+  get 'select_comanda_id', to: 'comandas#select_comanda_id'
+  post 'select_edit_comenziprod', to: 'comandas#select_edit_comenziprod'
+
   resources :prods
   resources :comandas
+
   
   
   #post 'detaliifacturares/create'

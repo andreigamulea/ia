@@ -64,7 +64,7 @@
                     <% end %> 
 
                     <% if current_user %>
-                    <% if current_user.role == 1 || (current_user.role == 0 && ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod12", "cod11"] }).exists?) %>
+                    <% if current_user.role == 1 || (current_user.role == 0 && ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod12", "cod11", "cod13"] }).exists?) %>
                     <li class="nav-item">
                     <%= link_to 'Nutritie modulul 3', nutritie3_path, id: 'nutritie3_link' %>
                     </li>

@@ -1,0 +1,7 @@
+<h3>Alege Comanda ID pentru Editare</h3>
+
+<%= form_tag select_edit_comenziprod_path, method: :post do %>
+    <%= label_tag :comanda_id, "Introdu ID-ul comenzii:" %>
+    <%= text_field_tag :comanda_id %>
+    <%= submit_tag "Editează" %>
+<% end %>
