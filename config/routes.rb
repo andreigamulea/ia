@@ -99,6 +99,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get 'home/listavegetalegratis/:acces', to: 'home#listavegetalegratis', as: :listavegetalegratis_home
   
   get 'home/userip', to: 'home#userip', as: 'userip'
+  get 'cazuriparticulare', to: 'home#cazuriparticulare', as: 'cazuriparticulare'
 
 
   get 'home/mergi/:mesaj', to: 'home#mergi', as: 'home_mergi'

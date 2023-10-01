@@ -17,6 +17,7 @@
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>
+        <th>User_id<th>
         <th>Nume</th>
         <th>Email</th>
         <th>Telefon</th>
@@ -29,6 +30,7 @@
     <tbody>
       <% @users.each do |user| %>
         <tr>
+        <td><%= user.id %></td>
           <td><%= user.name %></td>
           <td><%= user.email %></td>
           <td><%= user.telefon %></td>
