@@ -6,6 +6,43 @@ class ComandasController < ApplicationController
     @comandas = Comanda.all.order(id: :desc)
   end
   
+  def select_comanda_id
+    # Aici, nu avem nevoie de niciun cod în special, doar să renderizăm vizualizarea
+  end
+  def edit_comenziprod
+    @comenziprod = ComenziProd.find_by(comanda_id: params[:comanda_id])
+    unless @comenziprod
+      redirect_to root_path, alert: 'ComenziProd nu a fost găsit!'
+    end
+end
+
+  
+def update_comenziprod
+  
+  @comenziprod = ComenziProd.find_by(comanda_id: params[:id])
+  puts("iata id-ul: #{@comenziprod.id}")
+  if @comenziprod.update(comenziprod_params)
+    redirect_to root_path, notice: 'ComenziProd a fost actualizat cu succes.'
+  else
+    render :edit
+  end
+  
+
+  # restul codului...
+end
+
+
+
+  def select_edit_comenziprod
+    if params[:comanda_id].present?
+      redirect_to edit_comenziprod_path(comanda_id: params[:comanda_id])
+    else
+      # poți adăuga un flash de alertă sau altă logică
+      redirect_to select_comanda_id_path, alert: "ID-ul comenzii nu este valid."
+    end
+  end
+  
+
 
   # GET /comandas/1 or /comandas/1.json
   def show
@@ -131,4 +168,9 @@ class ComandasController < ApplicationController
         redirect_to root_path
       end
     end
+
+    def comenziprod_params
+      params.require(:comenzi_prod).permit(:user_id, :prod_id, :comanda_id, :datainceput, :datasfarsit, :validat, :taxa2324)
+    end
+    
 end
