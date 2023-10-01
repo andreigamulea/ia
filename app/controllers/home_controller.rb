@@ -16,6 +16,8 @@ class HomeController < ApplicationController
   end
   def cookiestest
   end
+  def cazuriparticulare
+  end  
   def userip
     @userip= UserIp.all
   end  
