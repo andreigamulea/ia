@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get 'factura', to: 'facturas#index'
   get 'facturas/:id/download', to: 'facturas#download', as: 'download_factura'
   get 'facturas/download1', to: 'facturas#download1', as: 'download1_factura'
-
+  get 'facturicomenzi', to: 'facturas#facturicomenzi'
   get 'facturas/:id', to: 'facturas#show', format: 'pdf'
 
 post '/stripe-webhooks', to: 'stripe_webhooks#create'

@@ -12,7 +12,23 @@ class FacturasController < ApplicationController
       # Cod pentru alte roluri sau un mesaj de eroare
     end
   end
-  
+  def facturicomenzi
+    #aceasta metoda ordoneaza facturile in functie de cate sunt pt o comanda
+    #pentru a vedea daca am 2 sau mai multe facturi pt aceeasi comanda desi nu ar trebui
+    @facturas = Factura
+  .select('facturas.*, subquery.factura_count')
+  .joins("LEFT JOIN (
+      SELECT comanda_id, COUNT(id) as factura_count
+      FROM facturas
+      GROUP BY comanda_id
+    ) AS subquery ON facturas.comanda_id = subquery.comanda_id")
+  .order('subquery.factura_count DESC, facturas.comanda_id DESC')
+
+
+
+
+  end  
+
 
   def download
     factura = Factura.find(params[:id])

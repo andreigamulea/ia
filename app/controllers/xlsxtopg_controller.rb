@@ -560,6 +560,7 @@ def preluaredate10 #listavegetale
 end
 
 def preluaredate11 #preluare useri noi (doar noi ) doar atat. email,name,pass,role,telefon
+  #acum e optim pt a prelua din excel email,name,telefon
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
 
   xlsx.each_row_streaming(offset: 0) do |row|
@@ -589,6 +590,7 @@ end
 
 def preluaredate12 # pune in tabela Userprod userii din tabela preluata mai sus user_id si prod_id (pt a controla userii 
   #userii care sa aiba acces sa cumpere un produs aici produsul care are cod=cod9 )
+  # acum am pus cod11 : pot cumpara acces la un produs de tip nutritie3 (oricare dc pun cod11)
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
 
   # Găsește produsul cu codul 'cod9'
