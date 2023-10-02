@@ -147,36 +147,50 @@ class VideosController < ApplicationController
         redirect_to new_user_session_path # Presupunând că aceasta este calea către login
         return
       end
-      puts("nu am gasit 1")
+    
       # Dacă userul are rolul 1, îi dăm acces direct
       return true if current_user.role == 1
-      puts("nu am gasit 2")
+    
+      # Verifică dacă userul are cod12
+      return true if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod12" }).exists?
+    
+      # Verifică dacă userul are ambele coduri: cod11 și cod38
+      if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod11" }).exists? &&
+         ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod38" }).exists?
+        return true
+      end
+    
+      # Verifică dacă userul are ambele coduri: cod13 și cod39
+      if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod13" }).exists? &&
+         ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod39" }).exists?
+        return true
+      end
+    
       tayv2_course = Listacursuri.find_by(nume: 'Nutritie3')
     
       if tayv2_course.nil?
-        puts("nu am gasit N3")
         flash[:alert] = "Cursul nu a fost găsit."
         redirect_to root_path
         return
       end
-      puts("nu am gasit 3")
+    
       # Găsim înregistrarea din tabelul Cursuri pentru utilizatorul și cursul curent
       user_course = Cursuri.find_by(user_id: current_user.id, listacursuri_id: tayv2_course.id)
-      puts("nu am gasit 4")
+    
       unless user_course
         flash[:alert] = "Nu aveți acces la acest curs."
-        puts("nu am gasit N33")
         redirect_to servicii_path
         return
       end
-      puts("nu am gasit 5")
+    
       # Verificăm dacă datasfarsit este nil sau dacă data curentă este mai mică sau egală cu datasfarsit
       if user_course.datasfarsit && user_course.datasfarsit > Date.parse("2024-01-31")
         flash[:alert] = "Accesul la acest curs a expirat."
-        puts("nu am gasit 6")
         redirect_to root_path
       end
     end
+    
+    
 
     def require_admin
       unless current_user && current_user.role == 1

@@ -9,7 +9,7 @@
 
 
 <% if current_user %>
-  <% if current_user.role == 1 || (current_user.role == 0 && ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod12" }).exists?) %>
+<% if @has_access %>
 <h1 style= "text-align: center;padding: 0 10px;">Inregistrari video Curs Nutritie modulul 3 </h1></br>
 
 
