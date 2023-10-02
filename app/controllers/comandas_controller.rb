@@ -85,7 +85,7 @@ end
     @comanda.statecomanda2 = 'Finalizata'
     @comanda.stateplata1 = 'Achitata'
     @comanda.telefon = user.telefon
-    @comanda.plataprin = 'alta modalitate'
+    #@comanda.plataprin = 'alta modalitate'
     @prod = Prod.find_by(id: comanda_params[:prodid]) # presupunem că Prod este numele modelului tău
     if @prod
       @comanda.stateplata3 = "acces #{@prod.valabilitatezile} zile"
@@ -112,8 +112,10 @@ end
           comanda_id: @comanda.id,
           prod_id: @comanda.prodid,
           user_id: @comanda.user_id,
+          validat: 'Finalizata',
           datainceput: Time.now,
           datasfarsit: Time.now + Prod.find(@comanda.prodid).valabilitatezile.to_i.days
+
         )
 
         
