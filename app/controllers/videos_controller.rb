@@ -1,7 +1,8 @@
 class VideosController < ApplicationController
   before_action :set_video, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[ show edit update destroy]
-  before_action :set_user1, only: %i[tayv2 myvideo1]
+  before_action :set_user1, only: %i[tayv2 myvideo1] #este pt tayv2
+  before_action :set_user2, only: %i[myvideo2] #este pt nutritie3
   before_action :require_admin, only: %i[index new edit update create]
   # GET /videos or /videos.json
   def index
@@ -18,8 +19,18 @@ class VideosController < ApplicationController
   def tayv2
     @myvideo = Video.where(tip: 'tayv2').order(ordine: :asc)
   end
-  
-  
+  ############################ in metoda de mai jos sunt pt nutritie3 
+  #daca vreau pt alte cursuri duplic metoda de mai jos fara view 
+  #foloseste ca view myvideo1.html.erb care e folosit si la tayv2
+  #deci daca mai vreau si pt alt curs pun: before_action :set_user2, only: %i[myvideo2]
+  #si fac metoda et_user3 de exemplu iar in view unde apas 'Vezi video' pun:
+  #<%= link_to "Vezi video", myvideo2_path(id: video.id, link: video.link), class: "btn btn-primary" %> 
+  def myvideo2 #pt nutritie3
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  ################################################################
   
   
   ## GET /videos/1 or /videos/1.json
@@ -102,6 +113,40 @@ class VideosController < ApplicationController
         redirect_to new_user_session_path # Presupunând că aceasta este calea către login
         return
       end
+    
+      # Dacă userul are rolul 1, îi dăm acces direct
+      return true if current_user.role == 1
+    
+      tayv2_course = Listacursuri.find_by(nume: 'tayv2')
+    
+      if tayv2_course.nil?
+        flash[:alert] = "Cursul nu a fost găsit."
+        redirect_to root_path
+        return
+      end
+    
+      # Găsim înregistrarea din tabelul Cursuri pentru utilizatorul și cursul curent
+      user_course = Cursuri.find_by(user_id: current_user.id, listacursuri_id: tayv2_course.id)
+    
+      unless user_course
+        flash[:alert] = "Nu aveți acces la acest curs."
+        redirect_to servicii_path
+        return
+      end
+    
+      # Verificăm dacă datasfarsit este nil sau dacă data curentă este mai mică sau egală cu datasfarsit
+      if user_course.datasfarsit && user_course.datasfarsit < Date.today
+        flash[:alert] = "Accesul la acest curs a expirat."
+        redirect_to root_path
+      end
+    end
+    def set_user2
+      # Verifică dacă userul este logat
+      unless user_signed_in?
+        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+        redirect_to new_user_session_path # Presupunând că aceasta este calea către login
+        return
+      end
       puts("nu am gasit 1")
       # Dacă userul are rolul 1, îi dăm acces direct
       return true if current_user.role == 1
@@ -132,6 +177,7 @@ class VideosController < ApplicationController
         redirect_to root_path
       end
     end
+
     def require_admin
       unless current_user && current_user.role == 1
         flash[:error] = "Only admins are allowed to access this page."
