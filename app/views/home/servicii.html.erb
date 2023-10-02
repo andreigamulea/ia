@@ -129,7 +129,8 @@
             </thead>
             <tbody>
             <% @prods.select{ |prod| prod.curslegatura == 'Nutritie3' }.each do |prod| %>
-                <%if prod.cod!='cod38'%> <%if prod.cod!='cod39'%>
+                <% next if (prod.cod == "cod38" && !@user_has_prod_cod11) %>
+                <% next if (prod.cod == "cod39" && !@user_has_prod_cod13) %>
                     <tr>
                     <td>
                         <%= raw prod.nume.gsub('înscrieri până pe 20 septembrie 2023', '<span class="text-danger">înscrieri până pe 20 septembrie 2023</span>').gsub('înscrieri începând cu 21 septembrie 2023', '<span class="text-danger">înscrieri începând cu 21 septembrie 2023</span>') %>
@@ -149,9 +150,10 @@
                          <% else %>
                              <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> 
                          <% end %>
+                         
                      </td>     
                     </tr>  
-                <% end %>  <% end %>  <% end %>  
+                <% end %>  
             </tbody>
         </table>
     </div>
