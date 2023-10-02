@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'nutritie3', to: 'nutritie3#index'
   get 'myvideo', to: 'videos#myvideo'
   get 'videos/:id/myvideo1', to: 'videos#myvideo1', as: 'myvideo1'
+  get 'videos/:id/myvideo2', to: 'videos#myvideo2', as: 'myvideo2'
  
   get 'videos/tayv2', to: 'videos#tayv2', as: 'tayv2'
 
