@@ -102,30 +102,33 @@ class VideosController < ApplicationController
         redirect_to new_user_session_path # Presupunând că aceasta este calea către login
         return
       end
-    
+      puts("nu am gasit 1")
       # Dacă userul are rolul 1, îi dăm acces direct
       return true if current_user.role == 1
-    
-      tayv2_course = Listacursuri.find_by(nume: 'tayv2')
+      puts("nu am gasit 2")
+      tayv2_course = Listacursuri.find_by(nume: 'Nutritie3')
     
       if tayv2_course.nil?
+        puts("nu am gasit N3")
         flash[:alert] = "Cursul nu a fost găsit."
         redirect_to root_path
         return
       end
-    
+      puts("nu am gasit 3")
       # Găsim înregistrarea din tabelul Cursuri pentru utilizatorul și cursul curent
       user_course = Cursuri.find_by(user_id: current_user.id, listacursuri_id: tayv2_course.id)
-    
+      puts("nu am gasit 4")
       unless user_course
         flash[:alert] = "Nu aveți acces la acest curs."
+        puts("nu am gasit N33")
         redirect_to servicii_path
         return
       end
-    
+      puts("nu am gasit 5")
       # Verificăm dacă datasfarsit este nil sau dacă data curentă este mai mică sau egală cu datasfarsit
-      if user_course.datasfarsit && user_course.datasfarsit < Date.today
+      if user_course.datasfarsit && user_course.datasfarsit > Date.parse("2024-01-31")
         flash[:alert] = "Accesul la acest curs a expirat."
+        puts("nu am gasit 6")
         redirect_to root_path
       end
     end
