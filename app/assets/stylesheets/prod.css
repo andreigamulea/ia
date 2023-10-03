@@ -148,6 +148,9 @@ body {
   .r1c1 img {
     padding-right: 0;
   }
+  .video{
+    width: 100%;
+  }
 }
 
 
