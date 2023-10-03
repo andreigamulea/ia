@@ -34,19 +34,19 @@
   </div>
 
 
-<section class="c1"></br>
-<h1 style= "text-align: center;padding: 0 10px;"><%=@myvideo1.nume%></h1></br>
-<p><%=@myvideo1.descriere%></p></br>
+
+<h1 class="name"><%=@myvideo1.nume%></h1>
+<p style="text-align:center;"><%=@myvideo1.descriere%></p>
 <!-- for non autoplay video //-->
-<div style="width: 80%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+<div class="video" style="width: 80%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
         <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
         <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
         <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
         <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
     </div>
-</div></br></br></br>
-</section>
+</div>
+</br></br>
 
 
 
