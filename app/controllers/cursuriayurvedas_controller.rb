@@ -58,7 +58,8 @@ class CursuriayurvedasController < ApplicationController
   end
 
   def cursayurveda
-    
+    @myvideo1 = Video.find_by(link: 'xGpVO2uopdc')
+    @myvideo = @myvideo1.link if @myvideo1
     ##################################grupa 1
     @prodgrupa1_taxainscriere_all = Prod.find_by(cod: "cod14")
     if current_user && current_user.grupa == 1
@@ -75,7 +76,7 @@ class CursuriayurvedasController < ApplicationController
     if current_user && current_user.grupa == 1
       # Verificăm dacă există o înregistrare în ComenziProd unde user_id corespunde cu current_user și taxa2324 este 1
       comanda = ComenziProd.find_by(user_id: current_user.id, taxa2324: 1)
-    
+      @textan1= 1
       # Dacă nu există astfel de înregistrare, setăm @prodgrupa1_taxainscriere
       @prodgrupa1_taxainscriere = comanda.nil? ? Prod.find_by(cod: "cod14") : nil
     else
