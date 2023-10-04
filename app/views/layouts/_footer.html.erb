@@ -13,18 +13,27 @@
     <div class="footer-row2">
       <div class="footer-column">
       <ul>
-      <li>
-         <h2>Contul meu</h2>
-      </li>
-      <li><a href="/users/sign_in/menu">Login</a></li>
-      <li><a href="/users/sign_up/menu">Creaza cont</a></li>
-      <br>
-      <li>
+      <li><h2>Contul meu</h2></li>
+      <% if user_signed_in? %>
+      <li><%= link_to 'Contul meu', edit_user_registration_path, class: 'nav-item' %></li>          
+      <li><%= link_to 'Iesi din cont', destroy_user_session_path, id: 'logout_link', data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %></li>
+      <li><%= link_to 'Facturile mele', facturas_path, class: 'nav-item' %></li>
+      <%else%>
+      <li><%= link_to 'Login', new_user_session_with_return_path('menu') %></li>
+      <li><%= link_to 'Creaza cont', new_user_registration_with_return_path('menu') %></li>
+      <%end%>
          <h2>Resurse</h2>
       </li>
       <li><a href="https://amnromania.ro/" target="_blank">amnromania.ro</a></li>
       <li><a href="https://animaplant.ro/" target="_blank">animaplant.ro</a></li>
    </ul>
+
+
+
+   
+
+
+
       </div>
       <div class="footer-column">
         <ul>
