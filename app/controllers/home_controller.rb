@@ -134,7 +134,9 @@ class HomeController < ApplicationController
         @prods << special_prod
       end
     end
-    @prod_tayt12 = Prod.where(curslegatura: 'tayt12')
+    #@prod_tayt12 = Prod.where(curslegatura: 'tayt12')
+    @prod_tayt12 = Prod.where(curslegatura: 'tayt12').order(:cod)
+
     #startvariabilele pt nutritie3
     @prod_id_cod11 = Prod.find_by(cod: 'cod11')&.id
     @prod_id_cod13 = Prod.find_by(cod: 'cod13')&.id
