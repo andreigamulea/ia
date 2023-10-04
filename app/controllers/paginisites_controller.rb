@@ -262,7 +262,7 @@ class PaginisitesController < ApplicationController
   
     # Interogarea pentru a obține înregistrările necesare
     @comenzi_prod = ComenziProd.includes(:user, :prod)
-                               .where(prod_id: [11, 12,13], validat: "Finalizata")
+                               .where(prod_id: [11, 12,13,38,38], validat: "Finalizata")
                                .order(:comanda_id)
     
     # Crearea unui nou document XLSX
@@ -295,7 +295,9 @@ class PaginisitesController < ApplicationController
       mapare_valori = {
         11 => 580,
         12 => 780,
-        13 => 690
+        13 => 690,
+        38 => 200,
+        39 => 90
       }
 
       valoare = mapare_valori[comanda.prod_id] || 0 # 0 este o valoare default, în cazul în care prod_id nu există în hash
