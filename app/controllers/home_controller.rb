@@ -139,13 +139,16 @@ class HomeController < ApplicationController
     @prod_id_cod11 = Prod.find_by(cod: 'cod11')&.id
     @prod_id_cod13 = Prod.find_by(cod: 'cod13')&.id
     
+   
+
     if current_user
-      @user_has_prod_cod11 = ComenziProd.exists?(user_id: current_user.id, prod_id: @prod_id_cod11)
-      @user_has_prod_cod13 = ComenziProd.exists?(user_id: current_user.id, prod_id: @prod_id_cod13)
+      @user_has_prod_cod11 = ComenziProd.exists?(user_id: current_user.id, prod_id: @prod_id_cod11, validat: 'Finalizata')
+      @user_has_prod_cod13 = ComenziProd.exists?(user_id: current_user.id, prod_id: @prod_id_cod13, validat: 'Finalizata')
     else
       @user_has_prod_cod11 = false
       @user_has_prod_cod13 = false
     end
+    
     
     #stoptvariabilele pt nutritie3
 
