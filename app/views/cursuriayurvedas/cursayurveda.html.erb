@@ -184,7 +184,7 @@ achitarea participarii pentru luna Octombrie 2023</p>
 </div>
 
 <%end%>
-<% if current_user && (current_user.role == 1 || (current_user.grupa == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2324) >= 2)) %>
+<% if current_user && (current_user.role == 1 || (current_user.grupa == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i >= 2)) %>
   
 
 <h2 style="padding: 0; text-align: center;">Datele de logare pe platforma ZOOM:</h2>
