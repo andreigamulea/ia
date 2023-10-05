@@ -62,12 +62,8 @@
       <%= f.text_field :judet, class: "form-control" %>
     </div>
 
-
-
-  <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:codpostal].any? %>">
-    <%= f.label "Cod postal*", class: "form-label" %>
-    <%= f.text_field :codpostal, class: "form-control" %>
-  </div>
+    
+  
 
   <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:strada].any? %>">
     <%= f.label "Strada*", class: "form-label" %>
@@ -78,6 +74,11 @@
     <%= f.label "Numar*", class: "form-label" %>
     <%= f.text_field :numar, class: "form-control" %>
   </div>
+  <div class="mb-3">
+  <%= f.label "Cod postal*", class: "form-label" %>
+  <%= f.text_field :codpostal, class: "form-control" %>
+</div>
+
 
   <div class="mb-3">
     <%= f.label "Bloc, Etaj, Apartament (optional)", class: "form-label" %>
@@ -97,15 +98,74 @@
 
   </div>
 
-    <div class="mb-3">
 
+
+<%if current_user.role==1%>
+  <div class="mb-3">
+  <%= f.label :use_alternate_shipping, class: "form-check-label" do %>
+    <%= f.check_box :use_alternate_shipping, class: "form-check-input" %>
+    <span style="color: red;">Folosești o adresă alternativă de livrare?</span>
+  <% end %>
+</div>
+<%end%>
+
+
+<div id="alternate_shipping_fields" style="display: none;">
+  
+<div class="mb-3">
+    <%= f.label "Prenume (livrare)*", class: "form-label" %>
+    <%= f.text_field :prenume1, class: "form-control" %>
+</div>
+
+<div class="mb-3">
+    <%= f.label "Nume (livrare)*", class: "form-label" %>
+    <%= f.text_field :nume1, class: "form-control" %>
+</div>
+
+<div class="mb-3">
+    <%= f.label "Tara (livrare)", class: "form-label" %>
+    <%= f.text_field :tara1, class: "form-control", value: f.object.tara1.presence || "România" %>
+</div>
     
+<div class="mb-3">
+  <%= f.label "Localitate (livrare)", class: "form-label" %>
+  <%= f.text_field :localitate1, class: "form-control" %>
+</div>
+
+<div class="mb-3">
+<%= f.label "Judet / Sector (livrare)", class: "form-label" %>
+  <%= f.text_field :judet1, class: "form-control" %>
+</div>
+
+<div class="mb-3">
+  <%= f.label "Cod postal (livrare)*", class: "form-label" %>
+  <%= f.text_field :codpostal1, class: "form-control" %>
+</div>
+
+<div class="mb-3">
+  <%= f.label "Strada (livrare)*", class: "form-label" %>
+  <%= f.text_field :strada1, class: "form-control" %>
+</div>
+
+<div class="mb-3">
+  <%= f.label "Numar (livrare)*", class: "form-label" %>
+  <%= f.text_field :numar1, class: "form-control" %>
+</div>
+
+<div class="mb-3">
+  <%= f.label "Telefon (livrare)*", class: "form-label" %>
+  <%= f.text_field :telefon1, class: "form-control" %>
+</div>
+
+</div>
+
+
+
+
+
+    <div class="mb-3">   
     
       <%= f.submit "Cumpara", class: "btn btn-primary" %>
-    
-
-
-
     </div>
 <% end %>
 </div>
@@ -131,6 +191,25 @@
 
 <% end %>
 
+<script>
+  $(document).ready(function() {
+    // Ascunde sau afișează câmpurile în funcție de starea inițială a checkbox-ului
+    if ($("[name='detaliifacturare[use_alternate_shipping]']").is(":checked")) {
+      $("#alternate_shipping_fields").show();
+    } else {
+      $("#alternate_shipping_fields").hide();
+    }
+
+    // Adaugă un event listener pentru schimbarea stării checkbox-ului
+    $("[name='detaliifacturare[use_alternate_shipping]']").change(function() {
+      if ($(this).is(":checked")) {
+        $("#alternate_shipping_fields").slideDown();
+      } else {
+        $("#alternate_shipping_fields").slideUp();
+      }
+    });
+  });
+</script>
 
 
 

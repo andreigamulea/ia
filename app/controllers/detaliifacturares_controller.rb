@@ -32,10 +32,7 @@ class DetaliifacturaresController < ApplicationController
       render 'edit1'
     end
   end
-  def create    
-   
- 
-    
+  def create   
     puts("sunt in createeeeeeeeeeeeeeeeeeeeee")
     @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare
    
@@ -43,6 +40,7 @@ class DetaliifacturaresController < ApplicationController
     
     detaliifacturare_params_without_s = detaliifacturare_params.except(:s)
     @detaliifacturare.assign_attributes(detaliifacturare_params_without_s)    
+    @detaliifacturare.use_alternate_shipping = params[:use_alternate_shipping] == "1"
     if @detaliifacturare.save
        # Asigura-te că utilizatorul are un client Stripe
       if current_user.stripe_customer_id.nil?
@@ -60,10 +58,23 @@ class DetaliifacturaresController < ApplicationController
     else
       render :datefacturare
     end
-
-  end  
- 
   
+  end  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   def update
     
     puts("sunt in updateeeeeeeeeeeeeeeeeeeeee")
@@ -220,9 +231,7 @@ end
 
   end
   
-  def detaliifacturare_params
-    params.require(:detaliifacturare).permit(:prenume, :nume, :numecompanie, :cui, :tara, :judet, :localitate, :codpostal, :strada, :numar, :altedate, :telefon, :adresaemail,:s)
-end
+  
 
 def restrict_access_to_special_page
   # Dacă utilizatorul este admin, nu aplica restricții
@@ -251,5 +260,13 @@ def deny_access
   redirect_to root_path # sau orice altă cale unde doriți să redirecționați utilizatorul
 end
 
-
+def detaliifacturare_params
+  params.require(:detaliifacturare).permit(
+    :prenume, :nume, :numecompanie, :cui, :tara, :judet, :localitate, 
+    :codpostal, :strada, :numar, :altedate, :telefon, :adresaemail, :s,
+    :prenume1, :nume1, :numecompanie1, :tara1, :codpostal1, :strada1, 
+    :numar1, :localitate1, :judet1, :altedate1, :telefon1, :s,
+    :use_alternate_shipping # presupunând că ai adăugat acest câmp pentru a ține evidența căsuței bifate
+  )
+end
 end
