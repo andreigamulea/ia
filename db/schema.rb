@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_27_154820) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_05_091049) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -207,7 +207,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_27_154820) do
     t.decimal "valoare_totala"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status"
     t.index ["comanda_id"], name: "index_facturas_on_comanda_id"
+    t.index ["status"], name: "index_facturas_on_status"
     t.index ["user_id"], name: "index_facturas_on_user_id"
   end
 
@@ -425,14 +427,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_27_154820) do
   create_table "user_videos", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.bigint "video_id"
     t.datetime "datainceput"
     t.datetime "datasfarsit"
     t.string "nume"
     t.string "tip"
-    t.index ["user_id"], name: "index_user_videos_on_user_id"
-    t.index ["video_id"], name: "index_user_videos_on_video_id"
   end
 
   create_table "userprods", force: :cascade do |t|
@@ -521,8 +519,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_27_154820) do
   add_foreign_key "user_ips", "users"
   add_foreign_key "user_paginisites", "paginisites"
   add_foreign_key "user_paginisites", "users"
-  add_foreign_key "user_videos", "users"
-  add_foreign_key "user_videos", "videos"
   add_foreign_key "userprods", "prods"
   add_foreign_key "userprods", "users"
 end
