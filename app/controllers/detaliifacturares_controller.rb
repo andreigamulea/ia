@@ -76,40 +76,58 @@ class DetaliifacturaresController < ApplicationController
 
 
   def update
-    
     puts("sunt in updateeeeeeeeeeeeeeeeeeeeee")
     @detaliifacturare = current_user.detaliifacturare
-    
+
     @prod = Prod.find(detaliifacturare_params[:s])
-    
-    if @detaliifacturare.update(detaliifacturare_params.except(:s))
-      puts("are client stripe")
-      # Asigura-te că utilizatorul are un client Stripe
-      if current_user.stripe_customer_id.nil?
-        puts("im here in begin dupa if")
-        begin
-          customer = Stripe::Customer.create(email: current_user.email)
-          current_user.update(stripe_customer_id: customer.id)
-          puts("im here in begin")
-          
-        rescue => e
-          Rails.logger.error "Stripe customer creation failed for user #{current_user.id}: #{e.message}"
-          # Gestionare erori
-          return
-        end
-      end  
-      puts("im here inainte de format js")
-      respond_to do |format|
-        format.html { render :update } ## Răspunde cu HTML
-        format.js { render :update } # Răspunde cu js   
-               
-      end
-      
-    else
-      puts("im here")
-      render :datefacturare
+    puts("Se setează valorile la nil")
+
+    update_attributes = detaliifacturare_params
+    puts "Valoare altedate: #{@detaliifacturare.altedate}"
+    puts "Valoare altedate1: #{@detaliifacturare.altedate1}"
+    unless params[:use_alternate_shipping] == "1"
+        puts("daaaa  este 0")
+        update_attributes.merge!({
+            prenume1: nil,
+            nume1: nil,
+            numecompanie1: nil,
+            tara1: nil,
+            localitate1: nil,
+            judet1: nil,
+            codpostal1: nil,
+            strada1: nil,
+            numar1: nil,
+            altedate1: nil,
+            telefon1: nil
+        })
     end
-  end
+
+    if @detaliifacturare.update(detaliifacturare_params.except(:s))
+
+        # Asigura-te că utilizatorul are un client Stripe
+        if current_user.stripe_customer_id.nil?
+            begin
+                customer = Stripe::Customer.create(email: current_user.email)
+                current_user.update(stripe_customer_id: customer.id)
+            rescue => e
+                Rails.logger.error "Stripe customer creation failed for user #{current_user.id}: #{e.message}"
+                # Gestionare erori
+                return
+            end
+        end
+
+        respond_to do |format|
+            format.html { render :update } # Răspunde cu HTML
+            format.js { render :update } # Răspunde cu JS
+        end
+        puts("nu sunt erori")
+    else
+        puts("erori")
+        puts "Errors: #{@detaliifacturare.errors.full_messages}"
+        render :datefacturare
+    end
+end
+
   
   
   def pay
@@ -158,6 +176,57 @@ class DetaliifacturaresController < ApplicationController
       datainceput: Time.now,
       datasfarsit: Time.now + @prod.valabilitatezile.to_i.days
     )
+
+####################start populeaza adresacomenzi
+# Presupunem că ai o comandă nou creată, @comanda
+
+# Inițializează un hash pentru atributele noii înregistrări
+atribute_adresacomenzi = { comanda_id: comanda.id }
+
+if @detaliifacturare.use_alternate_shipping
+  atribute_adresacomenzi.merge!(
+    adresacoincide: false,
+    prenume:       @detaliifacturare.prenume1,
+    nume:          @detaliifacturare.nume1,
+    numecompanie:  @detaliifacturare.numecompanie1.presence,
+    cui:           @detaliifacturare.cui.presence,
+    tara:          @detaliifacturare.tara1,
+    judet:         @detaliifacturare.judet1,
+    localitate:    @detaliifacturare.localitate1,
+    codpostal:     @detaliifacturare.codpostal1,
+    strada:        @detaliifacturare.strada1,
+    numar:         @detaliifacturare.numar1,
+    altedate:      @detaliifacturare.altedate1.presence,
+    telefon:       @detaliifacturare.telefon1,
+    email:         @detaliifacturare.adresaemail
+  )
+else
+  atribute_adresacomenzi.merge!(
+    adresacoincide: true,
+    prenume:       @detaliifacturare.prenume,
+    nume:          @detaliifacturare.nume,
+    numecompanie:  @detaliifacturare.numecompanie.presence,
+    cui:           @detaliifacturare.cui.presence,
+    tara:          @detaliifacturare.tara,
+    judet:         @detaliifacturare.judet,
+    localitate:    @detaliifacturare.localitate,
+    codpostal:     @detaliifacturare.codpostal,
+    strada:        @detaliifacturare.strada,
+    numar:         @detaliifacturare.numar,
+    altedate:      @detaliifacturare.altedate.presence,
+    telefon:       @detaliifacturare.telefon,
+    email:         @detaliifacturare.adresaemail
+  )
+end
+
+# Crearea unei noi înregistrări în tabela adresacomenzi cu atributele specificate
+AdresaComenzi.create!(atribute_adresacomenzi)
+
+
+
+
+###################stop populeaza adresacomenzi
+
     puts "@prod.valabilitatezile: #{@prod.valabilitatezile}"
 
     # Creare metadata
@@ -265,7 +334,7 @@ def detaliifacturare_params
     :prenume, :nume, :numecompanie, :cui, :tara, :judet, :localitate, 
     :codpostal, :strada, :numar, :altedate, :telefon, :adresaemail, :s,
     :prenume1, :nume1, :numecompanie1, :tara1, :codpostal1, :strada1, 
-    :numar1, :localitate1, :judet1, :altedate1, :telefon1, :s,
+    :numar1, :localitate1, :judet1, :altedate1, :telefon1, 
     :use_alternate_shipping # presupunând că ai adăugat acest câmp pentru a ține evidența căsuței bifate
   )
 end
