@@ -126,6 +126,23 @@ body {
 .processed span {
     display: none;
 }
+.register{
+  text-align: center;
+  color: white;
+  padding: 10px 40px;
+  border: 1px solid #4498fd;
+  width: fit-content;
+  border-radius: 20px;
+  background-color: #4499fd;
+  text-decoration: none;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 11px 1px rgba(0,0,0,.5);
+}
+.register:hover{
+  box-shadow: 0px 3px 10px 0 rgb(0 0 0/50%);
+}
 
 @media screen and (max-width: 720px) {
 

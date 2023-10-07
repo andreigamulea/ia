@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_05_210533) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_06_202715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -373,7 +373,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_210533) do
   create_table "prods", force: :cascade do |t|
     t.string "nume"
     t.text "detalii"
-    t.text "info"
+    t.string "luna"
     t.decimal "pret"
     t.integer "valabilitatezile"
     t.string "curslegatura"
@@ -540,6 +540,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_05_210533) do
     t.datetime "updated_at", null: false
     t.string "tip"
     t.integer "ordine"
+    t.string "luna"
+    t.index ["luna"], name: "index_videos_on_luna"
   end
 
   add_foreign_key "accescurs2324s", "users"
