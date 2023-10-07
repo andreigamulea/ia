@@ -356,7 +356,7 @@ class PaginisitesController < ApplicationController
     worksheet.add_cell(0, 6, 'Data Platii')
    
     worksheet.add_cell(0, 7, 'Valoare')
-  
+    worksheet.add_cell(0, 8, 'Plata prin')
     # Adăugarea datelor în fiecare rând
     @comenzi_prod.each_with_index do |comanda, index|
       worksheet.add_cell(index + 1, 0, comanda.comanda_id)
@@ -373,6 +373,9 @@ class PaginisitesController < ApplicationController
      # Folosiți noul hash de mapare pentru a adăuga valoarea în worksheet
     valoare = mapare_valori[comanda.prod_id] || 0
     worksheet.add_cell(index + 1, 7, valoare)
+    if comanda.comanda
+      worksheet.add_cell(index + 1, 8, comanda.comanda.plataprin)
+    end
     end
   
     # Stabilirea căii pentru fișierul XLSX și scrierea acestuia pe disc
@@ -421,7 +424,7 @@ class PaginisitesController < ApplicationController
     worksheet.add_cell(0, 6, 'Data Platii')
    
     worksheet.add_cell(0, 7, 'Valoare')
-  
+    worksheet.add_cell(0, 8, 'Plata prin')
     # Adăugarea datelor în fiecare rând
     @comenzi_prod.each_with_index do |comanda, index|
       worksheet.add_cell(index + 1, 0, comanda.comanda_id)
@@ -436,6 +439,9 @@ class PaginisitesController < ApplicationController
       # Adăugarea valorii în funcție de prod_id
       valoare = comanda.prod_id == 9 ? 80 : 215
       worksheet.add_cell(index + 1, 7, valoare)
+      if comanda.comanda
+        worksheet.add_cell(index + 1, 8, comanda.comanda.plataprin)
+      end
     end
   
     # Stabilirea căii pentru fișierul XLSX și scrierea acestuia pe disc
