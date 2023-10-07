@@ -71,7 +71,7 @@ class ProdsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def prod_params
-      params.require(:prod).permit(:nume, :detalii, :info, :pret, :valabilitatezile, :curslegatura, :linkstripe, :status, :cod)
+      params.require(:prod).permit(:nume, :detalii, :luna, :pret, :valabilitatezile, :curslegatura, :linkstripe, :status, :cod)
     end
     def require_admin
       unless current_user && current_user.role == 1

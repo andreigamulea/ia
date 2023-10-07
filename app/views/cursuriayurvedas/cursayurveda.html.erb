@@ -1,5 +1,6 @@
 <div class="cont">
   <h1 class="name"><%=@titlu_pagina%></h1>
+  <% if !(current_user && (current_user.role == 1 || (current_user.grupa == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i >= 2))) %>
   <div class="row1">
     <div class="r1c1">
       
@@ -18,24 +19,16 @@
     </div>
   </div>
   <div class="r2">
-    <p style="text-align:center;">Participa acum la acest curs și descopera beneficiile acestei cunoasteri traditionale!
+    <p style="text-align:center;">Participa acum la acest curs și descopera beneficiile acestei cunoasteri traditionale! </p>
     </br>
-    <%if !current_user || current_user.grupa!=1%>
-    Pentru mai multe informatii, vă invităm să vizitati pagina: 🌿
-      <a href="https://amnromania.ro/activitate/cursuri-de-ayurveda/inscrieri/" target="_blank">Inscrieri cursuri Ayurveda</a>
-      </br></br>
-    <%else%>
-    </br>  
-    <%end%>
-
-      </p>
-
+     
+   
 
   </div>
+  <a href="#register" class="register">Inscrie-te la curs</a>
+<%end%>
 
-
-
-<h1 class="name"><%=@myvideo1.nume%></h1>
+<h2 class="name"><%=@myvideo1.nume%></h2>
 <p style="text-align:center;"><%=@myvideo1.descriere%></p>
 <!-- for non autoplay video //-->
 <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
@@ -51,7 +44,7 @@
 
 
   <% if !current_user || current_user.grupa==nil  %>  
-  <h2 style="padding: 0; text-align: center;">Inscrieri curs Ayurveda grupa 1 octombrie 2023 - iulie 2024 </h2>
+  <h2 id="register" style="padding: 0; text-align: center;">Inscrieri curs Ayurveda grupa 1 octombrie 2023 - iulie 2024 </h2>
   
   <div class="tbland">
   <div class="tbr">
@@ -141,7 +134,7 @@ achitarea participarii pentru luna Octombrie 2023</p>
 
 <%if @ultima_luna_platita!= nil%>
 
-<p style="padding: 0 25px;">Ultima luna pentru care a fost achitata participarea: <%=@ultima_luna_platita%></p>
+<h2 style="text-align: center;font-size: 1.2rem;">Ultima luna pentru care a fost achitata participarea: <%=@ultima_luna_platita%></h2>
 <%end%>
 <% if @prodgrupa1_taxaanuala!=nil || @prodgrupa1_taxalunara!=nil %>
 <div class="tbland">
@@ -154,7 +147,7 @@ achitarea participarii pentru luna Octombrie 2023</p>
                 <th style="width: auto;">Detalii</th>
                 <th style="width: auto;">Pret (fara tva)</th>
                 <th style="width: auto;">Pret (cu tva)</th>
-                <th style="width: auto;">Selecție</th>
+                <th style="width: auto;">Actiune</th>
             </tr>
         </thead>
         <tbody>
@@ -184,8 +177,43 @@ achitarea participarii pentru luna Octombrie 2023</p>
 </div>
 
 <%end%>
+
 <% if current_user && (current_user.role == 1 || (current_user.grupa == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i >= 2)) %>
-  
+<% if current_user && (current_user.role == 1) %>
+<h2 style="text-align: center;font-size: 1.2rem;">Cursurile de Ayurveda</h2>
+
+<div class="tbland">
+  <div class="tbr">
+  <table class="table table-striped table-hover">
+  <thead>
+      <tr>
+          <th style="width: auto;">Nr</th>
+          <th style="width: auto;">Nume</th>
+          <th style="width: auto;">Detalii</th>
+          <th style="width: auto;">Pret (fara tva)</th>
+          <th style="width: auto;">Pret (cu tva)</th>
+          <th style="width: auto;">Actiune</th>
+      </tr>
+  </thead>
+  <tbody>
+      <% @produse_accesibile_an1.each_with_index do |produs, index| %>
+          <tr>
+              <td><%= index + 1 %></td> 
+              <td><%= produs.nume %></td>                        
+              <td><%= produs.detalii %></td> 
+              <td><%= (produs.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                <td><%= produs.pret.to_i %> lei</td>
+              <td> <%= link_to 'Comanda', datefacturare_path(s: produs.id), class: 'btn' %> </td>      
+          </tr>  
+      <% end %>
+  </tbody>
+</table>
+
+</div>
+</div>
+<% end %>
+
+
 
 <h2 style="padding: 0; text-align: center;">Datele de logare pe platforma ZOOM:</h2>
 <p style="text-align: left;margin-top: 10px;">Link acces ZOOM: <a href="https://us02web.zoom.us/j/85022539934?pwd=QURRRFZMZXppVHJJZzJRZFU0OGxJZz09" target="_blank">https://us02web.zoom.us/j/83284010524?pwd=QURRRFZMZXppVHJJZzJRZFU0OGxJZz09</a></p>

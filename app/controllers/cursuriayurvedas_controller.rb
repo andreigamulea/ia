@@ -119,7 +119,19 @@ class CursuriayurvedasController < ApplicationController
 
   end
 ##################################end grupa1
+ ##########################start acces produse video an 1
  
+
+ if max_taxa
+  lunile = [nil, nil, "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "iulie"]
+  @produse_accesibile_an1 = Prod.where(curslegatura: 'an1', luna: lunile[2..(2 + max_taxa - 1)])
+else
+  @produse_accesibile_an1 = []
+end
+
+
+
+ #########################stop acces produse video an 1
 
   end
 
