@@ -93,7 +93,7 @@
                         <% if current_user %>
                         <li><%= link_to 'Facturile mele', facturas_path, class: 'nav-item' %></li>
                         <% end %>
-                        <li><%= link_to 'Delogare', destroy_user_session_path, id: 'logout_link', data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %></li>
+                        <li><%= link_to 'Delogare', destroy_user_session_path, id: 'logout_link',  class: 'nav-item', data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %></li>
                 
                     </ul>
                 </li>

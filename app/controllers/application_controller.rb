@@ -5,6 +5,25 @@ class ApplicationController < ActionController::Base
     skip_before_action :check_user_active, only: [:after_sign_in_path_for]
     before_action :check_sign_in_token
     before_action :set_stripe_key
+    def luna_in_romana(luna_engleza)
+      traduceri = {
+        "January" => "ianuarie",
+        "February" => "februarie",
+        "March" => "martie",
+        "April" => "aprilie",
+        "May" => "mai",
+        "June" => "iunie",
+        "July" => "iulie",
+        "August" => "august",
+        "September" => "septembrie",
+        "October" => "octombrie",
+        "November" => "noiembrie",
+        "December" => "decembrie"
+      }
+    
+      traduceri[luna_engleza] || luna_engleza
+    end
+    
     def track_ahoy_visit
       ahoy.track "Processed #{controller_name}##{action_name}", request.filtered_parameters
     end   

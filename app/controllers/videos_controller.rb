@@ -3,6 +3,7 @@ class VideosController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy]
   before_action :set_user1, only: %i[tayv2 myvideo1] #este pt tayv2
   before_action :set_user2, only: %i[myvideo2] #este pt nutritie3
+  before_action :set_user3, only: %i[myvideo3] #este pt an1
   before_action :require_admin, only: %i[index new edit update create]
   # GET /videos or /videos.json
   def index
@@ -26,6 +27,11 @@ class VideosController < ApplicationController
   #si fac metoda et_user3 de exemplu iar in view unde apas 'Vezi video' pun:
   #<%= link_to "Vezi video", myvideo2_path(id: video.id, link: video.link), class: "btn btn-primary" %> 
   def myvideo2 #pt nutritie3
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo3 #pt an1
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
@@ -92,7 +98,7 @@ class VideosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def video_params
-      params.require(:video).permit(:nume, :descriere, :sursa, :link, :tip, :ordine, :luna)
+      params.require(:video).permit(:nume, :descriere, :sursa, :link, :tip, :ordine, :luna, :cod)
     end
 
     def set_user
@@ -190,6 +196,33 @@ class VideosController < ApplicationController
       end
     end
     
+    def set_user3
+      # Verifică dacă userul este logat
+      unless user_signed_in?
+        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest videoclip."
+        redirect_to new_user_session_path # Presupunând că aceasta este calea către login
+        return
+      end
+    
+      # Dacă userul are rolul 1, îi dăm acces direct
+      return true if current_user.role == 1
+      
+      # Află video-ul pe care user-ul dorește să-l acceseze
+      video_dorit = Video.find(params[:id])
+      
+      # Verificăm dacă user-ul curent a plătit pentru video-ul dorit
+      if ComenziProd.joins(:prod)
+        .where(user_id: current_user.id, prods: { cod: video_dorit.cod })
+        .where("datasfarsit IS NULL OR datasfarsit >= ?", Date.current)
+        .exists?
+return true
+end
+
+      
+      # Dacă nu se potrivește niciuna dintre condițiile de mai sus
+      flash[:alert] = "Nu aveți acces la acest videoclip."
+      redirect_to servicii_path
+    end
     
 
     def require_admin

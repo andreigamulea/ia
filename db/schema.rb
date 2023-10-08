@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_06_202715) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_08_165544) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -541,6 +541,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_06_202715) do
     t.string "tip"
     t.integer "ordine"
     t.string "luna"
+    t.string "cod"
     t.index ["luna"], name: "index_videos_on_luna"
   end
 
