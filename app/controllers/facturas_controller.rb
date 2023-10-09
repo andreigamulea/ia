@@ -1,6 +1,8 @@
 class FacturasController < ApplicationController
+  require 'zip'
   before_action :set_factura, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[index show edit update destroy]
+  before_action :set_factura, except: [:index, :new, :create, :download_all]
 
   # GET /facturas or /facturas.json
   def index
@@ -81,6 +83,53 @@ class FacturasController < ApplicationController
       end
     end
   end
+  def download_all
+    if current_user.role == 1
+      # Creează un fișier temporar pentru arhiva ZIP
+      tempfile = Tempfile.new(["facturi", ".zip"])
+      i=0
+      # Creează arhiva ZIP
+      Zip::OutputStream.open(tempfile.path) do |zos|
+        
+        puts("sunt aici1")
+        Factura.all.each do |factura|
+          i=i+1
+          puts("sunt aici2")
+          html = render_to_string(
+            template: 'facturas/pdf',
+            locals: { factura: factura },
+            encoding: 'UTF8'
+            
+            
+          )
+          puts("sunt aici5")
+          pdf = WickedPdf.new.pdf_from_string(
+            render_to_string(
+              template: 'facturas/pdf',
+              locals: { factura: factura },
+              encoding: 'UTF8'
+            )
+          )
+
+          puts("sunt aici6")
+          puts("i este egal cu: #{i}")
+          # Adaugă PDF-ul în arhiva ZIP
+          zos.put_next_entry("Factura_#{factura.id}.pdf")
+          zos.print(pdf)
+          if i==10
+            break
+          end
+        end
+       
+        puts("sunt aici3")
+      end
+  
+      # Trimite fișierul ZIP către client
+      send_file tempfile.path, filename: "Toate_Facturile.zip", type: "application/zip", disposition: 'attachment'
+      return
+
+    end
+  end
   
 
   # GET /facturas/new
@@ -138,7 +187,7 @@ class FacturasController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def factura_params
-      params.require(:factura).permit(:comanda_id, :user_id, :numar, :numar_comanda, :data_emiterii, :prenume, :nume, :nume_companie, :cui, :tara, :localitate, :judet, :cod_postal, :strada, :numar_adresa, :produs, :cantitate, :pret_unitar, :valoare_tva, :valoare_totala)
+      params.require(:factura).permit(:comanda_id, :user_id, :numar, :numar_comanda, :data_emiterii, :prenume, :nume, :nume_companie, :cui, :tara, :localitate, :judet, :cod_postal, :strada, :numar_adresa, :produs, :cantitate, :pret_unitar, :valoare_tva, :valoare_totala, :status)
     end
     def set_user
       @user = current_user # presupunând că current_user este disponibil

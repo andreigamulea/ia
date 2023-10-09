@@ -387,6 +387,7 @@ DEPENDENCIES
   ransack (~> 2.4)
   roo (~> 2.10)
   rubyXL (~> 3.4, >= 3.4.25)
+  rubyzip (~> 2.3, >= 2.3.2)
   selenium-webdriver
   sprockets-rails
   stimulus-rails

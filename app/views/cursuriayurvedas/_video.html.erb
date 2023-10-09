@@ -1,0 +1,20 @@
+<tr>
+  <td><%= video.nume %></td>
+  <td><%= video.descriere %></td>
+  <td><%= video.sursa %></td>
+  <td><%= video.link %></td>
+  <td><%= video.tip %></td>
+  <td><%= video.ordine %></td>
+  <td><%= video.luna %></td>
+  <td><%= video.cod %></td>
+  <td>
+   
+    <%= link_to "Edit", edit_video_path(video), class: "btn btn-warning" %>
+    <%= link_to "Delete", video, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+    <%= link_to "Vezi video", myvideo1_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+
+
+
+  </td>
+  
+</tr>
