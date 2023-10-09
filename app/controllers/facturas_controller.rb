@@ -84,12 +84,13 @@ class FacturasController < ApplicationController
     end
   end
   def download_all
+    require 'tmpdir'
     # Selecționează primele 10 facturi în funcție de data creării (cele mai recente)
     facturas = Factura.order(created_at: :desc).limit(10)
   
     # Cream un fișier zip temporar în directorul temp1
-    zipfile_name = Tempfile.new(["facturas", ".zip"], "C:/Temp1")
-  
+    #zipfile_name = Tempfile.new(["facturas", ".zip"], "C:/Temp1")
+    zipfile_name = Tempfile.new(["facturas", ".zip"], Dir.tmpdir)
     # Populăm fișierul ZIP cu PDF-uri generate
     Zip::File.open(zipfile_name.path, Zip::File::CREATE) do |zipfile|
       facturas.each do |factura|
