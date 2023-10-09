@@ -177,7 +177,8 @@ end
     end
     def generate_pdf_for_factura(factura)
       html = render_to_string(
-        template: 'facturas/show1.pdf',
+        template: 'facturas/show1.pdf.erb',
+
         locals: { factura: factura },
         layout: false, # Important as we only want the file content, not the app layout
         encoding: 'UTF8'
