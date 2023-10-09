@@ -87,12 +87,11 @@ class FacturasController < ApplicationController
   def download_all
     @user = User.find_by(id: 222)
     require 'tmpdir'
-    # Selecționează primele 10 facturi în funcție de data creării (cele mai recente)
-    facturas = Factura.order(created_at: :desc).limit(10)
   
-    # Cream un fișier zip temporar în directorul temp1
+    # Selecționează facturile cu numere de la 1001 la 1010
+    facturas = Factura.where(numar: 1001..1010)
+  
     zipfile_name = Tempfile.new(["facturas", ".zip"], Dir.tmpdir)
-    # Populăm fișierul ZIP cu PDF-uri generate
     Zip::File.open(zipfile_name.path, Zip::File::CREATE) do |zipfile|
       facturas.each do |factura|
         Rails.logger.info "Processing factura: #{factura.inspect}"
@@ -103,16 +102,14 @@ class FacturasController < ApplicationController
       end
     end
   
-    # Trimitem fișierul ZIP spre descărcare
     send_file zipfile_name.path, type: 'application/zip', disposition: 'attachment', filename: "facturas.zip"
   ensure
-    # Asigurați-vă că fișierul temporar este șters după ce a fost trimis
     if zipfile_name
       zipfile_name.close
       zipfile_name.unlink
     end
-    
-end
+  end
+  
 
   
   
@@ -182,13 +179,14 @@ end
       @user = current_user # presupunând că current_user este disponibil
     end
     def generate_pdf_for_factura(factura)
-      render_to_string(
+      ActionController::Base.new.render_to_string(
         pdf: "Factura_#{factura.id}",
         template: "facturas/show1.pdf.erb",
         formats: [:pdf],
         locals: { factura: factura }
       )
     end
+    
     
     
     
