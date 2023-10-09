@@ -90,7 +90,7 @@ class FacturasController < ApplicationController
     FileUtils.mkdir_p(temp_folder)
     
     # Extrageți facturile pe care doriți să le includeți
-    facturas = Factura.where(numar: 1011..1015)
+    facturas = Factura.where(numar: 1011..1012)
     
     # Generați PDF-uri pentru fiecare factură
     pdf_files = facturas.map do |factura|
@@ -125,8 +125,8 @@ class FacturasController < ApplicationController
     send_file zip_filename, type: 'application/zip', disposition: 'attachment', filename: 'facturas.zip'
     
     # Curățarea fișierelor temporare (păstrați această parte dacă doriți să ștergeți fișierele după descărcare)
-    FileUtils.rm_rf(temp_folder)
-    FileUtils.rm(zip_filename)
+    #FileUtils.rm_rf(temp_folder)
+    #FileUtils.rm(zip_filename)
 end
 
 
