@@ -94,7 +94,8 @@ class FacturasController < ApplicationController
     # Populăm fișierul ZIP cu PDF-uri generate
     Zip::File.open(zipfile_name.path, Zip::File::CREATE) do |zipfile|
       facturas.each do |factura|
-        next unless factura.user_id == @user.id || @user.role == 1
+        
+        next unless factura && (factura.user_id == @user.id || @user.role == 1)
         html = render_to_string(
           template: 'facturas/show.pdf.erb',
           locals: { factura: factura },
