@@ -1,7 +1,10 @@
 class FacturasController < ApplicationController
+ 
+  
   require 'zip'
-  before_action :set_factura, except: [:download_all]
+  before_action :set_factura, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[index show edit update destroy]
+  before_action :set_factura1, only: [:download_all]
 
   # GET /facturas or /facturas.json
   def index
@@ -168,7 +171,10 @@ end
     def set_factura
       @factura = Factura.find(params[:id])
     end
-
+    def set_factura1
+      @factura = Factura.find(params[:id])
+    end
+    
     # Only allow a list of trusted parameters through.
     def factura_params
       params.require(:factura).permit(:comanda_id, :user_id, :numar, :numar_comanda, :data_emiterii, :prenume, :nume, :nume_companie, :cui, :tara, :localitate, :judet, :cod_postal, :strada, :numar_adresa, :produs, :cantitate, :pret_unitar, :valoare_tva, :valoare_totala, :status)
