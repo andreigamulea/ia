@@ -1,10 +1,8 @@
-class FacturasController < ApplicationController
- 
-  
+class FacturasController < ApplicationController 
   require 'zip'
   before_action :set_factura, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[index show edit update destroy]
-  before_action :set_factura1, only: [:download_all]
+  #before_action :set_factura1, only: [:download_all]
 
   # GET /facturas or /facturas.json
   def index
