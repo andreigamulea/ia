@@ -89,20 +89,14 @@ class FacturasController < ApplicationController
     facturas = Factura.order(created_at: :desc).limit(10)
   
     # Cream un fișier zip temporar în directorul temp1
-    #zipfile_name = Tempfile.new(["facturas", ".zip"], "C:/Temp1")
     zipfile_name = Tempfile.new(["facturas", ".zip"], Dir.tmpdir)
     # Populăm fișierul ZIP cu PDF-uri generate
     Zip::File.open(zipfile_name.path, Zip::File::CREATE) do |zipfile|
       facturas.each do |factura|
         Rails.logger.info "Processing factura: #{factura.inspect}"
         next unless factura && (factura.user_id == @user.id || @user.role == 1)
-        html = render_to_string(
-          template: 'facturas/show.pdf.erb',
-          locals: { factura: factura },
-          layout: false, # Importanta aceasta linie, deoarece dorim doar conținutul fișierului, fără layout-ul aplicației
-          encoding: 'UTF8'
-        )
-        pdf = PDFKit.new(html).to_pdf
+        
+        pdf = generate_pdf_for_factura(factura)
         zipfile.get_output_stream("Factura_#{factura.id}.pdf") { |f| f.write(pdf) }
       end
     end
@@ -115,7 +109,6 @@ class FacturasController < ApplicationController
       zipfile_name.close
       zipfile_name.unlink
     end
-  
 end
 
   
@@ -181,5 +174,14 @@ end
     end
     def set_user
       @user = current_user # presupunând că current_user este disponibil
+    end
+    def generate_pdf_for_factura(factura)
+      html = render_to_string(
+        template: 'facturas/show.pdf.erb',
+        locals: { factura: factura },
+        layout: false, # Important as we only want the file content, not the app layout
+        encoding: 'UTF8'
+      )
+      PDFKit.new(html).to_pdf
     end
 end
