@@ -261,9 +261,14 @@ class PaginisitesController < ApplicationController
     search_term = params[:search]
   
     # Interogarea pentru a obține înregistrările necesare
+    # Păstrează id-urile produselor cu curslegatura 'Nutritie3' într-o variabilă
+    prod_ids = Prod.where(curslegatura: "Nutritie3").pluck(:id)
+
+    # Folosește aceste id-uri pentru a interoga comenzi_prod
     @comenzi_prod = ComenziProd.includes(:user, :prod)
-                               .where(prod_id: [11, 12,13,38,39], validat: "Finalizata")
-                               .order(:comanda_id)
+                              .where(prod_id: prod_ids, validat: "Finalizata")
+                              .order(:comanda_id)
+
     
     # Crearea unui nou document XLSX
     workbook = RubyXL::Workbook.new
