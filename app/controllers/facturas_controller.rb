@@ -86,31 +86,33 @@ class FacturasController < ApplicationController
   end
   def download_all
     @user = User.find_by(id: 222)
-    require 'tmpdir'
   
-    # Selecționează facturile cu numere de la 1001 la 1010
+    # Selecționează facturile cu numărul de la 1001 la 1010
     facturas = Factura.where(numar: 1001..1010)
   
+    # Cream un fișier zip temporar
     zipfile_name = Tempfile.new(["facturas", ".zip"], Dir.tmpdir)
+  
+    # Populăm fișierul ZIP cu PDF-uri generate
     Zip::File.open(zipfile_name.path, Zip::File::CREATE) do |zipfile|
       facturas.each do |factura|
         Rails.logger.info "Processing factura: #{factura.inspect}"
         next unless factura && (factura.user_id == @user.id || @user.role == 1)
-        
+  
         pdf = generate_pdf_for_factura(factura)
         zipfile.get_output_stream("Factura_#{factura.id}.pdf") { |f| f.write(pdf) }
       end
     end
   
+    # Trimitem fișierul ZIP spre descărcare
     send_file zipfile_name.path, type: 'application/zip', disposition: 'attachment', filename: "facturas.zip"
   ensure
+    # Asigurați-vă că fișierul temporar este șters după ce a fost trimis
     if zipfile_name
       zipfile_name.close
       zipfile_name.unlink
     end
   end
-  
-
   
   
   
@@ -179,12 +181,12 @@ class FacturasController < ApplicationController
       @user = current_user # presupunând că current_user este disponibil
     end
     def generate_pdf_for_factura(factura)
-      ActionController::Base.new.render_to_string(
-        pdf: "Factura_#{factura.id}",
-        template: "facturas/show1.pdf.erb",
-        formats: [:pdf],
-        locals: { factura: factura }
+      html = render_to_string(
+        template: 'facturas/download1',   # Aici folosim același template ca în download1
+        locals: { factura: factura },
+        encoding: 'UTF8'
       )
+      PDFKit.new(html).to_pdf
     end
     
     
