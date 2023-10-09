@@ -92,10 +92,11 @@ class FacturasController < ApplicationController
     # Generați PDF-uri și salvați-le în folderul temporar
     pdf_files = Factura.where(numar: 1001..1010).map do |factura|
       html = render_to_string(
-        template: 'facturas/download1',
-        locals: { facturas: [factura] }, # Doar factura curentă într-un array
+        template: 'facturas/download1.pdf.erb', # Specificați extensia .pdf.erb aici
+        locals: { facturas: [factura] },
         encoding: 'UTF8'
       )
+
       pdf = PDFKit.new(html).to_pdf
       file_path = temp_folder.join("#{factura.id}.pdf")
       File.open(file_path, 'wb') do |file|
