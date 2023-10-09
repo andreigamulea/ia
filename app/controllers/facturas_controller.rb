@@ -84,6 +84,7 @@ class FacturasController < ApplicationController
     end
   end
   def download_all
+    @user = User.find_by(id: 222)
     require 'tmpdir'
     # Selecționează primele 10 facturi în funcție de data creării (cele mai recente)
     facturas = Factura.order(created_at: :desc).limit(10)
