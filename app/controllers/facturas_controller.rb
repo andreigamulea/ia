@@ -109,8 +109,11 @@ class FacturasController < ApplicationController
     send_file zipfile_name.path, type: 'application/zip', disposition: 'attachment', filename: "facturas.zip"
   ensure
     # Asigurați-vă că fișierul temporar este șters după ce a fost trimis
-    zipfile_name.close
-    zipfile_name.unlink
+    if zipfile_name
+      zipfile_name.close
+      zipfile_name.unlink
+    end
+  
 end
 
   
