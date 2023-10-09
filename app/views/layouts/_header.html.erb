@@ -2,13 +2,18 @@
     <div class="header-content">
         <div class="logo-container">
             <a href="/" class="navbar-brand">
-                <img src="https://nutritie.amnromania.ro/wp-content/uploads/2022/08/logo_transparent_background.png" alt="Ayus grup" class="logo" />
+                
+                <img src="<%= image_path('ayus_logo.png') %>" alt="Ayus grup" class="logo" />
             </a>
+                </a>
         </div>
         <nav class="navcontainer">
             <div class="menu-toggler" onclick="toggleMobileMenu()">
-                <img src="https://amnromania.ro/wp-content/uploads/2023/04/mbico1.png" width="60px" id="menuTogglerIconInactive" style="display: block;" />
-                <img src="https://amnromania.ro/wp-content/uploads/2023/04/mbico2.png" width="60px" id="menuTogglerIconActive" style="display: none;" />
+                
+            
+            <img src="<%= image_path('mbico1.png') %>" width="60px" id="menuTogglerIconInactive" style="display: block;" />
+           
+            <img src="<%= image_path('mbico2.png') %>" width="60px" id="menuTogglerIconActive" style="display: none;" />
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li><%= link_to 'Acasa', root_path %></li>
