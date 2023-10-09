@@ -60,6 +60,7 @@ class FacturasController < ApplicationController
   
   
   
+  
   # GET /facturas/1 or /facturas/1.json
   def show
     @factura = Factura.find(params[:id])
