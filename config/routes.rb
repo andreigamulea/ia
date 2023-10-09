@@ -14,12 +14,17 @@ Rails.application.routes.draw do
 
   
   resources :videos
-  get 'facturas/download_all', to: 'facturas#download_all', as: 'download_all_facturas'
+  get 'facturas/generate_pdf', to: 'facturas#generate_pdf', as: 'generate_pdf_facturas'
+  #get 'facturas/download_all', to: 'facturas#download_all', defaults: { format: 'pdf' } 
+  #get 'facturas/download_all', to: 'facturas#download_all', as: 'download_all_facturas'
+  get 'facturas/download_all', to: 'facturas#download_all', as: 'download_all_facturas', defaults: { format: 'pdf' }  
   get 'facturas/download1', to: 'facturas#download1', as: 'download1_factura'
   get 'facturas/:id/download', to: 'facturas#download', as: 'download_factura'
   get 'facturicomenzi', to: 'facturas#facturicomenzi'
   get 'facturas/:id', to: 'facturas#show', format: 'pdf'
   
+
+
   resources :facturas, path: 'factura', except: :index
   get 'factura', to: 'facturas#index'
   

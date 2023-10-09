@@ -78,7 +78,7 @@ class FacturasController < ApplicationController
           encoding: 'UTF8'
         )
         pdf = PDFKit.new(html).to_pdf
-        send_data pdf, filename: "Factura_#{@factura.id}.pdf",
+        send_data pdf, filename: "Factura_#{@factura.id + 1000}_din_#{@factura.data_emiterii.strftime('%d.%m.%Y')}.pdf",
           type: 'application/pdf',
           disposition: 'attachment'
       end
@@ -88,39 +88,55 @@ class FacturasController < ApplicationController
     # Crearea unui folder temporar pentru stocarea PDF-urilor
     temp_folder = Rails.root.join('tmp', 'pdfs')
     FileUtils.mkdir_p(temp_folder)
-  
-    # Generați PDF-uri și salvați-le în folderul temporar
-    pdf_files = Factura.where(numar: 1001..1010).map do |factura|
+    
+    # Extrageți facturile pe care doriți să le includeți
+    facturas = Factura.where(numar: 1011..1015)
+    
+    # Generați PDF-uri pentru fiecare factură
+    pdf_files = facturas.map do |factura|
+      @factura = factura
       html = render_to_string(
-        template: 'facturas/download1.pdf.erb', # Specificați extensia .pdf.erb aici
-        locals: { facturas: [factura] },
+        template: 'facturas/show',
+        locals: { factura: factura },
         encoding: 'UTF8'
       )
-
       pdf = PDFKit.new(html).to_pdf
-      file_path = temp_folder.join("#{factura.id}.pdf")
+      file_path = temp_folder.join("Factura_#{factura.id + 1000}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.pdf")
       File.open(file_path, 'wb') do |file|
         file << pdf
       end
       file_path
     end
-  
+    
     # Crearea fișierului ZIP
     zip_filename = Rails.root.join('tmp', 'facturas.zip')
+    
+    # Ștergeți fișierul ZIP preexistent dacă există
+    File.delete(zip_filename) if File.exist?(zip_filename)
+
     Zip::File.open(zip_filename, Zip::File::CREATE) do |zipfile|
       pdf_files.each do |file|
-        zipfile.add(File.basename(file), file)
+        # Verificați dacă intrarea există înainte de a adăuga
+        zipfile.add(File.basename(file), file) unless zipfile.find_entry(File.basename(file))
       end
     end
-  
-    # Trimiterea fișierului ZIP ca răspuns
+    
+    # Trimiteți fișierul ZIP ca răspuns
     send_file zip_filename, type: 'application/zip', disposition: 'attachment', filename: 'facturas.zip'
-  
-    # Curățarea fișierelor temporare
+    
+    # Curățarea fișierelor temporare (păstrați această parte dacă doriți să ștergeți fișierele după descărcare)
     FileUtils.rm_rf(temp_folder)
     FileUtils.rm(zip_filename)
-  end
+end
+
+
   
+  
+  def generate_pdf
+    html = '<h1>Salutare!</h1><p>Acesta este un PDF simplu.</p>'
+    pdf = PDFKit.new(html).to_pdf
+    send_data pdf, filename: "simple.pdf", type: "application/pdf", disposition: "inline"
+  end
   
   
   
