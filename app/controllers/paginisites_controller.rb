@@ -412,9 +412,12 @@ class PaginisitesController < ApplicationController
     search_term = params[:search]
   
     # Interogarea pentru a obține înregistrările necesare
+    prod_ids = Prod.where(curslegatura: "tayv2").pluck(:id)
+
+    # Folosește aceste id-uri pentru a interoga comenzi_prod
     @comenzi_prod = ComenziProd.includes(:user, :prod)
-                               .where(prod_id: [9,10], validat: "Finalizata")
-                               .order(:comanda_id)
+                              .where(prod_id: prod_ids, validat: "Finalizata")
+                              .order(:comanda_id)
     
     # Crearea unui nou document XLSX
     workbook = RubyXL::Workbook.new
@@ -442,12 +445,19 @@ class PaginisitesController < ApplicationController
       worksheet.add_cell(index + 1, 6, comanda.datainceput.strftime('%d-%m-%Y')) if comanda.datainceput
      
   
-      # Adăugarea valorii în funcție de prod_id
-      valoare = comanda.prod_id == 9 ? 80 : 215
+      produse = Prod.where(curslegatura: "tayv2").pluck(:id, :pret)
+
+      # Convertim array-ul într-un hash
+      mapare_valori = Hash[produse]
+
+
+      valoare = mapare_valori[comanda.prod_id] || 0 # 0 este o valoare default, în cazul în care prod_id nu există în hash
+
       worksheet.add_cell(index + 1, 7, valoare)
       if comanda.comanda
         worksheet.add_cell(index + 1, 8, comanda.comanda.plataprin)
       end
+      
     end
   
     # Stabilirea căii pentru fișierul XLSX și scrierea acestuia pe disc
