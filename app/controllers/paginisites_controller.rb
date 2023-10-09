@@ -325,7 +325,8 @@ class PaginisitesController < ApplicationController
 
   def export_to_xlsx_plata_an1
    # 1. Extrage produsele cu coduri de la cod14 la cod25
-   produse = Prod.where(cod: (14..25).map { |i| "cod#{i}" })
+   produse = Prod.where(cod: (14..25).map { |i| "cod#{i}" } + ["cod46"])
+
 
    # Construiește hash-ul de mapare id => pret
    mapare_valori = produse.each_with_object({}) do |prod, hash|
