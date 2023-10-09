@@ -296,13 +296,12 @@ class PaginisitesController < ApplicationController
      
   
       # Adăugarea valorii în funcție de prod_id
-      mapare_valori = {
-        11 => 580,
-        12 => 780,
-        13 => 690,
-        38 => 200,
-        39 => 90
-      }
+     # Păstrează id-urile și prețurile produselor cu curslegatura 'Nutritie3' într-o variabilă
+      produse = Prod.where(curslegatura: "Nutritie3").pluck(:id, :pret)
+
+      # Convertim array-ul într-un hash
+      mapare_valori = Hash[produse]
+
 
       valoare = mapare_valori[comanda.prod_id] || 0 # 0 este o valoare default, în cazul în care prod_id nu există în hash
 
