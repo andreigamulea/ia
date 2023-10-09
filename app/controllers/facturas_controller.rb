@@ -109,6 +109,7 @@ class FacturasController < ApplicationController
       zipfile_name.close
       zipfile_name.unlink
     end
+    
 end
 
   
@@ -176,14 +177,12 @@ end
       @user = current_user # presupunând că current_user este disponibil
     end
     def generate_pdf_for_factura(factura)
-      html = render_to_string(
-        template: 'facturas/show1.pdf.erb',
-
-        locals: { factura: factura },
-        layout: false, # Important as we only want the file content, not the app layout
-        encoding: 'UTF8'
+      render_to_string(
+        pdf: "Factura_#{factura.id}",
+        template: "facturas/show1.pdf.erb",
+        locals: { factura: factura }
       )
-      PDFKit.new(html).to_pdf
     end
+    
     
 end
