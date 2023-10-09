@@ -180,9 +180,11 @@ end
       render_to_string(
         pdf: "Factura_#{factura.id}",
         template: "facturas/show1.pdf.erb",
+        formats: [:pdf],
         locals: { factura: factura }
       )
     end
+    
     
     
 end
