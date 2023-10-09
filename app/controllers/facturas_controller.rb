@@ -85,34 +85,36 @@ class FacturasController < ApplicationController
     end
   end
   def download_all
-    @user = User.find_by(id: 222)
+    # Crearea unui folder temporar pentru stocarea PDF-urilor
+    temp_folder = Rails.root.join('tmp', 'pdfs')
+    FileUtils.mkdir_p(temp_folder)
   
-    # Selecționează facturile cu numărul de la 1001 la 1010
-    facturas = Factura.where(numar: 1001..1010)
+    # Generați PDF-uri și salvați-le în folderul temporar
+    pdf_files = Factura.where(numar: 1001..1010).map do |factura|
+      pdf = render_to_string pdf: "#{factura.id}.pdf", template: "facturas/download1.pdf.erb", layout: 'pdf.html'
+      file_path = temp_folder.join("#{factura.id}.pdf")
+      File.open(file_path, 'wb') do |file|
+        file << pdf
+      end
+      file_path
+    end
   
-    # Cream un fișier zip temporar
-    zipfile_name = Tempfile.new(["facturas", ".zip"], Dir.tmpdir)
-  
-    # Populăm fișierul ZIP cu PDF-uri generate
-    Zip::File.open(zipfile_name.path, Zip::File::CREATE) do |zipfile|
-      facturas.each do |factura|
-        Rails.logger.info "Processing factura: #{factura.inspect}"
-        next unless factura && (factura.user_id == @user.id || @user.role == 1)
-  
-        pdf = generate_pdf_for_factura(factura)
-        zipfile.get_output_stream("Factura_#{factura.id}.pdf") { |f| f.write(pdf) }
+    # Crearea fișierului ZIP
+    zip_filename = Rails.root.join('tmp', 'facturas.zip')
+    Zip::File.open(zip_filename, Zip::File::CREATE) do |zipfile|
+      pdf_files.each do |file|
+        zipfile.add(File.basename(file), file)
       end
     end
   
-    # Trimitem fișierul ZIP spre descărcare
-    send_file zipfile_name.path, type: 'application/zip', disposition: 'attachment', filename: "facturas.zip"
-  ensure
-    # Asigurați-vă că fișierul temporar este șters după ce a fost trimis
-    if zipfile_name
-      zipfile_name.close
-      zipfile_name.unlink
-    end
+    # Trimiterea fișierului ZIP ca răspuns
+    send_file zip_filename, type: 'application/zip', disposition: 'attachment', filename: 'facturas.zip'
+  
+    # Curățarea fișierelor temporare
+    FileUtils.rm_rf(temp_folder)
+    FileUtils.rm(zip_filename)
   end
+  
   
   
   
