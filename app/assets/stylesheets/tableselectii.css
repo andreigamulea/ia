@@ -2,6 +2,9 @@
 .containerglob {
   padding: 0 10px;
 }
+.table-responsive {
+  overflow: visible;
+}
 .tabel-container {
   margin: 0 auto;
   max-width: 1250px;
