@@ -84,52 +84,37 @@ class FacturasController < ApplicationController
     end
   end
   def download_all
-    if current_user.role == 1
-      # Creează un fișier temporar pentru arhiva ZIP
-      tempfile = Tempfile.new(["facturi", ".zip"])
-      i=0
-      # Creează arhiva ZIP
-      Zip::OutputStream.open(tempfile.path) do |zos|
-        
-        puts("sunt aici1")
-        Factura.all.each do |factura|
-          i=i+1
-          puts("sunt aici2")
-          html = render_to_string(
-            template: 'facturas/pdf',
-            locals: { factura: factura },
-            encoding: 'UTF8'
-            
-            
-          )
-          puts("sunt aici5")
-          pdf = WickedPdf.new.pdf_from_string(
-            render_to_string(
-              template: 'facturas/pdf',
-              locals: { factura: factura },
-              encoding: 'UTF8'
-            )
-          )
-
-          puts("sunt aici6")
-          puts("i este egal cu: #{i}")
-          # Adaugă PDF-ul în arhiva ZIP
-          zos.put_next_entry("Factura_#{factura.id}.pdf")
-          zos.print(pdf)
-          if i==10
-            break
-          end
-        end
-       
-        puts("sunt aici3")
-      end
+    # Selecționează primele 10 facturi în funcție de data creării (cele mai recente)
+    facturas = Factura.order(created_at: :desc).limit(10)
   
-      # Trimite fișierul ZIP către client
-      send_file tempfile.path, filename: "Toate_Facturile.zip", type: "application/zip", disposition: 'attachment'
-      return
-
+    # Cream un fișier zip temporar în directorul temp1
+    zipfile_name = Tempfile.new(["facturas", ".zip"], "C:/Temp1")
+  
+    # Populăm fișierul ZIP cu PDF-uri generate
+    Zip::File.open(zipfile_name.path, Zip::File::CREATE) do |zipfile|
+      facturas.each do |factura|
+        next unless factura.user_id == @user.id || @user.role == 1
+        html = render_to_string(
+          template: 'facturas/show.pdf.erb',
+          locals: { factura: factura },
+          layout: false, # Importanta aceasta linie, deoarece dorim doar conținutul fișierului, fără layout-ul aplicației
+          encoding: 'UTF8'
+        )
+        pdf = PDFKit.new(html).to_pdf
+        zipfile.get_output_stream("Factura_#{factura.id}.pdf") { |f| f.write(pdf) }
+      end
     end
-  end
+  
+    # Trimitem fișierul ZIP spre descărcare
+    send_file zipfile_name.path, type: 'application/zip', disposition: 'attachment', filename: "facturas.zip"
+  ensure
+    # Asigurați-vă că fișierul temporar este șters după ce a fost trimis
+    zipfile_name.close
+    zipfile_name.unlink
+end
+
+  
+  
   
 
   # GET /facturas/new
