@@ -179,11 +179,6 @@ body {
 }
 @media screen and (max-width: 580px) {
     .tbland {
-        transform: rotate(-90deg) translate(-100%);
-        transform-origin: top left;
-        width: 100%;
-        min-width: 100vh;
-        height: 100vw;
         position:relative;
         overflow: auto;
         background: white;
