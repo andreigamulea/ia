@@ -506,7 +506,7 @@ class PaginisitesController < ApplicationController
       worksheet.add_cell(index + 1, 6, comanda.datainceput.strftime('%d-%m-%Y')) if comanda.datainceput
      
   
-      produse = Prod.where(curslegatura: "tayv2").pluck(:id, :pret)
+      produse = Prod.where(curslegatura: "tayt12").pluck(:id, :pret)
 
       # Convertim array-ul într-un hash
       mapare_valori = Hash[produse]
