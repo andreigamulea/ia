@@ -181,7 +181,7 @@ achitarea participarii pentru luna Octombrie 2023</p>
 <% if current_user && (current_user.role == 1 || (current_user.grupa == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i >= 2)) %>
 <%if @are_prioritate || current_user.role == 1%>
 <h2 style="padding: 0; text-align: center;">Datele de logare pe platforma ZOOM:</h2>
-<p style="text-align: left;margin-top: 10px;">Link acces ZOOM: <a href="https://us02web.zoom.us/j/85022539934?pwd=QURRRFZMZXppVHJJZzJRZFU0OGxJZz09" target="_blank">https://us02web.zoom.us/j/83284010524?pwd=QURRRFZMZXppVHJJZzJRZFU0OGxJZz09</a></p>
+<p style="text-align: left;margin-top: 10px;">Link acces ZOOM: <a style="word-wrap: break-word; overflow-wrap: break-word;" href="https://us02web.zoom.us/j/85022539934?pwd=QURRRFZMZXppVHJJZzJRZFU0OGxJZz09" target="_blank">https://us02web.zoom.us/j/83284010524?pwd=QURRRFZMZXppVHJJZzJRZFU0OGxJZz09</a></p>
 <p style="text-align: left;">Meeting ID: 850 2253 9934</p>
 <p style= "text-align: left;margin-top: -20px;">Passcode: 167175</p>
 <%end%>
