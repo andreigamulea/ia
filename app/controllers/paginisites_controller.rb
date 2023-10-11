@@ -468,7 +468,66 @@ class PaginisitesController < ApplicationController
     send_file(file_path)
   end
 
+  def export_to_xlsx_plata_tayt12
+    # Preia termenul de căutare din parametrii cererii
+    search_term = params[:search]
   
+    # Interogarea pentru a obține înregistrările necesare
+    prod_ids = Prod.where(curslegatura: "tayt12").pluck(:id)
+
+    # Folosește aceste id-uri pentru a interoga comenzi_prod
+    @comenzi_prod = ComenziProd.includes(:user, :prod)
+                              .where(prod_id: prod_ids, validat: "Finalizata")
+                              .order(:comanda_id)
+    
+    # Crearea unui nou document XLSX
+    workbook = RubyXL::Workbook.new
+    worksheet = workbook[0]
+  
+    # Adăugarea headerelor
+    worksheet.add_cell(0, 0, 'Comanda ID')
+    worksheet.add_cell(0, 1, 'Nume User')
+    worksheet.add_cell(0, 2, 'Email')
+    worksheet.add_cell(0, 3, 'Telefon')
+    worksheet.add_cell(0, 4, 'Nume Produs')
+    worksheet.add_cell(0, 5, 'Validat')
+    worksheet.add_cell(0, 6, 'Data Platii')
+   
+    worksheet.add_cell(0, 7, 'Valoare')
+    worksheet.add_cell(0, 8, 'Plata prin')
+    # Adăugarea datelor în fiecare rând
+    @comenzi_prod.each_with_index do |comanda, index|
+      worksheet.add_cell(index + 1, 0, comanda.comanda_id)
+      worksheet.add_cell(index + 1, 1, comanda.user.name) # Presupunând că relația este setată corect
+      worksheet.add_cell(index + 1, 2, comanda.user.email) # Presupunând că există un câmp de email
+      worksheet.add_cell(index + 1, 3, comanda.user.telefon) # Presupunând că există un câmp de telefon
+      worksheet.add_cell(index + 1, 4, comanda.prod.nume) # Afișează numele produsului
+      worksheet.add_cell(index + 1, 5, comanda.validat)
+      worksheet.add_cell(index + 1, 6, comanda.datainceput.strftime('%d-%m-%Y')) if comanda.datainceput
+     
+  
+      produse = Prod.where(curslegatura: "tayv2").pluck(:id, :pret)
+
+      # Convertim array-ul într-un hash
+      mapare_valori = Hash[produse]
+
+
+      valoare = mapare_valori[comanda.prod_id] || 0 # 0 este o valoare default, în cazul în care prod_id nu există în hash
+
+      worksheet.add_cell(index + 1, 7, valoare)
+      if comanda.comanda
+        worksheet.add_cell(index + 1, 8, comanda.comanda.plataprin)
+      end
+      
+    end
+  
+    # Stabilirea căii pentru fișierul XLSX și scrierea acestuia pe disc
+    file_path = Rails.root.join('tmp', 'comenzi_prod.xlsx')
+    workbook.write(file_path)
+  
+    # Trimite fișierul clientului
+    send_file(file_path)
+  end
   
   
 

@@ -8,7 +8,7 @@ PDFKit.configure do |config|
   end
 end
 
-
+###  de verificat daca las ce e mai jos daca merg facturile
 #PDFKit.configure do |config|
   #unless Rails.env.production?
     #config.wkhtmltopdf = 'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
