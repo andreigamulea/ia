@@ -9,9 +9,10 @@ Rails.application.routes.draw do
   get 'videos/:id/myvideo1', to: 'videos#myvideo1', as: 'myvideo1'
   get 'videos/:id/myvideo2', to: 'videos#myvideo2', as: 'myvideo2'
   get 'videos/:id/myvideo3', to: 'videos#myvideo3', as: 'myvideo3' 
+  get 'videos/:id/myvideo4', to: 'videos#myvideo4', as: 'myvideo4' 
  
   get 'videos/tayv2', to: 'videos#tayv2', as: 'tayv2'
-
+  get 'videos/tayt12', to: 'videos#tayt12', as: 'tayt12'
   
   resources :videos
   get 'facturas/generate_pdf', to: 'facturas#generate_pdf', as: 'generate_pdf_facturas'
