@@ -4,6 +4,7 @@ class VideosController < ApplicationController
   before_action :set_user1, only: %i[tayv2 myvideo1] #este pt tayv2
   before_action :set_user2, only: %i[myvideo2] #este pt nutritie3
   before_action :set_user3, only: %i[myvideo3] #este pt an1
+  before_action :set_user4, only: %i[myvideo4] #este pt tayt12
   before_action :require_admin, only: %i[index new edit update create]
   # GET /videos or /videos.json
   def index
@@ -20,6 +21,16 @@ class VideosController < ApplicationController
   def tayv2
     @myvideo = Video.where(tip: 'tayv2').order(ordine: :asc)
   end
+  def tayt12
+    @prod_tayt12 = Prod.where(curslegatura: 'tayt12').order(:cod)
+    @myvideo = Video.where(tip: 'tayt12').order(ordine: :asc)
+    if current_user
+        @has_access = current_user.role == 1 || ComenziProd.joins(:prod)
+        .where(user_id: current_user.id, prods: { cod: ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] }).exists?          
+    else
+      @has_access=false
+    end  
+  end
   ############################ in metoda de mai jos sunt pt nutritie3 
   #daca vreau pt alte cursuri duplic metoda de mai jos fara view 
   #foloseste ca view myvideo1.html.erb care e folosit si la tayv2
@@ -32,6 +43,11 @@ class VideosController < ApplicationController
     render 'myvideo1'
   end
   def myvideo3 #pt an1
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo4 #pt tayt12
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
@@ -215,8 +231,8 @@ class VideosController < ApplicationController
         .where(user_id: current_user.id, prods: { cod: video_dorit.cod })
         .where("datasfarsit IS NULL OR datasfarsit >= ?", Date.current)
         .exists?
-return true
-end
+      return true
+      end
 
       
       # Dacă nu se potrivește niciuna dintre condițiile de mai sus
@@ -224,6 +240,52 @@ end
       redirect_to servicii_path
     end
     
+
+    def set_user4
+      # Verifică dacă userul este logat
+      unless user_signed_in?
+        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+        redirect_to new_user_session_path # Presupunând că aceasta este calea către login
+        return
+      end
+    
+      # Dacă userul are rolul 1, îi dăm acces direct
+      return true if current_user.role == 1
+    
+      # Verifică dacă userul are cod12
+      return true if ComenziProd.joins(:prod)
+                          .where(user_id: current_user.id, prods: { cod: ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] })
+                          .exists?
+
+    
+      
+    
+      tayt12_course = Listacursuri.find_by(nume: 'tayt12')
+    
+      if tayt12_course.nil?
+        flash[:alert] = "Cursul nu a fost găsit."
+        redirect_to root_path
+        return
+      end
+    
+      # Găsim înregistrarea din tabelul Cursuri pentru utilizatorul și cursul curent
+      user_course = Cursuri.find_by(user_id: current_user.id, listacursuri_id: tayt12_course.id)
+    
+      unless user_course
+        flash[:alert] = "Nu aveți acces la acest curs."
+        redirect_to servicii_path
+        return
+      end
+    
+      # Verificăm dacă datasfarsit este nil sau dacă data curentă este mai mică sau egală cu datasfarsit
+      if user_course.datasfarsit && user_course.datasfarsit > Date.parse("2024-01-31")
+        flash[:alert] = "Accesul la acest curs a expirat."
+        redirect_to root_path
+      end
+    end
+
+
+
 
     def require_admin
       unless current_user && current_user.role == 1

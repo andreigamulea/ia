@@ -53,6 +53,11 @@
                     <%= link_to 'Lista Vegetale', new_user_session_with_return_path('lg'), class: 'button-link' %>
                     </li>
                     <% end %>
+                    
+                    <li class="nav-item">
+                    <%= link_to "Tabara ayurveda 2023 etapa de toamna partile 1 si 2", tayt12_path %>
+                    </li>
+
 
                     <%if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "tayv2" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })%>
                     <li class="nav-item">
