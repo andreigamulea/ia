@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   get 'videos/:id/myvideo4', to: 'videos#myvideo4', as: 'myvideo4' 
  
   get 'videos/tayv2', to: 'videos#tayv2', as: 'tayv2'
-  get 'videos/tayt12', to: 'videos#tayt12', as: 'tayt12'
+  get 'tabara_de_ayurveda_toamna', to: 'videos#tayt12', as: 'tayt12'
+
   
   resources :videos
   get 'facturas/generate_pdf', to: 'facturas#generate_pdf', as: 'generate_pdf_facturas'
