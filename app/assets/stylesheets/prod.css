@@ -146,6 +146,19 @@ body {
   box-shadow: 0px 3px 10px 0 rgba(0, 0, 0, 0.5);
 
 }
+span.bullet {
+  position: relative;
+  padding-left: 20px; /* Acesta este spațiul pentru bullet și spațiul dintre bullet și text */
+}
+
+span.bullet::before {
+  content: "•"; /* Acesta este bullet-ul */
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%); /* Acesta este pentru a centra bullet-ul vertical în raport cu textul */
+  font-size: 1.2em; /* Poți ajusta dimensiunea bullet-ului aici */
+}
 
 @media screen and (max-width: 720px) {
 
