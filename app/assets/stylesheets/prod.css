@@ -52,7 +52,7 @@ body {
   justify-content: center;
 }
 
-.r1c2 h2 {
+.r1c2 h2, .r2 h2 {
   margin: 20px 0;
   font-size: 1.3em;
   color: #333;
@@ -75,6 +75,7 @@ body {
   color: #555;
   flex-direction: column;
 }
+
 .table th {
     background-color: #64025e;
     color: #fff;
@@ -129,7 +130,7 @@ body {
 .register{
   text-align: center;
   color: white;
-  padding: 10px 40px;
+  padding: 13px 40px;
   border: 1px solid #4498fd;
   width: fit-content;
   border-radius: 20px;
@@ -155,10 +156,11 @@ span.bullet::before {
   content: "•"; /* Acesta este bullet-ul */
   position: absolute;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%); /* Acesta este pentru a centra bullet-ul vertical în raport cu textul */
+  top: 0; /* Poziționează la începutul primului rând */
   font-size: 1.2em; /* Poți ajusta dimensiunea bullet-ului aici */
+  line-height: 1; /* Acesta asigură că bullet-ul este centrat pe mijlocul înălțimii textului */
 }
+
 
 @media screen and (max-width: 720px) {
 
