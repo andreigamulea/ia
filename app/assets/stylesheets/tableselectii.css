@@ -131,7 +131,7 @@ padding: 4px;
     .trmob{display:none;}
       }
   @media only screen and (max-width: 991px) {
-    .trdesk{ display: none;}
+   
     .trmob th{
       text-align: center;
     }
