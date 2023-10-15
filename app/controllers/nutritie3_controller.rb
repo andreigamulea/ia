@@ -1,6 +1,6 @@
 class Nutritie3Controller < ApplicationController
     def index
-        @myvideo = Video.where(tip: 'nutritie3').order(ordine: :asc)
+      @myvideo = Video.where(tip: 'nutritie3').where('ordine <= ?', 1000).order(ordine: :asc)      #aici am cursurile
         @has_access = if current_user.role == 1
             true
           elsif current_user.role == 0
@@ -12,5 +12,7 @@ class Nutritie3Controller < ApplicationController
           else
             false
           end
+          @myvideo1 = Video.where(tip: 'nutritie3').where('ordine > ?', 1000).order(ordine: :asc)
+
     end
 end

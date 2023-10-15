@@ -10,6 +10,36 @@
 <p class="text-success"><%= notice %></p>
 
 
+
+<% if current_user %>
+
+<h1 style= "text-align: center;padding: 0 10px;">Aspecte organizatorice</h1></br>
+
+
+
+<div id="videos">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nr</th>
+        <th>Nume</th>
+        <th>Descriere</th>
+       
+        <th>Actiune</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @myvideo1.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>
+
+
+
+
 <% if current_user %>
 <% if @has_access %>
 <h1 style= "text-align: center;padding: 0 10px;">Înregistrări video Program de pregătire: Nutritie Ayurvedică modulul 3 </h1></br>

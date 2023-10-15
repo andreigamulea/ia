@@ -1,17 +1,12 @@
 <tr>
   <td><%= video.ordine %></td>
   <td><%= video.nume %></td>
-  <td><%= video.descriere %></td>
- 
-  <td>
-   
-   
-    
-  <%if video.tip== 'tayt12'%>
-    <%= link_to "Vezi video", myvideo4_path(id: video.id, link: video.link), class: "btn btn-primary" %>
-  <%else%>
-    <%= link_to "Vezi video", myvideo1_path(id: video.id, link: video.link), class: "btn btn-primary" %>
-  <%end%>
-  </td>
-  
+  <td><%= video.descriere %></td> 
+  <td>   
+    <%if video.tip== 'tayt12'%>
+      <%= link_to "Vezi video", myvideo4_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+    <%else%>
+      <%= link_to "Vezi video", myvideo1_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+    <%end%>
+  </td>  
 </tr>
