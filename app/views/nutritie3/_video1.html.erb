@@ -1,5 +1,13 @@
 <tr>
-  <td><%= video.ordine %></td>
+<% if video.tip == 'nutritie3' %>
+<td>
+  <% if video.ordine > 1000 %>
+    <%= video.ordine - 1000 %>
+  <% else %>
+    <%= video.ordine %>
+  <% end %>
+</td>
+<% end %>
   <td><%= video.nume %></td>
   <td><%= video.descriere %></td>
  
