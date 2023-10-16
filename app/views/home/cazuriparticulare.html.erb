@@ -17,3 +17,12 @@ scriu 'transfer b' sau altceva apoi codurile pentru produs si aici am incheiat p
 Apoi apas butonul Preluare in useriprod user_id cu prod_id  Tabela adaugauseri.xlsx are  (mail nume telefon) Enjoy!</p>
 
 
+<h2>5. toadermihaela@yahoo.com (id: 762) I-a plătit cineva la tabără, dar i-a făcut un cont nou pentru că i-a dat adresa de email greșită.
+    Corectă este adresa de email toadermihaela67@yahoo.com (id: 557) pe care a avut-o și la tabăra de vară</h2>
+<p>In situatia aceasta nu se poate sterge adresa de email ca la pct 3 pt ca sunt legaturi create (are cursuri asociate) </p>
+<p>Am facut pct 2 de mai sus (am creat o noua comanda etc)</p>
+<p>Am cautat userul gresit in ComenziProd: cp=ComenziProd.find_by(user_id: 762) apoi: cp.update(validat: 'Initiata')</p>
+<p>pentru ca acel user sa nu mai aiba acces la tayt12. (Trebuie identificata exact pt ca poate avea mai multe cp acel user.Aici era
+ doar o comanda si am folosit find_by, dar daca folosesc where vad cate are si identific pe cea care trebuie)</p>
+<p>Apoi in  df=Detaliifacturare.find_by(user_id: 762)  si am schimbat user_id pentru ca datele de facturare sa fie asociate 
+cu userul care trebuie: irb(main):010:0> df.update(user_id: 557) Enjoy!</p>
