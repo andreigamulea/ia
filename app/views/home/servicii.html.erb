@@ -178,7 +178,7 @@
     </thead>
         <tbody>
             <% @prod_tayt12.select{ |prod| prod.curslegatura == 'tayt12' && prod.pret > 0 }.each do |prod| %>
-                <% if prod.cod != "cod48" || (prod.cod == "cod48" && current_user.email == "stefclaudia1@yahoo.com") %>
+                <% if prod.cod != "cod48" || ((prod.cod == "cod48" && current_user.email == "stefclaudia1@yahoo.com") || current_user.role==1) %>
                 <tr>
                     <td> <%= prod.nume %> </td>                           
                     <td><%= prod.detalii %></td> 
