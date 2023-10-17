@@ -184,7 +184,23 @@
                     <td><%= prod.detalii %></td> 
                     <td><%= (prod.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
                     <td><%= prod.pret.to_i %> lei</td>
-                    <td> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
+
+
+                    <td> 
+                         
+                         <% if (prod.cod == "cod40" || prod.cod == "cod42" || prod.cod == "cod44") && Time.now.to_date >= Date.new(2023,10,19) %>
+                             <%= button_to 'Inactiv', '#', class: 'btn btn-secondary', disabled: true %>
+                         <% else %>
+                             <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> 
+                         <% end %>
+                         
+                     </td>     
+
+
+
+
+
+                        
                 </tr>  
                 <% end %>
             <% end %>
