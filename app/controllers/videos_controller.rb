@@ -188,6 +188,34 @@ class VideosController < ApplicationController
         return true
       end
     
+      video_dorit = Video.find(params[:id])
+
+      # Verificăm dacă user-ul curent a plătit pentru video-ul dorit (cod49, cod50 sau cod51)
+      # Află video-ul pe care user-ul dorește să-l acceseze
+  video_dorit = Video.find(params[:id])
+
+      # Verificăm dacă user-ul curent a plătit pentru video-ul dorit
+      if ComenziProd.joins(:prod)
+        .where(user_id: current_user.id, prods: { cod: video_dorit.cod })
+        .where("datasfarsit IS NULL OR datasfarsit >= ?", Date.current)
+        .exists?
+        puts("daaaaa1")
+      else
+        redirect_to root_path, alert: "Nu ai acces la acest video!" and return
+      end
+      
+      # Verificăm separat pentru codurile "cod49", "cod50", "cod51"  
+      coduri_relevante = Video.where(tip: 'nutritie3').where('ordine < ?', 1000).pluck(:cod)
+      coduri_relevante.each do |cod|
+        if ComenziProd.joins(:prod)
+          .where(user_id: current_user.id, prods: { cod: cod })
+          .where("datasfarsit IS NULL OR datasfarsit >= ?", Date.current)
+          .exists?
+          puts("daaaaa1 pentru #{cod}")
+          return true
+        end
+      end
+
       tayv2_course = Listacursuri.find_by(nume: 'Nutritie3')
     
       if tayv2_course.nil?

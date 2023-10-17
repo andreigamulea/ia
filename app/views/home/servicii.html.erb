@@ -128,7 +128,7 @@
                 </tr>      
             </thead>
             <tbody>
-            <% @prods.select{ |prod| prod.curslegatura == 'Nutritie3' }.each do |prod| %>
+            <% @prods.select{ |prod| prod.curslegatura == 'Nutritie3' }.sort_by(&:created_at).each do |prod| %>
                 <% next if (prod.cod == "cod38" && !@user_has_prod_cod11) %>
                 <% next if (prod.cod == "cod39" && !@user_has_prod_cod13) %>
                     <tr>
