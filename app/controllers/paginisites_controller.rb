@@ -349,10 +349,28 @@ class PaginisitesController < ApplicationController
     begin
       produse = Prod.where(curslegatura: ["Curs Ayurveda an 1", "an1"])
       mapare_valori = produse.each_with_object({}) { |prod, hash| hash[prod.id] = prod.pret }
-    
-      @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
-                                 .where(prod_id: mapare_valori.keys, validat: "Finalizata")
-                                 .order("users.email", :comanda_id)
+      
+      if params[:order_by] == 'email_unique'
+        unique_emails = User.joins(:comenzi_prods)
+                            .where(comenzi_prods: { prod_id: mapare_valori.keys, validat: "Finalizata" })
+                            .group('users.email')
+                            .having('count(users.email) = 1')
+                            .pluck('users.email')
+      
+        @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
+                                   .where(prod_id: mapare_valori.keys, validat: "Finalizata")
+                                   .where(users: { email: unique_emails })
+                                   .order("users.email", :comanda_id)
+      elsif params[:order_by] == 'email'
+        @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
+                                   .where(prod_id: mapare_valori.keys, validat: "Finalizata")
+                                   .order("users.email", :comanda_id)
+      else
+        @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
+                                   .where(prod_id: mapare_valori.keys, validat: "Finalizata")
+                                   .order("created_at ASC")
+      end
+                       
       
       user_ids = @comenzi_prod.map(&:user_id).uniq
       detaliifacturare_hash = Detaliifacturare.where(user_id: user_ids).index_by(&:user_id)
