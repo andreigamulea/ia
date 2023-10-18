@@ -25,8 +25,9 @@ class VideosController < ApplicationController
     @prod_tayt12 = Prod.where(curslegatura: 'tayt12').order(:cod)
     @myvideo = Video.where(tip: 'tayt12').order(ordine: :asc)
     if current_user
-        @has_access = current_user.role == 1 || ComenziProd.joins(:prod)
-        .where(user_id: current_user.id, prods: { cod: ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] }).exists?          
+      @has_access = current_user.role == 1 || ComenziProd.joins(:prod)
+      .where(user_id: current_user.id, prods: { cod: ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] }, validat: "Finalizata").exists?
+            
     else
       @has_access=false
     end  
@@ -177,40 +178,41 @@ class VideosController < ApplicationController
       return true if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod12" }).exists?
     
       # Verifică dacă userul are ambele coduri: cod11 și cod38
-      if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod11" }).exists? &&
-         ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod38" }).exists?
+      if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod11" }, validat: "Finalizata").exists? &&
+         ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod38" }, validat: "Finalizata").exists?
+
         return true
       end
     
       # Verifică dacă userul are ambele coduri: cod13 și cod39
-      if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod13" }).exists? &&
-         ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod39" }).exists?
+      if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod13" }, validat: "Finalizata").exists? &&
+         ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod39" }, validat: "Finalizata").exists?
         return true
       end
     
-      video_dorit = Video.find(params[:id])
-
-      # Verificăm dacă user-ul curent a plătit pentru video-ul dorit (cod49, cod50 sau cod51)
+     
       # Află video-ul pe care user-ul dorește să-l acceseze
-  video_dorit = Video.find(params[:id])
+      video_dorit = Video.find(params[:id])
 
       # Verificăm dacă user-ul curent a plătit pentru video-ul dorit
       if ComenziProd.joins(:prod)
-        .where(user_id: current_user.id, prods: { cod: video_dorit.cod })
+        .where(user_id: current_user.id, prods: { cod: video_dorit.cod }, validat: "Finalizata")
         .where("datasfarsit IS NULL OR datasfarsit >= ?", Date.current)
         .exists?
+      
         puts("daaaaa1")
       else
         redirect_to root_path, alert: "Nu ai acces la acest video!" and return
       end
       
-      # Verificăm separat pentru codurile "cod49", "cod50", "cod51"  
+      # Verificăm  coduri_relevante in cazul nostru  "cod49", "cod50", "cod51"  
       coduri_relevante = Video.where(tip: 'nutritie3').where('ordine < ?', 1000).pluck(:cod)
       coduri_relevante.each do |cod|
         if ComenziProd.joins(:prod)
-          .where(user_id: current_user.id, prods: { cod: cod })
+          .where(user_id: current_user.id, prods: { cod: cod }, validat: "Finalizata")
           .where("datasfarsit IS NULL OR datasfarsit >= ?", Date.current)
           .exists?
+        
           puts("daaaaa1 pentru #{cod}")
           return true
         end
@@ -256,9 +258,10 @@ class VideosController < ApplicationController
       
       # Verificăm dacă user-ul curent a plătit pentru video-ul dorit
       if ComenziProd.joins(:prod)
-        .where(user_id: current_user.id, prods: { cod: video_dorit.cod })
+        .where(user_id: current_user.id, prods: { cod: video_dorit.cod }, validat: "Finalizata")
         .where("datasfarsit IS NULL OR datasfarsit >= ?", Date.current)
         .exists?
+      
       return true
       end
 
@@ -282,8 +285,9 @@ class VideosController < ApplicationController
     
       # Verifică dacă userul are cod12
       return true if ComenziProd.joins(:prod)
-                          .where(user_id: current_user.id, prods: { cod: ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] })
-                          .exists?
+                .where(user_id: current_user.id, prods: { cod: ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] }, validat: "Finalizata")
+                .exists?
+    
 
     
       
