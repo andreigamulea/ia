@@ -10,9 +10,14 @@ class FacturasController < ApplicationController
       @facturas = Factura.all.order(id: :desc)
     elsif @user.role == 0
       @facturas = @user.facturas
+    
     else
+      #@facturas = @user.facturas
       # Cod pentru alte roluri sau un mesaj de eroare
     end
+    Rails.logger.debug "@facturas: #{@facturas.inspect}"
+    Rails.logger.debug "@user: #{@user.inspect}"
+
   end
   def facturicomenzi
     #aceasta metoda ordoneaza facturile in functie de cate sunt pt o comanda

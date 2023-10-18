@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   before_validation :downcase_email
+  before_validation :set_default_role
+ 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable,
          :omniauthable, omniauth_providers: [:google_oauth2]
@@ -82,7 +84,9 @@ class User < ApplicationRecord
     end
   end
   
-  
+  def set_default_role
+    self.role ||= 0
+  end
  
   
 end
