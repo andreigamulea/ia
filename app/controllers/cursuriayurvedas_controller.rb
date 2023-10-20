@@ -3,7 +3,7 @@ class CursuriayurvedasController < ApplicationController
 
   # GET /cursuriayurvedas or /cursuriayurvedas.json
   def index
-    @cursuriayurvedas = Cursuriayurveda.all
+    @cursuriayurvedas = Cursuriayurveda.all    
   end
 
   # GET /cursuriayurvedas/1 or /cursuriayurvedas/1.json
@@ -61,6 +61,8 @@ class CursuriayurvedasController < ApplicationController
   def cursayurveda
     @myvideo1 = Video.find_by(link: 'xGpVO2uopdc')
     @myvideo = @myvideo1.link if @myvideo1
+    
+    @myvideo3 = Video.where(tip: 'an1').where('ordine > ?', 1000).order(ordine: :asc)
     ##################################grupa 1
     @prodgrupa1_taxainscriere_all = Prod.find_by(cod: "cod14")
     if current_user && current_user.grupa == 1
