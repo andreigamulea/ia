@@ -72,8 +72,8 @@
             <tr>
                 <th style="width: auto;">Servicii</th>
                 <th style="width: auto;">Detalii</th>
-                <th style="width: auto;">Pret (fara tva)</th>
-                <th style="width: auto;">Pret (cu tva)</th>
+                
+                <th style="width: auto;">Pret</th>
                 <th style="width: auto;">Selecție</th>
             </tr>
         </thead>
@@ -83,7 +83,7 @@
             <tr>
                 <td> <%= @prodgrupa1_taxainscriere_all.nume %> </td>                        
                 <td><%= @prodgrupa1_taxainscriere_all.detalii %></td> 
-                <td><%= (@prodgrupa1_taxainscriere_all.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                
                 <td><%= @prodgrupa1_taxainscriere_all.pret.to_i %> lei</td>
 
                 <% if current_user %>
@@ -124,8 +124,8 @@ achitarea participarii pentru luna Octombrie 2023</p>
             <tr>
                 <th style="width: auto;">Servicii</th>
                 <th style="width: auto;">Detalii</th>
-                <th style="width: auto;">Pret (fara tva)</th>
-                <th style="width: auto;">Pret (cu tva)</th>
+                
+                <th style="width: auto;">Pret</th>
                 <th style="width: auto;">Selecție</th>
             </tr>
         </thead>
@@ -135,7 +135,7 @@ achitarea participarii pentru luna Octombrie 2023</p>
             <tr>
                 <td> <%= @prodgrupa1_taxainscriere.nume %> </td>                        
                 <td><%= @prodgrupa1_taxainscriere.detalii %></td> 
-                <td><%= (@prodgrupa1_taxainscriere.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                
                 <td><%= @prodgrupa1_taxainscriere.pret.to_i %> lei</td>
                 <td> <%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxainscriere.id), class: 'btn' %> </td>      
             </tr>  
@@ -164,8 +164,8 @@ achitarea participarii pentru luna Octombrie 2023</p>
             <tr>
                 <th style="width: auto;">Servicii</th>
                 <th style="width: auto;">Detalii</th>
-                <th style="width: auto;">Pret (fara tva)</th>
-                <th style="width: auto;">Pret (cu tva)</th>
+                
+                <th style="width: auto;">Pret</th>
                 <th style="width: auto;">Actiune</th>
             </tr>
         </thead>
@@ -174,7 +174,7 @@ achitarea participarii pentru luna Octombrie 2023</p>
             <tr>
                 <td><%= @prodgrupa1_taxaanuala.nume %> </td>                        
                 <td><%= @prodgrupa1_taxaanuala.detalii %></td> 
-                <td><%= (@prodgrupa1_taxaanuala.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                
                 <td><%= @prodgrupa1_taxaanuala.pret.to_i %> lei</td>
 
                 <td> <%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxaanuala.id), class: 'btn' %> </td>      
@@ -184,7 +184,7 @@ achitarea participarii pentru luna Octombrie 2023</p>
             <tr>
                 <td> <%= @prodgrupa1_taxalunara.nume %> </td>                        
                 <td><%= @prodgrupa1_taxalunara.detalii %></td> 
-                <td><%= (@prodgrupa1_taxalunara.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                
                 <td><%= @prodgrupa1_taxalunara.pret.to_i %> lei</td>
 
                 <td> <%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxalunara.id), class: 'btn' %> </td>      
@@ -247,8 +247,8 @@ achitarea participarii pentru luna Octombrie 2023</p>
           
           <th style="width: auto;">Nume</th>
           <th style="width: auto;">Detalii</th>
-          <th style="width: auto;">Pret (fara tva)</th>
-          <th style="width: auto;">Pret (cu tva)</th>
+          
+          <th style="width: auto;">Pret</th>
           <th style="width: auto;">Actiune</th>
       </tr>
   </thead>
@@ -258,7 +258,7 @@ achitarea participarii pentru luna Octombrie 2023</p>
               
               <td><%= produs.nume %></td>                        
               <td><%= produs.detalii %></td> 
-              <td><%= (produs.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+              
               <td><%= produs.pret.to_i %> lei</td>
               <td> <%= link_to 'Comanda', datefacturare_path(s: produs.id), class: 'btn' %> </td>      
           </tr>  

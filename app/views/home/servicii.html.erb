@@ -8,8 +8,8 @@
                 <tr class= "trdesk">
                     <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
                     <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (fara tva)</th>
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (cu tva)</th>
+                    
+                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret</th>
                     <th style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
                 </tr>      
             </thead>
@@ -18,7 +18,7 @@
                     <tr>
                         <td> <%= prod.nume %> </td>                        
                         <td><%= prod.detalii %></td> 
-                        <td><%= (prod.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                        
                          <td><%= prod.pret.to_i %> lei</td>
 
                         <td> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
@@ -35,8 +35,8 @@
                 <tr class= "trdesk">
                     <th  style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
                     <th  style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
-                    <th  style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (fara tva)</th>
-                    <th  style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (cu tva)</th>
+                    
+                    <th  style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret</th>
                     <th  style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
                 </tr>      
             </thead>
@@ -47,7 +47,7 @@
                   <td> <%= raw prod.nume.gsub('promo acces 24h', '<span class="text-danger">promo acces 24h</span>') %> </td>
                                    
                 <td><%= prod.detalii %></td> 
-                <td><%= (prod.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                
                 <td><%= prod.pret.to_i %> lei</td>
                 <td>
                 <% if (current_user && current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) }) || (current_user && current_user.role == 1) %>
@@ -71,7 +71,7 @@
                     <tr>
                         <td> <%= prod.nume %> </td>                        
                         <td><%= prod.detalii %></td> 
-                        <td><%= (prod.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                        
                          <td><%= prod.pret.to_i %> lei</td>
 
                         <td> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
@@ -89,8 +89,8 @@
                 <tr class= "trdesk">
                     <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
                     <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (fara tva)</th>
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (cu tva)</th>
+                    
+                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret</th>
                     <th style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
                 </tr>      
             </thead>
@@ -101,7 +101,7 @@
                         <%= raw prod.nume.gsub('pentru participanti deja inscrisi', '<span class="text-danger">pentru participanti deja inscrisi</span>').gsub('cu inscriere', '<span class="text-danger">cu inscriere</span>') %>
                     </td>                      
                         <td><%= prod.detalii %></td> 
-                        <td><%= (prod.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                        
                          <td><%= prod.pret.to_i %> lei</td>
 
                         <td> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
@@ -122,8 +122,8 @@
                 <tr class= "trdesk">
                     <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
                     <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (fara tva)</th>
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (cu tva)</th>
+                    
+                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret</th>
                     <th style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
                 </tr>      
             </thead>
@@ -139,7 +139,7 @@
                     <%= raw prod.detalii.gsub('Înscrieri până pe 20 septembrie 2023', '<span class="text-danger">Înscrieri până pe 20 septembrie 2023</span>').gsub('Înscrieri începând cu 21 septembrie 2023', '<span class="text-danger">Înscrieri începând cu 21 septembrie 2023</span>') %>
                 </td>
                  
-                        <td><%= (prod.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                        
                          <td><%= prod.pret.to_i %> lei</td>
 
                          <td> 
@@ -171,8 +171,8 @@
         <tr class= "trdesk">
             <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
             <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
-            <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (fara tva)</th>
-            <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (cu tva)</th>
+            
+            <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret</th>
             <th style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
         </tr>      
     </thead>
@@ -186,7 +186,7 @@
                 <tr>
                     <td> <%= prod.nume %> </td>                           
                     <td><%= prod.detalii %></td> 
-                    <td><%= (prod.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                    
                     <td><%= prod.pret.to_i %> lei</td>
 
 
