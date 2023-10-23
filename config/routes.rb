@@ -161,6 +161,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get '/xlsxtopg/preluaredate18', to: 'xlsxtopg#preluaredate18', as: 'preluaredate18_xlsxtopg'
   get '/xlsxtopg/preluaredate19', to: 'xlsxtopg#preluaredate19', as: 'preluaredate19_xlsxtopg'
   get '/xlsxtopg/preluaredate20', to: 'xlsxtopg#preluaredate20', as: 'preluaredate20_xlsxtopg'
+  get '/xlsxtopg/preluaredate21', to: 'xlsxtopg#preluaredate21', as: 'preluaredate21_xlsxtopg'
 
   get 'xlsxtopg/sterge_inregistrari', to: 'xlsxtopg#sterge_inregistrari', as: 'sterge_inregistrari_xlsxtopg'
   get 'xlsxtopg/sterge_inregistrari1', to: 'xlsxtopg#sterge_inregistrari1', as: 'sterge_inregistrari1_xlsxtopg'
