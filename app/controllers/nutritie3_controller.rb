@@ -44,7 +44,11 @@ class Nutritie3Controller < ApplicationController
       @myvideo2 = Video.where(tip: 'nutritie3', cod: relevant_cod_values)
     end
   
-    @myvideo1 = Video.where(tip: 'nutritie3').where('ordine > ?', 1000).order(ordine: :asc)
+    @myvideo1 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)#Aspecte organizatorice
+    #o sa pun la Resurse intre 2000-3000 video ce tin de modul 3 iar intre 3000-4000 video ce tin de modul 2
+    @myvideo3 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)#modulul 3
+    @myvideo4 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 2000, 4000).order(ordine: :asc)#modulul 2 si 3
+
   end
   
 end
