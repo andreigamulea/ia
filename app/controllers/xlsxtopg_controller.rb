@@ -833,7 +833,24 @@ def preluaredate20 # fac update la telefon pentru toti userii din tabela xlsx cu
   end
 end
 ##########################################################################
+def preluaredate21
+  # Deschide fișierul xlsx
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
 
+  # Parcurge fiecare rând din fișier
+  xlsx.each_row_streaming(offset: 0) do |row|
+    # Extrage valoarea emailului și normalizează-o (înlătură spațiile și convertește la litere mici)
+    email = row[0]&.value&.strip&.downcase
+    next unless email
+
+    # Caută userul cu email-ul dat
+    user = User.find_by(email: email)
+    next unless user
+
+    # Actualizează valoarea nutritieabsolvit cu 2
+    user.update(nutritieabsolvit: 2)
+  end
+end
 
 
 
