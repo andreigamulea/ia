@@ -1,4 +1,6 @@
 <section class="c1">
+
+<% if current_user && (@has_access1 || @has_access) %>
 <h1 class="ch1">Bun venit la Programul de pregătire: Nutritie Ayurvedică modulul 3</h1>
 
 <h2 class="ch1" style= "margin-top: -20px;">Datele de logare pe platforma ZOOM:</h2>
@@ -11,7 +13,7 @@
 
 
 
-<% if current_user %>
+
 
 <h1 style= "text-align: center;padding: 0 10px;">Aspecte organizatorice</h1></br>
 
@@ -99,7 +101,7 @@
 
 
 <% end %><% end %>
-<% if current_user %>
+<% if current_user && (@has_access1 || @has_access) %>
 <h2 style= "text-align: center;padding: 0 10px;">Resurse</h2></br>
 
 
@@ -127,5 +129,6 @@
   </table>
 </div>
 <%end%>
+ 
 </section>
 
