@@ -42,7 +42,7 @@
 
 <% if current_user %>
 <% if @has_access %>
-<h1 style= "text-align: center;padding: 0 10px;">Înregistrări video Program de pregătire: Nutritie Ayurvedică modulul 3 </h1></br>
+<h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Program de pregătire: Nutritie Ayurvedică modulul 3 </h2></br>
 
 
 
@@ -64,6 +64,8 @@
     </tbody>
   </table>
 </div>
+
+
 <% end %><% end %>
 
 
@@ -71,7 +73,7 @@
 
 <% if current_user %>
 <% if @has_access1 && @am_video.any? %>
-<h1 style= "text-align: center;padding: 0 10px;">Înregistrări video Program de pregătire: Nutritie Ayurvedică modulul 3 </h1></br>
+<h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Program de pregătire: Nutritie Ayurvedică modulul 3 </h2></br>
 
 
 
@@ -93,9 +95,37 @@
     </tbody>
   </table>
 </div>
+
+
+
 <% end %><% end %>
+<% if current_user %>
+<h2 style= "text-align: center;padding: 0 10px;">Resurse</h2></br>
 
 
 
+<div id="videos">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nr</th>
+        <th>Nume</th>
+        <th>Descriere</th>       
+        <th>Actiune</th>
+        <th>Descarca PDF</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    <% previous_video_tip = nil %>
+    <% @myvideo4.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video, previous_video_tip: previous_video_tip } %>
+        <% previous_video_tip = video.tip %>
+    <% end %>
+
+    </tbody>
+  </table>
+</div>
+<%end%>
 </section>
 
