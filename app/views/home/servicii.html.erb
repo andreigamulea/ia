@@ -177,37 +177,28 @@
         </tr>      
     </thead>
         <tbody>
-            <% @prod_tayt12.select{ |prod| prod.curslegatura == 'tayt12' && prod.pret > 0 }.each do |prod| %>
-
-                
-                
-                <% if prod.cod != "cod48" || (current_user && prod.cod == "cod48" && current_user.email == "aaa@gmail.com") %>
-
+        <% @prod_tayt12.select{ |prod| prod.curslegatura == 'tayt12' && prod.pret > 0 }.each do |prod| %>
+            <% if prod.cod != "cod48" || (current_user && prod.cod == "cod48" && current_user.email == "aaa@gmail.com") %>
+          
+              <% if prod.cod != "cod54" || (current_user && has_purchased_product?(current_user, @prod_tayt12)) %>
                 <tr>
-                    <td> <%= prod.nume %> </td>                           
+                    <td> <%= prod.nume %> </td>         
+                                       
                     <td><%= prod.detalii %></td> 
                     
                     <td><%= prod.pret.to_i %> lei</td>
-
-
+          
                     <td> 
-                         
-                         <% if (prod.cod == "cod40" || prod.cod == "cod42" || prod.cod == "cod44") && Time.now.to_date >= Date.new(2023,10,19) %>
-                             <%= button_to 'Inactiv', '#', class: 'btn btn-secondary', disabled: true %>
-                         <% else %>
-                             <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> 
-                         <% end %>
-                         
-                     </td>     
-
-
-
-
-
-                        
-                </tr>  
-                <% end %>
-            <% end %>
+                        <% if (prod.cod == "cod40" || prod.cod == "cod42" || prod.cod == "cod44") && Time.now.to_date >= Date.new(2023,10,19) %>
+                            <%= button_to 'Inactiv', '#', class: 'btn btn-secondary', disabled: true %>
+                        <% else %>
+                            <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> 
+                        <% end %>
+                    </td>           
+                </tr>
+              <% end %> 
+            <% end %> 
+          <% end %>
           
             </tbody>  
 
