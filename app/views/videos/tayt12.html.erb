@@ -40,23 +40,24 @@ Calităţile generale formatoare (nirmanya-guna) măsoară de fapt specificitate
         <tr class= "trdesk">
             <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
             <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
-            <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (fara tva)</th>
-            <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret (cu tva)</th>
+            
+            <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret</th>
             <th style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
         </tr>      
     </thead>
         <tbody>
             <% @prod_tayt12.select{ |prod| prod.curslegatura == 'tayt12' && prod.pret > 0 }.each do |prod| %>
+              <% if prod.cod != "cod48" || (current_user && prod.cod == "cod48" && current_user.email == "aaa@yahoo.com") %>
                     <tr>
                         <td> <%= prod.nume %> </td>         
                                        
                         <td><%= prod.detalii %></td> 
-                        <td><%= (prod.pret/(1 + TVA / 100.0)).round(2) %> lei</td>
+                        
                          <td><%= prod.pret.to_i %> lei</td>
 
                         <td> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
-                    </tr>  
-                <% end %>  
+                    </tr> <% end %> <% end %>
+                  
             </tbody>  
 
         
