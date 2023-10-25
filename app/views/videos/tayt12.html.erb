@@ -49,7 +49,7 @@ Conceptul ayurvedic de calitate generală (guna), precum și întreg sistemul ce
     </thead>
         <tbody>
             <% @prod_tayt12.select{ |prod| prod.curslegatura == 'tayt12' && prod.pret > 0 }.each do |prod| %>
-              <% if prod.cod != "cod48" || current_user.role==1 || (current_user && prod.cod == "cod48" && current_user.email == "evaszilveszter@gmail.com") %>
+              <% if prod.cod != "cod48" || (current_user && prod.cod == "cod48" && current_user.email == "aaar@gmail.com") %>
                     <tr>
                         <td> <%= prod.nume %> </td>         
                                        
