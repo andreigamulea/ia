@@ -181,7 +181,7 @@
 
                 
                 
-                <% if prod.cod != "cod48" || current_user.role==1 || (current_user && prod.cod == "cod48" && current_user.email == "evaszilveszter@gmail.com") %>
+                <% if prod.cod != "cod48" || (current_user && prod.cod == "cod48" && current_user.email == "aaa@gmail.com") %>
 
                 <tr>
                     <td> <%= prod.nume %> </td>                           
