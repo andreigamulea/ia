@@ -37,7 +37,8 @@ class VideosController < ApplicationController
     end  
     #@has_access_cursuri = ComenziProd.exists?(user_id: current_user.id, prod_id: 56)
     #verific daca userul poate vedea videourile taberei(a platit?)
-    @has_access_cursuri = current_user.role == 1 || ComenziProd.exists?(user_id: current_user.id, prod_id: 56)
+    @has_access_cursuri = current_user && (current_user.role == 1 || ComenziProd.exists?(user_id: current_user.id, prod_id: 56))
+
 
   end
   ############################ in metoda de mai jos sunt pt nutritie3 
