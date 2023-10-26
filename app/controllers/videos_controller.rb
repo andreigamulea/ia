@@ -23,7 +23,11 @@ class VideosController < ApplicationController
   end
   def tayt12
     @prod_tayt12 = Prod.where(curslegatura: 'tayt12').order(:cod)
-    @myvideo = Video.where(tip: 'tayt12').order(ordine: :asc)
+    #@myvideo = Video.where(tip: 'tayt12').order(ordine: :asc)
+    @myvideo = Video.where(tip: 'tayt12').where("ordine < ?", 1000).order(ordine: :asc)
+    
+    @myvideo2 = Video.where(tip: 'tayt12').where("ordine > ?", 1000).order(ordine: :asc)
+
     if current_user
       @has_access = current_user.role == 1 || ComenziProd.joins(:prod)
       .where(user_id: current_user.id, prods: { cod: ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] }, validat: "Finalizata").exists?
@@ -31,6 +35,10 @@ class VideosController < ApplicationController
     else
       @has_access=false
     end  
+    #@has_access_cursuri = ComenziProd.exists?(user_id: current_user.id, prod_id: 56)
+    #verific daca userul poate vedea videourile taberei(a platit?)
+    @has_access_cursuri = current_user.role == 1 || ComenziProd.exists?(user_id: current_user.id, prod_id: 56)
+
   end
   ############################ in metoda de mai jos sunt pt nutritie3 
   #daca vreau pt alte cursuri duplic metoda de mai jos fara view 
