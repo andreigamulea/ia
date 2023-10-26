@@ -1,5 +1,7 @@
 <section class="c1">
-    <% if user_signed_in? && (current_user.email != "aura2005a@gmail.com" && current_user.email != "sunnyada@yahoo.com") %>
+<% restricted_emails = ["aura2005a@gmail.com", "bairavica@yahoo.com","aura.ciocoiu81@gmail.com", "georgescuada19@yahoo.com", "sunnyada@yahoo.com"] %>
+<% if user_signed_in? && !restricted_emails.include?(current_user.email) %>
+
 
     <h1 class="text-center" style="margin: 50px 0 50px 0;font-size:1.5em;">Te rog să introduci datele de facturare pentru: </br> <span class= "dn"><%= @prod.nume %></span></h1>
     <%= turbo_frame_tag 'detaliifacturare_form' do %>
