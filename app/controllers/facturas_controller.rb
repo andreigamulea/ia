@@ -6,7 +6,10 @@ class FacturasController < ApplicationController
 
   # GET /facturas or /facturas.json
   def index
-    if @user.role == 1
+    if !current_user
+      redirect_to new_user_session_path   
+
+    elsif @user.role == 1
       @facturas = Factura.all.order(id: :desc)
     elsif @user.role == 0
       @facturas = @user.facturas
