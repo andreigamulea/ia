@@ -39,9 +39,9 @@
   </div>
 <% end %>
 
-<h3>Sterge contul</h3>
+<h3>Dezactiveaza contul</h3>
 
-<div>Unhappy? <%= button_to "Deactivate my account", set_inactive_user_path(current_user), method: :put, data: { confirm: "Are you sure you want to deactivate your account?" }, class: "button-class" %>
+<div><p>Dacă alegeți să dezactivați contul, nu veți mai avea acces la toate funcționalitățile site-ului, inclusiv cursuri, seminarii și alte resurse.</p><%= button_to "Dezactiveaza contul", set_inactive_user_path(current_user), method: :put, data: { confirm: "Are you sure you want to deactivate your account?" }, class: "button-class" %>
 
 
 
