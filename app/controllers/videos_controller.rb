@@ -1,4 +1,6 @@
 class VideosController < ApplicationController
+  require 'date'
+
   before_action :set_video, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[ show edit update destroy]
   before_action :set_user1, only: %i[tayv2 myvideo1] #este pt tayv2
@@ -11,9 +13,12 @@ class VideosController < ApplicationController
   def index
     @videos = Video.all
   end
-  def linkocazional
+  def linkocazional   
+    # Verifică dacă utilizatorul este autentificat
     authenticate_user!
-    unless current_user.email == 'piharadita@yahoo.com' || current_user.role == 1
+  
+    allowed_emails = ['piharadita@yahoo.com']
+    unless (allowed_emails.include?(current_user.email) || current_user.role == 1) && Date.current <= Date.parse("2023-11-01")
       redirect_to root_path, alert: "Acces neautorizat!"
       return
     end
@@ -22,6 +27,7 @@ class VideosController < ApplicationController
     @myvideo = @myvideo1[:link] if @myvideo1
     render 'myvideo1'
   end
+  
   
   def myvideo   
     @myvideo = Video.first.link    
