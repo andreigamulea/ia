@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  
+  get 'video/link', to: 'videos#linkocazional'
+
 
   get '/cursayurveda', to: 'cursuriayurvedas#cursayurveda'
   resources :cursuriayurvedas

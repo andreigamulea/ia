@@ -5,11 +5,24 @@ class VideosController < ApplicationController
   before_action :set_user2, only: %i[myvideo2] #este pt nutritie3
   before_action :set_user3, only: %i[myvideo3] #este pt an1
   before_action :set_user4, only: %i[myvideo4] #este pt tayt12
+  
   before_action :require_admin, only: %i[index new edit update create]
   # GET /videos or /videos.json
   def index
     @videos = Video.all
   end
+  def linkocazional
+    authenticate_user!
+    unless current_user.email == 'piharadita@yahoo.com' || current_user.role == 1
+      redirect_to root_path, alert: "Acces neautorizat!"
+      return
+    end
+  
+    @myvideo1 = Video.find_by(tip: "linkocazional")
+    @myvideo = @myvideo1[:link] if @myvideo1
+    render 'myvideo1'
+  end
+  
   def myvideo   
     @myvideo = Video.first.link    
   end
