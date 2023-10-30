@@ -82,6 +82,10 @@ class ApplicationController < ActionController::Base
           tayv2_path # Înlocuiește cu calea corespunzătoare  taxainscriere
         elsif return_to == "taxainscriere" 
           cursayurveda_path
+        elsif return_to == "link1"
+          # Cod pentru cazul în care sursa este link1
+          video_link_path # Înlocuiește cu calea corespunzătoare pentru link1
+      
         else
           # Dacă nu există parametru return_to, sau dacă valoarea acestuia nu este recunoscută, redirectează către o cale implicită
           servicii_path # Înlocuiește cu calea implicită
