@@ -13,10 +13,14 @@ class VideosController < ApplicationController
   def index
     @videos = Video.all
   end
-  def linkocazional   
+  def linkocazional  
+   
     # Verifică dacă utilizatorul este autentificat
-    authenticate_user!
-  
+    unless current_user        
+        redirect_to new_user_session_path(return_to: 'link1')
+        return # Opriți execuția metodei aici
+    end
+    
     allowed_emails = ['piharadita@yahoo.com']
     unless (allowed_emails.include?(current_user.email) || current_user.role == 1) && Date.current <= Date.parse("2023-11-01")
       redirect_to root_path, alert: "Acces neautorizat!"
@@ -26,7 +30,8 @@ class VideosController < ApplicationController
     @myvideo1 = Video.find_by(tip: "linkocazional")
     @myvideo = @myvideo1[:link] if @myvideo1
     render 'myvideo1'
-  end
+end
+
   
   
   def myvideo   

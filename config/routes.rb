@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
-  get 'video/link', to: 'videos#linkocazional'
+  #get 'video/link', to: 'videos#linkocazional'
+  get 'video/link/:return_to', to: 'videos#linkocazional', as: 'video_link', defaults: { return_to: 'default' }
+
 
 
   get '/cursayurveda', to: 'cursuriayurvedas#cursayurveda'
