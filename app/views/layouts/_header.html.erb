@@ -23,7 +23,7 @@
                 <a class="nav-link" href="#">Tabere Ayurveda</a>
                 <ul class="submenu">
                 <li class="nav-item">
-                    <%= link_to "Tabara ayurveda 2023 etapa de toamna", tayt12_path %>
+                    <%= link_to "Tabara ayurveda 2023 etapa de toamna partea 1", tayt12_path %>
                     </li>
                 <%if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "tayv2" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })%>
                     <li class="nav-item">
@@ -112,7 +112,7 @@
                         <% if current_user %>
                         <li><%= link_to 'Facturile mele', facturas_path, class: 'nav-item' %></li>
                         <% end %>
-                        <li><%= link_to 'Delogare', destroy_user_session_path, id: 'logout_link',  class: 'nav-item', data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %></li>
+                        <li><%= link_to 'Delogare', destroy_user_session_path, class: 'nav-item', id: 'logout_link',  data: { turbo_action: 'replace', turbo_method: 'delete' } %></li>
                 
                     </ul>
                 </li>
@@ -125,30 +125,7 @@
                 <% end %>
                 
                
-                <li class="nav-item has-submenu">
-                <a class="nav-link" href="#">Video</a>
-                <ul class="submenu">
-
-                <%if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "tayv2" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })%>
-                <li class="nav-item">
-                <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', tayv2_path, id: 'tayv2_link' %>
-                </li>
-                <% elsif current_user %>   
-                <li class="nav-item">
-                <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', servicii_path, class: 'button-link' %>
-                </li>
-                <% else %>   
-                <li class="nav-item">
-                <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', new_user_session_with_return_path('tayv2'), class: 'button-link' %>
-                </li>
-                <% end %> 
-
-
-
-                 
-                  <!-- Adaugă aici alte sub-itemuri dacă este necesar -->
-                </ul>
-              </li>
+         
               
 
                 <li><%= link_to 'Contact', contact_path %></li> 
