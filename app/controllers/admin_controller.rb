@@ -142,7 +142,7 @@ class AdminController < ApplicationController
 
  
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :active, :gdpr, :telefon, cursuri: {})
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :limba, :role, :active, :gdpr, :telefon, cursuri: {})
   end
   
  
