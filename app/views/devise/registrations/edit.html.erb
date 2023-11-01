@@ -5,8 +5,7 @@
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", readonly: true %>
+    <b>Email: </b><%=current_user.email %>
 
   </div>
 
@@ -14,9 +13,9 @@
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
   <div class="field">
-      <%= f.label "Parola curenta" %> <i>(scrie parola curenta)</i><br />
-      <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
+  <%= f.label "Parola curenta" %> <i>(scrie parola curenta)</i><br />
+  <%= f.password_field :current_password, autocomplete: "current-password" %>
+</div>
 
   <div class="field">
     <%= f.label "Parola noua" %> <i>(lasa spatiu liber daca nu vrei sa modifici)</i><br />
