@@ -138,12 +138,11 @@ body {
 
 .edituser label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: -5px;
   font-weight: bold;
 }
 
-.edituser input[type="email"],
-.edituser input[type="password"] {
+.edituser .form-control {
   width: 100%;
   padding: 8px;
   font-size: 14px;
@@ -199,6 +198,13 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
+.edituser .form-group {
+  margin-top:10px;
+}
+.edituser .actions{
+  margin-top: 20px;
+}
+
 
 .edituser .button_to button:hover {
   box-shadow: 0 5px 8px rgba(0,0,0,0.3);
