@@ -120,9 +120,9 @@ body {
 
 .edituser {
   width: 100%;
-  max-width: 600px;
+  max-width: 1240px;
   margin: 30px auto;
-  padding: 20px;
+  padding: 60px;
   background: #f4f4f4;
   border-radius: 5px;
 }
@@ -149,6 +149,7 @@ body {
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  max-width: 300px;
 }
 
 .edituser input[type="submit"] {
@@ -163,7 +164,7 @@ body {
 }
 
 .edituser input[type="submit"]:hover {
-  background: #3c0056;
+  box-shadow: 0 5px 8px rgba(0,0,0,0.3);
 }
 
 .edituser i {
@@ -181,6 +182,8 @@ body {
 .edituser h3 {
   margin-top: 20px;
   font-size: 18px;
+  border-top: 1px solid black;
+  padding-top: 10px;
 }
 
 .edituser .button_to {
@@ -198,7 +201,7 @@ body {
 }
 
 .edituser .button_to button:hover {
-  background: #c00;
+  box-shadow: 0 5px 8px rgba(0,0,0,0.3);
 }
 
 .edituser a {
@@ -222,14 +225,26 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s;
-    margin: 25px 0 50px 0;
+    margin: 50px 0 50px 0;
   }
   .inapoi a{
     color: white;
     font-size: 16px;
   }
+  .inapoi a:hover{
+    color: white;
+      }
   
-  .inapoi:hover {
-    background: #3c0056;
+  .edituser .inapoi:hover {
+    box-shadow: 0 5px 8px rgba(0,0,0,0.3);
   }
-  
+  @media screen and (max-width: 600px) {
+    .edituser{
+      padding: 20px;
+    }
+  }
+  @media screen and (max-width: 420) {
+    .edituser{
+      padding: 10px;
+    }
+  }

@@ -1,5 +1,5 @@
 <section class= "edituser";>
-<h1>Edit <%= resource_name.to_s.humanize %></h1>
+<h1 style="color: #9025c0; border-bottom: 1px solid black; padding-bottom: 5px; width: fit-content; margin-bottom: 10px;">Editare informații cont</h1>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
@@ -13,12 +13,13 @@
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
   <div class="field">
-  <%= f.label "Parola curenta" %> <i>(scrie parola curenta)</i><br />
+  <h2 style="font-size:24px;margin-top: 30px;">Modificare parola</h2>
+  <%= f.label "Introdu parola curentă" %> <i>(scrie parola curentă)</i><br />
   <%= f.password_field :current_password, autocomplete: "current-password" %>
 </div>
 
   <div class="field">
-    <%= f.label "Parola noua" %> <i>(lasa spatiu liber daca nu vrei sa modifici)</i><br />
+    <%= f.label "Introdu parola nouă" %> <i>(lasa spatiu liber daca nu vrei sa modifici)</i><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
       <br />
@@ -27,14 +28,14 @@
   </div>
 
   <div class="field">
-    <%= f.label "Confirma parola noua" %><br />
+    <%= f.label "Confirmă parola nouă" %><i>(reintrodu parola nouă)</i><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
 
   
 
   <div class="actions">
-    <%= f.submit "Update" %>
+    <%= f.submit "Actualizează parola" %>
   </div>
 <% end %>
 
@@ -47,5 +48,5 @@
 </div>
 
 
-<span class="inapoi"><%= link_to "Inapoi", :back %></span>
+<span class="inapoi"><%= link_to "Înapoi", :back %></span>
 </section>
