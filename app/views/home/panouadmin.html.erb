@@ -1,9 +1,34 @@
-<div class="jumbotron" style="background-color: #e9ecef;padding: 30px;margin: 40px;">
+<style>
+.jumbotron {
+  background-color: #e9ecef; 
+  padding: 30px; 
+  margin: 10px; 
+  width: 49%;
+}
+h1.display-4{
+  font-size:2.2rem!important;
+}
+.square {
+  display: flex;
+  justify-content: space-between;
+}
+@media (max-width: 768px) {
+  .square{
+    display:inline;
+  }
+  .jumbotron{
+    width:auto;
+  }
+}
+</style>
+
+<section style="max-width: 1240px; margin:0 auto;">
+<div class="jumbotron" style="background-color: #e9ecef;padding: 30px;margin: 10px; width:auto;">
 <%= link_to "Vizualizați Tabele Ahoy", tabeleahoy_home_path, class: "btn btn-primary" %>
 
 </div>
-<div style="display: flex; justify-content: space-between;">
-  <div class="jumbotron" style="background-color: #e9ecef; padding: 30px; margin: 40px; width: 45%;">
+<div class="square">
+  <div class="jumbotron">
     <h1 class="display-4">XlsxToPg</h1>
     <p class="lead">
       <%= link_to 'Plante', plantes_path %><br>
@@ -17,7 +42,7 @@
     </p>
   </div>
 
-  <div class="jumbotron" style="background-color: #e9ecef; padding: 30px; margin: 40px; width: 45%;">
+  <div class="jumbotron">
     <h1 class="display-4">Manager</h1>
     <p class="lead">
       <%= link_to 'Valori Nutritionale', valorinutritionales_path %><br>
@@ -37,8 +62,8 @@
 </div>
 
 </div>
-<div style="display: flex; justify-content: space-between;">
-  <div class="jumbotron" style="background-color: #e9ecef; padding: 30px; margin: 40px; width: 45%;">
+<div class="square">
+  <div class="jumbotron">
     <h1 class="display-4">Comenzi Produse Facturi</h1>
     <p class="lead">
       <%= link_to 'Produse', prods_path %><br>
@@ -56,7 +81,7 @@
     </p>
   </div>
 
-  <div class="jumbotron" style="background-color: #e9ecef; padding: 30px; margin: 40px; width: 45%;">
+  <div class="jumbotron">
     <h1 class="display-4">Video</h1>
     <p class="lead">
     <%= link_to 'Video', videos_path %><br>
@@ -67,10 +92,10 @@
 
 
 
-<div style="display: flex; justify-content: space-between;">
+<div class="square">
   
 
-  <div class="jumbotron" style="background-color: #e9ecef; padding: 30px; margin: 40px; width: 45%;">
+  <div class="jumbotron">
     <h1 class="display-4">Rapoarte de date</h1>
    
     <%= link_to "Export fisier xlsx plata nutriție 3", export_plata_nutritie3_path, class: "btn btn-secondary" %></br></br>
@@ -90,3 +115,4 @@
 
   </div>
 </div>
+</section>
