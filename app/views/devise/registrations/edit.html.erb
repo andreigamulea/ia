@@ -1,4 +1,35 @@
-<section class= "edituser";>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // Pentru parola curentă
+  document.getElementById("show-current-password").addEventListener("change", function() {
+    var currentPasswordInput = document.getElementById("current-password-input");
+    var currentTextInput = document.getElementById("current-text-input");
+    togglePasswordVisibility(this.checked, currentPasswordInput, currentTextInput);
+
+    var newPasswordInput = document.getElementById("password-input");
+    var newPasswordTextInput = document.getElementById("password-text-input");
+    togglePasswordVisibility(this.checked, newPasswordInput, newPasswordTextInput);
+
+    var confirmPasswordInput = document.getElementById("confirm-password-input");
+    var confirmPasswordTextInput = document.getElementById("confirm-text-input");
+    togglePasswordVisibility(this.checked, confirmPasswordInput, confirmPasswordTextInput);
+  });
+});
+
+function togglePasswordVisibility(isChecked, passwordInput, textInput) {
+  if (isChecked) {
+    passwordInput.style.display = "none";
+    textInput.style.display = "block";
+    textInput.value = passwordInput.value;
+  } else {
+    passwordInput.style.display = "block";
+    textInput.style.display = "none";
+    passwordInput.value = textInput.value;
+  }
+}
+</script>
+
+<section class= "edituser">
 <h1 style="color: #9025c0; border-bottom: 1px solid black; padding-bottom: 5px; width: fit-content; margin-bottom: 10px;">Editare informații cont</h1>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
@@ -12,27 +43,29 @@
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
-  <div class="field">
-  <h2 style="font-size:24px;margin-top: 30px;">Modificare parola</h2>
+
+  <div class="form-group">
   <%= f.label "Introdu parola curentă" %> <i>(scrie parola curentă)</i><br />
-  <%= f.password_field :current_password, autocomplete: "current-password" %>
+  <%= f.password_field :current_password, autocomplete: "current-password", id: "current-password-input", class: "form-control" %>
+  <%= f.text_field :current_password, autocomplete: "current-password", id: "current-text-input", style: "display: none;", class: "form-control" %>
+  <div class="form-group"><input type="checkbox" id="show-current-password"> Arată parola</div>
 </div>
 
-  <div class="field">
-    <%= f.label "Introdu parola nouă" %> <i>(lasa spatiu liber daca nu vrei sa modifici)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> caractere minim</em>
-    <% end %>
-  </div>
+<div class="form-group">
+  <%= f.label :password, "Parola nouă" %>
+  <% if @minimum_password_length %>
+    <em >(minim <%= @minimum_password_length %> caractere)</em>
+  <% end %>
+  <%= f.password_field :password, autofocus: false, autocomplete: "new-password", class: "form-control", id: "password-input" %>
+  <%= f.text_field :password, autofocus: false, autocomplete: "new-password", class: "form-control", id: "password-text-input", style: "display: none;" %>
+</div>
 
-  <div class="field">
-    <%= f.label "Confirmă parola nouă" %><i>(reintrodu parola nouă)</i><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+<div class="form-group">
+  <%= f.label "Confirmă parola nouă" %><i>(reintrodu parola nouă)</i><br />
+  <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", id: "confirm-password-input" %>
+  <%= f.text_field :password_confirmation, autocomplete: "new-password", class: "form-control", id: "confirm-text-input", style: "display: none;" %>
+</div>
 
-  
 
   <div class="actions">
     <%= f.submit "Actualizează parola" %>
