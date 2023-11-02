@@ -1,5 +1,3 @@
-
-
 <section class= "edituser">
 <h1 style="color: #9025c0; border-bottom: 1px solid black; padding-bottom: 5px; width: fit-content; margin-bottom: 10px;">Editare informații cont</h1>
 
@@ -19,7 +17,7 @@
   <%= f.label "Introdu parola curentă" %> <i>(scrie parola curentă)</i><br />
   <%= f.password_field :current_password, autocomplete: "current-password", id: "current-password-input", class: "form-control" %>
   <%= f.text_field :current_password, autocomplete: "current-password", id: "current-text-input", style: "display: none;", class: "form-control" %>
-  <div class="form-group"><input type="checkbox" id="show-current-password"> Arată parola</div>
+  <div class="form-group"><input type="checkbox" id="show-current-password"> <i>Arată parola</i></div>
 </div>
 
 <div class="form-group">
@@ -45,7 +43,7 @@
 
 <h3>Dezactiveaza contul</h3>
 
-<div><p>Dacă alegeți să dezactivați contul, nu veți mai avea acces la toate funcționalitățile site-ului, inclusiv cursuri, seminarii și alte resurse.</p><%= button_to "Dezactiveaza contul", set_inactive_user_path(current_user), method: :put, data: { confirm: "Are you sure you want to deactivate your account?" }, class: "button-class" %>
+<div style="border-bottom: 1px solid black; padding-bottom: 20px;"><p style="line-height:1.3;">Dacă alegeți să dezactivați contul, nu veți mai avea acces la toate funcționalitățile site-ului, inclusiv cursuri, seminarii și alte resurse.</p><%= button_to "Dezactiveaza contul", set_inactive_user_path(current_user), method: :put, data: { confirm: "Are you sure you want to deactivate your account?" }, class: "button-class" %>
 
 
 
