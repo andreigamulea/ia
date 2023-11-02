@@ -126,6 +126,9 @@ padding: 4px;
   .trdesk, .trmob{
     height: 40px;
   }
+  .desk th{
+    text-align: center;
+  }
   @media only screen and (min-width: 992px) {
     .trdesk{ display: table-row;
     }

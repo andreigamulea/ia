@@ -365,6 +365,8 @@ class PaginisitesController < ApplicationController
         @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
                                    .where(prod_id: mapare_valori.keys, validat: "Finalizata")
                                    .order("users.email", :comanda_id)
+     
+
       else
         @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
                                    .where(prod_id: mapare_valori.keys, validat: "Finalizata")
