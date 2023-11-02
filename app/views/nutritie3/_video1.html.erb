@@ -9,6 +9,8 @@
   <%= video.ordine - 2000 %>
   <%elsif video.ordine > 3000 && video.ordine < 4000%>  
   <%= video.ordine - 3000 %>
+  <%elsif video.ordine > 4000 && video.ordine < 5000%>  
+  <%= video.ordine - 4000 %>
   <% else %>
     <%= video.ordine %>
   <% end %>

@@ -3,8 +3,11 @@ class Nutritie3Controller < ApplicationController
     if !current_user
       redirect_to new_user_session_path and return
     end
+    if current_user.limba=='EN'
+    @myvideo = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
+    else  
     @myvideo = Video.where(tip: 'nutritie3').where('ordine <= ?', 1000).order(ordine: :asc)
-  
+    end  
     # Logic for @has_access
     @has_access = if current_user && current_user.role == 1
                     true
@@ -37,8 +40,11 @@ class Nutritie3Controller < ApplicationController
 
       # Filter videos based on the paid cod values
       # Preia codurile relevante din tabela `Video`
-      coduri_din_video = Video.where(tip: 'nutritie3').where('ordine < ?', 1000).pluck(:cod)
-
+      if current_user && current_user.limba=='EN'       
+        coduri_din_video = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
+      else  
+        coduri_din_video = Video.where(tip: 'nutritie3').where('ordine < ?', 1000).pluck(:cod)
+      end  
       # Calculează intersecția între codurile plătite și cele relevante
       relevant_cod_values = paid_cod_values & coduri_din_video
       @am_video=relevant_cod_values
