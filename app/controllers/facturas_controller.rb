@@ -98,7 +98,7 @@ class FacturasController < ApplicationController
     FileUtils.mkdir_p(temp_folder)
     
     # Extrageți facturile pe care doriți să le includeți
-    facturas = Factura.where(numar: 1011..1207)
+    facturas = Factura.where(numar: 1204..1542)
     
     # Generați PDF-uri pentru fiecare factură
     pdf_files = facturas.map do |factura|
