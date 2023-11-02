@@ -1,16 +1,16 @@
 
 <section class="tabel-container rotate-landscape">
-    <h1 class="alimente-nutritionale">Calculator Valori Nutritionale</h1>
+    <h1 class="alimente-nutritionale" id="CalculatorValoriNutritionale">Calculator Valori Nutritionale</h1>
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
                 <tr class= "trdesk">
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Servicii</th>                    
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Detalii</th>
                     
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret</th>
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
+                    <th style="height: 40px; vertical-align:middle; width: 14%;">Pret</th>
+                    <th style="height: 40px; vertical-align:middle; width: 12%;">Actiune</th>
                 </tr>      
             </thead>
             <tbody>
@@ -19,25 +19,25 @@
                         <td> <%= prod.nume %> </td>                        
                         <td><%= prod.detalii %></td> 
                         
-                         <td><%= prod.pret.to_i %> lei</td>
+                         <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
 
-                        <td> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
+                        <td style="text-align:center;"> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
                     </tr>  
                 <% end %>  
             </tbody>
         </table>
     </div>
-    <h1 class="alimente-nutritionale">Consultare Selectiva Lista Ingrediente Vegetale</h1>
+    <h1 class="alimente-nutritionale" id="ListaIngredienteVegetale">Consultare Selectiva Lista Ingrediente Vegetale</h1>
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
                 <tr class= "trdesk">
-                    <th  style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
-                    <th  style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
+                    <th  style="height: 40px; vertical-align:middle; width: 30%;">Servicii</th>                    
+                    <th  style="height: 40px; vertical-align:middle; width: 30%;">Detalii</th>
                     
-                    <th  style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret</th>
-                    <th  style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
+                    <th  style="height: 40px; vertical-align:middle; width: 14%;">Pret</th>
+                    <th  style="height: 40px; vertical-align:middle; width: 12%;">Actiune</th>
                 </tr>      
             </thead>
             <!-- Primul tbody pentru produsele cu pret = 0 -->
@@ -48,8 +48,8 @@
                                    
                 <td><%= prod.detalii %></td> 
                 
-                <td><%= prod.pret.to_i %> lei</td>
-                <td>
+                <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
+                <td style="text-align:center;">
                 <% if (current_user && current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) }) || (current_user && current_user.role == 1) %>
 
 
@@ -72,26 +72,26 @@
                         <td> <%= prod.nume %> </td>                        
                         <td><%= prod.detalii %></td> 
                         
-                         <td><%= prod.pret.to_i %> lei</td>
+                         <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
 
-                        <td> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
+                        <td style="text-align:center;"> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
                     </tr>  
                 <% end %>  
             </tbody>
         </table>
     </div>
 
-    <h1 class="alimente-nutritionale">Acces prezentari video din Tabara de Ayurveda 2023 etapa de vara  partea a 2-a </h1>
+    <h1 class="alimente-nutritionale" id="Tabara23VaraP2">Acces prezentari video din Tabara de Ayurveda 2023 etapa de vara  partea a 2-a </h1>
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
                 <tr class= "trdesk">
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Servicii</th>                    
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Detalii</th>
                     
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret</th>
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
+                    <th style="height: 40px; vertical-align:middle; width: 14%;">Pret</th>
+                    <th style="height: 40px; vertical-align:middle; width: 12%;">Actiune</th>
                 </tr>      
             </thead>
             <tbody>
@@ -102,9 +102,9 @@
                     </td>                      
                         <td><%= prod.detalii %></td> 
                         
-                         <td><%= prod.pret.to_i %> lei</td>
+                         <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
 
-                        <td> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
+                        <td style="text-align:center;"> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
                     </tr>  
                 <% end %>  
             </tbody>
@@ -114,17 +114,17 @@
 
     <% if @prods.any? { |prod| prod.id == 11 } && @prods.any? { |prod| prod.id == 12 } %>  
     <a name="nutritie-modul3"></a>
-    <h1 class="alimente-nutritionale">Acces Curs Nutritie Modulul 3 </h1>
+    <h1 class="alimente-nutritionale" id="Nutritie3">Acces Curs Nutritie Modulul 3 </h1>
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
                 <tr class= "trdesk">
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Servicii</th>                    
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Detalii</th>
                     
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret</th>
-                    <th style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
+                    <th style="height: 40px; vertical-align:middle; width: 14%;">Pret</th>
+                    <th style="height: 40px; vertical-align:middle; width: 12%;">Actiune</th>
                 </tr>      
             </thead>
             <tbody>
@@ -140,9 +140,9 @@
                 </td>
                  
                         
-                         <td><%= prod.pret.to_i %> lei</td>
+                         <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
 
-                         <td> 
+                         <td style="text-align:center;"> 
                          <% if prod.cod == "cod13" && Time.now.to_date <= Date.new(2023,9,20) %>
                              <%= button_to 'Inactiv', '#', class: 'btn btn-secondary', disabled: true %>
                          <% elsif prod.cod == "cod11" && Time.now.to_date >= Date.new(2023,9,21) %>
@@ -162,18 +162,16 @@
 
 
 
-
-
-<h1 class="alimente-nutritionale">Acces prezentari ZOOM Tabara de Ayurveda 2023 etapa de toamna  partile 1 si 2 </h1>
+<h1 class="alimente-nutritionale" id="Tabara23ToamnaP1P2">Acces prezentari ZOOM Tabara de Ayurveda 2023 etapa de toamna  partile 1 si 2 </h1>
 <div class="table-responsive">
 <table class="table table-striped table-bordered table-hover">
     <thead class="thead-dark">
         <tr class= "trdesk">
-            <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Servicii</th>                    
-            <th style="text-align: left; height: 50px; vertical-align:middle; width: 30%;">Detalii</th>
+            <th style="height: 40px; vertical-align:middle; width: 30%;">Servicii</th>                    
+            <th style="height: 40px; vertical-align:middle; width: 30%;">Detalii</th>
             
-            <th style="text-align: left; height: 50px; vertical-align:middle; width: 14%;">Pret</th>
-            <th style="text-align: left; height: 50px; vertical-align:middle; width: 12%;">Actiune</th>
+            <th style="height: 40px; vertical-align:middle; width: 14%;">Pret</th>
+            <th style="height: 40px; vertical-align:middle; width: 12%;">Actiune</th>
         </tr>      
     </thead>
         <tbody>
@@ -187,9 +185,9 @@
                                        
                     <td><%= prod.detalii %></td> 
                     
-                    <td><%= prod.pret.to_i %> lei</td>
+                    <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
           
-                    <td> 
+                    <td style="text-align:center;"> 
                         <% if (prod.cod == "cod40" || prod.cod == "cod42" || prod.cod == "cod44") && Time.now.to_date >= Date.new(2023,10,19) %>
                             <%= button_to 'Inactiv', '#', class: 'btn btn-secondary', disabled: true %>
                         <% else %>
@@ -208,13 +206,6 @@
 
     </table>
 </div>
-
-
-
-
-
-
-
 </section>
 
 

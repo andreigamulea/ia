@@ -1,3 +1,88 @@
+<style>
+.tabel-container {
+  max-width: 1280px; /* Lățimea maximă a tabelului */
+  margin: 0 auto; /* Centrează tabelul orizontal */
+}
+.table-responsive .table {
+  width: 100%; /* Se extinde pe toată lățimea containerului său */
+  table-layout: fixed; /* Fixează lățimea coloanelor */
+  word-wrap: break-word; /* Permite cuvintelor să se rupă și să treacă pe linia următoare */
+}
+
+.table-responsive .table th,
+.table-responsive .table td {
+  padding: 0.5rem; /* Reduceți padding-ul pentru a economisi spațiu */
+  white-space: normal; /* Permite textului să ocupe mai multe rânduri */
+  vertical-align: middle; /* Aliniază conținutul celulelor la mijloc pe verticală */
+  text-align: left; /* Aliniază textul la stanga */
+  min-width: 0; /* Setează o lățime minimă pentru coloane */
+  max-width: none; /* Permite coloanelor să se micșoreze până la conținutul lor */
+}
+/* Setări specifice pentru fiecare coloană */
+.table-responsive .table th:nth-child(1),
+.table-responsive .table td:nth-child(1) {
+  width: 5%; /* Nr. factura */
+}
+
+.table-responsive .table th:nth-child(2),
+.table-responsive .table td:nth-child(2) {
+  width: 5%; /* Nr. comandă */
+}
+
+.table-responsive .table th:nth-child(3),
+.table-responsive .table td:nth-child(3) {
+  width: 7%; /* Data emiterii */
+}
+
+.table-responsive .table th:nth-child(4),
+.table-responsive .table td:nth-child(4) {
+  width: 11%; /* Prenume */
+}
+
+
+
+.table-responsive .table th:nth-child(5),
+.table-responsive .table td:nth-child(5) {
+  width: 10%; /* Nume Companie */
+}
+
+.table-responsive .table th:nth-child(6),
+.table-responsive .table td:nth-child(6) {
+  width: 7%; /* CUI */
+}
+
+.table-responsive .table th:nth-child(7),
+.table-responsive .table td:nth-child(7) {
+  width: 7%; /* Țara */
+}
+
+.table-responsive .table th:nth-child(8),
+.table-responsive .table td:nth-child(8) {
+  width: 6%; /* Localitate */
+}
+
+.table-responsive .table th:nth-child(9),
+.table-responsive .table td:nth-child(9) {
+  width: 8%; /* Strada */
+}
+
+.table-responsive .table th:nth-child(10),
+.table-responsive .table td:nth-child(10) {
+  width: 20%; /* Descrierea produsului */
+}
+
+.table-responsive .table th:nth-child(11),
+.table-responsive .table td:nth-child(11) {
+  width: 5%; /* Valoare Totală */
+}
+
+.table-responsive .table th:nth-child(12),
+.table-responsive .table td:nth-child(12) {
+  width: 9%; /* Opțiuni */
+}
+</style>
+
+
 
 <section class="tabel-container .rotate-landscape">
 <h1 class="my-4">Facturi</h1>
@@ -15,8 +100,7 @@
       <th style="text-align: center; height: 50px; vertical-align:middle;">Nr factura</th>
       <th style="text-align: center; height: 50px; vertical-align:middle;">Nr comanda</th>
       <th style="text-align: center; height: 50px; vertical-align:middle;">Data Emiterii</th>
-      <th style="text-align: center; height: 50px; vertical-align:middle;">Prenume</th>
-      <th style="text-align: center; height: 50px; vertical-align:middle;">Nume</th>
+      <th style="text-align: center; height: 50px; vertical-align:middle;">Nume si Prenume</th>
       <th style="text-align: center; height: 50px; vertical-align:middle;">Nume Companie</th>
       <th style="text-align: center; height: 50px; vertical-align:middle;">CUI</th>
       <%if current_user.role==1%>
@@ -41,9 +125,8 @@
         <td><%= factura.numar %></td>
         <td><%= factura.numar_comanda %></td>
         <td><%= factura.data_emiterii %></td>
-        <td><%= factura.prenume %></td>
-        <td><%= factura.nume %></td>
-        <td><%= factura.nume_companie %></td>
+        <td><%= factura.nume %> <%= factura.prenume %></td>
+         <td><%= factura.nume_companie %></td>
         <td><%= factura.cui %></td>
         <%if current_user.role==1%>
         <td><%= factura.tara %></td>
