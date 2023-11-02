@@ -170,7 +170,7 @@ class CursuriayurvedasController < ApplicationController
     else
       puts "Luna curenta are prioritate fata de ultima luna platita."
     end
-      #stop1 aici tratez situatia cand sa aiba acces la link ZOOM
+      ##stop1 aici tratez situatia cand sa aiba acces la link ZOOM
 
       # Obții toate codurile videourilor cu tipul 'an1'
       video_coduri = Video.where(tip: 'an1').pluck(:cod)
