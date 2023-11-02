@@ -1,33 +1,4 @@
-<script>
-document.addEventListener("turbo:load", function() {
-  // Pentru parola curentă
-  document.getElementById("show-current-password").addEventListener("change", function() {
-    var currentPasswordInput = document.getElementById("current-password-input");
-    var currentTextInput = document.getElementById("current-text-input");
-    togglePasswordVisibility(this.checked, currentPasswordInput, currentTextInput);
 
-    var newPasswordInput = document.getElementById("password-input");
-    var newPasswordTextInput = document.getElementById("password-text-input");
-    togglePasswordVisibility(this.checked, newPasswordInput, newPasswordTextInput);
-
-    var confirmPasswordInput = document.getElementById("confirm-password-input");
-    var confirmPasswordTextInput = document.getElementById("confirm-text-input");
-    togglePasswordVisibility(this.checked, confirmPasswordInput, confirmPasswordTextInput);
-  });
-});
-
-function togglePasswordVisibility(isChecked, passwordInput, textInput) {
-  if (isChecked) {
-    passwordInput.style.display = "none";
-    textInput.style.display = "block";
-    textInput.value = passwordInput.value;
-  } else {
-    passwordInput.style.display = "block";
-    textInput.style.display = "none";
-    passwordInput.value = textInput.value;
-  }
-}
-</script>
 
 <section class= "edituser">
 <h1 style="color: #9025c0; border-bottom: 1px solid black; padding-bottom: 5px; width: fit-content; margin-bottom: 10px;">Editare informații cont</h1>
@@ -83,3 +54,33 @@ function togglePasswordVisibility(isChecked, passwordInput, textInput) {
 
 <span class="inapoi"><%= link_to "Înapoi", :back %></span>
 </section>
+<script>
+document.addEventListener("turbo:load", function() {
+  // Pentru parola curentă
+  document.getElementById("show-current-password").addEventListener("change", function() {
+    var currentPasswordInput = document.getElementById("current-password-input");
+    var currentTextInput = document.getElementById("current-text-input");
+    togglePasswordVisibility(this.checked, currentPasswordInput, currentTextInput);
+
+    var newPasswordInput = document.getElementById("password-input");
+    var newPasswordTextInput = document.getElementById("password-text-input");
+    togglePasswordVisibility(this.checked, newPasswordInput, newPasswordTextInput);
+
+    var confirmPasswordInput = document.getElementById("confirm-password-input");
+    var confirmPasswordTextInput = document.getElementById("confirm-text-input");
+    togglePasswordVisibility(this.checked, confirmPasswordInput, confirmPasswordTextInput);
+  });
+});
+
+function togglePasswordVisibility(isChecked, passwordInput, textInput) {
+  if (isChecked) {
+    passwordInput.style.display = "none";
+    textInput.style.display = "block";
+    textInput.value = passwordInput.value;
+  } else {
+    passwordInput.style.display = "block";
+    textInput.style.display = "none";
+    passwordInput.value = textInput.value;
+  }
+}
+</script>
