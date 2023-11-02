@@ -93,6 +93,7 @@ padding: 4px;
       background-color: #64025e;
       color: #fff;
       padding: 3px 10px;
+      margin: 2px;
   }
   
   @media only screen and (min-width: 992px) {
@@ -122,6 +123,9 @@ padding: 4px;
     display: inline-flex;
     align-items: center;
   }
+  .trdesk, .trmob{
+    height: 40px;
+  }
   @media only screen and (min-width: 992px) {
     .trdesk{ display: table-row;
     }
@@ -136,6 +140,9 @@ padding: 4px;
       text-align: center;
     }
     .trmob{display:table-row;
+    }
+    .trdesk{
+      display: none;
     }
   }
   .tabel-container input[type="number"] {
@@ -221,3 +228,4 @@ padding: 4px;
 .nutritie .button a:hover {
   box-shadow: 0 5px 8px rgba(0,0,0,0.3);
   }
+
