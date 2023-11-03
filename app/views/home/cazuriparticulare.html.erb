@@ -27,3 +27,6 @@ Apoi apas butonul Preluare in useriprod user_id cu prod_id  Tabela adaugauseri.x
 <p>Apoi in  df=Detaliifacturare.find_by(user_id: 762)  si am schimbat user_id pentru ca datele de facturare sa fie asociate 
 cu userul care trebuie: irb(main):010:0> df.update(user_id: 557) </p>
 <p>Trebuie schimbat si user_id de la 762 la 557 in tabela Factura pt ca factura sa fie asociata cu 557 Enjoy!</p>
+<h2>6. Cineva a cumparat un produs acces la un video dar in loc sa ia in limba romana a luat in engleza. Pretul fiind acelasi si pt RO si pt EN</h2>
+<p>Trebuie modificat prod_id din ComenziProd  cu prod_id al produsului cu video in RO. Atat!!</p>
+<p>Ex: cp=ComenziProd.find_by(comanda_id: 727) cp.update(prod_id: 55) Enjoy!</p>
