@@ -513,74 +513,97 @@ class PaginisitesController < ApplicationController
           monthly_payments_summary[payment] += amount
         end
       end
-     # ...
+     
+      headers = ['e-mail USER', 'Nume USER', 'Telefon USER', 'email din FACTURA', 'Nume din FACTURA',
+      'Telefon din FACTURA', 'inscriere', 'an cu reducere', 'octombrie 2023', 'noiembrie 2023',
+      'decembrie 2023', 'ianuarie 2024', 'februarie 2024', 'martie 2024', 'aprilie 2024',
+      'mai 2024', 'iunie 2024', 'iulie 2024']
+
      workbook = RubyXL::Workbook.new
      worksheet = workbook[0]
-headers = ['e-mail USER', 'Nume USER', 'Telefon USER', 'email din FACTURA', 'Nume din FACTURA',
-'Telefon din FACTURA', 'inscriere', 'an cu reducere', 'octombrie 2023', 'noiembrie 2023',
-'decembrie 2023', 'ianuarie 2024', 'februarie 2024', 'martie 2024', 'aprilie 2024',
-'mai 2024', 'iunie 2024', 'iulie 2024']
-
-# ...
-
-user_payments.each_with_index do |(email, payments), row|
-user = User.find_by(email: email)
-
-factura = Factura.find_by(user_id: user.id)
-puts("da1")
-if factura.comanda.try(:adresa_comenzi).nil?
-  puts("da2")
-  detalii_factura = Detaliifacturare.find_by(user_id: factura.user_id)
-  puts("da3")
-  if detalii_factura
-    puts("da4")
-    nume = detalii_factura.nume
-    prenume = detalii_factura.prenume
-    telefon = detalii_factura.telefon
-    email = factura.user.email
-  
-  else
-    puts("da5")
-    # Aici puteți trata cazul în care nu există nici o detaliifacturares pentru acel user
-  end
-else
-  puts("da6")
-  adresa = factura.comanda.adresa_comenzi
-end
+     headers.each_with_index do |header, col_index|
+      worksheet.add_cell(0, col_index, header)
+    end
 
 
 
-worksheet.add_cell(row + 1, 0, user.email)
-worksheet.add_cell(row + 1, 1, user.name)
-worksheet.add_cell(row + 1, 2, user.telefon || "N/A") # În cazul în care telefonul este nil
+    user_payments.each_with_index do |(email, payments), row|
+      user = User.find_by(email: email)
+      factura = Factura.find_by(user_id: user.id)
 
-# Alegeți rândurile potrivite dintre cele de mai jos în funcție de sursa detaliilor
-worksheet.add_cell(row + 1, 3, factura&.adresa_comenzi&.email || adresa&.email || "N/A")
+      if factura.comanda_id.present?
+        adresa_comenzi = AdresaComenzi.find_by(comanda_id: factura.comanda_id)
 
-worksheet.add_cell(row + 1, 4, "#{factura&.prenume} #{factura&.nume}" || "#{adresa&.prenume} #{adresa&.nume}" || "N/A")
-worksheet.add_cell(row + 1, 5, adresa&.telefon || "N/A")
+        if adresa_comenzi.nil?
+          detalii_factura = Detaliifacturare.find_by(user_id: factura.user_id)
+          if detalii_factura
+            nume = detalii_factura.nume
+            prenume = detalii_factura.prenume
+            telefon = detalii_factura.telefon
+            email = factura.user.email
+          end
+        else
+          nume = adresa_comenzi.nume
+          prenume = adresa_comenzi.prenume
+          telefon = adresa_comenzi.telefon
+          email = adresa_comenzi.email
+        end
+      end
 
-# Adăugați valorile de plată
-(6..17).each do |col|
-payment_header = headers[col]
-value = payments[payment_header] || 0
-worksheet.add_cell(row + 1, col, value)
-end
-end
+      worksheet.add_cell(row + 1, 0, user.email)
+      worksheet.add_cell(row + 1, 1, user.name)
+      worksheet.add_cell(row + 1, 2, telefon || "N/A")
+      worksheet.add_cell(row + 1, 3, email || "N/A")
+      worksheet.add_cell(row + 1, 4, "#{prenume} #{nume}" || "N/A")
+      worksheet.add_cell(row + 1, 5, telefon || "N/A")
+
+      # Populate product values
+      comenzi_for_user = ComenziProd.where(user_id: user.id, prod_id: mapare_coduri_id.values, validat: "Finalizata")
+
+      # initialize all payments to 0
+      values = Array.new(12, 0)
+
+      has_cod15 = comenzi_for_user.where(prod_id: mapare_coduri_id['cod15']).exists?
+
+      comenzi_for_user.each do |comanda|
+        cod = Prod.find(comanda.prod_id).cod
+        pret = Prod.find(comanda.prod_id).pret
+      
+        case cod
+        when 'cod14'
+          values[0] = pret
+        when 'cod15'
+          values[1] = pret
+          values.fill(180, 2..10) if has_cod15 # 2 to 10 for cod16 to cod24
+          values[11] = "gratuit" if has_cod15 # 11 for cod25
+        else
+          # Dacă utilizatorul nu are cod15, vom decrementa indexul cu 1 pentru cod16 și codurile ulterioare
+          index_shift = has_cod15 ? 0 : 1
+          index = cod.slice(3..).to_i - 14 + 1 - index_shift
+          values[index] = pret if index < 12 && values[index] == 0
+        end
+      end
+      
+      values.each_with_index do |value, index|
+        worksheet.add_cell(row + 1, 6 + index, value == 0 ? nil : value)
+      end
+      
+
+    end
  
-file_path = Rails.root.join('tmp', "comenzi_prod_#{Time.now.to_i}.xlsx")
-workbook.write(file_path)
-send_file(file_path)
-ensure
-# Cleanup the temporary file
-#File.delete(file_path) if File.exist?(file_path)
-end
-rescue => e
-# Handle any exception and possibly notify the user or log the error
-logger.error "Error generating Excel: #{e.message}"
-redirect_to root_path, alert: "There was an error generating the report. Please try again later."
-end
+    file_path = Rails.root.join('tmp', "comenzi_prod_#{Time.now.to_i}.xlsx")
+    workbook.write(file_path)
+    send_file(file_path)
 
+  ensure
+    # Cleanup the temporary file
+    # File.delete(file_path) if File.exist?(file_path)
+  end
+rescue => e
+  # Handle any exception and possibly notify the user or log the error
+  logger.error "Error generating Excel: #{e.message}"
+  redirect_to root_path, alert: "There was an error generating the report. Please try again later."
+end
   
 
 
