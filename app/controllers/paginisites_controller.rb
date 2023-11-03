@@ -451,10 +451,137 @@ class PaginisitesController < ApplicationController
     logger.error "Error generating Excel: #{e.message}"
     redirect_to root_path, alert: "There was an error generating the report. Please try again later."
   end
+
+
+ 
+
+
+
+  def export_to_xlsx_summary
+    begin
+      # Define lunile if it's not already set somewhere else
+      lunile = ['Octombrie 2023', 'Noiembrie 2023', 'Decembrie 2023', 'Ianuarie 2024', 'Februarie 2024', 'Martie 2024', 'Aprilie 2024', 'Mai 2024', 'Iunie 2024', 'Iulie 2024']
+      coduri = (14..25).to_a.map { |num| "cod#{num}" }
+      produse = Prod.where(cod: coduri)
+      mapare_coduri_id = produse.map { |prod| [prod.cod, prod.id] }.to_h
+      
+      user_ids = ComenziProd.where(prod_id: mapare_coduri_id.values, validat: "Finalizata").distinct.pluck(:user_id)
+      users = User.where(id: user_ids)
+      
+      # Inițializăm un hash pentru a ține evidența plăților utilizatorilor
+      user_payments = {}
+      
+      users.each do |user|
+        user_plati = ComenziProd.where(user_id: user.id, prod_id: mapare_coduri_id.values, validat: "Finalizata")
+      
+        # Inițializăm datele pentru utilizator
+        user_payments[user.email] ||= { 'Inscriere' => 0, 'An cu reducere' => 0 }
+      
+        user_plati.each do |plata|
+          cod_produs = mapare_coduri_id.key(plata.prod_id)
+          
+          # Verificăm dacă codul produsului a fost deja procesat pentru acest utilizator
+          next if user_payments[user.email].key?(cod_produs)
+      
+          case cod_produs
+          when 'cod14'
+            user_payments[user.email]['Inscriere'] += 60
+          when 'cod15'
+            user_payments[user.email]['An cu reducere'] += 1620
+            lunile[0..5].each { |luna| user_payments[user.email][luna] = 180 } # Iunie 2023 inclusiv
+            user_payments[user.email]['Iulie 2023'] = 'Gratuit'
+          else # Pentru coduri de la cod16 la cod25
+            # Calculăm indexul lunii pe baza codului produsului
+            index_luna = cod_produs.slice(3..).to_i - 16 + 9 # +9 pentru a începe de la Octombrie 2023
+            luna_corespondenta = lunile[index_luna]
+            user_payments[user.email][luna_corespondenta] = 180 if luna_corespondenta # Adăugăm plata dacă luna există
+          end
+      
+          # Marcăm codul produsului ca fiind procesat pentru acest utilizator
+          user_payments[user.email][cod_produs] = true
+        end
+      end
+      
+      # La final, user_payments va conține toate plățile utilizatorilor
+      
+        
+        
+      monthly_payments_summary = Hash.new(0)
+      user_payments.each do |email, payments|
+        payments.each do |payment, amount|
+          next unless lunile.include?(payment)
+          monthly_payments_summary[payment] += amount
+        end
+      end
+     # ...
+     workbook = RubyXL::Workbook.new
+     worksheet = workbook[0]
+headers = ['e-mail USER', 'Nume USER', 'Telefon USER', 'email din FACTURA', 'Nume din FACTURA',
+'Telefon din FACTURA', 'inscriere', 'an cu reducere', 'octombrie 2023', 'noiembrie 2023',
+'decembrie 2023', 'ianuarie 2024', 'februarie 2024', 'martie 2024', 'aprilie 2024',
+'mai 2024', 'iunie 2024', 'iulie 2024']
+
+# ...
+
+user_payments.each_with_index do |(email, payments), row|
+user = User.find_by(email: email)
+
+factura = Factura.find_by(user_id: user.id)
+puts("da1")
+if factura.comanda.try(:adresa_comenzi).nil?
+  puts("da2")
+  detalii_factura = Detaliifacturare.find_by(user_id: factura.user_id)
+  puts("da3")
+  if detalii_factura
+    puts("da4")
+    nume = detalii_factura.nume
+    prenume = detalii_factura.prenume
+    telefon = detalii_factura.telefon
+    email = factura.user.email
   
+  else
+    puts("da5")
+    # Aici puteți trata cazul în care nu există nici o detaliifacturares pentru acel user
+  end
+else
+  puts("da6")
+  adresa = factura.comanda.adresa_comenzi
+end
 
 
 
+worksheet.add_cell(row + 1, 0, user.email)
+worksheet.add_cell(row + 1, 1, user.name)
+worksheet.add_cell(row + 1, 2, user.telefon || "N/A") # În cazul în care telefonul este nil
+
+# Alegeți rândurile potrivite dintre cele de mai jos în funcție de sursa detaliilor
+worksheet.add_cell(row + 1, 3, factura&.adresa_comenzi&.email || adresa&.email || "N/A")
+
+worksheet.add_cell(row + 1, 4, "#{factura&.prenume} #{factura&.nume}" || "#{adresa&.prenume} #{adresa&.nume}" || "N/A")
+worksheet.add_cell(row + 1, 5, adresa&.telefon || "N/A")
+
+# Adăugați valorile de plată
+(6..17).each do |col|
+payment_header = headers[col]
+value = payments[payment_header] || 0
+worksheet.add_cell(row + 1, col, value)
+end
+end
+ 
+file_path = Rails.root.join('tmp', "comenzi_prod_#{Time.now.to_i}.xlsx")
+workbook.write(file_path)
+send_file(file_path)
+ensure
+# Cleanup the temporary file
+#File.delete(file_path) if File.exist?(file_path)
+end
+rescue => e
+# Handle any exception and possibly notify the user or log the error
+logger.error "Error generating Excel: #{e.message}"
+redirect_to root_path, alert: "There was an error generating the report. Please try again later."
+end
+
+  
 
 
 
