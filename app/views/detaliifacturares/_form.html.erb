@@ -94,7 +94,8 @@
   <%= f.label "Email*", class: "form-label" %>
 
 
-    <%= f.text_field :adresaemail, class: "form-control", value: f.object.adresaemail.presence || current_user.email %>
+    
+    <%= f.text_field :adresaemail, class: "form-control", value: f.object.adresaemail.presence || current_user.email, readonly: true %>
 
   </div>
 
