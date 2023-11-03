@@ -176,7 +176,7 @@
     </thead>
         <tbody>
         <% @prod_tayt12.select{ |prod| prod.curslegatura == 'tayt12' && prod.pret > 0 }.each do |prod| %>
-            <% if prod.cod != "cod48" || (current_user && prod.cod == "cod48" && current_user.email == "aaa@gmail.com") %>
+            <% if prod.cod != "cod48" || (current_user && prod.cod == "cod48" && current_user.email == "gabriela_georgeta@yahoo.com") %>
           
             <% if prod.cod != "cod54" || (current_user && (has_purchased_product?(current_user, @prod_tayt12) || current_user.role==1)) %>
 

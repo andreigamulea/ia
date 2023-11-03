@@ -72,7 +72,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get '/plata_tayv2/export', to: 'paginisites#export_to_xlsx_plata_tayv2', as: 'export_plata_tayv2'
   get '/plata_tayt12/export', to: 'paginisites#export_to_xlsx_plata_tayt12', as: 'export_plata_tayt12'
   get '/plata_an1/export', to: 'paginisites#export_to_xlsx_plata_an1', as: 'export_plata_an1'
-
+  get '/plata_an1/summary_export', to: 'paginisites#export_to_xlsx_summary', as: 'export_to_xlsx_summary'
 
   get '/paginisites/:id/statistici_utilizator', to: 'paginisites#statistici_utilizator', as: 'statistici_utilizator_paginisite'
   resources :statistics, only: [:index]

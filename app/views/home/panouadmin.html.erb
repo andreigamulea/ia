@@ -103,7 +103,8 @@ h1.display-4{
     <%= link_to "Export fisier xlsx plata An 1 dupa email", export_plata_an1_path(order_by: 'email'), class: "btn btn-secondary" %></br></br>
     <%= link_to "Export fisier xlsx plata An 1 dupa data", export_plata_an1_path(order_by: 'created_at'), class: "btn btn-secondary" %></br></br>
     <%= link_to "Export fisier xlsx plata An 1 care au platit doar 60 lei", export_plata_an1_path(order_by: 'email_unique'), class: "btn btn-secondary" %></br></br></br>
-
+    <%= link_to "Export tabel cu platile fiecarui user pe an 1", export_to_xlsx_summary_path(order_by: 'situatie_user'), class: "btn btn-secondary" %></br></br>
+   
     <%= link_to "Export fisier xlsx plata Tabara Ayurveda etapa de vara p2", export_plata_tayv2_path, class: "btn btn-secondary" %></br></br>
     <%= link_to "Export fisier xlsx plata Tabara Ayurveda etapa de toamna p1+2", export_plata_tayt12_path, class: "btn btn-secondary" %></br></br>
     <%= link_to "Exporta Toate Facturile - un singur pdf cu toate facturile (nerecomandat)", download1_factura_path(format: 'pdf'), class: "btn btn-secondary" %></br></br>
