@@ -33,17 +33,24 @@ class Nutritie3Controller < ApplicationController
       # Logic for @myvideo2
     if @has_access1
       # Get the cod values from the Prod model based on the user's purchases
-      
+      puts("da are acces1")
       paid_cod_values = ComenziProd.joins(:prod).where(user_id: current_user.id).where('comenzi_prods.datasfarsit >= ?', Date.today).pluck("prods.cod").uniq
-
+      puts("paid_cod_values: #{paid_cod_values}")
+      puts("da are acces2")
       
 
       # Filter videos based on the paid cod values
       # Preia codurile relevante din tabela `Video`
-      if current_user && current_user.limba=='EN'       
-        coduri_din_video = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
+      if current_user && current_user.limba=='EN'    
+        puts("da are acces3")   
+        
+        coduri_din_video = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc).pluck(:cod)
+        puts("coduri_din_video: #{coduri_din_video}") 
       else  
+        puts("da are acces4")  
         coduri_din_video = Video.where(tip: 'nutritie3').where('ordine < ?', 1000).pluck(:cod)
+        puts("coduri_din_video: #{coduri_din_video}") 
+        puts("da are acces5")
       end  
       # Calculează intersecția între codurile plătite și cele relevante
       relevant_cod_values = paid_cod_values & coduri_din_video
