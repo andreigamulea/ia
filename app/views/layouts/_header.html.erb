@@ -134,6 +134,10 @@
                         <% end %>
                         <li><%= link_to 'Delogare', destroy_user_session_path, class: 'nav-item', id: 'logout_link',  data: { turbo_action: 'replace', turbo_method: 'delete' } %></li>
                 
+                        <% if current_user && current_user.role==1 %>
+                        <li><%= link_to 'Pagina noua', home_index1_path, class: 'nav-item' %></li>
+                        <% end %>
+
                     </ul>
                 </li>
 
