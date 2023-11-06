@@ -82,6 +82,8 @@ class ApplicationController < ActionController::Base
           tayv2_path # Înlocuiește cu calea corespunzătoare  taxainscriere
         elsif return_to == "taxainscriere" 
           cursayurveda_path
+        elsif return_to == "tri" 
+          tayt12_transport_international_path(return_to: 'tri')
         elsif return_to == "link1"
           # Cod pentru cazul în care sursa este link1
           video_link_path # Înlocuiește cu calea corespunzătoare pentru link1

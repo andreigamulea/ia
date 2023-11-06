@@ -1,6 +1,7 @@
 Rails.application.routes.draw do  
   get 'tayt12/index'
-  get 'tayt12/transport_international', to: 'tayt12#transport_international'
+  
+  get 'tayt12/transport_international/:return_to', to: 'tayt12#transport_international', as: :tayt12_transport_international
   get 'video/link/:return_to', to: 'videos#linkocazional', as: 'video_link', defaults: { return_to: 'default' }
 
 
