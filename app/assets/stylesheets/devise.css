@@ -5,6 +5,8 @@
 }
 .login h1{
     padding: 35px 0 35px 0;
+    color: #9025c0;
+    font-size: 35px;
 }
 .login * {
     box-sizing: border-box;
