@@ -7,7 +7,7 @@ class VideosController < ApplicationController
   before_action :set_user2, only: %i[myvideo2] #este pt nutritie3
   before_action :set_user3, only: %i[myvideo3] #este pt an1
   before_action :set_user4, only: %i[myvideo4] #este pt tayt12
-  
+  before_action :set_user4, only: %i[myvideo5] #este pt tayt122 folosesc tot set_user4 pt ca e aceeasi plata si la tayt12 si la tayt122
   before_action :require_admin, only: %i[index new edit update create]
   # GET /videos or /videos.json
   def index
@@ -70,6 +70,31 @@ end
 
 
   end
+  def tayt122
+    @prod_tayt12 = Prod.where(curslegatura: 'tayt12').order(:cod)
+    #@myvideo = Video.where(tip: 'tayt12').order(ordine: :asc)
+    @myvideo = Video.where(tip: 'tayt12').where("ordine < ?", 1000).order(ordine: :asc)
+    
+    #@myvideo2 = Video.where(tip: 'tayt12').where("ordine > ?", 1000).order(ordine: :asc)
+    if current_user && current_user.limba=="EN"
+      @myvideo2 = Video.where(tip: 'tayt12').where("ordine > ? AND ordine < ?", 2000, 3000).order(ordine: :asc)
+    else  
+      @myvideo2 = Video.where(tip: 'tayt12').where("ordine > ? AND ordine < ?", 1000, 2000).order(ordine: :asc)
+    end  
+
+    if current_user
+      @has_access = current_user.role == 1 || ComenziProd.joins(:prod)
+      .where(user_id: current_user.id, prods: { cod: ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] }, validat: "Finalizata").exists?
+            
+    else
+      @has_access=false
+    end  
+    #@has_access_cursuri = ComenziProd.exists?(user_id: current_user.id, prod_id: 56)
+    #verific daca userul poate vedea videourile taberei(a platit?)
+    @has_access_cursuri = current_user && (current_user.role == 1 || ComenziProd.exists?(user_id: current_user.id, prod_id: 56))
+
+
+  end
   ############################ in metoda de mai jos sunt pt nutritie3 
   #daca vreau pt alte cursuri duplic metoda de mai jos fara view 
   #foloseste ca view myvideo1.html.erb care e folosit si la tayv2
@@ -87,6 +112,11 @@ end
     render 'myvideo1'
   end
   def myvideo4 #pt tayt12
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo5 #pt tayt122
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'

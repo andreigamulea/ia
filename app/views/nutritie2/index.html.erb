@@ -1,5 +1,9 @@
 <section class="c1">
+<% if current_user && @has_access %>
 <h1 class="ch1">Bun venit la Programul de pregătire: Nutritie Ayurvedică modulul 2</h1>
+<%else%>
+<h1 class="ch1"></h1>
+<%end%>
     <% if current_user && @has_access %>
         <h2 style= "text-align: center;padding: 0 10px;">Resurse</h2></br>
 
