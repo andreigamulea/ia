@@ -1,0 +1,241 @@
+.container {
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    max-width:1920px;
+    margin: 0 auto;
+    
+ }
+ #first-page h1{
+     font-size: 16px;
+     text-align: right;
+ }
+ .cl,
+ .cr {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+ }
+ 
+ .cl {
+    width: 25%;
+    box-sizing: border-box;
+    margin: 0 10px 0 0;
+    border-right: 2px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #f5f5f5;
+ }
+ 
+ .cl h2 {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    margin: -20px 0 0 0;
+ }
+ 
+ .cl h2:first-of-type {
+    margin-top: -20px;
+ }
+ 
+ .cl a.alink {
+    display: block;
+    padding: 5px 7px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    color: #4B0082;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;
+ }
+ 
+ .cl a.alink:hover {
+    background-color: rgb(15 32 255 / 18%);
+    color: black;
+ }
+ 
+ .cl .tl {
+    border-bottom: 2px solid rgb(100, 2, 94);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+ }
+ 
+ .cr {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 10px;
+ }
+ 
+ .cr .cr-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #4B0082;
+    margin-bottom: 15px;
+    text-align: left;
+    border-bottom: 1px solid #4B0082;
+    padding-bottom: 10px;
+    margin-top: 50px;
+ }
+ .cr .cr-title:nth-of-type(1) {
+    margin-top: 20px;
+ }
+ 
+ .line {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+ }
+ 
+ .col {
+    display: flex;
+    flex-direction: column;
+    width: 33.3%;
+    margin: 0px;
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    border: 1px solid #64025e1a;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-color: rgb(255 255 255 / 97%);
+    background-blend-mode: screen;
+ }
+ 
+ .col:hover {
+    transform: translateY(-5px);
+ }
+ 
+ .tl {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: rgb(100, 2, 94);
+    margin-bottom: 10px;
+    margin-top: 20px;
+    text-transform: uppercase;
+ }
+ 
+ .desc {
+    flex: 1;
+    margin-top: 5px;
+    font-size: 18px;
+    line-height: 1.3;
+    color: #333;
+ }
+ 
+ .btn-fp {
+    margin-top: auto;
+    display: inline-flex;
+    margin-top: 15px;
+    margin-bottom: 10px;
+ }
+ 
+ .btn-fp a {
+    background-color: rgb(100, 2, 94);
+    color: white;
+    font-size: 16px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 4px;
+    padding: 8px 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    text-align: center;
+ }
+ 
+ .btn-fp a:hover {
+    background-color: rgb(80, 2, 74);
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 8px;
+ }
+ 
+ .main-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #4B0082;
+    margin-bottom: 20px;
+    text-align: left;
+    padding: 10px 0px;
+  }
+  
+ .first-tittle {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 0px;
+ }
+ 
+ .cr-title:nth-of-type(2)::before {
+    content: "\1F388";
+    margin-right: 8px;
+ }
+ 
+ .cr-title:nth-of-type(3)::before {
+    content: "\26FA";
+    margin-right: 8px;
+ }
+ 
+ .cr .cr-title:nth-of-type(4)::before {
+    content: "\1F4DA";
+    margin-right: 8px;
+ }
+ 
+ @media (max-width: 920px) {
+    .container {
+       flex-direction: column;
+       align-items: stretch;
+       padding:0;
+    }
+    #first-page h1{
+     font-size: 25px;
+     text-align: center;
+     margin-top:25px;
+    }
+ 
+    .cl,.cr {
+       width: auto;
+       margin: 0px;
+       padding:0;
+    }
+    .cl{
+     display:none;
+    }
+ 
+    .cl {
+       margin-bottom: 0;
+       border-right: none;
+       padding-right: 0;
+    }
+    .cr{
+     align-items: center;
+    }
+    .line {
+       flex-direction: column;
+       gap: 10px;
+    }
+ 
+    .col {
+       width: auto;
+       padding: 10px;
+       align-items: center;
+       text-align: center;
+    }
+ 
+    .tl {
+       text-align: center;
+       font-size: 1.2em;
+    }
+    .main-title {
+        text-align:center;
+    }
+    .desc {
+       font-size: 14px;
+    }
+ 
+    .btn-fp a {
+       font-size: 14px;
+    }
+ }
