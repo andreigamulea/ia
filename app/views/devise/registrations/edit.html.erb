@@ -8,12 +8,13 @@
     <b>Email: </b><%=current_user.email %>
 
   </div>
-
+  
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
-
+  <h3 style="color: #9025c0; padding-top: 30px;">Modifică parola</h3>
   <div class="form-group">
+ 
   <%= f.label "Introdu parola curentă" %> <i>(scrie parola curentă)</i><br />
   <%= f.password_field :current_password, autocomplete: "current-password", id: "current-password-input", class: "form-control" %>
   <%= f.text_field :current_password, autocomplete: "current-password", id: "current-text-input", style: "display: none;", class: "form-control" %>
