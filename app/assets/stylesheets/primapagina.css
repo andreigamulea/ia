@@ -52,9 +52,10 @@
  }
  
  .cl a.alink:hover {
-    background-color: rgb(15 32 255 / 18%);
+    background-color: rgba(15, 32, 255, 0.18);
     color: black;
- }
+}
+
  
  .cl .tl {
     border-bottom: 2px solid rgb(100, 2, 94);
@@ -104,7 +105,8 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: top;
-    background-color: rgb(255 255 255 / 97%);
+    background-color: rgba(255, 255, 255, 0.97);
+
     background-blend-mode: screen;
  }
  
