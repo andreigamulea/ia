@@ -184,6 +184,10 @@
     content: "\1F4DA";
     margin-right: 8px;
  }
+ .cr .cr-title:nth-of-type(5)::before {
+   content: "\1F343";
+   margin-right: 8px;
+}
  
  @media (max-width: 920px) {
     .container {
