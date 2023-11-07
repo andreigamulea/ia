@@ -2,15 +2,17 @@
 <div class="cl">
 
     <p class="tl">Cursuri</p>
-    <h2><a class="alink" href="<%= cursayurveda_path %>">Curs de Ayurveda octombrie 2023 - iulie 2024</a></h2>
+    <h2>
+    
+    <a class="alink" href="<%= cursayurveda_path %>">Curs de Ayurveda octombrie 2023 - iulie 2024</a>
 
     
-    <h2> <% if current_user && (current_user.role == 1 || (current_user.role == 0 && ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod12", "cod11", "cod13"] }).exists?)) %>
+    <% if current_user && (current_user.role == 1 || (current_user.role == 0 && ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod12", "cod11", "cod13"] }).exists?)) %>
   <%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 3', nutritie3_path, class: 'alink' %>
 <% else %>
   <%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 3', new_user_session_path(return_to: 'nutritie3'), class: 'alink' %>
-<% end %></h2>
-<h2>
+<% end %>
+
 <% if current_user && (current_user.role == 1 || current_user.nutritieabsolvit == 2) %>
   <%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 2', nutritie2_path, class: 'alink' %>
 <% else %>
@@ -42,10 +44,10 @@
 
    <p class="tl">Tabere</p>
    <h2>
-    <%= link_to "Tabăra de Ayurveda 2023 etapa de toamnă partea 2", tayt122_path, class: 'alink' %>  </h2> 
-   <h2> <%= link_to "Tabăra de Ayurveda 2023 etapa de toamnă partea 1", tayt12_path, class: 'alink' %></h2>
+    <%= link_to "Tabăra de Ayurveda 2023 etapa de toamnă partea 2", tayt122_path, class: 'alink' %>   
+    <%= link_to "Tabăra de Ayurveda 2023 etapa de toamnă partea 1", tayt12_path, class: 'alink' %>
 
-    <h2>
+    
     <% if current_user %>   
       <%= link_to 'Tabăra de Ayurveda 2023 etapa de vară partea 2', tayv2_path, class: 'alink', id: 'tayv2_link' %>
    <% else %>   
@@ -63,7 +65,7 @@
     <div class="line">
       <div class="col" style="width:100%;">
          <h2>Curs de Ayurveda sesiunea octombrie 2023 - iulie 2024</h2>
-         <div class="desc">Participa la cursurile de Ayurveda organizate de catre Ayush Cell Romania & AMN-Romania. Acest curs este accesibil tuturor celor interesați indiferent de pregătirea profesională.</div>
+         <div class="desc">Participa la cursurile de Ayurveda organizate de catre Ayush Cell Romania & AMN-Romania. Acest curs este accesibil tuturor celor interesați indiferent de pregătirea profesională..</div>
          <div class="btn-fp">
          <%= link_to 'Înscrie-te la curs', cursayurveda_path, class: 'btn-fp-link' %>
        </div>
@@ -112,8 +114,8 @@
    </section>
 
 
-   <h2 class="cr-title">Tabere Ayush Cell & AMN-Romania</h2>
-   <section class="line"><img src="https://amnromania.ro/wp-content/uploads/2020/10/tabara-de-ayurveda-natura.jpg" style='max-width:250px;'>
+   <h2 class="cr-title">Tabere Ayush Cell & AMN-Romania</h2><img src="https://amnromania.ro/wp-content/uploads/2020/10/tabara-de-ayurveda-natura.jpg" style='max-width:250px;'>
+   <section class="line">
       <div class="col">
          <h2>Tabăra Ayurveda 2023 Etapa de Toamnă partea a doua</h2>
          <div class="desc">Tema: Prezentarea celor 20 calități generale - Vimshati-Guna. Tabăra se va desfășura LIVE pe platforma ZOOM in zilele de 30 noiembrie, 1, 2 și 3 decembrie 2023..</div>
@@ -122,9 +124,8 @@
 
          </div>
       </div>
-</section>
-<section class="line">
-    <div class="col">
+
+      <div class="col">
          <h2>Tabăra Ayurveda 2023 Etapa de Toamnă prima parte</h2>
          <div class="desc">Tema: Prezentarea celor 10 calități cu rol formator - Nirmanya-Guna.</div>
          <div class="btn-fp">
@@ -146,7 +147,7 @@
          </div>
       </div>
    </section>
-   <h2 class="cr-title">Cursuri</h2>   
+   <h2 class="cr-title">Cursuri</h2><img src="https://www.ayushcell.ro/assets/nutritie-ayushcell-390e39914b729abcc72dc4c97dd4890e28b82621d9109b396f4f2585c2fb500f.jpg" style='max-width:250px;'>
    <section class="line">
       <div class="col">
          <h2>Curs de Ayurveda sesiunea octombrie 2023 - iulie 2024</h2>
@@ -158,17 +159,17 @@
     </section>
 
     
-    <h2 class="cr-title">Program de pregătire Nutritie Ayurvedică</h2>
-    <section class="line"><img src="<%= image_path('aplicatii.jpg') %>" alt="Imagine" style='max-width:250px;'> 
+    <h2 class="cr-title">Program de pregătire Nutritie Ayurvedică</h2><img src="https://www.ayushcell.ro/assets/listavegetale-32179814339fc02ad84eb798e846a69f4e8c8bdb6c5ae98f4209d9ff96102585.jpg" style='max-width:250px;'> 
+    <section class="line">
     <div class="col" style="width:100%;">
             <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 3</h2>
             <div class="desc">Programul de pregătire în nutriția ayurvedică practică aplicată include prezentări ale noțiunilor și conceptelor tradiționale din Ayurveda referitoare la nutriție, teste de evaluare nutrițională ayurvedică, personalizarea opțiunilor nutriționale la necesitățile participanților, evaluarea direcțiilor de optimizare nutrițională în conformitate cu principiile sistemului milenar de cunoaștere asupra vieții – Ayurveda.</div>
             <div class="btn-fp">
             <%= link_to 'Participă', cursayurveda_path, class: 'btn-fp-link' %>
             </div>
-    </div>
-    </section>
-    <section class="line"><img src="https://www.ayushcell.ro/assets/nutritie-ayushcell-390e39914b729abcc72dc4c97dd4890e28b82621d9109b396f4f2585c2fb500f.jpg" style='max-width:250px;'>
+         </div>
+         </section>
+         <section class="line">
          <div class="col" style="width:100%;">
          <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 2</h2>
           <div class="desc">Programul de pregătire în nutriția ayurvedică practică aplicată elaborat și susținut de Ayush Cell Romania oferă participanților prilejul de a învăța principiile de bază ale nutriției ayurvedice și noțiuni specifice de nutriție ayurvedică aplicată.</div>
