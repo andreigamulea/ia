@@ -46,7 +46,8 @@ end
     @myvideo = Video.where(tip: 'tayv2').order(ordine: :asc)
   end
   def tayt12
-    @prod_tayt12 = Prod.where(curslegatura: 'tayt12').order(:cod)
+    #@prod_tayt12 = Prod.where(curslegatura: 'tayt12').order(:cod)
+    @prod_tayt12 = Prod.where(curslegatura: 'tayt12', status: 'activ').order(:cod)
     #@myvideo = Video.where(tip: 'tayt12').order(ordine: :asc)
     @myvideo = Video.where(tip: 'tayt12').where("ordine < ?", 1000).order(ordine: :asc)
     
