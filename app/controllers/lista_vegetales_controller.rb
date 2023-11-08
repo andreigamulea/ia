@@ -8,7 +8,7 @@ class ListaVegetalesController < ApplicationController
     @page_title = "Lista vegetale"
 
     if params[:search_type] == "eq"
-        @lista_vegetales = ListaVegetale.where('specie ~* ? OR sinonime ~* ? OR parteutilizata ~* ?', "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y").page(params[:page]).per(25)
+        @lista_vegetales = ListaVegetale.where('specie ~* ? OR sinonime ~* ? OR parteutilizata ~* ?', "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y").page(params[:page]).per(15)
         @q = @lista_vegetales.ransack(params[:q])
         @search_term = params[:search_term] 
     else
