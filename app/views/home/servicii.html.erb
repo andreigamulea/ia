@@ -173,43 +173,39 @@
         <tr class= "desk">
             <th style="height: 40px; vertical-align:middle; width: 30%;">Servicii</th>                    
             <th style="height: 40px; vertical-align:middle; width: 30%;">Detalii</th>
-            
             <th style="height: 40px; vertical-align:middle; width: 14%;">Pret</th>
             <th style="height: 40px; vertical-align:middle; width: 12%;">Actiune</th>
         </tr>      
     </thead>
-        <tbody>
-        <% @prod_tayt12.select{ |prod| prod.curslegatura == 'tayt12' && prod.pret > 0 }.each do |prod| %>
-            <% if prod.cod != "cod48" || ((current_user && prod.cod == "cod48" && current_user.email == "aaa@yahoo.com") || (current_user && current_user.role==2)) %>
-            <% if prod.cod != "cod63"%>
-            <% if !["cod54", "cod64"].include?(prod.cod) || (current_user && (has_purchased_product?(current_user, @prod_tayt12) || current_user.role==1)) %>
-
-                <tr>
-                    <td> <%= prod.nume %> </td>         
-                                       
-                    <td><%= prod.detalii %></td> 
-                    
-                    <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
-          
-                    <td style="text-align:center;"> 
-                        <% if (prod.cod == "cod40" || prod.cod == "cod42" || prod.cod == "cod44") && Time.now.to_date >= Date.new(2023,10,19) %>
-                            <%= button_to 'Inactiv', '#', class: 'btn btn-secondary', disabled: true %>
-                        <% else %>
-                            <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> 
-                        <% end %>
-                    </td>           
-                </tr>
-              <% end %> <% end %> 
-            <% end %> 
-          <% end %>
-          
-            </tbody>  
-
-        
-
-
-    </table>
+    <tbody>
+        <% required_cod_for_special_products = ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] %>
+        <% @prod_tayt12.each do |prod| %>
+            <% next if prod.cod == "cod48" && current_user&.email != "aaa@yahoo.com" && current_user&.role != 2 %>
+            <% next if prod.cod == "cod63" %>
+            <% special_product = ["cod54", "cod64"].include?(prod.cod) %>
+            <% product_accessible = current_user.nil? || has_required_products?(current_user, required_cod_for_special_products) || current_user.role == 1 %>
+            <% display_popup = special_product && !product_accessible %>
+            <tr>
+                <td> <%= prod.nume %> </td>                                   
+                <td><%= prod.detalii %></td>                    
+                <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>          
+                <td style="text-align:center;"> 
+                    <% if ["cod40", "cod42", "cod44"].include?(prod.cod) && Time.now.to_date >= Date.new(2023,10,19) %>
+                        <%= button_to 'Inactiv', '#', class: 'btn btn-secondary', disabled: true %>
+                    <% elsif display_popup %>
+                    <% order_path = current_user ? "javascript:void(0);" : new_user_session_path %>
+                    <% confirmation_message = current_user ? "Inscrie-te la tabara pentru a putea comanda acest produs." : "Va rugam sa va logati pentru a putea comanda." %>
+                    <%= link_to 'Comanda', order_path, class: 'btn btn-primary', onclick: "if(!#{product_accessible}) { alert('#{confirmation_message}'); return false; }" %>
+                <% else %>
+                    <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
+                <% end %>
+                </td>           
+            </tr>
+        <% end %>
+    </tbody>
+</table>
 </div>
+
 </section>
 
 
