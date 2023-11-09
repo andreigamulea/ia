@@ -1,4 +1,6 @@
-Rails.application.routes.draw do  
+Rails.application.routes.draw do    
+  get '/crypto_prices/show_doge_price', to: 'crypto_prices#show_doge_price', as: 'show_doge_price'
+
   get 'tayt12/index'
   
   get 'tayt12/transport_international/:return_to', to: 'tayt12#transport_international', as: :tayt12_transport_international

@@ -43,7 +43,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 
 # Use Sass to process CSS
-# gem "sassc-rails"
+gem "sassc-rails"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
@@ -98,3 +98,5 @@ gem 'video_player', '~> 1.0'
 gem 'rubyzip', '~> 2.3', '>= 2.3.2'
 gem 'bugsnag', '~> 6.26'
 gem 'rails_stats', '~> 1.0', '>= 1.0.2'
+gem 'binance-ruby', '~> 1.3', '>= 1.3.6'
+gem 'httparty', '~> 0.21.0'

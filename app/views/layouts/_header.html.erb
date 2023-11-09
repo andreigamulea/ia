@@ -129,6 +129,11 @@
                         <li>
                             <%= link_to 'Transport international', tayt12_transport_international_path('tri'), class: 'nav-item' %>
                         </li>
+                        <li>
+                        <% if (current_user && (current_user.email=="ilates@yahoo.com" || current_user.email=="costelaioanei@yahoo.com"))%>
+                        <%= link_to 'Pret Doge', show_doge_price_path, class: 'nav-item' %>
+                        <% end %>
+                        </li>
                         <% end %>
 
                     </ul>
