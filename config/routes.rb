@@ -1,5 +1,5 @@
 Rails.application.routes.draw do    
-  get '/crypto_prices/show_doge_price', to: 'crypto_prices#show_doge_price', as: 'show_doge_price'
+  get '/crypto_prices/show_crypto_price', to: 'crypto_prices#show_crypto_price', as: 'show_crypto_price'
 
   get 'tayt12/index'
   

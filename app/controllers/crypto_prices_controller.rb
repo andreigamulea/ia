@@ -1,7 +1,7 @@
 require 'httparty'
 
 class CryptoPricesController < ApplicationController
-  def show_doge_price
+  def show_crypto_price
     begin
       @doge_prices = get_book_ticker('DOGEUSDT')
       @btc_prices = get_book_ticker('BTCUSDT')

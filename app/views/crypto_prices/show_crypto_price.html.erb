@@ -1,0 +1,18 @@
+<h1>Prețuri Criptomonede</h1>
+
+<% if @doge_prices %>
+<p><b>DOGE</b></p>
+  <p>C: <b><%= @doge_prices[:bid_price] %></b> | V: <b><%= @doge_prices[:ask_price] %></b></p>
+<% end %>
+<% if @btc_prices %>
+<p><b>BTC</b></p>
+  <p>C: <b><%= @btc_prices[:bid_price] %></b> | V: <b><%= @btc_prices[:ask_price] %></b></p>
+<% end %>
+<% if @xmr_prices %>
+<p><b>XMR</b></p>
+  <p>C: <b><%= @xmr_prices[:bid_price] %></b> | V: <b><%= @xmr_prices[:ask_price] %></b></p>
+<% end %>
+<% if @eth_prices %>
+<p><b>ETH</b></p>
+  <p>C: <b><%= @eth_prices[:bid_price] %></b> | V: <b><%= @eth_prices[:ask_price] %></b></p>
+<% end %>
