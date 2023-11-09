@@ -100,6 +100,7 @@ class FacturasController < ApplicationController
     # Extrageți facturile pe care doriți să le includeți
     facturas = Factura.where(numar: 1204..1542)
     
+    
     # Generați PDF-uri pentru fiecare factură
     pdf_files = facturas.map do |factura|
       @factura = factura
@@ -109,7 +110,12 @@ class FacturasController < ApplicationController
         encoding: 'UTF8'
       )
       pdf = PDFKit.new(html).to_pdf
-      file_path = temp_folder.join("Factura_#{factura.id + 1000}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.pdf")
+      if factura.id + 1000<=1308
+        file_path = temp_folder.join("Factura_#{factura.id + 1000}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.pdf")
+      else
+        file_path = temp_folder.join("Factura_#{factura.id + 999}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.pdf")
+      end  
+
       File.open(file_path, 'wb') do |file|
         file << pdf
       end

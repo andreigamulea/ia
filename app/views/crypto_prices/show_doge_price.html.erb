@@ -1,2 +1,14 @@
-<h1>Prețul DOGE</h1>
-<p>Prețul curent pentru DOGE este: <%= @doge_price %></p>
+<h1>Prețuri Criptomonede</h1>
+
+<% if @doge_prices %>
+  <p>DOGE Cumparare: <%= @doge_prices[:bid_price] %> | DOGE Vanzare: <%= @doge_prices[:ask_price] %></p>
+<% end %>
+<% if @btc_prices %>
+  <p>BTC Cumparare: <%= @btc_prices[:bid_price] %> | BTC Vanzare: <%= @btc_prices[:ask_price] %></p>
+<% end %>
+<% if @xmr_prices %>
+  <p>XMR Cumparare: <%= @xmr_prices[:bid_price] %> | XMR Vanzare: <%= @xmr_prices[:ask_price] %></p>
+<% end %>
+<% if @eth_prices %>
+  <p>ETH Cumparare: <%= @eth_prices[:bid_price] %> | ETH Vanzare: <%= @eth_prices[:ask_price] %></p>
+<% end %>
