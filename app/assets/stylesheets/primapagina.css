@@ -26,7 +26,8 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    background-color: hsl(206deg 100% 73.3% / 57%);
+    background-color: hsla(206, 100%, 73.3%, 0.57);
+
  }
  
  .cl h2 {
