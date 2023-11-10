@@ -113,7 +113,9 @@
  .col:hover {
     transform: translateY(-5px);
  }
- 
+ .col img{
+   margin: 20px 10px;
+ }
  .tl {
     font-size: 1.5em;
     font-weight: bold;
@@ -188,6 +190,17 @@
    content: "\1F343";
    margin-right: 8px;
 }
+.col-left {
+   width: 33%; 
+   display: flex; 
+   justify-content: center;
+   flex-shrink: 0;
+}
+.col-right {
+   width: 67%;
+   flex-shrink: 0;
+   margin-left:20px;
+}
  
  @media (max-width: 920px) {
     .container {
@@ -228,8 +241,18 @@
        padding: 10px;
        align-items: center;
        text-align: center;
+       flex-direction: column!important;
     }
- 
+    .col-left, .col-right img{
+      margin-bottom:20px;
+      margin-top:10px;
+    }
+    .col-left, .col-right{
+      width: 100%;
+    }
+    .col-left{
+      margin-left:0;
+    }
     .tl {
        text-align: center;
        font-size: 1.2em;
