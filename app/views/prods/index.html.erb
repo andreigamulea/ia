@@ -1,4 +1,4 @@
-<section>
+<div style="margin:0 auto; max-width:1280px;">
 <p style="color: green"><%= notice %></p>
 
 <h1 class="ch1">Produse</h1> </br>
@@ -7,7 +7,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col", style: "text-align: center;">#</th>
       <th scope="col">Nume</th>
       <th scope="col">Detalii</th>
       <th scope="col">Luna</th>
@@ -16,13 +16,14 @@
       <th scope="col">Zile</th>
       <th scope="col">Link stripe </th>
       <th scope="col">Status </th>
-      <th scope="col">Cod </th>
+      <th scope="col">Cod</th>
+      <th scope="col">Actiune</th>
     </tr>
   </thead>
   <tbody>
     <% @prods.each do |prod| %>
       <tr>
-        <th scope="row"><%= prod.id %></th>
+        <th scope="row", style: "text-align: center;"><%= prod.id %></th>
         <td><%= prod.nume %></td>
         <td><%= prod.detalii %></td>
         <td><%= prod.luna %></td>
@@ -33,9 +34,9 @@
         <td><%= prod.status %></td>
         <td><%= prod.cod %></td>
         <td>
-          <%= link_to "Show", prod, class: "btn btn-primary" %>
-          <%= link_to "Edit", edit_prod_path(prod), class: "btn btn-secondary" %>
-          <%= link_to "Delete", prod, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+          <%= link_to "Show", prod, class: "btn btn-primary", style: "margin: 3px;" %>
+          <%= link_to "Edit", edit_prod_path(prod), class: "btn btn-secondary", style: "margin: 3px;" %>
+          <%= link_to "Delete", prod, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger", style: "margin: 3px;" %>
         </td>
       </tr>
     <% end %>
@@ -43,4 +44,4 @@
 </table>
 
 
-<section>
+<div>
