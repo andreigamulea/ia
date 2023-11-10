@@ -236,6 +236,7 @@
    }
    .cr .cr-title {
       text-align:center;
+      margin-top: 20px;
    }
    .line {
       flex-direction: column;
@@ -266,6 +267,8 @@
    }
    .main-title {
        text-align:center;
+       margin-bottom: -10px;
+       margin-top: 10px;
    }
    .desc {
       font-size: 14px;
