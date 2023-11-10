@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="display:block;">
   <h1 class="text-center mb-4" style="color: #007bff; font-size: 3rem; text-shadow: 2px 2px #eee;">Users</h1>
  <div style="display: flex;">
     <%= search_form_for @q, url: url_for(controller: 'admin', action: 'index') do |f| %>
@@ -9,7 +9,7 @@
         </div>
       </div>
     <% end %>
-    <div class="d-inline-block" style="margin-left: 100px;">
+    <div class="d-inline-block" style="margin-left: 100px;margin-bottom:30px;">
       <%= button_to 'Show All Users', url_for(controller: 'admin', action: 'index'), method: :get, class: 'btn btn-secondary ml-2' %>
     </div>
   </div>
