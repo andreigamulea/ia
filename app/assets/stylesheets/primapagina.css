@@ -9,6 +9,7 @@
 #first-page h1{
     font-size: 16px;
     text-align: right;
+    padding: 10px;
 }
 .cl,
 .cr {
@@ -232,6 +233,9 @@
    .cr{
     align-items: center;
     padding-bottom: 20px;
+   }
+   .cr .cr-title {
+      text-align:center;
    }
    .line {
       flex-direction: column;
