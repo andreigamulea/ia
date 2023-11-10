@@ -26,7 +26,6 @@
 </style>
 </head>
 <body>
-
 <table style="margin-bottom:50px;">
   <tr>
 
@@ -37,53 +36,67 @@
   <tr>
 
     <td>BTC</td>
-    <td><%= @btc_prices[:bid_price] %></td>
-    <td><%= @btc_prices[:ask_price] %></td>
+    <td><%=@btc_usdt_bid_price%></td>
+    <td><%=@btc_usdt_ask_price%></td>
   </tr>
   <tr>
 
     <td>ETH</td>
-    <td><%= @eth_prices[:bid_price] %></td>
-    <td><%= @eth_prices[:ask_price] %></td>
+    <td><%=@eth_usdt_bid_price%></td>
+    <td><%=@eth_usdt_ask_price%></td>
   </tr>
   <tr>
 
     <td>XMR</td>
-    <td><%= @xmr_prices[:bid_price] %></td>
-    <td><%= @xmr_prices[:ask_price] %></td>
+    <td><%=@xmr_usdt_bid_price%></td>
+    <td><%=@xmr_usdt_ask_price%></td>
   </tr>
   </table>
   <table style="margin-bottom:50px;">
   <tr>
     <th>Suma Pornire in BTC</th>
-    <th>0.001</th>
+    <th><%=@starting_btc%></th>
   </tr>
 </table>
-<table style="margin-bottom:50px;">
 
+<table style="margin-bottom:50px;">
   <tr>
     <th>Schimb</th>
     <td></td>
     <td>Rezultat</td>
-
+    <th>Pret Vanzare(ask)</th>
+    <th>Pret Cumparare(bid)</th>
+    <th>Volum Vanzare</th>
+    <th>Volum Cumparare</th>
   </tr>
   <tr>
-    <td>BTC -></td>
-    <td>ETH</td>
-    <td><%=@btc_to_eth%></td>
-
+  <tr>
+  <td>BTC -> ETH</td>
+  <td>ETH</td>
+  <td><%= @btc_to_eth %></td>
+  <td><%= @eth_for_btc_v %></td>
+  <td><%= @eth_for_btc_c%></td>
+  <td><%= @eth_btc_prices[:bid_volume] %></td>
+  <td><%= @eth_btc_prices[:ask_volume] %></td>
+</tr>
+<tr>
+<td>ETH -> XMR</td>
+<td>XMR</td>
+<td><%= @eth_to_xmr %></td>
+<td><%=@xmr_for_eth_v %></td>
+<td><%= @xmr_for_eth_c %></td>
+    <td><%= @eth_xmr_prices[:bid_volume] %></td>
+    <td><%= @eth_xmr_prices[:ask_volume] %></td>
   </tr>
   <tr>
-    <td>ETH -></td>
-    <td>XMR</td>
-    <td><%=@eth_to_xmr%></td>
-
-  </tr>
-  <tr>
-    <td>XMR -></td>
-    <td>BTC</td>
-    <td><%=@xmr_to_btc%></td>
-
+  <td>XMR -> BTC</td>
+  <td>BTC</td>
+  <td><%= @xmr_to_btc %></td>
+  <td><%= @btc_for_xmr_v %></td>
+  <td><%= @btc_for_xmr_c%></td>
+    <td><%= @xmr_btc_prices[:bid_volume] %></td>
+    <td><%= @xmr_btc_prices[:ask_volume] %></td>
   </tr>
 </table>
+
 </section>
