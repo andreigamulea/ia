@@ -1,221 +1,133 @@
-
 <% content_for :title, "Cursuri de Ayurveda I Aplicații Plante I Vizionări Tabere și Seminarii" %>
 <% content_for :description, "Ayush Cell Romania: Cursuri de Ayurveda, Nutriție, Aplicații Plante Medicinale și Resurse Vegetale" %>
 <% content_for :keywords, "cursuri de ayurveda, cursuri de nutritie, plante medicinale, alimentație sănătoasă, calculator nutrițional, dieta, tabere de ayurveda," %>
 <% content_for :canonical do %>
   <link rel="canonical" href="https://www.ayushcell.ro">
 <% end %>
-<div class="container" id="first-page">
-<div class="cl">
 
-    <p class="tl">Cursuri</p>
-    <h2><a class="alink" href="<%= cursayurveda_path %>">Curs de Ayurveda octombrie 2023 - iulie 2024</a></h2>
+<section class="home">
 
-    
-    <h2> <% if current_user && (current_user.role == 1 || (current_user.role == 0 && ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod12", "cod11", "cod13"] }).exists?)) %>
-  <%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 3', nutritie3_path, class: 'alink' %>
-<% else %>
-  <%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 3', new_user_session_path(return_to: 'nutritie3'), class: 'alink' %>
-<% end %></h2>
-<h2>
-<% if current_user && (current_user.role == 1 || current_user.nutritieabsolvit == 2) %>
-  <%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 2', nutritie2_path, class: 'alink' %>
-<% else %>
-  <%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 2', new_user_session_path(return_to: 'nutritie2'), class: 'alink' %>
-<% end %>
 
-    </h2>
-    <img src="<%= image_path('cursuri.jpg') %>" alt="Curs de Ayurveda">
-   <p class="tl">Ayurveda - Aplicații</p>
-   <h2>
-  <% if user_signed_in? %>
-    <%= link_to 'Aplicație valori nutriționale', valorinutritionales_path, class: 'alink' %>
-  <% else %>
-    <%= link_to 'Aplicație valori nutriționale', new_user_session_with_return_path('vn'), class: 'alink button-link' %>
-  <% end %>
-</h2>
+<div class="nutritie endrow">
+   <div class="row">
+      
 
-   
-<h2>
-<% if current_user %>
-  <% if current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) } %>
-    <%= link_to 'Consultare lista Resurse Vegetale', lista_vegetales_path, class: 'alink' %>
-  <% else %>
-    <%= link_to 'Consultare lista Resurse Vegetale', servicii_path, class: 'alink button-link' %>
-  <% end %>
-<% else %>
-  <%= link_to 'Consultare lista Resurse Vegetale', new_user_session_with_return_path('lg'), class: 'alink button-link' %>
-<% end %>
-</h2>
-<p style="padding: 5px 10px;border-radius: 5px;font-size: 18px;margin: -20px 0 0 0;font-weight: 600;color: indigo;border-bottom: 1px solid #ccc;margin-bottom: 5px;margin-top: -10px;">În curând</p>
-<h2><a class="alink" href="#mentiuni-nutritionale">Mențiuni nutritionale și de sănătate</a></h2>
-<h2><a class="alink" href="#test-tipologii-ayurvedice">Test tipologii ayurvedice</a></h2>
-
-<h2><a class="alink" href="#index-ayurvedic-plante-indiene">Index Ayurvedic - plante indiene</a></h2>
-<h2><a class="alink" href="#index-ayurvedic-plante-romanesti">Index Ayurvedic - plante românești</a></h2>
-<h2><a class="alink" href="#teste-ayurveda-specialitati">Teste de Ayurveda - specialități</a></h2>
-<h2><a class="alink" href="#teste-ayurveda-specialitati">Proprietăți Rasa - Virya - Vipaka</a></h2>
-<h2><a class="alink" href="#teste-ayurveda-specialitati">Tradiția Ayurvedică - Amnaya Trantaka</a></h2>
-<h2><a class="alink" href="#teste-ayurveda-specialitati">Glosar termeni sanscriți utilizați în Ayurveda</a></h2>
-<h2><a class="alink" href="#teste-ayurveda-specialitati">Index Ayurvedic Sistematic Selectiv - general</a></h2>
-
-<img src="<%= image_path('Ayurveda-aplicatii.jpg') %>" alt="Curs de Ayurveda">
-   <p class="tl">Tabere</p>
-   <h2>
-    <%= link_to "Tabăra de Ayurveda 2023 etapa de toamnă partea 2", tayt122_path, class: 'alink' %>  </h2> 
-   <h2> <%= link_to "Tabăra de Ayurveda 2023 etapa de toamnă partea 1", tayt12_path, class: 'alink' %></h2>
-
-    <h2>
-    <% if current_user %>   
-      <%= link_to 'Tabăra de Ayurveda 2023 etapa de vară partea 2', tayv2_path, class: 'alink', id: 'tayv2_link' %>
-   <% else %>   
-      <%= link_to 'Tabăra de Ayurveda 2023 etapa de vară partea 2', new_user_session_with_return_path('tayv2'), class: 'alink button-link' %>
-   <% end %>
-   </h2>
-   <img src="<%= image_path('tabara.jpg') %>" alt="Imagine">
-   
-</div>
-<div class="cr">
-    <h1 class="first-tittle">Ayush Cell Romania: Cursuri, Aplicații, Tabere, Vizionări</h1>
-    <h2 class="main-title" >Actualitate</h2>
-    <div class="line">
-      <div class="col" style="width:100%;">
-         <h2>Curs de Ayurveda sesiunea octombrie 2023 - iulie 2024</h2>
-         <div class="desc">Participa la cursurile de Ayurveda organizate de catre Ayush Cell Romania & AMN-Romania. Acest curs este accesibil tuturor celor interesați indiferent de pregătirea profesională.</div>
-         <div class="btn-fp">
-         <%= link_to 'Înscrie-te la curs', cursayurveda_path, class: 'btn-fp-link' %>
-       </div>
-       
-      </div>
-      <div class="col" style="width:100%;">
-         <h2>Tabăra Ayurveda 2023 Etapa de Toamnă partea a doua</h2>
-         <div class="desc">Tema: Prezentarea celor 20 calități generale - Vimshati-Guna. Tabăra se va desfășura LIVE pe platforma ZOOM in zilele de 30 noiembrie, 1, 2 și 3 decembrie 2023..</div>
-         <div class="btn-fp">
-         <%= link_to 'Participă la tabără', tayt122_path, class: 'btn-fp-link' %>
-
+      <div class="column ivl">
+         <h1>Cursuri de Ayurveda</h1>
+         <div class="description">Participa la cursurile de Ayurveda organizate de catre Ayush Cell Romania & AMN-Romania</div>
+         <div class="button">
+           <a href="<%= cursayurveda_path %>">Vezi mai mult..</a>
          </div>
       </div>
       
+      <div class="column ivl1">
+         <a href="<%= cursayurveda_path %>">
+         <img src="<%= image_path('iarba-sarpelui-1.jpg') %>" alt="Imagine"></a>
+      </div>
+   </div>
+</div></br></br>
+
+
+
+
+
+
+
+
+
+
+
+<div class="nutritie">
+   <div class="row">
+      <% link_path = if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Nutritie" }) || (current_user && current_user.role == 1)
+         "/valori-nutritionale"
+      elsif current_user
+         servicii_path
+      else
+         new_user_session_with_return_path('vn')
+      end %>
+
+      <div class="column">
+         <a href="<%= link_path %>">
+         <img src="<%= image_path('nutritie-ayushcell.jpg') %>" alt="Imagine">
+         </a>
+      </div>
+      <div class="column">
+         <h1>Aplicație Nutriție</h1>
+         <div class="description">Descoperă conținutul nutritiv al alimentelor și calculează numărul de calorii, proteine, lipide, carbohidrați și fibre la fiecare masă! Alege în fiecare zi o alimentație sănătoasă și echilibrată.</div>
+         <div class="button">
+            <%= link_to 'Intră în aplicație', link_path, class: 'button-link' %>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="nutritie endrow">
+   <div class="row">
+      <% link_path = if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Lista vegetale" }) || (current_user && current_user.role == 1)
+         "/lista_vegetales"
+      elsif current_user
+         servicii_path
+      else
+         new_user_session_with_return_path('lg')
+      end %>
+
+      <div class="column ivl">
+         <h1>Lista ingrediente vegetale</h1>
+         <div class="description">Accesează lista ingredientelor vegetale ce pot fi utilizate in suplimentele alimentare.</div>
+         <div class="button">
+            <% if (current_user && current_user.listacursuri.any? { |curs| curs.nume == "Lista vegetale" }) || (current_user && current_user.role == 1) %>
+            <a href="<%= link_path %>">Intră în aplicație</a>
+            <% elsif current_user %>   
+            <%= link_to 'Intră în aplicație', link_path, class: 'button-link' %>
+            <% else %>   
+            <%= link_to 'Intră în aplicație', link_path, class: 'button-link' %>
+            <% end %>
+         </div>
+      </div>
+      
+      <div class="column ivl1">
+         <a href="<%= link_path %>">
+         <img src="<%= image_path('listavegetale.jpg') %>" alt="Imagine"></a>
+      </div>
+   </div>
+</div></br></br>
+
+
+
+      <div class="nutritie">
+         <div class="row">
+         <% link_path = if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "tayv2" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })
+         tayv2_path
+      elsif current_user
+         servicii_path
+      else
+         new_user_session_with_return_path('tayv2') # Același lucru ca la buton
+      end %>
+
+      <div class="column">
+         <a href="<%= link_path %>">
+         <img src="<%= image_path('tayv2.jpg') %>" alt="Imagine">
+         </a>
+      </div>
+
+ 
+      <div class="column">
+      <h1>Prezentari Video</h1>
+      <div class="description">Acces prezentari video din Tabara de ayurveda etapa de vara 2023 partea a 2-a</div>
+      <div class="button">
+        <% if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "tayv2" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) }) %>
+          <%= link_to 'Vezi prezentari video', tayv2_path, id: 'tayv2_link' %>
+        <% elsif current_user %>   
+          <%= link_to 'Vezi prezentari video', servicii_path, class: 'button-link' %>
+        <% else %>   
+          <%= link_to 'Vezi prezentari video', new_user_session_with_return_path('tayv2'), class: 'button-link' %>
+        <% end %> 
+      </div>
     </div>
-
-   <h2 class="cr-title">Aplicații Ayush Cell Romania</h2>
-   <section class="line">
-      <div class="col"  style="align-items:center;">
-         <h2>Aplicație Valori Nutriționale</h2>
-         <img src="<%= image_path('nutritie-ayushcell.jpg') %>" alt="Valori nutritionale" style='max-width:250px;'>
-       
-         <div class="desc">Descoperă conținutul nutritiv al alimentelor și calculează numărul de calorii, proteine, lipide, carbohidrați și fibre la fiecare masă! Alege în fiecare zi o alimentație sănătoasă și echilibrată.</div>
-         <div class="btn-fp">
-         
-         <% if user_signed_in? %>
-            <%= link_to 'Aplicație Nutriție', valorinutritionales_path, class: 'alink' %>
-         <% else %>
-            <%= link_to 'Aplicație Nutriție', new_user_session_with_return_path('vn'), class: 'alink button-link' %>
-         <% end %>
-         </div>
-      </div>
-      <div class="col" style="align-items:center;">
-         <h2>Lista actualizată a ingredientelor vegetale ce pot fi utilizate în suplimentele alimentare</h2>
-         <img src="<%= image_path('listavegetale.jpg') %>" alt="Curs de Ayurveda" style="max-width:250px;">
-         <div class="desc">Aplicația se constituie drept referință principală pentru profesioniștii din domeniul sănătății și producătorii de suplimente alimentare, oferind informațiile necesare despre ingredientele vegetale acceptate pentru utilizare în România.</div>
-         <div class="btn-fp">
-         <% if current_user %>
-         <% if current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) } %>
-           <%= link_to 'Accesează aplicația', lista_vegetales_path, class: 'btn-fp-link' %>
-         <% else %>
-           <%= link_to 'Accesează aplicația', servicii_path, class: 'btn-fp-link' %>
-         <% end %>
-       <% else %>
-         <%= link_to 'Accesează aplicația', new_user_session_with_return_path('lg'), class: 'btn-fp-link' %>
-       <% end %>
-       
-         </div>
-      </div>
-    </section>
     
+   </div>
+</div></br></br>
 
 
-   <h2 class="cr-title">Tabere Ayush Cell Romania & AMN-Romania</h2>
-   <section class="line" style="flex-direction: row-reverse;">
-   
-      <div class="col" style=" align-items: center; text-align: center;">
-         <h2>Tabăra Ayurveda 2023 Etapa de Toamnă partea a doua</h2>
-         <img src="<%= image_path('Tabara Ayurveda toamna p2.jpg') %>" alt="Tabara de Ayurveda etapa de toamna 2023" style= "max-width:450px;margin-bottom:20px;margin-top:10px;">
-         <div class="desc">Tema: Prezentarea celor 20 calități generale - Vimshati-Guna. Tabăra se va desfășura LIVE pe platforma ZOOM in zilele de 30 noiembrie, 1, 2 și 3 decembrie 2023..</div>
-         <div class="btn-fp">
-         <%= link_to 'Participă la tabără', tayt122_path, class: 'btn-fp-link' %>
-
-         </div>
-      </div>
 </section>
-<section class="line">
-    <div class="col">
-         <h2>Tabăra Ayurveda 2023 Etapa de Toamnă prima parte</h2>
-         <div class="desc">Tema: Prezentarea celor 10 calități cu rol formator - Nirmanya-Guna.</div>
-         <div class="btn-fp">
-         <%= link_to 'Revizionează', tayt12_path, class: 'btn-fp-link' %>
-         </div>
-      </div>
-   </section>
-   <section class="line">
-      <div class="col">
-         <h2>Tabăra Ayurveda 2023 Etapa de Vară partea a doua</h2>
-         <div class="desc">Tema taberei: Gupta-Cikitsa. Expresia Gupta-Cikitsa este tradusă ad litteram ca fiind „o medicină secretă”. Termenul sanscrit „gupta” înseamnă ascuns sau secret, iar „cikitsa” înseamnă tratament,  sistem terapeutic sau medicină. Expresia Gupta-Cikitsa reprezintă gândirea principială pe baza căreia se constituie strategiile de tratament ayurvedic, cunoaștere deosebit de valoroasă ce a fost oferită într-un mod original de către marele înțelept Atreya.</div>
-         <div class="btn-fp">
-         <% if current_user %>   
-         <%= link_to 'Revizionează', tayv2_path, class: 'btn-fp-link' %>
-       <% else %>   
-         <%= link_to 'Revizionează', new_user_session_with_return_path('tayv2'), class: 'btn-fp-link' %>
-       <% end %>
-       
-         </div>
-      </div>
-   </section>
-   <h2 class="cr-title">Cursuri</h2>   
-   <section class="line">
-      <div class="col" style=" align-items: center; text-align: center;">
-      <img src="<%= image_path('cursuri.jpg') %>" alt="Curs de Ayurveda" style='text-align:center; width: 100%; max-width: 350px;'>
-         <h2>Curs de Ayurveda sesiunea octombrie 2023 - iulie 2024</h2>
-         <div class="desc">Participa la cursurile de Ayurveda organizate de catre Ayush Cell Romania & AMN-Romania. Acest curs este accesibil tuturor celor interesați indiferent de pregătirea profesională. Înscrierile sunt în continuare deschise.</div>
-         <div class="btn-fp">
-         <%= link_to 'Înscrie-te la curs', cursayurveda_path, class: 'btn-fp-link' %>
-         </div>
-      </div>
-    </section>
-
-    
-    <h2 class="cr-title">Program de pregătire Nutritie Ayurvedică</h2>
-    
-    <section class="line">
-    <div class="col" style="flex-direction: row; align-items: center;">
-    <div class="col-left">
-    <img src="<%= image_path('aplicatii.jpg') %>" alt="Nutritie ayurvedica" style='text-align:center; width: 100%; max-width: 250px;'> 
-    </div>
-    <div class="col-right">
-            <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 3</h2>
-            <div class="desc">Programul de pregătire în nutriția ayurvedică practică aplicată include prezentări ale noțiunilor și conceptelor tradiționale din Ayurveda referitoare la nutriție, teste de evaluare nutrițională ayurvedică, personalizarea opțiunilor nutriționale la necesitățile participanților, evaluarea direcțiilor de optimizare nutrițională în conformitate cu principiile sistemului milenar de cunoaștere asupra vieții – Ayurveda.</div>
-            <div class="btn-fp"><%= link_to 'Participă', cursayurveda_path, class: 'btn-fp-link' %></div>
-    </div>
-    </div>
-    </section>
-
-
-
-    <section class="line">
-    
-    <div class="col" style="flex-direction: row; align-items: center;">
-    <div class="col-left">
-    <img src="<%= image_path('nutritie-ayushcell.jpg') %>" alt="Nutritie ayurvedica" style='max-width:250px;'>
-    </div>
-    <div class="col-right">
-        <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 2</h2>
-        <div class="desc">Programul de pregătire în nutriția ayurvedică practică aplicată...</div>
-        <div class="btn-fp">
-            <%= link_to 'Participă', cursayurveda_path, class: 'btn-fp-link' %>
-        </div>
-    </div>
-    </div>
-
-   </section>
-</div>
-</div>
