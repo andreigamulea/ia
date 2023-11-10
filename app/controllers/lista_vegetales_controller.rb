@@ -8,12 +8,12 @@ class ListaVegetalesController < ApplicationController
     @page_title = "Lista vegetale"
 
     if params[:search_type] == "eq"
-        @lista_vegetales = ListaVegetale.where('specie ~* ? OR sinonime ~* ? OR parteutilizata ~* ?', "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y").page(params[:page]).per(15)
+        @lista_vegetales = ListaVegetale.where('specie ~* ? OR sinonime ~* ? OR parteutilizata ~* ?', "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y", "\\y#{params[:search_term]}\\y").page(params[:page]).per(10)
         @q = @lista_vegetales.ransack(params[:q])
         @search_term = params[:search_term] 
     else
         @q = ListaVegetale.ransack({specie_cont: params[:search_term], sinonime_cont: params[:search_term], parteutilizata_cont: params[:search_term], m: 'or'})
-        @lista_vegetales = @q.result.distinct.order(:id).page(params[:page]).per(25)
+        @lista_vegetales = @q.result.distinct.order(:id).page(params[:page]).per(10)
         @search_term = params[:search_term]
     end
     # Numărul total de înregistrări și numărul de pagini
