@@ -14,5 +14,5 @@ PDFKit.configure do |config|
     #unless Rails.env.production?
       #config.wkhtmltopdf = 'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
     #end
-  #end
+  ##end
   
