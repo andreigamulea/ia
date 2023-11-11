@@ -147,11 +147,14 @@ class HomeController < ApplicationController
 
     if current_user
       @user_has_prod_cod11 = ComenziProd.exists?(user_id: current_user.id, prod_id: @prod_id_cod11, validat: 'Finalizata')
-      @user_has_prod_cod13 = ComenziProd.exists?(user_id: current_user.id, prod_id: @prod_id_cod13, validat: 'Finalizata')
+      @user_has_prod_cod13 = ComenziProd.exists?(user_id: current_user.id, prod_id: @prod_id_cod13, validat: 'Finalizata')    
+      @user_has_bought_cod11_or_cod13 = @user_has_prod_cod11 || @user_has_prod_cod13
     else
       @user_has_prod_cod11 = false
       @user_has_prod_cod13 = false
+      @user_has_bought_cod11_or_cod13 = false
     end
+    
     
     
     #stoptvariabilele pt nutritie3

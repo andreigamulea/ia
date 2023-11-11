@@ -193,7 +193,13 @@
     <div class="col-right">
             <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 3</h2>
             <div class="desc">Programul de pregătire în nutriția ayurvedică practică aplicată include prezentări ale noțiunilor și conceptelor tradiționale din Ayurveda referitoare la nutriție, teste de evaluare nutrițională ayurvedică, personalizarea opțiunilor nutriționale la necesitățile participanților, evaluarea direcțiilor de optimizare nutrițională în conformitate cu principiile sistemului milenar de cunoaștere asupra vieții – Ayurveda.</div>
-            <div class="btn-fp"><%= link_to 'Participă', cursayurveda_path, class: 'btn-fp-link' %></div>
+            <div class="btn-fp">
+            <% if current_user && (current_user.role == 1 || current_user.nutritieabsolvit == 2) %>
+            <%= link_to 'Participă', nutritie3_path, class: 'btn-fp-link' %>
+          <% else %>
+            <%= link_to 'Participă', new_user_session_path(return_to: 'nutritie3'), class: 'btn-fp-link' %>
+          <% end %>
+            </div>
     </div>
     </div>
     </section>
@@ -210,7 +216,15 @@
         <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 2</h2>
         <div class="desc">Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</div>
         <div class="btn-fp">
-            <%= link_to 'Participă', cursayurveda_path, class: 'btn-fp-link' %>
+
+        <% if current_user && (current_user.role == 1 || current_user.nutritieabsolvit == 2) %>
+        <%= link_to 'Participă', nutritie2_path, class: 'btn-fp-link' %>
+      <% else %>
+        <%= link_to 'Participă', new_user_session_path(return_to: 'nutritie2'), class: 'btn-fp-link' %>
+      <% end %>
+
+
+            
         </div>
     </div>
     </div>

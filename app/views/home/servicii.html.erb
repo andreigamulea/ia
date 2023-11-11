@@ -131,6 +131,7 @@
             <% @prods.select{ |prod| prod.curslegatura == 'Nutritie3' }.sort_by(&:created_at).each do |prod| %>
                 <% next if (prod.cod == "cod38" && !@user_has_prod_cod11) %>
                 <% next if (prod.cod == "cod39" && !@user_has_prod_cod13) %>
+                <% next if prod.pret == 38 && !@user_has_bought_cod11_or_cod13 %>
                 <tr>
                 <td>
                   <%= raw prod.nume
