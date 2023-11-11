@@ -111,7 +111,9 @@
 
    background-blend-mode: screen;
 }
-
+.col h2{
+   font-size: 1.7rem;
+}
 .col:hover {
    transform: translateY(-5px);
 }
@@ -253,6 +255,7 @@
       text-align: center;
       flex-direction: column!important;
    }
+
    .col-left, .col-right img{
      margin-bottom:20px;
      margin-top:10px;
