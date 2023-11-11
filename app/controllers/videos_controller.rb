@@ -5,7 +5,7 @@ class VideosController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy]
   before_action :set_user1, only: %i[tayv2 myvideo1] #este pt tayv2
   before_action :set_user2, only: %i[myvideo2] #este pt nutritie3
-  before_action :set_user7, only: %i[myvideo7] #este pt nutritie3
+  before_action :set_user7, only: %i[myvideo7] #este pt nutritie3 pt video de la Resurse si Aspecte organizatorice
   before_action :set_user6, only: %i[myvideo6] #este pt nutritie2
   before_action :set_user3, only: %i[myvideo3] #este pt an1
   before_action :set_user4, only: %i[myvideo4] #este pt tayt12
