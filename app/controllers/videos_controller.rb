@@ -5,6 +5,7 @@ class VideosController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy]
   before_action :set_user1, only: %i[tayv2 myvideo1] #este pt tayv2
   before_action :set_user2, only: %i[myvideo2] #este pt nutritie3
+  before_action :set_user7, only: %i[myvideo7] #este pt nutritie3
   before_action :set_user6, only: %i[myvideo6] #este pt nutritie2
   before_action :set_user3, only: %i[myvideo3] #este pt an1
   before_action :set_user4, only: %i[myvideo4] #este pt tayt12
@@ -128,6 +129,11 @@ end
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
   end
+  def myvideo7 #pt nutritie2
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
   ################################################################
   
   
@@ -245,41 +251,43 @@ end
         redirect_to new_user_session_path # Presupunând că aceasta este calea către login
         return
       end
-    
+      puts("daaaaa1")
       # Dacă userul are rolul 1, îi dăm acces direct
       return true if current_user.role == 1
-    
+      puts("daaaaa2")
       # Verifică dacă userul are cod12
       return true if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod12" }).exists?
-    
+      puts("daaaaa3")
       # Verifică dacă userul are ambele coduri: cod11 și cod38
       if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod11" }, validat: "Finalizata").exists? &&
          ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod38" }, validat: "Finalizata").exists?
-
+         puts("daaaaa4")
         return true
       end
-    
+      puts("daaaaa5")
       # Verifică dacă userul are ambele coduri: cod13 și cod39
       if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod13" }, validat: "Finalizata").exists? &&
          ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod39" }, validat: "Finalizata").exists?
         return true
       end
-    
+      puts("daaaaa6")
      
       # Află video-ul pe care user-ul dorește să-l acceseze
       video_dorit = Video.find(params[:id])
-
+      puts("daaaaa7")
+      puts("video_dorit este: #{video_dorit.link}")
       # Verificăm dacă user-ul curent a plătit pentru video-ul dorit
       if ComenziProd.joins(:prod)
         .where(user_id: current_user.id, prods: { cod: video_dorit.cod }, validat: "Finalizata")
         .where("datasfarsit IS NULL OR datasfarsit >= ?", Date.current)
         .exists?
       
-        puts("daaaaa1")
+        puts("daaaaa8")
       else
+        puts("daaaaa9")
         redirect_to root_path, alert: "Nu ai acces la acest video!" and return
       end
-      
+      puts("daaaaa10")
       # Verificăm  coduri_relevante in cazul nostru  "cod49", "cod50", "cod51"  
       coduri_relevante = Video.where(tip: 'nutritie3').where('ordine < ?', 1000).pluck(:cod)
       coduri_relevante.each do |cod|
@@ -288,7 +296,7 @@ end
           .where("datasfarsit IS NULL OR datasfarsit >= ?", Date.current)
           .exists?
         
-          puts("daaaaa1 pentru #{cod}")
+          puts("daaaaa11 pentru #{cod}")
           return true
         end
       end
@@ -411,7 +419,20 @@ end
       end  
     end
     
-
+    def set_user7
+      unless user_signed_in?
+        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+        redirect_to new_user_session_path # Presupunând că aceasta este calea către login
+        return
+      end
+    
+      if current_user.role == 1
+        return true
+      end
+      if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod11", "cod12", "cod13"] }, validat: "Finalizata").exists?
+      return true
+      end
+    end  
 
 
     def require_admin
