@@ -6,7 +6,9 @@
 Pentru a participa la acest modul, vă invităm să ne contactați pe adresa de email: 
 <a href="mailto:ayushcellromania@gmail.com" class="email-link">ayushcellromania@gmail.com</a>
 </p>
-<%= link_to 'Login', new_user_session_with_return_path('nutritie3'), class: 'alink button-link' %>
+<div class="btn-fp">
+    <%= link_to 'Intră în cont', new_user_session_with_return_path('nutritie3'), class: 'btn-fp-link' %>
+</div>
 <%end%>
 <% if current_user && (@has_access1 || @has_access) %>
 <h1 class="ch1">Bun venit la Programul de pregătire: Nutritie Ayurvedică modulul 3</h1>
