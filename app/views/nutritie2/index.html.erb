@@ -1,14 +1,16 @@
 <section class="c1">
-<% unless user_signed_in? %>
+<% if !user_signed_in? || (current_user && !@has_access) %>
 <h1 class="ch1">Bun venit la Programul de pregătire: Nutritie Ayurvedică modulul 2</h1>
 <p>Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</p>
 <p>
 Pentru a vă înscrie la acest modul, vă rugăm să ne trimiteți un mesaj prin intermediul formularului de pe <a href='/contact'>pagina noastră de contact</a>.
 .
 </p>
+<% if !user_signed_in? %>
 <div class="btn-fp">
     <%= link_to 'Intră în cont', new_user_session_with_return_path('nutritie2'), class: 'btn-fp-link' %>
 </div>
+<%end%>
 <%end%>
 <% if current_user && @has_access %>
 <h1 class="ch1">Bun venit la Programul de pregătire: Nutritie Ayurvedică modulul 2</h1>
