@@ -47,18 +47,14 @@
                     <% end %>
                   </li>
                   <li class="nav-item">
-                    <% if current_user && (current_user.role == 1 || (current_user.role == 0 && ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod12", "cod11", "cod13"] }).exists?)) %>
+                   
                       <%= link_to 'Nutritie modulul 3', nutritie3_path %>
-                    <% else %>
-                      <%= link_to 'Nutritie modulul 3', new_user_session_path(return_to: 'nutritie3'), id: 'nutritie3_link' %>
-                    <% end %>
+                    
                   </li>
                   <li class="nav-item">
-                    <% if current_user && (current_user.role == 1 || current_user.nutritieabsolvit == 2) %>
+                    
                       <%= link_to 'Nutritie modulul 2', nutritie2_path %>
-                    <% else %>
-                      <%= link_to 'Nutritie modulul 2', new_user_session_path(return_to: 'nutritie2'), id: 'nutritie2_link' %>
-                    <% end %>
+                    
                   </li>
                 </ul>
               </li>

@@ -1,9 +1,7 @@
 class Nutritie3Controller < ApplicationController
   def index
-    if !current_user
-      redirect_to new_user_session_path and return
-    end
-    if current_user.limba=='EN'
+    
+    if current_user && current_user.limba=='EN'
     @myvideo = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
     else  
     @myvideo = Video.where(tip: 'nutritie3').where('ordine <= ?', 1000).order(ordine: :asc)
@@ -31,7 +29,7 @@ class Nutritie3Controller < ApplicationController
                   end
   
       # Logic for @myvideo2
-    if @has_access1
+    if current_user && @has_access1
       # Get the cod values from the Prod model based on the user's purchases
       puts("da are acces1")
       paid_cod_values = ComenziProd.joins(:prod).where(user_id: current_user.id).where('comenzi_prods.datasfarsit >= ?', Date.today).pluck("prods.cod").uniq
