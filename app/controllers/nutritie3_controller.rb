@@ -61,9 +61,8 @@ class Nutritie3Controller < ApplicationController
     @myvideo1 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)#Aspecte organizatorice
     #o sa pun la Resurse intre 2000-3000 video ce tin de modul 3 iar intre 3000-4000 video ce tin de modul 2
     if (current_user && current_user.role==1) || (current_user && current_user.nutritieabsolvit==2)
-      @myvideo4 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 2000, 3000)
-                 .or(Video.where(tip: 'nutritie2').where('ordine > ? AND ordine < ?', 3000, 4000))
-                 .order(Arel.sql("CASE WHEN tip = 'nutritie2' THEN 1 ELSE 2 END, ordine ASC"))#modulul 2 si 3
+      @myvideo4 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 2000, 3000).
+      order(Arel.sql("CASE WHEN tip = 'nutritie2' THEN 1 ELSE 2 END, ordine ASC"))#modulul 2 si 3
     else      
       @myvideo4 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)#modulul 3
     end  
