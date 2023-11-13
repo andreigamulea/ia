@@ -1,0 +1,60 @@
+<div class="cl">
+
+    <p class="tl">Cursuri</p>
+    <h2><a class="alink" href="<%= cursayurveda_path %>">Curs de Ayurveda octombrie 2023 - iulie 2024</a></h2>
+
+    
+    
+  <h2><%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 3', nutritie3_path, class: 'alink' %></h2>
+
+<h2><%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 2', nutritie2_path, class: 'alink' %></h2>    
+    <img src="<%= image_path('cursuri.jpg') %>" alt="Curs de Ayurveda">
+   <p class="tl">Ayurveda - Aplicații</p>
+   <h2>
+  <% if user_signed_in? %>
+    <%= link_to 'Aplicație valori nutriționale', valorinutritionales_path, class: 'alink' %>
+  <% else %>
+    <%= link_to 'Aplicație valori nutriționale', new_user_session_with_return_path('vn'), class: 'alink button-link' %>
+  <% end %>
+</h2>
+
+   
+<h2>
+<% if current_user %>
+  <% if current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) } %>
+    <%= link_to 'Consultare lista Resurse Vegetale', lista_vegetales_path, class: 'alink' %>
+  <% else %>
+    <%= link_to 'Consultare lista Resurse Vegetale', servicii_path, class: 'alink button-link' %>
+  <% end %>
+<% else %>
+  <%= link_to 'Consultare lista Resurse Vegetale', new_user_session_with_return_path('lg'), class: 'alink button-link' %>
+<% end %>
+</h2>
+<p style="padding: 5px 10px;border-radius: 5px;font-size: 18px;margin: -20px 0 0 0;font-weight: 600;color: indigo;border-bottom: 1px solid #ccc;margin-bottom: 5px;margin-top: -10px;">În curând</p>
+<h2><a class="alink" href="#mentiuni-nutritionale">Mențiuni nutritionale și de sănătate</a></h2>
+<h2><a class="alink" href="#test-tipologii-ayurvedice">Test tipologii ayurvedice</a></h2>
+
+<h2><a class="alink" href="#index-ayurvedic-plante-indiene">Index Ayurvedic - plante indiene</a></h2>
+<h2><a class="alink" href="#index-ayurvedic-plante-romanesti">Index Ayurvedic - plante românești</a></h2>
+<h2><a class="alink" href="#teste-ayurveda-specialitati">Teste de Ayurveda - specialități</a></h2>
+<h2><a class="alink" href="#teste-ayurveda-specialitati">Proprietăți Rasa - Virya - Vipaka</a></h2>
+<h2><a class="alink" href="#teste-ayurveda-specialitati">Tradiția Ayurvedică - Amnaya Trantaka</a></h2>
+<h2><a class="alink" href="#teste-ayurveda-specialitati">Glosar termeni sanscriți utilizați în Ayurveda</a></h2>
+<h2><a class="alink" href="#teste-ayurveda-specialitati">Index Ayurvedic Sistematic Selectiv - general</a></h2>
+
+<img src="<%= image_path('Ayurveda-aplicatii.jpg') %>" alt="Curs de Ayurveda">
+   <p class="tl">Tabere</p>
+   <h2>
+    <%= link_to "Tabăra de Ayurveda 2023 etapa de toamnă partea 2", tayt122_path, class: 'alink' %>  </h2> 
+   <h2> <%= link_to "Tabăra de Ayurveda 2023 etapa de toamnă partea 1", tayt12_path, class: 'alink' %></h2>
+
+    <h2>
+    <% if current_user %>   
+      <%= link_to 'Tabăra de Ayurveda 2023 etapa de vară partea 2', tayv2_path, class: 'alink', id: 'tayv2_link' %>
+   <% else %>   
+      <%= link_to 'Tabăra de Ayurveda 2023 etapa de vară partea 2', new_user_session_with_return_path('tayv2'), class: 'alink button-link' %>
+   <% end %>
+   </h2>
+   <img src="<%= image_path('tabara.jpg') %>" alt="Imagine">
+   
+</div>
