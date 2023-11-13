@@ -124,6 +124,8 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get 'home/index1', to: 'home#index1'
 
   get 'home/index'
+  get 'evaluare_tipologie_ayurvedica', to: 'home#evaluare_tipologie_ayurvedica'
+
   #get 'home/listavegetalegratis', to: 'home#listavegetalegratis', as: :listavegetalegratis_home
   get 'home/listavegetalegratis/:acces', to: 'home#listavegetalegratis', as: :listavegetalegratis_home
   
