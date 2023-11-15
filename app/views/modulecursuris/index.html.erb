@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Modulecursuris</h1>
+
+<div id="modulecursuris">
+  <% @modulecursuris.each do |modulecursuri| %>
+    <%= render modulecursuri %>
+    <p>
+      <%= link_to "Show this modulecursuri", modulecursuri %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New modulecursuri", new_modulecursuri_path %>

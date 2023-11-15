@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_23_231816) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_14_173735) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -292,6 +292,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_231816) do
     t.index ["srota"], name: "index_listaproprietatis_on_srota"
   end
 
+  create_table "modulecursuris", force: :cascade do |t|
+    t.string "nume"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "paginisites", force: :cascade do |t|
     t.string "nume"
     t.datetime "created_at", null: false
@@ -439,6 +445,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_231816) do
     t.index ["user_id"], name: "index_user_ips_on_user_id"
   end
 
+  create_table "user_modulecursuris", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "modulecursuri_id", null: false
+    t.string "validat"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["modulecursuri_id"], name: "index_user_modulecursuris_on_modulecursuri_id"
+    t.index ["user_id"], name: "index_user_modulecursuris_on_user_id"
+  end
+
   create_table "user_paginisites", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "paginisite_id", null: false
@@ -555,6 +571,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_231816) do
   add_foreign_key "facturas", "comandas"
   add_foreign_key "facturas", "users"
   add_foreign_key "user_ips", "users"
+  add_foreign_key "user_modulecursuris", "modulecursuris"
+  add_foreign_key "user_modulecursuris", "users"
   add_foreign_key "user_paginisites", "paginisites"
   add_foreign_key "user_paginisites", "users"
   add_foreign_key "userprods", "prods"
