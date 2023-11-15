@@ -890,6 +890,14 @@ def preluaredate22 # pune inregistri in tabela UserModulecursuri doar daca combi
   end
 end
 
+def preluaredate23
+  # Parcurge toți userii
+  User.where(nutritieabsolvit: 2).each do |user|
+    # Pentru fiecare user care are nutritieabsolvit == 2,
+    # creează o înregistrare în UserModulecursuri
+    UserModulecursuri.find_or_create_by(user_id: user.id, modulecursuri_id: 3, validat: "Finalizata")
+  end
+end
 
 
 
