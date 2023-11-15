@@ -1,0 +1,22 @@
+<%= form_with(model: modulecursuri) do |form| %>
+  <% if modulecursuri.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(modulecursuri.errors.count, "error") %> prohibited this modulecursuri from being saved:</h2>
+
+      <ul>
+        <% modulecursuri.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :nume, style: "display: block" %>
+    <%= form.text_field :nume %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

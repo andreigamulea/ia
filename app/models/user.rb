@@ -48,7 +48,9 @@ class User < ApplicationRecord
   
  
   
- 
+  has_many :user_modulecursuris
+  has_many :modulecursuris, through: :user_modulecursuris
+  
 
 
   has_many :user_videos

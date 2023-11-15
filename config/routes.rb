@@ -1,4 +1,5 @@
 Rails.application.routes.draw do    
+  resources :modulecursuris
   get '/crypto_prices/show_crypto_price', to: 'crypto_prices#show_crypto_price', as: 'show_crypto_price'
 
   get 'tayt12/index'
@@ -176,6 +177,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get '/xlsxtopg/preluaredate19', to: 'xlsxtopg#preluaredate19', as: 'preluaredate19_xlsxtopg'
   get '/xlsxtopg/preluaredate20', to: 'xlsxtopg#preluaredate20', as: 'preluaredate20_xlsxtopg'
   get '/xlsxtopg/preluaredate21', to: 'xlsxtopg#preluaredate21', as: 'preluaredate21_xlsxtopg'
+  get '/xlsxtopg/preluaredate22', to: 'xlsxtopg#preluaredate22', as: 'preluaredate22_xlsxtopg'
 
   get 'xlsxtopg/sterge_inregistrari', to: 'xlsxtopg#sterge_inregistrari', as: 'sterge_inregistrari_xlsxtopg'
   get 'xlsxtopg/sterge_inregistrari1', to: 'xlsxtopg#sterge_inregistrari1', as: 'sterge_inregistrari1_xlsxtopg'

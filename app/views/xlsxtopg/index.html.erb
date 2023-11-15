@@ -9,10 +9,12 @@
   <%= button_to 'Srota', preluaredate7_xlsxtopg_path, class: "btn btn-info", method: :get %><br>
   <%= button_to 'Valori Nutritionale', preluaredate8_xlsxtopg_path, class: "btn btn-info", method: :get %><br>
   <%= button_to 'Valori Nutritionale update camp observatii', preluaredate9_xlsxtopg_path, class: "btn btn-info", method: :get %><br>
-  <%= button_to 'Lista Vegetale', preluaredate10_xlsxtopg_path, class: "btn btn-warning", method: :get %><br>
+  <%= button_to 'Lista Vegetale', preluaredate10_xlsxtopg_path, class: "btn btn-warning", method: :get %> Cand se adauga
+   noi records se face Listavegetale.destroy_all in rails c  iar apoi se pune noul xlsx cu toate records (cele din urma cu cele noi)
+   si apas pe butonul Lista Vegetale. Enjoy!
   <div class="jumbotron" style="background-color: #e9ec1a;padding: 0px;margin: 0px;width:20%;">
     
-    <%= button_to 'Preluare useri care sa poata cumpara de la Nutritie3', preluaredate11_xlsxtopg_path, class: "btn btn-warning", method: :get %><br>
+    <%= button_to 'Preluare useri noi - doar atat email nume telefon', preluaredate11_xlsxtopg_path, class: "btn btn-warning", method: :get %><br>
     <%= button_to 'Preluare in useriprod user_id cu prod_id', preluaredate12_xlsxtopg_path, class: "btn btn-warning", method: :get %><br>
     <%= button_to 'Verificare lipsa useri i user', preluaredate13_xlsxtopg_path, class: "btn btn-warning", method: :get %><br>
     <%= button_to 'Pune in User valoarea 2 - modulul de nutritie absolvit', preluaredate21_xlsxtopg_path, class: "btn btn-warning", method: :get %><br>
@@ -32,7 +34,9 @@
   <%= button_to 'Pune telefon la userii preluati mai sus', preluaredate20_xlsxtopg_path, class: "btn btn-warning", method: :get %><br>
  
 </div></br>
-
+<div class="jumbotron" style="background-color: #a9e21a;padding: 0px;margin: 0px;width:20%;">
+<%= button_to 'Pune in user_modulecursuri user_id modelcursuri_id finalizat din tabela listauseri', preluaredate22_xlsxtopg_path, class: "btn btn-warning", method: :get %><br>
+</div></br>
 
   <%= link_to 'Sterge toate înregistrările din toate tabelele', sterge_inregistrari_xlsxtopg_path, class: "text-red-500 hover:text-red-700" %><br>
 <%= link_to 'Sterge toate înregistrările din tabela Plante', sterge_inregistrari1_xlsxtopg_path, class: "text-red-500 hover:text-red-700" %>

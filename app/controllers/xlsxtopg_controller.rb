@@ -851,6 +851,44 @@ def preluaredate21
     user.update(nutritieabsolvit: 2)
   end
 end
+def preluaredate22 # pune inregistri in tabela UserModulecursuri doar daca combinatia user.id, modulecursuri_id nu exista
+  #deci pot veni cu o tabela noua si sa o rulez - nu va crea duplicate va pune doar ce e nou
+  #in cazul meu modulecursuri_id  1  si 2 corespund cursului de Nutritie modulul 1 p1 si modulul 1 p2
+  #daca vreau sa adaug pentru Nutritie 2 acestuia ii corespunde-vezi in tabela Modulecursuri - acolo e 3
+  #daca vreau sa adaug pentru Nutritie 3 acestuia ii corespunde-vezi in tabela Modulecursuri - acolo e 4
+  #Mare atentie daca folosesc id: modulecursuri_id: 4  acum Nutritie3 are id 4 dar vezi sa nu se schimbe!!! daca stergi si pui la loc
+
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
+ 
+  xlsx.each_row_streaming(offset: 0) do |row|
+    email = row[0]&.value&.strip&.downcase
+    name = row[1]&.value&.strip
+    telefon = row[2]&.value&.to_s&.strip
+
+    absolvit = row[4]&.value&.strip
+    absolvit = row[3]&.value&.strip if absolvit.nil?
+
+    # Sari peste rând dacă email este nul
+    next if email.nil?
+
+    # Caută userul în baza de date
+    user = User.find_by(email: email)
+
+    # Verifică dacă userul există și procesează în funcție de valoarea lui 'absolvit'
+    if user
+     
+      case absolvit
+      when "p1 si p2"
+        UserModulecursuri.find_or_create_by(user_id: user.id, modulecursuri_id: 1, validat: "Finalizata")
+        UserModulecursuri.find_or_create_by(user_id: user.id, modulecursuri_id: 2, validat: "Finalizata")
+      when "doar p1"
+        UserModulecursuri.find_or_create_by(user_id: user.id, modulecursuri_id: 1, validat: "Finalizata")
+      end
+    end
+   
+
+  end
+end
 
 
 
