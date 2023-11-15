@@ -1,0 +1,2 @@
+class Tipconstitutional < ApplicationRecord
+end

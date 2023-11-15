@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Tipconstitutionals</h1>
+
+<div id="tipconstitutionals">
+  <% @tipconstitutionals.each do |tipconstitutional| %>
+    <%= render tipconstitutional %>
+    <p>
+      <%= link_to "Show this tipconstitutional", tipconstitutional %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New tipconstitutional", new_tipconstitutional_path %>

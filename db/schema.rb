@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_14_173735) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_15_142912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -426,6 +426,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_14_173735) do
     t.datetime "updated_at", null: false
     t.index ["codsr"], name: "index_srota_on_codsr"
     t.index ["codsrota"], name: "index_srota_on_codsrota"
+  end
+
+  create_table "tipconstitutionals", force: :cascade do |t|
+    t.integer "nrtip"
+    t.integer "nr"
+    t.string "tip"
+    t.string "caracteristica"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tipuri_props", force: :cascade do |t|

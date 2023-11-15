@@ -1,4 +1,5 @@
 Rails.application.routes.draw do    
+  resources :tipconstitutionals
   
   resources :modulecursuris
   get '/crypto_prices/show_crypto_price', to: 'crypto_prices#show_crypto_price', as: 'show_crypto_price'
