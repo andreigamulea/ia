@@ -28,75 +28,70 @@
 <body>
 <table style="margin-bottom:50px;">
   <tr>
-
     <th>Moneda</th>
-    <th>Pret Vanzare</th>
-    <th>Pret Cumparare</th>
+    <th>Pret Vanzare (Bid) în USDT</th>
+    <th>Pret Cumparare (Ask) în USDT</th>
   </tr>
   <tr>
-
     <td>BTC</td>
-    <td><%=@btc_usdt_bid_price%></td>
-    <td><%=@btc_usdt_ask_price%></td>
+    <td><%=@btc_usdt_bid_price%> USDT</td>
+    <td><%=@btc_usdt_ask_price%> USDT</td>
   </tr>
   <tr>
-
     <td>ETH</td>
-    <td><%=@eth_usdt_bid_price%></td>
-    <td><%=@eth_usdt_ask_price%></td>
+    <td><%=@eth_usdt_bid_price%> USDT</td>
+    <td><%=@eth_usdt_ask_price%> USDT</td>
   </tr>
   <tr>
-
     <td>XMR</td>
-    <td><%=@xmr_usdt_bid_price%></td>
-    <td><%=@xmr_usdt_ask_price%></td>
-  </tr>
-  </table>
-  <table style="margin-bottom:50px;">
-  <tr>
-    <th>Suma Pornire in BTC</th>
-    <th><%=@starting_btc%></th>
+    <td><%=@xmr_usdt_bid_price%> USDT</td>
+    <td><%=@xmr_usdt_ask_price%> USDT</td>
   </tr>
 </table>
 
 <table style="margin-bottom:50px;">
+<tr>
+    <td>Volum minim comun: </th>
+    <td><%=@starting_btc%> BTC</th>
+</tr>
+
+</table>
+
+<table style="margin-bottom:50px;">
   <tr>
-    <th>Schimb</th>
-    <td></td>
-    <td>Suma vanduta</td>
-    <th>Suma vanduta(ask)</th>
-    <th>Suma cumparata(bid)</th>
+    <th>Conversie</th>
+    <th>Suma Initială</th>
+    <th>Suma Finală</th>
     <th>Volum Vanzare</th>
     <th>Volum Cumparare</th>
   </tr>
   <tr>
+    <td>BTC -> ETH</td>
+    <td><%=@starting_btc%> BTC</td>
+    <td><%= @btc_to_eth %> ETH</td>
+    <td><%= @eth_btc_prices[:bid_volume] %></td>
+    <td><%= @eth_btc_prices[:ask_volume] %></td>
+  </tr>
   <tr>
-  <td>BTC -> ETH</td>
-  <td>ETH</td>
-  <td><%= @btc_to_eth %></td>
-  <td><%= @eth_for_btc_v %></td>
-  <td><%= @eth_for_btc_c%></td>
-  <td><%= @eth_btc_prices[:bid_volume] %></td>
-  <td><%= @eth_btc_prices[:ask_volume] %></td>
-</tr>
-<tr>
-<td>ETH -> XMR</td>
-<td>XMR</td>
-<td><%= @eth_to_xmr %></td>
-<td><%=@xmr_for_eth_v %></td>
-<td><%= @xmr_for_eth_c %></td>
+    <td>ETH -> XMR</td>
+    <td><%= @btc_to_eth %> ETH</td>
+    <td><%= @eth_to_xmr %> XMR</td>
     <td><%= @eth_xmr_prices[:bid_volume] %></td>
     <td><%= @eth_xmr_prices[:ask_volume] %></td>
   </tr>
   <tr>
-  <td>XMR -> BTC</td>
-  <td>BTC</td>
-  <td><%= @xmr_to_btc %></td>
-  <td><%= @btc_for_xmr_v %></td>
-  <td><%= @btc_for_xmr_c%></td>
+    <td>XMR -> BTC</td>
+    <td><%= @eth_to_xmr %> XMR</td>
+    <td><%= @xmr_to_btc %> BTC</td>
     <td><%= @xmr_btc_prices[:bid_volume] %></td>
     <td><%= @xmr_btc_prices[:ask_volume] %></td>
   </tr>
 </table>
 
+<table style="margin-bottom:50px;">
+<tr>
+    <td>Profit in BTC: </th>
+    <td><%=@btc_profit%> BTC adica <%=@btc_profit_in_usdt%> USDT</th>
+</tr>
+</table>
 </section>
