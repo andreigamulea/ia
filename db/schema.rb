@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_15_142912) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_15_144634) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -473,6 +473,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_15_142912) do
     t.index ["user_id"], name: "index_user_paginisites_on_user_id"
   end
 
+  create_table "user_tipconstitutionals", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "tipconstitutional_id", null: false
+    t.integer "valoare"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tipconstitutional_id"], name: "index_user_tipconstitutionals_on_tipconstitutional_id"
+    t.index ["user_id"], name: "index_user_tipconstitutionals_on_user_id"
+  end
+
   create_table "user_unhappies", force: :cascade do |t|
     t.integer "user_id"
     t.string "name"
@@ -584,6 +594,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_15_142912) do
   add_foreign_key "user_modulecursuris", "users"
   add_foreign_key "user_paginisites", "paginisites"
   add_foreign_key "user_paginisites", "users"
+  add_foreign_key "user_tipconstitutionals", "tipconstitutionals"
+  add_foreign_key "user_tipconstitutionals", "users"
   add_foreign_key "userprods", "prods"
   add_foreign_key "userprods", "users"
 end
