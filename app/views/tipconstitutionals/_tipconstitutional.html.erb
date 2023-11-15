@@ -1,22 +1,10 @@
-<div id="<%= dom_id tipconstitutional %>">
-  <p>
-    <strong>Nrtip:</strong>
-    <%= tipconstitutional.nrtip %>
-  </p>
-
-  <p>
-    <strong>Nr:</strong>
-    <%= tipconstitutional.nr %>
-  </p>
-
-  <p>
-    <strong>Tip:</strong>
-    <%= tipconstitutional.tip %>
-  </p>
-
-  <p>
-    <strong>Caracteristica:</strong>
-    <%= tipconstitutional.caracteristica %>
-  </p>
-
-</div>
+<tr class="table-row" id="<%= dom_id tipconstitutional %>">
+  <td class="row-item1"><%= tipconstitutional.id %></td>
+  <td class="row-item1"><%= tipconstitutional.nrtip %></td>
+  <td class="row-item1"><%= tipconstitutional.nr %></td>
+  <td class="row-item1"><%= tipconstitutional.tip %></td>
+  <td class="row-item1"><%= tipconstitutional.caracteristica %></td>
+  <td class="row-item1">
+    <%= link_to "Show this tipconstitutional", tipconstitutional %>
+  </td>
+</tr>

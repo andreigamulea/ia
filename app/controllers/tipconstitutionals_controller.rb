@@ -3,8 +3,11 @@ class TipconstitutionalsController < ApplicationController
 
   # GET /tipconstitutionals or /tipconstitutionals.json
   def index
-    @tipconstitutionals = Tipconstitutional.all
+    @tipconstitutionals = Tipconstitutional.all.order(id: :asc)
+
   end
+def tipconstitutionals
+end  
 
   # GET /tipconstitutionals/1 or /tipconstitutionals/1.json
   def show
