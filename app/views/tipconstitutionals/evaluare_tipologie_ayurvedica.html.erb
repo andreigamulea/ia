@@ -150,7 +150,15 @@
     <td class="row-item1"><%= vata_item.nr %></td>
     <td class="row-item2"><%= vata_item.caracteristica %></td>
     <td class="row-item3">
-      <input type="number" name="punctaj[]" class="punctaj-input" min="0" max="6" value="0">
+    <select name="punctaj[]" class="punctaj-input">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+  </select>
     </td>
   </tr>
 <% end %>
@@ -209,7 +217,15 @@
   <td class="row-item1"><%= vata_item.nr %></td>
   <td class="row-item2"><%= vata_item.caracteristica %></td>
   <td class="row-item3">
-    <input type="number" name="punctaj[]" class="punctaj-input" min="0" max="6" value="0">
+  <select name="punctaj[]" class="punctaj-input">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+  </select>
   </td>
 </tr>
 <% end %>
