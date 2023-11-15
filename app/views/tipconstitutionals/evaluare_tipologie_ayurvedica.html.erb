@@ -259,7 +259,8 @@
 
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+
+  document.addEventListener("turbo:load", function() {
   calculateTableTotal('vata-table', 'total-punctaj-vata');
   calculateTableTotal('pitta-table', 'total-punctaj-pitta');
   calculateTableTotal('kapha-table', 'total-punctaj-kapha');
@@ -267,6 +268,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function calculateTableTotal(tableId, totalId) {
   const table = document.getElementById(tableId);
+  if (!table) return;
+
   const inputs = table.getElementsByClassName('punctaj-input');
 
   const calculateTotal = () => {
@@ -281,7 +284,6 @@ function calculateTableTotal(tableId, totalId) {
     input.addEventListener('change', calculateTotal);
   }
 }
-
 
 
 </script>
