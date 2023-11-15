@@ -36,7 +36,13 @@ class CryptoPricesController < ApplicationController
       
       @xmr_btc_prices = get_book_ticker('XMRBTC') # presupunând că există această pereche
      
-      @starting_btc = 0.001
+        # Găsește volumul minim de tranzacționare pentru BTC, ETH și XMR în USDT
+        min_btc_volume = [btc_usdt_ticker[:bid_volume].to_f, btc_usdt_ticker[:ask_volume].to_f].min if btc_usdt_ticker
+        min_eth_volume = [eth_usdt_ticker[:bid_volume].to_f, eth_usdt_ticker[:ask_volume].to_f].min if eth_usdt_ticker
+        min_xmr_volume = [xmr_usdt_ticker[:bid_volume].to_f, xmr_usdt_ticker[:ask_volume].to_f].min if xmr_usdt_ticker
+    
+        # Alege cel mai mic volum ca @starting_btc
+        @starting_btc = [min_btc_volume, min_eth_volume, min_xmr_volume].compact.min
 
       # Calculează cât ETH vei obține pentru 0.001 BTC
       @btc_to_eth = @starting_btc / @eth_btc_prices[:ask_price].to_f if @eth_btc_prices
@@ -46,6 +52,13 @@ class CryptoPricesController < ApplicationController
 
       # Calculează cât BTC vei obține pentru XMR-ul obținut anterior
       @xmr_to_btc = @eth_to_xmr * @xmr_btc_prices[:bid_price].to_f if @eth_to_xmr && @xmr_btc_prices
+
+      # Calculează diferența dintre BTC-ul inițial și cel final
+      @btc_profit = @xmr_to_btc - @starting_btc   
+
+      # Converteste profitul/pierderea în BTC în USDT
+      # Folosește prețul de bid pentru BTCUSDT pentru a converti în USDT
+      @btc_profit_in_usdt = @btc_profit * @btc_usdt_bid_price if @btc_usdt_bid_price  
 
       @eth_for_btc_c =  @btc_to_eth if @btc_to_eth
       @eth_for_btc_v = @btc_to_eth = @starting_btc / @eth_btc_prices[:bid_price].to_f if @eth_btc_prices

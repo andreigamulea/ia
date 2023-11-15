@@ -6,7 +6,10 @@ class TipconstitutionalsController < ApplicationController
     @tipconstitutionals = Tipconstitutional.all.order(id: :asc)
 
   end
-def tipconstitutionals
+def evaluare_tipologie_ayurvedica
+  @vata = Tipconstitutional.where(nrtip: 1).order(nr: :asc)
+  @pitta = Tipconstitutional.where(nrtip: 2).order(nr: :asc)
+  @kapha = Tipconstitutional.where(nrtip: 3).order(nr: :asc)
 end  
 
   # GET /tipconstitutionals/1 or /tipconstitutionals/1.json
