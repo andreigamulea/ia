@@ -1,4 +1,5 @@
 Rails.application.routes.draw do    
+  
   resources :modulecursuris
   get '/crypto_prices/show_crypto_price', to: 'crypto_prices#show_crypto_price', as: 'show_crypto_price'
 
@@ -11,7 +12,7 @@ Rails.application.routes.draw do
 
   get '/cursayurveda', to: 'cursuriayurvedas#cursayurveda'
   resources :cursuriayurvedas
-  
+  get 'nutritie1', to: 'nutritie1#index'
   get 'nutritie2', to: 'nutritie2#index'
   get 'nutritie3', to: 'nutritie3#index'
   get 'myvideo', to: 'videos#myvideo'
@@ -21,6 +22,8 @@ Rails.application.routes.draw do
   get 'videos/:id/myvideo4', to: 'videos#myvideo4', as: 'myvideo4' 
   get 'videos/:id/myvideo6', to: 'videos#myvideo6', as: 'myvideo6' 
   get 'videos/:id/myvideo7', to: 'videos#myvideo7', as: 'myvideo7'
+  get 'videos/:id/myvideo8', to: 'videos#myvideo8', as: 'myvideo8'
+  get 'videos/:id/myvideo9', to: 'videos#myvideo9', as: 'myvideo9'
  
   get 'videos/tayv2', to: 'videos#tayv2', as: 'tayv2'
   get 'tabara_de_ayurveda_toamna1', to: 'videos#tayt12', as: 'tayt12'

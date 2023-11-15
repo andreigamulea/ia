@@ -7,6 +7,8 @@ class VideosController < ApplicationController
   before_action :set_user2, only: %i[myvideo2] #este pt nutritie3
   before_action :set_user7, only: %i[myvideo7] #este pt nutritie3 pt video de la Resurse si Aspecte organizatorice
   before_action :set_user6, only: %i[myvideo6] #este pt nutritie2
+  before_action :set_user8, only: %i[myvideo8] #este pt nutritie1
+  before_action :set_user9, only: %i[myvideo9] #este pt nutritie1
   before_action :set_user3, only: %i[myvideo3] #este pt an1
   before_action :set_user4, only: %i[myvideo4] #este pt tayt12
   before_action :set_user4, only: %i[myvideo5] #este pt tayt122 folosesc tot set_user4 pt ca e aceeasi plata si la tayt12 si la tayt122
@@ -134,6 +136,18 @@ end
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
   end
+  def myvideo8 #pt nutritie1
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+
+  def myvideo9 #pt nutritie1
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+
   ################################################################
   
   
@@ -433,6 +447,45 @@ end
       return true
       end
     end  
+
+    def set_user8 # nutritie1 p1 si p2
+      unless user_signed_in?
+        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+        redirect_to new_user_session_path
+        return
+      end
+    
+      has_module_1 = UserModulecursuri.exists?(user_id: current_user.id, 
+                                               modulecursuri_id: 1, 
+                                               validat: "Finalizata")
+    
+      has_module_2 = UserModulecursuri.exists?(user_id: current_user.id, 
+                                               modulecursuri_id: 2, 
+                                               validat: "Finalizata")
+    
+      unless (has_module_1 && has_module_2) || current_user.role == 1
+        flash[:alert] = "Nu aveți acces la acest curs."
+        redirect_to root_path # sau o altă cale relevantă
+      end
+    end
+    
+    def set_user9 # nutritie1 p1
+      unless user_signed_in?
+        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+        redirect_to new_user_session_path
+        return
+      end
+    
+      has_module_1 = UserModulecursuri.exists?(user_id: current_user.id, 
+                                               modulecursuri_id: 1, 
+                                               validat: "Finalizata")
+    
+      unless has_module_1 || current_user.role == 1
+        flash[:alert] = "Nu aveți acces la acest curs."
+        redirect_to root_path # sau o altă cale relevantă
+      end
+    end
+    
 
 
     def require_admin
