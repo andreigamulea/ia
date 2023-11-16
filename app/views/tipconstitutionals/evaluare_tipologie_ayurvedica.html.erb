@@ -75,7 +75,9 @@
 #evaluare .data-table .punctaj:focus {
   outline: none;
 }
-
+#evaluare select {
+  width: -webkit-fill-available;
+}
 
 
 </style>
@@ -163,14 +165,14 @@
   </tr>
 <% end %>
 
-<tr class="table-total">
-  <td colspan="2">Total</td>
-  <td id="total-punctaj-vata">0</td>
+<tr class="table-row">
+  <td colspan="2" style="text-align:right; padding-right:10px; font-weight:500; border-right:none;">Total calculat pentru Vata:  </td>
+  <td id="total-punctaj-vata" style="text-align:center; border-left:none;font-weight:500;">0</td>
 </tr>
 </table>
 
 
-  <h2 class="main-title" style="margin-top:20px;">Test pentru evaluarea caracteristicilor de tip pitta</h2>
+  <h2 class="main-title" style="margin-top:20px;color: #bf0000;">Test pentru evaluarea caracteristicilor de tip pitta</h2>
   <table class="data-table test-pitta" id="pitta-table">
   <tr class="table-header">
   <th class="header-item1">Nr.</th>
@@ -197,13 +199,13 @@
   </tr>
 <% end %>
 
-<tr class="table-total">
-  <td colspan="2">Total</td>
-  <td id="total-punctaj-pitta">0</td>
+<tr class="table-row">
+  <td colspan="2" style="text-align:right; padding-right:10px; font-weight:500;">Total calculat pentru Pitta: </td>
+  <td id="total-punctaj-pitta" style="text-align:center;font-weight:500;">0</td>
 </tr>
 </table>
 
-<h2 class="main-title" style="margin-top:20px;">Test pentru evaluarea caracteristicilor de tip Kapha</h2>
+<h2 class="main-title" style="margin-top:20px; color: #036803;">Test pentru evaluarea caracteristicilor de tip Kapha</h2>
 
 <table class="data-table test-kapha" id="kapha-table">
 <tr class="table-header">
@@ -230,9 +232,9 @@
 </tr>
 <% end %>
 
-<tr class="table-total">
-  <td colspan="2">Total</td>
-  <td id="total-punctaj-kapha">0</td>
+<tr class="table-row">
+  <td colspan="2" style="text-align:right; padding-right:10px; font-weight:500;">Total calculat pentru Kapha: </td>
+  <td id="total-punctaj-kapha" style="text-align:center;font-weight:500;">0</td>
 </tr>
 </table>
 
