@@ -87,8 +87,6 @@
   .login a:hover {
     color: #9025c0;
   }
-  /* ... restul stilurilor ... */
-
 
 .login .remember-me {
     display: flex;
@@ -108,7 +106,16 @@
     vertical-align: middle;
   }
   
-/* Resetare stiluri */
+  .bn-textField-input {
+    border: none; /* Elimină chenarul */
+    background: transparent; /* Fundal transparent */
+    font-size: 14px; /* Mărimea fontului */
+  }
+  .bn-textField-input:focus {
+    border: none;
+    outline: none; /* Elimină conturul implicit în stare de focus */
+  }
+
 * {
   margin: 0;
   padding: 0;
