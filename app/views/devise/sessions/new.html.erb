@@ -12,31 +12,25 @@
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true, data: { turbo: turbo_option }) do |f| %> 
       <div class="field">
-        <%= f.label :email %><br />
+        <%= f.label :email %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
       </div>
       
-      <div class="field" >
-      <%= f.label "parola" %><br />
-      <div style="display: flex; align-items: center;background: #e8f0fe; border: 1px solid #ccc; border-radius: 4px;">
-      <%= f.password_field :password, id: "current-password-input", autocomplete: "current-password", class: "bn-textField-input", style: "border:none; background:transparent; font-size:14px;" %>
-     
-      <%= f.text_field :password, id: "current-text-input", style: "display: none; background: #e8f0fe; font-size:14px; width: 100%; padding: 8px;", autocomplete: "current-password", class: "bn-textField-input" %>
-      <div class="bn-textField-suffix">
-        <div class="bn-flex" style="width: 20px; margin-right:10px;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="password-visibility-icon" id="password-show-icon">
-                   <ellipse cx="12" cy="12" rx="10" ry="6" fill="currentColor"></ellipse> <!-- Conturul ochiului -->
-                   <circle cx="12" cy="12" r="3" fill="white"></circle> <!-- Pupila -->
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="password-visibility-icon" id="password-hide-icon" style="display: none;">
-                    <ellipse cx="12" cy="12" rx="10" ry="6" fill="currentColor"></ellipse> <!-- Conturul ochiului -->
-                    <line x1="3" y1="3" x2="21" y2="21" stroke="white" stroke-width="2"></line> <!-- Linia peste ochi -->
-                </svg>
+      <div class="field">
+        <%= f.label "parola" %>
+
+        <div>
+        <%= f.password_field :password, id: "current-password-input", autocomplete: "current-password" %>
+        <%= f.text_field :password, id: "current-text-input", style: "display: none; background: rgb(232, 240, 254); width: 100%; padding: 8px; border: 1px solid rgb(204, 204, 204); border-radius: 4px; font-size: 14px;", autocomplete: "current-password" %>
+        
+        <div style="display: flex;flex-direction: row; align-items: center; margin-top: 10px;">
+        <label style="width: auto; margin: 0; font-weight: 400;">Arată parola</label>
+        <input type="checkbox" id="show-current-password" style="display: block;background: rgb(232, 240, 254); width: auto;padding: 8px;border: 1px solid rgb(204, 204, 204);border-radius: 4px;font-size: 14px; margin-left:8px;">
+        </div>
+        
         </div>
       </div>
-      </div>
-    </div>
- 
+
       <% if devise_mapping.rememberable? %>
         <div class="field remember-me">
           <%= f.label "Tine-ma minte" %>
@@ -57,35 +51,29 @@
 
 
 
+
 <script>
 document.addEventListener("turbo:load", function() {
-  var showIcon = document.getElementById("password-show-icon");
-  var hideIcon = document.getElementById("password-hide-icon");
+  var showPasswordCheckbox = document.getElementById("show-current-password");
 
-  showIcon.addEventListener("click", function() {
-    togglePasswordVisibility(true);
-  });
-
-  hideIcon.addEventListener("click", function() {
-    togglePasswordVisibility(false);
-  });
-
-  function togglePasswordVisibility(isVisible) {
-    var passwordInput = document.getElementById("current-password-input");
-    var textInput = document.getElementById("current-text-input");
-    if (isVisible) {
-      passwordInput.style.display = "none";
-      textInput.style.display = "block";
-      textInput.value = passwordInput.value;
-      showIcon.style.display = "none";
-      hideIcon.style.display = "block";
-    } else {
-      passwordInput.style.display = "block";
-      textInput.style.display = "none";
-      passwordInput.value = textInput.value;
-      showIcon.style.display = "block";
-      hideIcon.style.display = "none";
-    }
+  if (showPasswordCheckbox) {
+    showPasswordCheckbox.addEventListener("change", function() {
+      var currentPasswordInput = document.getElementById("current-password-input");
+      var currentTextInput = document.getElementById("current-text-input");
+      togglePasswordVisibility(this.checked, currentPasswordInput, currentTextInput);
+    });
   }
 });
+
+function togglePasswordVisibility(isChecked, passwordInput, textInput) {
+  if (isChecked) {
+    passwordInput.style.display = "none";
+    textInput.style.display = "block";
+    textInput.value = passwordInput.value;
+  } else {
+    passwordInput.style.display = "block";
+    textInput.style.display = "none";
+    passwordInput.value = textInput.value;
+  }
+}
 </script>
