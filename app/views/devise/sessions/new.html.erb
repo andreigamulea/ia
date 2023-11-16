@@ -1,79 +1,50 @@
 <section class="login">
-  <% if flash[:alert] %>
-    <div class="alert">
-      <%= flash[:alert] %>
+<% if flash[:alert] %>
+  <div class="alert">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+
+<div class="login-container">
+<h1>Intră în cont</h1>
+
+<% turbo_option = request.path.ends_with?('/vn') ? false : true %>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true, data: { turbo: turbo_option }) do |f| %> 
+  <!-- form fields here -->
+
+
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+  
+  <div class="field">
+    <%= f.label "parola" %><br />
+    <%= f.password_field :password, autocomplete: "current-password" %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="field remember-me">
+      <%= f.label "Tine-ma minte" %>
+      <%= f.check_box :remember_me %>
+      
     </div>
   <% end %>
 
-  <div class="login-container">
-    <h1>Intră în cont</h1>
-
-    <% turbo_option = request.path.ends_with?('/vn') ? false : true %>
-
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true, data: { turbo: turbo_option }) do |f| %> 
-      <div class="field">
-        <%= f.label :email %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-      </div>
-      
-      <div class="field">
-        <%= f.label "parola" %>
-
-        <div>
-        <%= f.password_field :password, id: "current-password-input", autocomplete: "current-password" %>
-        <%= f.text_field :password, id: "current-text-input", style: "display: none; background: rgb(232, 240, 254); width: 100%; padding: 8px; border: 1px solid rgb(204, 204, 204); border-radius: 4px; font-size: 14px;", autocomplete: "current-password" %>
-        
-        <div style="display: flex;flex-direction: row; align-items: center; margin-top: 10px;">
-        <label style="width: auto; margin: 0; font-weight: 400;">Arată parola</label>
-        <input type="checkbox" id="show-current-password" style="display: block;background: rgb(232, 240, 254); width: auto;padding: 8px;border: 1px solid rgb(204, 204, 204);border-radius: 4px;font-size: 14px; margin-left:8px;">
-        </div>
-        
-        </div>
-      </div>
-
-      <% if devise_mapping.rememberable? %>
-        <div class="field remember-me">
-          <%= f.label "Tine-ma minte" %>
-          <%= f.check_box :remember_me %>
-        </div>
-      <% end %>
-
-      <div class="actions">
-        <%= hidden_field_tag 'return_to', params[:return_to] %>
-        <%= f.submit "Log in" %>
-      </div>
-    <% end %>
-
-    <%= render "devise/shared/links" %>
-    <%= link_to "Ati uitat parola?", new_password_path(resource_name) %>
+  <div class="actions">
+  <%= hidden_field_tag 'return_to', params[:return_to] %>
+    <%= f.submit "Log in" %>
   </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+
+<%= link_to "Ati uitat parola?", new_password_path(resource_name) %>
+
+  
+</div>
+
 </section>
-
-
-
-
-<script>
-document.addEventListener("turbo:load", function() {
-  var showPasswordCheckbox = document.getElementById("show-current-password");
-
-  if (showPasswordCheckbox) {
-    showPasswordCheckbox.addEventListener("change", function() {
-      var currentPasswordInput = document.getElementById("current-password-input");
-      var currentTextInput = document.getElementById("current-text-input");
-      togglePasswordVisibility(this.checked, currentPasswordInput, currentTextInput);
-    });
-  }
-});
-
-function togglePasswordVisibility(isChecked, passwordInput, textInput) {
-  if (isChecked) {
-    passwordInput.style.display = "none";
-    textInput.style.display = "block";
-    textInput.value = passwordInput.value;
-  } else {
-    passwordInput.style.display = "block";
-    textInput.style.display = "none";
-    passwordInput.value = textInput.value;
-  }
-}
-</script>
