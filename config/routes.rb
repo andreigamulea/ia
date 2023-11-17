@@ -1,6 +1,7 @@
 Rails.application.routes.draw do    
   resources :tipconstitutionals
   get 'evaluare_tipologie_ayurvedica', to: 'tipconstitutionals#evaluare_tipologie_ayurvedica'
+  get 'test1', to: 'tipconstitutionals#test1'
   
   resources :modulecursuris
   get '/crypto_prices/show_crypto_price', to: 'crypto_prices#show_crypto_price', as: 'show_crypto_price'
