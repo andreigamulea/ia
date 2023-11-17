@@ -1,0 +1,143 @@
+
+<style>
+#calcnutr .cr{
+    background-color:white!important;
+}
+dt {
+    font-weight: bold;
+    color: #0056b3;
+    margin-top: 10px;
+}
+dd {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+.mb0{
+    margin-bottom:0;
+}
+
+.ayrow {
+    display: flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+
+.aycolumn {
+    width: 50%;
+    box-sizing: border-box; 
+}
+
+@media screen and (max-width: 920px) {
+    .aycolumn {
+        width: 100%;
+        flex-direction:column;
+    }
+}
+
+#calcnutr .data-table .table-header th, 
+#calcnutr .data-table .table-row td {
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #000000;
+}
+#calcnutr .data-table .table-header th:nth-child(1), 
+#calcnutr .data-table .table-row td:nth-child(1) {
+
+}
+
+.btncmd{
+    color:white;
+    text-decoration:none;
+    background-color:#65025d;
+    padding: 7px 16px;
+    margin: 3px;
+    border-radius:5px;
+}
+</style>
+
+<div class="container" id="calcnutr">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: aliceblue; ">
+
+<h1 class="first-tittle">Ayush Cell Romania: Calculator Nutrițional</h1>
+<h2 class="main-title mb0" >Aplicatie de calcul nutrițional</h2>
+
+
+
+
+<p class="mb0">Vă invităm să descoperiți conținutul nutritiv al alimentelor și să calculați cu ușurință numărul de calorii, proteine, lipide, carbohidrați și fibre pentru fiecare masă. Alegeți zilnic o alimentație sănătoasă și echilibrată, adaptată nevoilor și obiectivelor dumneavoastră</p>
+<p class="mb0">Această aplicație este un instrument indispensabil pentru oricine dorește să monitorizeze și să optimizeze aportul său nutritiv, contribuind astfel la un stil de viață sănătos și echilibrat.</p>
+
+<h2 class="main-title" style="margin-bottom: -20px;">Caracteristici Esențiale ale Calculatorului Nutrițional</h2>
+<dl >
+    <dt>Baza de Date a Alimentelor:</dt>
+    <dd>
+        Explorați o colecție impresionantă de peste 4000 de alimente. Fiecare aliment este detaliat cu informații despre calorii, proteine, lipide, carbohidrați, fibre și cantitatea standard (în grame).
+    </dd>
+
+    <dt>Calculator Nutrițional:</dt>
+    <dd>
+        Selectați diferite alimente și cantități, iar sistemul nostru va calcula automat totalul de calorii, proteine, lipide, carbohidrați și fibre. Această funcție vă permite să analizați precis conținutul nutritiv al fiecărei mese.
+    </dd>
+
+    <dt>Funcția de Căutare Avansată:</dt>
+    <dd>
+        Găsiți rapid și eficient alimentele dorite folosind opțiunea noastră de căutare flexibilă. Căutați după cuvinte întregi sau fragmente de cuvinte pentru a accesa informațiile necesare.
+    </dd>
+</dl>
+
+<div class="ayrow">
+    <div class="aycolumn">
+        <h2 class="main-title mb0">Instrucțiuni de Utilizare</h2>
+        <dl>
+            <dt>Pasul 1:</dt>
+            <dd>Alegeți alimentele dorite din baza noastră de date folosind funcția de căutare.</dd>
+        
+            <dt>Pasul 2:</dt>
+            <dd>Introduceți cantitățile dorite pentru fiecare aliment selectat.</dd>
+        
+            <dt>Pasul 3:</dt>
+            <dd>Vizualizați rezumatul nutrițional total pentru selecția dvs., inclusiv numărul total de calorii și distribuția macronutrienților.</dd>
+        </dl>
+    </div>
+    <div class="aycolumn">
+        <img src="<%= image_path('calculator-nutritional-web.jpg') %>" alt="Calculator nutritional" style="width: -webkit-fill-available;">
+    </div>
+</div>
+
+<h2 class="main-title mb0">Calculator Valori Nutritionale</h2>
+
+<table class="data-table">
+<tr class="table-header" style="background-color: #65025d; color: white;">
+  <th class="header-item2">Opțiuni</th>
+  <th class="header-item3">Pret</th>
+  <th class="header-item3">Comandă</th>
+</tr>
+<tr class="table-row">
+  <td class="row-item1">Calculator Valori Nutritionale - acces 60 de zile</td>
+  <td class="row-item2">38 lei</td>
+  <td class="row-item3"><a href="#" class="btncmd">Accesează</a></td>
+</tr>
+<tr class="table-row">
+  <td class="row-item1">Calculator Valori Nutritionale - acces 180 de zile</td>
+  <td class="row-item2">75 lei</td>
+  <td class="row-item3"><a href="#" class="btncmd">Accesează</a></td>
+</tr>
+<tr class="table-row">
+  <td class="row-item1">Calculator Valori Nutritionale - acces 365 de zile</td>
+  <td class="row-item2">139 lei</td>
+  <td class="row-item3"><a href="#" class="btncmd">Accesează</a></td>
+</tr>
+<tr class="table-row">
+  <td class="row-item1">Calculator Valori Nutritionale - acces 3 de zile</td>
+  <td class="row-item2">3 lei</td>
+  <td class="row-item3"><a href="#" class="btncmd">Accesează</a></td>
+</tr>
+</table>
+
+</div>
+</div>
+
