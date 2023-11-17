@@ -11,6 +11,8 @@ def evaluare_tipologie_ayurvedica
   @pitta = Tipconstitutional.where(nrtip: 2).order(nr: :asc)
   @kapha = Tipconstitutional.where(nrtip: 3).order(nr: :asc)
 end  
+def test1
+end  
 
   # GET /tipconstitutionals/1 or /tipconstitutionals/1.json
   def show
