@@ -42,19 +42,84 @@ dd {
   padding: 8px;
   border: 1px solid #000000;
 }
-#calcnutr .data-table .table-header th:nth-child(1), 
-#calcnutr .data-table .table-row td:nth-child(1) {
+/* Stiluri pentru liniile impare ale tabelului (prima, a treia, etc.) */
+#calcnutr .data-table .table-row:nth-child(odd) {
+    background-color: #f2f2f2; /* O nuanță de gri */
+}
 
+/* Stiluri pentru liniile pare ale tabelului (a doua, a patra, etc.) */
+#calcnutr .data-table .table-row:nth-child(even) {
+    background-color: #ffffff; /* Alb */
+}
+/* Stiluri pentru efectul de hover pe liniile tabelului */
+#calcnutr .data-table .table-row:hover {
+    background-color: #e0e0e0; /* O nuanță mai închisă de gri pentru hover */
 }
 
 .btncmd{
     color:white;
     text-decoration:none;
     background-color:#65025d;
-    padding: 7px 16px;
+    padding: 6px 13px;
     margin: 3px;
     border-radius:5px;
 }
+.btncmd:hover{
+    background-color:rgb(80, 2, 76);
+    transition: opacity 0.4s ease; /* tranziție pentru opacitate */
+}
+
+
+
+.modal {
+    display: none; /* inițial ascuns */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+    opacity: 0; /* inițial, modalul este complet transparent */
+    transition: opacity 0.4s ease; /* tranziție pentru opacitate */
+}
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 90%;
+  max-width: 100vh;
+}
+
+
+/* Stilul atunci când modalul este activ (vizibil) */
+.modal.active {
+    display: block; /* afișează modalul */
+    opacity: 1; /* face modalul complet opac */
+}
+
+
+
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+#myImg {
+    cursor: pointer; 
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#myImg:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
 </style>
 
 <div class="container" id="calcnutr">
@@ -69,7 +134,39 @@ dd {
 
 
 <p class="mb0">Vă invităm să descoperiți conținutul nutritiv al alimentelor și să calculați cu ușurință numărul de calorii, proteine, lipide, carbohidrați și fibre pentru fiecare masă. Alegeți zilnic o alimentație sănătoasă și echilibrată, adaptată nevoilor și obiectivelor dumneavoastră</p>
-<p class="mb0">Această aplicație este un instrument indispensabil pentru oricine dorește să monitorizeze și să optimizeze aportul său nutritiv, contribuind astfel la un stil de viață sănătos și echilibrat.</p>
+<p class="mb0">Această aplicație este un instrument indispensabil pentru oricine dorește să monitorizeze și să optimizeze aportul său nutritiv, contribuind astfel la un stil de viață sănătos și echilibrat. Fie că sunteți un atlet care își monitorizează aportul de proteine, un vegetarian care caută opțiuni nutritive diverse sau pur și simplu doriți să măncați sănătos, aplicația noastră este aici pentru a vă asista la fiecare pas.</p>
+
+
+<div class="ayrow" style="margin:0 auto; max-width:1024px">
+    <div class="aycolumn">
+        <h2 class="main-title mb0">Instrucțiuni de Utilizare</h2>
+        <dl>
+            <dt>Pasul 1:</dt>
+            <dd>Explorați vasta noastră bază de date cu alimente, de la fructe și legume până la produse de patiserie și alte alimente gătite. Utilizați funcția noastră de căutare intuitivă pentru a găsi rapid exact ceea ce doriți. Fie că sunteți în căutarea unor opțiuni sănătoase, fie că doriți să aflați detalii despre alimentele preferate, totul este la doar câteva clicuri distanță.</dd>
+        
+            <dt>Pasul 2:</dt>
+            <dd>După ce ați selectat alimentele dorite, introduceți cantitățile pe care intenționați să le consumați. Fie că este vorba de o singură porție sau de o masă întreagă, puteți ajusta cantitățile în grame, oferindu-vă flexibilitatea de a personaliza calculul în funcție de nevoile dvs. nutriționale. Această etapă este crucială pentru a obține o estimare precisă a aportului caloric și nutritiv.</dd>
+        
+
+        </dl>
+        
+    </div>
+    <div class="aycolumn">
+    <img src="<%= image_path('calculator-nutritional-web.jpg') %>" alt="Calculator nutritional" id="myImg" style="width: -webkit-fill-available;padding:10px;">
+
+    </div>
+    <dl>
+    <dt>Pasul 3:</dt>
+        <dd>Odată ce ați selectat alimentele și ați introdus cantitățile, aplicația noastră vă oferă un rezumat detaliat al profilului nutrițional. Veți vedea nu numai numărul total de calorii, ci și o descompunere completă a macronutrienților - proteine, grăsimi și carbohidrați. Aceste informații vă ajută să înțelegeți mai bine impactul alimentației asupra obiectivelor dvs., permițându-vă să faceți alegeri adecvate pentru fiecare masă.</dd>
+    </dl>
+    <!-- Modalul pentru imagine -->
+            <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="img01">
+            <div id="caption"></div>
+            </div>
+</div>
+
 
 <h2 class="main-title" style="margin-bottom: -20px;">Caracteristici Esențiale ale Calculatorului Nutrițional</h2>
 <dl >
@@ -89,24 +186,7 @@ dd {
     </dd>
 </dl>
 
-<div class="ayrow">
-    <div class="aycolumn">
-        <h2 class="main-title mb0">Instrucțiuni de Utilizare</h2>
-        <dl>
-            <dt>Pasul 1:</dt>
-            <dd>Alegeți alimentele dorite din baza noastră de date folosind funcția de căutare.</dd>
-        
-            <dt>Pasul 2:</dt>
-            <dd>Introduceți cantitățile dorite pentru fiecare aliment selectat.</dd>
-        
-            <dt>Pasul 3:</dt>
-            <dd>Vizualizați rezumatul nutrițional total pentru selecția dvs., inclusiv numărul total de calorii și distribuția macronutrienților.</dd>
-        </dl>
-    </div>
-    <div class="aycolumn">
-        <img src="<%= image_path('calculator-nutritional-web.jpg') %>" alt="Calculator nutritional" style="width: -webkit-fill-available;">
-    </div>
-</div>
+
 
 <h2 class="main-title mb0">Calculator Valori Nutritionale</h2>
 
@@ -141,3 +221,33 @@ dd {
 </div>
 </div>
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Obține imaginea și modalul
+    var img = document.getElementById("myImg");
+    var modal = document.getElementById("myModal");
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+
+    // Deschide modalul când imaginea este apăsată
+    img.onclick = function(){
+        modal.style.display = "flex";
+        modal.classList.add("active"); // Adaugă clasa "active"
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Obține elementul <span> care închide modalul
+    var span = document.getElementsByClassName("close")[0];
+
+    // Când utilizatorul apasă pe <span> (x), închide modalul
+    span.onclick = function() { 
+        modal.classList.remove("active"); // Scoate clasa "active"
+        // Așteaptă finalizarea tranziției înainte de a ascunde complet modalul
+        setTimeout(function() {
+            modal.style.display = "none";
+        }, 400); // 400ms este durata tranziției setate în CSS
+    }
+});
+
+</script>
