@@ -138,6 +138,15 @@
 </table>
 <p>La sfârşitul fiecărui tabel dintre cele trei corespunzătoarea fiecăreia dintre cele trei dosha-uri se va calcula suma punctelor obţinute. </p>
 <p>În cele din urmă, se obţin trei scoruri care sunt corespunzătoare aprecierii noastre asupra predominanţei celor trei dosha-uri. Apoi vom comparara aceste rezultate pentru a afla astfel rezultatul final al aprecierii noastre asupra tipului constituţional (dosha-prakriti) și a predominanţei relative a celor trei dosha-uri în fiinţa noastră. </p>
+
+<% unless current_user %>  
+    <h2 class="main-title">Pentru a accesa funcțiile automate de calcul și vizualizare a rezultatelor din cadrul acestui
+     test ayurvedic,te invităm să te loghezi pe site. Dacă nu ai un cont, creează unul acum, este simplu și gratuit.</h2>
+  
+<% end %>
+
+
+
 <h2 class="main-title">Test pentru evaluarea caracteristicilor de tip vata</h2>
     
 <table class="data-table test-vata" id="vata-table">
@@ -152,7 +161,7 @@
     <td class="row-item1"><%= vata_item.nr %></td>
     <td class="row-item2"><%= vata_item.caracteristica %></td>
     <td class="row-item3">
-    <select name="punctaj[]" class="punctaj-input">
+    <select name="punctaj[]" class="punctaj-input" <%= 'disabled' unless current_user %>>
     <option value="0">0</option>
     <option value="1">1</option>
     <option value="2">2</option>
@@ -185,7 +194,7 @@
     <td class="row-item1"><%= vata_item.nr %></td>
     <td class="row-item2"><%= vata_item.caracteristica %></td>
     <td class="row-item3">
-    <select name="punctaj[]" class="punctaj-input">
+    <select name="punctaj[]" class="punctaj-input" <%= 'disabled' unless current_user %>>
       <option value="0">0</option>
       <option value="1">1</option>
       <option value="2">2</option>
@@ -219,7 +228,7 @@
   <td class="row-item1"><%= vata_item.nr %></td>
   <td class="row-item2"><%= vata_item.caracteristica %></td>
   <td class="row-item3">
-  <select name="punctaj[]" class="punctaj-input">
+  <select name="punctaj[]" class="punctaj-input" <%= 'disabled' unless current_user %>>
     <option value="0">0</option>
     <option value="1">1</option>
     <option value="2">2</option>
@@ -237,6 +246,20 @@
   <td id="total-punctaj-kapha" style="text-align:center;font-weight:500;">0</td>
 </tr>
 </table>
+
+
+
+<button id="calculate-sum" class='btn btn-primary' data-controller="calculate" data-action="click->calculate#submitTotals ">Valorile</button>
+
+<%= turbo_frame_tag 'total-sum-display' do %>
+  <!-- Aici va fi inserat conținutul din răspunsul HTML -->
+<% end %>
+
+
+
+
+
+
 
 <p>La sfârşitul fiecărui tabel dintre cele trei corespunzătoarea fiecăreia dintre cele trei dosha-uri se va calcula suma punctelor obţinute. În cele din urmă, se obţin trei scoruri care sunt corespunzătoare aprecierii noastre asupra predominanţei celor trei dosha-uri.</p>
 <p> Apoi vom comparara aceste rezultate pentru a afla astfel rezultatul final al aprecierii noastre asupra tipului constituţional (dosha-prakriti) și a predominanţei relative a celor trei dosha-uri în fiinţa noastră. </p>

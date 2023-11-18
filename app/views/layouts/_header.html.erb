@@ -131,14 +131,14 @@
                             <%= link_to 'Transport international', tayt12_transport_international_path('tri'), class: 'nav-item' %>
                         </li>
                         
-                        <% if (current_user && (current_user.email=="ilates@yahoo.com" || current_user.email=="costelaioanei@yahoo.com"))%>
+                        
                         <li><%= link_to 'Evaluare Tipologie Ayurvedica', evaluare_tipologie_ayurvedica_path, class: 'nav-item' %> </li>
                         <li><%= link_to 'Evaluare Test1', test1_path, class: 'nav-item' %> </li>
 
 
                         <li><%= link_to 'PC', show_crypto_price_path, class: 'nav-item' %> </li>
 
-                        <% end %>
+                        
                         
                         <% end %>
 
@@ -148,7 +148,7 @@
                 
                 <% else %>
                 <li><%= link_to 'Login', new_user_session_with_return_path('menu') %></li>
-                
+               
 
                 <% end %>
                 
