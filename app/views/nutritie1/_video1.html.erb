@@ -3,9 +3,9 @@
 <tr style="<%= border_style %>">
 <% if video.tip == 'nutritie1'%>
 <td>
-  <% if video.ordine > 1000 && video.ordine < 2000%> 
+  <% if (video.ordine > 1000 && video.ordine < 2000) || (video.ordine > 2000 && video.ordine < 3000)%> 
   <%= video.luna %>
- 
+  
   <% end %>
 </td>
 <% end %>
