@@ -67,7 +67,11 @@
           <td><%= valorinutritionale.calorii %></td>
           <td><%= valorinutritionale.proteine %></td>
           <td><%= valorinutritionale.lipide %></td>
+          <%if valorinutritionale.carbohidrati==nil%>
+         <td>date inexistente</td>
+         <%else%>        
           <td><%= (valorinutritionale.carbohidrati).round(2) %></td>
+          <%end%>
           <td><%= valorinutritionale.fibre %></td>
           <td class= "mw100";>
           
