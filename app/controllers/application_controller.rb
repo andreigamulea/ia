@@ -30,7 +30,9 @@ class ApplicationController < ActionController::Base
       ahoy.track "Processed #{controller_name}##{action_name}", request.filtered_parameters
     end   
     def redirect_to_root
-      RedirectionLog.create(original_path: request.fullpath, redirected_to: root_path)
+      unless request.path.start_with?('/assets', '/thumbnails')
+        RedirectionLog.create(original_path: request.fullpath, redirected_to: root_path)
+      end
       redirect_to root_path
     end
     protected
