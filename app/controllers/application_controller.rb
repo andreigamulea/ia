@@ -62,11 +62,14 @@ class ApplicationController < ActionController::Base
         end
         puts "aici"
         
-        Rails.logger.info "Aici, return_to: #{params[:return_to]}"
+        Rails.logger.info "Aici, return_to1: #{params[:return_to]}"
         #return_to = params[:return_to] || request.env['omniauth.params']['return_to'] 
-        return_to = params[:return_to] || request.env.dig('omniauth.params', 'return_to') || "menu"
+        #return_to = params[:return_to] || request.env.dig('omniauth.params', 'return_to') || "menu"
 
-        Rails.logger.info "Aici, return_to: #{return_to}"
+        return_to = session.delete(:user_return_to) || request.env.dig('omniauth.params', 'return_to') || params[:return_to]
+  
+
+        Rails.logger.info "Aici, return_to2: #{return_to}"
 
         if return_to == "menu"
           # Cod pentru cazul în care sursa este meniul
@@ -91,6 +94,8 @@ class ApplicationController < ActionController::Base
           tayv2_path # Înlocuiește cu calea corespunzătoare  taxainscriere
         elsif return_to == "taxainscriere" 
           cursayurveda_path
+        elsif return_to == "evaluaretipologie" 
+          evaluare_tipologie_ayurvedica_path  
         elsif return_to == "tri" 
           tayt12_transport_international_path(return_to: 'tri')
         elsif return_to == "link1"
@@ -103,8 +108,46 @@ class ApplicationController < ActionController::Base
         end
       end
      
-     
-
+      def after_sign_up_path_for(resource)
+        puts("dddadadadda")
+        # Log the user's ID for debugging purposes.
+        Rails.logger.info "In after_sign_up_path_for, user id: #{resource.id}"
+      
+        # Find a specific page in your database (if needed).
+        sign_up_page = Paginisite.find_by(nume: "Sign Up")
+      
+        # Create a new record linking the user to the Sign Up page (if the page exists).
+        if sign_up_page
+          user_pagina = UserPaginisite.new(user_id: resource.id, paginisite_id: sign_up_page.id)
+          if user_pagina.save
+            Rails.logger.info "Created UserPaginisite record for user id: #{resource.id} and pagina id: #{sign_up_page.id}"
+          else
+            Rails.logger.error "Failed to create UserPaginisite record: #{user_pagina.errors.full_messages.join(", ")}"
+          end
+        else
+          Rails.logger.info "Sign Up page not found"
+        end
+      
+        # Determine the return path based on a parameter or a default value.
+        
+        return_to = params[:return_to] || request.referrer.split('?').last.split('=').last
+      
+        # Log the determined path for debugging.
+        Rails.logger.info "Redirecting to: #{return_to}"
+      
+        # Redirect to the appropriate path.
+        case return_to
+        when "menu"
+          root_path
+        when "evaluaretipologie"
+          evaluare_tipologie_ayurvedica_path  
+        # Add more cases as needed
+        else
+          # Default redirection if return_to doesn't match any case
+          root_path # Replace with your default path method
+        end
+      end
+      
       def set_stripe_key
         if Rails.env.development?
           @stripe_public_key = Rails.application.credentials.dig(:stripe, :development,  :publishable_key)

@@ -17,10 +17,18 @@ def process_totals
   totals = params[:totals].split(',').map(&:to_i)
   #totals este array-ul cu cele 3 valori
   sum = totals.sum
-
+  if totals[0]==0 || totals[1]==0 || totals[2]==0
+    verificare=0
+    v, p, k = 0, 0, 0
+  else
+    verificare=1
+    v=100*totals[0]/sum
+    p=100*totals[1]/sum
+    k=100*totals[2]/sum
+  end    
   respond_to do |format|
     format.html do
-      render partial: 'tipconstitutionals/total_sum', locals: { sum: sum,v: totals[0],p: totals[1],k: totals[2] }, layout: false
+      render partial: 'tipconstitutionals/total_sum', locals: { sum: sum,v: v,p: p,k: k,verificare: verificare }, layout: false
     end
     # Nu este necesar format.turbo_stream sau format.json dacă nu îi folosești
   end

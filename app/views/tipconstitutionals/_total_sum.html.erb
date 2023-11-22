@@ -1,9 +1,12 @@
 <!-- app/views/tipconstitutionals/_total_sum.html.erb -->
 <%= turbo_frame_tag 'total-sum-display' do %>
-  
-  Vata: <%= v %></br>
-  Pitta: <%= p %></br>
-  Kapha: <%= k %></br>
+  <%if verificare==1 %>
+  Vata: <%= v %>%</br>
+  Pitta: <%= p %>%</br>
+  Kapha: <%= k %>%</br>
+  <%else%>
+  <p style= "color: red;">Te rugam sa completezi toate cele 3 tabele</p>
+  <% end %>
 
 
 <% end %>
