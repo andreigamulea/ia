@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+    rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_root
+    rescue_from ActionController::RoutingError, with: :redirect_to_root
     before_action :track_ahoy_visit
     before_action :configure_permitted_parameters, if: :devise_controller?
     before_action :check_user_active
@@ -27,12 +29,17 @@ class ApplicationController < ActionController::Base
     def track_ahoy_visit
       ahoy.track "Processed #{controller_name}##{action_name}", request.filtered_parameters
     end   
+    def redirect_to_root
+      RedirectionLog.create(original_path: request.fullpath, redirected_to: root_path)
+      redirect_to root_path
+    end
     protected
     def configure_permitted_parameters
         devise_parameter_sanitizer.permit(:sign_up, keys: [:email,:name, :role, :gdpr])
         devise_parameter_sanitizer.permit(:account_update, keys: [:email,:name, :role, :gdpr])
     end
     private
+   
     def require_admin
         unless current_user && current_user.role == 1
           flash[:error] = "Only admins are allowed to access this page."
@@ -63,8 +70,11 @@ class ApplicationController < ActionController::Base
         puts "aici"
         
         Rails.logger.info "Aici, return_to1: #{params[:return_to]}"
-        #return_to = params[:return_to] || request.env['omniauth.params']['return_to'] 
-        #return_to = params[:return_to] || request.env.dig('omniauth.params', 'return_to') || "menu"
+        Rails.logger.info "Aici, session.delete(:user_return_to): #{session.delete(:user_return_to)}"
+        #Explicatie: la sign_up return_to vine de la session.delete(:user_return_to iar 
+        #la sign_in de la request.env.dig('omniauth.params', 'return_to') sau de la params[:return_to]
+        #asa ca pot de acum folosi parametrul return_to si la sign_up care ma va duce tot aici la aceasta metoda.
+        #nu am nevoie de o metoda noua  def after_sign_up_path_for(resource)
 
         return_to = session.delete(:user_return_to) || request.env.dig('omniauth.params', 'return_to') || params[:return_to]
   
@@ -104,50 +114,13 @@ class ApplicationController < ActionController::Base
       
         else
           # Dacă nu există parametru return_to, sau dacă valoarea acestuia nu este recunoscută, redirectează către o cale implicită
-          servicii_path # Înlocuiește cu calea implicită
+          root_path # Înlocuiește cu calea implicită
         end
       end
      
-      def after_sign_up_path_for(resource)
-        puts("dddadadadda")
-        # Log the user's ID for debugging purposes.
-        Rails.logger.info "In after_sign_up_path_for, user id: #{resource.id}"
       
-        # Find a specific page in your database (if needed).
-        sign_up_page = Paginisite.find_by(nume: "Sign Up")
-      
-        # Create a new record linking the user to the Sign Up page (if the page exists).
-        if sign_up_page
-          user_pagina = UserPaginisite.new(user_id: resource.id, paginisite_id: sign_up_page.id)
-          if user_pagina.save
-            Rails.logger.info "Created UserPaginisite record for user id: #{resource.id} and pagina id: #{sign_up_page.id}"
-          else
-            Rails.logger.error "Failed to create UserPaginisite record: #{user_pagina.errors.full_messages.join(", ")}"
-          end
-        else
-          Rails.logger.info "Sign Up page not found"
-        end
-      
-        # Determine the return path based on a parameter or a default value.
-        
-        return_to = params[:return_to] || request.referrer.split('?').last.split('=').last
-      
-        # Log the determined path for debugging.
-        Rails.logger.info "Redirecting to: #{return_to}"
-      
-        # Redirect to the appropriate path.
-        case return_to
-        when "menu"
-          root_path
-        when "evaluaretipologie"
-          evaluare_tipologie_ayurvedica_path  
-        # Add more cases as needed
-        else
-          # Default redirection if return_to doesn't match any case
-          root_path # Replace with your default path method
-        end
-      end
-      
+     
+
       def set_stripe_key
         if Rails.env.development?
           @stripe_public_key = Rails.application.credentials.dig(:stripe, :development,  :publishable_key)
@@ -169,13 +142,9 @@ class ApplicationController < ActionController::Base
       end
       
       
-      
-      
-      
-      
-      
-      
-     
+ 
+
+  
       
       
 end

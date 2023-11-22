@@ -249,4 +249,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   #devise_scope :user do
     #root to: "devise/sessions#new"
   #end
+  
+  match '*unmatched', to: 'application#redirect_to_root', via: :all
+
 end
