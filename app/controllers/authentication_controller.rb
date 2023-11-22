@@ -1,8 +1,10 @@
 class AuthenticationController < Devise::SessionsController
   skip_before_action :check_sign_in_token, only: :create
+  
 
   def create
     session[:return_to] = params[:return_to]
+    
     self.resource = warden.authenticate!(auth_options)
     if resource.nil?
       Rails.logger.info("Authentication failed for email #{params[:user][:email]}")

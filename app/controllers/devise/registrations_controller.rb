@@ -1,4 +1,6 @@
 class Devise::RegistrationsController < ::Devise::RegistrationsController
-    include TurboDeviseControllerConcern
-  end
+  include TurboDeviseControllerConcern
+
+end
+
   

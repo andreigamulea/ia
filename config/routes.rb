@@ -210,7 +210,9 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
  #devise_for :users, skip: :all
   devise_for :users, controllers: {
     sessions: 'authentication',  # controler de sesiuni
-    registrations: 'devise/registrations',    
+    #registrations: 'devise/registrations',    
+    
+    registrations: 'custom_registrations',
         
     passwords: 'custom_passwords',
     confirmations: 'devise/confirmations',
