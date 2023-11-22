@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_15_144634) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_22_170003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -410,6 +410,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_15_144634) do
     t.index ["idpp"], name: "index_recomandaris_on_idpp"
     t.index ["listaproprietati_id"], name: "index_recomandaris_on_listaproprietati_id"
     t.index ["srota"], name: "index_recomandaris_on_srota"
+  end
+
+  create_table "redirection_logs", force: :cascade do |t|
+    t.string "original_path"
+    t.string "redirected_to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "srota", force: :cascade do |t|
