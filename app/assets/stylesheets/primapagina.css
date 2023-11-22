@@ -142,7 +142,7 @@
    margin-bottom: 10px;
 }
 
-.btn-fp a {
+.btn-fp a, #calculate-sum {
    background-color: rgb(100, 2, 94);
    color: white;
    font-size: 16px;
@@ -152,9 +152,11 @@
    text-decoration: none;
    transition: background-color 0.3s, box-shadow 0.3s;
    text-align: center;
+   border: none; /* Elimină bordura implicită a butonului */
+   cursor: pointer; /* Cursorul mânușă pentru aspectul de clic */
 }
 
-.btn-fp a:hover {
+.btn-fp a:hover, #calculate-sum:hover {
    background-color: rgb(80, 2, 74);
    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 8px;
 }
