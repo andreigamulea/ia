@@ -140,8 +140,7 @@
 <p>În cele din urmă, se obţin trei scoruri care sunt corespunzătoare aprecierii noastre asupra predominanţei celor trei dosha-uri. Apoi vom comparara aceste rezultate pentru a afla astfel rezultatul final al aprecierii noastre asupra tipului constituţional (dosha-prakriti) și a predominanţei relative a celor trei dosha-uri în fiinţa noastră. </p>
 
 <% unless current_user %>  
-    <h2 class="main-title">Pentru a accesa funcțiile automate de calcul și vizualizare a rezultatelor din cadrul acestui
-     test ayurvedic,te invităm să <a href="/users/sign_in?return_to=evaluaretipologie">Te loghezi pe site</a>. Dacă nu ai un cont, <a href="/users/sign_up?return_to=evaluaretipologie">Creează unul acum</a>, este simplu și gratuit.</h2>
+    <p style="color: red; font-size:20px; line-height:1.3;">Pentru a accesa funcțiile automate de calcul și vizualizare a rezultatelor din cadrul acestui test ayurvedic, te invităm să <a href="/users/sign_in?return_to=evaluaretipologie">te loghezi pe site</a>. Dacă nu ai un cont, <a href="/users/sign_up?return_to=evaluaretipologie">creează unul acum</a>, este simplu și gratuit.</p>
   
 <% end %>
 
@@ -249,7 +248,7 @@
 
 
 
-<button id="calculate-sum" class='btn btn-primary' data-controller="calculate" data-action="click->calculate#submitTotals ">Valorile</button>
+<div style="text-align:right; margin-top:10px;"><button id="calculate-sum" class='btn-fp' data-controller="calculate" data-action="click->calculate#submitTotals ">Calculează valorile procentuale</button></div>
 
 <%= turbo_frame_tag 'total-sum-display' do %>
   <!-- Aici va fi inserat conținutul din răspunsul HTML -->
@@ -257,13 +256,6 @@
 
 
 
-
-
-
-
-<p>La sfârşitul fiecărui tabel dintre cele trei corespunzătoarea fiecăreia dintre cele trei dosha-uri se va calcula suma punctelor obţinute. În cele din urmă, se obţin trei scoruri care sunt corespunzătoare aprecierii noastre asupra predominanţei celor trei dosha-uri.</p>
-<p> Apoi vom comparara aceste rezultate pentru a afla astfel rezultatul final al aprecierii noastre asupra tipului constituţional (dosha-prakriti) și a predominanţei relative a celor trei dosha-uri în fiinţa noastră. </p>
-<p>Chiar şi o astfel de evaluare sumară a tipului nostru constituţional poate reprezenta o importantă bază care ne oferă un reper pentru adoptarea unui comportament adecvat, capabil de a genera armonie, fericire şi echilibru în viaţă. </p>
 
 
 

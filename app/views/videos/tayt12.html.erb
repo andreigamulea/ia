@@ -1,8 +1,9 @@
 
-<div class="cont">
+<div class="cont"> 
+<section>
   <h1 class="name"><%=@titlu_pagina%></h1> 
   <h1 class="name">Tabara de ayurveda 2023 etapa de toamna</h1>
-  <div class="row1">
+<div class="row1">
     <div class="r1c1">
       
       <img src="<%= image_url('tayt12.jpg') %>" alt="Curs de Ayurveda">
@@ -23,8 +24,8 @@
   </div>
   <div class="r2">
      
- </div>
- 
+ </div></section>
+ <section>
     <h2 style="font-size: 1.2em; margin: 10px 0 0 0;">NIRMANYA-GUNA</h2></br>
     <p>Termenul sanscrit guna este utilizat în cadrul sistemului Ayurveda şi cu sensul de calitate generală formatoare (nirmanya-guna). În Ayurveda sunt cunoscute zece astfel de calităţi generale formatoare (nirmanya-guna) şi anume acestea sunt: 1. predominanţa (para), 2. subordonarea (apara), 3. proprietatea (yukti), 4. numărul (samkhya), 5. combinaţia (samyoga), 6. diviziunea (vibhaga), 7. separaţia (prithaktva), 8. măsurarea (parimana), 9. transformarea (samskara) şi 10. repetiţia (abhyasa). 
 Toate aceste calităţi generale formatoare (nirmanya-guna) acţionează ca nişte sui-generis „operatori” (prachalaka), care au rolul de a modula într-o anumită manieră specifică raporturile de interacţiune dintre diferitele forţe sau energii subtile formatoare, care contribuie la alcătuirea unei anumite structuri sau a unei anumite forme animate, vii ori a unei structuri ori forme ne-animate, ne-vii. 
@@ -33,8 +34,10 @@ Calităţile generale formatoare (nirmanya-guna) măsoară de fapt specificitate
      <p>În Ayurveda, termenul sanscrit guna se referă cel mai frecvent la conceptul de calitate generală de bază (adhara-guna), care este totodată și o calitate perceptibilă și care are un important rol de diferențiere definitorie. O astfel de calitate generală esențială (adhara-guna) este descrisă și definită dintr-un punct de vedere mai puțin abstract și general sau, cu alte cuvinte, ea este expusă și descrisă într-un cadru care este mult mai apropiat de manifestarea sensibilă, care poate fi percepută prin intermediul simțurilor și al percepțiilor umane comune, în general
 Tratatul fundamental de Ayurveda Charaka-Samhita menționează următoarele 20 de calități generale (guna) care se grupează în 10 perechi complementare: greu (guru) -  ușor (laghu); fierbinte/ cald (ushna) – rece/răcoros (shita); uscat (ruksha) – umed-uleios (snigdha); aspru (khara) – neted-bălos (slakshna);  rapid/fulgerător (tikshna) - încet/ lent (manda); mobil/mișcător (chala) – imobil/static (sthira); ); tare/dur (kathina) – moale/fin (mridu); solid/dens (sandra) – lichid/fluid (drava); limpede/subțire (vishadha) – tulbure/vâscos (picchila); subtil (sukshma) - grosier (sthula);
 Conceptul ayurvedic de calitate generală (guna), precum și întreg sistemul celor 20 de calități generale (vimshati-guna) constituie fundamentul teoretic și practic al întregii științe tradiționale aplicative a sistemului Ayurveda, cu toate ramurile sale.</p>
+</section>
 <%if !@has_access%>
 
+<section>
 <h1 class="alimente-nutritionale">Acces prezentari ZOOM Tabara de Ayurveda 2023 etapa de toamna  partile 1 si 2 </h1>
 <div class="table-responsive">
 <table class="table table-striped table-bordered table-hover">
@@ -75,9 +78,10 @@ Conceptul ayurvedic de calitate generală (guna), precum și întreg sistemul ce
 </table>
 </div></br>
 <%end%>
+</section>
 <%if @has_access%>
 
-<section class="c1">
+<section class="c1" style="margin:0;">
 
 <!--
 <h2 class="ch1">Datele de logare pe platforma ZOOM:</h2>
@@ -95,17 +99,18 @@ Conceptul ayurvedic de calitate generală (guna), precum și întreg sistemul ce
 
 
 
-<h3 class="ch1" style="text-align: left;margin-top:20px;">Programul in format PDF al partii 1 al taberei de ayurveda etapa de toamna <a href="/pdf/tayt12/Program 2023 detaliat - toamna - partea 1 v03.pdf", <%= tag :a, download: '' %>poate fi descarcat de aici</a></h3>
+<div><h3 class="ch1" style="text-align: left;margin-top:20px;font-size:20px;">Programul in format PDF al partii 1 al taberei de ayurveda etapa de toamna <a href="/pdf/tayt12/Program 2023 detaliat - toamna - partea 1 v03.pdf", <%= tag :a, download: '' %>poate fi descarcat de aici</a></h3></div>
 
 
 
 
-<h2 style= "text-align: center;padding: 0 10px; margin-top:40px;">Inregistrari video preliminare</h2></br>
+
 </section>
 
 
-
+<section>
 <div id="videos">
+<h2 style= "text-align: center;padding: 0 10px; margin-top:40px;">Inregistrari video preliminare</h2></br>
   <table class="table">
     <thead>
       <tr>
@@ -125,10 +130,11 @@ Conceptul ayurvedic de calitate generală (guna), precum și întreg sistemul ce
 </div>
 
 
-
+</section>
+<section>
 <%if @has_access_cursuri%>
 <h2 style= "text-align: center;padding: 0 10px; margin-top:20px;">Inregistrari video Tabara de toamna</h2></br>
-</section>
+
 
 
 
@@ -208,7 +214,7 @@ Conceptul ayurvedic de calitate generală (guna), precum și întreg sistemul ce
 
 <%end%>
 
-  
+</section>  
 </div>
 
 
