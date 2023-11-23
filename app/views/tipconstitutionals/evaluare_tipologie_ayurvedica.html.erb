@@ -1,88 +1,3 @@
-<style>
-@media screen and (min-width: 920px) {
-#evaluare .cr{
-    padding-left:40px;padding-right:40px;
-}
-}
-@media screen and (max-width: 919px) {
-#evaluare .cr{
-    padding-left:20px;padding-right:20px;
-}
-}
-@media screen and (max-width: 520px) {
-#evaluare .cr{
-    padding-left:10px;padding-right:10px;
-}
-}
-#evaluare .data-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: auto; /* sau 'fixed', în funcție de preferințele dvs. */
-}
-#evaluare .test-vata .table-header{
-    background-color: #c3c3ff;
-}
-.test-vata .row-item3:hover {
-    background-color: #c3c3ff;
-}
-#evaluare .test-pitta .table-header{
-    background-color: #ffc3c3;
-}
-.test-pitta .row-item3:hover {
-    background-color: #ffc3c3;
-}
- #evaluare .test-kapha .table-header{
-    background-color: #bfffc4;
-} 
-.test-kapha .row-item3:hover {
-    background-color: #bfffc4;
-}  
-#evaluare .data-table .table-header th, 
-#evaluare .data-table .table-row td {
-  text-align: center;
-  padding: 8px;
-  border: 1px solid #000000;
-}
-#evaluare .data-table .table-header th:nth-child(1), 
-#evaluare .data-table .table-row td:nth-child(1) {
-  width: 5%;
-  min-width:50px;
-}
-#evaluare .data-table .table-row td:nth-child(2) {
-  width: 85%;
-  text-align:left;
-}
-#evaluare .data-table .table-header th:nth-child(2){
-    text-align:center;
-}
-#evaluare .data-table .table-header th:nth-child(3), 
-#evaluare .data-table .table-row td:nth-child(3) {
-  width: 10%;
-  min-width:50px;
-  max-width:75px;
-}
-#evaluare .data-table .table-row:nth-child(even) {
-  background-color: #f9f9f9;
-}
-#evaluare .data-table .punctaj {
-  border: none;
-  background: transparent;
-  text-align: center;
-  height: -webkit-fill-available;
-  width: -webkit-fill-available;
-}
-
-#evaluare .data-table .punctaj:focus {
-  outline: none;
-}
-#evaluare select {
-  width: -webkit-fill-available;
-}
-
-
-</style>
-
-
 <div class="container" id="evaluare">
 
 
@@ -140,7 +55,7 @@
 <p>În cele din urmă, se obţin trei scoruri care sunt corespunzătoare aprecierii noastre asupra predominanţei celor trei dosha-uri. Apoi vom comparara aceste rezultate pentru a afla astfel rezultatul final al aprecierii noastre asupra tipului constituţional (dosha-prakriti) și a predominanţei relative a celor trei dosha-uri în fiinţa noastră. </p>
 
 <% unless current_user %>  
-    <p style="color: red; font-size:20px; line-height:1.3;">Pentru a accesa funcțiile automate de calcul și vizualizare a rezultatelor din cadrul acestui test ayurvedic, te invităm să <a href="/users/sign_in?return_to=evaluaretipologie">te loghezi pe site</a>. Dacă nu ai un cont, <a href="/users/sign_up?return_to=evaluaretipologie">creează unul acum</a>, este simplu și gratuit.</p>
+    <p style="color: red;">Pentru a accesa funcțiile automate de calcul și vizualizare a rezultatelor din cadrul acestui test ayurvedic, te invităm să <a href="/users/sign_in?return_to=evaluaretipologie">te loghezi pe site</a>. Dacă nu ai un cont, <a href="/users/sign_up?return_to=evaluaretipologie">creează unul acum</a>, este simplu și gratuit.</p>
   
 <% end %>
 
