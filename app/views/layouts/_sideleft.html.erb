@@ -1,5 +1,6 @@
 <div class="cl">
 
+   
     <p class="tl">Cursuri</p>
     <h2><a class="alink" href="<%= cursayurveda_path %>">Curs de Ayurveda octombrie 2023 - iulie 2024</a></h2>
 
@@ -19,7 +20,7 @@
   <% end %>
 </h2>
 
-   
+
 <h2>
 <% if current_user %>
   <% if current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) } %>
@@ -31,9 +32,11 @@
   <%= link_to 'Consultare lista Resurse Vegetale', new_user_session_with_return_path('lg'), class: 'alink button-link' %>
 <% end %>
 </h2>
+
+<h2><%= link_to 'Evaluare tipologie ayurvedică', evaluare_tipologie_ayurvedica_path, class: 'alink button-link' %> </h2>
 <p style="padding: 5px 10px;border-radius: 5px;font-size: 18px;margin: -20px 0 0 0;font-weight: 600;color: indigo;border-bottom: 1px solid #ccc;margin-bottom: 5px;margin-top: -10px;">În curând</p>
 <h2><a class="alink" href="#mentiuni-nutritionale">Mențiuni nutritionale și de sănătate</a></h2>
-<h2><a class="alink" href="#test-tipologii-ayurvedice">Test tipologii ayurvedice</a></h2>
+
 
 <h2><a class="alink" href="#index-ayurvedic-plante-indiene">Index Ayurvedic - plante indiene</a></h2>
 <h2><a class="alink" href="#index-ayurvedic-plante-romanesti">Index Ayurvedic - plante românești</a></h2>

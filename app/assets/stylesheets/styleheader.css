@@ -66,7 +66,6 @@
              .nav-menu a {
                     text-decoration: none;
                     color: black;
-                    text-transform: capitalize;
                     position: relative;
                     width: max-content;
              }
