@@ -55,9 +55,10 @@
             .nav-menu li {
                     padding: 10px 20px;
                     display: inline-grid;
-                    line-height: 1.2;
+                    line-height: 1;
                     align-items: center;
                     justify-items: start;
+                    width: max-content;
                 }
                 
                 
@@ -103,7 +104,7 @@
                 display: none;
                 position: absolute;
                 top: 100%;
-                left: -100px;
+                left: -50px;
                 background-color:#9025c0;
                 border-bottom: 1px solid #ccc;
                 padding: 10px;
