@@ -21,6 +21,7 @@ def process_totals
     verificare=0
     v, p, k = 0, 0, 0
   else
+    
     verificare=1
     v=100*totals[0]/sum
     p=100*totals[1]/sum

@@ -110,7 +110,7 @@ Conceptul ayurvedic de calitate generală (guna), precum și întreg sistemul ce
 
 <section>
 <div id="videos">
-<h2 style= "text-align: center;padding: 0 10px; margin-top:40px;">Inregistrari video preliminare</h2></br>
+<h2 style= "text-align: center;padding: 0 10px; margin-top:40px;">Inregistrari video preliminare partea 1</h2></br>
   <table class="table">
     <thead>
       <tr>
@@ -131,6 +131,32 @@ Conceptul ayurvedic de calitate generală (guna), precum și întreg sistemul ce
 
 
 </section>
+
+<section>
+<div id="videos">
+<h2 style= "text-align: center;padding: 0 10px; margin-top:40px;">Inregistrari video preliminare partea 2</h2></br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nr</th>
+        <th>Nume</th>
+        <th>Descriere</th>
+       
+        <th>Actiune</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @myvideo3.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+</section>
+
+
 <section>
 <%if @has_access_cursuri%>
 <h2 style= "text-align: center;padding: 0 10px; margin-top:20px;">Inregistrari video Tabara de toamna</h2></br>

@@ -54,6 +54,7 @@ end
     @prod_tayt12 = Prod.where(curslegatura: 'tayt12', status: 'activ').order(:cod)
     #@myvideo = Video.where(tip: 'tayt12').order(ordine: :asc)
     @myvideo = Video.where(tip: 'tayt12').where("ordine < ?", 1000).order(ordine: :asc)
+    @myvideo3 = Video.where(tip: 'tayt12').where("ordine > ? AND ordine < ?", 3000, 4000).order(ordine: :asc)
     
     #@myvideo2 = Video.where(tip: 'tayt12').where("ordine > ?", 1000).order(ordine: :asc)
     if current_user && current_user.limba=="EN"
