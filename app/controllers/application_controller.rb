@@ -27,8 +27,10 @@ class ApplicationController < ActionController::Base
     end
     
     def track_ahoy_visit
+      return if @skip_tracking
+  
       ahoy.track "Processed #{controller_name}##{action_name}", request.filtered_parameters
-    end   
+    end
     def redirect_to_root
       unless request.path.start_with?('/assets', '/thumbnails')
         RedirectionLog.create(original_path: request.fullpath, redirected_to: root_path)
@@ -47,7 +49,11 @@ class ApplicationController < ActionController::Base
           flash[:error] = "Only admins are allowed to access this page."
           redirect_to root_path
         end
-      end
+    end
+    def redirect_to_root
+      @skip_tracking = true
+      redirect_to root_path
+    end
       def check_user_active
         if current_user && current_user.active == false
           sign_out(current_user)
