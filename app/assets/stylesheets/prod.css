@@ -52,9 +52,9 @@ body {
   justify-content: center;
 }
 
-.r1c2 h2, .r2 h2 {
+.cont h2 {
   margin: 20px 0 10px 0;
-  font-size: 1.3em;
+  font-size: 1.6em!important;
   color: #333;
 }
 
@@ -100,9 +100,6 @@ body {
     width: 100%;
     border-collapse: collapse;
 }
-
-
-
 
 
 .table .btn {
@@ -165,7 +162,9 @@ span.bullet::before {
 
 
 @media screen and (max-width: 720px) {
-
+  .cont h2{
+    font-size: 1.6em;
+  }
   .cont, .row1 {
     flex-direction: column;
   }
@@ -184,6 +183,7 @@ span.bullet::before {
   }
   .r1c1 img {
     padding-right: 0;
+    margin-bottom:10px;
   }
   .video{
     width: 100%;
