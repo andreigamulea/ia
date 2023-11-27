@@ -21,7 +21,9 @@ class HomeController < ApplicationController
   def userip
     @userip= UserIp.all
   end  
+  def newsletter
 
+  end
   def listavegetalegratis
     @acces = params[:acces]
     @mesaj1 = "Acces gratuit 24h"
