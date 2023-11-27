@@ -1,5 +1,5 @@
 <div class="cont">
-  <h1 class="name"><%=@titlu_pagina%></h1>
+  <h1 class="name" style="font-size:1.8em;"><%=@titlu_pagina%></h1>
   <% if !(current_user && (current_user.role == 1 || (current_user.grupa == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i >= 2))) %>
   <div class="row1">
     <div class="r1c1">
@@ -18,7 +18,7 @@
  </div>
   </div>
   <div class="r2">
-  <h2>Înscriere și participare</h2>
+  <h2 class="name" style="font-size:1.6em;">Înscriere și participare</h2>
   <p><strong>Cum și când se desfășoară cursul?</strong><br>
 <span class="bullet">Cursul se desfășoară on-line, LIVE, o dată pe săptămână, în fiecare vineri de la ora 18:00. </span></p>
 
@@ -44,10 +44,10 @@
 
   
      
-   
+    <a href="#register" class="register">Inscrie-te la curs</a>
 
   </div>
-  <a href="#register" class="register">Inscrie-te la curs</a>
+ 
 <%end%>
 
 <h2 class="name"><%=@myvideo1.nume%></h2>
@@ -66,8 +66,8 @@
 
 
   <% if !current_user || current_user.grupa==nil  %>  
-  <h2 id="register" style="padding: 0; text-align: center;">Inscrieri curs Ayurveda grupa 1 octombrie 2023 - iulie 2024 </h2>
-  <p><strong>Costul participării la cursul de Ayurveda pentru sesiunea octombrie 2023 – iulie 2024 este de 1800 lei.</strong><br>
+  <h2 class="name" id="register">Inscrieri curs Ayurveda grupa 1 octombrie 2023 - iulie 2024 </h2>
+  <p style="margin-top:20px;"><strong>Costul participării la cursul de Ayurveda pentru sesiunea octombrie 2023 – iulie 2024 este de 1800 lei.</strong><br><br>
   <span >Înscrierea presupune parcurgerea următorilor doi pași:</span></p>
   
   <ol>
@@ -79,7 +79,7 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th style="width: auto;">Servicii</th>
+                <th style="width: auto;">Curs de Ayurveda</th>
                 <th style="width: auto;">Detalii</th>
                 
                 <th style="width: auto;">Pret</th>
@@ -119,7 +119,7 @@
 
 
 <%if @textan1 && @textan1==1%>
-<p><strong>Costul participării la cursul de Ayurveda pentru sesiunea octombrie 2023 – iulie 2024 este de 1800 lei.</strong><br>
+<p style="margin-top:20px;"><strong>Costul participării la cursul de Ayurveda pentru sesiunea octombrie 2023 – iulie 2024 este de 1800 lei.</strong><br><br>
 <span>Înscrierea presupune parcurgerea următorilor doi pași:</span></p>
 
 <ol>
@@ -134,7 +134,7 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th style="width: auto;">Servicii</th>
+                <th style="width: auto;">Curs de Ayurveda</th>
                 <th style="width: auto;">Detalii</th>
                 
                 <th style="width: auto;">Pret</th>
@@ -174,7 +174,7 @@
         <thead>
         
             <tr>
-                <th style="width: auto;">Servicii</th>
+                <th style="width: auto;">Curs de Ayurveda</th>
                 <th style="width: auto;">Detalii</th>
                 
                 <th style="width: auto;">Pret</th>

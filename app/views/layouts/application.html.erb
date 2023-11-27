@@ -16,6 +16,7 @@
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "cursuri online, aplicații, vizionari, cărți, publicații, seminarii, resurse pentru informare în Ayurveda, Nutriție, Plante medicinale și domeniile conexe" %>">
     <meta name="keywords" content="<%= content_for?(:keywords) ? yield(:keywords) : "cursuri online, aplicații, vizionari, cărți, publicații, seminarii, resurse pentru informare în Ayurveda, Nutriție, Plante medicinale și domeniile conexe, dieta" %>">
     <%= yield(:canonical) if content_for?(:canonical) %>
+    <%= yield :meta_tags if content_for?(:meta_tags) %>
 
 
     
