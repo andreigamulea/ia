@@ -28,7 +28,9 @@
    background-color: hsla(206, 100%, 73.3%, 0.57);
 
 }
-
+.cl img, .col img {
+   border-radius:20px;
+}
 .cl h2 {
    padding: 5px 10px;
    border-radius: 5px;
