@@ -530,36 +530,43 @@ class PaginisitesController < ApplicationController
     user_payments.each_with_index do |(email, payments), row|
       user = User.find_by(email: email)
       factura = Factura.find_by(user_id: user.id)
-      puts("da1")
-      if factura.comanda_id.present?
-        puts("da2")
-        adresa_comenzi = AdresaComenzi.find_by(comanda_id: factura.comanda_id)
-        puts("da3")
-        if adresa_comenzi.nil?
-          puts("da4")
-          detalii_factura = Detaliifacturare.find_by(user_id: factura.user_id)
-          if detalii_factura
-            puts("da5")
-            nume = detalii_factura.nume
-            prenume = detalii_factura.prenume
-            telefon = detalii_factura.telefon
-            email = factura.user.email
-          end
-        else
-          puts("da6")
-          nume = adresa_comenzi.nume
-          prenume = adresa_comenzi.prenume
-          telefon = adresa_comenzi.telefon
-          email = adresa_comenzi.email
-        end
-      else
+      puts("da0")
+      if factura.nil?
         puts("da7")
-          nume = "-"
-          prenume = "-"
-          telefon = "-"
-          email = "-"
+            nume = "-"
+            prenume = "-"
+            telefon = "-"
+            email = "-"
+        puts("da8")
+                puts "factura este nil"
+                # Gestionați cazul când factura este nil
+      else
+        puts("da1")
+        if factura.comanda_id.present?
+          puts("da2")
+          adresa_comenzi = AdresaComenzi.find_by(comanda_id: factura.comanda_id)
+          puts("da3")
+          if adresa_comenzi.nil?
+            puts("da4")
+            detalii_factura = Detaliifacturare.find_by(user_id: factura.user_id)
+            if detalii_factura
+              puts("da5")
+              nume = detalii_factura.nume
+              prenume = detalii_factura.prenume
+              telefon = detalii_factura.telefon
+              email = factura.user.email
+            end
+          else
+            puts("da6")
+            nume = adresa_comenzi.nume
+            prenume = adresa_comenzi.prenume
+            telefon = adresa_comenzi.telefon
+            email = adresa_comenzi.email
+          end
+      
+        end
+     
       end
-      puts("da8")
       worksheet.add_cell(row + 1, 0, user.email)
       worksheet.add_cell(row + 1, 1, user.name)
       worksheet.add_cell(row + 1, 2, telefon || "N/A")
