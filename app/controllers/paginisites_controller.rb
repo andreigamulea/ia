@@ -457,7 +457,7 @@ class PaginisitesController < ApplicationController
 
 
 
-  def export_to_xlsx_summary
+  def export_to_xlsx_summary #comanda_id
     begin
       # Define lunile if it's not already set somewhere else
       lunile = ['Octombrie 2023', 'Noiembrie 2023', 'Decembrie 2023', 'Ianuarie 2024', 'Februarie 2024', 'Martie 2024', 'Aprilie 2024', 'Mai 2024', 'Iunie 2024', 'Iulie 2024']
@@ -548,6 +548,11 @@ class PaginisitesController < ApplicationController
           telefon = adresa_comenzi.telefon
           email = adresa_comenzi.email
         end
+      else
+          nume = "-"
+          prenume = "-"
+          telefon = "-"
+          email = "-"
       end
 
       worksheet.add_cell(row + 1, 0, user.email)

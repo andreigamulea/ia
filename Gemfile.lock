@@ -195,6 +195,7 @@ GEM
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
+    mini_magick (4.12.0)
     mini_mime (1.1.5)
     minitest (5.20.0)
     msgpack (1.7.2)
@@ -409,6 +410,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kaminari (~> 1.2, >= 1.2.2)
+  mini_magick (~> 4.12)
   nokogiri (~> 1.15, >= 1.15.3)
   omniauth-google-oauth2 (~> 1.1, >= 1.1.1)
   omniauth-rails_csrf_protection (~> 1.0, >= 1.0.1)
