@@ -181,7 +181,7 @@
     <tbody>
         <% required_cod_for_special_products = ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] %>
         <% @prod_tayt12.each do |prod| %>
-            <% next if prod.cod == "cod48" && current_user&.email != "aaa@yahoo.com" && current_user&.role != 2 %>
+            <% next if prod.cod == "cod48" && current_user&.email != "ludmilamila1987@gmail.com" && current_user&.role != 2 %>
             <% next if prod.cod == "cod63" %>
             <% special_product = ["cod54", "cod64"].include?(prod.cod) %>
             <% product_accessible = current_user.nil? || has_required_products?(current_user, required_cod_for_special_products) || current_user.role == 1 %>
