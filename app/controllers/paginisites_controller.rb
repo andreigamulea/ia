@@ -457,7 +457,7 @@ class PaginisitesController < ApplicationController
 
 
 
-  def export_to_xlsx_summary #comanda_id
+  def export_to_xlsx_summary # comanda_id
     begin
       # Define lunile if it's not already set somewhere else
       lunile = ['Octombrie 2023', 'Noiembrie 2023', 'Decembrie 2023', 'Ianuarie 2024', 'Februarie 2024', 'Martie 2024', 'Aprilie 2024', 'Mai 2024', 'Iunie 2024', 'Iulie 2024']
@@ -530,41 +530,46 @@ class PaginisitesController < ApplicationController
     user_payments.each_with_index do |(email, payments), row|
       user = User.find_by(email: email)
       factura = Factura.find_by(user_id: user.id)
-
+      puts("da1")
       if factura.comanda_id.present?
+        puts("da2")
         adresa_comenzi = AdresaComenzi.find_by(comanda_id: factura.comanda_id)
-
+        puts("da3")
         if adresa_comenzi.nil?
+          puts("da4")
           detalii_factura = Detaliifacturare.find_by(user_id: factura.user_id)
           if detalii_factura
+            puts("da5")
             nume = detalii_factura.nume
             prenume = detalii_factura.prenume
             telefon = detalii_factura.telefon
             email = factura.user.email
           end
         else
+          puts("da6")
           nume = adresa_comenzi.nume
           prenume = adresa_comenzi.prenume
           telefon = adresa_comenzi.telefon
           email = adresa_comenzi.email
         end
       else
+        puts("da7")
           nume = "-"
           prenume = "-"
           telefon = "-"
           email = "-"
       end
-
+      puts("da8")
       worksheet.add_cell(row + 1, 0, user.email)
       worksheet.add_cell(row + 1, 1, user.name)
       worksheet.add_cell(row + 1, 2, telefon || "N/A")
       worksheet.add_cell(row + 1, 3, email || "N/A")
       worksheet.add_cell(row + 1, 4, "#{prenume} #{nume}" || "N/A")
       worksheet.add_cell(row + 1, 5, telefon || "N/A")
-
+      puts("da9")
       # Populate product values
       comenzi_for_user = ComenziProd.where(user_id: user.id, prod_id: mapare_coduri_id.values, validat: "Finalizata")
-
+      puts("da10")
       # initialize all payments to 0
       values = Array.new(12, 0)
 
