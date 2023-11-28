@@ -181,7 +181,15 @@
 <div class="col10 col10m">
   <h2 style="font-size:1.5em;"><%= @prod.nume %></h2>
   <p><%= @prod.detalii %></p>
-  <p>Pret: <%= @prod.pret.to_i %> lei</p></br>
+  <%if current_user.email!="edvin.t.nagy@eminscubm.ro"%>
+  <p>Pret: <%= @prod.pret.to_i%> lei</p></br>
+  
+  <% elsif current_user.email == "edvin.t.nagy@eminscubm.ro" && @prod.cod.in?(['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 'cod25']) %>
+  <p>Pret: <%= @prod.pret.to_i-145%> lei</p></br>
+  <% elsif current_user.email == "edvin.t.nagy@eminscubm.ro" && !['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 'cod25'].include?(@prod.cod) %>
+  <p>Pret: <%= @prod.pret.to_i%> lei</p></br>
+  
+  <%end%>
   <div class="column" style="display: flex; justify-content: center;">        
     <img src="<%= image_path('nutritie-ayushcell.jpg') %>" alt="Imagine" style="width: 100%; max-width:500px;">       
   </div>

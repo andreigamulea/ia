@@ -530,34 +530,34 @@ class PaginisitesController < ApplicationController
     user_payments.each_with_index do |(email, payments), row|
       user = User.find_by(email: email)
       factura = Factura.find_by(user_id: user.id)
-      puts("da0")
+      
       if factura.nil?
-        puts("da7")
+        
             nume = "-"
             prenume = "-"
             telefon = "-"
             email = "-"
-        puts("da8")
+        
                 puts "factura este nil"
                 # Gestionați cazul când factura este nil
       else
-        puts("da1")
+       
         if factura.comanda_id.present?
-          puts("da2")
+         
           adresa_comenzi = AdresaComenzi.find_by(comanda_id: factura.comanda_id)
-          puts("da3")
+          
           if adresa_comenzi.nil?
-            puts("da4")
+            
             detalii_factura = Detaliifacturare.find_by(user_id: factura.user_id)
             if detalii_factura
-              puts("da5")
+             
               nume = detalii_factura.nume
               prenume = detalii_factura.prenume
               telefon = detalii_factura.telefon
               email = factura.user.email
             end
           else
-            puts("da6")
+           
             nume = adresa_comenzi.nume
             prenume = adresa_comenzi.prenume
             telefon = adresa_comenzi.telefon
@@ -573,10 +573,10 @@ class PaginisitesController < ApplicationController
       worksheet.add_cell(row + 1, 3, email || "N/A")
       worksheet.add_cell(row + 1, 4, "#{prenume} #{nume}" || "N/A")
       worksheet.add_cell(row + 1, 5, telefon || "N/A")
-      puts("da9")
+      
       # Populate product values
       comenzi_for_user = ComenziProd.where(user_id: user.id, prod_id: mapare_coduri_id.values, validat: "Finalizata")
-      puts("da10")
+      
       # initialize all payments to 0
       values = Array.new(12, 0)
 
