@@ -22,7 +22,10 @@ class HomeController < ApplicationController
     @userip= UserIp.all
   end  
   def newsletter
-
+    @a=1+1
+  end
+  def newsletter1
+    @a=1+1
   end
   def listavegetalegratis
     @acces = params[:acces]
