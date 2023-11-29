@@ -97,6 +97,17 @@ class StripeWebhooksController < ApplicationController
       )
       cp = ComenziProd.find_by(comanda_id: numar_comanda)
       cp.update(validat: 'Finalizata')
+
+      case produs.cod
+      when 'cod72'
+        UserModulecursuri.create(user_id: user_id, modulecursuri_id: 3, validat: 'Finalizata')
+      when 'cod73'
+        UserModulecursuri.create(user_id: user_id, modulecursuri_id: 1, validat: 'Finalizata')
+        UserModulecursuri.create(user_id: user_id, modulecursuri_id: 2, validat: 'Finalizata')
+      when 'cod76'
+        UserModulecursuri.create(user_id: user_id, modulecursuri_id: 2, validat: 'Finalizata')
+      end
+
       #1start creaza o inregistrare in accescurs2324 dc nu exista iar daca exista fa doar update (pt taxa inscriere an 1)      
       if produs.cod == "cod14"
         user = User.find_by(id: user_id)

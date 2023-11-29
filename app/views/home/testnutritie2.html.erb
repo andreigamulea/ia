@@ -1,11 +1,5 @@
 <section class="c1">
-<% if !user_signed_in? || (current_user && !@has_access) %>
-<h1 class="ch1">Bun venit la Programul de pregătire: Nutritie Ayurvedică modulul 2</h1>
-<p>Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</p>
-<p>
-Pentru a vă înscrie la acest modul, vă rugăm să ne trimiteți un mesaj prin intermediul formularului de pe <a href='/contact'>pagina noastră de contact</a>
-.
-</p>
+<%if !@platit%>
 <h1 class="alimente-nutritionale" id="Tabara23VaraP2">Acces prezentari video Nutritie Modulul 2</h1>
 
     <div class="table-responsive">
@@ -35,6 +29,43 @@ Pentru a vă înscrie la acest modul, vă rugăm să ne trimiteți un mesaj prin
             </tbody>
         </table>
     </div>
+    <%end%>  
+    <% if current_user %>
+<% if @platit %>
+<h1 class="ch1">Bun venit la Programul de pregătire: Nutritie Ayurvedică modulul 2</h1>
+<h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Program de pregătire: Nutritie Ayurvedică modulul 2 </h2></br>
+
+
+
+<div id="videos">
+  <table class="table">
+    <thead>
+    <tr>
+        <th>Data</th>
+        <th>Nume</th>
+        <th>Descriere</th>       
+        <th>Actiune</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+    <% @myvideo.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<% end %><% end %>
+<% if !user_signed_in? || (current_user && !@has_access) %>
+<h1 class="ch1">Bun venit la Programul de pregătire: Nutritie Ayurvedică modulul 2</h1>
+<p>Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</p>
+<p>
+Pentru a vă înscrie la acest modul, vă rugăm să ne trimiteți un mesaj prin intermediul formularului de pe <a href='/contact'>pagina noastră de contact</a>
+.
+</p>
+
 <% if !user_signed_in? %>
 <div class="btn-fp">
     <%= link_to 'Intră în cont', new_user_session_with_return_path('nutritie2'), class: 'btn-fp-link' %>
@@ -42,7 +73,7 @@ Pentru a vă înscrie la acest modul, vă rugăm să ne trimiteți un mesaj prin
 <%end%>
 <%end%>
 <% if current_user && @has_access %>
-<h1 class="ch1">Bun venit la Programul de pregătire: Nutritie Ayurvedică modulul 2</h1>
+
 <%else%>
 <br><br><br>
 <%end%>
