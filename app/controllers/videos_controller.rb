@@ -6,9 +6,10 @@ class VideosController < ApplicationController
   before_action :set_user1, only: %i[tayv2 myvideo1] #este pt tayv2
   before_action :set_user2, only: %i[myvideo2] #este pt nutritie3
   before_action :set_user7, only: %i[myvideo7] #este pt nutritie3 pt video de la Resurse si Aspecte organizatorice
-  before_action :set_user6, only: %i[myvideo6] #este pt nutritie2
-  before_action :set_user8, only: %i[myvideo8] #este pt nutritie1
-  before_action :set_user9, only: %i[myvideo9] #este pt nutritie1
+  before_action :set_user6, only: %i[myvideo6] #este pt nutritie2 cursuri pregatitoare-slidere
+  before_action :set_user67, only: %i[myvideo67] #este pt nutritie2 cursuri video
+  before_action :set_user8, only: %i[myvideo8] #este pt nutritie1 cursuri pregatitoare-slidere
+  before_action :set_user9, only: %i[myvideo9] #este pt nutritie1 cursuri video
   before_action :set_user3, only: %i[myvideo3] #este pt an1
   before_action :set_user4, only: %i[myvideo4] #este pt tayt12
   before_action :set_user4, only: %i[myvideo5] #este pt tayt122 folosesc tot set_user4 pt ca e aceeasi plata si la tayt12 si la tayt122
@@ -128,6 +129,11 @@ end
     render 'myvideo1'
   end
   def myvideo6 #pt nutritie2
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo67 #pt nutritie2
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
@@ -417,22 +423,40 @@ end
     def set_user6
       unless user_signed_in?
         flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
-        redirect_to new_user_session_path # Presupunând că aceasta este calea către login
+        redirect_to new_user_session_path
         return
       end
     
-      if current_user.role == 1
-        return true
+      has_module_1 = UserModulecursuri.exists?(user_id: current_user.id, 
+                                               modulecursuri_id: 3, 
+                                               validat: "Finalizata")
+    
+   
+    
+      unless has_module_1  || current_user.role == 1
+        flash[:alert] = "Nu aveți acces la acest curs."
+        redirect_to root_path # sau o altă cale relevantă
+      end
+    end
+
+    def set_user67
+      unless user_signed_in?
+        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+        redirect_to new_user_session_path
+        return
       end
     
-      if current_user.nutritieabsolvit.nil?
-        return false
-      elsif current_user.nutritieabsolvit >= 2
-        return true
-      else
-        return false
-      end  
+      @condition1 = current_user && ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
+                                               .where(prod_id: Prod.where(cod: ['cod72', 'cod74']).select(:id))
+                                               .exists?
+    
+      unless @condition1 || current_user.role == 1
+        flash[:alert] = "Nu aveți acces la acest curs."
+        redirect_to root_path # sau o altă cale relevantă
+      end
     end
+    
+  
     
     def set_user7
       unless user_signed_in?
@@ -470,22 +494,23 @@ end
       end
     end
     
-    def set_user9 # nutritie1 p1
+    def set_user9 # nutritie1 video cursuri
       unless user_signed_in?
         flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
         redirect_to new_user_session_path
         return
       end
     
-      has_module_1 = UserModulecursuri.exists?(user_id: current_user.id, 
-                                               modulecursuri_id: 1, 
-                                               validat: "Finalizata")
+      @condition1 = current_user && ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
+                                               .where(prod_id: Prod.where(cod: ['cod73', 'cod75']).select(:id))
+                                               .exists?
     
-      unless has_module_1 || current_user.role == 1
+      unless @condition1 || current_user.role == 1
         flash[:alert] = "Nu aveți acces la acest curs."
         redirect_to root_path # sau o altă cale relevantă
       end
     end
+    
     
 
 
