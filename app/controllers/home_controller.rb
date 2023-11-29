@@ -24,8 +24,11 @@ class HomeController < ApplicationController
   def newsletter
     @a=1+1
   end
-  def newsletter1
-    @a=1+1
+  def testnutritie1
+    @prods = Prod.where(curslegatura: 'nutritie1', status: 'activ').order(:cod)
+  end
+  def testnutritie2
+    @prods = Prod.where(curslegatura: 'nutritie2', status: 'activ').order(:cod)
   end
   def listavegetalegratis
     @acces = params[:acces]

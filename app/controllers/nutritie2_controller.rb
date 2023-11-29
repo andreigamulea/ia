@@ -1,5 +1,6 @@
 class Nutritie2Controller < ApplicationController
   def index
+    @prods = Prod.where(curslegatura: 'nutritie2', status: 'activ').order(:cod)
     # Verifică dacă userul curent are rolul 1
     @has_access = current_user&.role == 1
   
