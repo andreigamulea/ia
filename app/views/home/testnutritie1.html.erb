@@ -1,5 +1,6 @@
 <section class="c1">
 <%if !@platit%>
+
 <h1 class="alimente-nutritionale" id="Tabara23VaraP2">Acces prezentari video Nutritie Modulul 1</h1>
 
     <div class="table-responsive">
@@ -22,9 +23,17 @@
                         <td><%= prod.detalii %></td> 
                         
                          <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
-
-                        <td style="text-align:center;"> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
-                    </tr>  
+                         <% if current_user %>
+                         <td style="text-align:center;">
+                           <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
+                         </td>
+                       <% else %>
+                         <td style="text-align:center;">
+                           <%= link_to 'Comanda', new_user_session_with_return_path('testnutritie1'), class: 'btn btn-primary' %>
+                         </td>
+                       <% end %>
+                       
+                        </tr>  
                 <% end %>  
             </tbody>
         </table>
