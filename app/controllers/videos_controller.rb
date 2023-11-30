@@ -449,11 +449,11 @@ end
       end
       puts("da8")
       # Verificăm dacă datasfarsit este nil sau dacă data curentă este mai mică sau egală cu datasfarsit
-      if user_course.datasfarsit && user_course.datasfarsit > Date.parse("2024-01-31")
-        puts("da9")
-        flash[:alert] = "Accesul la acest curs a expirat."
-        redirect_to root_path
-      end
+     ## if user_course.datasfarsit && user_course.datasfarsit > Date.parse("2024-01-31")
+       ## puts("da9")
+        ##flash[:alert] = "Accesul la acest curs a expirat."
+       ## redirect_to root_path
+     ## end
       puts("da10")
     end
     def set_user44
