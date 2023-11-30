@@ -432,24 +432,29 @@ end
     
       if tayt12_course.nil?
         flash[:alert] = "Cursul nu a fost găsit."
+        puts("da3")
         redirect_to root_path
+        puts("da4")
         return
       end
-    
+      puts("da5")
       # Găsim înregistrarea din tabelul Cursuri pentru utilizatorul și cursul curent
       user_course = Cursuri.find_by(user_id: current_user.id, listacursuri_id: tayt12_course.id)
-    
+      puts("da6")
       unless user_course
+        puts("da7")
         flash[:alert] = "Nu aveți acces la acest curs."
         redirect_to servicii_path
         return
       end
-    
+      puts("da8")
       # Verificăm dacă datasfarsit este nil sau dacă data curentă este mai mică sau egală cu datasfarsit
       if user_course.datasfarsit && user_course.datasfarsit > Date.parse("2024-01-31")
+        puts("da9")
         flash[:alert] = "Accesul la acest curs a expirat."
         redirect_to root_path
       end
+      puts("da10")
     end
     def set_user44
       puts("da00")
