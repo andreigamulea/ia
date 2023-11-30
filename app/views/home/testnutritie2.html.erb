@@ -23,7 +23,19 @@
                         
                          <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
 
-                        <td style="text-align:center;"> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>      
+                         <% if current_user %>
+                         <td style="text-align:center;">
+                         <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
+                       </td>
+                     <% else %>
+                       <td style="text-align:center;">
+                         <%= link_to 'Comanda', new_user_session_with_return_path('testnutritie2'), class: 'btn btn-primary' %>
+                       </td>
+                     <% end %>
+
+
+
+                             
                     </tr>  
                 <% end %>  
             </tbody>
