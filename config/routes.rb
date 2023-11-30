@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get 'videos/:id/myvideo2', to: 'videos#myvideo2', as: 'myvideo2'
   get 'videos/:id/myvideo3', to: 'videos#myvideo3', as: 'myvideo3' 
   get 'videos/:id/myvideo4', to: 'videos#myvideo4', as: 'myvideo4' 
+  get 'videos/:id/myvideo44', to: 'videos#myvideo44', as: 'myvideo44'
   get 'videos/:id/myvideo6', to: 'videos#myvideo6', as: 'myvideo6' 
   get 'videos/:id/myvideo67', to: 'videos#myvideo67', as: 'myvideo67'
   get 'videos/:id/myvideo7', to: 'videos#myvideo7', as: 'myvideo7'
