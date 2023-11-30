@@ -448,6 +448,24 @@ end
         return
       end
       puts("da8")
+
+      if user_course.datasfarsit
+        puts("da99")
+        Rails.logger.info "Verificare user_course.datasfarsit: #{user_course.datasfarsit}"
+        if user_course.datasfarsit > Date.parse("2024-01-31")
+          puts("da991")
+          Rails.logger.info "Accesul la acest curs a expirat pentru user_id: #{current_user.id}"
+          flash[:alert] = "Accesul la acest curs a expirat."
+          redirect_to root_path
+        else
+          puts("da992")
+          Rails.logger.info "Accesul la curs este încă valid pentru user_id: #{current_user.id}"
+        end
+      else
+        puts("da993")
+        Rails.logger.info "user_course.datasfarsit este nil pentru user_id: #{current_user.id}"
+      end
+      
       # Verificăm dacă datasfarsit este nil sau dacă data curentă este mai mică sau egală cu datasfarsit
      ## if user_course.datasfarsit && user_course.datasfarsit > Date.parse("2024-01-31")
        ## puts("da9")
