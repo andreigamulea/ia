@@ -418,7 +418,9 @@ end
 
       condition2 = ComenziProd.joins(:prod)
             .where(user_id: current_user.id, prods: { cod: "cod54" }, validat: "Finalizata")
+            .where("datasfarsit >= ?", Date.current)
             .exists?
+
 
       unless condition1 && condition2
       redirect_to root_path and return
@@ -449,29 +451,9 @@ end
       end
       puts("da8")
 
-      if user_course.datasfarsit
-        puts("da99")
-        Rails.logger.info "Verificare user_course.datasfarsit: #{user_course.datasfarsit}"
-        if user_course.datasfarsit > Date.parse("2024-01-31")
-          puts("da991")
-          Rails.logger.info "Accesul la acest curs a expirat pentru user_id: #{current_user.id}"
-          flash[:alert] = "Accesul la acest curs a expirat."
-          redirect_to root_path
-        else
-          puts("da992")
-          Rails.logger.info "Accesul la curs este încă valid pentru user_id: #{current_user.id}"
-        end
-      else
-        puts("da993")
-        Rails.logger.info "user_course.datasfarsit este nil pentru user_id: #{current_user.id}"
-      end
       
-      # Verificăm dacă datasfarsit este nil sau dacă data curentă este mai mică sau egală cu datasfarsit
-     ## if user_course.datasfarsit && user_course.datasfarsit > Date.parse("2024-01-31")
-       ## puts("da9")
-        ##flash[:alert] = "Accesul la acest curs a expirat."
-       ## redirect_to root_path
-     ## end
+      
+      
       puts("da10")
     end
     def set_user44
@@ -491,8 +473,9 @@ end
             .where(user_id: current_user.id, prods: { cod: ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] }, validat: "Finalizata")
             .exists?
 
-      condition2 = ComenziProd.joins(:prod)
+            condition2 = ComenziProd.joins(:prod)
             .where(user_id: current_user.id, prods: { cod: "cod64" }, validat: "Finalizata")
+            .where("datasfarsit >= ?", Date.current)
             .exists?
 
       unless condition1 && condition2
@@ -515,16 +498,13 @@ end
       user_course = Cursuri.find_by(user_id: current_user.id, listacursuri_id: tayt12_course.id)
     
       unless user_course
+        puts("da23")
         flash[:alert] = "Nu aveți acces la acest curs."
         redirect_to servicii_path
         return
       end
     
-      # Verificăm dacă datasfarsit este nil sau dacă data curentă este mai mică sau egală cu datasfarsit
-      if user_course.datasfarsit && user_course.datasfarsit > Date.parse("2024-01-31")
-        flash[:alert] = "Accesul la acest curs a expirat."
-        redirect_to root_path
-      end
+     
     end
 
     def set_user6
