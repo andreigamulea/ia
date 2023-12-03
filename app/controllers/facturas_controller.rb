@@ -224,6 +224,10 @@ end
     
 
     def set_user_admin
+      if !current_user
+        redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
+        return
+      end  
       unless current_user.role == 1
         redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
         return
