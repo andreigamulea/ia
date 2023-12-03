@@ -224,8 +224,12 @@ end
     
 
     def set_user_admin
-      @user = current_user.role == 1 # presupunând că current_user este disponibil
+      unless current_user.role == 1
+        redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
+        return
+      end
     end
+    
     
     def generate_pdf_for_factura(factura)
       html = render_to_string(
