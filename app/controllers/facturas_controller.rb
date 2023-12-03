@@ -2,6 +2,7 @@ class FacturasController < ApplicationController
   require 'zip'
   before_action :set_factura, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[index show edit update destroy]
+  before_action :set_user_admin, only: %i[download_all]
   #before_action :set_factura1, only: [:download_all]
 
   # GET /facturas or /facturas.json
@@ -220,6 +221,12 @@ end
     def set_user
       @user = current_user # presupunând că current_user este disponibil
     end
+    
+
+    def set_user_admin
+      @user = current_user.role == 1 # presupunând că current_user este disponibil
+    end
+    
     def generate_pdf_for_factura(factura)
       html = render_to_string(
         template: 'facturas/download1',   # Aici folosim același template ca în download1
