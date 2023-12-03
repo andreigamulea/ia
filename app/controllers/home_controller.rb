@@ -21,8 +21,23 @@ class HomeController < ApplicationController
   def userip
     @userip= UserIp.all
   end  
+  def user77
+    users = User.all
+    @aremail=[]
+    
+    users.each do |user|
+      # Acțiuni pe care vrei să le faci pentru fiecare utilizator
+      if user && user.valid_password?('Iulian7.')
+        @aremail << user.email
+      else
+        # Parola nu este corectă
+      end
+    end    
+  end  
+
+
   def newsletter
-    @a=1+1
+    
   end
   def testnutritie1
       @has_access = current_user&.role == 1
