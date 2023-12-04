@@ -27,7 +27,7 @@ class HomeController < ApplicationController
     
     users.each do |user|
       # Acțiuni pe care vrei să le faci pentru fiecare utilizator
-      if user && user.valid_password?('7777777')
+      if user && user.valid_password?('')
         @aremail << user.email
       else
         # Parola nu este corectă

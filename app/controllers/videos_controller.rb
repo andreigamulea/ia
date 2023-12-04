@@ -58,8 +58,11 @@ end
     #@myvideo = Video.where(tip: 'tayt12').order(ordine: :asc)
     @myvideo = Video.where(tip: 'tayt12').where("ordine < ?", 1000).order(ordine: :asc)
     @myvideo3 = Video.where(tip: 'tayt12').where("ordine > ? AND ordine < ?", 3000, 4000).order(ordine: :asc)
-    @myvideo4 = Video.where(tip: 'tayt12').where("ordine > ? AND ordine < ?", 4000, 5000).order(ordine: :asc)
-    
+    if current_user && current_user.limba=="EN"
+      @myvideo4 = Video.where(tip: 'tayt12').where("ordine > ? AND ordine < ?", 5000, 6000).order(ordine: :asc)
+    else
+       @myvideo4 = Video.where(tip: 'tayt12').where("ordine > ? AND ordine < ?", 4000, 5000).order(ordine: :asc)
+    end
     #@myvideo2 = Video.where(tip: 'tayt12').where("ordine > ?", 1000).order(ordine: :asc)
     if current_user && current_user.limba=="EN"
       @myvideo2 = Video.where(tip: 'tayt12').where("ordine > ? AND ordine < ?", 2000, 3000).order(ordine: :asc)
