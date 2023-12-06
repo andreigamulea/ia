@@ -3,6 +3,8 @@ class ValorinutritionalesController < ApplicationController
   before_action :set_valorinutritionale, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, only: %i[index ] #verifica daca utilizatorul este autentificat
   before_action :set_user, only: %i[index show edit update destroy]
+  before_action :set_user1, only: %i[aplicatie]
+
   before_action :track_ahoy_visit
   skip_before_action :verify_authenticity_token, only: [:track]
   protect_from_forgery except: :track
@@ -39,10 +41,13 @@ class ValorinutritionalesController < ApplicationController
   end
   
   
-  
-  def index 
-    @page_title = "Valori Nutritionale"
+  def aplicatie #pagina de produs-  Descriere app Valori nutritionale. posibilitate de cumparare
+    @prods = Prod.where(status: 'activ').where(curslegatura: 'Nutritie')
+  end
 
+  def index #app Valori Nutritionale
+    @page_title = "Valori Nutritionale"
+    
     if params[:search_type] == "eq"
       @valorinutritionales = Valorinutritionale.where('aliment ~* ?', "\\y#{params[:search_term]}\\y").page(params[:page]).per(10)
       @q = @valorinutritionales.ransack(params[:q])
@@ -310,23 +315,49 @@ class ValorinutritionalesController < ApplicationController
       params.permit(:id, selected_values_attributes: [:id, :value])
     end
     def set_user
+      @has_access = false
       # Verifica daca userul este logat
       if current_user
         # Verifica daca userul este admin sau asociat cu cursul "Nutritie"
         if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Nutritie" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })
+        @has_access = true
+        puts("da are acces")
         # Utilizatorul are acces la resursa
         else
           # Utilizatorul nu are acces la resursa
+          puts("nu, nu are acces")
           flash[:alert] = "Nu ai acces la această resursă."
-          redirect_to servicii_path
+          redirect_to aplicatie_path
         end
       else
         # Utilizatorul nu este logat
         flash[:alert] = "Trebuie să te autentifici pentru a accesa această resursă."
-        redirect_to login_path
+        redirect_to new_user_session_with_return_path('aplicatie nutritie')
       end
+      
     end
-    
+    def set_user1
+      @has_access = false
+      # Verifica daca userul este logat
+      if current_user
+        # Verifica daca userul este admin sau asociat cu cursul "Nutritie"
+        if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Nutritie" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })
+        @has_access = true
+        puts("da are acces")
+        # Utilizatorul are acces la resursa
+        else
+          # Utilizatorul nu are acces la resursa
+          puts("nu, nu are acces")
+          flash[:alert] = "Nu ai acces la această resursă."
+          
+        end
+      else
+        # Utilizatorul nu este logat
+        #flash[:alert] = "Trebuie să te autentifici pentru a accesa această resursă."
+        #redirect_to new_user_session_with_return_path('aplicatie nutritie')
+      end
+      
+    end
 
     # Only allow a list of trusted parameters through.
     def valorinutritionale_params

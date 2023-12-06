@@ -114,6 +114,8 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
 
   
   
+  get '/aplicatie-calcul-nutritional', to: 'valorinutritionales#aplicatie', as: :aplicatie
+
 
   resources :valorinutritionales, only: [:index], path: 'valori-nutritionale' do
     collection do

@@ -13,11 +13,9 @@
     <img src="<%= image_path('cursuri.jpg') %>" alt="Curs de Ayurveda">
    <p class="tl">Ayurveda - Aplicații</p>
    <h2>
-  <% if user_signed_in? %>
-    <%= link_to 'Aplicație valori nutriționale', valorinutritionales_path, class: 'alink' %>
-  <% else %>
-    <%= link_to 'Aplicație valori nutriționale', new_user_session_with_return_path('vn'), class: 'alink button-link' %>
-  <% end %>
+ 
+    <%= link_to 'Aplicație valori nutriționale', aplicatie_path, class: 'alink' %>
+ 
 </h2>
 
 

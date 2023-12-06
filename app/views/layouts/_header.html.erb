@@ -70,11 +70,9 @@
                 <ul class="submenu">
                     <li><%= link_to 'Evaluare tipologie ayurvedică', evaluare_tipologie_ayurvedica_path, class: 'nav-item' %> </li>
                     <li class="nav-item">
-                    <% if user_signed_in? %>
-                      <%= link_to 'Aplicație de calcul nutrițional', valorinutritionales_path, id: 'valorinutritionales_link' %>
-                    <% else %>
-                      <%= link_to 'Aplicație de calcul nutrițional', new_user_session_with_return_path('vn'), class: 'button-link' %>
-                    <% end %>
+                   
+                      <%= link_to 'Aplicație de calcul nutrițional', aplicatie_path %>
+                    
                   </li>            
 
                     <%if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })%>
