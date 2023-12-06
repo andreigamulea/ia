@@ -95,6 +95,9 @@ class ApplicationController < ActionController::Base
         elsif return_to == "vn"
           # Cod pentru cazul în care sursa este butonul
           valorinutritionales_path # Înlocuiește cu calea corespunzătoare
+        elsif return_to == "aplicatie nutritie"
+          # Cod pentru cazul în care sursa este butonul
+          aplicatie_path # Înlocuiește cu calea corespunzătoare
         elsif return_to == "lg"
           # Cod pentru cazul în care sursa este butonul
           lista_vegetales_path # Înlocuiește cu calea corespunzătoare

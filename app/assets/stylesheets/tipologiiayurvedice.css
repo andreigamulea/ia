@@ -78,3 +78,125 @@
       width: -webkit-fill-available;
     }
     
+
+
+    #calcnutr .cr{
+      background-color:white!important;
+  }
+  dt {
+      font-weight: bold;
+      color: #0056b3;
+      margin-top: 10px;
+  }
+  dd {
+      margin-left: 20px;
+      margin-bottom: 10px;
+  }
+  .mb0{
+      margin-bottom:0;
+  }
+  
+  .ayrow {
+      display: flex;
+      flex-direction:row;
+      flex-wrap: wrap;
+      width: 100%;
+      align-items: center;
+  }
+  
+  .aycolumn {
+      width: 50%;
+      box-sizing: border-box; 
+  }
+  
+  @media screen and (max-width: 920px) {
+      .aycolumn {
+          width: 100%;
+          flex-direction:column;
+      }
+  }
+  
+  #calcnutr .data-table .table-header th, 
+  #calcnutr .data-table .table-row td {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #000000;
+  }
+  /* Stiluri pentru liniile impare ale tabelului (prima, a treia, etc.) */
+  #calcnutr .data-table .table-row:nth-child(odd) {
+      background-color: #f2f2f2; /* O nuanță de gri */
+  }
+  
+  /* Stiluri pentru liniile pare ale tabelului (a doua, a patra, etc.) */
+  #calcnutr .data-table .table-row:nth-child(even) {
+      background-color: #ffffff; /* Alb */
+  }
+  /* Stiluri pentru efectul de hover pe liniile tabelului */
+  #calcnutr .data-table .table-row:hover {
+      background-color: #e0e0e0; /* O nuanță mai închisă de gri pentru hover */
+  }
+  
+  .btncmd{
+      color:white;
+      text-decoration:none;
+      background-color:#65025d;
+      padding: 6px 13px;
+      margin: 3px;
+      border-radius:5px;
+  }
+  .btncmd:hover{
+      background-color:rgb(80, 2, 76);
+      transition: opacity 0.4s ease; /* tranziție pentru opacitate */
+  }
+  
+  
+  
+  .modal {
+      display: none; /* inițial ascuns */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+      opacity: 0; /* inițial, modalul este complet transparent */
+      transition: opacity 0.4s ease; /* tranziție pentru opacitate */
+  }
+  .modal-content {
+    margin: auto;
+    display: block;
+    width: 90%;
+    max-width: 100vh;
+  }
+  
+  
+  /* Stilul atunci când modalul este activ (vizibil) */
+  .modal.active {
+      display: block; /* afișează modalul */
+      opacity: 1; /* face modalul complet opac */
+  }
+  
+  
+  
+  
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  #myImg {
+      cursor: pointer; 
+      transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  #myImg:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+  }
+  

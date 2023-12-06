@@ -40,11 +40,9 @@
          <div class="desc">Descoperă conținutul nutritiv al alimentelor și calculează numărul de calorii, proteine, lipide, carbohidrați și fibre la fiecare masă! Alege în fiecare zi o alimentație sănătoasă și echilibrată.</div>
          <div class="btn-fp">
          
-         <% if user_signed_in? %>
-            <%= link_to 'Aplicație Nutriție', valorinutritionales_path, class: 'alink' %>
-         <% else %>
-            <%= link_to 'Aplicație Nutriție', new_user_session_with_return_path('vn'), class: 'alink button-link' %>
-         <% end %>
+         
+            <%= link_to 'Aplicație Nutriție', aplicatie_path, class: 'alink' %>
+         
          </div>
       </div>
       <div class="col" style="align-items:center;text-align:center;">
