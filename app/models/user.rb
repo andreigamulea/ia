@@ -47,7 +47,7 @@ class User < ApplicationRecord
   end
   
  
-  
+  has_many :contractes
   has_many :user_modulecursuris
   has_many :modulecursuris, through: :user_modulecursuris
   

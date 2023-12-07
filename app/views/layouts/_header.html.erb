@@ -124,20 +124,17 @@
                         </li>
                         <li><%= link_to 'Newsletter', newsletter_path, class: 'nav-item' %></li>
                         <li><%= link_to 'Nutritie modul 2', testnutritie2_path, class: 'nav-item' %></li>
-                        <li><%= link_to 'Nutritie modul 1', testnutritie1_path, class: 'nav-item' %></li>
-                        
-
-                        
+                        <li><%= link_to 'Nutritie modul 1', testnutritie1_path, class: 'nav-item' %></li>                  
                        
-                        <li><%= link_to 'Aplicatie calcul nutritional', test1_path, class: 'nav-item' %> </li>
+                        <li><%= link_to 'Contractori', contractes_path, class: 'nav-item' %></li>
 
-
-                        <li><%= link_to 'PC', show_crypto_price_path, class: 'nav-item' %> </li>
-
-                        
+                        <li><%= link_to 'PC', show_crypto_price_path, class: 'nav-item' %> </li>                       
                         
                         <% end %>
+                        <% if (current_user && current_user.role==1) || (current_user && current_user.email=='test@yahoo.com') %>
+                        <li><%= link_to 'Semnează Contract', contractes_semneaza_contract_path, class: 'nav-item' %></li>
 
+                        <% end %>
                     </ul>
                 </li>
 

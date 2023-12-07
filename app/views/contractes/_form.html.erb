@@ -1,0 +1,47 @@
+<%= form_with(model: contracte) do |form| %>
+  <% if contracte.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(contracte.errors.count, "error") %> prohibited this contracte from being saved:</h2>
+
+      <ul>
+        <% contracte.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.number_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :tip, style: "display: block" %>
+    <%= form.text_field :tip %>
+  </div>
+
+  <div>
+    <%= form.label :denumire, style: "display: block" %>
+    <%= form.text_field :denumire %>
+  </div>
+
+  <div>
+    <%= form.label :contor, style: "display: block" %>
+    <%= form.number_field :contor %>
+  </div>
+
+  <div>
+    <%= form.label :textcontract, style: "display: block" %>
+    <%= form.text_area :textcontract %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

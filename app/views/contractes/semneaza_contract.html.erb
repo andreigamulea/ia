@@ -1,0 +1,50 @@
+<%=@contract%></br></br>
+<canvas id="signature-pad" width="400" height="200" style="border: 1px solid #000;"></canvas></br></br>
+<button onclick="saveSignature()">Salvează Semnătura</button></br></br>
+<button onclick="clearSignature()">Șterge Semnătura</button></br></br>
+
+<script>
+  var canvas = document.getElementById('signature-pad');
+  var context = canvas.getContext('2d');
+  var isDrawing = false;
+
+  canvas.addEventListener('mousedown', function(event) {
+  isDrawing = true;
+  var x = event.offsetX;
+  var y = event.offsetY;
+  context.beginPath(); // Începe o nouă cale de desenare
+  context.moveTo(x, y);
+});
+
+canvas.addEventListener('mousemove', function(event) {
+    if (isDrawing) {
+      context.lineTo(event.offsetX, event.offsetY);
+      context.stroke();
+    }
+  });
+
+  canvas.addEventListener('mouseup', function() {
+    isDrawing = false;
+  });
+
+  canvas.addEventListener('mouseleave', function() {
+    isDrawing = false;
+  });
+function saveSignature() {
+    var dataURL = canvas.toDataURL();
+    console.log(dataURL);
+    // Aici poți adăuga cod pentru a trimite dataURL la server
+  }
+
+  function clearSignature() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    signatureCoordinates = []; // Resetează coordonatele semnăturii
+  }
+  
+
+</script>
+
+
+
+  
+
