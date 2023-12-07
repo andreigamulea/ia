@@ -1,4 +1,6 @@
 Rails.application.routes.draw do    
+  get 'contractes/semneaza_contract', to: 'contractes#semneaza_contract'
+  resources :contractes
   resources :tipconstitutionals
   get 'evaluare_tipologie_ayurvedica', to: 'tipconstitutionals#evaluare_tipologie_ayurvedica'
   get 'calculate_totals', to: 'tipconstitutionals#process_totals'

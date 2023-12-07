@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_22_170003) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_07_000841) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -145,6 +145,36 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_22_170003) do
     t.index ["taxa2324"], name: "index_comenzi_prods_on_taxa2324"
     t.index ["user_id"], name: "index_comenzi_prods_on_user_id"
     t.index ["validat"], name: "index_comenzi_prods_on_validat"
+  end
+
+  create_table "contracte_acces_emails", force: :cascade do |t|
+    t.integer "contracte_id"
+    t.string "email"
+    t.integer "idcontractor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "contracte_useris", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "email"
+    t.integer "idcontractor"
+    t.integer "contracte_id"
+    t.text "contract_content"
+    t.text "signature_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "contractes", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "email"
+    t.string "tip"
+    t.string "denumire"
+    t.integer "contor"
+    t.text "textcontract"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "cursuri_history", force: :cascade do |t|
