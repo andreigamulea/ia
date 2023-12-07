@@ -1,10 +1,16 @@
 
 <style>
 #nutritie1 .c1 h2 {
-    font-size: 1.6em;
+    font-size: 1.3em;
+}
+#nutritie1 .register{
+    border: 1px solid #4b0082;
+    background-color:#4b0082;
 }
 #nutritie1 .c1 h3{
-    font-size:1.3em;
+    font-size:16px;
+    font-weight:800;
+    margin-bottom:0;
 }
 #nutritie1 .register{
     margin:0;
@@ -41,13 +47,13 @@
 <div class="row1 center" style="max-width:920px; margin:0 auto;">
     <div class="r1c1" style="height: 350px;">
       
-      <img src="<%= image_url('nutritie-ayushcell.jpg') %>" alt="Curs de Ayurveda">
+      <img src="<%= image_url('nutritie-ayushcell.jpg') %>" alt="Program Nutriție Ayurvedică">
     </div>
     <div class="r1c2">
     <p>Programul de pregătire în nutriția ayurvedică practică aplicată este conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</p>
            
     <div class="r1c2">
-        <%= link_to 'Inscrie-te la curs', new_user_session_with_return_path('nutritie1'), class: 'register' %>
+        <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie1'), class: 'register' %>
     </div>
       
      
@@ -58,55 +64,50 @@
 <h2>Din subiectele abordate in cadrul acestui modul:</h2>
 <br>
 
-<h3>Importanța principiului adecvării (satmya) în nutriția ayurvedică</h3>
+<h3>🍎 Importanța principiului adecvării (satmya) în nutriția ayurvedică</h3>
 <p>Pentru a beneficia de o bună condiție trupească, sufletească și spirituală în legătură cu alimentația, este esențială potrivirea, altfel spus, adecvarea între ceea ce noi suntem și ceea ce folosim în alimentația noastră curentă. În Ayurveda, acest principiu de adecvare în nutriție este numit Satmya.</p>
 
-<h3>Cunoașterea tipologiei constituționale personale</h3>
+<h3>🧬 Cunoașterea tipologiei constituționale personale</h3>
 <p>În abordarea nutriției, nu doar alimentația contează, ci și modul în care aceasta se adaptează particularităților noastre constituționale. Aceasta se poate realiza prin determinarea tipului constituțional ayurvedic personal, cunoscut sub denumirea de dosha-prakriti.</p>
 
-<h3>Dosha-urile și rolul acestora în determinarea comportamentelor</h3>
+<h3>🔥 Dosha-urile și rolul acestora în determinarea comportamentelor</h3>
 <p>Determinarea tipologiilor constituționale ayurvedice se bazează pe trei forme de energie vitală, numite dosha-uri: vata-dosha, pitta-dosha și kapha-dosha. Acestea determină comportamente diferite, atât în mediul exterior, cât și în cel intern, organic.</p>
 
-<h3>Personalizarea nutriției în funcție de tipul constituțional</h3>
+<h3>🍽️ Personalizarea nutriției în funcție de tipul constituțional</h3>
 <p>Fiecare tip constituțional ayurvedic are un mod specific de utilizare și valorificare a hranei în consumul zilnic. Această structurare specifică influențează forma trupului și fiziologia acestuia. Două ființe umane cu tipuri constituționale ayurvedice diferite pot utiliza aceleași tipuri de alimente, dar vor înregistra efecte diferite asupra trupului.</p>
 
-<h3>Corelarea greutății ideale cu Ayurveda</h3>
+<h3>⚖️ Corelarea greutății ideale cu Ayurveda</h3>
 <p>Formulele moderne de determinare a greutății ideale, bazate pe înălțime, vârstă și gen, precum și calculul indicelui de masă corporală (IMC) sunt interpretate și corelate cu înțelepciunea străveche din Ayurveda. Această corelare permite o nuanțare mai precisă a standardelor de sănătate în raport cu greutatea ideală pentru fiecare tipologie constituțională ayurvedică.</p>
 
 <p>Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</p>
 
+<div class="r1c2" style="align-items: center; width:100%;">
+    <%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('nutritie1'), class: 'register' %>
+</div>
+
 <br>
 <h2>Înscriere și participare</h2>
 <br>
-<h3><strong>Modalitatea de desfășurare a cursului</strong></h3>
-<p>Cursul este disponibil exclusiv prin înregistrări, permițându-vă să studiați la propriul ritm.</p>
-
-<h3><strong>Modalitatea de desfășurare a cursului</strong></h3>
-<p>Cursul este disponibil exclusiv prin înregistrări, permițându-vă să studiați la propriul ritm.</p>
 
 <h3><strong>Cine poate participa?</strong></h3>
-<p>Programul este deschis tuturor celor interesați, indiferent de pregătirea profesională anterioară. Este utilă cunoașterea prealabilă a unor noțiuni din Ayurveda, dar nu este obligatorie.</p>
-
-<h3><strong>Durata accesului la curs</strong></h3>
-<p>Participanții vor avea acces la înregistrările cursului pentru o perioadă de 90 de zile de la data înscrierii.</p>
-
-<h3><strong>Costul participării</strong></h3>
-<p>Costul pentru acest modul de nutriție este de 780 lei.</p>
-
+<p>Programul este accesibil oricui este interesat de o alimentație sănătoasă, fără a fi necesară o pregătire profesională specifică. Deși cunoașterea preliminară a unor notiuni din Ayurveda poate constitui un avantaj, modulul acoperă toate conceptele esențiale pentru a vă asigura succesul în parcurgerea lecțiilor și pentru a facilita o înțelegere profundă a materiei.</p>
+<h3><strong>Modalitatea de desfășurare a cursului</strong></h3>
+<p>Cursul este disponibil exclusiv prin înregistrări, oferind astfel participanților nou înscrisi libertatea de a accesa conținutul acestui modul, la orice oră și fără restricții de timp, asigurând flexibilitatea necesară în gestionarea programului personal.</p>
 <h3><strong>Procesul de înscriere</strong></h3>
-<p>Pentru a vă înscrie la acest modul, vă rugăm să completați formularul disponibil pe pagina noastră de înscriere și să efectuați plata aferentă.</p>
-
-
-
-<p>Pentru a vă înscrie la acest modul, vă rugăm să ne trimiteți un mesaj prin intermediul formularului de pe <a href='/contact'>pagina noastră de contact</a>.</p>
-</section>
-<section>
-
-
-<% if !user_signed_in? %>
+<p>Pentru a vă înscrie la acest modul, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul la vizionarea inregistrarilor se va face direct in pagina de site.</p>
+<h3><strong>Costul participării</strong></h3>
+<p>Participarea la acest modul de nutriție reprezintă o investiție valoroasă în direcția educației pentru sănătate și pentru dezvoltarea personală și profesională, având un cost accesibil de 780 lei.</p>
+<h3><strong>Durata accesului la curs</strong></h3>
+<p>Participanții vor avea acces la vizionarea înregistrărilor cursului pentru o perioadă de 90 de zile de la data înscrierii.</p>
 <div class="r1c2">
-    <%= link_to 'Inscrie-te la curs1', new_user_session_with_return_path('nutritie1'), class: 'register' %>
+    <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie1'), class: 'register' %>
 </div>
+</section>
+
+
+<section>
+<% if !user_signed_in? %>
+
 <%end%>
 <%end%>
 <% if current_user && @has_access %>
@@ -235,16 +236,11 @@
 
 <% if !user_signed_in? || (current_user && !@has_access) %>
 
-<p>Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</p>
-<p>
-Pentru a vă înscrie la acest modul, vă rugăm să ne trimiteți un mesaj prin intermediul formularului de pe <a href='/contact'>pagina noastră de contact</a>.
-
-</p>
 
 <% if !user_signed_in? %>
-<div class="r1c2">
+<!-- <div class="r1c2">
     <%= link_to 'Inscrie-te la curs2', new_user_session_with_return_path('nutritie1'), class: 'register' %>
-</div>
+ </div> -->
 <%end%>
 <%end%>
 <% if current_user && @has_access %>
