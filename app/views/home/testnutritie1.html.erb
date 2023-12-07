@@ -16,6 +16,9 @@
     margin:0;
     margin-top:20px;
 }
+#nutritie1 .table td {
+    text-align:center;
+}
 @media screen and (max-width: 720px) {
     #nutritie1 .register{
         margin:0 auto;
@@ -41,7 +44,7 @@
     <h1 class="first-tittle">Ayush Cell Romania: Program de pregătire Nutritie Ayurvedică modulul 1</h1>
     <h2 class="main-title" >Nutritie Ayurvedică modulul 1</h2>
 
-<section class="c1">
+<section>
 <% if !user_signed_in? || (current_user && !@has_access) %>
 
 <div class="row1 center" style="max-width:920px; margin:0 auto;">
@@ -162,7 +165,7 @@
 
 
 
-<section class="c1">
+<section>
 <%if !@platit%>
 
 <h1 class="alimente-nutritionale" id="Tabara23VaraP2">Acces prezentari video Nutritie Modulul 1</h1>
@@ -238,9 +241,9 @@
 
 
 <% if !user_signed_in? %>
-<!-- <div class="r1c2">
-    <%= link_to 'Inscrie-te la curs2', new_user_session_with_return_path('nutritie1'), class: 'register' %>
- </div> -->
+ <div class="r1c2">
+    <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie1'), class: 'register' %>
+ </div> 
 <%end%>
 <%end%>
 <% if current_user && @has_access %>
