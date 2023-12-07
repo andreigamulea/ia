@@ -10,37 +10,30 @@
       </ul>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.number_field :user_id %>
-  </div>
-
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div>
-    <%= form.label :tip, style: "display: block" %>
-    <%= form.text_field :tip %>
-  </div>
-
-  <div>
-    <%= form.label :denumire, style: "display: block" %>
-    <%= form.text_field :denumire %>
-  </div>
-
-  <div>
-    <%= form.label :contor, style: "display: block" %>
-    <%= form.number_field :contor %>
-  </div>
-
-  <div>
-    <%= form.label :textcontract, style: "display: block" %>
-    <%= form.text_area :textcontract %>
-  </div>
-
+  <div id="videos">
+  <table class="table">
+      <thead>
+        <tr>
+          <th><%= form.label :user_id %></th>
+          <th><%= form.label :email %></th>
+          <th><%= form.label :tip %></th>
+          <th><%= form.label :denumire %></th>
+          <th><%= form.label :contor %></th>
+          <th><%= form.label :textcontract %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= form.number_field :user_id %></td>
+          <td><%= form.text_field :email %></td>
+          <td><%= form.text_field :tip %></td>
+          <td><%= form.text_field :denumire %></td>
+          <td><%= form.number_field :contor %></td>
+          <td><%= form.text_area :textcontract %></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
   <div>
     <%= form.submit %>
   </div>
