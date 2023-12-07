@@ -180,7 +180,11 @@ end
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
   end
-
+  def myvideo10 #pt an2
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
   ################################################################
   
   
@@ -601,7 +605,34 @@ end
       end
     end
     
+    def set_user10
+      # Verifică dacă userul este logat
+      unless user_signed_in?
+        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest videoclip."
+        redirect_to new_user_session_path # Presupunând că aceasta este calea către login
+        return
+      end
     
+      # Dacă userul are rolul 1, îi dăm acces direct
+      return true if current_user.role == 1
+      
+      # Află video-ul pe care user-ul dorește să-l acceseze
+      video_dorit = Video.find(params[:id])
+      
+      # Verificăm dacă user-ul curent a plătit pentru video-ul dorit
+      if ComenziProd.joins(:prod)
+        .where(user_id: current_user.id, prods: { cod: video_dorit.cod }, validat: "Finalizata")
+        .where("datasfarsit IS NULL OR datasfarsit >= ?", Date.current)
+        .exists?
+      
+      return true
+      end
+
+      
+      # Dacă nu se potrivește niciuna dintre condițiile de mai sus
+      flash[:alert] = "Nu aveți acces la acest videoclip."
+      redirect_to servicii_path
+    end
 
 
     def require_admin
