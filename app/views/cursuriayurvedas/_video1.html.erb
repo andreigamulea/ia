@@ -8,6 +8,18 @@
   <% end %>
 </td>
 <% end %>
+
+<% if video.tip == 'an2' %>
+<td>
+  <% if video.ordine > 1000 %>
+    <%= video.ordine - 1000 %>
+  <% else %>
+    <%= video.ordine %>
+  <% end %>
+</td>
+<% end %>
+
+
   <td><%= video.nume %></td>
   <td><%= video.descriere %></td>
  

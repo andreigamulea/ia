@@ -206,6 +206,18 @@ class CursuriayurvedasController < ApplicationController
  #########################stop acces produse video an 1
 
   end
+  def an2
+    @prods=Prod.where(cod: "cod78")        
+    email_eligibile = ["mihaelachazli@gmail.com", "ade.dinu@gmail.com"]   
+    @has_access = current_user && (email_eligibile.include?(current_user.email) || current_user.role == 1)
+    @platit = if current_user
+      current_user.role == 1 || ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
+                 .where(prod_id: Prod.where(cod: ['cod78']).select(:id))
+                 .exists?
+    end
+    puts("@platit= #{@platit}")
+    @myvideo = Video.where(tip: 'an2').where('ordine > ? AND ordine < ?', 0, 1000).order(ordine: :asc) 
+  end  
 
   private
     # Use callbacks to share common setup or constraints between actions.

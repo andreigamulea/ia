@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
 
   get '/cursayurveda', to: 'cursuriayurvedas#cursayurveda'
+  get '/an2', to: 'cursuriayurvedas#an2'
+
   resources :cursuriayurvedas
   get 'nutritie1', to: 'nutritie1#index'
   get 'nutritie2', to: 'nutritie2#index'
@@ -33,6 +35,7 @@ Rails.application.routes.draw do
   get 'videos/:id/myvideo7', to: 'videos#myvideo7', as: 'myvideo7'
   get 'videos/:id/myvideo8', to: 'videos#myvideo8', as: 'myvideo8'
   get 'videos/:id/myvideo9', to: 'videos#myvideo9', as: 'myvideo9'
+  get 'videos/:id/myvideo10', to: 'videos#myvideo10', as: 'myvideo10'
  
   get 'videos/tayv2', to: 'videos#tayv2', as: 'tayv2'
   get 'tabara_de_ayurveda_toamna1', to: 'videos#tayt12', as: 'tayt12'
