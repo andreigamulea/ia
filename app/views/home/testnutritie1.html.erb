@@ -118,41 +118,7 @@
 <%else%>
 <br><br><br>
 <%end%>
-    <% if current_user && (@has_access || @has_access1)%>
-        <h2 style= "text-align: center;padding: 0 10px;">Resurse</h2></br>
-
-
-        <div id="videos">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Nume</th>
-                    <th>Descriere</th>       
-                    <th>Actiune</th>
-                    <th>Descarca PDF</th>
-                </tr>
-                </thead>
-                <tbody>
-                
-                <% previous_video_tip = nil %>
-                <% if current_user && @has_access%>
-                <% @myvideo4.each do |video| %>
-                    <%= render partial: 'video1', locals: { video: video, previous_video_tip: previous_video_tip } %>
-                    <% previous_video_tip = video.tip %>
-                <% end %>
-                <% end %>
-                <% if current_user && @has_access1%>
-                <% @myvideo3.each do |video| %>
-                    <%= render partial: 'video1', locals: { video: video, previous_video_tip: previous_video_tip } %>
-                    <% previous_video_tip = video.tip %>
-                <% end %>
-                <% end %>
-
-                </tbody>
-            </table>
-        </div>
-    <%end%>
+   
  
 </section>
 
