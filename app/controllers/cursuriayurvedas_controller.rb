@@ -137,7 +137,7 @@ class CursuriayurvedasController < ApplicationController
 
  if max_taxa
   lunile = [nil, nil, "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "iulie"]
-  @produse_accesibile_an1 = Prod.where(curslegatura: 'an1', luna: lunile[2..(2 + max_taxa - 1)]).order(created_at: :asc)
+  @produse_accesibile_an1 = Prod.where(curslegatura: 'an1', luna: lunile[2..(2 + max_taxa - 2)]).order(created_at: :asc)
   #ATENTIE ESTE BINE: USERUL ARE ACCES DOAR SA CUMPERE PRODUSE(VIDEO) DOAR PANA LA LUNA PE CARE A PLATIT INCLUSIV
 
     #start1 aici tratez situatia cand sa aiba acces la link ZOOM
