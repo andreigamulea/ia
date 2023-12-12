@@ -535,7 +535,7 @@ class PaginisitesController < ApplicationController
         
             nume = "-"
             prenume = "-"
-            telefon = "-"
+            telefon = user.telefon
             email = "-"
         
                 puts "factura este nil"
