@@ -102,9 +102,7 @@
 <p>Participarea la acest modul de nutriție reprezintă o investiție valoroasă în direcția educației pentru sănătate și pentru dezvoltarea personală și profesională, având un cost accesibil de 780 lei.</p>
 <h3><strong>Durata accesului la curs</strong></h3>
 <p>Participanții vor avea acces la vizionarea înregistrărilor cursului pentru o perioadă de 90 de zile de la data înscrierii.</p>
-<div class="r1c2">
-    <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie1'), class: 'register' %>
-</div>
+
 </section>
 
 
@@ -206,11 +204,7 @@
 <% if !user_signed_in? || (current_user && !@has_access) %>
 
 
-<% if !user_signed_in? %>
- <div class="r1c2">
-    <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie1'), class: 'register' %>
- </div> 
-<%end%>
+
 <%end%>
 <% if current_user && @has_access %>
 
