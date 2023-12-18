@@ -11,6 +11,12 @@
             <th style="height: 40px; vertical-align: middle; width: 30%;">Tip</th>
             <th style="height: 40px; vertical-align: middle; width: 30%;">Denumire</th>
             <th style="height: 40px; vertical-align: middle; width: 1%;">Contor</th>
+            <th>Nume Firma</th>
+            <th>Sediu Firma</th>
+            <th>Cont Bancar</th>
+            <th>Banca Firma</th>
+            <th>CUI Firma</th>
+            <th>Reprezentant Firma</th>
             <th style="height: 40px; vertical-align: middle; width: 30%;">Acțiuni</th>
         </tr>
     </thead>
@@ -23,6 +29,12 @@
                 <td><%= c.tip %></td>
                 <td><%= c.denumire %></td>
                 <td><%= c.contor %></td>
+                <td><%= c.nume_firma %></td>
+                <td><%= c.sediu_firma %></td>
+                <td><%= c.cont_bancar %></td>
+                <td><%= c.banca_firma %></td>
+                <td><%= c.cui_firma %></td>
+                <td><%= c.reprezentant_firma %></td>
                 <td>
                     <%= link_to 'View', c %>
                     <%= link_to 'Edit', edit_contracte_path(c) %>
