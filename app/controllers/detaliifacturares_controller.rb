@@ -133,8 +133,8 @@ end
   def pay
    
     puts("sunt in payeeeeeeeeeeeeeeeeeeeeee")
-    @prod = Prod.find(params[:id])
-    if current_user.email=="edvin.t.nagy@eminscubm.ro" && @prod.cod.in?(['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 'cod25'])
+    @prod = Prod.find(params[:id]) 
+    if current_user.email=="nagy.edvin@yahoo.com" && @prod.cod.in?(['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 'cod25'])
       @prod.pret=35 #situatie particulara
     end  
     @detaliifacturare = current_user.detaliifacturare

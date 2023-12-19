@@ -123,7 +123,7 @@ class CursuriayurvedasController < ApplicationController
 
         cod_produs = "cod#{15 + numar_valori}"  # Se adaugă 15 pentru că cod16 corespunde cu 1 valoare, cod17 cu 2 valori, etc.
         @prodgrupa1_taxalunara = Prod.find_by(cod: cod_produs)
-        if current_user.email=="edvin.t.nagy@eminscubm.ro"
+        if current_user.email=="nagy.edvin@yahoo.com" #
           @prodgrupa1_taxalunara.pret=35
         end  
       end

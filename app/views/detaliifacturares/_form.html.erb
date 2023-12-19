@@ -181,12 +181,12 @@
 <div class="col10 col10m">
   <h2 style="font-size:1.5em;"><%= @prod.nume %></h2>
   <p><%= @prod.detalii %></p>
-  <%if current_user.email!="edvin.t.nagy@eminscubm.ro"%>
+  <%if current_user.email!="nagy.edvin@yahoo.com"%>
   <p>Pret: <%= @prod.pret.to_i%> lei</p></br>
   
-  <% elsif current_user.email == "edvin.t.nagy@eminscubm.ro" && @prod.cod.in?(['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 'cod25']) %>
+  <% elsif current_user.email == "nagy.edvin@yahoo.com" && @prod.cod.in?(['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 'cod25']) %>
   <p>Pret: <%= @prod.pret.to_i-145%> lei</p></br>
-  <% elsif current_user.email == "edvin.t.nagy@eminscubm.ro" && !['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 'cod25'].include?(@prod.cod) %>
+  <% elsif current_user.email == "nagy.edvin@yahoo.com" && !['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 'cod25'].include?(@prod.cod) %>
   <p>Pret: <%= @prod.pret.to_i%> lei</p></br>
   
   <%end%>
