@@ -86,7 +86,12 @@ class StripeWebhooksController < ApplicationController
           
       # Acum puteți accesa adresa de email a clientului
       customer_email = payment_method.billing_details.email
-    
+      if metadata[:email]=='nagy.edvin@yahoo.com' && ['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
+        'cod22', 'cod23', 'cod24', 'cod25'].include?(produs.cod)
+        produs.pret=35
+      end  
+
+
       comanda.update(
         statecomanda2: 'Finalizata',
         stateplata1: 'Achitata',
@@ -311,6 +316,14 @@ class StripeWebhooksController < ApplicationController
   
     # Calculați valoarea fără TVA
     pret_unitar_fara_tva = produs.pret / (1 + TVA / 100.0)
+    if metadata[:email]=='nagy.edvin@yahoo.com' && ['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
+      'cod22', 'cod23', 'cod24', 'cod25'].include?(produs.cod)
+
+      
+      pret_unitar_fara_tva = 29.41 #custom
+      produs.pret = 35
+    end  
+
     dt = produs.valabilitatezile
     if !['cod11', 'cod12', 'cod13', 'cod14', 'cod15', 'cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
        'cod22', 'cod23', 'cod24', 'cod25', 'cod26', 'cod27', 'cod28', 'cod29',
