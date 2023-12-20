@@ -399,8 +399,12 @@ class PaginisitesController < ApplicationController
         worksheet.add_cell(index + 1, 5, comanda.datainceput.strftime('%d-%m-%Y')) if comanda.datainceput
   
         valoare = mapare_valori[comanda.prod_id] || 0
-        worksheet.add_cell(index + 1, 6, valoare)
-  
+        
+        if comanda.user.email=="nagy.edvin@yahoo.com" && comanda.prod.cod!="cod14" #custom
+          worksheet.add_cell(index + 1, 6, 35)
+        else  
+          worksheet.add_cell(index + 1, 6, valoare)        
+        end  
         worksheet.add_cell(index + 1, 7, comanda.comanda_id)
   
         # Nume din Livrare
@@ -585,6 +589,9 @@ class PaginisitesController < ApplicationController
       comenzi_for_user.each do |comanda|
         cod = Prod.find(comanda.prod_id).cod
         pret = Prod.find(comanda.prod_id).pret
+        if user.email=="nagy.edvin@yahoo.com" && cod!="cod14" #custom
+          pret=35
+        end  
       
         case cod
         when 'cod14'
