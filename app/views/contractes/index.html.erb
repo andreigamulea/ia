@@ -17,6 +17,7 @@
             <th>Banca Firma</th>
             <th>CUI Firma</th>
             <th>Reprezentant Firma</th>
+            <th>Calitate</th>
             <th style="height: 40px; vertical-align: middle; width: 30%;">Acțiuni</th>
         </tr>
     </thead>
@@ -35,6 +36,7 @@
                 <td><%= c.banca_firma %></td>
                 <td><%= c.cui_firma %></td>
                 <td><%= c.reprezentant_firma %></td>
+                <td><%= c.calitate_reprezentant %></td>
                 <td>
                     <%= link_to 'View', c %>
                     <%= link_to 'Edit', edit_contracte_path(c) %>
