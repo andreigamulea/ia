@@ -118,21 +118,90 @@
     </div>
 
     <div class="section">
-        <h2>Art. 9. CLAUZE FINALE</h2>
+    <h2>Art. 9. CLAUZE FINALE</h2>
         <p>9.1 Anexa nr.1 - Fişa de voluntariat şi Anexa nr.2 - Fişa de protecţie a voluntarului fac parte integrantă din prezentul contract.</p>
         <p>9.2 Răspunderea pentru neexecutarea sau executarea necorespunzătoare a contractului de voluntariat este supusă prevederilor Legii nr. 287/2009 privind Codul civil, republicată, cu modificările ulterioare.</p>
         <p>9.3 Încheiat astăzi, 21.12.2023 în trei exemplare, două pentru Organizația gazdă și unul pentru Voluntar, fiecare exemplar având aceeași valoare juridică. Intră în vigoare la data semnării de către ambele părți.</p>
-        <p>Organizația Gazdă                                          
-        <p>Nume: <%= @reprezentant_firma%> Semnatura:</p>
-        <canvas id="signature-pad-1" width="1350" height="650" style="border: 1px solid #000;"></canvas>
-        <button onclick="saveSignature(1)">Salvează Semnătura</button>
-        <button onclick="clearSignature(1)">Șterge Semnătura</button></br></br></br>
-    
-        <p>Voluntar    <%= form.text_field :nume_voluntar, placeholder: "Numele voluntarului" %></p>
-        <canvas id="signature-pad-2" width="1350" height="650" style="border: 1px solid #000;"></canvas>
-        <button onclick="saveSignature(2)">Salvează Semnătura</button>
-        <button onclick="clearSignature(2)">Șterge Semnătura</button>
     </div>
+
+
+    <div class="semnatura">
+ 
+        
+        <div class="gazda">
+            <p>AMN-ROMANIA,</p>
+            <p style="margin-top: -10px; border: 2px solid transparent; border-left: none;"><%= @reprezentant_firma%></p>
+                 
+            <canvas id="signature-pad-1" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
+            <button onclick="saveSignature(1)">Salvează Semnătura</button>
+            <button onclick="clearSignature(1)">Șterge Semnătura</button>
+        </div>
+        
+        
+        <div class="voluntar">
+         
+            <p>Voluntar</p>
+            <p style="margin-top: -10px;">  <%= form.text_field :nume_voluntar, placeholder: "Numele voluntarului", style: "width: -webkit-fill-available;" %>
+</p>
+
+            
+            
+            <canvas id="signature-pad-2" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
+            <button onclick="saveSignature(2)">Salvează Semnătura</button>
+            <button onclick="clearSignature(2)">Șterge Semnătura</button>
+        </div>
+
+    </div>
+    
+    <style>
+    .semnatura {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .gazda, .voluntar {
+        max-width: 300px;
+        flex: 1; /* Permite ca div-urile să se ajusteze în funcție de spațiul disponibil */
+    }
+
+    .gazda canvas, .voluntar canvas {
+        border: 1px solid #000;
+        
+    }
+
+    button {
+        display: block;
+        margin-top: 10px;
+    }
+    .cr{
+        word-wrap: break-word;
+    }
+
+    /* Media query pentru ecrane cu lățime mai mică de 720px */
+    @media (max-width: 925px) {
+        .gazda, .voluntar {
+            max-width: none;
+            flex-basis: 100%;
+        }
+        .voluntar {
+            margin-top: 20px;
+        }
+    }
+
+    /* Media query pentru ecrane foarte înguste */
+    @media (max-width: 300px) {
+        .gazda, .voluntar {
+            padding: 0;
+            margin: 0;
+        }
+
+        .gazda canvas, .voluntar canvas {
+            max-height: 150px; /* Reduce înălțimea canvas-ului pentru ecrane mici */
+        }
+    }
+</style>
+
 
 
 
