@@ -1,5 +1,8 @@
 Rails.application.routes.draw do    
   get 'contractes/semneaza_contract', to: 'contractes#semneaza_contract'
+  post '/contractes', to: 'contractes#create', as: 'contractes_create' # Aici, 'contractes_create' este numele rutei
+  
+  
   resources :contractes
   resources :tipconstitutionals
   get 'evaluare_tipologie_ayurvedica', to: 'tipconstitutionals#evaluare_tipologie_ayurvedica'
