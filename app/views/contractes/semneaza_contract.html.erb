@@ -1,77 +1,175 @@
-
 <style>
 
+h1 {
+    text-align: center;
+}
+.section {
+    margin-top: 20px;
+}
+.section p {
+    margin: 10px 0;
+}
 </style>
-
-
 <div class="container" id="cvp1">
 <%= render 'layouts/sideleft' %>
 
 <div class="cr" style="background-color: aliceblue; ">
 
-<h1 class="first-tittle">Ayush Cell Romania: Generator contracte de voluntariat</h1>
-<h2 class="main-title mb0">Contract de voluntariat</h2>
 
-<%=@contract.html_safe%></br></br>
+<h1>CONTRACT DE VOLUNTARIAT</h1>
+    <p>Nr. ......... din data de .................</p>
+
+    <div class="section">
+        <p>Între ..............................................................., cu sediul în ...................................................., identificată cu CUI .......................................... , reprezentată de ........................................................  în calitate de ......................................................., numită în continuare Organizația gazdă</p>
+        <p>și</p>
+        <p>..........................................................................., domiciliat în ...............................
+        ...................................................., legitimat cu .................................................., eliberat de ............................................., la data de ......................................................., numit în continuare Voluntar,</p>
+        <p>s-a convenit încheierea prezentului contract în baza Legii nr. 78/ 2014 privind reglementarea activității de voluntariat din România.</p>
+    </div>
+
+    <div class="section">
+        <h2>Art. 1. OBIECTUL CONTRACTULUI</h2>
+        <p>1.1 Obiectul contractului îl constituie derularea de către Voluntar, fără remuneraţie, a activităților de interes public menţionate şi detaliate în Fişa voluntarului, ataşată prezentului contract (Anexa nr. 1).</p>
+        <p>1.2. Instrucțiunile cu privire la desfășurarea activității voluntarului sunt cuprinse în Fișa de protecție a voluntarului, Anexa nr. 2 la prezentul contract, întocmită cu respectarea prevederilor legale în domeniul securității și sănătății în muncă.</p>
+        <p>1.3. În executarea contractului de voluntariat, voluntarul se subordonează coordonatorului de voluntari al Organizației gazdă, conform Art. 16 din Legea 78/2014 privind reglementarea activităţii de voluntariat din România.</p>
+    </div>
+    <div class="section">
+    <h2>Art. 2. DURATA CONTRACTULUI</h2>
+    <p>2.1 Prezentul contract se încheie pe perioada ............... ani de zile, cu posibilitatea prelungirii sale pentru noi perioade stabilite de părți.</p>
+    <p>2.2 Activitățile de voluntariat care fac obiectul prezentului contract se desfășoară pe timp de zi. Programul, timpul şi perioada de desfăşurare a activității de voluntariat precum și responsabilitățile sunt stabilite prin fişa voluntarului, ataşată prezentului contract.</p>
+</div>
+
+<div class="section">
+    <h2>Art. 3. DREPTURILE PĂRŢILOR</h2>
+    <p>A. Organizaţia gazdă dispune de următoarele drepturi:</p>
+    <p>3.1 dreptul de a stabili organizarea şi funcţionarea activităţii de voluntariat;</p>
+    <p>3.2 dreptul de a iniţia conţinutul fişei de voluntariat, pe care o adaptează la solicitarea şi pregătirea voluntarului, precum şi la tipul de activităţi de voluntariat desfăşurate de către organizaţia gazdă;</p>
+    <p>3.3 dreptul de a exercita controlul asupra modului de implementare a fişei de voluntariat prin coordonatorul de voluntari;</p>
+    <p>3.4 dreptul de a constata abaterile voluntarului, raportate la clauzele stabilite în contractul de voluntariat, fişa de voluntariat şi/sau în fişa de protecţie a voluntarului;</p>
+    <p>3.5 dreptul de a cere voluntarului rapoarte de activitate;</p>
+    <p>3.6 dreptul de a exclude voluntarul din programele şi proiectele în care desfăşoară activităţi de voluntariat, dacă acesta nu respectă prevederile prezentului contract, ale fişei de voluntariat şi/sau ale fişei de protecţie a voluntarului;</p>
+    <p>3.7 dreptul de a deţine toate drepturile asupra materialelor, rapoartelor, informaţiilor, documentaţiei şi a altor materiale scrise, create, colectate şi/sau produse de voluntar în perioada desfăşurării activităţilor care fac obiectul prezentului contract de voluntariat;</p>
+    <p>3.8 dreptul de a cere informaţii şi recomandări despre voluntar, altor persoane;</p>
+    <p>3.9 dreptul de a schimba coordonatorul de voluntari oricând pe perioada de desfăşurare a actualului contract, cu obligaţia de a informa voluntarul;</p>
+    <p>3.10 dreptul de a iniția schimbarea conţinutului fişei de voluntariat, cu obligaţia de a informa voluntarul cu 15 zile înainte despre această intenție.</p>
+    
+    <p>B. Voluntarul dispune de următoarele drepturi:</p>
+    <p>3.11 dreptul de a desfăşura activitatea de voluntariat în concordanţă cu capacitatea pregătirea şi disponibilitatea sa;</p>
+    <p>3.12 dreptul de a solicita organizaţiei gazdă eliberarea certificatului de voluntariat însoţit de raportul de activitate;</p>
+    <p>3.13 dreptul la confidenţialitate şi protecţia datelor personale;</p>
+    <p>3.14 dreptul la timp liber corespunzător cu activitatea de voluntariat;</p>
+    <p>3.15 dreptul de a fi respectat ca şi persoană şi tratat ca şi coleg cu drepturi egale de către conducerea organizaţiei, de colegi fără discriminare;</p>
+    <p>3.16 dreptul de a beneficia de îndrumare şi orientare din partea coordonatorului de voluntariat;</p>
+    <p>3.17 dreptul de a i se rambursa cheltuielile efectuate pentru derularea activităţii, conform articolului 3;</p>
+    <p>3.18 dreptul de a participa la programele de formare şi instruire oferite de organizaţie.</p>
+    <p>3.19 dreptul de a i se recunoaşte activitatea de voluntariat drept experienţă profesională şi/sau în specialitate, în funcţie de tipul activităţii, dacă aceasta este realizată în domeniul studiilor absolvite – conform Art. 10 (2) din Legea 78/2014 privind reglementarea activităţii de voluntariat din România.</p>
+</div>
+<div class="section">
+    <h2>Art. 4. OBLIGAŢIILE PĂRŢILOR</h2>
+    <h3>A. Organizaţia gazdă se obligă:</h3>
+    <p>4.1 să asigure desfăşurarea activităţilor sub conducerea unui coordonator de voluntari, cu respectarea condiţiilor legale privind securitatea şi sănătatea în muncă, în funcţie de natura şi de caracteristicile activităţii respective;</p>
+    <p>4.2 să suporte cheltuielile de hrană și cazare pentru voluntar în desfăşurarea activităţii sale de voluntariat, dacă aceste cheltuieli au fost aprobate anterior începerii activităţii de conducerea organizaţiei prin acord scris;</p>
+    <p>4.3 să elibereze voluntarului certificatul nominal care atestă calitatea de voluntar;</p>
+    <p>4.4 să-l trateze pe voluntar ca şi coleg cu drepturi egale;</p>
+    <p>4.5 să pună la dispoziţia voluntarului datele de contact ale coordonatorului de voluntari;</p>
+    <p>4.6 să întocmească, în conformitate cu prevederile legale, contractul de voluntariat și fișele de voluntariat și respectiv de protecție a voluntarului, care sunt anexe la contractul de voluntariat și să înmâneze voluntarului câte un exemplar din aceste documente.</p>
+    
+    <h3>B. Voluntarul se obligă:</h3>
+    <p>4.6 să presteze o activitate de interes public, fără remuneraţie;</p>
+    <p>4.7 să îndeplinească sarcinile prevăzute în fişa de voluntariat şi să respecte instrucţiunilor stipulate în fişa de protecţie a voluntarului;</p>
+    <p>4.8 să păstreze confidenţialitatea informaţiilor la care are acces în cadrul activităţii de voluntariat, pe perioada desfăşurării contractului de voluntariat şi pe o perioada de 2 ani după încetarea acestuia;</p>
+    <p>4.9 să anunţe cu minim 24 de ore înainte indisponibilitatea temporară de a presta activitatea de voluntariat în care este implicat.</p>
+    <p>4.10 să îndeplinească la timp sarcinile primite din partea coordonatorului de voluntari;</p>
+    <p>4.11 să ocrotească bunurile pe care le foloseşte în cadrul activităţilor de voluntariat;</p>
+    <p>4.12 să respecte regulile şi normele de comportament ale organizaţiei gazdă;</p>
+    <p>4.13 să nu comunice sau să răspândească în public afirmaţii defăimătoare la adresa organizaţiei şi/sau a activităţii acesteia;</p>
+    <p>4.14 să prezinte coordonatorului de voluntari rapoartele de activitate, în maximum 5 zile de la solicitare;</p>
+    <p>4.15 să respecte procedurile şi regulamentele interne ale organizaţiei.</p>
+</div>
 
 
-<canvas id="signature-pad" width="1350" height="650" style="border: 1px solid #000;"></canvas></br></br>
-<button onclick="saveSignature()">Salvează Semnătura</button></br></br>
-<button onclick="clearSignature()">Șterge Semnătura</button></br></br>
+    <!-- Alte secțiuni ale contractului -->
+
+    <div class="section">
+        <h2>Art. 8 LITIGII</h2>
+        <p>Litigiile izvorâte din încheierea, modificarea, executarea sau încetarea prezentului contract sunt de competența instanțelor judecătorești, dacă părțile contractante nu le rezolvă pe cale amiabilă.</p>
+    </div>
+
+    <div class="section">
+        <h2>Art. 9. CLAUZE FINALE</h2>
+        <p>9.1 Anexa nr.1 - Fişa de voluntariat şi Anexa nr.2 - Fişa de protecţie a voluntarului fac parte integrantă din prezentul contract.</p>
+        <p>9.2 Răspunderea pentru neexecutarea sau executarea necorespunzătoare a contractului de voluntariat este supusă prevederilor Legii nr. 287/2009 privind Codul civil, republicată, cu modificările ulterioare.</p>
+        <p>9.3 Încheiat astăzi, în trei exemplare, două pentru Organizația gazdă și unul pentru Voluntar, fiecare exemplar având aceeași valoare juridică. Intră în vigoare la data semnării de către ambele părți.</p>
+        <p>Organizația Gazdă                                          
+        <p>Nume ....................................             </p>
+        <canvas id="signature-pad-1" width="1350" height="650" style="border: 1px solid #000;"></canvas>
+        <button onclick="saveSignature(1)">Salvează Semnătura</button>
+        <button onclick="clearSignature(1)">Șterge Semnătura</button>
+    
+        <p>Voluntar    Nume ...........................................</p>
+        <canvas id="signature-pad-2" width="1350" height="650" style="border: 1px solid #000;"></canvas>
+        <button onclick="saveSignature(2)">Salvează Semnătura</button>
+        <button onclick="clearSignature(2)">Șterge Semnătura</button>
+    </div>
+
+
+
+
 
 
 </div>
 </div>
 
 <script>
-  document.addEventListener("turbo:load", function() {
-    var canvas = document.getElementById('signature-pad');
-    if (canvas) { // Verifică dacă elementul canvas există pe pagină
+document.addEventListener("turbo:load", function() {
+  initializeSignaturePad('signature-pad-1');
+  initializeSignaturePad('signature-pad-2');
+});
+
+function initializeSignaturePad(canvasId) {
+  var canvas = document.getElementById(canvasId);
+  if (canvas) {
       var context = canvas.getContext('2d');
       var isDrawing = false;
 
       canvas.addEventListener('mousedown', function(event) {
-        isDrawing = true;
-        var x = event.offsetX;
-        var y = event.offsetY;
-        context.beginPath(); // Începe o nouă cale de desenare
-        context.moveTo(x, y);
+          isDrawing = true;
+          var x = event.offsetX;
+          var y = event.offsetY;
+          context.beginPath();
+          context.moveTo(x, y);
       });
 
       canvas.addEventListener('mousemove', function(event) {
-        if (isDrawing) {
-          context.lineTo(event.offsetX, event.offsetY);
-          context.stroke();
-        }
+          if (isDrawing) {
+              context.lineTo(event.offsetX, event.offsetY);
+              context.stroke();
+          }
       });
 
       canvas.addEventListener('mouseup', function() {
-        isDrawing = false;
+          isDrawing = false;
       });
 
       canvas.addEventListener('mouseleave', function() {
-        isDrawing = false;
+          isDrawing = false;
       });
+  }
+}
 
-      function saveSignature() {
-        var dataURL = canvas.toDataURL();
-        console.log(dataURL);
-        // Aici poți adăuga cod pentru a trimite dataURL la server
-      }
+function saveSignature(padNumber) {
+  var canvas = document.getElementById('signature-pad-' + padNumber);
+  var dataURL = canvas.toDataURL();
+  console.log(dataURL);
+  // Trimite dataURL la server
+}
 
-      function clearSignature() {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-      }
+function clearSignature(padNumber) {
+  var canvas = document.getElementById('signature-pad-' + padNumber);
+  var context = canvas.getContext('2d');
+  context.clearRect(0, 0, canvas.width, canvas.height);
+}
 
-      // Atașează funcțiile la butoane, dacă acestea există
-      var btnSave = document.querySelector('[onclick="saveSignature()"]');
-      var btnClear = document.querySelector('[onclick="clearSignature()"]');
-      if (btnSave && btnClear) {
-        btnSave.onclick = saveSignature;
-        btnClear.onclick = clearSignature;
-      }
-    }
-  });
 </script>
 
 

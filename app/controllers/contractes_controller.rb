@@ -80,7 +80,8 @@ class ContractesController < ApplicationController
         :cont_bancar,
         :banca_firma,
         :cui_firma,
-        :reprezentant_firma
+        :reprezentant_firma,
+        :calitate_reprezentant
       )
     end
     

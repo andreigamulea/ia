@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_18_123457) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_21_125127) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -181,6 +181,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_18_123457) do
     t.string "banca_firma"
     t.string "cui_firma"
     t.string "reprezentant_firma"
+    t.string "calitate_reprezentant"
   end
 
   create_table "cursuri_history", force: :cascade do |t|
