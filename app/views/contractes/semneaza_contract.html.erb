@@ -1,30 +1,23 @@
-<style>
 
-h1 {
-    text-align: center;
-}
-.section {
-    margin-top: 20px;
-}
-.section p {
-    margin: 10px 0;
-}
-</style>
 <div class="container" id="cvp1">
 <%= render 'layouts/sideleft' %>
 
 <div class="cr" style="background-color: aliceblue; ">
 
 
+<%= form_with(model: @contracte_useri, url: contractes_create_path, local: true) do |form| %>
+  <%= form.hidden_field :save_type, value: "contracte_useri" %>
+  <%= form.hidden_field :contracte_id, value: 1 %>
 <h1>CONTRACT DE VOLUNTARIAT</h1>
-    <p>Nr. ......... din data de .................</p>
+    <p>Nr. 1 din data de 21.12.2023</p>
 
     <div class="section">
-        <p>Între ..............................................................., cu sediul în ...................................................., identificată cu CUI .......................................... , reprezentată de ........................................................  în calitate de ......................................................., numită în continuare Organizația gazdă</p>
-        <p>și</p>
-        <p>..........................................................................., domiciliat în ...............................
-        ...................................................., legitimat cu .................................................., eliberat de ............................................., la data de ......................................................., numit în continuare Voluntar,</p>
-        <p>s-a convenit încheierea prezentului contract în baza Legii nr. 78/ 2014 privind reglementarea activității de voluntariat din România.</p>
+        <p>Între <%= @nume_firma%>, cu sediul în <%= @sediu_firma%>, identificată cu CUI <%= @cui_firma%> , reprezentată de <%= @reprezentant_firma%>  în calitate de <%= @calitate_reprezentant%>, numită în continuare Organizația gazdă</p>
+        <p>
+        <%= form.text_field :nume_voluntar, placeholder: "Numele voluntarului" %>, domiciliat în <%= form.text_field :domiciliu_voluntar, placeholder: "Domiciliul voluntarului" %>,
+        legitimat cu <%= form.text_field :ci_voluntar, placeholder: "CI voluntar" %>, eliberat de <%= form.text_field :eliberat_de, placeholder: "Eliberat de" %>, la data de <%= form.date_field :eliberat_data %>, numit în continuare Voluntar,
+      </p>
+      <p>s-a convenit încheierea prezentului contract în baza Legii nr. 78/ 2014 privind reglementarea activității de voluntariat din România.</p>
     </div>
 
     <div class="section">
@@ -35,7 +28,7 @@ h1 {
     </div>
     <div class="section">
     <h2>Art. 2. DURATA CONTRACTULUI</h2>
-    <p>2.1 Prezentul contract se încheie pe perioada ............... ani de zile, cu posibilitatea prelungirii sale pentru noi perioade stabilite de părți.</p>
+    <p>2.1 Prezentul contract se încheie pe perioada 3 ani de zile, cu posibilitatea prelungirii sale pentru noi perioade stabilite de părți.</p>
     <p>2.2 Activitățile de voluntariat care fac obiectul prezentului contract se desfășoară pe timp de zi. Programul, timpul şi perioada de desfăşurare a activității de voluntariat precum și responsabilitățile sunt stabilite prin fişa voluntarului, ataşată prezentului contract.</p>
 </div>
 
@@ -86,6 +79,35 @@ h1 {
     <p>4.14 să prezinte coordonatorului de voluntari rapoartele de activitate, în maximum 5 zile de la solicitare;</p>
     <p>4.15 să respecte procedurile şi regulamentele interne ale organizaţiei.</p>
 </div>
+<h2>Art.5. CERINȚE SPECIFICE</h2>
+<p>
+    5.1. În executarea contractului de voluntariat, voluntarul se subordonează coordonatorului de voluntari <%= @reprezentant_firma%>  al Organizaţiei gazdă, conform Art. 16 din Legea 78/2014 privind reglementarea activităţii de voluntariat din România.
+</p>
+
+<h2>Art. 6. NEGOCIEREA/MODIFICAREA CONTRACTULUI</h2>
+<p>
+    6.1 Dacă pe parcursul executării contractului de voluntariat intervine, independent de voinţa părţilor, o situaţie de natură să îngreuneze executarea obligaţiilor ce revin voluntarului, contractul va fi renegociat, iar dacă situaţia face imposibilă executarea contractului, acesta încetează de drept.
+</p>
+<p>
+    6.2 Negocierea sau renegocierea contractului de voluntariat se va face la cererea scrisă a uneia dintre părţi, formulată în termen de 3 zile de la data la care a intervenit situaţia descrisă la Art. 6.1, în condiţiile stabilite prin prezentul contract de voluntariat.
+</p>
+<p>
+    6.3 La negocierea clauzelor şi la încheierea contractelor de voluntariat părţile sunt egale şi libere.
+</p>
+<p>
+    6.4 Modificarea sau completarea prezentului contract poate fi făcută prin acordul părţilor, prin act adiţional.
+</p>
+
+<h2>Art. 7. ÎNCETAREA CONTRACTULUI</h2>
+<p>
+    Prezentul contract încetează în următoarele situaţii:
+</p>
+<ul>
+    <li>a) la expirarea termenului pentru care este încheiat;</li>
+    <li>b) prin acordul părţilor;</li>
+    <li>c) prin denunţarea unilaterală din iniţiativa uneia dintre părţi, cu o notificare prealabilă de 15 zile, fără obligaţia prezentării motivelor. Organizaţia poate să denunţe unilateral acest contract de voluntariat imediat ce voluntarul a încălcat prevederile contractului de voluntariat sau orice alte restricţii legale în timpul îndeplinirii sarcinilor, inclusiv (însă nu numai) în caz de necinste, incompetenţă, condamnare pentru infracţiune;</li>
+    <li>d) dacă situaţia descrisă în Art.6 face imposibilă executarea în continuare a contractului, acesta este reziliat de drept.</li>
+</ul>
 
 
     <!-- Alte secțiuni ale contractului -->
@@ -99,14 +121,14 @@ h1 {
         <h2>Art. 9. CLAUZE FINALE</h2>
         <p>9.1 Anexa nr.1 - Fişa de voluntariat şi Anexa nr.2 - Fişa de protecţie a voluntarului fac parte integrantă din prezentul contract.</p>
         <p>9.2 Răspunderea pentru neexecutarea sau executarea necorespunzătoare a contractului de voluntariat este supusă prevederilor Legii nr. 287/2009 privind Codul civil, republicată, cu modificările ulterioare.</p>
-        <p>9.3 Încheiat astăzi, în trei exemplare, două pentru Organizația gazdă și unul pentru Voluntar, fiecare exemplar având aceeași valoare juridică. Intră în vigoare la data semnării de către ambele părți.</p>
+        <p>9.3 Încheiat astăzi, 21.12.2023 în trei exemplare, două pentru Organizația gazdă și unul pentru Voluntar, fiecare exemplar având aceeași valoare juridică. Intră în vigoare la data semnării de către ambele părți.</p>
         <p>Organizația Gazdă                                          
-        <p>Nume ....................................             </p>
+        <p>Nume: <%= @reprezentant_firma%> Semnatura:</p>
         <canvas id="signature-pad-1" width="1350" height="650" style="border: 1px solid #000;"></canvas>
         <button onclick="saveSignature(1)">Salvează Semnătura</button>
-        <button onclick="clearSignature(1)">Șterge Semnătura</button>
+        <button onclick="clearSignature(1)">Șterge Semnătura</button></br></br></br>
     
-        <p>Voluntar    Nume ...........................................</p>
+        <p>Voluntar    <%= form.text_field :nume_voluntar, placeholder: "Numele voluntarului" %></p>
         <canvas id="signature-pad-2" width="1350" height="650" style="border: 1px solid #000;"></canvas>
         <button onclick="saveSignature(2)">Salvează Semnătura</button>
         <button onclick="clearSignature(2)">Șterge Semnătura</button>
@@ -114,10 +136,12 @@ h1 {
 
 
 
-
-
+    </br></br></br>
+<%= form.submit "Salvează Contractul" %>
+<% end %>
 
 </div>
+
 </div>
 
 <script>
