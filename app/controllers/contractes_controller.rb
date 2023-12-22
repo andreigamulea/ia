@@ -16,6 +16,25 @@ class ContractesController < ApplicationController
     @semnatura_admin = @contract.semnatura_admin if @contract
     @contracte_useri = ContracteUseri.new
   end  
+  def vizualizeaza_contract    
+    @contract = Contracte.first
+    @contracte_useri = ContracteUseri.first
+  
+    @nume_firma = @contract&.nume_firma
+    @sediu_firma = @contract&.sediu_firma
+    @cui_firma = @contract&.cui_firma
+    @reprezentant_firma = @contract&.reprezentant_firma    
+    @calitate_reprezentant = @contract&.calitate_reprezentant
+    @semnatura_admin = @contract&.semnatura_admin
+
+    @nume_voluntar = @contracte_useri&.nume_voluntar
+    @domiciliu_voluntar_voluntar = @contracte_useri&.domiciliu_voluntar
+    @ci_voluntar = @contracte_useri&.ci_voluntar
+    @eliberat_de = @contracte_useri&.eliberat_de
+    @eliberat_data = @contracte_useri&.eliberat_data
+    @semnatura_voluntar = @contracte_useri&.semnatura_voluntar
+  end
+  
 
   # GET /contractes/1 or /contractes/1.json
   def show
