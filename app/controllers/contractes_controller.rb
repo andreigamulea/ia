@@ -4,14 +4,16 @@ class ContractesController < ApplicationController
   # GET /contractes or /contractes.json
   def index
     @contractes = Contracte.all
+    @contracte = Contracte.last
   end
   def semneaza_contract
-    @contract=Contracte.all.first
+    @contract=Contracte.first
     @nume_firma=@contract.nume_firma
     @sediu_firma=@contract.sediu_firma
     @cui_firma=@contract.cui_firma
     @reprezentant_firma=@contract.reprezentant_firma    
     @calitate_reprezentant=@contract.calitate_reprezentant
+    @semnatura_admin = @contract.semnatura_admin if @contract
     @contracte_useri = ContracteUseri.new
   end  
 
@@ -107,11 +109,12 @@ class ContractesController < ApplicationController
         :banca_firma,
         :cui_firma,
         :reprezentant_firma,
-        :calitate_reprezentant
+        :calitate_reprezentant,
+        :semnatura_admin
       )
     end
     def contracte_useri_params
-      params.require(:contracte_useri).permit(:nume_voluntar, :domiciliu_voluntar, :ci_voluntar, :eliberat_de, :eliberat_data, :contracte_id)
+      params.require(:contracte_useri).permit(:nume_voluntar, :domiciliu_voluntar, :ci_voluntar, :eliberat_de, :eliberat_data, :contracte_id, :semnatura_voluntar)
     end 
     
 end
