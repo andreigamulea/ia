@@ -8,13 +8,17 @@
 <%= form_with(model: @contracte_useri, url: contractes_create_path, local: true) do |form| %>
   <%= form.hidden_field :save_type, value: "contracte_useri" %>
   <%= form.hidden_field :contracte_id, value: 1 %>
+  <%= form.hidden_field :semnatura_admin, id: "semnatura_admin" %>
+  <%= form.hidden_field :semnatura_voluntar, id: "semnatura_voluntar" %>
+
 <h1>CONTRACT DE VOLUNTARIAT</h1>
     <p>Nr. 1 din data de 21.12.2023</p>
 
     <div class="section">
         <p>Între <%= @nume_firma%>, cu sediul în <%= @sediu_firma%>, identificată cu CUI <%= @cui_firma%> , reprezentată de <%= @reprezentant_firma%>  în calitate de <%= @calitate_reprezentant%>, numită în continuare Organizația gazdă</p>
+        <p>si</p>
         <p>
-        <%= form.text_field :nume_voluntar, placeholder: "Numele voluntarului" %>, domiciliat în <%= form.text_field :domiciliu_voluntar, placeholder: "Domiciliul voluntarului" %>,
+        <%= form.text_field :nume_voluntar_sursa, id: "nume-voluntar-sursa", placeholder: "Numele voluntarului" %>, domiciliat în <%= form.text_field :domiciliu_voluntar, placeholder: "Domiciliul voluntarului" %>,
         legitimat cu <%= form.text_field :ci_voluntar, placeholder: "CI voluntar" %>, eliberat de <%= form.text_field :eliberat_de, placeholder: "Eliberat de" %>, la data de <%= form.date_field :eliberat_data %>, numit în continuare Voluntar,
       </p>
       <p>s-a convenit încheierea prezentului contract în baza Legii nr. 78/ 2014 privind reglementarea activității de voluntariat din România.</p>
@@ -133,22 +137,25 @@
             <p style="margin-top: -10px; border: 2px solid transparent; border-left: none;"><%= @reprezentant_firma%></p>
                  
             <canvas id="signature-pad-1" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
-            <button onclick="saveSignature(1)">Salvează Semnătura</button>
-            <button onclick="clearSignature(1)">Șterge Semnătura</button>
+           
         </div>
         
         
         <div class="voluntar">
          
             <p>Voluntar</p>
-            <p style="margin-top: -10px;">  <%= form.text_field :nume_voluntar, placeholder: "Numele voluntarului", style: "width: -webkit-fill-available;" %>
+            <p style="margin-top: -10px;">  <%= form.text_field :nume_voluntar_destinatie, 
+            id: "nume-voluntar-destinatie", 
+            readonly: true, 
+            style: "width: -webkit-fill-available;" %>
 </p>
 
             
             
             <canvas id="signature-pad-2" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
-            <button onclick="saveSignature(2)">Salvează Semnătura</button>
-            <button onclick="clearSignature(2)">Șterge Semnătura</button>
+            
+            
+            <button type="button" onclick="clearSignature(2)">Șterge Semnătura</button>
         </div>
 
     </div>
@@ -215,9 +222,21 @@
 
 <script>
 document.addEventListener("turbo:load", function() {
-  initializeSignaturePad('signature-pad-1');
-  initializeSignaturePad('signature-pad-2');
+  initializeSignaturePad('signature-pad-2'); // Inițializează doar al doilea canvas
+  loadExistingSignature('signature-pad-1');  // Încarcă semnătura existentă în primul canvas
+  var form = document.querySelector('form');
+  form.addEventListener('submit', function() {
+    saveSignatureOnSubmit('signature-pad-2', 'semnatura_voluntar'); // Folosește ID-ul corect al canvas-ului și câmpului ascuns
+  });
+  synchronizeFields('nume-voluntar-sursa', 'nume-voluntar-destinatie');
 });
+function saveSignatureOnSubmit(canvasId, hiddenFieldId) {
+  var canvas = document.getElementById(canvasId);
+  if (canvas) {
+    var dataURL = canvas.toDataURL();
+    document.getElementById(hiddenFieldId).value = dataURL; // Setează valoarea câmpului ascuns
+  }
+}
 
 function initializeSignaturePad(canvasId) {
   var canvas = document.getElementById(canvasId);
@@ -225,28 +244,45 @@ function initializeSignaturePad(canvasId) {
       var context = canvas.getContext('2d');
       var isDrawing = false;
 
-      canvas.addEventListener('mousedown', function(event) {
-          isDrawing = true;
-          var x = event.offsetX;
-          var y = event.offsetY;
-          context.beginPath();
-          context.moveTo(x, y);
-      });
+      // Atașează evenimentele doar dacă canvasId este 'signature-pad-2'
+      if (canvasId === 'signature-pad-2') {
+          canvas.addEventListener('mousedown', function(event) {
+              isDrawing = true;
+              var x = event.offsetX;
+              var y = event.offsetY;
+              context.beginPath();
+              context.moveTo(x, y);
+          });
 
-      canvas.addEventListener('mousemove', function(event) {
-          if (isDrawing) {
-              context.lineTo(event.offsetX, event.offsetY);
-              context.stroke();
-          }
-      });
+          canvas.addEventListener('mousemove', function(event) {
+              if (isDrawing) {
+                  context.lineTo(event.offsetX, event.offsetY);
+                  context.stroke();
+              }
+          });
 
-      canvas.addEventListener('mouseup', function() {
-          isDrawing = false;
-      });
+          canvas.addEventListener('mouseup', function() {
+              isDrawing = false;
+          });
 
-      canvas.addEventListener('mouseleave', function() {
-          isDrawing = false;
-      });
+          canvas.addEventListener('mouseleave', function() {
+              isDrawing = false;
+          });
+      }
+  }
+}
+
+function loadExistingSignature(canvasId) {
+  var canvas = document.getElementById(canvasId);
+  var context = canvas.getContext('2d');
+  var existingSignature = "<%= @semnatura_admin %>";
+
+  if (existingSignature) {
+    var image = new Image();
+    image.onload = function() {
+      context.drawImage(image, 0, 0);
+    };
+    image.src = existingSignature;
   }
 }
 
@@ -262,7 +298,16 @@ function clearSignature(padNumber) {
   var context = canvas.getContext('2d');
   context.clearRect(0, 0, canvas.width, canvas.height);
 }
+function synchronizeFields(sourceFieldId, targetFieldId) {
+  var sourceField = document.getElementById(sourceFieldId);
+  var targetField = document.getElementById(targetFieldId);
 
+  if (sourceField && targetField) {
+    sourceField.addEventListener('input', function() {
+      targetField.value = sourceField.value;
+    });
+  }
+}
 </script>
 
 
