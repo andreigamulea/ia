@@ -1,0 +1,246 @@
+
+<div class="container" id="cvp1">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: aliceblue; ">
+
+
+
+  
+
+<h1>CONTRACT DE VOLUNTARIAT</h1>
+    <p>Nr. 1 din data de 21.12.2023</p>
+
+    <div class="section">
+        <p>Între <%= @nume_firma%>, cu sediul în <%= @sediu_firma%>, identificată cu CUI <%= @cui_firma%> , reprezentată de <%= @reprezentant_firma%>  în calitate de <%= @calitate_reprezentant%>, numită în continuare Organizația gazdă</p>
+        <p>si</p>
+        <p>
+        <%= @nume_voluntar || "Nu este disponibil" %>, domiciliat în <%= @domiciliu_voluntar_voluntar || "Nu este disponibil" %>,
+        legitimat cu <%= @ci_voluntar || "Nu este disponibil" %>, eliberat de <%= @eliberat_de || "Nu este disponibil" %>, la data de <%= @eliberat_data || "Nu este disponibil" %>, numit în continuare Voluntar,
+      </p>
+      <p>s-a convenit încheierea prezentului contract în baza Legii nr. 78/ 2014 privind reglementarea activității de voluntariat din România.</p>
+    </div>
+
+    <div class="section">
+        <h2>Art. 1. OBIECTUL CONTRACTULUI</h2>
+        <p>1.1 Obiectul contractului îl constituie derularea de către Voluntar, fără remuneraţie, a activităților de interes public menţionate şi detaliate în Fişa voluntarului, ataşată prezentului contract (Anexa nr. 1).</p>
+        <p>1.2. Instrucțiunile cu privire la desfășurarea activității voluntarului sunt cuprinse în Fișa de protecție a voluntarului, Anexa nr. 2 la prezentul contract, întocmită cu respectarea prevederilor legale în domeniul securității și sănătății în muncă.</p>
+        <p>1.3. În executarea contractului de voluntariat, voluntarul se subordonează coordonatorului de voluntari al Organizației gazdă, conform Art. 16 din Legea 78/2014 privind reglementarea activităţii de voluntariat din România.</p>
+    </div>
+    <div class="section">
+    <h2>Art. 2. DURATA CONTRACTULUI</h2>
+    <p>2.1 Prezentul contract se încheie pe perioada 3 ani de zile, cu posibilitatea prelungirii sale pentru noi perioade stabilite de părți.</p>
+    <p>2.2 Activitățile de voluntariat care fac obiectul prezentului contract se desfășoară pe timp de zi. Programul, timpul şi perioada de desfăşurare a activității de voluntariat precum și responsabilitățile sunt stabilite prin fişa voluntarului, ataşată prezentului contract.</p>
+</div>
+
+<div class="section">
+    <h2>Art. 3. DREPTURILE PĂRŢILOR</h2>
+    <p>A. Organizaţia gazdă dispune de următoarele drepturi:</p>
+    <p>3.1 dreptul de a stabili organizarea şi funcţionarea activităţii de voluntariat;</p>
+    <p>3.2 dreptul de a iniţia conţinutul fişei de voluntariat, pe care o adaptează la solicitarea şi pregătirea voluntarului, precum şi la tipul de activităţi de voluntariat desfăşurate de către organizaţia gazdă;</p>
+    <p>3.3 dreptul de a exercita controlul asupra modului de implementare a fişei de voluntariat prin coordonatorul de voluntari;</p>
+    <p>3.4 dreptul de a constata abaterile voluntarului, raportate la clauzele stabilite în contractul de voluntariat, fişa de voluntariat şi/sau în fişa de protecţie a voluntarului;</p>
+    <p>3.5 dreptul de a cere voluntarului rapoarte de activitate;</p>
+    <p>3.6 dreptul de a exclude voluntarul din programele şi proiectele în care desfăşoară activităţi de voluntariat, dacă acesta nu respectă prevederile prezentului contract, ale fişei de voluntariat şi/sau ale fişei de protecţie a voluntarului;</p>
+    <p>3.7 dreptul de a deţine toate drepturile asupra materialelor, rapoartelor, informaţiilor, documentaţiei şi a altor materiale scrise, create, colectate şi/sau produse de voluntar în perioada desfăşurării activităţilor care fac obiectul prezentului contract de voluntariat;</p>
+    <p>3.8 dreptul de a cere informaţii şi recomandări despre voluntar, altor persoane;</p>
+    <p>3.9 dreptul de a schimba coordonatorul de voluntari oricând pe perioada de desfăşurare a actualului contract, cu obligaţia de a informa voluntarul;</p>
+    <p>3.10 dreptul de a iniția schimbarea conţinutului fişei de voluntariat, cu obligaţia de a informa voluntarul cu 15 zile înainte despre această intenție.</p>
+    
+    <p>B. Voluntarul dispune de următoarele drepturi:</p>
+    <p>3.11 dreptul de a desfăşura activitatea de voluntariat în concordanţă cu capacitatea pregătirea şi disponibilitatea sa;</p>
+    <p>3.12 dreptul de a solicita organizaţiei gazdă eliberarea certificatului de voluntariat însoţit de raportul de activitate;</p>
+    <p>3.13 dreptul la confidenţialitate şi protecţia datelor personale;</p>
+    <p>3.14 dreptul la timp liber corespunzător cu activitatea de voluntariat;</p>
+    <p>3.15 dreptul de a fi respectat ca şi persoană şi tratat ca şi coleg cu drepturi egale de către conducerea organizaţiei, de colegi fără discriminare;</p>
+    <p>3.16 dreptul de a beneficia de îndrumare şi orientare din partea coordonatorului de voluntariat;</p>
+    <p>3.17 dreptul de a i se rambursa cheltuielile efectuate pentru derularea activităţii, conform articolului 3;</p>
+    <p>3.18 dreptul de a participa la programele de formare şi instruire oferite de organizaţie.</p>
+    <p>3.19 dreptul de a i se recunoaşte activitatea de voluntariat drept experienţă profesională şi/sau în specialitate, în funcţie de tipul activităţii, dacă aceasta este realizată în domeniul studiilor absolvite – conform Art. 10 (2) din Legea 78/2014 privind reglementarea activităţii de voluntariat din România.</p>
+</div>
+<div class="section">
+    <h2>Art. 4. OBLIGAŢIILE PĂRŢILOR</h2>
+    <h3>A. Organizaţia gazdă se obligă:</h3>
+    <p>4.1 să asigure desfăşurarea activităţilor sub conducerea unui coordonator de voluntari, cu respectarea condiţiilor legale privind securitatea şi sănătatea în muncă, în funcţie de natura şi de caracteristicile activităţii respective;</p>
+    <p>4.2 să suporte cheltuielile de hrană și cazare pentru voluntar în desfăşurarea activităţii sale de voluntariat, dacă aceste cheltuieli au fost aprobate anterior începerii activităţii de conducerea organizaţiei prin acord scris;</p>
+    <p>4.3 să elibereze voluntarului certificatul nominal care atestă calitatea de voluntar;</p>
+    <p>4.4 să-l trateze pe voluntar ca şi coleg cu drepturi egale;</p>
+    <p>4.5 să pună la dispoziţia voluntarului datele de contact ale coordonatorului de voluntari;</p>
+    <p>4.6 să întocmească, în conformitate cu prevederile legale, contractul de voluntariat și fișele de voluntariat și respectiv de protecție a voluntarului, care sunt anexe la contractul de voluntariat și să înmâneze voluntarului câte un exemplar din aceste documente.</p>
+    
+    <h3>B. Voluntarul se obligă:</h3>
+    <p>4.6 să presteze o activitate de interes public, fără remuneraţie;</p>
+    <p>4.7 să îndeplinească sarcinile prevăzute în fişa de voluntariat şi să respecte instrucţiunilor stipulate în fişa de protecţie a voluntarului;</p>
+    <p>4.8 să păstreze confidenţialitatea informaţiilor la care are acces în cadrul activităţii de voluntariat, pe perioada desfăşurării contractului de voluntariat şi pe o perioada de 2 ani după încetarea acestuia;</p>
+    <p>4.9 să anunţe cu minim 24 de ore înainte indisponibilitatea temporară de a presta activitatea de voluntariat în care este implicat.</p>
+    <p>4.10 să îndeplinească la timp sarcinile primite din partea coordonatorului de voluntari;</p>
+    <p>4.11 să ocrotească bunurile pe care le foloseşte în cadrul activităţilor de voluntariat;</p>
+    <p>4.12 să respecte regulile şi normele de comportament ale organizaţiei gazdă;</p>
+    <p>4.13 să nu comunice sau să răspândească în public afirmaţii defăimătoare la adresa organizaţiei şi/sau a activităţii acesteia;</p>
+    <p>4.14 să prezinte coordonatorului de voluntari rapoartele de activitate, în maximum 5 zile de la solicitare;</p>
+    <p>4.15 să respecte procedurile şi regulamentele interne ale organizaţiei.</p>
+</div>
+<h2>Art.5. CERINȚE SPECIFICE</h2>
+<p>
+    5.1. În executarea contractului de voluntariat, voluntarul se subordonează coordonatorului de voluntari <%= @reprezentant_firma%>  al Organizaţiei gazdă, conform Art. 16 din Legea 78/2014 privind reglementarea activităţii de voluntariat din România.
+</p>
+
+<h2>Art. 6. NEGOCIEREA/MODIFICAREA CONTRACTULUI</h2>
+<p>
+    6.1 Dacă pe parcursul executării contractului de voluntariat intervine, independent de voinţa părţilor, o situaţie de natură să îngreuneze executarea obligaţiilor ce revin voluntarului, contractul va fi renegociat, iar dacă situaţia face imposibilă executarea contractului, acesta încetează de drept.
+</p>
+<p>
+    6.2 Negocierea sau renegocierea contractului de voluntariat se va face la cererea scrisă a uneia dintre părţi, formulată în termen de 3 zile de la data la care a intervenit situaţia descrisă la Art. 6.1, în condiţiile stabilite prin prezentul contract de voluntariat.
+</p>
+<p>
+    6.3 La negocierea clauzelor şi la încheierea contractelor de voluntariat părţile sunt egale şi libere.
+</p>
+<p>
+    6.4 Modificarea sau completarea prezentului contract poate fi făcută prin acordul părţilor, prin act adiţional.
+</p>
+
+<h2>Art. 7. ÎNCETAREA CONTRACTULUI</h2>
+<p>
+    Prezentul contract încetează în următoarele situaţii:
+</p>
+<ul>
+    <li>a) la expirarea termenului pentru care este încheiat;</li>
+    <li>b) prin acordul părţilor;</li>
+    <li>c) prin denunţarea unilaterală din iniţiativa uneia dintre părţi, cu o notificare prealabilă de 15 zile, fără obligaţia prezentării motivelor. Organizaţia poate să denunţe unilateral acest contract de voluntariat imediat ce voluntarul a încălcat prevederile contractului de voluntariat sau orice alte restricţii legale în timpul îndeplinirii sarcinilor, inclusiv (însă nu numai) în caz de necinste, incompetenţă, condamnare pentru infracţiune;</li>
+    <li>d) dacă situaţia descrisă în Art.6 face imposibilă executarea în continuare a contractului, acesta este reziliat de drept.</li>
+</ul>
+
+
+    <!-- Alte secțiuni ale contractului -->
+
+    <div class="section">
+        <h2>Art. 8 LITIGII</h2>
+        <p>Litigiile izvorâte din încheierea, modificarea, executarea sau încetarea prezentului contract sunt de competența instanțelor judecătorești, dacă părțile contractante nu le rezolvă pe cale amiabilă.</p>
+    </div>
+
+    <div class="section">
+    <h2>Art. 9. CLAUZE FINALE</h2>
+        <p>9.1 Anexa nr.1 - Fişa de voluntariat şi Anexa nr.2 - Fişa de protecţie a voluntarului fac parte integrantă din prezentul contract.</p>
+        <p>9.2 Răspunderea pentru neexecutarea sau executarea necorespunzătoare a contractului de voluntariat este supusă prevederilor Legii nr. 287/2009 privind Codul civil, republicată, cu modificările ulterioare.</p>
+        <p>9.3 Încheiat astăzi, 21.12.2023 în trei exemplare, două pentru Organizația gazdă și unul pentru Voluntar, fiecare exemplar având aceeași valoare juridică. Intră în vigoare la data semnării de către ambele părți.</p>
+    </div>
+
+
+    <div class="semnatura">
+ 
+        
+        <div class="gazda">
+            <p>AMN-ROMANIA,</p>
+            <p style="margin-top: -10px; border: 2px solid transparent; border-left: none;"><%= @reprezentant_firma%></p>
+                 
+            <canvas id="signature-pad-1" width="auto" height="auto" style="border: none;"></canvas>
+           
+        </div>
+        
+        
+        <div class="voluntar">
+         
+            <p>Voluntar</p>
+            <p style="margin-top: -10px;">
+            <span style="width: -webkit-fill-available;"><%= @nume_voluntar %></span>
+          </p>
+          
+
+            
+            
+            <canvas id="signature-pad-2" width="auto" height="auto" style="border: none;"></canvas>
+            
+            
+            
+        </div>
+
+    </div>
+    
+    <style>
+    .semnatura {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .gazda, .voluntar {
+        max-width: 300px;
+        flex: 1; /* Permite ca div-urile să se ajusteze în funcție de spațiul disponibil */
+    }
+
+    .gazda canvas, .voluntar canvas {
+        border: 1px solid #000;
+        
+    }
+
+    button {
+        display: block;
+        margin-top: 10px;
+    }
+    .cr{
+        word-wrap: break-word;
+    }
+
+    /* Media query pentru ecrane cu lățime mai mică de 720px */
+    @media (max-width: 925px) {
+        .gazda, .voluntar {
+            max-width: none;
+            flex-basis: 100%;
+        }
+        .voluntar {
+            margin-top: 20px;
+        }
+    }
+
+    /* Media query pentru ecrane foarte înguste */
+    @media (max-width: 300px) {
+        .gazda, .voluntar {
+            padding: 0;
+            margin: 0;
+        }
+
+        .gazda canvas, .voluntar canvas {
+            max-height: 150px; /* Reduce înălțimea canvas-ului pentru ecrane mici */
+        }
+    }
+</style>
+
+
+
+
+    </br></br></br>
+
+
+</div>
+
+</div>
+<script>
+document.addEventListener("turbo:load", function() {
+  loadExistingSignature('signature-pad-1', "<%= @semnatura_admin %>");   // Încarcă semnătura adminului în primul canvas
+  loadExistingSignature('signature-pad-2', "<%= @semnatura_voluntar %>"); // Încarcă semnătura voluntarului în al doilea canvas
+});
+
+function loadExistingSignature(canvasId, existingSignatureBase64) {
+  var canvas = document.getElementById(canvasId);
+  var context = canvas.getContext('2d');
+
+  if (existingSignatureBase64) {
+    var image = new Image();
+    image.onload = function() {
+      context.drawImage(image, 0, 0, canvas.width, canvas.height); // Ajustează dimensiunile dacă este necesar
+    };
+    image.src = existingSignatureBase64;
+  }
+}
+
+function clearSignature(padNumber) {
+  var canvas = document.getElementById('signature-pad-' + padNumber);
+  var context = canvas.getContext('2d');
+  context.clearRect(0, 0, canvas.width, canvas.height);
+}
+</script>
+
+
+
+  
+
