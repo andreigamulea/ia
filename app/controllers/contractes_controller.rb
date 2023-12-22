@@ -18,7 +18,7 @@ class ContractesController < ApplicationController
   end  
   def vizualizeaza_contract    
     @contract = Contracte.first
-    @contracte_useri = ContracteUseri.first
+    @contracte_useri = ContracteUseri.last
   
     @nume_firma = @contract&.nume_firma
     @sediu_firma = @contract&.sediu_firma
