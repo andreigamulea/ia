@@ -66,11 +66,12 @@ class ContractesController < ApplicationController
 
   # PATCH/PUT /contractes/1 or /contractes/1.json
   def update
-      
+   
     respond_to do |format|
       if @contracte.update(contracte_params)
         format.html { redirect_to contracte_url(@contracte), notice: "Contracte was successfully updated." }
-        format
+        format.json { render :show, status: :ok, location: @contracte }
+      else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @contracte.errors, status: :unprocessable_entity }
       end

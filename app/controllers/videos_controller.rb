@@ -13,7 +13,7 @@ class VideosController < ApplicationController
   before_action :set_user3, only: %i[myvideo3] #este pt an1
   before_action :set_user4, only: %i[myvideo4] #este pt tayt12
   before_action :set_user44, only: %i[myvideo44] #este pt tayt12 p2 
-  
+  before_action :set_user444, only: %i[myvideo444] #este pt tayt12 video introductive la liber pt cei care au achitat doar tabara
   #before_action :set_user4, only: %i[myvideo5] #este pt tayt122 folosesc tot set_user4 pt ca e aceeasi plata si la tayt12 si la tayt122
   before_action :require_admin, only: %i[index new edit update create]
   # GET /videos or /videos.json
@@ -77,17 +77,20 @@ end
     else
       @has_access=false
     end  
+
     #@has_access_cursuri = ComenziProd.exists?(user_id: current_user.id, prod_id: 56)
     #verific daca userul poate vedea videourile taberei(a platit?)
-    @has_access_cursuri = if current_user
+    @has_access_cursuri = if current_user 
       prod_id_cod54 = Prod.find_by(cod: 'cod54')&.id
-      current_user.role == 1 || (prod_id_cod54 && ComenziProd.exists?(user_id: current_user.id, prod_id: prod_id_cod54))
+      current_user.role == 1 || (prod_id_cod54 && ComenziProd.exists?(user_id: current_user.id, prod_id: prod_id_cod54, validat: 'Finalizata'))
     end
-    @has_access_cursuri2 = if current_user
+    
+    @has_access_cursuri2 = if current_user 
+      puts("Avem @has_access_cursuri2=true")
       prod_id_cod64 = Prod.find_by(cod: 'cod64')&.id
-      current_user.role == 1 || (prod_id_cod64 && ComenziProd.exists?(user_id: current_user.id, prod_id: prod_id_cod64))
+      current_user.role == 1 || (prod_id_cod64 && ComenziProd.exists?(user_id: current_user.id, prod_id: prod_id_cod64, validat: 'Finalizata'))
     end
-
+    
     if !@has_access
       @prod_tayt12a = Prod.none
     elsif !@has_access_cursuri && !@has_access_cursuri2
@@ -153,7 +156,11 @@ end
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
   end
- 
+  def myvideo444 #pt tayt12  video introductive la liber pt cei care au achitat doar tabara
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
   def myvideo6 #pt nutritie2
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
@@ -430,6 +437,9 @@ end
 
 
       unless condition1 && condition2
+        puts("nu se verifica conditiile")
+        puts("condition1= #{condition1}") #true
+        puts("condition2= #{condition2}") #false
       redirect_to root_path and return
       end
 
@@ -513,6 +523,65 @@ end
     
      
     end
+
+    def set_user444
+      puts("da0")
+      # Verifică dacă userul este logat
+      unless user_signed_in?
+        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+        redirect_to new_user_session_path
+        return
+      end
+    
+      # Dacă userul are rolul 1, îi dăm acces direct
+      return true if current_user.role == 1
+    puts("da1")
+      # Verifică dacă userul are cod12
+      condition1 = ComenziProd.joins(:prod)
+            .where(user_id: current_user.id, prods: { cod: ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] }, validat: "Finalizata")
+            .exists?
+
+      
+
+
+      unless condition1 
+        puts("nu se verifica conditiile")
+        puts("condition1= #{condition1}") #true
+        #puts("condition2= #{condition2}") #false
+      redirect_to root_path and return
+      end
+
+      puts("da2")
+    
+      
+    
+      tayt12_course = Listacursuri.find_by(nume: 'tayt12')
+    
+      if tayt12_course.nil?
+        flash[:alert] = "Cursul nu a fost găsit."
+        puts("da3")
+        redirect_to root_path
+        puts("da4")
+        return
+      end
+      puts("da5")
+      # Găsim înregistrarea din tabelul Cursuri pentru utilizatorul și cursul curent
+      user_course = Cursuri.find_by(user_id: current_user.id, listacursuri_id: tayt12_course.id)
+      puts("da6")
+      unless user_course
+        puts("da7")
+        flash[:alert] = "Nu aveți acces la acest curs."
+        redirect_to servicii_path
+        return
+      end
+      puts("da8")
+
+      
+      
+      
+      puts("da10")
+    end
+
 
     def set_user6
       unless user_signed_in?
