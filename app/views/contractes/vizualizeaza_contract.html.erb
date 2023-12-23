@@ -15,7 +15,12 @@
         <p>Între <%= @nume_firma%>, cu sediul în <%= @sediu_firma%>, identificată cu CUI <%= @cui_firma%> , reprezentată de <%= @reprezentant_firma%>  în calitate de <%= @calitate_reprezentant%>, numită în continuare Organizația gazdă</p>
         <p>si</p>
         <p>
-        <%= @nume_voluntar || "Nu este disponibil" %>, domiciliat în <%= @domiciliu_voluntar_voluntar || "Nu este disponibil" %>,
+        <p>Voluntar: <%= @nume_voluntar || "Nu este disponibil" %>, domiciliat în <%= @localitate_voluntar || "Nu este disponibil" %>,
+        strada <%= @strada_voluntar || "Nu este disponibil" %>,
+        numărul <%= @numarstrada_voluntar || "Nu este disponibil" %>,
+        bloc <%= @bloc_voluntar || "Nu este disponibil" %>,
+        județul <%= @judet_voluntar || "Nu este disponibil" %>.</p>
+
         legitimat cu <%= @ci_voluntar || "Nu este disponibil" %>, eliberat de <%= @eliberat_de || "Nu este disponibil" %>, la data de <%= @eliberat_data || "Nu este disponibil" %>, numit în continuare Voluntar,
       </p>
       <p>s-a convenit încheierea prezentului contract în baza Legii nr. 78/ 2014 privind reglementarea activității de voluntariat din România.</p>
@@ -127,34 +132,25 @@
 
 
     <div class="semnatura">
- 
-        
-        <div class="gazda">
-            <p>AMN-ROMANIA,</p>
-            <p style="margin-top: -10px; border: 2px solid transparent; border-left: none;"><%= @reprezentant_firma%></p>
-                 
-            <canvas id="signature-pad-1" width="auto" height="auto" style="border: none;"></canvas>
-           
-        </div>
-        
-        
-        <div class="voluntar">
-         
-            <p>Voluntar</p>
-            <p style="margin-top: -10px;">
-            <span style="width: -webkit-fill-available;"><%= @nume_voluntar %></span>
-          </p>
-          
-
-            
-            
-            <canvas id="signature-pad-2" width="auto" height="auto" style="border: none;"></canvas>
-            
-            
-            
-        </div>
-
+    <div class="gazda">
+        <p>AMN-ROMANIA,</p>
+        <p style="margin-top: -10px; border: 2px solid transparent; border-left: none;"><%= @reprezentant_firma %></p>
+        <!-- Afișați semnătura adminului direct din variabilă -->
+        <img src="<%= @semnatura_admin %>" alt="Semnătura reprezentantului AMN-ROMANIA" style="border: none;">
     </div>
+    
+    <div class="voluntar">
+        <p>Voluntar</p>
+        <p style="margin-top: -10px;">
+        <p style="margin-top: -10px; border: 2px solid transparent; border-left: none;"><%= @nume_voluntar %></p>
+        </p>
+        <!-- Afișați semnătura voluntarului direct din variabilă -->
+        <img src="<%= @semnatura_voluntar %>" alt="Semnătura voluntarului" style="border: none;">
+    </div>
+</div>
+
+
+
     
     <style>
     .semnatura {
@@ -214,33 +210,3 @@
 </div>
 
 </div>
-<script>
-document.addEventListener("turbo:load", function() {
-  loadExistingSignature('signature-pad-1', "<%= @semnatura_admin %>");   // Încarcă semnătura adminului în primul canvas
-  loadExistingSignature('signature-pad-2', "<%= @semnatura_voluntar %>"); // Încarcă semnătura voluntarului în al doilea canvas
-});
-
-function loadExistingSignature(canvasId, existingSignatureBase64) {
-  var canvas = document.getElementById(canvasId);
-  var context = canvas.getContext('2d');
-
-  if (existingSignatureBase64) {
-    var image = new Image();
-    image.onload = function() {
-      context.drawImage(image, 0, 0, canvas.width, canvas.height); // Ajustează dimensiunile dacă este necesar
-    };
-    image.src = existingSignatureBase64;
-  }
-}
-
-function clearSignature(padNumber) {
-  var canvas = document.getElementById('signature-pad-' + padNumber);
-  var context = canvas.getContext('2d');
-  context.clearRect(0, 0, canvas.width, canvas.height);
-}
-</script>
-
-
-
-  
-

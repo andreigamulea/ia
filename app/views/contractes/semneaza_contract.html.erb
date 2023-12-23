@@ -14,15 +14,95 @@
 <h1>CONTRACT DE VOLUNTARIAT</h1>
     <p>Nr. 1 din data de 21.12.2023</p>
 
-    <div class="section">
-        <p>Între <%= @nume_firma%>, cu sediul în <%= @sediu_firma%>, identificată cu CUI <%= @cui_firma%> , reprezentată de <%= @reprezentant_firma%>  în calitate de <%= @calitate_reprezentant%>, numită în continuare Organizația gazdă</p>
-        <p>si</p>
-        <p>
-        <%= form.text_field :nume_voluntar_sursa, id: "nume-voluntar-sursa", placeholder: "Numele voluntarului" %>, domiciliat în <%= form.text_field :domiciliu_voluntar, placeholder: "Domiciliul voluntarului" %>,
-        legitimat cu <%= form.text_field :ci_voluntar, placeholder: "CI voluntar" %>, eliberat de <%= form.text_field :eliberat_de, placeholder: "Eliberat de" %>, la data de <%= form.date_field :eliberat_data %>, numit în continuare Voluntar,
-      </p>
-      <p>s-a convenit încheierea prezentului contract în baza Legii nr. 78/ 2014 privind reglementarea activității de voluntariat din România.</p>
+
+    <section class="contract-section">
+    <div class="section-content">
+        <p class="organization-info">
+            Între <span class="dynamic-content"><%= @nume_firma %></span>, cu sediul în <span class="dynamic-content"><%= @sediu_firma %></span>, identificată cu CUI <span class="dynamic-content"><%= @cui_firma %></span>, reprezentată de <span class="dynamic-content"><%= @reprezentant_firma %></span> în calitate de <span class="dynamic-content"><%= @calitate_reprezentant %></span>, numită în continuare Organizația gazdă
+        </p>
+        <p class="contract-connection">și</p>
+        <div class="volunteer-info">
+    <input type="text" name="contracte_useri[nume_voluntar]" class="form-input" id="nume-voluntar-sursa" placeholder="Numele voluntarului">
+
+    <label for="localitate-voluntar" class="form-label">domiciliat în localitatea</label>
+    <input type="text" name="contracte_useri[localitate_voluntar]" class="form-input" id="localitate-voluntar" placeholder="Localitatea de domiciliu">
+    <label for="localitate-voluntar" class="form-label">,</label>
+
+    <label for="strada-voluntar" class="form-label">strada</label>
+    <input type="text" name="contracte_useri[strada_voluntar]" class="form-input" id="strada-voluntar" placeholder="Strada">
+    <label for="strada-voluntar" class="form-label">,</label>
+
+    <label for="numar-voluntar" class="form-label">numărul</label>
+    <input type="text" name="contracte_useri[numarstrada_voluntar]" class="form-input" id="numar-voluntar" placeholder="Număr">
+    <label for="numar-voluntar" class="form-label">,</label>
+
+    <label for="bloc-voluntar" class="form-label">bloc</label>
+    <input type="text" name="contracte_useri[bloc_voluntar]" class="form-input" id="bloc-voluntar" placeholder="Bloc, scară, etaj, apartament">
+    <label for="bloc-voluntar" class="form-label">,</label>
+
+    <label for="judet-voluntar" class="form-label">județul</label>
+    <input type="text" name="contracte_useri[judet_voluntar]" class="form-input" id="judet-voluntar" placeholder="Județ">
+    <label for="judet-voluntar" class="form-label">,</label>
+
+    <label for="ci-voluntar" class="form-label">având CI</label>
+    <input type="text" name="contracte_useri[ci_voluntar]" class="form-input" id="ci-voluntar" placeholder="CI serie și număr">
+
+    <label for="eliberat-de" class="form-label">eliberat de</label>
+    <input type="text" name="contracte_useri[eliberat_de]" class="form-input" id="eliberat-de" placeholder="Numele instituției">
+
+    <label for="eliberat-data" class="form-label"> la data de </label>
+    <input type="date" name="contracte_useri[eliberat_data]" class="form-input" id="eliberat-data" style="text-transform: lowercase;">
+</div>
+
+        <p class="contract-intro">
+            s-a convenit încheierea prezentului contract în baza Legii nr. 78/ 2014 privind reglementarea activității de voluntariat din România.
+        </p>
     </div>
+</section>
+
+<style>
+.contract-section {
+    box-sizing: border-box;
+}
+
+.section-content {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.organization-info, .contract-intro {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: inline-block; /* Aliniere în linie cu inputurile */
+    margin-right: 5px; /* Spațiere între etichetă și input */
+    vertical-align: middle; /* Centrare verticală în raport cu inputurile */
+}
+
+.form-input {
+    width: auto; /* Lățime ajustată pentru a permite două inputuri pe rând */
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    display: inline-block; /* Afișare în linie pentru aliniere cu etichetele */
+    min-width: 290px;
+
+}
+
+@media screen and (max-width: 600px) {
+    .form-input, .form-label {
+        width: 100%; /* Lățime completă pe ecrane mici pentru o mai bună vizibilitate */
+        display: block; /* Afișare pe rânduri separate pe ecrane mici */
+        margin-right: 0;
+    }
+}
+
+</style>
+
+
+
 
     <div class="section">
         <h2>Art. 1. OBIECTUL CONTRACTULUI</h2>
@@ -133,23 +213,24 @@
  
         
         <div class="gazda">
-            <p>AMN-ROMANIA,</p>
-            <p style="margin-top: -10px; border: 2px solid transparent; border-left: none;"><%= @reprezentant_firma%></p>
+            <p>AMN-ROMANIA, </p>
+            <p style="margin-top:-12px;"><%= @reprezentant_firma%></p>
+          
                  
-            <canvas id="signature-pad-1" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
+            <canvas id="signature-pad-1" width="auto" height="auto" style="border: none;"></canvas>
            
         </div>
         
         
         <div class="voluntar">
          
-            <p>Voluntar</p>
-            <p style="margin-top: -10px;">  <%= form.text_field :nume_voluntar_destinatie, 
-            id: "nume-voluntar-destinatie", 
-            readonly: true, 
-            style: "width: -webkit-fill-available;" %>
-</p>
-
+            <p>Voluntar: </p>
+            <p style="margin-top:-15px;">
+                <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available; padding-left:5px;">
+                    <!-- Valoarea va fi setată de JavaScript -->
+                </span>
+            </p>
+            
             
             
             <canvas id="signature-pad-2" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
@@ -228,8 +309,29 @@ document.addEventListener("turbo:load", function() {
   form.addEventListener('submit', function() {
     saveSignatureOnSubmit('signature-pad-2', 'semnatura_voluntar'); // Folosește ID-ul corect al canvas-ului și câmpului ascuns
   });
-  synchronizeFields('nume-voluntar-sursa', 'nume-voluntar-destinatie');
+  
+  synchronizeFields('nume-voluntar-sursa',  'nume-voluntar-destinatie');
 });
+
+function synchronizeFields(sourceFieldId, targetElementId) {
+    var sourceField = document.getElementById(sourceFieldId);
+    var targetElement = document.getElementById(targetElementId);
+
+    if (sourceField && targetElement) {
+        sourceField.addEventListener('input', function() {
+            // Verifică dacă elementul țintă este un câmp de input sau alt tip de element
+            if ('value' in targetElement) {
+                // Pentru elemente de input, textarea, etc.
+                targetElement.value = sourceField.value;
+            } else {
+                // Pentru elemente non-input, cum ar fi span, div, etc.
+                targetElement.textContent = sourceField.value;
+            }
+        });
+    }
+}
+
+
 function saveSignatureOnSubmit(canvasId, hiddenFieldId) {
   var canvas = document.getElementById(canvasId);
   if (canvas) {
@@ -298,16 +400,7 @@ function clearSignature(padNumber) {
   var context = canvas.getContext('2d');
   context.clearRect(0, 0, canvas.width, canvas.height);
 }
-function synchronizeFields(sourceFieldId, targetFieldId) {
-  var sourceField = document.getElementById(sourceFieldId);
-  var targetField = document.getElementById(targetFieldId);
 
-  if (sourceField && targetField) {
-    sourceField.addEventListener('input', function() {
-      targetField.value = sourceField.value;
-    });
-  }
-}
 </script>
 
 

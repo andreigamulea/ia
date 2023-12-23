@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_21_223831) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_23_121056) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -174,6 +174,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_21_223831) do
     t.date "data_inceperii"
     t.text "semnatura_voluntar"
     t.text "semnatura_administrator"
+    t.string "localitate_voluntar"
+    t.string "strada_voluntar"
+    t.string "numarstrada_voluntar"
+    t.string "bloc_voluntar"
+    t.string "judet_voluntar"
   end
 
   create_table "contractes", force: :cascade do |t|
