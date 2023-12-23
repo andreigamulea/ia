@@ -10,6 +10,7 @@
   <%= form.hidden_field :contracte_id, value: 1 %>
   <%= form.hidden_field :semnatura_admin, id: "semnatura_admin" %>
   <%= form.hidden_field :semnatura_voluntar, id: "semnatura_voluntar" %>
+  
 
 <h1>CONTRACT DE VOLUNTARIAT</h1>
     <p>Nr. 1 din data de 21.12.2023</p>
@@ -212,14 +213,13 @@
     <div class="semnatura">
  
         
-        <div class="gazda">
-            <p>AMN-ROMANIA, </p>
-            <p style="margin-top:-12px;"><%= @reprezentant_firma%></p>
-          
-                 
-            <canvas id="signature-pad-1" width="auto" height="auto" style="border: none;"></canvas>
-           
-        </div>
+    <div class="gazda">
+        <p>AMN-ROMANIA,</p>
+        <p style="margin-top: -10px; border: 2px solid transparent; border-left: none;"><%= @reprezentant_firma %></p>
+        <!-- Afișați semnătura adminului direct din variabilă -->
+        <img src="<%= @semnatura_admin %>" alt="Semnătura reprezentantului AMN-ROMANIA" style="border: none;">
+    </div>
+
         
         
         <div class="voluntar">
@@ -304,7 +304,7 @@
 <script>
 document.addEventListener("turbo:load", function() {
   initializeSignaturePad('signature-pad-2'); // Inițializează doar al doilea canvas
-  loadExistingSignature('signature-pad-1');  // Încarcă semnătura existentă în primul canvas
+  
   var form = document.querySelector('form');
   form.addEventListener('submit', function() {
     saveSignatureOnSubmit('signature-pad-2', 'semnatura_voluntar'); // Folosește ID-ul corect al canvas-ului și câmpului ascuns
@@ -333,12 +333,13 @@ function synchronizeFields(sourceFieldId, targetElementId) {
 
 
 function saveSignatureOnSubmit(canvasId, hiddenFieldId) {
-  var canvas = document.getElementById(canvasId);
-  if (canvas) {
-    var dataURL = canvas.toDataURL();
-    document.getElementById(hiddenFieldId).value = dataURL; // Setează valoarea câmpului ascuns
-  }
+    var canvas = document.getElementById(canvasId);
+    if (canvas) {
+        var dataURL = canvas.toDataURL();
+        document.getElementById(hiddenFieldId).value = dataURL; // Setează valoarea câmpului ascuns
+    }
 }
+
 
 function initializeSignaturePad(canvasId) {
   var canvas = document.getElementById(canvasId);
@@ -389,14 +390,14 @@ function loadExistingSignature(canvasId) {
 }
 
 function saveSignature(padNumber) {
-  var canvas = document.getElementById('signature-pad-' + padNumber);
+  var canvas = document.getElementById('signature-pad-2');
   var dataURL = canvas.toDataURL();
   console.log(dataURL);
   // Trimite dataURL la server
 }
 
 function clearSignature(padNumber) {
-  var canvas = document.getElementById('signature-pad-' + padNumber);
+  var canvas = document.getElementById('signature-pad-2');
   var context = canvas.getContext('2d');
   context.clearRect(0, 0, canvas.width, canvas.height);
 }
