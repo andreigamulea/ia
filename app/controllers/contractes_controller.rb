@@ -56,6 +56,7 @@ class ContractesController < ApplicationController
 
   # GET /contractes/1/edit
   def edit
+    @contracte = Contracte.find(params[:id])
   end
 
   # POST /contractes or /contractes.json
@@ -89,11 +90,11 @@ class ContractesController < ApplicationController
         format.json { render json: @contracte.errors, status: :unprocessable_entity }
       end
     end
-  end
+  end end
 
   # PATCH/PUT /contractes/1 or /contractes/1.json
   def update
-   
+    @contracte = Contracte.find(params[:id])
     respond_to do |format|
       if @contracte.update(contracte_params)
         format.html { redirect_to contracte_url(@contracte), notice: "Contracte was successfully updated." }
@@ -104,7 +105,7 @@ class ContractesController < ApplicationController
       end
     end
   end
-  end
+  
 
   # DELETE /contractes/1 or /contractes/1.json
   def destroy
