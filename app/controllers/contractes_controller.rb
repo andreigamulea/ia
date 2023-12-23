@@ -27,12 +27,20 @@ class ContractesController < ApplicationController
     @calitate_reprezentant = @contract&.calitate_reprezentant
     @semnatura_admin = @contract&.semnatura_admin
 
-    @nume_voluntar = @contracte_useri&.nume_voluntar
-    @domiciliu_voluntar_voluntar = @contracte_useri&.domiciliu_voluntar
+    @nume_voluntar = @contracte_useri&.nume_voluntar    
+    @localitate_voluntar = @contracte_useri&.localitate_voluntar
+    @strada_voluntar = @contracte_useri&.strada_voluntar
+    @numarstrada_voluntar = @contracte_useri&.numarstrada_voluntar
+    @bloc_voluntar = @contracte_useri&.bloc_voluntar
+    @judet_voluntar = @contracte_useri&.judet_voluntar
+    
+
+
     @ci_voluntar = @contracte_useri&.ci_voluntar
     @eliberat_de = @contracte_useri&.eliberat_de
     @eliberat_data = @contracte_useri&.eliberat_data
     @semnatura_voluntar = @contracte_useri&.semnatura_voluntar
+
   end
   
 
@@ -134,7 +142,21 @@ class ContractesController < ApplicationController
       )
     end
     def contracte_useri_params
-      params.require(:contracte_useri).permit(:nume_voluntar, :domiciliu_voluntar, :ci_voluntar, :eliberat_de, :eliberat_data, :contracte_id, :semnatura_voluntar)
-    end 
+      params.require(:contracte_useri).permit(
+        :nume_voluntar, 
+        :domiciliu_voluntar, 
+        :ci_voluntar, 
+        :eliberat_de, 
+        :eliberat_data, 
+        :contracte_id, 
+        :semnatura_voluntar,
+        :localitate_voluntar, 
+        :strada_voluntar, 
+        :numarstrada_voluntar, 
+        :bloc_voluntar, 
+        :judet_voluntar
+      )
+    end
+    
     
 end
