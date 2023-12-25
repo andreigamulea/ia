@@ -368,8 +368,11 @@ function initializeSignaturePad(canvasId) {
     }
 
     function stopDrawing(event) {
-      event.preventDefault(); // Împiedică derularea în timpul desenării
-      isDrawing = false;
+      if (isDrawing) {
+        event.preventDefault();  // Împiedică derularea și alte acțiuni implicite
+        event.stopPropagation(); // Opriți propagarea evenimentului
+        isDrawing = false;
+      }
     }
 
     // Evenimente pentru mouse
