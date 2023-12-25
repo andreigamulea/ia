@@ -344,36 +344,44 @@ function saveSignatureOnSubmit(canvasId, hiddenFieldId) {
 function initializeSignaturePad(canvasId) {
   var canvas = document.getElementById(canvasId);
   if (canvas) {
-      var context = canvas.getContext('2d');
-      var isDrawing = false;
+    var context = canvas.getContext('2d');
+    var isDrawing = false;
 
-      // Atașează evenimentele doar dacă canvasId este 'signature-pad-2'
-      if (canvasId === 'signature-pad-2') {
-          canvas.addEventListener('mousedown', function(event) {
-              isDrawing = true;
-              var x = event.offsetX;
-              var y = event.offsetY;
-              context.beginPath();
-              context.moveTo(x, y);
-          });
+    function startDrawing(event) {
+      isDrawing = true;
+      var rect = canvas.getBoundingClientRect();
+      var x = (event.clientX || event.touches[0].clientX) - rect.left;
+      var y = (event.clientY || event.touches[0].clientY) - rect.top;
+      context.beginPath();
+      context.moveTo(x, y);
+    }
 
-          canvas.addEventListener('mousemove', function(event) {
-              if (isDrawing) {
-                  context.lineTo(event.offsetX, event.offsetY);
-                  context.stroke();
-              }
-          });
+    function continueDrawing(event) {
+      if (!isDrawing) return;
+      var rect = canvas.getBoundingClientRect();
+      var x = (event.clientX || event.touches[0].clientX) - rect.left;
+      var y = (event.clientY || event.touches[0].clientY) - rect.top;
+      context.lineTo(x, y);
+      context.stroke();
+    }
 
-          canvas.addEventListener('mouseup', function() {
-              isDrawing = false;
-          });
+    function stopDrawing() {
+      isDrawing = false;
+    }
 
-          canvas.addEventListener('mouseleave', function() {
-              isDrawing = false;
-          });
-      }
+    // Evenimente pentru mouse
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', continueDrawing);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseleave', stopDrawing);
+
+    // Evenimente pentru touch (ecran tactil)
+    canvas.addEventListener('touchstart', startDrawing);
+    canvas.addEventListener('touchmove', continueDrawing);
+    canvas.addEventListener('touchend', stopDrawing);
   }
 }
+
 
 function loadExistingSignature(canvasId) {
   var canvas = document.getElementById(canvasId);
