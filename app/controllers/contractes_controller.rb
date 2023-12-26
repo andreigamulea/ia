@@ -100,7 +100,7 @@ class ContractesController < ApplicationController
 
   # PATCH/PUT /contractes/1 or /contractes/1.json
   def update
-    @reprezentant_firma=@contract.reprezentant_firma
+    @reprezentant_firma=@contracte.reprezentant_firma
     @contracte = Contracte.find(params[:id])
     respond_to do |format|
       if @contracte.update(contracte_params)
