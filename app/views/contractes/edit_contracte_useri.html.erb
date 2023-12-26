@@ -5,11 +5,12 @@
 <div class="cr" style="background-color: aliceblue; ">
 
 
-<%= form_with(model: @contracte_useri, url: contractes_create_path, local: true) do |form| %>
-  <%= form.hidden_field :save_type, value: "contracte_useri" %>
-  <%= form.hidden_field :contracte_id, value: 1 %>
+<%= form_with(model: @contracte_useri, url: update_contracte_useri_contracte_path(@contracte_useri), method: :patch, local: true) do |form| %>
+  
   <%= form.hidden_field :semnatura_admin, id: "semnatura_admin" %>
-  <%= form.hidden_field :semnatura_voluntar, id: "semnatura_voluntar" %>
+  
+
+  
   
 
 <h1>CONTRACT DE VOLUNTARIAT</h1>
@@ -23,38 +24,39 @@
         </p>
         <p class="contract-connection">și</p>
         <div class="volunteer-info">
-    <input type="text" name="contracte_useri[nume_voluntar]" class="form-input" id="nume-voluntar-sursa" placeholder="Numele voluntarului">
+        <%= form.text_field :nume_voluntar, id: "nume-voluntar-sursa", placeholder: "Numele voluntarului", class: "form-input" %>
 
-    <%= form.label :localitate_voluntar, "domiciliat în localitatea", class: "form-label" %>
-    <%= form.text_field :localitate_voluntar, id: "localitate-voluntar", placeholder: "Localitatea de domiciliu", class: "form-input" %>
-    <label>,</label>
-  
-    <%= form.label :strada_voluntar, "strada", class: "form-label" %>
-    <%= form.text_field :strada_voluntar, id: "strada-voluntar", placeholder: "Strada", class: "form-input" %>
-    <label>,</label>
-  
-    <%= form.label :numarstrada_voluntar, "numărul", class: "form-label" %>
-    <%= form.text_field :numarstrada_voluntar, id: "numar-voluntar", placeholder: "Număr", class: "form-input" %>
-    <label>,</label>
-  
-    <%= form.label :bloc_voluntar, "bloc", class: "form-label" %>
-    <%= form.text_field :bloc_voluntar, id: "bloc-voluntar", placeholder: "Bloc, scară, etaj, apartament", class: "form-input" %>
-    <label>,</label>
-  
-    <%= form.label :judet_voluntar, "județul", class: "form-label" %>
-    <%= form.text_field :judet_voluntar, id: "judet-voluntar", placeholder: "Județ", class: "form-input" %>
-    <label>,</label>
-  
-    <%= form.label :ci_voluntar, "având CI", class: "form-label" %>
-    <%= form.text_field :ci_voluntar, id: "ci-voluntar", placeholder: "CI serie și număr", class: "form-input" %>
-  
-    <%= form.label :eliberat_de, "eliberat de", class: "form-label" %>
-    <%= form.text_field :eliberat_de, id: "eliberat-de", placeholder: "Numele instituției", class: "form-input" %>
-  
-    <%= form.label :eliberat_data, "la data de", class: "form-label" %>
-    <%= form.date_field :eliberat_data, id: "eliberat-data", class: "form-input", style: "text-transform: lowercase;" %>
-  </div>
 
+
+        <%= form.label :localitate_voluntar, "domiciliat în localitatea", class: "form-label" %>
+        <%= form.text_field :localitate_voluntar, id: "localitate-voluntar", placeholder: "Localitatea de domiciliu", class: "form-input" %>
+        <label>,</label>
+      
+        <%= form.label :strada_voluntar, "strada", class: "form-label" %>
+        <%= form.text_field :strada_voluntar, id: "strada-voluntar", placeholder: "Strada", class: "form-input" %>
+        <label>,</label>
+      
+        <%= form.label :numarstrada_voluntar, "numărul", class: "form-label" %>
+        <%= form.text_field :numarstrada_voluntar, id: "numar-voluntar", placeholder: "Număr", class: "form-input" %>
+        <label>,</label>
+      
+        <%= form.label :bloc_voluntar, "bloc", class: "form-label" %>
+        <%= form.text_field :bloc_voluntar, id: "bloc-voluntar", placeholder: "Bloc, scară, etaj, apartament", class: "form-input" %>
+        <label>,</label>
+      
+        <%= form.label :judet_voluntar, "județul", class: "form-label" %>
+        <%= form.text_field :judet_voluntar, id: "judet-voluntar", placeholder: "Județ", class: "form-input" %>
+        <label>,</label>
+      
+        <%= form.label :ci_voluntar, "având CI", class: "form-label" %>
+        <%= form.text_field :ci_voluntar, id: "ci-voluntar", placeholder: "CI serie și număr", class: "form-input" %>
+      
+        <%= form.label :eliberat_de, "eliberat de", class: "form-label" %>
+        <%= form.text_field :eliberat_de, id: "eliberat-de", placeholder: "Numele instituției", class: "form-input" %>
+      
+        <%= form.label :eliberat_data, "la data de", class: "form-label" %>
+        <%= form.date_field :eliberat_data, id: "eliberat-data", class: "form-input", style: "text-transform: lowercase;" %>
+      </div>
         <p class="contract-intro">
             s-a convenit încheierea prezentului contract în baza Legii nr. 78/ 2014 privind reglementarea activității de voluntariat din România.
         </p>
@@ -203,11 +205,10 @@
     </div>
 
     <div class="section">
-        <h2>Art. 9. CLAUZE FINALE</h2>
-        <p>9.1 Anexa nr.1 - Fișa de voluntariat și Anexa nr.2 - Fișa de protecție a voluntarului fac parte integrantă din prezentul contract.</p>
+    <h2>Art. 9. CLAUZE FINALE</h2>
+        <p>9.1 Anexa nr.1 - Fişa de voluntariat şi Anexa nr.2 - Fişa de protecţie a voluntarului fac parte integrantă din prezentul contract.</p>
         <p>9.2 Răspunderea pentru neexecutarea sau executarea necorespunzătoare a contractului de voluntariat este supusă prevederilor Legii nr. 287/2009 privind Codul civil, republicată, cu modificările ulterioare.</p>
-        <p>9.3 Încheiat astăzi, <%= Date.today.strftime("%d.%m.%Y") %> în trei exemplare, două pentru Organizația gazdă și unul pentru Voluntar, fiecare exemplar având aceeași valoare juridică. Intră în vigoare la data semnării de către ambele părți.</p>
-
+        <p>9.3 Încheiat astăzi, 21.12.2023 în trei exemplare, două pentru Organizația gazdă și unul pentru Voluntar, fiecare exemplar având aceeași valoare juridică. Intră în vigoare la data semnării de către ambele părți.</p>
     </div>
 
 
@@ -215,23 +216,29 @@
  
         
     <div class="gazda">
-    <p>AMN-ROMANIA,</p>
-    <p style="margin-top: -10px; border: 2px solid transparent; border-left: none;"><%= @reprezentant_firma %></p>
-    <img src="<%= @semnatura_admin %>" alt="Semnătura reprezentantului AMN-ROMANIA" style="border: none;">
+        <p>AMN-ROMANIA,</p>
+        <p style="margin-top: -10px; border: 2px solid transparent; border-left: none;"><%= @reprezentant_firma %></p>
+        <!-- Afișați semnătura adminului direct din variabilă -->
+        <img src="<%= @semnatura_admin %>" alt="Semnătura reprezentantului AMN-ROMANIA" style="border: none;">
     </div>
 
-        
         
     <div class="voluntar">
         <p>Voluntar: </p>
         <p style="margin-top:-15px;">
-        <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available; padding-left:5px;">
+            <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available; padding-left:5px;">
             <%= @contracte_useri.nume_voluntar %>
-        </span>
+            </span>
         </p>
-        <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
-        <button type="button" onclick="clearSignature(2)">Șterge Semnătura</button>
+        <canvas id="signature-pad-2" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
+        <%= form.hidden_field :semnatura_voluntar, id: "semnatura_voluntar" %>
+        
+        
+        
+        <button type="button" onclick="clearSignature()">Șterge Semnătura</button>
+
     </div>
+
   
 
     </div>
@@ -297,16 +304,48 @@
 </div>
 
 <script>
+
+
 document.addEventListener("turbo:load", function() {
-  initializeSignaturePad('signature-pad-3'); // Inițializează doar al doilea canvas
+  var existingSignature = '<%= j @contracte_useri.semnatura_voluntar %>';
+  console.log("Semnatura existenta:", existingSignature); // Acesta va afișa semnătura în consola browser-ului
+
+  
+  initializeSignaturePad('signature-pad-2');
+  if (existingSignature !== 'null' && existingSignature !== "") {
+    loadExistingSignature2('signature-pad-2', existingSignature);
+  }
   
   var form = document.querySelector('form');
   form.addEventListener('submit', function() {
-    saveSignatureOnSubmit('signature-pad-3', 'semnatura_voluntar'); // Folosește ID-ul corect al canvas-ului și câmpului ascuns
+    saveSignatureOnSubmit('signature-pad-2', 'semnatura_voluntar');
+    location.reload(); // Forțează un refresh al paginii după trimiterea formularului
   });
+
+
+  
   
   synchronizeFields('nume-voluntar-sursa',  'nume-voluntar-destinatie');
 });
+
+function loadExistingSignature2(canvasId, existingSignatureBase64) {
+  var canvas = document.getElementById(canvasId);
+  var context = canvas.getContext('2d');
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (existingSignatureBase64) {
+    var image = new Image();
+    image.onload = function() {
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    };
+    image.src = existingSignatureBase64;
+  }
+}
+
+
+
+
 
 function synchronizeFields(sourceFieldId, targetElementId) {
     var sourceField = document.getElementById(sourceFieldId);
@@ -343,14 +382,26 @@ function initializeSignaturePad(canvasId) {
     var isDrawing = false;
 
     function startDrawing(event) {
-      event.preventDefault(); // Împiedică derularea în timpul desenării
-      isDrawing = true;
-      var rect = canvas.getBoundingClientRect();
-      var x = (event.clientX || event.touches[0].clientX) - rect.left;
-      var y = (event.clientY || event.touches[0].clientY) - rect.top;
-      context.beginPath();
-      context.moveTo(x, y);
-    }
+        event.preventDefault();
+        isDrawing = true;
+        var rect = canvas.getBoundingClientRect();
+        var x = (event.clientX || event.touches[0].clientX) - rect.left;
+        var y = (event.clientY || event.touches[0].clientY) - rect.top;
+        context.beginPath();
+        context.moveTo(x, y);
+      }
+      
+      
+    
+      function clearCanvas() {
+        var canvas = document.getElementById('signature-pad-2');
+        if (canvas) {
+            var context = canvas.getContext('2d');
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        }
+      
+      
 
     function continueDrawing(event) {
       event.preventDefault(); // Împiedică derularea în timpul desenării
@@ -363,13 +414,19 @@ function initializeSignaturePad(canvasId) {
     }
 
     function stopDrawing(event) {
-      if (isDrawing) {
-        event.preventDefault();  // Împiedică derularea și alte acțiuni implicite
-        event.stopPropagation(); // Opriți propagarea evenimentului
-        isDrawing = false;
-      }
-    }
+  if (isDrawing) {
+    isDrawing = false;
+    updateHiddenSignatureField();
+  }
+}
 
+      
+
+    function updateHiddenSignatureField() {
+        var canvas = document.getElementById('signature-pad-2');
+        var dataURL = canvas.toDataURL();
+        document.getElementById('semnatura_voluntar').value = dataURL;
+      }
     // Evenimente pentru mouse
     canvas.addEventListener('mousedown', startDrawing);
     canvas.addEventListener('mousemove', continueDrawing);
@@ -384,32 +441,37 @@ function initializeSignaturePad(canvasId) {
 }
 
 
-function loadExistingSignature(canvasId) {
+function loadExistingSignature2(canvasId, existingSignatureBase64) {
   var canvas = document.getElementById(canvasId);
   var context = canvas.getContext('2d');
-  var existingSignature = "<%= @semnatura_admin %>";
+  context.clearRect(0, 0, canvas.width, canvas.height); // Curăță canvas-ul înainte de încărcare
 
-  if (existingSignature) {
+  if (existingSignatureBase64 && existingSignatureBase64 !== 'null') {
     var image = new Image();
     image.onload = function() {
-      context.drawImage(image, 0, 0);
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
     };
-    image.src = existingSignature;
+    image.src = existingSignatureBase64;
   }
 }
 
+
 function saveSignature(padNumber) {
-  var canvas = document.getElementById('signature-pad-3');
+  var canvas = document.getElementById('signature-pad-2');
   var dataURL = canvas.toDataURL();
   console.log(dataURL);
   // Trimite dataURL la server
 }
 
-function clearSignature(padNumber) {
-  var canvas = document.getElementById('signature-pad-3');
+function clearSignature() {
+  var canvas = document.getElementById('signature-pad-2');
   var context = canvas.getContext('2d');
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.clearRect(0, 0, canvas.width, canvas.height); // Curăță canvas-ul
+  document.getElementById('semnatura_voluntar').value = ''; // Resetează câmpul ascuns
 }
+
+
+
 
 </script>
 

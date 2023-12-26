@@ -136,7 +136,9 @@
                         <% end %>
                         <% if (current_user && current_user.role==1) || (current_user && current_user.email=='test@yahoo.com') %>
                         <li><%= link_to 'Semnează Contract', contractes_semneaza_contract_path, class: 'nav-item' %></li>
-                        <li><%= link_to 'Vizualizeaza Contract', contractes_vizualizeaza_contract_path, class: 'nav-item' %></li>
+                        
+                        <li><%= link_to 'Vizualizeaza Toate Contractele', contracte_all_path, class: 'nav-item' %></li>
+
                         <% end %>
                     </ul>
                 </li>
