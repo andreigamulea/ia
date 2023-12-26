@@ -143,7 +143,7 @@ def edit_contracte_useri
   @semnatura_admin = @contract&.semnatura_admin
 
   @contracte_useri = ContracteUseri.find(params[:id])
-  # Logica pentru editarea unui ContracteUseri
+  
 end
 
 def update_contracte_useri
@@ -154,7 +154,7 @@ def update_contracte_useri
     
   else
     puts("nu s-a salvat")
-    #render :edit_contracte_useri
+    render :edit_contracte_useri
   end
 end
 
@@ -168,9 +168,58 @@ def destroy_contracte_useri
   redirect_to contracte_all_path, notice: 'ContracteUseri was successfully destroyed.'
 end
 
+def show_pdf
+  
 
+  @contracte_useri = ContracteUseri.find(params[:id])
+  @contract = Contracte.first
+    
+  
+    @nume_firma = @contract&.nume_firma
+    @sediu_firma = @contract&.sediu_firma
+    @cui_firma = @contract&.cui_firma
+    @reprezentant_firma = @contract&.reprezentant_firma    
+    @calitate_reprezentant = @contract&.calitate_reprezentant
+    @semnatura_admin = @contract&.semnatura_admin
+
+    @nume_voluntar = @contracte_useri&.nume_voluntar    
+    @localitate_voluntar = @contracte_useri&.localitate_voluntar
+    @strada_voluntar = @contracte_useri&.strada_voluntar
+    @numarstrada_voluntar = @contracte_useri&.numarstrada_voluntar
+    @bloc_voluntar = @contracte_useri&.bloc_voluntar
+    @judet_voluntar = @contracte_useri&.judet_voluntar
+    
+
+
+    @ci_voluntar = @contracte_useri&.ci_voluntar
+    @eliberat_de = @contracte_useri&.eliberat_de
+    @eliberat_data = @contracte_useri&.eliberat_data
+    @semnatura_voluntar = @contracte_useri&.semnatura_voluntar
+
+  #unless @contract.user_id == @user.id || @user.role == 1
+   # redirect_to root_path, alert: "Nu aveți permisiunea de a vizualiza această factură"
+    #return
+  #end
+
+  respond_to do |format|
+    format.html
+    format.pdf do
+      html = render_to_string(
+      template: 'contractes/show_pdf',
+      locals: { contract: @contracte_useri },
+      encoding: 'UTF8'
+    )
+      pdf = PDFKit.new(html).to_pdf
+      send_data pdf, filename: "Contract_#{@contracte_useri.id}_din_#{@contracte_useri.created_at.strftime('%d.%m.%Y')}.pdf",
+        type: 'application/pdf',
+        disposition: 'attachment'
+    end
+  end
+end
  
 ##
+
+
 
   private
     # Strong parameters pentru ContracteUseri
