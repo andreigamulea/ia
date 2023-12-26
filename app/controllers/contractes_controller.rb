@@ -1,5 +1,6 @@
 class ContractesController < ApplicationController
   before_action :set_contracte, only: %i[ show edit update destroy ]
+  before_action :set_contracte_useri, only: %i[vizualizeaza_contract destroy_contracte_useri update_contracte_useri]
 
   # GET /contractes or /contractes.json
   def index
@@ -16,9 +17,14 @@ class ContractesController < ApplicationController
     @semnatura_admin = @contract.semnatura_admin if @contract
     @contracte_useri = ContracteUseri.new
   end  
+  def contracte_all
+    @contract=Contracte.first
+    @reprezentant_firma=@contract.reprezentant_firma
+    @contracte_useri = ContracteUseri.all
+  end  
   def vizualizeaza_contract    
     @contract = Contracte.first
-    @contracte_useri = ContracteUseri.last
+    
   
     @nume_firma = @contract&.nume_firma
     @sediu_firma = @contract&.sediu_firma
@@ -94,6 +100,7 @@ class ContractesController < ApplicationController
 
   # PATCH/PUT /contractes/1 or /contractes/1.json
   def update
+    @reprezentant_firma=@contract.reprezentant_firma
     @contracte = Contracte.find(params[:id])
     respond_to do |format|
       if @contracte.update(contracte_params)
@@ -116,11 +123,61 @@ class ContractesController < ApplicationController
       format.json { head :no_content }
     end
   end
+##
+# Acțiuni pentru ContracteUseri
+
+def view_contracte_useri
+  @contracte_useri = ContracteUseri.find(params[:id])
+  # Logica pentru afișarea unui ContracteUseri
+end
+
+def edit_contracte_useri
+  @contract = Contracte.first
+    
+  
+  @nume_firma = @contract&.nume_firma
+  @sediu_firma = @contract&.sediu_firma
+  @cui_firma = @contract&.cui_firma
+  @reprezentant_firma = @contract&.reprezentant_firma    
+  @calitate_reprezentant = @contract&.calitate_reprezentant
+  @semnatura_admin = @contract&.semnatura_admin
+
+  @contracte_useri = ContracteUseri.find(params[:id])
+  # Logica pentru editarea unui ContracteUseri
+end
+
+def update_contracte_useri
+  @contracte_useri = ContracteUseri.find(params[:id])
+  if @contracte_useri.update(contracte_useri_params)
+    redirect_to contracte_all_path, notice: 'ContracteUseri was successfully updated.'
+  else
+    render :edit_contracte_useri
+  end
+end
+
+
+
+
+
+def destroy_contracte_useri
+  puts("salut")
+  @contracte_useri.destroy
+  redirect_to contracte_all_path, notice: 'ContracteUseri was successfully destroyed.'
+end
+
+
+ 
+##
 
   private
+    # Strong parameters pentru ContracteUseri
+    
     # Use callbacks to share common setup or constraints between actions.
     def set_contracte
       @contracte = Contracte.find(params[:id])
+    end
+    def set_contracte_useri
+      @contracte_useri = ContracteUseri.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

@@ -1,12 +1,24 @@
 Rails.application.routes.draw do    
   get 'contractes/semneaza_contract', to: 'contractes#semneaza_contract'
   post '/contractes', to: 'contractes#create', as: 'contractes_create' # Aici, 'contractes_create' este numele rutei
+  #get 'contractes/vizualizeaza/:id', to: 'contractes#vizualizeaza_contract', as: 'contracte_vizualizeaza'
+  get 'contractes/:id/vizualizeaza', to: 'contractes#vizualizeaza_contract', as: 'vizualizeaza_contract_contracte'
+  get 'contractes/all', to: 'contractes#contracte_all', as: 'contracte_all'
+
  
   get 'vizualizeaza_contract', to: 'contractes#vizualizeaza_contract', as: 'contractes_vizualizeaza_contract'
-
+  delete 'contractes/:id/destroy_contracte_useri', to: 'contractes#destroy_contracte_useri', as: 'destroy_contracte_useri'
 
   
-  resources :contractes
+  resources :contractes do
+    member do
+      get 'view_contracte_useri', to: 'contractes#view_contracte_useri'
+      get 'edit_contracte_useri', to: 'contractes#edit_contracte_useri'
+      patch 'update_contracte_useri', to: 'contractes#update_contracte_useri'
+      #delete 'destroy_contracte_useri', to: 'contractes#destroy_contracte_useri'
+      
+    end
+  end
   resources :tipconstitutionals
   get 'evaluare_tipologie_ayurvedica', to: 'tipconstitutionals#evaluare_tipologie_ayurvedica'
   get 'calculate_totals', to: 'tipconstitutionals#process_totals'
