@@ -304,44 +304,25 @@
 </div>
 
 <script>
+var existingSignatureLoaded = false;
 
-
-document.addEventListener("turbo:load", function() {
-  var existingSignature = '<%= j @contracte_useri.semnatura_voluntar %>';
-  console.log("Semnatura existenta:", existingSignature); // Acesta va afișa semnătura în consola browser-ului
-
-  
+document.addEventListener("turbo:load", function() {   
   initializeSignaturePad('signature-pad-2');
-  if (existingSignature !== 'null' && existingSignature !== "") {
+  var existingSignature = '<%= j @contracte_useri.semnatura_voluntar %>';
+
+  if (existingSignature && existingSignature !== 'null' && existingSignature !== "") {
     loadExistingSignature2('signature-pad-2', existingSignature);
   }
-  
+ 
   var form = document.querySelector('form');
   form.addEventListener('submit', function() {
     saveSignatureOnSubmit('signature-pad-2', 'semnatura_voluntar');
-    location.reload(); // Forțează un refresh al paginii după trimiterea formularului
+   
   });
 
-
-  
-  
   synchronizeFields('nume-voluntar-sursa',  'nume-voluntar-destinatie');
 });
 
-function loadExistingSignature2(canvasId, existingSignatureBase64) {
-  var canvas = document.getElementById(canvasId);
-  var context = canvas.getContext('2d');
-
-  context.clearRect(0, 0, canvas.width, canvas.height);
-
-  if (existingSignatureBase64) {
-    var image = new Image();
-    image.onload = function() {
-      context.drawImage(image, 0, 0, canvas.width, canvas.height);
-    };
-    image.src = existingSignatureBase64;
-  }
-}
 
 
 
@@ -376,12 +357,16 @@ function saveSignatureOnSubmit(canvasId, hiddenFieldId) {
 
 
 function initializeSignaturePad(canvasId) {
+  existingSignatureLoaded = false;
   var canvas = document.getElementById(canvasId);
   if (canvas) {
     var context = canvas.getContext('2d');
     var isDrawing = false;
 
     function startDrawing(event) {
+        if (!existingSignatureLoaded) {
+            clearCanvas();
+        }
         event.preventDefault();
         isDrawing = true;
         var rect = canvas.getBoundingClientRect();
@@ -390,18 +375,7 @@ function initializeSignaturePad(canvasId) {
         context.beginPath();
         context.moveTo(x, y);
       }
-      
-      
-    
-      function clearCanvas() {
-        var canvas = document.getElementById('signature-pad-2');
-        if (canvas) {
-            var context = canvas.getContext('2d');
-            context.clearRect(0, 0, canvas.width, canvas.height);
-        }
-        }
-      
-      
+     
 
     function continueDrawing(event) {
       event.preventDefault(); // Împiedică derularea în timpul desenării
@@ -444,14 +418,25 @@ function initializeSignaturePad(canvasId) {
 function loadExistingSignature2(canvasId, existingSignatureBase64) {
   var canvas = document.getElementById(canvasId);
   var context = canvas.getContext('2d');
-  context.clearRect(0, 0, canvas.width, canvas.height); // Curăță canvas-ul înainte de încărcare
+  clearCanvas(canvas); // Curăță canvas-ul înainte de a încărca o nouă semnătură
 
   if (existingSignatureBase64 && existingSignatureBase64 !== 'null') {
     var image = new Image();
     image.onload = function() {
+      clearCanvas(canvas); // Curăță din nou canvas-ul pentru a asigura că nu sunt reziduuri
       context.drawImage(image, 0, 0, canvas.width, canvas.height);
     };
     image.src = existingSignatureBase64;
+    existingSignatureLoaded = true;
+  } else {
+    existingSignatureLoaded = false;
+  }
+}
+
+function clearCanvas(canvas) {
+  if (canvas) {
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
   }
 }
 

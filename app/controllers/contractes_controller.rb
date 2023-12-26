@@ -1,6 +1,6 @@
 class ContractesController < ApplicationController
   before_action :set_contracte, only: %i[ show edit update destroy ]
-  before_action :set_contracte_useri, only: %i[vizualizeaza_contract destroy_contracte_useri update_contracte_useri]
+  before_action :set_contracte_useri, only: %i[vizualizeaza_contract destroy_contracte_useri]
 
   # GET /contractes or /contractes.json
   def index
@@ -149,9 +149,12 @@ end
 def update_contracte_useri
   @contracte_useri = ContracteUseri.find(params[:id])
   if @contracte_useri.update(contracte_useri_params)
+    puts("s-a salvat")
     redirect_to contracte_all_path, notice: 'ContracteUseri was successfully updated.'
+    
   else
-    render :edit_contracte_useri
+    puts("nu s-a salvat")
+    #render :edit_contracte_useri
   end
 end
 
