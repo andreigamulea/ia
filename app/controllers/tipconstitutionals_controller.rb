@@ -14,7 +14,7 @@ end
 def test1
 end  
 def process_totals
-  totals = params[:totals].split(',').map(&:to_i)
+  totals = params[:totals].split(',').map(&:to_f)
   #totals este array-ul cu cele 3 valori
   sum = totals.sum
   if totals[0]==0 || totals[1]==0 || totals[2]==0
@@ -23,9 +23,9 @@ def process_totals
   else
     
     verificare=1
-    v=100*totals[0]/sum
-    p=100*totals[1]/sum
-    k=100*totals[2]/sum
+    v=(100*totals[0]/sum).round(2)    
+    p=(100*totals[1]/sum).round(2)
+    k=(100*totals[2]/sum).round(2)
   end    
   respond_to do |format|
     format.html do

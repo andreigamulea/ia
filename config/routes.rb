@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'contractes/:id/vizualizeaza', to: 'contractes#vizualizeaza_contract', as: 'vizualizeaza_contract_contracte'
   get 'contractes/all', to: 'contractes#contracte_all', as: 'contracte_all'
   get 'contracte_useri/:id/show_pdf', to: 'contractes#show_pdf', as: 'contract_pdf'
-
+  get 'contractes/preluare_emailuri', to: 'contractes#preluare_emailuri_din_text'
 
  
   get 'vizualizeaza_contract', to: 'contractes#vizualizeaza_contract', as: 'contractes_vizualizeaza_contract'
