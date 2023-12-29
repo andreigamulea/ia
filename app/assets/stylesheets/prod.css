@@ -110,6 +110,7 @@ body {
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    width: max-content;
 }
 
 .table .btn:hover {
@@ -191,7 +192,7 @@ span.bullet::before {
 }
 @media screen and (min-width: 1024px) {
 .table th{
-  min-width: 125px;
+  min-width: 10px;
 }
 }
 @media screen and (max-width: 580px) {
