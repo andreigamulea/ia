@@ -3,6 +3,21 @@ class ContractesController < ApplicationController
   before_action :set_contracte_useri, only: %i[vizualizeaza_contract destroy_contracte_useri]
 
   # GET /contractes or /contractes.json
+  
+  
+  def preluare_emailuri_din_text # aceasta metoda va fi adaptata. Contractorii vor pune in formular mailurile care vor semna contracte
+    text = params[:text] || "Emailul meu este: luminita.trapcea@gmail.com olga@magicon.co.uk, braferdes@gmail.com;  "
+    potential_email_regex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/
+    potential_emails = text.scan(potential_email_regex)
+    valid_emails = potential_emails.select { |email| valid_email?(email) }
+
+    respond_to do |format|
+      format.html { @emails = valid_emails }
+      format.json { render json: valid_emails }
+    end
+    puts valid_emails
+  end
+  
   def index
     @contractes = Contracte.all
     @contracte = Contracte.last
@@ -268,5 +283,10 @@ end
       )
     end
     
+    def valid_email?(email)
+      email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+      !!(email =~ email_regex)
+    end
+
     
 end

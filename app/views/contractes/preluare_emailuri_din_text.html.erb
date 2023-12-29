@@ -1,0 +1,9 @@
+<% if defined?(@emails) %>
+
+  <ul>
+    <% @emails.each do |email| %>
+      <li><%= email %></li>
+      
+    <% end %>
+  </ul>
+<% end %>
