@@ -1,25 +1,34 @@
+<style>
+#cvp1 h1 {
+    font-size:25px; 
+    margin:0 auto; 
+    padding:25px 10px;
+    width: max-content;
+}
 
+#cvp1 h2, #cvp1 h3 {
+    font-size: 18px;
+}
+</style>
 <div class="container" id="cvp1">
 
 
-<div class="cr" style="background-color: aliceblue; ">
+<div class="cr" style="width:100%;" >
 
-
-
-  
-
+ 
+<div style="text-align:center;">
 <h1>CONTRACT DE VOLUNTARIAT</h1>
-    <p>Nr. 1 din data de 21.12.2023</p>
+    <p style="margin:0 auto; padding-bottom:25px;margin-top: -20px; width:max-content!important;">Nr. 1 din data de 21.12.2023</p>
+</div>
 
     <div class="section">
-        <p>Între <%= @nume_firma%>, cu sediul în <%= @sediu_firma%>, identificată cu CUI <%= @cui_firma%> , reprezentată de <%= @reprezentant_firma%>  în calitate de <%= @calitate_reprezentant%>, numită în continuare Organizația gazdă</p>
-        <p>si</p>
-        <p>
+        <p>Între <%= @nume_firma%>, cu sediul în <%= @sediu_firma%>, identificată cu CUI <%= @cui_firma%> , reprezentată de <%= @reprezentant_firma%>  în calitate de <%= @calitate_reprezentant%>, numită în continuare Organizația gazdă și</p>
+       <p>
         <p><%= @nume_voluntar || "Nu este disponibil" %>, domiciliat în <%= @localitate_voluntar || "Nu este disponibil" %>,
         strada <%= @strada_voluntar || "Nu este disponibil" %>,
         numărul <%= @numarstrada_voluntar || "Nu este disponibil" %>,
         bloc <%= @bloc_voluntar || "Nu este disponibil" %>,
-        județul <%= @judet_voluntar || "Nu este disponibil" %>.</p>
+        județul <%= @judet_voluntar || "Nu este disponibil" %>.
 
         legitimat cu <%= @ci_voluntar || "Nu este disponibil" %>, eliberat de <%= @eliberat_de || "Nu este disponibil" %>, la data de <%= @eliberat_data || "Nu este disponibil" %>, numit în continuare Voluntar,
       </p>
@@ -132,14 +141,14 @@
 
 
     <div class="semnatura">
-    <div class="gazda">
+    <div class="gazda" style="display:block;float:left;">
         <p>AMN-ROMANIA,</p>
         <p style="margin-top: -10px; border: 2px solid transparent; border-left: none;"><%= @reprezentant_firma %></p>
         <!-- Afișați semnătura adminului direct din variabilă -->
         <img src="<%= @semnatura_admin %>" alt="Semnătura reprezentantului AMN-ROMANIA" style="border: none;">
     </div>
     
-    <div class="voluntar">
+    <div class="voluntar" style="display:block;float:right;">
         <p>Voluntar</p>
         <p style="margin-top: -10px;">
         <p style="margin-top: -10px; border: 2px solid transparent; border-left: none;"><%= @nume_voluntar %></p>
@@ -162,6 +171,7 @@
     .gazda, .voluntar {
         max-width: 300px;
         flex: 1; /* Permite ca div-urile să se ajusteze în funcție de spațiul disponibil */
+        text-align:center;
     }
 
     .gazda canvas, .voluntar canvas {
@@ -177,28 +187,7 @@
         word-wrap: break-word;
     }
 
-    /* Media query pentru ecrane cu lățime mai mică de 720px */
-    @media (max-width: 925px) {
-        .gazda, .voluntar {
-            max-width: none;
-            flex-basis: 100%;
-        }
-        .voluntar {
-            margin-top: 20px;
-        }
-    }
 
-    /* Media query pentru ecrane foarte înguste */
-    @media (max-width: 300px) {
-        .gazda, .voluntar {
-            padding: 0;
-            margin: 0;
-        }
-
-        .gazda canvas, .voluntar canvas {
-            max-height: 150px; /* Reduce înălțimea canvas-ului pentru ecrane mici */
-        }
-    }
 </style>
 
 
