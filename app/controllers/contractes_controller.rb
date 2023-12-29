@@ -227,6 +227,10 @@ def show_pdf
         # Setează opțiunile pentru PDFKit, inclusiv dimensiunea paginii la A4
     options = {
       page_size: 'A4',
+      margin_top: '10mm',
+      margin_right: '10mm',
+      margin_bottom: '10mm',
+      margin_left: '10mm',
       encoding: 'UTF8'
     }
 
