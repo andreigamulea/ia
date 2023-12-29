@@ -224,7 +224,13 @@ def show_pdf
       locals: { contract: @contracte_useri },
       encoding: 'UTF8'
     )
-      pdf = PDFKit.new(html).to_pdf
+        # Setează opțiunile pentru PDFKit, inclusiv dimensiunea paginii la A4
+    options = {
+      page_size: 'A4',
+      encoding: 'UTF8'
+    }
+
+    pdf = PDFKit.new(html, options).to_pdf
       send_data pdf, filename: "Contract_#{@contracte_useri.id}_din_#{@contracte_useri.created_at.strftime('%d.%m.%Y')}.pdf",
         type: 'application/pdf',
         disposition: 'attachment'

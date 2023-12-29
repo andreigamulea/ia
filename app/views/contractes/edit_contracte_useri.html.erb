@@ -8,6 +8,8 @@
 #cvp1 h2, #cvp1 h3{
     font-size: 18px;
 }
+#cvp1 .form-label {
+    margin-bottom: 0;
 </style>
 <div class="container" id="cvp1">
 <%= render 'layouts/sideleft' %>
@@ -29,39 +31,39 @@
     <section class="contract-section">
     <div class="section-content">
         <p class="organization-info">
-            Între <span class="dynamic-content"><%= @nume_firma %></span>, cu sediul în <span class="dynamic-content"><%= @sediu_firma %></span>, identificată cu CUI <span class="dynamic-content"><%= @cui_firma %></span>, reprezentată de <span class="dynamic-content"><%= @reprezentant_firma %></span> în calitate de <span class="dynamic-content"><%= @calitate_reprezentant %></span>, numită în continuare Organizația gazdă
+            Între <span class="dynamic-content"><%= @nume_firma %></span>, cu sediul în <span class="dynamic-content"><%= @sediu_firma %></span>, identificată cu CUI <span class="dynamic-content"><%= @cui_firma %></span>, reprezentată de <span class="dynamic-content"><%= @reprezentant_firma %></span> în calitate de <span class="dynamic-content"><%= @calitate_reprezentant %></span>, numită în continuare Organizația gazdă și
         </p>
-        <p class="contract-connection">și</p>
+    
         <div class="volunteer-info">
-        <%= form.text_field :nume_voluntar, id: "nume-voluntar-sursa", placeholder: "Numele voluntarului", class: "form-input" %>
+        <%= form.text_field :nume_voluntar, id: "nume-voluntar-sursa", placeholder: "numele voluntarului", class: "form-input" %>
 
 
 
         <%= form.label :localitate_voluntar, "domiciliat în localitatea", class: "form-label" %>
-        <%= form.text_field :localitate_voluntar, id: "localitate-voluntar", placeholder: "Localitatea de domiciliu", class: "form-input" %>
+        <%= form.text_field :localitate_voluntar, id: "localitate-voluntar", placeholder: "localitatea de domiciliu", class: "form-input" %>
         <label>,</label>
       
         <%= form.label :strada_voluntar, "strada", class: "form-label" %>
-        <%= form.text_field :strada_voluntar, id: "strada-voluntar", placeholder: "Strada", class: "form-input" %>
+        <%= form.text_field :strada_voluntar, id: "strada-voluntar", placeholder: "strada", class: "form-input" %>
         <label>,</label>
       
         <%= form.label :numarstrada_voluntar, "numărul", class: "form-label" %>
-        <%= form.text_field :numarstrada_voluntar, id: "numar-voluntar", placeholder: "Număr", class: "form-input" %>
-        <label>,</label>
+        <%= form.text_field :numarstrada_voluntar, id: "numar-voluntar", placeholder: "număr", class: "form-input" %>
+   
       
-        <%= form.label :bloc_voluntar, "bloc", class: "form-label" %>
-        <%= form.text_field :bloc_voluntar, id: "bloc-voluntar", placeholder: "Bloc, scară, etaj, apartament", class: "form-input" %>
+        <%= form.label :bloc_voluntar, ",", class: "form-label" %>
+        <%= form.text_field :bloc_voluntar, id: "bloc-voluntar", placeholder: "bloc, scară, etaj, apartament", class: "form-input" %>
         <label>,</label>
       
         <%= form.label :judet_voluntar, "județul", class: "form-label" %>
-        <%= form.text_field :judet_voluntar, id: "judet-voluntar", placeholder: "Județ", class: "form-input" %>
+        <%= form.text_field :judet_voluntar, id: "judet-voluntar", placeholder: "județ", class: "form-input" %>
         <label>,</label>
       
-        <%= form.label :ci_voluntar, "având CI", class: "form-label" %>
-        <%= form.text_field :ci_voluntar, id: "ci-voluntar", placeholder: "CI serie și număr", class: "form-input" %>
+        <%= form.label :ci_voluntar, "legitimat cu", class: "form-label" %>
+        <%= form.text_field :ci_voluntar, id: "ci-voluntar", placeholder: "CI / pasaport serie și număr", class: "form-input" %>
       
         <%= form.label :eliberat_de, "eliberat de", class: "form-label" %>
-        <%= form.text_field :eliberat_de, id: "eliberat-de", placeholder: "Numele instituției", class: "form-input" %>
+        <%= form.text_field :eliberat_de, id: "eliberat-de", placeholder: "numele instituției", class: "form-input" %>
       
         <%= form.label :eliberat_data, "la data de", class: "form-label" %>
         <%= form.date_field :eliberat_data, id: "eliberat-data", class: "form-input", style: "text-transform: lowercase;" %>
@@ -77,11 +79,6 @@
     box-sizing: border-box;
 }
 
-.section-content {
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    box-sizing: border-box;
-}
 
 .organization-info, .contract-intro {
     margin-bottom: 15px;
@@ -235,7 +232,7 @@
     <div class="voluntar">
         <p>Voluntar: </p>
         <p style="margin-top:-15px;">
-            <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available; padding-left:5px;">
+            <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available;">
             <%= @contracte_useri.nume_voluntar %>
             </span>
         </p>
