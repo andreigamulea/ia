@@ -1,17 +1,7 @@
-<style>
-#cvp1 h1{
-    font-size:25px; 
-    margin:0 auto; 
-    padding:25px 10px;
-    width: max-content;
-}
-#cvp1 h2, #cvp1 h3{
-    font-size: 18px;
-}
-#cvp1 .form-label {
-    margin-bottom: 0;
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+
+
 <div class="container" id="cvp1">
 
 
@@ -29,10 +19,8 @@
         <p><%= @nume_voluntar || "Nu este disponibil" %>, domiciliat în <%= @localitate_voluntar || "Nu este disponibil" %>,
         strada <%= @strada_voluntar || "Nu este disponibil" %>,
         numărul <%= @numarstrada_voluntar || "Nu este disponibil" %>,
-        bloc <%= @bloc_voluntar || "Nu este disponibil" %>,
-        județul <%= @judet_voluntar || "Nu este disponibil" %>.
-
-        legitimat cu <%= @ci_voluntar || "Nu este disponibil" %>, eliberat de <%= @eliberat_de || "Nu este disponibil" %>, la data de <%= @eliberat_data || "Nu este disponibil" %>, numit în continuare Voluntar,
+        <%= @bloc_voluntar || "Nu este disponibil" %>,
+        județul <%= @judet_voluntar || "Nu este disponibil" %>, legitimat cu <%= @ci_voluntar || "Nu este disponibil" %>, eliberat de <%= @eliberat_de || "Nu este disponibil" %>, la data de <%= @eliberat_data || "Nu este disponibil" %>, numit în continuare Voluntar,
       </p>
       <p>s-a convenit încheierea prezentului contract în baza Legii nr. 78/ 2014 privind reglementarea activității de voluntariat din România.</p>
     </div>
@@ -164,6 +152,22 @@
 
     
     <style>
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+    
+    #cvp1 h1{
+        font-size:25px; 
+        margin:0 auto; 
+        padding:25px 10px;
+        width: max-content;
+    }
+    #cvp1 h2, #cvp1 h3{
+        font-size: 18px;
+    }
+    #cvp1 .form-label {
+        margin-bottom: 0;
+    }
     .semnatura {
         display: flex;
         flex-wrap: wrap;
