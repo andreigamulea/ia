@@ -1,16 +1,4 @@
-<style>
-#cvp1 h1{
-    font-size:25px; 
-    margin:0 auto; 
-    padding:25px 10px;
-    width: max-content;
-}
-#cvp1 h2, #cvp1 h3{
-    font-size: 18px;
-}
-#cvp1 .form-label {
-    margin-bottom: 0;
-</style>
+
 <div class="container" id="cvp1">
 <%= render 'layouts/sideleft' %>
 
@@ -75,6 +63,26 @@
 </section>
 
 <style>
+
+
+#cvp1 h1{
+    font-size:25px; 
+    margin:0 auto; 
+    padding:25px 10px;
+    width: max-content;
+}
+#cvp1 h2, #cvp1 h3{
+    font-size: 18px;
+}
+#cvp1 .form-label {
+    margin-bottom: 0;
+}
+#cvp1 button{
+    border: 1px solid #4b0082; 
+    background-color: #4b0082;
+}
+
+
 .contract-section {
     box-sizing: border-box;
 }
@@ -241,7 +249,7 @@
         
         
         
-        <button type="button" onclick="clearSignature()">Șterge Semnătura</button>
+        <button type="button" onclick="clearSignature()", class="register">Șterge Semnătura</button>
 
     </div>
 
@@ -302,7 +310,7 @@
 
 
     </br></br></br>
-<%= form.submit "Salvează Contractul" %>
+    <%= form.submit "Salvează Contractul", class: "register", style: "border: 1px solid #4b0082; background-color: #4b0082;" %>
 <% end %>
 
 </div>
