@@ -14,7 +14,7 @@
   
 
 <h1>CONTRACT DE VOLUNTARIAT</h1>
-    <p style="margin:0 auto; padding-bottom:25px;margin-top: -20px;width:max-content;">Nr. 1 din data de 21.12.2023</p>
+    <p style="margin:0 auto; padding-bottom:25px;margin-top: -20px;width:max-content;text-align:center;">Nr. 1 din data de 21.12.2023</p>
 
 
     <section class="contract-section">
@@ -61,43 +61,6 @@
         </p>
     </div>
 </section>
-
-<style>
-.contract-section {
-    box-sizing: border-box;
-}
-
-
-.organization-info, .contract-intro {
-    margin-bottom: 15px;
-}
-
-.form-label {
-    display: inline-block; /* Aliniere în linie cu inputurile */
-    margin-right: 5px; /* Spațiere între etichetă și input */
-    vertical-align: middle; /* Centrare verticală în raport cu inputurile */
-}
-
-.form-input {
-    width: auto; /* Lățime ajustată pentru a permite două inputuri pe rând */
-    padding: 8px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    display: inline-block; /* Afișare în linie pentru aliniere cu etichetele */
-    min-width: 290px;
-  }
-
-@media screen and (max-width: 600px) {
-    .form-input, .form-label {
-        width: 100%; /* Lățime completă pe ecrane mici pentru o mai bună vizibilitate */
-        display: block; /* Afișare pe rânduri separate pe ecrane mici */
-        margin-right: 0;
-    }
-}
-
-</style>
-
-
 
 
     <div class="section">
@@ -225,7 +188,7 @@
         </span>
         </p>
         <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
-        <button type="button" onclick="clearSignature(2)">Șterge Semnătura</button>
+        <button type="button" onclick="clearSignature(2)", class="register">Șterge Semnătura</button>
     </div>
   
 
@@ -233,6 +196,38 @@
     
     <style>
 
+    .contract-section {
+        box-sizing: border-box;
+    }
+    
+    
+    .organization-info, .contract-intro {
+        margin-bottom: 15px;
+    }
+    
+    .form-label {
+        display: inline-block; /* Aliniere în linie cu inputurile */
+        margin-right: 5px; /* Spațiere între etichetă și input */
+        vertical-align: middle; /* Centrare verticală în raport cu inputurile */
+    }
+    
+    .form-input {
+        width: auto; /* Lățime ajustată pentru a permite două inputuri pe rând */
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        display: inline-block; /* Afișare în linie pentru aliniere cu etichetele */
+        min-width: 290px;
+      }
+    
+    @media screen and (max-width: 600px) {
+        .form-input, .form-label {
+            width: 100%; /* Lățime completă pe ecrane mici pentru o mai bună vizibilitate */
+            display: block; /* Afișare pe rânduri separate pe ecrane mici */
+            margin-right: 0;
+        }
+    }
+    
     #cvp1 h1{
         font-size:25px; 
         margin:0 auto; 
@@ -245,11 +240,15 @@
     #cvp1 .form-label {
         margin-bottom: 0;
     }
-
+    #cvp1 button{
+        border: 1px solid #4b0082; 
+        background-color: #4b0082;
+    }
     .semnatura {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        text-align:center;
     }
 
     .gazda, .voluntar {
@@ -298,7 +297,7 @@
 
 
     </br></br></br>
-<%= form.submit "Salvează Contractul" %>
+<%= form.submit "Salvează Contractul", class: "register", style: "border: 1px solid #4b0082; background-color: #4b0082;" %>
 <% end %>
 
 </div>
