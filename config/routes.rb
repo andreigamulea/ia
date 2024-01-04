@@ -164,7 +164,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
 
   get 'home/index'
   get 'newsletter', to: 'home#newsletter'
-  get 'testnutritie1', to: 'home#testnutritie1'
+  get 'testnutritie4', to: 'home#testnutritie4'
   get 'testnutritie2', to: 'home#testnutritie2'
   get 'user77', to: 'home#user77'
 
