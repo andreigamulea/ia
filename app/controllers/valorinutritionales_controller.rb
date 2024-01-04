@@ -42,6 +42,7 @@ class ValorinutritionalesController < ApplicationController
   
   
   def aplicatie #pagina de produs-  Descriere app Valori nutritionale. posibilitate de cumparare
+
     @prods = Prod.where(status: 'activ').where(curslegatura: 'Nutritie')
   end
 
@@ -314,7 +315,7 @@ class ValorinutritionalesController < ApplicationController
       @selected_values = params[:selected_values]
       params.permit(:id, selected_values_attributes: [:id, :value])
     end
-    def set_user
+    def set_user #seteaza userul ca are acces la aplicatia Valori Nutritionale
       @has_access = false
       # Verifica daca userul este logat
       if current_user
@@ -323,9 +324,15 @@ class ValorinutritionalesController < ApplicationController
         @has_access = true
         puts("da are acces")
         # Utilizatorul are acces la resursa
+        elsif Date.today < Date.new(2024, 12, 31) && UserModulecursuri.exists?(user_id: current_user.id)
+          @has_access = true
+        elsif current_user && Date.today < Date.new(2024, 12, 31) && ComenziProd.joins(:prod).where(user_id: current_user.id, prod: { cod: ['cod11', 'cod12', 'cod13', 'cod72', 'cod73'] }, validat: "Finalizata").exists?
+          @has_access = true # aici dau acces la Calculator Valori N pana la 31.12.2024 - si mai jos
+          puts("utilizatorul are o comandă finalizată pentru un produs specific")
+          # Utilizatorul are o comandă finalizată pentru un produs specific
         else
           # Utilizatorul nu are acces la resursa
-          puts("nu, nu are acces")
+          puts("nu, nu are acces1")
           flash[:alert] = "Nu ai acces la această resursă."
           redirect_to aplicatie_path
         end
@@ -336,18 +343,25 @@ class ValorinutritionalesController < ApplicationController
       end
       
     end
-    def set_user1
+    def set_user1 #seteaza userul ca are acces la aplicatia Valori Nutritionale
       @has_access = false
       # Verifica daca userul este logat
       if current_user
         # Verifica daca userul este admin sau asociat cu cursul "Nutritie"
         if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Nutritie" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })
         @has_access = true
-        puts("da are acces")
+        puts("da are acces2")
         # Utilizatorul are acces la resursa
+        elsif Date.today < Date.new(2024, 12, 31) && UserModulecursuri.exists?(user_id: current_user.id)
+          @has_access = true
+          puts("utilizatorul este din UserModulecursuri")
+        elsif current_user && Date.today < Date.new(2024, 12, 31) && ComenziProd.joins(:prod).where(user_id: current_user.id, prod: { cod: ['cod11', 'cod12', 'cod13', 'cod72', 'cod73'] }, validat: "Finalizata").exists?
+            @has_access = true # aici dau acces la Calculator Valori N pana la 31.12.2024 - si mai sus
+            puts("utilizatorul are o comandă finalizată pentru un produs specific")
+            # Utilizatorul are o comandă finalizată pentru un produs specific
         else
           # Utilizatorul nu are acces la resursa
-          puts("nu, nu are acces")
+          puts("nu, nu are acces3")
           flash[:alert] = "Nu ai acces la această resursă."
           
         end
