@@ -120,26 +120,12 @@
                         <% end %>
                         <li><%= link_to 'Delogare', destroy_user_session_path, class: 'nav-item', id: 'logout_link',  data: { turbo_action: 'replace', turbo_method: 'delete' } %></li>
                 
-                        <% if current_user && current_user.role==1 %>
-                                          
-                        <li>
-                            <%= link_to 'Transport international', tayt12_transport_international_path('tri'), class: 'nav-item' %>
-                        </li>
-                        <li><%= link_to 'Newsletter', newsletter_path, class: 'nav-item' %></li>
-                        <li><%= link_to 'Nutritie modul 2', testnutritie2_path, class: 'nav-item' %></li>
-                        <li><%= link_to 'Nutritie modul 4', testnutritie4_path, class: 'nav-item' %></li>                  
-                       
-                        <li><%= link_to 'Contractori', contractes_path, class: 'nav-item' %></li>
+                        <% if current_user && current_user.role==1 %>                
 
                         <li><%= link_to 'PC', show_crypto_price_path, class: 'nav-item' %> </li>                       
                         
                         <% end %>
-                        <% if (current_user && current_user.role==1) || (current_user && current_user.email=='test@yahoo.com') %>
-                        <li><%= link_to 'Semnează Contract', contractes_semneaza_contract_path, class: 'nav-item' %></li>
-                        
-                        <li><%= link_to 'Vizualizeaza Toate Contractele', contracte_all_path, class: 'nav-item' %></li>
-                        <%= link_to 'Preluare Emailuri', contractes_preluare_emailuri_path %>
-                        <% end %>
+                       
                     </ul>
                 </li>
 
