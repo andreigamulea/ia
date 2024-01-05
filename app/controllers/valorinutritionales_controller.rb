@@ -328,6 +328,7 @@ class ValorinutritionalesController < ApplicationController
           @has_access = true
         elsif current_user && Date.today < Date.new(2024, 12, 31) && ComenziProd.joins(:prod).where(user_id: current_user.id, prod: { cod: ['cod11', 'cod12', 'cod13', 'cod72', 'cod73'] }, validat: "Finalizata").exists?
           @has_access = true # aici dau acces la Calculator Valori N pana la 31.12.2024 - si mai jos
+          #pt ca si cei care platesc nutritie4 sa aiba acces adaug mai sus produsele: cod88 de exemlu
           puts("utilizatorul are o comandă finalizată pentru un produs specific")
           # Utilizatorul are o comandă finalizată pentru un produs specific
         else
@@ -357,6 +358,7 @@ class ValorinutritionalesController < ApplicationController
           puts("utilizatorul este din UserModulecursuri")
         elsif current_user && Date.today < Date.new(2024, 12, 31) && ComenziProd.joins(:prod).where(user_id: current_user.id, prod: { cod: ['cod11', 'cod12', 'cod13', 'cod72', 'cod73'] }, validat: "Finalizata").exists?
             @has_access = true # aici dau acces la Calculator Valori N pana la 31.12.2024 - si mai sus
+            #pt ca si cei care platesc nutritie4 sa aiba acces adaug mai sus produsele: cod88 de exemlu
             puts("utilizatorul are o comandă finalizată pentru un produs specific")
             # Utilizatorul are o comandă finalizată pentru un produs specific
         else

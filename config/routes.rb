@@ -163,6 +163,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get 'home/index1', to: 'home#index1'
 
   get 'home/index'
+  get 'vajikarana', to: 'home#vajikarana'
   get 'newsletter', to: 'home#newsletter'
   get 'testnutritie4', to: 'home#testnutritie4'
   get 'testnutritie2', to: 'home#testnutritie2'
