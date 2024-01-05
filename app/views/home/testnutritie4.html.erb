@@ -56,7 +56,7 @@
     <p>Programul de pregătire în nutriția ayurvedică practică aplicată este conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</p>
     <% if !current_user %>      
     <div class="r1c2">
-        <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie1'), class: 'register' %>
+        <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie4'), class: 'register' %>
     </div>
     <%elsif current_user && !@has_access%>
     <%= link_to 'Înscrie-te acum', '#VideoNutritie', class: 'register' %>
@@ -152,7 +152,7 @@
                 </tr>      
             </thead>
             <tbody>
-            <% @prods.select{ |prod| prod.curslegatura == 'nutritie1' }.each do |prod| %>
+            <% @prods.select{ |prod| prod.curslegatura == 'nutritie4' }.each do |prod| %>
                     <tr>
                     <td>
                         <%= raw prod.nume.gsub('pentru participanti deja inscrisi', '<span class="text-danger">pentru participanti deja inscrisi</span>').gsub('cu inscriere', '<span class="text-danger">cu inscriere</span>') %>
@@ -166,7 +166,7 @@
                          </td>
                        <% else %>
                          <td style="text-align:center;">
-                           <%= link_to 'Comanda', new_user_session_with_return_path('testnutritie4'), class: 'btn btn-primary' %>
+                           <%= link_to 'Comanda', new_user_session_with_return_path('nutritie4'), class: 'btn btn-primary' %>
                          </td>
                        <% end %>
                        

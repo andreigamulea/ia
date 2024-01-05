@@ -1,4 +1,5 @@
 Rails.application.routes.draw do    
+  get 'nutritie4/index'
   get 'contractes/semneaza_contract', to: 'contractes#semneaza_contract'
   post '/contractes', to: 'contractes#create', as: 'contractes_create' # Aici, 'contractes_create' este numele rutei
   #get 'contractes/vizualizeaza/:id', to: 'contractes#vizualizeaza_contract', as: 'contracte_vizualizeaza'
@@ -44,6 +45,7 @@ Rails.application.routes.draw do
   get 'nutritie1', to: 'nutritie1#index'
   get 'nutritie2', to: 'nutritie2#index'
   get 'nutritie3', to: 'nutritie3#index'
+  get 'nutritie4', to: 'nutritie4#index'
   get 'myvideo', to: 'videos#myvideo'
   get 'videos/:id/myvideo1', to: 'videos#myvideo1', as: 'myvideo1'
   get 'videos/:id/myvideo2', to: 'videos#myvideo2', as: 'myvideo2'
