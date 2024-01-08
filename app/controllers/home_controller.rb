@@ -41,6 +41,8 @@ class HomeController < ApplicationController
   end
   def vajikarana
   end  
+  def traditia_ayurvedica
+  end  
   def testnutritie4
     @has_access = current_user&.role == 1
   
