@@ -166,6 +166,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
 
   get 'home/index'
   get 'vajikarana', to: 'home#vajikarana'
+  get 'traditia_ayurvedica', to: 'home#traditia_ayurvedica'
   get 'newsletter', to: 'home#newsletter'
   get 'testnutritie4', to: 'home#testnutritie4'
   get 'testnutritie2', to: 'home#testnutritie2'
