@@ -27,17 +27,24 @@ class ValorinutritionalesController < ApplicationController
       # aici puteți decide cum să gestionați această situație, de exemplu prin crearea unui nou obiect Visit
       head :unprocessable_entity
     else
-      # avem un obiect Visit, acum putem crea un eveniment
-      Ahoy::Event.create!(
-        visit_id: visit.id,
-        user_id: current_user.id,  # presupunem că există o metodă current_user care returnează utilizatorul curent
-        name: event_name,
-        properties: event_properties,
-        time: Time.current
-      )
+      if current_user && current_user.id
+        # avem un obiect Visit și un utilizator autentificat, acum putem crea un eveniment
+        Ahoy::Event.create!(
+          visit_id: visit.id,
+          user_id: current_user.id,  # presupunem că există o metodă current_user care returnează utilizatorul curent
+          name: event_name,
+          properties: event_properties,
+          time: Time.current
+        )
     
-      head :ok  # răspunde cu status 200 OK
+        head :ok  # răspunde cu status 200 OK
+      else
+        # current_user este nil sau nu are un id valid
+        # aici puteți decide cum să gestionați această situație
+        head :unauthorized  # sau un alt status HTTP adecvat
+      end
     end
+    
   end
   
   
