@@ -682,11 +682,25 @@ end
         return
       end
     
-      @condition1 = current_user && ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
-            .where(prod_id: Prod.where(cod: ['cod73', 'cod75']).select(:id))
-            .order(datasfarsit: :desc)
-            .first
-            &.datasfarsit >= Date.today
+     
+
+      @condition1 = if current_user
+        comanda = ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
+                            .where(prod_id: Prod.where(cod: ['cod73', 'cod75']).select(:id))
+                            .order(datasfarsit: :desc)
+                            .first
+        comanda && comanda.datasfarsit && comanda.datasfarsit >= Date.today
+      else
+        false
+      end
+
+
+
+
+     
+
+
+
 
       unless @condition1 || current_user.role == 1
       flash[:alert] = "Nu aveți acces la acest curs."
