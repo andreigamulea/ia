@@ -41,7 +41,7 @@
 <%= render 'layouts/sideleft' %>
 
 <div class="cr" style="background-color: white; ">
-    <h1 class="first-tittle">Ayush Cell Romania: Program de pregătire Nutritie Ayurvedică modulul 4</h1>
+    <h1 class="first-tittle">Ayush Cell Romania: Program de pregătire Nutritie Ayurvedică modulul 2</h1>
     <h2 class="main-title" >Nutritie Ayurvedică modulul 2</h2>
 
 <section>
@@ -70,29 +70,39 @@
 <h2 style="font-size:22px;">Din subiectele abordate in cadrul acestui modul:</h2>
 <br>
 
-<h3>🍎 Importanța principiului adecvării (satmya) în nutriția ayurvedică</h3>
-<p>Pentru a beneficia de o bună condiție trupească, sufletească și spirituală în legătură cu alimentația, este esențială potrivirea, altfel spus, adecvarea între ceea ce noi suntem și ceea ce folosim în alimentația noastră curentă. În Ayurveda, acest principiu de adecvare în nutriție este numit Satmya.</p>
+<h3>🍎 Importanța alegerii conștiente a hranei pentru sănătate debordantă</h3>
+<p>Scopul principal în alegerea alimentelor este obținerea și menținerea unei sănătăți optime. Aceasta implică atenție nu doar la cantitate, ci și la calitatea hranei, recunoscând influența directă a alimentației asupra stării noastre de sănătate ("suntem ceea ce mâncăm").
+Este important să se realizeze o compensare a carențele nutriționale provenite din lipsa calității alimentelor de bază, precum și o atentă alegere a provenienței alimentelor (animală sau vegetală).</p>
 
-<h3>🧬 Cunoașterea tipologiei constituționale personale</h3>
-<p>În abordarea nutriției, nu doar alimentația contează, ci și modul în care aceasta se adaptează particularităților noastre constituționale. Aceasta se poate realiza prin determinarea tipului constituțional ayurvedic personal, cunoscut sub denumirea de dosha-prakriti.</p>
+<h3>🧬 Prezentarea pe larg a rolurilor macronutrienților și a micronutrienților în nutriția ayurvedică practică aplicată</h3>
+<p>Macronutrienții - proteinele, carbohidrații și lipidele - sunt esențiali pentru sănătatea optimă a organismului, aceștia fiind implicați în procese vitale precum metabolismul, creșterea și reparația țesuturilor.
+Micronutrienții – vitaminele și mineralele - deși sunt prezente în hrană în cantități mult mai mici decât macronutrienții, contribuie semnificativ la păstrarea echilibrului și vitalității organismului. </p>
 
-<h3>🔥 Dosha-urile și rolul acestora în determinarea comportamentelor</h3>
-<p>Determinarea tipologiilor constituționale ayurvedice se bazează pe trei forme de energie vitală, numite dosha-uri: vata-dosha, pitta-dosha și kapha-dosha. Acestea determină comportamente diferite, atât în mediul exterior, cât și în cel intern, organic.</p>
+<h3>⚖️ Echilibrul nutrițional și impactul asupra sănătății</h3>
+<p>Menținerea unui echilibru între aportul energetic și necesitățile organismului este deosebit de importantă, implicând acțiuni precum calculul ratei metabolismului bazal și necesarului energetic zilnic.
+Unul dintre efectele menținerii echilibrului dinamic dintre aportul energetic și consumul energetic în cadrul unui organism uman este menținerea greutății corporale în parametrii ideali.</p>
 
-<h3>🍽️ Personalizarea nutriției în funcție de tipul constituțional</h3>
-<p>Fiecare tip constituțional ayurvedic are un mod specific de utilizare și valorificare a hranei în consumul zilnic. Această structurare specifică influențează forma trupului și fiziologia acestuia. Două ființe umane cu tipuri constituționale ayurvedice diferite pot utiliza aceleași tipuri de alimente, dar vor înregistra efecte diferite asupra trupului.</p>
+<h3>🔥 Nutriția ayurvedică are întotdeauna în vedere tipologia dosha-prakriti din Ayurveda</h3>
+<p>Din perspectiva Ayurveda, între starea de sănătate a unei ființe umane și starea în care se află dosha-urile acelei ființe umane este o legătură cauzală directă. Cunoașterea acestor conexiuni creează un cadru pentru ajustarea personalizată a alimentației și stilului de viață, esențială pentru atingerea unei stări de sănătate debordantă. Această abordare personalizată a nutriției ayurvedice aplicate se aliniază cu specificul constituțional unic al fiecărei ființe</p>
 
-<h3>⚖️ Corelarea greutății ideale cu Ayurveda</h3>
-<p>Formulele moderne de determinare a greutății ideale, bazate pe înălțime, vârstă și gen, precum și calculul indicelui de masă corporală (IMC) sunt interpretate și corelate cu înțelepciunea străveche din Ayurveda. Această corelare permite o nuanțare mai precisă a standardelor de sănătate în raport cu greutatea ideală pentru fiecare tipologie constituțională ayurvedică.</p>
-
-<p>Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</p>
 <% if !user_signed_in? || (current_user && !@has_access) %>
 
-<div class="r1c2" style="align-items: center; width:100%;">
 
 
-    <%= link_to 'Vizionează înregistrările',  '#VideoNutritie', class: 'register' %>
-</div>
+
+<% if !current_user %>      
+    <div class="r1c2" style="align-items: center; width:100%;">
+        <%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('nutritie2'), class: 'register' %>
+    </div>
+    <%elsif current_user && !@has_access%>
+    <div class="r1c2" style="align-items: center; width:100%;">
+    <%= link_to 'Vizionează înregistrările', '#VideoNutritie', class: 'register' %>
+    </div>
+<%end%> 
+
+
+
+
 
 <br>
 <h2>Înscriere și participare</h2>
@@ -105,9 +115,9 @@
 <h3><strong>Procesul de înscriere</strong></h3>
 <p>Pentru a vă înscrie la acest modul, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul la vizionarea inregistrarilor se va face direct in pagina de site.</p>
 <h3><strong>Costul participării</strong></h3>
-<p>Participarea la acest modul de nutriție reprezintă o investiție valoroasă în direcția educației pentru sănătate și pentru dezvoltarea personală și profesională. Costul este accesibil, fiind de 680 lei pentru participarea live pe platforma Zoom sau de 780 lei pentru participarea live plus accesul la vizionarea cursurilor direct pe site.</p>
+<p>Participarea la acest modul de nutriție reprezintă o investiție valoroasă în direcția educației pentru sănătate și pentru dezvoltarea personală și profesională, având un cost accesibil de 780 lei.</p>
 <h3><strong>Durata accesului la curs</strong></h3>
-<p>Participanții care au achitat 780 lei vor avea acces la vizionarea înregistrărilor cursului pentru o perioadă de 30 de zile de la data finalizarii acestui modul.</p>
+<p>Participanții vor avea acces la vizionarea înregistrărilor cursului pentru o perioadă de 90 de zile de la data înscrierii.</p>
 
 </section>
 

@@ -124,6 +124,8 @@ class ApplicationController < ActionController::Base
           tayv2_path # Înlocuiește cu calea corespunzătoare  taxainscriere
         elsif return_to == "taxainscriere" 
           cursayurveda_path
+        elsif return_to == "traditia_ayurvedica" 
+          traditia_ayurvedica_path
         elsif return_to == "evaluaretipologie" 
           evaluare_tipologie_ayurvedica_path  
         elsif return_to == "tri" 

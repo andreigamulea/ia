@@ -1,5 +1,7 @@
 class Nutritie1Controller < ApplicationController
   def index
+    #functioneaza f bine. este luata in considerare si datasfarsit pana cand a platit sa aiba acces
+    # dupa cele 60 zile acces ii apare sa plateasca din nou 200 lei pt acces - si daca plateste va avea din nou acces
     @has_access = current_user&.role == 1
 
   # Verifică dacă userul curent există în UserModulecursuri cu condițiile specificate
@@ -11,7 +13,7 @@ class Nutritie1Controller < ApplicationController
                                       .exists?
   end
 
-  @has_access_partial = if current_user
+  @has_access1 = if current_user
     has_access_module_1 = UserModulecursuri.exists?(user_id: current_user.id, 
                                                     modulecursuri_id: 1, 
                                                     validat: "Finalizata")
@@ -23,12 +25,24 @@ class Nutritie1Controller < ApplicationController
     has_access_module_1 && !has_access_module_2
   end
   
+ 
+  
+
   @condition1 = if current_user
-    current_user.role == 1 || ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
-              .where(prod_id: Prod.where(cod: ['cod73', 'cod75']).select(:id))
-              .exists?
+    comanda = ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
+                        .where(prod_id: Prod.where(cod: ['cod73', 'cod75']).select(:id))
+                        .order(datasfarsit: :desc)
+                        .first
+  
+    if comanda && comanda.datasfarsit
+      comanda.datasfarsit >= Date.today
+    else
+      false
+    end
   end
   
+  
+
   
 
   if @has_access #@myvideo4  este pentru cei care au platit tot nutritie1 p1+p2 - vor avea acces pana la curs 8b
@@ -45,11 +59,22 @@ class Nutritie1Controller < ApplicationController
     @prods = Prod.none
     @platit=true # variabila care permite accesul la video
     @myvideo = Video.where(tip: 'nutritie1').where('ordine > ? AND ordine < ?', 0, 1000).order(ordine: :asc)
-  elsif current_user && @has_access_partial
+  elsif current_user && @has_access1
     puts("da1")
-        @condition = ComenziProd.exists?(user_id: current_user.id, 
-                                prod_id: Prod.find_by(cod: 'cod76')&.id, 
-                                validat: "Finalizata") if current_user
+    @condition = if current_user
+      comanda = ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
+                          .where(prod_id: Prod.find_by(cod: 'cod76')&.id)
+                          .order(datasfarsit: :desc)
+                          .first
+    
+      if comanda && comanda.datasfarsit
+        comanda.datasfarsit >= Date.today
+      else
+        false
+      end
+    end
+    
+    
 
 
         if @condition
@@ -58,6 +83,7 @@ class Nutritie1Controller < ApplicationController
         else
           puts("da3")
           @prods = Prod.where(curslegatura: 'nutritie1', status: 'activ', cod: 'cod76')  
+          
         end  
   elsif current_user && @has_access
     @prods = Prod.where(curslegatura: 'nutritie1', status: 'activ', cod: 'cod75')
