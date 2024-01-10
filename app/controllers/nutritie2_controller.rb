@@ -11,17 +11,22 @@ class Nutritie2Controller < ApplicationController
                                                 validat: "Finalizata")
     end
     @condition1 = if current_user
-      comanda = ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
-                          .where(prod_id: Prod.where(cod: ['cod72', 'cod74']).select(:id))
-                          .order(datasfarsit: :desc)
-                          .first
-    
-      if comanda && comanda.datasfarsit
-        comanda.datasfarsit >= Date.today
+      if current_user.role == 1
+        true
       else
-        false
+        comanda = ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
+                            .where(prod_id: Prod.where(cod: ['cod72', 'cod74']).select(:id))
+                            .order(datasfarsit: :desc)
+                            .first
+    
+        if comanda && comanda.datasfarsit
+          comanda.datasfarsit >= Date.today
+        else
+          false
+        end
       end
     end
+    
     
     
     if @has_access
