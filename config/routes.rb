@@ -1,4 +1,6 @@
 Rails.application.routes.draw do    
+  
+  get 'traditia_ayurvedica/amnaya', to: 'traditia_ayurvedica#amnaya', as: 'amnaya'
   get 'nutritie4/index'
   get 'contractes/semneaza_contract', to: 'contractes#semneaza_contract'
   post '/contractes', to: 'contractes#create', as: 'contractes_create' # Aici, 'contractes_create' este numele rutei
