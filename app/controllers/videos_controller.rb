@@ -603,20 +603,32 @@ end
     end
 
     def set_user67
+     
+
       unless user_signed_in?
         flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
         redirect_to new_user_session_path
         return
       end
-    
-      @condition1 = current_user && ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
-                                               .where(prod_id: Prod.where(cod: ['cod72', 'cod74']).select(:id))
-                                               .exists?
-    
+
+
+  
+
+
+    puts("sal0")
+      comanda = ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
+          .where(prod_id: Prod.where(cod: ['cod72', 'cod74']).select(:id))
+          .order(datasfarsit: :desc)
+          .first
+      puts("sal1")
+      @condition1 = comanda && comanda.datasfarsit >= Date.today
+      puts("sal2")
+      Rails.logger.info "Condition1 este: #{@condition1}, User Role: #{current_user.role}"
       unless @condition1 || current_user.role == 1
-        flash[:alert] = "Nu aveți acces la acest curs."
-        redirect_to root_path # sau o altă cale relevantă
+      redirect_to root_path
+      flash[:alert] = "Nu aveți acces la acest curs."
       end
+
     end
     
   
@@ -665,13 +677,16 @@ end
       end
     
       @condition1 = current_user && ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
-                                               .where(prod_id: Prod.where(cod: ['cod73', 'cod75']).select(:id))
-                                               .exists?
-    
+            .where(prod_id: Prod.where(cod: ['cod73', 'cod75']).select(:id))
+            .order(datasfarsit: :desc)
+            .first
+            &.datasfarsit >= Date.today
+
       unless @condition1 || current_user.role == 1
-        flash[:alert] = "Nu aveți acces la acest curs."
-        redirect_to root_path # sau o altă cale relevantă
+      flash[:alert] = "Nu aveți acces la acest curs."
+      redirect_to root_path # sau o altă cale relevantă
       end
+
     end
     
     def set_user10

@@ -7,16 +7,20 @@
   <%= video.luna %>
   
   <% end %>
+  <% if (video.ordine > 0 && video.ordine < 1000)%> 
+  <%= video.luna %>
+  
+  <% end %>
 </td>
 <% end %>
   <td><%= video.nume %></td>
   <td><%= video.descriere %></td>
  
   <td>   
-  <% if current_user && @has_access%>
+  <% if current_user && (@has_access || @has_access1) && ((video.ordine > 1000 && video.ordine < 2000) || (video.ordine > 2000 && video.ordine < 3000))%>
     <%= link_to "Vezi video", myvideo8_path(id: video.id, link: video.link), class: "btn btn-primary" %>
   <%end%>  
-  <% if current_user && @has_access1%>
+  <% if current_user &&  @condition1 && (video.ordine > 0 && video.ordine < 1000) %>
     <%= link_to "Vezi video", myvideo9_path(id: video.id, link: video.link), class: "btn btn-primary" %>
   <%end%>  
   </td>
