@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   get 'videos/:id/myvideo8', to: 'videos#myvideo8', as: 'myvideo8'
   get 'videos/:id/myvideo9', to: 'videos#myvideo9', as: 'myvideo9'
   get 'videos/:id/myvideo10', to: 'videos#myvideo10', as: 'myvideo10'
+  get 'videos/:id/myvideo11', to: 'videos#myvideo11', as: 'myvideo11'
  
   get 'videos/tayv2', to: 'videos#tayv2', as: 'tayv2'
   get 'tabara_de_ayurveda_toamna1', to: 'videos#tayt12', as: 'tayt12'
