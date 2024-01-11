@@ -13,7 +13,7 @@ class TraditiaAyurvedicaController < ApplicationController
                                       .pluck(:prod_id)
     
       # Selectează produsele eligibile care nu au fost cumpărate de current_user
-      @prods = Prod.where(id: eligible_prods - purchased_prod_ids)
+      @prods = Prod.where(id: eligible_prods - purchased_prod_ids).order(:id)
     
       # Selectează produsele cumpărate de current_user
       @prods_cumparate = Prod.where(id: purchased_prod_ids)
@@ -26,7 +26,7 @@ class TraditiaAyurvedicaController < ApplicationController
       @videos_correspondente = Video.where(cod: coduri_produse_cumparate).order(:ordine)
       end
     else
-      @prods = Prod.where(curslegatura: 'traditia_ayurvedica', status: 'activ')
+      @prods = Prod.where(curslegatura: 'traditia_ayurvedica', status: 'activ').order(:id)
       # În cazul în care nu există un current_user, @prods_cumparate va fi gol
       @prods_cumparate = Prod.none
       @videos_correspondente= Video.none
