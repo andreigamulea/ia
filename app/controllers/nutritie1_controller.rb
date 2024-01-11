@@ -2,6 +2,11 @@ class Nutritie1Controller < ApplicationController
   def index
     #functioneaza f bine. este luata in considerare si datasfarsit pana cand a platit sa aiba acces
     # dupa cele 60 zile acces ii apare sa plateasca din nou 200 lei pt acces - si daca plateste va avea din nou acces
+    # cine plateste 780 lei pe langa comanda finalizata ce apare in ComenziProd apar 2 inregistrari noi
+    #    in UserModulecursuri: modulecursuri_id  1 si 2 finalizate iar daca plateste completarea de 300 lei apare
+    #    si in UserModulecursuri: modulecursuri_id  2 finalizata
+    #daca este in UserModulecursuri cu modulecursuri_id  1 si 2 finalizate atunci poate plati 200 pt acces digital
+
     @has_access = current_user&.role == 1
 
   # Verifică dacă userul curent există în UserModulecursuri cu condițiile specificate
