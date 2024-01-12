@@ -209,7 +209,10 @@ class CursuriayurvedasController < ApplicationController
   def an2
         
         # Selectează toate ID-urile de produse care au fost plătite de către utilizatorul curent
-        produse_platite_ids = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata').pluck(:prod_id)
+         produse_platite_ids = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+            .where('datasfarsit IS NULL OR datasfarsit >= ?', Date.current)
+            .pluck(:prod_id)
+
 
         # Obține toate produsele care nu sunt în lista de produse plătite
         @prods = Prod.where(curslegatura: "an2").where.not(id: produse_platite_ids).order(:linkstripe)
