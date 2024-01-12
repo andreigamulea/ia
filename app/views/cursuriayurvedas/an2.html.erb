@@ -13,8 +13,10 @@
     
 
    <h2 class="cr-title" style="margin-top: 10px;">Ayush Cell Romania</h2>
-   <%if current_user && @has_access && !@platit%>
+   <%if current_user && @prods.count>0%>
 <div class="tbland">
+<h2 style= "text-align: center;padding: 0 10px;">Accesare cursuri Ayurveda</h2></br>
+
 <div class="tbr">
   <table class="table table-striped table-hover">
       <thead>
@@ -57,7 +59,7 @@
     <table class="table">
       <thead>
       <tr>
-          <th>Data</th>
+          <th>Nr</th>
           <th>Nume</th>
           <th>Descriere</th>       
           <th>Actiune</th>
