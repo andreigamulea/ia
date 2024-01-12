@@ -207,17 +207,43 @@ class CursuriayurvedasController < ApplicationController
 
   end
   def an2
-    @prods=Prod.where(cod: "cod78")        
-    email_eligibile = ["mihaelachazli@gmail.com", "ade.dinu@gmail.com"]   
-    @has_access = current_user && (email_eligibile.include?(current_user.email) || current_user.role == 1)
-    @platit = if current_user
-      current_user.role == 1 || ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
-                 .where(prod_id: Prod.where(cod: ['cod78']).select(:id))
-                 .exists?
-    end
-    puts("@platit= #{@platit}")
-    @myvideo = Video.where(tip: 'an2').where('ordine > ? AND ordine < ?', 0, 1000).order(ordine: :asc) 
-  end  
+        
+        # Selectează toate ID-urile de produse care au fost plătite de către utilizatorul curent
+        produse_platite_ids = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata').pluck(:prod_id)
+
+        # Obține toate produsele care nu sunt în lista de produse plătite
+        @prods = Prod.where(curslegatura: "an2").where.not(id: produse_platite_ids).order(:linkstripe)
+
+
+
+
+        #@prods=Prod.where(curslegatura: "an2").order(:linkstripe) 
+        email_eligibile = ["mihaelachazli@gmail.com", "ade.dinu@gmail.com", "arkosi.mariann@gmail.com"]   
+        @has_access = current_user && (email_eligibile.include?(current_user.email) || current_user.role == 1)
+        
+        coduri_produse_platite = ComenziProd.joins(:prod)
+                                          .where(user_id: current_user.id, validat: 'Finalizata')
+                                          .where('datasfarsit IS NULL OR datasfarsit >= ?', Date.current)
+                                          .pluck('prods.cod')
+
+        # Obține toate videoclipurile care au un cod corespunzător produselor plătite
+        if current_user.role==1
+          @myvideo = Video.where(tip: 'an2')
+                        .where('ordine > ? AND ordine < ?', 0, 1000)
+                        .order(ordine: :asc)
+        else  
+        @myvideo = Video.where(tip: 'an2')
+                        .where('ordine > ? AND ordine < ?', 0, 1000)
+                        .where(cod: coduri_produse_platite)
+                        .order(ordine: :asc) 
+        end  
+        @platit = if current_user
+          current_user.role == 1 || coduri_produse_platite.count > 0
+        end
+    
+        puts("@platit= #{@platit}")
+    
+    end  
 
   private
     # Use callbacks to share common setup or constraints between actions.

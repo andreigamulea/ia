@@ -415,7 +415,7 @@ end
       
       # Dacă nu se potrivește niciuna dintre condițiile de mai sus
       flash[:alert] = "Nu aveți acces la acest videoclip."
-      redirect_to servicii_path
+      redirect_to an2_path
     end
     
 
