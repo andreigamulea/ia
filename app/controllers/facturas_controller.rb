@@ -87,12 +87,13 @@ class FacturasController < ApplicationController
           encoding: 'UTF8'
         )
         pdf = PDFKit.new(html).to_pdf
-        send_data pdf, filename: "Factura_#{@factura.id + 1000}_din_#{@factura.data_emiterii.strftime('%d.%m.%Y')}.pdf",
-          type: 'application/pdf',
-          disposition: 'attachment'
+        filename_prefix = @factura.id + 1000 <= 1308 ? @factura.id + 1000 : @factura.id + 999
+        filename = "Factura_#{filename_prefix}_din_#{@factura.data_emiterii.strftime('%d.%m.%Y')}.pdf"
+        send_data pdf, filename: filename, type: 'application/pdf', disposition: 'attachment'
       end
     end
   end
+  
   def download_all
     # Crearea unui folder temporar pentru stocarea PDF-urilor
     temp_folder = Rails.root.join('tmp', 'pdfs')
