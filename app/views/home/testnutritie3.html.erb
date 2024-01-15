@@ -1,0 +1,270 @@
+
+<style>
+#nutritie1 .cm h2 {
+    font-size:22px;
+}
+#nutritie1 .register{
+    border: 1px solid #4b0082;
+    background-color:#4b0082;
+}
+#nutritie1 .cm h3{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:0;
+}
+#nutritie1 .register{
+    margin:0;
+    margin-top:20px;
+}
+#nutritie1 .table td {
+    text-align:center;
+}
+@media screen and (max-width: 720px) {
+    #nutritie1 .register{
+        margin:0 auto;
+        margin-top:20px;
+    }
+    .cm{
+        text-align:center;
+    }
+}
+
+</style>
+<% content_for :title, "Ayush Cell Romania: Program de nutritie Ayurvedica: modulul 2" %>
+<% content_for :meta_tags do %>
+  <meta name="description" content="Descoperiți importanța adaptării (satmya) alimentației la tipologia constituțională ayurvedică proprie (dosha) și impactul acesteia asupra sănătății.">
+  <meta name="keywords" content="ayurveda, nutritie ayurvedica, dosha, vata, pitta, kapha, dosha-prakriti, greutatea ideala, formule greutate ideala">
+  <link rel="canonical" href="https://www.ayushcell.ro/nutritie2">
+<% end %>
+
+<div class="container" id="nutritie1">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: white; ">
+    <h1 class="first-tittle">Ayush Cell Romania: Program de pregătire Nutritie Ayurvedică modulul 2</h1>
+    <h2 class="main-title" >Nutritie Ayurvedică modulul 2</h2>
+
+<section>
+
+
+<div class="row1 center" style="max-width:920px; margin:0 auto;">
+    <div class="r1c1" style="height: 350px;">
+      
+      <img src="<%= image_url('nutritie4.jpg') %>" alt="Program Nutriție Ayurvedică">
+    </div>
+    <div class="r1c2">
+    <p>Programul de pregătire în nutriția ayurvedică practică aplicată este conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</p>
+    <% if !current_user %>      
+    <div class="r1c2">
+        <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie2'), class: 'register' %>
+    </div>
+    <%elsif current_user && !@has_access%>
+    <%= link_to 'Înscrie-te acum', '#VideoNutritie', class: 'register' %>
+
+     <%end%> 
+     
+ </div>
+  </div>
+<section class="cm">  
+<br>
+<h2 style="font-size:22px;">Din subiectele abordate in cadrul acestui modul:</h2>
+<br>
+
+<h3>🍎 Importanța alegerii conștiente a hranei pentru sănătate debordantă</h3>
+<p>Scopul principal în alegerea alimentelor este obținerea și menținerea unei sănătăți optime. Aceasta implică atenție nu doar la cantitate, ci și la calitatea hranei, recunoscând influența directă a alimentației asupra stării noastre de sănătate ("suntem ceea ce mâncăm").
+Este important să se realizeze o compensare a carențele nutriționale provenite din lipsa calității alimentelor de bază, precum și o atentă alegere a provenienței alimentelor (animală sau vegetală).</p>
+
+<h3>🧬 Prezentarea pe larg a rolurilor macronutrienților și a micronutrienților în nutriția ayurvedică practică aplicată</h3>
+<p>Macronutrienții - proteinele, carbohidrații și lipidele - sunt esențiali pentru sănătatea optimă a organismului, aceștia fiind implicați în procese vitale precum metabolismul, creșterea și reparația țesuturilor.
+Micronutrienții – vitaminele și mineralele - deși sunt prezente în hrană în cantități mult mai mici decât macronutrienții, contribuie semnificativ la păstrarea echilibrului și vitalității organismului. </p>
+
+<h3>⚖️ Echilibrul nutrițional și impactul asupra sănătății</h3>
+<p>Menținerea unui echilibru între aportul energetic și necesitățile organismului este deosebit de importantă, implicând acțiuni precum calculul ratei metabolismului bazal și necesarului energetic zilnic.
+Unul dintre efectele menținerii echilibrului dinamic dintre aportul energetic și consumul energetic în cadrul unui organism uman este menținerea greutății corporale în parametrii ideali.</p>
+
+<h3>🔥 Nutriția ayurvedică are întotdeauna în vedere tipologia dosha-prakriti din Ayurveda</h3>
+<p>Din perspectiva Ayurveda, între starea de sănătate a unei ființe umane și starea în care se află dosha-urile acelei ființe umane este o legătură cauzală directă. Cunoașterea acestor conexiuni creează un cadru pentru ajustarea personalizată a alimentației și stilului de viață, esențială pentru atingerea unei stări de sănătate debordantă. Această abordare personalizată a nutriției ayurvedice aplicate se aliniază cu specificul constituțional unic al fiecărei ființe</p>
+
+<% if !user_signed_in? || (current_user && !@has_access) %>
+
+
+
+
+<% if !current_user %>      
+    <div class="r1c2" style="align-items: center; width:100%;">
+        <%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('nutritie2'), class: 'register' %>
+    </div>
+    <%elsif current_user && !@has_access%>
+    <div class="r1c2" style="align-items: center; width:100%;">
+    <%= link_to 'Vizionează înregistrările', '#VideoNutritie', class: 'register' %>
+    </div>
+<%end%> 
+
+
+
+
+
+<br>
+<h2>Înscriere și participare</h2>
+<br>
+
+<h3><strong>Cine poate participa?</strong></h3>
+<p>Programul este accesibil oricui este interesat de o alimentație sănătoasă, fără a fi necesară o pregătire profesională specifică. Deși cunoașterea preliminară a unor notiuni din Ayurveda poate constitui un avantaj, modulul acoperă toate conceptele esențiale pentru a vă asigura succesul în parcurgerea lecțiilor și pentru a facilita o înțelegere profundă a materiei.</p>
+<h3><strong>Modalitatea de desfășurare a cursului</strong></h3>
+<p>Cursul este disponibil exclusiv prin înregistrări, oferind astfel participanților nou înscrisi libertatea de a accesa conținutul acestui modul, la orice oră și fără restricții de timp, asigurând flexibilitatea necesară în gestionarea programului personal.</p>
+<h3><strong>Procesul de înscriere</strong></h3>
+<p>Pentru a vă înscrie la acest modul, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul la vizionarea inregistrarilor se va face direct in pagina de site.</p>
+<h3><strong>Costul participării</strong></h3>
+<p>Participarea la acest modul de nutriție reprezintă o investiție valoroasă în direcția educației pentru sănătate și pentru dezvoltarea personală și profesională, având un cost accesibil de 780 lei.</p>
+<h3><strong>Durata accesului la curs</strong></h3>
+<p>Participanții vor avea acces la vizionarea înregistrărilor cursului pentru o perioadă de 90 de zile de la data înscrierii.</p>
+
+</section>
+
+
+<section>
+<% if !user_signed_in? %>
+
+<%end%>
+<%end%>
+<% if current_user && @has_access %>
+<p style="font-size:18px;">Programul de pregătire în nutriția ayurvedică practică aplicată este conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</h1>
+<%else%>
+
+<%end%>
+   
+ 
+</section>
+
+ 
+
+
+
+
+
+
+
+
+<section>
+<%if !@platit%>
+
+<h1 class="alimente-nutritionale" id="VideoNutritie" style="font-size:28px;">Acces prezentari video Nutritie Modulul 2</h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr class= "desk">
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Servicii</th>                    
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Detalii</th>
+                    
+                    <th style="height: 40px; vertical-align:middle; width: 14%;">Pret</th>
+                    <th style="height: 40px; vertical-align:middle; width: 12%;">Actiune</th>
+                </tr>      
+            </thead>
+            <tbody>
+            <% @prods.select{ |prod| prod.curslegatura == 'nutritie2' }.each do |prod| %>
+                    <tr>
+                    <td>
+                        <%= raw prod.nume.gsub('pentru participanti deja inscrisi', '<span class="text-danger">pentru participanti deja inscrisi</span>').gsub('cu inscriere', '<span class="text-danger">cu inscriere</span>') %>
+                    </td>                      
+                        <td><%= prod.detalii %></td> 
+                        
+                         <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
+                         <% if current_user %>
+                         <td style="text-align:center;">
+                           <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
+                         </td>
+                       <% else %>
+                         <td style="text-align:center;">
+                           <%= link_to 'Comanda', new_user_session_with_return_path('nutritie2'), class: 'btn btn-primary' %>
+                         </td>
+                       <% end %>
+                       
+                        </tr>  
+                <% end %>  
+            </tbody>
+        </table>
+    </div>
+<%end%>    
+
+<% if current_user %>
+<% if @platit %>
+
+<h2 style= "text-align: center;padding: 0 10px; font-size:28px;">Înregistrări video Program de pregătire: Nutritie Ayurvedică modulul 2</h2></br>
+
+
+
+<div id="videos">
+  <table class="table">
+    <thead>
+    <tr>
+        <th>Data</th>
+        <th>Nume</th>
+        <th>Descriere</th>       
+        <th>Actiune</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+    <% @myvideo.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<% end %><% end %>
+
+
+<% if !user_signed_in? || (current_user && !@has_access) %>
+
+
+
+<%end%>
+<% if current_user && @has_access %>
+
+<%else%>
+<br><br><br>
+<%end%>
+    <% if current_user && (@has_access || @has_access1)%>
+        <h2 style= "text-align: center;padding: 0 10px; font-size:28px;margin-top:35px;">Resurse</h2></br>
+
+
+
+        <div id="videos">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Nume</th>
+                    <th>Descriere</th>       
+                    <th>Actiune</th>
+                    <th>Descarca PDF</th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                <% previous_video_tip = nil %>
+                <% if current_user && @has_access%>
+                <% @myvideo4.each do |video| %>
+                    <%= render partial: 'video1', locals: { video: video, previous_video_tip: previous_video_tip } %>
+                    <% previous_video_tip = video.tip %>
+                <% end %>
+                <% end %>
+                <% if current_user && @has_access1%>
+                <% @myvideo3.each do |video| %>
+                    <%= render partial: 'video1', locals: { video: video, previous_video_tip: previous_video_tip } %>
+                    <% previous_video_tip = video.tip %>
+                <% end %>
+                <% end %>
+
+                </tbody>
+            </table>
+        </div>
+    <%end%>
+ 
+</section>
+
+</div>
+</div>
