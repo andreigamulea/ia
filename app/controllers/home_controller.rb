@@ -42,6 +42,8 @@ class HomeController < ApplicationController
   end
   def vajikarana
   end  
+  def rasayana
+  end  
   def traditia_ayurvedica
     @has_access = current_user&.role == 1     
     if current_user
