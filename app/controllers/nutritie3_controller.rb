@@ -1,72 +1,108 @@
 class Nutritie3Controller < ApplicationController
   def index
-    
-    if current_user && current_user.limba=='EN'
-    @myvideo = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
-    else  
-    @myvideo = Video.where(tip: 'nutritie3').where('ordine <= ?', 1000).order(ordine: :asc)
-    end  
-    # Logic for @has_access
-    @has_access = if current_user && current_user.role == 1
-                    true
-                  elsif current_user && current_user.role == 0
-                    ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod12" }).exists? ||
-                    (ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod11" }).exists? && 
-                     ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod38" }).exists?) ||
-                    (ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod13" }).exists? && 
-                     ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod39" }).exists?)
-                  else
-                    false
-                  end
-    
-                  @has_access1 = if current_user && current_user.role == 0
-                    (ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod11" }).exists? && 
-                     !ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod38", "cod39"] }).exists?) ||
-                    (ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod13" }).exists? && 
-                     !ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod38", "cod39"] }).exists?)
-                  else
-                    false
-                  end
+    @has_access = current_user&.role == 1
   
-      # Logic for @myvideo2
-    if current_user && @has_access1
-      # Get the cod values from the Prod model based on the user's purchases
-      puts("da are acces1")
-      paid_cod_values = ComenziProd.joins(:prod).where(user_id: current_user.id).where('comenzi_prods.datasfarsit >= ?', Date.today).pluck("prods.cod").uniq
-      puts("paid_cod_values: #{paid_cod_values}")
-      puts("da are acces2")
-      
+    # Verifică dacă userul curent există în UserModulecursuri cu condițiile specificate
+    if current_user
+                  @has_access = if current_user
+                    if current_user.role == 1
+                      true
+                    elsif current_user.role == 0
+                      acces_initial = ComenziProd.joins(:prod)
+                                                 .where(user_id: current_user.id, 
+                                                        prods: { cod: ["cod12"] }, 
+                                                        validat: "Finalizata")
+                                                 .where("to_char(datainceput, 'YYYY') = ?", "2023")
+                                                 .exists? ||
+                                       (ComenziProd.joins(:prod)
+                                                   .where(user_id: current_user.id, 
+                                                          prods: { cod: ["cod11"] }, 
+                                                          validat: "Finalizata")
+                                                   .where("to_char(datainceput, 'YYYY') = ?", "2023")
+                                                   .exists? &&
+                                        ComenziProd.joins(:prod)
+                                                   .where(user_id: current_user.id, 
+                                                          prods: { cod: ["cod38"] }, 
+                                                          validat: "Finalizata")
+                                                   .where("to_char(datainceput, 'YYYY') = ?", "2023")
+                                                   .exists?) ||
+                                       (ComenziProd.joins(:prod)
+                                                   .where(user_id: current_user.id, 
+                                                          prods: { cod: ["cod13"] }, 
+                                                          validat: "Finalizata")
+                                                   .where("to_char(datainceput, 'YYYY') = ?", "2023")
+                                                   .exists? &&
+                                        ComenziProd.joins(:prod)
+                                                   .where(user_id: current_user.id, 
+                                                          prods: { cod: ["cod39"] }, 
+                                                          validat: "Finalizata")
+                                                   .where("to_char(datainceput, 'YYYY') = ?", "2023")
+                                                   .exists?)
+                    
 
-      # Filter videos based on the paid cod values
-      # Preia codurile relevante din tabela `Video`
-      if current_user && current_user.limba=='EN'    
-        puts("da are acces3")   
-        
-        coduri_din_video = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc).pluck(:cod)
-        puts("coduri_din_video: #{coduri_din_video}") 
-      else  
-        puts("da are acces4")  
-        coduri_din_video = Video.where(tip: 'nutritie3').where('ordine < ?', 1000).pluck(:cod)
-        puts("coduri_din_video: #{coduri_din_video}") 
-        puts("da are acces5")
-      end  
-      # Calculează intersecția între codurile plătite și cele relevante
-      relevant_cod_values = paid_cod_values & coduri_din_video
-      @am_video=relevant_cod_values
-      
 
-      @myvideo2 = Video.where(tip: 'nutritie3', cod: relevant_cod_values)
+                      if acces_initial && Date.today <= Date.new(2024, 1, 31)
+                        true
+                      else
+                        comanda_recenta = ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
+                                                    .where("datainceput > ?", Date.new(2024, 1, 1))
+                                                    .where(prod_id: Prod.where(cod: ["cod12", "cod38"]).select(:id))
+                                                    .order(datainceput: :desc)
+                                                    .first
+
+                        if comanda_recenta
+                          data_expirare = comanda_recenta.datainceput + comanda_recenta.prod.valabilitatezile.days
+                          Date.today <= data_expirare
+                        else
+                          false
+                        end
+                      end
+                    else
+                      false
+                    end
+                  else
+                    false
+                  end
+
+
+                  @condition1 = if current_user
+                    if current_user.role == 1
+                      true
+                    else
+                      ComenziProd.joins(:prod) # Presupunând că 'prod' este numele corect al relației
+                                .where(user_id: current_user.id, prods: { cod: ["cod11", "cod12", "cod13"] })
+                                .exists?
+                    end
+                  else
+                    false
+                  end
+    
+    
     end
-  
-    @myvideo1 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)#Aspecte organizatorice
-    #o sa pun la Resurse intre 2000-3000 video ce tin de modul 3 iar intre 3000-4000 video ce tin de modul 2
-    if (current_user && current_user.role==1) || (current_user && current_user.nutritieabsolvit==2)
-      @myvideo4 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 2000, 3000).
-      order(Arel.sql("CASE WHEN tip = 'nutritie2' THEN 1 ELSE 2 END, ordine ASC"))#modulul 2 si 3
-    else      
-      @myvideo4 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)#modulul 3
-    end  
-      
+    
+    
+    
+   
+    if !current_user      
+      @prods = Prod.where(curslegatura: 'Nutritie3', status: 'activ', cod: 'cod12')
+    elsif current_user && @has_access
+      @prods = Prod.none
+      @platit=true # variabila care permite accesul la video
+            if current_user && current_user.limba=='EN'
+              @myvideo2 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
+            else  
+              @myvideo2 = Video.where(tip: 'nutritie3').where('ordine <= ?', 1000).order(ordine: :asc)
+            end  
+      @myvideo7 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)#modulul 3
+    elsif current_user && !@has_access && @condition1
+      puts("saluuuuuut")
+      @platit=false
+      @prods = Prod.where(curslegatura: 'Nutritie3', status: 'activ', cod: 'cod38')
+      @myvideo7 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)#modulul 3
+    else
+      @platit=false
+      @prods = Prod.where(curslegatura: 'Nutritie3', status: 'activ', cod: 'cod12')
+    end
     
 
   end
