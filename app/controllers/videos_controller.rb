@@ -309,87 +309,53 @@ end
       end
     end
     def set_user2
-      # Verifică dacă userul este logat
-      unless user_signed_in?
-        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
-        redirect_to new_user_session_path # Presupunând că aceasta este calea către login
-        return
-      end
-      puts("daaaaa1")
-      # Dacă userul are rolul 1, îi dăm acces direct
-      return true if current_user.role == 1
-      puts("daaaaa2")
-      # Verifică dacă userul are cod12
-      return true if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod12" }).exists?
-      puts("daaaaa3")
-      # Verifică dacă userul are ambele coduri: cod11 și cod38
-      if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod11" }, validat: "Finalizata").exists? &&
-         ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod38" }, validat: "Finalizata").exists?
-         puts("daaaaa4")
-        return true
-      end
-      puts("daaaaa5")
-      # Verifică dacă userul are ambele coduri: cod13 și cod39
-      if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod13" }, validat: "Finalizata").exists? &&
-         ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: "cod39" }, validat: "Finalizata").exists?
-        return true
-      end
-      puts("daaaaa6")
-     
-      # Află video-ul pe care user-ul dorește să-l acceseze
-      video_dorit = Video.find(params[:id])
-      puts("daaaaa7")
-      puts("video_dorit este: #{video_dorit.link}")
-      # Verificăm dacă user-ul curent a plătit pentru video-ul dorit
-      if ComenziProd.joins(:prod)
-        .where(user_id: current_user.id, prods: { cod: video_dorit.cod }, validat: "Finalizata")
-        .where("datasfarsit IS NULL OR datasfarsit >= ?", Date.current)
-        .exists?
-      
-        puts("daaaaa8")
-      else
-        puts("daaaaa9")
-        redirect_to root_path, alert: "Nu ai acces la acest video!" and return
-      end
-      puts("daaaaa10")
-      # Verificăm  coduri_relevante in cazul nostru  "cod49", "cod50", "cod51"  
-      coduri_relevante = Video.where(tip: 'nutritie3').where('ordine < ?', 1000).pluck(:cod)
-      coduri_relevante.each do |cod|
-        if ComenziProd.joins(:prod)
-          .where(user_id: current_user.id, prods: { cod: cod }, validat: "Finalizata")
-          .where("datasfarsit IS NULL OR datasfarsit >= ?", Date.current)
-          .exists?
+          unless user_signed_in?
+            flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+            redirect_to new_user_session_path
+            return false
+          end
         
-          puts("daaaaa11 pentru #{cod}")
-          return true
-        end
-      end
-
-      tayv2_course = Listacursuri.find_by(nume: 'Nutritie3')
-    
-      if tayv2_course.nil?
-        flash[:alert] = "Cursul nu a fost găsit."
-        redirect_to root_path
-        return
-      end
-    
-      # Găsim înregistrarea din tabelul Cursuri pentru utilizatorul și cursul curent
-      user_course = Cursuri.find_by(user_id: current_user.id, listacursuri_id: tayv2_course.id)
-    
-      unless user_course
-        flash[:alert] = "Nu aveți acces la acest curs."
-        redirect_to servicii_path
-        return
-      end
-    
-      # Verificăm dacă datasfarsit este nil sau dacă data curentă este mai mică sau egală cu datasfarsit
-      if user_course.datasfarsit && user_course.datasfarsit > Date.parse("2024-01-31")
-        flash[:alert] = "Accesul la acest curs a expirat."
-        redirect_to root_path
-      end
+          if current_user.role == 1
+            return true
+          elsif current_user.role == 0
+            date_condition = Date.today <= Date.new(2024, 1, 31)
+            has_access = date_condition && ComenziProd.joins(:prod)
+                                                      .where(user_id: current_user.id, 
+                                                              prods: { cod: ["cod11", "cod12", "cod13"] }, 
+                                                              validat: "Finalizata")
+                                                      .where("to_char(datainceput, 'YYYY') = ?", "2023")
+                                                      .exists?
+        
+            has_recent_access = ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
+                                          .where("datainceput > ?", Date.new(2024, 1, 1))
+                                          .where(prod_id: Prod.where(cod: ["cod12", "cod38"]).select(:id))
+                                          .order(datainceput: :desc)
+                                          .first
+                                          .yield_self { |comanda_recenta| comanda_recenta && (Date.today <= comanda_recenta.datainceput + comanda_recenta.prod.valabilitatezile.days) }
+        
+            unless has_access || has_recent_access
+              flash[:alert] = "Nu aveți acces la acest curs."
+              redirect_to nutritie3_path # Schimbați cu calea dorită
+              return false
+            end
+          else
+            flash[:alert] = "Nu aveți permisiuni suficiente pentru a accesa acest curs."
+            redirect_to nutritie3_path # Schimbați cu calea dorită
+            return false
+          end
+        
+          true
     end
     
+    
+    
+    
+    
     def set_user3
+
+
+
+
       # Verifică dacă userul este logat
       unless user_signed_in?
         flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest videoclip."
@@ -651,6 +617,9 @@ end
       end
       if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod11", "cod12", "cod13"] }, validat: "Finalizata").exists?
       return true
+      else
+        redirect_to nutritie3_path # Schimbați cu calea dorită
+        return false
       end
     end  
 

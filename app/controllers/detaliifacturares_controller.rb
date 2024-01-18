@@ -312,16 +312,13 @@ def restrict_access_to_special_page
   target_prod_id = params[:s].to_i
 
   # Verifică dacă ID-ul produsului din parametru este 9, 11 sau 12
-  if [9, 11, 12].include?(target_prod_id)
+  if [9].include?(target_prod_id)
     if target_prod_id == 9
       unless Userprod.exists?(user_id: current_user.id, prod_id: 9)
         deny_access
       end
     else
-      # Aici, verificăm doar pentru produsul cu ID-ul 11, deoarece oricine are acces la 11 are, de asemenea, acces implicit la 12
-      unless Userprod.exists?(user_id: current_user.id, prod_id: 11)
-        deny_access
-      end
+     
     end
   end
 end

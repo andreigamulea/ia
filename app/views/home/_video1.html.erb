@@ -11,6 +11,17 @@
 
 <% end %>
 
+<% if video.tip == 'nutritie3'%>
+    <td>
+        <% case video.ordine %>
+      <% when 1...1000 %>
+        <%= video.ordine %>
+      <% when 2001...3000 %>
+        <%= video.ordine - 2000 %>
+    <% end %>
+
+      </td>
+<% end %>
 
 
 
@@ -21,8 +32,9 @@
  
   <% end %>
 </td>
-
 <% end %>
+
+
 <% if video.tip == 'nutritie1'%>
 <td>
   <% if video.ordine >0 && video.ordine < 3000%> 
@@ -36,6 +48,16 @@
   <% if video.tip == 'nutritie1' && video.ordine<1000%>
   <td>   
     <%= link_to "Vezi video", myvideo9_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+  </td>
+  <%end%>
+  <% if video.tip == 'nutritie3'  && (video.ordine<1000 || (video.ordine>4000 && video.ordine<5000))%>
+  <td>   
+    <%= link_to "Vezi video", myvideo2_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+  </td>
+  <%end%>
+  <% if video.tip == 'nutritie3'  && ((video.ordine>2000 && video.ordine<3000))%>
+  <td>   
+    <%= link_to "Vezi video", myvideo7_path(id: video.id, link: video.link), class: "btn btn-primary" %>
   </td>
   <%end%>
   <% if video.tip == 'nutritie1'  && video.ordine>1000%>
