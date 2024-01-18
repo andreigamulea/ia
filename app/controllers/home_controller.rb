@@ -132,11 +132,36 @@ class HomeController < ApplicationController
                       true
                     elsif current_user.role == 0
                       acces_initial = ComenziProd.joins(:prod)
-                           .where(user_id: current_user.id, 
-                                  prods: { cod: ["cod11", "cod12", "cod13"] }, 
-                                  validat: "Finalizata")
-                           .where("to_char(datainceput, 'YYYY') = ?", "2023")
-                           .exists?
+                                                 .where(user_id: current_user.id, 
+                                                        prods: { cod: ["cod12"] }, 
+                                                        validat: "Finalizata")
+                                                 .where("to_char(datainceput, 'YYYY') = ?", "2023")
+                                                 .exists? ||
+                                       (ComenziProd.joins(:prod)
+                                                   .where(user_id: current_user.id, 
+                                                          prods: { cod: ["cod11"] }, 
+                                                          validat: "Finalizata")
+                                                   .where("to_char(datainceput, 'YYYY') = ?", "2023")
+                                                   .exists? &&
+                                        ComenziProd.joins(:prod)
+                                                   .where(user_id: current_user.id, 
+                                                          prods: { cod: ["cod38"] }, 
+                                                          validat: "Finalizata")
+                                                   .where("to_char(datainceput, 'YYYY') = ?", "2023")
+                                                   .exists?) ||
+                                       (ComenziProd.joins(:prod)
+                                                   .where(user_id: current_user.id, 
+                                                          prods: { cod: ["cod13"] }, 
+                                                          validat: "Finalizata")
+                                                   .where("to_char(datainceput, 'YYYY') = ?", "2023")
+                                                   .exists? &&
+                                        ComenziProd.joins(:prod)
+                                                   .where(user_id: current_user.id, 
+                                                          prods: { cod: ["cod39"] }, 
+                                                          validat: "Finalizata")
+                                                   .where("to_char(datainceput, 'YYYY') = ?", "2023")
+                                                   .exists?)
+                    
 
 
                       if acces_initial && Date.today <= Date.new(2024, 1, 31)
@@ -193,8 +218,10 @@ class HomeController < ApplicationController
             end  
       @myvideo7 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)#modulul 3
     elsif current_user && !@has_access && @condition1
+      puts("saluuuuuut")
       @platit=false
       @prods = Prod.where(curslegatura: 'Nutritie3', status: 'activ', cod: 'cod38')
+      @myvideo7 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)#modulul 3
     else
       @platit=false
       @prods = Prod.where(curslegatura: 'Nutritie3', status: 'activ', cod: 'cod12')
