@@ -171,7 +171,8 @@ span.bullet::before {
   }
   .r1c1, .r1c2 {
     width: 100%;
-    height: auto;
+    height: auto!important;
+    text-align: center;
   }
   .name {
     text-align: center;
@@ -185,6 +186,7 @@ span.bullet::before {
   .r1c1 img {
     padding-right: 0;
     margin-bottom:10px;
+    height:auto;
   }
   .video{
     width: 100%;
