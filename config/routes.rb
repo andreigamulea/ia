@@ -174,6 +174,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get 'newsletter', to: 'home#newsletter'
   get 'testnutritie4', to: 'home#testnutritie4'
   get 'testcognitronica', to: 'home#testcognitronica'
+  get 'testjivaka', to: 'home#testjivaka'
   get 'user77', to: 'home#user77'
 
   get 'evaluare_tipologie_ayurvedica', to: 'home#evaluare_tipologie_ayurvedica'
