@@ -173,7 +173,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get 'traditia_ayurvedica', to: 'home#traditia_ayurvedica'
   get 'newsletter', to: 'home#newsletter'
   get 'testnutritie4', to: 'home#testnutritie4'
-  get 'testnutritie3', to: 'home#testnutritie3'
+  get 'testcognitronica', to: 'home#testcognitronica'
   get 'user77', to: 'home#user77'
 
   get 'evaluare_tipologie_ayurvedica', to: 'home#evaluare_tipologie_ayurvedica'
