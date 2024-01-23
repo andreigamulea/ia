@@ -15,7 +15,8 @@ class VideosController < ApplicationController
   before_action :set_user44, only: %i[myvideo44] #este pt tayt12 p2 
   before_action :set_user444, only: %i[myvideo444] #este pt tayt12 video introductive la liber pt cei care au achitat doar tabara
   #before_action :set_user4, only: %i[myvideo5] #este pt tayt122 folosesc tot set_user4 pt ca e aceeasi plata si la tayt12 si la tayt122
-  before_action :set_user11, only: %i[myvideo11] #pt traditia_ayurvedica 
+  before_action :set_user11, only: %i[myvideo11] #pt jivaka si cognitronica
+  #ATENTIE POT FOLOSI set_user11, only: %i[myvideo11]  PT ORICE VIDEO INDIVIDUAL CARE ARE PRET- gen: video asociat cu produs cu pret=12lei
   before_action :require_admin, only: %i[index new edit update create]
   # GET /videos or /videos.json
   def index
@@ -193,7 +194,7 @@ end
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
   end
-  def myvideo11 #pt traditia_ayurvedica
+  def myvideo11 #pt jivaka
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
