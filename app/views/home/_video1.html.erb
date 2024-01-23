@@ -68,7 +68,7 @@
     <%= link_to "Vezi video", myvideo6_path(id: video.id, link: video.link), class: "btn btn-primary" %>
   </td>
   <%end%>
-  <% if video.tip == 'traditia_ayurvedica'%>
+  <% if video.tip == 'jivaka' || video.tip == 'cognitronica'%>
   <td>   
     <%= link_to "Vezi video", myvideo11_path(id: video.id, link: video.link), class: "btn btn-primary" %>
   </td>
