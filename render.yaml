@@ -10,7 +10,7 @@ services:
   - type: web
     name: ia
     domains:
-      - ia.onrender.com
+      - ayushcell.ro
     env: ruby
     plan: Starter
     buildCommand: "./bin/render-build.sh"
