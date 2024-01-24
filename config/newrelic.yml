@@ -814,16 +814,20 @@ common: &default_settings
 # If your application has other named environments, configure them here.
 development:
   <<: *default_settings
+  monitor_mode: false
   app_name: Ayushcell (Development)
 
 test:
   <<: *default_settings
-  # It doesn't make sense to report to New Relic from automated test runs.
   monitor_mode: false
 
 staging:
   <<: *default_settings
+  monitor_mode: false
   app_name: Ayushcell (Staging)
+
 
 production:
   <<: *default_settings
+  app_name: Ayushcell (Production)
+
