@@ -170,17 +170,12 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   
 
   get 'home/index1', to: 'home#index1'
-
   get 'home/index'
   get 'vajikarana', to: 'home#vajikarana'
-  get 'rasayana', to: 'home#rasayana'
-  get 'traditia_ayurvedica', to: 'home#traditia_ayurvedica'
+  get 'rasayana', to: 'home#rasayana' 
   get 'newsletter', to: 'home#newsletter'
-  get 'testnutritie4', to: 'home#testnutritie4'
-  get 'testcognitronica', to: 'home#testcognitronica'
-  get 'testjivaka', to: 'home#testjivaka'
+  get 'testnutritie4', to: 'home#testnutritie4' 
   get 'user77', to: 'home#user77'
-
   get 'evaluare_tipologie_ayurvedica', to: 'home#evaluare_tipologie_ayurvedica'
 
   ##get 'home/listavegetalegratis', to: 'home#listavegetalegratis', as: :listavegetalegratis_home
