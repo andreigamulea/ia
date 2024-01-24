@@ -59,7 +59,7 @@
         <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('cognitronica'), class: 'register' %>
     </div>
     <%elsif current_user && !@has_access%>
-    <%= link_to 'Vizionează acum', '#VideoNutritie', class: 'register' %>
+    <%= link_to 'Vizionează acum', '#seminar', class: 'register' %>
 
      <%end%> 
      
@@ -99,7 +99,7 @@ Gândirea neconvențională dispune, spre deosebire de gândirea convențională
     </div>
     <%elsif current_user && !@has_access%>
     <div class="r1c2" style="align-items: center; width:100%;">
-    <%= link_to 'Vizionează înregistrările', '#VideoNutritie', class: 'register' %>
+    <%= link_to 'Vizionează înregistrările', '#seminar', class: 'register' %>
     </div>
      <%end%> 
 
