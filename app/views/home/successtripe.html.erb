@@ -54,7 +54,18 @@
     <%= link_to 'Traditia Ayurvedica', traditia_ayurvedica_path, id: 'cursayurveda_link' %>
             </div>
     </div>     
-    
+<%elsif @redirect_spre == 'jivaka'%>
+    <div class="button">
+
+    <%= link_to 'Traditia Ayurvedica', jivaka_path, id: 'cursayurveda_link' %>
+            </div>
+    </div>         
+<%elsif @redirect_spre == 'cognitronica'%>
+    <div class="button">
+
+    <%= link_to 'Traditia Ayurvedica', cognitronica_path, id: 'cursayurveda_link' %>
+            </div>
+    </div>        
 <%else%>
     <div class="button">
 
