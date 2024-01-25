@@ -3,7 +3,10 @@ class ContractesController < ApplicationController
   before_action :set_contracte_useri, only: %i[vizualizeaza_contract destroy_contracte_useri]
 
   # GET /contractes or /contractes.json
-  
+  def voluntariat
+  end  
+  def voluntar
+  end  
   
   def preluare_emailuri_din_text # aceasta metoda va fi adaptata. Contractorii vor pune in formular mailurile care vor semna contracte
     text = params[:text] || "Emailul meu este: luminita.trapcea@gmail.com olga@magicon.co.uk, braferdes@gmail.com;  "
