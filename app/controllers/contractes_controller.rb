@@ -6,7 +6,13 @@ class ContractesController < ApplicationController
   def voluntariat
   end  
   def voluntar
-  end  
+  end 
+  def cerere_voluntar
+  end   
+  def gdpr
+  end
+  def fisa_postului
+  end    
   
   def preluare_emailuri_din_text # aceasta metoda va fi adaptata. Contractorii vor pune in formular mailurile care vor semna contracte
     text = params[:text] || "Emailul meu este: luminita.trapcea@gmail.com olga@magicon.co.uk, braferdes@gmail.com;  "
