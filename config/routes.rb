@@ -6,7 +6,9 @@ Rails.application.routes.draw do
 
   # ...alte rute...
   get 'nutritie4/index'
-  get 'contractes/semneaza_contract', to: 'contractes#semneaza_contract'
+  
+  get 'contract/contract_voluntar', to: 'contractes#semneaza_contract', as: 'contract_voluntar'
+
   post '/contractes', to: 'contractes#create', as: 'contractes_create' # Aici, 'contractes_create' este numele rutei
   #get 'contractes/vizualizeaza/:id', to: 'contractes#vizualizeaza_contract', as: 'contracte_vizualizeaza'
   get 'contractes/:id/vizualizeaza', to: 'contractes#vizualizeaza_contract', as: 'vizualizeaza_contract_contracte'
@@ -17,7 +19,11 @@ Rails.application.routes.draw do
  
   get 'vizualizeaza_contract', to: 'contractes#vizualizeaza_contract', as: 'contractes_vizualizeaza_contract'
   get '/voluntariat', to: 'contractes#voluntariat', as: 'voluntariat'
-  get '/voluntar', to: 'contractes#voluntar', as: 'voluntar'
+  get '/voluntar', to: 'contractes#voluntar', as: 'voluntar' 
+  get '/cerere_voluntar', to: 'contractes#cerere_voluntar', as: 'cerere_voluntar'
+  get '/gdpr', to: 'contractes#gdpr', as: 'gdpr'
+  get '/fisa_postului', to: 'contractes#fisa_postului', as: 'fisa_postului'
+
   delete 'contractes/:id/destroy_contracte_useri', to: 'contractes#destroy_contracte_useri', as: 'destroy_contracte_useri'
 
   

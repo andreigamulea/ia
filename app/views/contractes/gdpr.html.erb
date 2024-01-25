@@ -1,0 +1,155 @@
+
+    <div>
+        <h2>Organizație Gazdă:</h2>
+        <h1>ACORD GDPR</h1>
+        <p>
+            Subsemnat(ul)/a <input type="text" name="nume" style="width: 200px;"> domiciliat în 
+            <input type="text" name="adresa" style="width: 400px;">, prin semnarea acestui act declar că sunt de acord cu prelucrarea datelor mele cu caracter personal înserate atât în cuprinsul Contractului de Voluntariat, cât și a anexelor sale, care se realizează în conformitate cu dispozițiile art. 6 alin (1) litera b) și c) din Regulamentul nr. 679/2016.
+        </p>
+        <p>
+            Prin semnarea prezentului act îmi dau acordul ca organizația gazdă să poată prelucra toate datele din contractul de voluntariat și anexele sale, în mod special: nume/prenume, adresa, CNP, telefon, e-mail, serie si nr BI sau CI, fotografie legitimație.
+        </p>
+        <p>
+            De asemenea, sunt de acord cu prelucrarea datelor personale pentru justificări de natură financiar contabile (atunci când beneficiez din partea asociației de transport, cazare, masă, cursuri de perfecționare, etc.) în conformitate cu dispozițiile art. 6 alin. 1 lit c) din același regulament.
+        </p>
+        <p>
+            Prelucrarea datelor va fi efectuată în cadrul activităților legitime ale organizației gazdă în conformitate cu dispozițiile legale şi cu garanțiile adecvate.
+        </p>
+        <p>
+            Astfel, în vederea asigurării proporționalității și a unui echilibru între dreptul la protecția datelor cu caracter personal și a datelor speciale și prelucrarea unor astfel de date, în conformitate cu dispozițiile art. 9 alin. 1 lit. c) din Legea nr. nr. 190 din 18 iulie 2018 privind măsuri de punere în aplicare a Regulamentului (UE) 2016/679 al Parlamentului European și al Consiliului din 27 aprilie 2016 privind protecția persoanelor fizice în ceea ce privește prelucrarea datelor cu caracter personal și privind libera circulație a acestor date și de abrogare a Directivei 95/46/CE (Regulamentul general privind protecția datelor), organizația gazdă garantează voluntarului respectarea dreptului de rectificare și ștergere a datelor cu caracter personal. În vederea realizării acestui deziderat, cel interesat se va putea adresa, în scris, domnului Andrei Gămulea, la adresa de email <a href="mailto:andreigamulea1@gmail.com">andreigamulea1@gmail.com</a>, persoană desemnată de către asociație ca fiind responsabilul cu protecția datelor personale în cadrul organizației.
+        </p>
+        <p>
+            Data <input type="date" name="data"> 
+            <div class="voluntar" style="text-align: right;">
+                <p style="padding-left: 30px;">Voluntar: </p>
+                <p style="margin-top:-15px;">
+                <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available; padding-left:5px;">
+                    
+                </span>
+                </p>
+                <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000;"></canvas></br></br>
+                <button type="button" onclick="clearSignature(2)", class="register">Șterge Semnătura</button>
+            </div>
+
+                <input type="submit" value="Trimite Cererea" class="register" style="border: 1px solid #4b0082; background-color: #4b0082;">
+                </p>
+    </div>
+
+    <script>
+    document.addEventListener("turbo:load", function() {
+      initializeSignaturePad('signature-pad-3'); // Inițializează doar al doilea canvas
+      
+      var form = document.querySelector('form');
+      form.addEventListener('submit', function() {
+        saveSignatureOnSubmit('signature-pad-3', 'semnatura_voluntar'); // Folosește ID-ul corect al canvas-ului și câmpului ascuns
+      });
+      
+      synchronizeFields('nume-voluntar-sursa',  'nume-voluntar-destinatie');
+    });
+    
+    function synchronizeFields(sourceFieldId, targetElementId) {
+        var sourceField = document.getElementById(sourceFieldId);
+        var targetElement = document.getElementById(targetElementId);
+    
+        if (sourceField && targetElement) {
+            sourceField.addEventListener('input', function() {
+                // Verifică dacă elementul țintă este un câmp de input sau alt tip de element
+                if ('value' in targetElement) {
+                    // Pentru elemente de input, textarea, etc.
+                    targetElement.value = sourceField.value;
+                } else {
+                    // Pentru elemente non-input, cum ar fi span, div, etc.
+                    targetElement.textContent = sourceField.value;
+                }
+            });
+        }
+    }
+    
+    
+    function saveSignatureOnSubmit(canvasId, hiddenFieldId) {
+        var canvas = document.getElementById(canvasId);
+        if (canvas) {
+            var dataURL = canvas.toDataURL();
+            document.getElementById(hiddenFieldId).value = dataURL; // Setează valoarea câmpului ascuns
+        }
+    }
+    
+    
+    function initializeSignaturePad(canvasId) {
+      var canvas = document.getElementById(canvasId);
+      if (canvas) {
+        var context = canvas.getContext('2d');
+        var isDrawing = false;
+    
+        function startDrawing(event) {
+          event.preventDefault(); // Împiedică derularea în timpul desenării
+          isDrawing = true;
+          var rect = canvas.getBoundingClientRect();
+          var x = (event.clientX || event.touches[0].clientX) - rect.left;
+          var y = (event.clientY || event.touches[0].clientY) - rect.top;
+          context.beginPath();
+          context.moveTo(x, y);
+        }
+    
+        function continueDrawing(event) {
+          event.preventDefault(); // Împiedică derularea în timpul desenării
+          if (!isDrawing) return;
+          var rect = canvas.getBoundingClientRect();
+          var x = (event.clientX || event.touches[0].clientX) - rect.left;
+          var y = (event.clientY || event.touches[0].clientY) - rect.top;
+          context.lineTo(x, y);
+          context.stroke();
+        }
+    
+        function stopDrawing(event) {
+          if (isDrawing) {
+            event.preventDefault();  // Împiedică derularea și alte acțiuni implicite
+            event.stopPropagation(); // Opriți propagarea evenimentului
+            isDrawing = false;
+          }
+        }
+    
+        // Evenimente pentru mouse
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', continueDrawing);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseleave', stopDrawing);
+    
+        // Evenimente pentru touch (ecran tactil)
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchmove', continueDrawing);
+        canvas.addEventListener('touchend', stopDrawing);
+      }
+    }
+    
+    
+    function loadExistingSignature(canvasId) {
+      var canvas = document.getElementById(canvasId);
+      var context = canvas.getContext('2d');
+      var existingSignature = "<%= @semnatura_admin %>";
+    
+      if (existingSignature) {
+        var image = new Image();
+        image.onload = function() {
+          context.drawImage(image, 0, 0);
+        };
+        image.src = existingSignature;
+      }
+    }
+    
+    function saveSignature(padNumber) {
+      var canvas = document.getElementById('signature-pad-3');
+      var dataURL = canvas.toDataURL();
+      console.log(dataURL);
+      // Trimite dataURL la server
+    }
+    
+    function clearSignature(padNumber) {
+      var canvas = document.getElementById('signature-pad-3');
+      var context = canvas.getContext('2d');
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    
+    </script>
+    
+    
