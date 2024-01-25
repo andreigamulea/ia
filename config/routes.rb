@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
  
   get 'vizualizeaza_contract', to: 'contractes#vizualizeaza_contract', as: 'contractes_vizualizeaza_contract'
+  get '/voluntariat', to: 'contractes#voluntariat', as: 'voluntariat'
+  get '/voluntar', to: 'contractes#voluntar', as: 'voluntar'
   delete 'contractes/:id/destroy_contracte_useri', to: 'contractes#destroy_contracte_useri', as: 'destroy_contracte_useri'
 
   
@@ -24,6 +26,7 @@ Rails.application.routes.draw do
       get 'view_contracte_useri', to: 'contractes#view_contracte_useri'
       get 'edit_contracte_useri', to: 'contractes#edit_contracte_useri'
       patch 'update_contracte_useri', to: 'contractes#update_contracte_useri'
+
       #delete 'destroy_contracte_useri', to: 'contractes#destroy_contracte_useri'
       
     end
