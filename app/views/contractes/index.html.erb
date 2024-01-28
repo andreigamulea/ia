@@ -13,6 +13,7 @@
             <th style="height: 40px; vertical-align: middle; width: 15%;">Email</th>
             <th style="height: 40px; vertical-align: middle; width: 15%;">Tip</th>
             <th style="height: 40px; vertical-align: middle; width: 15%;">Denumire</th>
+            <th style="height: 40px; vertical-align: middle; width: 15%;">Cod contract</th>
             <th style="height: 40px; vertical-align: middle; width: 1%;">Contor</th>
             <th>Nume Firma</th>
             <th>Sediu Firma</th>
@@ -21,6 +22,12 @@
             <th>CUI Firma</th>
             <th>Reprezentant Firma</th>
             <th>Calitate</th>
+            <th>Denumire post</th>
+            <th>Locul desfasurarii</th>
+            <th>Departament</th>
+            <th>Subordonare</th>
+            <th>Relatii functionale</th>
+            
             <th style="height: 40px; vertical-align: middle; width: 30%;">Acțiuni</th>
         </tr>
     </thead>
@@ -32,6 +39,7 @@
                 <td><%= c.email %></td>
                 <td><%= c.tip %></td>
                 <td><%= c.denumire %></td>
+                <td><%= c.cod_contract %></td>
                 <td><%= c.contor %></td>
                 <td><%= c.nume_firma %></td>
                 <td><%= c.sediu_firma %></td>
@@ -40,6 +48,11 @@
                 <td><%= c.cui_firma %></td>
                 <td><%= c.reprezentant_firma %></td>
                 <td><%= c.calitate_reprezentant %></td>
+                <td><%= c.denumire_post %></td>
+                <td><%= c.locul_desfasurarii %></td>
+                <td><%= c.departament %></td>
+                <td><%= c.subordonare %></td>
+                <td><%= c.relatii_functionale %></td>
                 <td>
                     <%= link_to 'View', c %>
                     <%= link_to 'Edit', edit_contracte_path(c) %>

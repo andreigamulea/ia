@@ -273,6 +273,7 @@ end
         :email, 
         :tip, 
         :denumire, 
+        :cod_contract,
         :contor, 
         :textcontract,
         :nume_firma,
@@ -280,6 +281,11 @@ end
         :cont_bancar,
         :banca_firma,
         :cui_firma,
+        :denumire_post,
+        :locul_desfasurarii,
+        :departament,
+        :subordonare,
+        :relatii_functionale,
         :reprezentant_firma,
         :calitate_reprezentant,
         :semnatura_admin
@@ -288,6 +294,9 @@ end
     def contracte_useri_params
       params.require(:contracte_useri).permit(
         :nume_voluntar, 
+        :prenume,
+        :telefon_voluntar,
+        :email, #la GDPR trebuie sa completeze o adresa de email care poate fi diferita de cea a userului
         :domiciliu_voluntar, 
         :ci_voluntar, 
         :eliberat_de, 
@@ -298,7 +307,10 @@ end
         :strada_voluntar, 
         :numarstrada_voluntar, 
         :bloc_voluntar, 
-        :judet_voluntar
+        :judet_voluntar,
+        :cod_contract,
+        :nr_contract_referinta,
+        :status
       )
     end
     
