@@ -14,8 +14,12 @@ class ContractesController < ApplicationController
   def cerere_voluntar
   end   
   def gdpr
+    @gazda = Contracte.first.nume_firma
+    @adresa_firma = Contracte.first.sediu_firma
   end
   def fisa_postului
+    @gazda = Contracte.first.nume_firma
+    @adresa_firma = Contracte.first.sediu_firma
   end    
   
   def preluare_emailuri_din_text # aceasta metoda va fi adaptata. Contractorii vor pune in formular mailurile care vor semna contracte
