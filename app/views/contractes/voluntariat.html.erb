@@ -8,10 +8,20 @@
 <%= render 'layouts/sideleft' %>
 
 <div class="cr" style="background-color: aliceblue; ">
-<h1>Voluntariat-pagina principa de prezentare a serviciului oferit de ayushcell, va avea <span style="text-decoration: underline; font-style: italic;">buton</span> catre pagina de voluntat si <span style="text-decoration: underline; font-style: italic;">buton</span> catre pagina de administrator firma care vrea voluntari</h1> 
+<h1>Voluntariat-pagina principa de prezentare a serviciului oferit de ayushcell, va avea <span style="text-decoration: underline; font-style: italic;">buton</span> catre pagina de voluntar si <span style="text-decoration: underline; font-style: italic;">buton</span> catre pagina de administrator firma care vrea voluntari</h1> 
 
 <div class="tbland">
 <div class="tbr">
+
+<%= form_with(url: verifica_cod_path, method: :post) do |f| %>
+  <div>
+    <h3>Cod: 
+      <%= f.text_field :code_part1, placeholder: 'Prefix', size: 4 %>  
+      <%= f.text_field :code_part2, placeholder: 'Cod' %>  
+      <%= f.submit 'Pagina Volontar', class: "btn btn-primary" %>
+    </h3>
+  </div>
+<% end %>
 
 
 </div></div></div></div>
