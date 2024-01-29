@@ -4,24 +4,23 @@ class ContractesController < ApplicationController
 
   # GET /contractes or /contractes.json
   def verifica_cod
-    # Preluăm valorile din parametrii formularului
     prefix = params[:code_part1]
     cod = params[:code_part2]
-    # Căutăm o înregistrare care să corespundă cu valorile introduse
     contract = Contracte.find_by(cod_contract: prefix, cui_firma: cod)
-    # Verificăm dacă am găsit o înregistrare corespunzătoare
-    if contract
-      # Dacă există un contract corespunzător, redirecționăm spre o anumită pagină
+  
+    if contract #|| current_user.role==1
+      session[:verificat] = true
       redirect_to voluntar_path
     else
-      # Dacă nu există, putem redirecționa către o altă pagină sau afișa un mesaj de eroare
-      # De exemplu, redirecționăm înapoi la formular cu un mesaj de eroare
       redirect_to voluntariat_path, alert: "Nu s-a găsit nicio înregistrare corespunzătoare."
     end
-  end  
+  end
   def voluntariat
   end  
   def voluntar
+    unless session[:verificat]
+      redirect_to voluntariat_path, alert: "Acces neautorizat."
+    end
     @status1 = "required"
     @status2 = "required"
     @status3 = "required"
