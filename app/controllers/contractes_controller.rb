@@ -6,10 +6,10 @@ class ContractesController < ApplicationController
   def voluntariat
   end  
   def voluntar
-    @status1 = "pending"
-    @status2 = "pending"
-    @status3 = "pending"
-    @status4 = "pending"
+    @status1 = "required"
+    @status2 = "required"
+    @status3 = "required"
+    @status4 = "required"
   end 
   def cerere_voluntar
   end   
