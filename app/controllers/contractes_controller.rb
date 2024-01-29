@@ -3,6 +3,22 @@ class ContractesController < ApplicationController
   before_action :set_contracte_useri, only: %i[vizualizeaza_contract destroy_contracte_useri]
 
   # GET /contractes or /contractes.json
+  def verifica_cod
+    # Preluăm valorile din parametrii formularului
+    prefix = params[:code_part1]
+    cod = params[:code_part2]
+    # Căutăm o înregistrare care să corespundă cu valorile introduse
+    contract = Contracte.find_by(cod_contract: prefix, cui_firma: cod)
+    # Verificăm dacă am găsit o înregistrare corespunzătoare
+    if contract
+      # Dacă există un contract corespunzător, redirecționăm spre o anumită pagină
+      redirect_to voluntar_path
+    else
+      # Dacă nu există, putem redirecționa către o altă pagină sau afișa un mesaj de eroare
+      # De exemplu, redirecționăm înapoi la formular cu un mesaj de eroare
+      redirect_to voluntariat_path, alert: "Nu s-a găsit nicio înregistrare corespunzătoare."
+    end
+  end  
   def voluntariat
   end  
   def voluntar
@@ -16,6 +32,9 @@ class ContractesController < ApplicationController
   def gdpr
     @gazda = Contracte.first.nume_firma
     @adresa_firma = Contracte.first.sediu_firma
+    @email_admin = Contracte.first.email
+    @nume_admin = Contracte.first.reprezentant_firma
+
   end
   def fisa_postului
     @gazda = Contracte.first.nume_firma

@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   get '/fisa_postului', to: 'contractes#fisa_postului', as: 'fisa_postului'
 
   delete 'contractes/:id/destroy_contracte_useri', to: 'contractes#destroy_contracte_useri', as: 'destroy_contracte_useri'
-
+  post 'verifica_cod', to: 'contractes#verifica_cod'
   
   resources :contractes do
     member do
