@@ -84,7 +84,7 @@
         <p>
             Organizația gazdă: <input type="text" name="organizatie_gazda"><br>
             Voluntar: <input type="text" name="voluntar"><br>
-            Data: <input type="date" name="data">
+            Data: <%= Date.today.strftime('%d-%m-%Y') %><br><br>
         </p>
         <div class="voluntar" style="text-align: right;">
         <p style="padding-left: 30px;">Voluntar: </p>

@@ -36,6 +36,62 @@
 
 <p>Experiența acumulată în timpul voluntariatului nu doar îmbogățește CV-ul dvs., demonstrând angajament, inițiativă și abilități diverse, ci contribuie și la bunăstarea emoțională, oferindu-vă satisfacție personală și îmbunătățirea stării de spirit prin impactul pozitiv asupra sănătății psiho-emoționale.</p>
 
+
+<div class="table-responsive">
+<table class="table table-striped table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr class= "desk">
+            <th style="height: 40px; vertical-align:middle; width: 30%;">Nume document</th>  
+            <th style="height: 40px; vertical-align:middle; width: 14%;">Status</th>
+            <th style="height: 40px; vertical-align:middle; width: 30%;">Completeaza</th>          
+            <th style="height: 40px; vertical-align:middle; width: 12%;">Download</th>
+        </tr>      
+    </thead>
+    <tbody>
+    <tr>
+      <td>CERERE ÎNSCRIERE VOLUNTAR</td>
+      <td><%=@status1%></td>      
+      <td style="text-align:center;"><%= link_to "Completeaza documentul", cerere_voluntar_path, class: "btn btn-primary" %></td>
+      <td style="text-align:center;"><%= link_to "Descarca PDF", cerere_voluntar_path, class: "btn btn-primary disabled"  %></td>
+    </tr>
+    <tr>
+      <td>ACORD GDPR</td>
+      <td><%=@status2%></td>      
+      <td style="text-align:center;"><%= link_to "Completeaza documentul", gdpr_path, class: "btn btn-primary" %></td>
+      <td style="text-align:center;"><%= link_to "Descarca PDF", gdpr_path, class: "btn btn-primary disabled" %></td>
+    </tr>
+    <tr>
+      <td>CONTRACT VOLUNTARIAT</td>
+      <td><%=@status3%></td>      
+      <td style="text-align:center;"><%= link_to "Completeaza documentul", contract_voluntar_path, class: "btn btn-primary" %></td>
+      <td style="text-align:center;"><%= link_to "Descarca PDF", contract_voluntar_path, class: "btn btn-primary disabled" %></td>
+    </tr>
+    <tr>
+      <td>FISA POSTULUI - anexă la contractul de voluntariat</td>
+      <td><%=@status4%></td>      
+      <td style="text-align:center;"><%= link_to "Completeaza documentul", fisa_postului_path, class: "btn btn-primary" %></td>
+      <td style="text-align:center;"><%= link_to "Descarca PDF", contract_voluntar_path, class: "btn btn-primary disabled" %></td>
+    </tr>
+  
+    <tr>
+      <td>FISA ISU DE INSTRUCTAJ ÎN DOMENIUL SITUAȚIILOR DE URGENȚĂ</td>
+      <td><%=@status1%></td>      
+      <td style="text-align:center;"></td>
+      <td style="text-align:center;"><%= link_to "Descarca PDF", "pdf/voluntariat/Fisa ISU.pdf", class: "btn btn-primary", download: '' %></td>
+    </tr>
+    <tr>
+      <td>FISA SSM DE INSTRUIRE INDIVIDUALĂ PRIVIND SECURITATEA ȘI SĂNĂTATEA ÎN MUNCĂ</td>
+      <td><%=@status1%></td>      
+      <td style="text-align:center;"></td>
+      <td style="text-align:center;"><%= link_to "Descarca PDF", "pdf/voluntariat/Fisa SSM.pdf", class: "btn btn-primary", download: '' %></td>
+      
+    </tr>
+    </tbody>
+</table>
 </div>
 </div>
 </div>
+
+</div>
+
+
