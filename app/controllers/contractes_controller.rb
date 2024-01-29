@@ -7,14 +7,19 @@ class ContractesController < ApplicationController
     prefix = params[:code_part1]
     cod = params[:code_part2]
     contract = Contracte.find_by(cod_contract: prefix, cui_firma: cod)
+    session[:verificat] = false # Inițializează sesiunea ca neverificată
   
-    if contract #|| current_user.role==1
-      session[:verificat] = true
+    if contract # Verifică dacă contractul există
+      session[:verificat] = true # Setează sesiunea ca verificată
+      session[:contract_id] = contract.id # Actualizează ID-ul contractului în sesiune
+  
       redirect_to voluntar_path
     else
       redirect_to voluntariat_path, alert: "Nu s-a găsit nicio înregistrare corespunzătoare."
     end
   end
+  
+  
   def voluntariat
   end  
   def voluntar
@@ -27,17 +32,37 @@ class ContractesController < ApplicationController
     @status4 = "required"
   end 
   def cerere_voluntar
+    if session[:contract_id]
+      @contract = Contracte.find_by(id: session[:contract_id])
+      @gazda = @contract.nume_firma
+      @adresa_firma = @contract.sediu_firma
+      @email_admin = @contract.email
+      @nume_admin = @contract.reprezentant_firma
+    else
+      redirect_to voluntariat_path, alert: "Acces neautorizat."
+    end  
   end   
   def gdpr
-    @gazda = Contracte.first.nume_firma
-    @adresa_firma = Contracte.first.sediu_firma
-    @email_admin = Contracte.first.email
-    @nume_admin = Contracte.first.reprezentant_firma
+    if session[:contract_id]
+      @contract = Contracte.find_by(id: session[:contract_id])
+      @gazda = @contract.nume_firma
+      @adresa_firma = @contract.sediu_firma
+      @email_admin = @contract.email
+      @nume_admin = @contract.reprezentant_firma
+    else
+      redirect_to voluntariat_path, alert: "Acces neautorizat."
+    end  
 
   end
   def fisa_postului
-    @gazda = Contracte.first.nume_firma
-    @adresa_firma = Contracte.first.sediu_firma
+    if session[:contract_id]
+      @contract = Contracte.find_by(id: session[:contract_id])
+      @gazda = @contract.nume_firma
+      @adresa_firma = @contract.sediu_firma
+      
+    else
+      redirect_to voluntariat_path, alert: "Acces neautorizat."
+    end  
   end    
   
   def preluare_emailuri_din_text # aceasta metoda va fi adaptata. Contractorii vor pune in formular mailurile care vor semna contracte
@@ -58,7 +83,7 @@ class ContractesController < ApplicationController
     @contracte = Contracte.last
   end
   def semneaza_contract
-    @contract=Contracte.first
+    @contract = Contracte.find_by(id: session[:contract_id])
     @nume_firma=@contract.nume_firma
     @sediu_firma=@contract.sediu_firma
     @cui_firma=@contract.cui_firma
@@ -68,8 +93,7 @@ class ContractesController < ApplicationController
     @contracte_useri = ContracteUseri.new
   end  
   def contracte_all
-    @contract=Contracte.first
-    @reprezentant_firma=@contract.reprezentant_firma
+   
     @contracte_useri = ContracteUseri.all
   end  
   def vizualizeaza_contract    
