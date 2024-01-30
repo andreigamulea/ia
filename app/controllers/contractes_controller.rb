@@ -338,7 +338,9 @@ end
         :relatii_functionale,
         :reprezentant_firma,
         :calitate_reprezentant,
-        :semnatura_admin
+        :semnatura_admin,
+        :contor_start,
+        :valabilitate_luni
       )
     end
     def contracte_useri_params

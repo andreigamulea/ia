@@ -27,7 +27,8 @@
             <th>Departament</th>
             <th>Coordonare</th>
             <th>Relatii functionale</th>
-            
+            <th>Contor start</th>
+            <th>Valabilitate (luni)</th>
             <th>Acțiuni</th>
         </tr>
     </thead>
@@ -53,6 +54,8 @@
                 <td><%= c.departament %></td>
                 <td><%= c.subordonare %></td>
                 <td><%= c.relatii_functionale %></td>
+                <td><%= c.contor_start %></td>
+                <td><%= c.valabilitate_luni %></td>
                 <td>
                     <%= link_to 'View', c %>
                     <%= link_to 'Edit', edit_contracte_path(c) %>
