@@ -112,59 +112,7 @@
     </div>
 
 
-    <% if @prods.any? { |prod| prod.id == 11 } && @prods.any? { |prod| prod.id == 12 } %>  
-    <a name="nutritie-modul3"></a>
-    <h1 class="alimente-nutritionale" id="Nutritie3">Acces Curs Nutritie Modulul 3 </h1>
-
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
-            <thead class="thead-dark">
-                <tr class= "desk">
-                    <th style="height: 40px; vertical-align:middle; width: 30%;">Servicii</th>                    
-                    <th style="height: 40px; vertical-align:middle; width: 30%;">Detalii</th>
-                    
-                    <th style="height: 40px; vertical-align:middle; width: 14%;">Pret</th>
-                    <th style="height: 40px; vertical-align:middle; width: 12%;">Actiune</th>
-                </tr>      
-            </thead>
-            <tbody>
-            <% @prods.select{ |prod| prod.curslegatura == 'Nutritie3' }.sort_by(&:created_at).each do |prod| %>
-                <% next if (prod.cod == "cod38" && !@user_has_prod_cod11) %>
-                <% next if (prod.cod == "cod39" && !@user_has_prod_cod13) %>
-                <% next if prod.pret == 38 && !@user_has_bought_cod11_or_cod13 %>
-                <tr>
-                <td>
-                  <%= raw prod.nume
-                           .gsub('înscrieri până pe 20 septembrie 2023', '<span class="text-danger">înscrieri până pe 20 septembrie 2023</span>')
-                           .gsub('înscrieri începând cu 21 septembrie 2023', '<span class="text-danger">înscrieri începând cu 21 septembrie 2023</span>')
-                           .gsub(/\bRO\b/, '<span class="text-danger">RO</span>')
-                           .gsub(/\bEN\b/, '<span class="text-danger">EN</span>') %>
-                </td>
-                <td>
-                  <%= raw prod.detalii
-                           .gsub('Înscrieri până pe 20 septembrie 2023', '<span class="text-danger">Înscrieri până pe 20 septembrie 2023</span>')
-                           .gsub('Înscrieri începând cu 21 septembrie 2023', '<span class="text-danger">Înscrieri începând cu 21 septembrie 2023</span>') %>
-                </td>
-                <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
-                <td style="text-align:center;">
-                  <% if prod.cod == "cod13" && Time.now.to_date <= Date.new(2023,9,20) %>
-                    <%= button_to 'Inactiv', '#', class: 'btn btn-secondary', disabled: true %>
-                  <% elsif prod.cod == "cod11" && Time.now.to_date >= Date.new(2023,9,21) %>
-                    <%= button_to 'Inactiv', '#', class: 'btn btn-secondary', disabled: true %>
-                  <% else %>
-                    <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
-                  <% end %>
-                </td>
-              </tr>
-              
-               
-                <% end %>  
-            </tbody>
-        </table>
-    </div>
-
-<%end%>
-
+   
 
 
 <h1 class="alimente-nutritionale" id="Tabara23ToamnaP1P2">Acces prezentari ZOOM Tabara de Ayurveda 2023 etapa de toamna  partile 1 si 2 </h1>
