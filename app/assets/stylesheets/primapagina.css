@@ -278,7 +278,7 @@
    }
    .main-title {
        text-align:center;
-       margin-bottom: -10px;
+       margin-bottom: 0px;
        margin-top: 10px;
    }
    .desc {
