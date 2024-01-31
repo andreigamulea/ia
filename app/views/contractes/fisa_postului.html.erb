@@ -20,27 +20,16 @@
         <h3>Scopul postului:</h3>
         <p>realizarea de activități în conformitate cu valorile promovate de asociație</p>
         <div>
-        <h3>Sarcini și îndatoriri specifice:</h3>
-        <ul>
-            <li>Realizează activitățile de yoga respectând procedurile stabilite de organizație.</li>
-            <li>Informează, explică și urmărește realizarea corectă a procedeelor yoga.</li>
-            <li>Răspunde la întrebările participanților legate de procedeele yoga.</li>
-            <li>Durata și programul realizării fiecărei activități de yoga este precizată și menționată la începutul activității.</li>
-            <li>Procedeele din programul de activități sunt realizate în ordinea menționată în cuprinsul organizației.</li>
-            <li>Intervalele de timp destinate fiecărui procedeu sunt menționate în programul activității de yoga.</li>
-            <li>Oferirea de răspunsuri la întrebările participanților este efectuată cu responsabilitate pentru preîntâmpinarea unor posibile situații de disconfort sau unor eventuale accidentări.</li>
-            <li>Supravegherea realizării corespunzătoare a activităților de yoga de către participanți este realizată de instructori a exercițiilor yoga de către cursanți este realizată cu responsabilitate.</li>
-            <li>Comunică participanților principii și modalități către un stil de viață sănătos.</li>
-            <li>Respectă programul de funcționare a departamentului și regulile stabilite pentru accesul în incintă, intrarea și ieșirea de la locul de desfășurare a activității de voluntariat.</li>
-            <li>Are o ținută decentă, prezintă un comportament corespunzător în timpul activităților de voluntariat.</li>
-            <li>Respectă confidențialitatea datelor, informațiilor și a documentelor ce îi sunt transmise de organizație, la care are acces în virtutea desfășurării activității sale, despre proiectele acestuia precum și orice alte date a căror divulgare ar produce prejudicii materiale și/sau morale acestuia.</li>
-            <li>Voluntarul poate beneficia de sesiuni periodice de pregătire în domenii conexe activității de yoga cu scopul aprofundării conoștințelor sale.</li>
-            <li>Voluntarul beneficiază de participarea de intâlniri organizatorice periodice cu reprezentanți din conducerea asociației.</li>
-            <li>Voluntarul respectă regulamentul de ordine interioară.</li>
-            <li>Voluntarul duce la îndeplinire activitățile indicate de conducerea asociației conform modalităților stabilte.</li>
-            <li>Voluntarul poate participa și la alte forme de pregătire și perfecționare necesare activităților sale organizate prin intermediul asociației.</li>
-            <li>Nu este permisă obținerea de avantaje/foloase necuvenite, nu primește bani sau alte foloase pentru exercitarea atribuțiunilor de voluntariat, nu folosește sub nici o formă calitatea pe care o deține în cadrul organizației gazdă pentru rezolvarea unei probleme personale sau pentru obținerea unor privilegii personale.</li>
-        </ul>
+        <h3>Sarcini și îndatoriri specifice:</h3> <!-- sarcinile trebuie puse in tabel despartite de ; -->
+        <ul> 
+        <% @sarcini.each_with_index do |sarcina, index| %> 
+
+          <li>
+            <%= sarcina %><%= ';' if index < @sarcini.length  %>
+          </li>
+        <% end %>
+      </ul>
+      
 
         <h3>Protecția datelor cu caracter personal</h3>
         <ul>

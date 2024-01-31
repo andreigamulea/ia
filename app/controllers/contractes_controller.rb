@@ -59,6 +59,8 @@ class ContractesController < ApplicationController
       @contract = Contracte.find_by(id: session[:contract_id])
       @gazda = @contract.nume_firma
       @adresa_firma = @contract.sediu_firma
+      @sarcini = @contract.sarcini_voluntar.split(';').map(&:strip) #atentie sarcinile trebuiesc obligatoriu separate prin ; in tabela postges
+
       
     else
       redirect_to voluntariat_path, alert: "Acces neautorizat."
@@ -340,7 +342,8 @@ end
         :calitate_reprezentant,
         :semnatura_admin,
         :contor_start,
-        :valabilitate_luni
+        :valabilitate_luni,
+        :sarcini_voluntar
       )
     end
     def contracte_useri_params
