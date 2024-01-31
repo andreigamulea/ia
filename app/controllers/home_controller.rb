@@ -19,6 +19,8 @@ class HomeController < ApplicationController
   end
   def cazuriparticulare
   end  
+  def documente
+  end  
   def userip
     @userip= UserIp.all
   end  

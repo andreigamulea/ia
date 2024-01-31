@@ -1,0 +1,217 @@
+<section class="c1">
+<% if !user_signed_in? || (current_user && !(@has_access1 || @has_access)) %>
+<h1 class="ch1">Bun venit la Programul de pregătire: Nutritie Ayurvedică modulul 3</h1>
+<p>Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</p>
+<p>
+Pentru a vă înscrie la acest modul, vă rugăm să ne trimiteți un mesaj prin intermediul formularului de pe <a href='/contact'>pagina noastră de contact</a>.
+
+</p>
+<% if !user_signed_in? %>
+<div class="btn-fp">
+    <%= link_to 'Intră în cont', new_user_session_with_return_path('nutritie3'), class: 'btn-fp-link' %>
+</div>
+<br><br><br>
+<%end%>
+<%end%>
+<% if current_user && (@has_access1 || @has_access) %>
+<h1 class="ch1">Bun venit la Programul de pregătire: Nutritie Ayurvedică modulul 3</h1>
+
+<h2 class="ch1" style= "margin-top: -20px;">Datele de logare pe platforma ZOOM:</h2>
+
+<h3 class="ch1" style= "text-align: left;">Link acces ZOOM: <a href="https://us02web.zoom.us/j/83284010524?pwd=V01lNVFKVFRmWWNsTytDNnhyd2tSUT09" target="_blank">https://us02web.zoom.us/j/83284010524?pwd=V01lNVFKVFRmWWNsTytDNnhyd2tSUT09</a></h3>
+<h3 class="ch1" style= "text-align: left;">Meeting ID: 832 8401 0524</h3>
+<h3 class="ch1" style= "text-align: left;margin-top: -20px;">Passcode: 034536</h3>
+
+
+<p class="text-success"><%= notice %></p>
+
+
+
+
+
+<h1 style= "text-align: center;padding: 0 10px;">Aspecte organizatorice</h1></br>
+
+
+
+<div id="videos">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nr</th>
+        <th>Nume</th>
+        <th>Descriere</th>
+       
+        <th>Actiune</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @myvideo1.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>
+
+
+
+
+<% if current_user %>
+<% if @has_access %>
+<h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Program de pregătire: Nutritie Ayurvedică modulul 3 </h2></br>
+
+
+
+<div id="videos">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nr</th>
+        <th>Nume</th>
+        <th>Descriere</th>
+       
+        <th>Actiune</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @myvideo.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<% end %><% end %>
+
+
+
+
+<% if current_user %>
+<% if @has_access1 && @am_video.any? %>
+<h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Program de pregătire: Nutritie Ayurvedică modulul 3 </h2></br>
+
+
+
+<div id="videos">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nr</th>
+        <th>Nume</th>
+        <th>Descriere</th>
+       
+        <th>Actiune</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @myvideo2.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+
+<% end %><% end %>
+<% if current_user && (@has_access1 || @has_access) %>
+<h2 style= "text-align: center;padding: 0 10px;">Resurse</h2></br>
+
+
+
+<div id="videos">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Nume</th>
+        <th>Descriere</th>       
+        <th>Actiune</th>
+        <th>Descarca PDF</th>
+      </tr>
+    </thead>
+    <tbody>
+    
+    <% previous_video_tip = nil %>
+    <% @myvideo4.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video, previous_video_tip: previous_video_tip } %>
+        <% previous_video_tip = video.tip %>
+    <% end %>
+
+    </tbody>
+  </table>
+</div>
+<%end%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% if @prods.any? { |prod| prod.id == 11 } && @prods.any? { |prod| prod.id == 12 } %>  
+    <a name="nutritie-modul3"></a>
+    <h1 class="alimente-nutritionale" id="Nutritie3">Acces Curs Nutritie Modulul 3 </h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr class= "desk">
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Servicii</th>                    
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Detalii</th>
+                    
+                    <th style="height: 40px; vertical-align:middle; width: 14%;">Pret</th>
+                    <th style="height: 40px; vertical-align:middle; width: 12%;">Actiune</th>
+                </tr>      
+            </thead>
+            <tbody>
+            <% @prods.select{ |prod| prod.curslegatura == 'Nutritie3' }.sort_by(&:created_at).each do |prod| %>
+                <% next if (prod.cod == "cod38" && !@user_has_prod_cod11) %>
+                <% next if (prod.cod == "cod39" && !@user_has_prod_cod13) %>
+                <% next if prod.pret == 38 && !@user_has_bought_cod11_or_cod13 %>
+                <tr>
+                <td>
+                  <%= raw prod.nume
+                           .gsub('înscrieri până pe 20 septembrie 2023', '<span class="text-danger">înscrieri până pe 20 septembrie 2023</span>')
+                           .gsub('înscrieri începând cu 21 septembrie 2023', '<span class="text-danger">înscrieri începând cu 21 septembrie 2023</span>')
+                           .gsub(/\bRO\b/, '<span class="text-danger">RO</span>')
+                           .gsub(/\bEN\b/, '<span class="text-danger">EN</span>') %>
+                </td>
+                <td>
+                  <%= raw prod.detalii
+                           .gsub('Înscrieri până pe 20 septembrie 2023', '<span class="text-danger">Înscrieri până pe 20 septembrie 2023</span>')
+                           .gsub('Înscrieri începând cu 21 septembrie 2023', '<span class="text-danger">Înscrieri începând cu 21 septembrie 2023</span>') %>
+                </td>
+                <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
+                <td style="text-align:center;">
+                  <% if prod.cod == "cod13" && Time.now.to_date <= Date.new(2023,9,20) %>
+                    <%= button_to 'Inactiv', '#', class: 'btn btn-secondary', disabled: true %>
+                  <% elsif prod.cod == "cod11" && Time.now.to_date >= Date.new(2023,9,21) %>
+                    <%= button_to 'Inactiv', '#', class: 'btn btn-secondary', disabled: true %>
+                  <% else %>
+                    <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
+                  <% end %>
+                </td>
+              </tr>
+              
+               
+                <% end %>  
+            </tbody>
+        </table>
+    </div>
+
+<%end%>
+
+ 
+</section>
+
