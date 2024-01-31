@@ -20,6 +20,7 @@ class HomeController < ApplicationController
   def cazuriparticulare
   end  
   def documente
+    @prods = Prod.where(curslegatura: 'documente', status: 'activ')
   end  
   def userip
     @userip= UserIp.all
