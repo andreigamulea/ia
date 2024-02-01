@@ -1,5 +1,6 @@
 
 <section class="tabel-container rotate-landscape">
+<%if current_user && current_user.role==1%>
     <h1 class="alimente-nutritionale" id="CalculatorValoriNutritionale">Calculator Valori Nutritionale</h1>
 
     <div class="table-responsive">
@@ -26,7 +27,7 @@
                 <% end %>  
             </tbody>
         </table>
-    </div>
+    </div><% end %>
     <h1 class="alimente-nutritionale" id="ListaIngredienteVegetale">Consultare Selectiva Lista Ingrediente Vegetale</h1>
 
     <div class="table-responsive">
@@ -114,46 +115,6 @@
 
    
 
-
-<h1 class="alimente-nutritionale" id="Tabara23ToamnaP1P2">Acces prezentari ZOOM Tabara de Ayurveda 2023 etapa de toamna  partile 1 si 2 </h1>
-<div class="table-responsive">
-<table class="table table-striped table-bordered table-hover">
-    <thead class="thead-dark">
-        <tr class= "desk">
-            <th style="height: 40px; vertical-align:middle; width: 30%;">Servicii</th>                    
-            <th style="height: 40px; vertical-align:middle; width: 30%;">Detalii</th>
-            <th style="height: 40px; vertical-align:middle; width: 14%;">Pret</th>
-            <th style="height: 40px; vertical-align:middle; width: 12%;">Actiune</th>
-        </tr>      
-    </thead>
-    <tbody>
-        <% required_cod_for_special_products = ["cod40", "cod41", "cod42", "cod43", "cod44", "cod45"] %>
-        <% @prod_tayt12.each do |prod| %>
-            <% next if prod.cod == "cod48" && !["ludmilamila1987@gmail.com", "aaa@yahoo.com"].include?(current_user&.email) && current_user&.role != 1 %>
-            <% next if prod.cod == "cod63" %>
-            <% special_product = ["cod54", "cod64"].include?(prod.cod) %>
-            <% product_accessible = current_user.nil? || has_required_products?(current_user, required_cod_for_special_products) || current_user.role == 1 %>
-            <% display_popup = special_product && !product_accessible %>
-            <tr>
-                <td> <%= prod.nume %> </td>                                   
-                <td><%= prod.detalii %></td>                    
-                <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>          
-                <td style="text-align:center;"> 
-                    <% if ["cod40", "cod42", "cod44"].include?(prod.cod) && Time.now.to_date >= Date.new(2023,10,19) %>
-                        <%= button_to 'Inactiv', '#', class: 'btn btn-secondary', disabled: true %>
-                    <% elsif display_popup %>
-                    <% order_path = current_user ? "javascript:void(0);" : new_user_session_path %>
-                    <% confirmation_message = current_user ? "Inscrie-te la tabara pentru a putea comanda acest produs." : "Va rugam sa va logati pentru a putea comanda." %>
-                    <%= link_to 'Comanda', order_path, class: 'btn btn-primary', onclick: "if(!#{product_accessible}) { alert('#{confirmation_message}'); return false; }" %>
-                <% else %>
-                    <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
-                <% end %>
-                </td>           
-            </tr>
-        <% end %>
-    </tbody>
-</table>
-</div>
 
 </section>
 
