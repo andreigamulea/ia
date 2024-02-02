@@ -32,6 +32,9 @@
 .cl img, .col img {
    border-radius:20px;
 }
+.cl img{
+   max-width: -webkit-fill-available;
+}
 .cl h2 {
    padding: 5px 10px;
    border-radius: 5px;
