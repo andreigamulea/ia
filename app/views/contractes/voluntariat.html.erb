@@ -3,25 +3,77 @@
   display: flex;
   gap: 10px;
 }
+#log input {
+  padding:2px 0 2px 5px;
+  font-size:14px;
+  color: #667;
+  margin-bottom: 5px;
+}
+#log input.btn-primary:hover{
+  background-color: rgb(80, 2, 74)!important;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 8px!important;
+}
+
+
 </style>
 <div class="container" id="cvp1">
 <%= render 'layouts/sideleft' %>
 
-<div class="cr" style="background-color: aliceblue; ">
-<h1>Voluntariat-pagina principa de prezentare a serviciului oferit de ayushcell, va avea <span style="text-decoration: underline; font-style: italic;">buton</span> catre pagina de voluntar si <span style="text-decoration: underline; font-style: italic;">buton</span> catre pagina de administrator institutie unde vor exista voluntari</h1> 
+<div class="cr" >
+<h1 class="first-tittle">Contracte voluntariat - Ayush Cell Romania</h1>
+<h2 class="main-title" style="margin-bottom: 0;" >Contracte de voluntariat</h2>
 
 <div class="tbland">
 <div class="tbr">
 
+<p ><strong>Ești voluntar? Organizație gazdă? Aici e locul unde ne întâlnim!</strong></p>
+<p>De ce să alegi platforma noastră?</p>
+
+<h2 style="font-size:18px;"><strong>Vrei să fii voluntar?</strong></h2>
+<ul>
+    <li>Implică-te în proiecte care te pasionează și contribuie la o lume mai bună.</li>
+    <li>Dezvoltă-te personal: Descoperă noi abilități, fă cunoștințe noi și construiește o rețea profesională.</li>
+    <li>Beneficiază de sprijin: Te ajutăm cu ceea ce ai nevoie pentru a te implica în siguranță și cu satisfacție în proiecte de voluntariat.</li>
+</ul>
+<p style="margin-top:-10px;"><strong>Ești voluntar și ai primit o invitație de o organizație gazdă? Introdu datele aici: </strong></p>
+
 <%= form_with(url: verifica_cod_path, method: :post) do |f| %>
-  <div>
-    <h3>Cod: 
-      <%= f.text_field :code_part1, placeholder: 'Prefix', size: 4 %>  
-      <%= f.text_field :code_part2, placeholder: 'Cod' %>  
-      <%= f.submit 'Pagina Voluntar', class: "btn btn-primary" %>
+  <div id="log" style="margin-top: -10px;">
+    <h3 style="font-size: 18px;">Date acces: 
+      <%= f.text_field :code_part1, placeholder: 'Prefix', size: 4, class: 'custom-placeholder', style: 'margin-right: 0px;' %>  
+      <%= f.text_field :code_part2, placeholder: 'Numar', class: 'custom-placeholder', style: 'margin-right: 5px;' %>  
+      <%= f.submit 'Acceseaza pagina pentru voluntar', class: "btn btn-primary", style: 'background-color: #64025e; color: white; border: none; padding: 2px 10px; font-size:14px; margin-top:5px; box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 4px; transition: background-color 0.3s, box-shadow 0.3s;' %>
     </h3>
   </div>
 <% end %>
+
+
+<h2 style="font-size:18px; margin-top:20px;"><strong>Ești organizație gazdă?</strong></h2>
+<ul style="margin-bottom: 0;">
+    <li>Beneficiază de resursele necesare: Completează echipa ta cu voluntari motivați și talentați.</li>
+    <li>Îmbunătățește imaginea companiei tale: Implică-te în proiecte sociale și demonstrează responsabilitatea ta socială.</li>
+    <li>Contribuie la o cauză nobilă: Sprijină o cauză importantă pentru tine și pentru comunitatea ta.</li>
+</ul>
+
+  <div id="log" style="margin-top: 0px;">
+    <h3 style="font-size: 18px;"> <%= link_to 'Acceseaza pagina pentru organizația gazdă', contractes_path, class: "btn btn-primary", style: 'background-color: #64025e; color: white; border: none; padding: 2px 10px; font-size:14px; margin-top:5px; box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 4px; transition: background-color 0.3s, box-shadow 0.3s;' %>
+
+
+    </h3>
+  </div>
+
+<h2 style="font-size: 18px; margin-top: 20px;"><strong>Simplificăm voluntariatul:</strong></h2>
+<ul style="margin-bottom: 0;">
+    <li><strong>Gestionează documentele legale:</strong> Te ajutăm cu redactarea și semnarea contractelor de voluntariat online.</li>
+    <li><strong>Comunică eficient:</strong> Oferim o platformă de comunicare facilă între voluntari și organizațiile gazdă.</li>
+    <li><strong>Oferim suport:</strong> Echipa noastră este la dispoziția ta pentru a te ajuta cu orice problemă legată de voluntariat.</li>
+</ul>
+
+<p style="margin-top:10px;"><strong>Alege serviciile noastre! Fă o diferență! Implică-te în voluntariat!</strong></p>
+
+
+
+
 
 
 </div></div></div></div>

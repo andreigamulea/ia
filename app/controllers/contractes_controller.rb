@@ -21,6 +21,7 @@ class ContractesController < ApplicationController
   
   
   def voluntariat
+    
   end  
   def voluntar
     unless session[:verificat]
@@ -95,7 +96,7 @@ class ContractesController < ApplicationController
     @contracte_useri = ContracteUseri.new
   end  
   def contracte_all
-   
+    @prods = Prod.where(curslegatura: 'documente', status: 'activ')
     @contracte_useri = ContracteUseri.all
   end  
   def vizualizeaza_contract    
