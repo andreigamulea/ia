@@ -1,21 +1,7 @@
 <% border_style = (defined?(previous_video_tip) && previous_video_tip == 'nutritie2' && video.tip == 'nutritie3') ? 'border-top: 3px solid #000;' : '' %>
 
 <tr style="<%= border_style %>">
-<% if video.tip == 'nutritie3' %>
 
-<% if video.tip == 'nutritie3'%>
-    <td>
-        <% case video.ordine %>
-      <% when 1...1000 %>
-        <%= video.ordine %>
-      <% when 2001...3000 %>
-        <%= video.luna %>
-    <% end %>
-
-      </td>
-<% end %>
-
-<% end %>
 
 
 
