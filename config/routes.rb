@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   get 'traditia_ayurvedica/amnaya', to: 'traditia_ayurvedica#amnaya', as: 'amnaya'
   get 'traditia_ayurvedica/jivaka', to: 'traditia_ayurvedica#jivaka', as: 'jivaka'
   get 'traditia_ayurvedica/cognitronica', to: 'traditia_ayurvedica#cognitronica', as: 'cognitronica'
-  get 'traditia_ayurvedica/performanta_cognitiva', to: 'traditia_ayurvedica#performanta_cognitiva', as: 'performanta_cognitiva'
+  #get 'traditia_ayurvedica/performanta_cognitiva', to: 'traditia_ayurvedica#performanta_cognitiva', as: 'performanta_cognitiva'
+  # Definirea rutei cu un nume personalizat pentru helper-ul de cale
+  get 'traditia_ayurvedica/optimizarea_performantelor_cognitive', to: 'traditia_ayurvedica#performanta_cognitiva', as: 'optimizarea_performantelor_cognitive'
 
   # ...alte rute...
   get 'nutritie4/index'
