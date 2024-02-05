@@ -184,24 +184,6 @@
    text-align: right;
 }
 
-.cr-title:nth-of-type(2)::before {
-   content: "\1F388";
-   margin-right: 8px;
-}
-
-.cr-title:nth-of-type(3)::before {
-   content: "\26FA";
-   margin-right: 8px;
-}
-
-.cr .cr-title:nth-of-type(4)::before {
-   content: "\1F4DA";
-   margin-right: 8px;
-}
-.cr .cr-title:nth-of-type(5)::before {
-  content: "\1F343";
-  margin-right: 8px;
-}
 .col-left {
   width: 33%; 
   display: flex; 
