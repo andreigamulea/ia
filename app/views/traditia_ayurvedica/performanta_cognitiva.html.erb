@@ -1,0 +1,233 @@
+<style>
+#nutritie1 .cm h2 {
+    font-size:22px;
+}
+#nutritie1 .register{
+    border: 1px solid #4b0082;
+    background-color:#4b0082;
+}
+#nutritie1 .cm h3{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+#nutritie1 .register{
+    margin:0;
+    margin-top:20px;
+}
+#nutritie1 .table td {
+    text-align:center;
+}
+@media screen and (max-width: 720px) {
+    #nutritie1 .register{
+        margin:0 auto;
+        margin-top:20px;
+    }
+    .cm{
+        text-align:center;
+    }
+}
+
+</style>
+<% content_for :title, "Cognitronica și Gândirea Neconvențională - Ayush Cell Romania" %>
+<% content_for :meta_tags do %>
+  <meta name="description" content="Explorați domeniul fascinant al cognitronicii. Descoperiți cum gândirea neconvențională și cunoașterea superioară pot transforma percepția asupra conștiinței umane.">
+  <meta name="keywords" content="Cognitronica, Gândire Neconvențională, Conștiință Umană, Bharadvaja, Prabodha-Vijnana, Patanjali, Cunoaștere Superioară">
+  <link rel="canonical" href="http://localhost:3000/testcognitronica">
+<% end %>
+
+<div class="container" id="nutritie1">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: white; ">
+    <h1 class="first-tittle">Cognitronica și Gândirea Neconvențională - Ayush Cell Romania</h1>
+    <h2 class="main-title" >Performanta cognitiva</h2>
+
+<section>
+
+
+<div class="row1 center" style="max-width:920px; margin:0 auto;">
+    <div class="r1c1" style="height: 350px;">
+      
+      <img src="<%= image_url('cognitronica.jpg') %>" alt="Cognitronica și Gândirea Neconvențională">
+    </div>
+    <div class="r1c2">
+    <p>Știința cognitronicii sau știința ezoterică a existenței și manifestării fluxurilor cognitronice (Prabodha-Vijnana) a fost inițiată de către marele înțelept și yoghin Bharadvaja. Cognitronica oferă ființelor umane pregătite accesul la o cunoaștere superioară de natură supramentală, realizată cel mai adesea prin intermediul trezirii în ființă a învelișului subtil supramental (vijnana-maya-kosha).</p>
+   
+    <% if !current_user %>      
+    <div class="r1c2">
+        <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('performanta_cognitiva'), class: 'register' %>
+    </div>
+    <%elsif current_user && !@has_access%>
+    <%= link_to 'Vizionează acum', '#seminar', class: 'register' %>
+
+     <%end%> 
+     
+ </div>
+  </div>
+<section class="cm">  
+<br>
+<h2 style="font-size:22px;">Cognitronica: O explorare a cunoașterii superioare și a gândirii neconvenționale</h2>
+<br>
+
+<h3>Cognitronica și neuroștiința</h3>
+<p>Neuroștiința (sau neurobiologia) se ocupă cu studiul științific al sistemului nervos și își bazează observațiile pe studiul componentei preponderent materiale, fizice. Aspectele funcționale mult mai subtile, cele de natură invizibilă, precum și întreg determinismul cognitiv, la fel ca și așa-numita neuroplasticitate a creierului, nu își găsesc întotdeauna în prezent o explicație coerentă și completă în neuroștiință. Înțelegerea bazei biologice a învățării, memoriei, comportamentului, percepției și conștiinței au fost descrise de Eric Kandel drept „provocarea supremă” a științelor biologice.</p>
+
+<h3>Cognitronica și neuroplasticitatea</h3>
+<p>Neuroplasticitatea, cunoscută și sub numele de plasticitate cerebrală, este capacitatea creierului uman de a se reorganiza și de a se modela într-un mod nou prin formarea de noi conexiuni, trasee și rețele neuronale. În funcție de orientarea atenției sale conștiente și a unei anumite componente volitive, de experiență și de comportament, ființa umană poate determina manifestarea anumitor funcții, se poate antrena într-o măsură mai mică sau mai mare să realizeze anumite performanțe, specializate într-o anumită direcție sau în alta. </p>
+
+
+<p>Astfel descoperim că o realitate mult mai subtilă, mult mai complexă, care prezintă o formă de substanțialitate subtilă corespondentă de natura fluxurilor cognitronice se va exprima până la urmă până la nivelul universului material, în sfera vieții materiale vii. Din acest punct de vedere cognitronica este o știință pragmatică care vizează mai ales o mai bună gestionare a resurselor tainice ale conștiinței (citta) și mai ales ale conștiinței instrumentale a ființei umane (manas).</p>
+
+<p>În concluzie, prin intermediul conștiinței sale individuale (citta), ființa umană își poate modela configurațiile neuronale și se vor genera anumite conexiuni sinaptice, astfel ca respectivul demers cognitiv declanșat să se poată înfăptui într-o anumită măsură rezonabilă, eficientă, chiar prin intermediul țesutului nervos (majja-dhatu) existent la nivel trupesc, material.</p>
+
+<h3>Perspectiva cognitronicii asupra gândirii neconvenționale</h3>
+<p>Gândirea neconvențională este acea modalitate de operare a gândirii, a conștiinței instrumentale a ființei umane ce oferă o cantitate mare de oportunități în a privi aspectele vieții într-un mod original și adeseori într-un mod creativ, evitând pe cât posibil alunecarea în tiparele obișnuite sau în soluțiile convenționale de gândire.</p>
+
+<p>Am putea spune că, privind unificator peste timp, gândirea neconvențională este caracterizată de originalitate, de flexibilitate, de curiozitate, de capacitatea de asociere liberă a ideilor, a gândurilor. Gândirea neconvențională este considerată adeseori ca fiind non-liniară, indicând prin aceasta o extrapolare a logicii așa-zis convenționale. Gândirii neconvenționale i-a fost asociat și riscul în explorarea unor posibilități de înțelegere sau de reprezentare lăuntrică diferită de cele care sunt deja folosite.
+Gândirea neconvențională dispune, spre deosebire de gândirea convențională, de un mult mai bun și eficient mecanism intern de autoreglare și de auto-reconstrucție prin auto-reflecție. De aceea, gândirea neconvențională este principala sursă a adaptabilității ființei umane, cea care, am putea spune, determină neuroplasticitatea.</p>
+
+
+<% if !user_signed_in? || (current_user && !@has_access) %>
+
+
+
+
+<% if !current_user %>      
+    <div class="r1c2" style="align-items: center; width:100%;">
+        <%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('performanta_cognitiva'), class: 'register' %>
+    </div>
+    <%elsif current_user && !@has_access%>
+    <div class="r1c2" style="align-items: center; width:100%;">
+    <%= link_to 'Vizionează înregistrările', '#seminar', class: 'register' %>
+    </div>
+     <%end%> 
+
+<br>
+<h2>Înscriere și participare</h2>
+<br>
+
+
+<h3><strong>Modalitatea de accesare</strong></h3>
+<p>Prezentarile sunt disponibile exclusiv prin înregistrări, oferind astfel participanților libertatea de a accesa conținutul la orice oră și fără restricții de timp, asigurând flexibilitatea necesară în gestionarea programului personal.</p>
+<h3><strong>Cum pot viziona?</strong></h3>
+<p>Pentru a accesa prezentarile, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul la vizionarea inregistrarilor se va face direct in pagina de site.</p>
+<h3><strong>Costul participării</strong></h3>
+<p>Vizionarea fiecarei inregistrari are un cost accesibil de 12 lei.</p>
+<h3><strong>Durata accesului</strong></h3>
+<p>Accesul la vizionarea înregistrării se realizează pentru o perioadă de 60 de zile de la data efectuarii platii.</p>
+
+</section>
+
+
+<section>
+<% if !user_signed_in? %>
+
+<%end%>
+<%end%>
+
+   
+ 
+</section>
+
+
+
+
+<% if !@videos_correspondente.empty? || @has_access%>
+
+
+
+<h2 id="seminar" style= "text-align: center;padding: 0 10px; font-size:28px;">Seminar video: cognitronica și gândirea neconvențională</h2></br>
+
+
+
+<div id="videos">
+  <table class="table">
+    <thead>
+    <tr>
+        <th>Nr</th>
+        <th>Nume</th>
+        <th>Descriere</th>       
+        <th>Actiune</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+    <% @videos_correspondente.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+
+
+
+
+<%end%>
+
+
+
+
+
+
+
+
+<%if !current_user ||  (current_user && !@prods.empty?) %>
+
+<h2 class="alimente-nutritionale" id="seminar" style="font-size:28px;">Acces prezentari video: Cognitronica și gândirea neconvențională</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr class= "desk">
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Servicii</th>                    
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Detalii</th>
+                    
+                    <th style="height: 40px; vertical-align:middle; width: 14%;">Pret</th>
+                    <th style="height: 40px; vertical-align:middle; width: 12%;">Actiune</th>
+                </tr>      
+            </thead>
+            <tbody>
+            <% @prods.each do |prod| %>
+                    <tr>
+                    
+                    <td><%= prod.nume %></td> 
+                                          
+                        <td><%= prod.detalii %></td> 
+                        
+                         <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
+                         <% if current_user %>
+                         <td style="text-align:center;">
+                           <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
+                         </td>
+                       <% else %>
+                         <td style="text-align:center;">
+                           <%= link_to 'Comanda', new_user_session_with_return_path('performanta_cognitiva'), class: 'btn btn-primary' %>
+                         </td>
+                       <% end %>
+                       
+                        </tr>  
+                <% end %>  
+            </tbody>
+        </table>
+    </div>
+<%end%>    
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
