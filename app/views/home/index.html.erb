@@ -10,7 +10,33 @@
 <main class="cr" style="background-color: aliceblue;">
     <h1 class="first-tittle">Ayush Cell Romania: Cursuri, Aplicații, Tabere, Vizionări</h1>
     <h2 class="main-title" >Actualitate</h2>
-   
+    <div class="line">
+    <div class="col"  style="align-items:center;text-align:center;">
+       <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 1</h2>
+       <a href="<%= nutritie1_path %>"><img src="<%= image_path('nutritie-ayushcell.jpg') %>" alt="Nutritie Ayurvedica" style='max-width:300px;'></a>
+     
+       <div class="desc">Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată..</div>
+       <div class="btn-fp">
+       
+          <%= link_to 'Află mai mult..', nutritie1_path, class: 'btn-fp-link' %>
+          
+       
+       </div>
+    </div>
+    <div class="col" style="align-items:center;text-align:center;">
+       <h2>Optimizarea performanțelor cognitive prin practici de pratyahara care pot potența funcțiile inhibitorii cerebrale</h2>
+       <a href="<%= optimizarea_performantelor_cognitive_path %>"><img src="<%= image_path('optimizarea_performanțelor_cognitive 2.jpg') %>" alt="Perspectiva cognitronicii asupra gandirii neconvenționale" style="max-width:300px;"></a>
+       <div class="desc">Atunci când parcurgem într-un mod comparativ felul în care este descrisă practica pratyahara (retragerea simțurilor) în tratatele străvechi orientale și felul în care neuroștiința contemporană explică controlul asupra funcțiilor sistemului nervos, descoperim o coincidență remarcabilă. Aceasta subliniază capacitățile noastre inerente de autoreglare a conștiinței, evidențiind o punte între înțelepciunea tradițională și descoperirile științifice moderne..</div>
+       <div class="btn-fp">          
+       
+        
+         <%= link_to 'Află mai mult..', optimizarea_performantelor_cognitive_path, class: 'btn-fp-link' %>
+       
+     
+     
+       </div>
+    </div>
+ </div>
    
     <div class="line">
       <div class="col" style="width:100%;">
@@ -22,7 +48,7 @@
        
       </div>
       <div class="col" style="width:100%;">
-         <h2>Tabăra Ayurveda 2023 Etapa de Toamnă</h2>
+         <h2>Revizionare Tabăra de Ayurveda 2023 Etapa de Toamnă</h2>
          <div class="desc">Partea 1 - Prezentarea celor 10 calități cu rol formator - Nirmanya-Guna, Partea 2 - Prezentarea celor 20 calități generale - Vimshati-Guna..</div>
          <div class="btn-fp">
          <%= link_to 'Vezi înregistrările', tayt12_path, class: 'btn-fp-link' %>
@@ -31,34 +57,37 @@
       </div>
       
     </div>
-    <div class="line">
-    <div class="col"  style="align-items:center;text-align:center;">
-       <h2>Înțeleptul Ayurvedic Jivaka-Rishi</h2>
-       <a href="<%= jivaka_path %>"><img src="<%= image_path('jivaka.jpg') %>" alt="Jivaka-Rishi" style='max-width:300px;'></a>
-     
-       <div class="desc">Înţeleptul Jivaka, este o figură emblematică în tradiţia ayurvedică. Numele său, derivat din limba sanscrită, semnifică „ceea ce trăiește” sau „o ființă vie”, sugerând o conexiune profundă cu forțele vitale ale naturii..</div>
-       <div class="btn-fp">
+ 
+
+ <h2 class="main-title" >Tradiția Ayurvedică</h2>
+
+
+ <div class="line">
+ <div class="col"  style="align-items:center;text-align:center;">
+    <h2>Înțeleptul Ayurvedic Jivaka-Rishi</h2>
+    <a href="<%= jivaka_path %>"><img src="<%= image_path('jivaka.jpg') %>" alt="Jivaka-Rishi" style='max-width:300px;'></a>
+  
+    <div class="desc">Înţeleptul Jivaka, este o figură emblematică în tradiţia ayurvedică. Numele său, derivat din limba sanscrită, semnifică „ceea ce trăiește” sau „o ființă vie”, sugerând o conexiune profundă cu forțele vitale ale naturii..</div>
+    <div class="btn-fp">
+    
+       <%= link_to 'Află mai mult..', jivaka_path, class: 'btn-fp-link' %>
        
-          <%= link_to 'Află mai mult..', jivaka_path, class: 'btn-fp-link' %>
-          
-       
-       </div>
-    </div>
-    <div class="col" style="align-items:center;text-align:center;">
-       <h2>Perspectiva cognitronicii asupra gandirii neconvenționale</h2>
-       <a href="<%= cognitronica_path %>"><img src="<%= image_path('cognitronica.jpg') %>" alt="Perspectiva cognitronicii asupra gandirii neconvenționale" style="max-width:300px;"></a>
-       <div class="desc">Perspectiva cognitronicii asupra gandirii neconvenționale.</div>
-       <div class="btn-fp">          
-       
-         <%= link_to 'Află mai mult..', cognitronica_path, class: 'btn-fp-link' %>
-       
-     
-     
-       </div>
+    
     </div>
  </div>
-
-
+ <div class="col" style="align-items:center;text-align:center;">
+    <h2>Perspectiva cognitronicii asupra gandirii neconvenționale</h2>
+    <a href="<%= cognitronica_path %>"><img src="<%= image_path('cognitronica.jpg') %>" alt="Perspectiva cognitronicii asupra gandirii neconvenționale" style="max-width:300px;"></a>
+    <div class="desc">Perspectiva cognitronicii asupra gandirii neconvenționale.</div>
+    <div class="btn-fp">          
+    
+      <%= link_to 'Află mai mult..', cognitronica_path, class: 'btn-fp-link' %>
+    
+  
+  
+    </div>
+ </div>
+</div>
  
 
 

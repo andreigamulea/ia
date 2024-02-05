@@ -58,7 +58,7 @@
     <div class="r1c2">
         <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('cognitronica'), class: 'register' %>
     </div>
-    <%elsif current_user && !@has_access%>
+    <%elsif current_user%>
     <%= link_to 'Vizionează acum', '#seminar', class: 'register' %>
 
      <%end%> 

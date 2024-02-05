@@ -60,7 +60,7 @@
     <div class="r1c2">
         <%= link_to 'Mai mult..', new_user_session_with_return_path('jivaka'), class: 'register' %>
     </div>
-    <%elsif current_user && !@has_access%>
+    <%elsif current_user%>
     <%= link_to 'Vizionează acum', '#VideoNutritie', class: 'register' %>
 
      <%end%> 
