@@ -128,8 +128,10 @@ class ApplicationController < ActionController::Base
           traditia_ayurvedica_path
         elsif return_to == "jivaka" 
           jivaka_path  
-        elsif return_to == "cognitronica" 
+        elsif return_to == "cognitronica"   
           cognitronica_path
+        elsif return_to == "performanta_cognitiva" 
+          performanta_cognitiva_path
         elsif return_to == "evaluaretipologie" 
           evaluare_tipologie_ayurvedica_path  
         elsif return_to == "tri" 
