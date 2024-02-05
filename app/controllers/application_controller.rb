@@ -133,7 +133,8 @@ class ApplicationController < ActionController::Base
         elsif return_to == "cognitronica"   
           cognitronica_path
         elsif return_to == "optimizarea_performanțelor_cognitive" 
-          optimizarea_performanțelor_cognitive_path
+          optimizarea_performantelor_cognitive_path
+        
         elsif return_to == "evaluaretipologie" 
           evaluare_tipologie_ayurvedica_path  
         elsif return_to == "tri" 
