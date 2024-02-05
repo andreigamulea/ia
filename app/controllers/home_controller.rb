@@ -44,6 +44,7 @@ class HomeController < ApplicationController
     
   end
   def vajikarana
+    @prods = Prod.where(curslegatura: 'vajikarana', status: 'activ')
   end  
   
   
