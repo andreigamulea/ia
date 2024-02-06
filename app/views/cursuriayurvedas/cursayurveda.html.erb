@@ -1,3 +1,13 @@
+<% content_for :title, "Curs de Ayurveda | Ayush Cell Romania" %>
+<% content_for :meta_tags do %>
+  <meta name="description" content="Participați la cursul nostru de Ayurveda pentru a accesa învățăturile tradiționale autentice și a descoperi cum să echilibrați viața conform tipologiei dosha proprii. Aflați despre alimentația naturală, utilizarea plantelor medicinale și aromatice, cromoterapie, meloterapie și multe alte practici naturale pentru o viață armonioasă. Cursul este deschis tuturor, oferind sesiuni live săptămânale, suport de curs și acces la înregistrări, adaptat nevoilor omului modern.">
+
+  <meta name="keywords" content="ayurveda, nutritie ayurvedica, dosha, vata, pitta, kapha, dosha-prakriti, greutatea ideala, formule greutate ideala, invataturi traditionale, plante medicinale, aromaterapie, cromoterapie, meloterapie, digitopunctura, automasaj, revitalizare, tonus erotic-amoros, purificare trup, plantelor vindecatoare, afrodiziace, efecte binefacatoare, utilizare plante medicinale, curs online, live, accesibil tuturor, module anuale, suport de curs, inscriere, participare, zoom, vizionare inregistrari">
+
+  <link rel="canonical" href="https://www.ayushcell.ro/cursayurveda">
+<% end %>
+
+
 <div class="cont">
   <h1 class="name" style="font-size:1.8em;"><%=@titlu_pagina%></h1>
   <% if !(current_user && (current_user.role == 1 || (current_user.grupa == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i >= 2))) %>
