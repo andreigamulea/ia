@@ -168,11 +168,11 @@ Unul dintre efectele menținerii echilibrului dinamic dintre aportul energetic �
                          <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
                          <% if current_user %>
                          <td style="text-align:center;">
-                           <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
+                           <%= link_to 'Activează Accesul', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
                          </td>
                        <% else %>
                          <td style="text-align:center;">
-                           <%= link_to 'Comanda', new_user_session_with_return_path('nutritie2'), class: 'btn btn-primary' %>
+                           <%= link_to 'Activează Accesul', new_user_session_with_return_path('nutritie2'), class: 'btn btn-primary' %>
                          </td>
                        <% end %>
                        
@@ -186,7 +186,7 @@ Unul dintre efectele menținerii echilibrului dinamic dintre aportul energetic �
 <% if current_user %>
 <% if @platit %>
 
-<h2 style= "text-align: center;padding: 0 10px; font-size:28px;">Înregistrări video Program de pregătire: Nutritie Ayurvedică modulul 2</h2></br>
+<h2 class="alimente-nutritionale" style= "text-align: center; font-size:28px;">Înregistrări video Program de pregătire: Nutritie Ayurvedică modulul 2</h2>
 
 
 
@@ -224,7 +224,7 @@ Unul dintre efectele menținerii echilibrului dinamic dintre aportul energetic �
 <br><br><br>
 <%end%>
     <% if current_user && (@has_access || @has_access1)%>
-        <h2 style= "text-align: center;padding: 0 10px; font-size:28px;margin-top:35px;">Resurse</h2></br>
+        <h2 class="alimente-nutritionale" style= "text-align: center; font-size:28px;">Resurse</h2>
 
 
 
