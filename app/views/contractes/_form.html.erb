@@ -3,15 +3,16 @@
   width: 100%; /* sau o lățime specifică, cum ar fi 500px */
   height: 200px; /* înălțimea casetei de text */
 }
-
+.spanview span{
+  margin-bottom:10px;
+}
 
 </style>
 
 <%= form_with(model: contracte) do |form| %>
   <% if contracte.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(contracte.errors.count, "error") %> prohibited this contracte from being saved:</h2>
-
+      <h2><%= pluralize(contracte.errors.count, "error") %> prohibited this contract from being saved:</h2>
       <ul>
         <% contracte.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -19,80 +20,36 @@
       </ul>
     </div>
   <% end %>
-  <div id="videos">
-  <table class="table">
-      <thead>
-        <tr>
-          <th><%= form.label :user_id %></th>
-          <th><%= form.label :email %></th>
-          <th><%= form.label :tip %></th>
-          <th><%= form.label :denumire %></th>
-          <th><%= form.label :cod_contract %></th>
-          <th><%= form.label :contor %></th>
-          <!-- <th><%= form.label :textcontract %></th> -->
-          <th><%= form.label :nume_firma %></th>
-          <th><%= form.label :sediu_firma %></th>
-          <th><%= form.label :cont_bancar %></th>
-          <th><%= form.label :banca_firma %></th>
-          <th><%= form.label :cui_firma %></th>
-          <th><%= form.label :reprezentant_firma %></th>
-          <th><%= form.label :calitate_reprezentant %></th>
-          <th><%= form.label :denumire_post %></th>
-          <th><%= form.label :locul_desfasurarii %></th>
-          <th><%= form.label :departament %></th>
-          <th><%= form.label :subordonare %></th>
-          <th><%= form.label :relatii_functionale %></th>
-          <th><%= form.label :contor_start %></th>
-          <th><%= form.label :valabilitate_luni %></th>
-          <th><%= form.label :sarcini_voluntar %></th>
-        </tr>
-      </thead>
-      
-      <tbody>
-        <tr>
-          <td><%= form.number_field :user_id %></td>
-          <td><%= form.text_field :email %></td>
-          <td><%= form.text_field :tip %></td>
-          <td><%= form.text_field :denumire %></td>
-          <td><%= form.text_field :cod_contract %></td>
-          <td><%= form.number_field :contor %></td>
-          <!-- <td><%= form.text_area :textcontract %></td> -->
-          <td><%= form.text_field :nume_firma %></td>
-          <td><%= form.text_field :sediu_firma %></td>
-          <td><%= form.text_field :cont_bancar %></td>
-          <td><%= form.text_field :banca_firma %></td>
-          <td><%= form.text_field :cui_firma %></td>
-          <td><%= form.text_field :reprezentant_firma %></td>
-          <td><%= form.text_field :calitate_reprezentant %></td>
-          <td><%= form.text_field :denumire_post %></td>
-          <td><%= form.text_field :locul_desfasurarii %></td>
-          <td><%= form.text_field :departament %></td>
-          <td><%= form.text_field :subordonare %></td>
-          <td><%= form.text_field :relatii_functionale %></td>
-          <td><%= form.text_field :contor_start %></td>
-          <td><%= form.text_field :valabilitate_luni %></td>          
-          <td><%= form.text_area :sarcini_voluntar, 
-          rows: 5, 
-          cols: 50, 
-          placeholder: "ATENTIE!! Introduceți aici sarcinile voluntarului separate prin ; Exemplu: voluntarul respectă regulamentul de ordine interioară; voluntarul îndeplineste sarcinile indicate; etc" %></td>
 
-        </tr>
-      </tbody>
-    </table>
-    </div>
-  <div>
+  <div class="spanview">
+    <h2 style="font-size:22px;">Pachet contract nr. <%= form.object.id || "Nou" %> din data <%= form.object.created_at&.strftime("%d %B %Y") || "Curentă" %></h2>
 
+    <p style="margin:10px 0 0 0;"><strong>Date Asociație:</strong></p>
+    <span><strong>Email contractor: </strong><%= form.text_field :email %></span><span>, </span>
+    <span><strong>Tip Contract: </strong><%= form.text_field :tip %></span><span>, </span>
+    <span><strong>Denumire contract: </strong><%= form.text_field :denumire %></span><span>, </span>
+    <span><strong>Serie Contract: </strong><%= form.text_field :cod_contract %></span><span>, </span>
+    <span><strong>Număr start Contract: </strong><%= form.number_field :contor_start %></span><span>, </span>
+    <span><strong>Reprezentant Instituție: </strong><%= form.text_field :reprezentant_firma %></span><span>, </span>
+    <span><strong>Calitate reprezentant: </strong><%= form.text_field :calitate_reprezentant %></span><span>, </span>
+    <span><strong>Instituție: </strong><%= form.text_field :nume_firma %></span><span>, </span>
+    <span><strong>Sediu Instituție: </strong><%= form.text_field :sediu_firma %></span><span>, </span>
+    <span><strong>Cont Bancar: </strong><%= form.text_field :cont_bancar %></span><span>, </span>
+    <span><strong>Banca Instituției: </strong><%= form.text_field :banca_firma %></span><span>, </span>
+    <span><strong>CUI: </strong><%= form.text_field :cui_firma %></span><span>.</span>
 
-
-
-
-  
-  <canvas id="signature-pad" width="300" height="150" style="border: 1px solid #000;"></canvas>
-<button type="button" onclick="clearSignature()">Șterge Semnătura</button>
-<%= form.hidden_field :semnatura_admin, id: "semnatura_admin" %>
-    <%= form.submit %>
+    <p style="margin:10px 0 0 0;"><strong>Date Voluntari:</strong></p>
+    <span><strong>Denumire Post Voluntar: </strong><%= form.text_field :denumire_post %></span><span>, </span>
+    <span><strong>Locul desfășurării activității: </strong><%= form.text_field :locul_desfasurarii %></span><span>, </span>
+    <span><strong>Departament: </strong><%= form.text_field :departament %></span><span>, </span>
+    <span><strong>Relații funcționale cu: </strong><%= form.text_field :relatii_functionale %></span><span>, </span>
+    <span><strong>Sarcini voluntar: </strong><%= form.text_area :sarcini_voluntar, rows: 3 %></span><span>, </span>
+    <span><strong>Valabilitate pachet (luni): </strong><%= form.number_field :valabilitate_luni %></span>
   </div>
+
+  <%= form.submit "Salvează" %>
 <% end %>
+
 
 
 <script>
