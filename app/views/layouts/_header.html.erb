@@ -11,9 +11,10 @@
             <div class="menu-toggler" onclick="toggleMobileMenu()">
                 
             
-            <img src="<%= image_path('mbico1.png') %>" width="60px" id="menuTogglerIconInactive" style="display: block;" />
-           
-            <img src="<%= image_path('mbico2.png') %>" width="60px" id="menuTogglerIconActive" style="display: none;" />
+            <img src="<%= image_path('mbico1.png') %>" width="60px" height="60px" id="menuTogglerIconInactive" style="display: block;" alt="MenuTooglerUp" />
+
+            <img src="<%= image_path('mbico2.png') %>" width="60px" height="60px" id="menuTogglerIconActive" style="display: none;" alt="MenuTooglerDown" />
+            
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li><%= link_to 'Acasa', root_path %></li>
