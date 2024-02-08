@@ -2,7 +2,55 @@
 <div class="container" id="cvp1">
 <%= render 'layouts/sideleft' %>
 
+
+
 <div style="background-color: aliceblue;" >
+
+
+<h1 style="margin-left: 400px;">Achiziționează Contracte de voluntariat</h1></br>
+
+
+<div class="table-responsive" style="width: 1400px; margin-right: auto; margin-left: 0;">
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr class="desk">
+                <th>Servicii</th>
+                <th>Detalii</th>
+                <th>Cantitate</th>
+                <th>Pret bucata</th>                
+                <th>Pret total</th>
+                <th>Actiune</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> <%= @prod.nume %> </td>
+                <td><%= @prod.detalii %></td>
+                <td style="text-align:center;">
+                    <select id="cantitateSelect" name="cantitate" class="form-control">
+                        <% (1..200).each do |numar| %>
+                            <option value="<%= numar %>"><%= numar %></option>
+                        <% end %>
+                    </select>
+                </td>
+                <td id="pretBucata" style="text-align:center;"><%= @prod.pret.to_f %> lei</td>                
+                <td id="pretTotal" style="text-align:center;">---</td>
+                <td style="text-align:center;"> <%= link_to 'Comanda', datefacturare_path(s: @prod.id), id: 'linkComanda', class: 'btn btn-primary', "data-turbo": "false" %>
+                
+
+                </td>
+
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
 <h1>Contracte</h1>
 
 <table class="table table-striped table-bordered table-hover">
@@ -68,3 +116,61 @@
 
 <%= link_to "New Contracte", new_contracte_path %>
 </div></div>
+
+<script>
+console.log("Script încărcat");
+document.addEventListener("turbo:load", function() {
+    
+    console.log("Turbo load triggered");
+    initComandaLink();
+});
+
+function initComandaLink() {
+    updatePret();
+    updateLink();
+
+    document.getElementById('cantitateSelect').addEventListener('change', function() {
+        updatePret();
+        updateLink();
+    });
+}
+
+function calculeazaPret(n) {
+    if (n <= 10) return -0.0667 * n + 5.8667;
+    else if (n <= 20) return -0.04 * n + 5.6;
+    else if (n <= 100) return -0.0125 * n + 5.05;
+    else return 3.8;
+}
+
+function updatePret() {
+    var cantitate = document.getElementById('cantitateSelect').value;
+    var pretPeBucata = calculeazaPret(cantitate);
+    var pretTotal = pretPeBucata * cantitate;
+
+    document.getElementById('pretBucata').textContent = pretPeBucata.toFixed(2) + ' lei';
+    document.getElementById('pretTotal').textContent = pretTotal.toFixed(2) + ' lei';
+}
+
+function updateLink() {
+    console.log('salut');
+    var cantitate = document.getElementById('cantitateSelect').value;
+    var pretBucata = parseFloat(document.getElementById('pretBucata').textContent.replace(' lei', ''));
+    var pretTotal = parseFloat(document.getElementById('pretTotal').textContent.replace(' lei', ''));
+    var link = document.getElementById('linkComanda');
+    var baseUrl = link.href; 
+   
+    
+
+
+    let newUrl = new URL(baseUrl);
+   
+    newUrl.searchParams.set('cantitate', cantitate);
+    newUrl.searchParams.set('pret_bucata', pretBucata.toFixed(2));
+    newUrl.searchParams.set('pret_total', pretTotal.toFixed(2));
+
+    link.href = newUrl.toString();
+}
+
+</script>
+
+
