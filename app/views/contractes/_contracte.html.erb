@@ -1,4 +1,50 @@
-<div id="<%= dom_id contracte %>">
+<div class="container" id="cvp1">
+<%= render 'layouts/sideleft' %>
+
+
+
+<div class="cr" style="background-color: aliceblue;" >
+</br></br>
+<div class="spanview">
+
+    <h2 style="font-size:22px;">Pachet contract nr. 10 din data de 02 ianuarie 2024</h2>
+
+    <p style="margin:10px 0 0 0"><strong>Date Asociație:</strong></p>
+    <span><strong>Email contractor: </strong>andreigamulea1@gmail.com</span><span>, </span>
+    <span><strong>Tip Contract: </strong>Contract de voluntariat pentru lectori</span><span>, </span>
+    <span><strong>Denumire contract: </strong>Contract de voluntariat lectori</span><span>, </span>
+    <span><strong>Serie Contract: </strong>LEC</span><span>, </span>
+    <span><strong>Numar start Contract start: </strong> 1</span><span>, </span>
+    <span><strong>Reprezentant Instituție: </strong>Andrei Gămulea</span><span>, </span>
+    <span><strong>Coordonator voluntar: </strong>Andrei Gămulea</span><span> , </span>
+    <span><strong>Calitate reprezentant: </strong>Administrator</span><span>, </span>
+    <span><strong>Instituție: </strong>Ayus Grup S.R.L.</span><span>, </span>
+    <span><strong>Sediu Instituție: </strong>București, România, Str. Ostasilor nr. 15, sector 1</span><span>, </span>
+    <span><strong>Cont Bancar: </strong>RO86INGB0000999902964556</span><span>, </span>
+    <span><strong>Banca Instituției: </strong>ING BANK</span><span>, </span>
+    <span><strong>CUI: </strong>15768237</span><span>.</span>
+
+    <p style="margin:10px 0 0 0;"><strong>Date Voluntari:</strong></p>
+    <span><strong>Denumire Post Voluntar: </strong>Voluntar pentru activități de lector ayurveda</span><span>, </span>
+    <span><strong>Locul desfășurării activității: </strong>Activitatea se desfășoară la sălile și locațiile destinate activităților organizate</span><span>, </span>
+    <span><strong>Departament: </strong>Lectori de ayurveda</span><span>, </span></br>
+    <span><strong>Voluntarul va avea relații funcționale cu: </strong>Cu ceilalți voluntari pentru obținerea de date și informații legate de specificul activității sale</span><span>, </span></br>
+    <span><strong>Sarcini voluntar: </strong>acesta, aceasta, va fi si va face,acesta, aceasta, va fi si va face,acesta, aceasta, va fi si va face,acesta, aceasta, va fi si va face,acesta, aceasta, va fi si va face,acesta, aceasta, va fi si va face,</span><span>, </span></br>
+    <span><strong>Valabilitate pachet (luni): </strong> 24</span><span>, </span>
+    <span><strong>Acțiuni: </strong></span>
+
+</div>
+
+
+<div>
+  <%= link_to "Editează acest contract", edit_contracte_path(@contracte) %> |
+  <%= link_to "Înapoi la contracte", contractes_path %>
+
+  <!--<%= button_to "Sterge acest contract", @contracte, method: :delete %>-->
+</div>
+
+
+<!--<div id="<%= dom_id contracte %>">
   <p>
     <strong>User:</strong>
     <%= contracte.user_id %>
@@ -100,3 +146,6 @@
   <%= contracte.sarcini_voluntar %>
 </p>
 </div>
+-->
+
+</div></div>
