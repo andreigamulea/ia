@@ -30,12 +30,16 @@
 }
 
 </style>
-<% content_for :title, "Program de nutritie Ayurvedica: modulul 1 | Ayush Cell Romania" %>
-<% content_for :meta_tags do %>
-  <meta name="description" content="Descoperiți importanța adaptării (satmya) alimentației la tipologia constituțională ayurvedică proprie (dosha) și impactul acesteia asupra sănătății.">
-  <meta name="keywords" content="ayurveda, nutritie ayurvedica, dosha, vata, pitta, kapha, dosha-prakriti, greutatea ideala, formule greutate ideala">
+
+
+<% content_for :title, "Program de nutritie Ayurvedica: modulul 1 | Ayush Cell Romania"  %>
+<% content_for :description, "Descoperiți importanța adaptării (satmya) alimentației la tipologia constituțională ayurvedică proprie (dosha) și impactul acesteia asupra sănătății." %>
+<% content_for :keywords, "ayurveda, nutritie ayurvedica, dosha, vata, pitta, kapha, dosha-prakriti, greutatea ideala, formule greutate ideala" %>
+
+<% content_for :canonical do %>
   <link rel="canonical" href="https://www.ayushcell.ro/nutritie1">
 <% end %>
+
 
 <div class="container" id="nutritie1">
 <%= render 'layouts/sideleft' %>
