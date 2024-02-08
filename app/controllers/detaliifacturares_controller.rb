@@ -286,11 +286,29 @@ end
 
   
   
-  def datefacturare
-    @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare
-    @serviciu = params[:serviciu]
-    @prod = Prod.find(params[:s].to_i)
-  end
+def datefacturare
+  @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare
+  @serviciu = params[:serviciu]
+  @prod = Prod.find(params[:s].to_i)
+
+  # Noi parametri preluați din request
+  cantitate = params[:cantitate].to_i
+  pret_bucata = params[:pret_bucata].to_f
+  pret_total = params[:pret_total].to_f # Acesta ar putea fi calculat și în backend, dacă preferi
+
+  # În funcție de logica aplicației, poți să salvezi aceste valori în baza de date,
+  # sau să le folosești direct pentru a prepara datele pentru facturare sau pentru a afișa în view.
+  
+  # Exemplu de atribuire (ajustează în funcție de modelul tău)
+  
+  #@detaliifacturare.cantitate = cantitate
+  #@detaliifacturare.pret_bucata = pret_bucata
+  #@detaliifacturare.pret_total = pret_total
+  
+  # Asigură-te că salvezi orice modificare dacă este necesar
+  @detaliifacturare.save if @detaliifacturare.changed?
+end
+
   
   
 

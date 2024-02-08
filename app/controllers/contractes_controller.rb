@@ -82,6 +82,7 @@ class ContractesController < ApplicationController
   end
   
   def index
+    @prod = Prod.find_by(curslegatura: 'voluntari', status: 'activ')
     @contractes = Contracte.all
     @contracte = Contracte.last
   end
