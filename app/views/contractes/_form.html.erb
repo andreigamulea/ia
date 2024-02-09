@@ -1,13 +1,118 @@
 <style>
-.large-textarea {
-  width: 100%; /* sau o lățime specifică, cum ar fi 500px */
-  height: 200px; /* înălțimea casetei de text */
-}
-.spanview span{
-  margin-bottom:10px;
+#cvn .spanview {
+   
+    margin: 0;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    background-color: #fff;
 }
 
+#cvn .cr h2 {
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+#cvn .cr .section-title {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #4b0082;
+    margin-bottom: 20px;
+}
+
+#cvn .cr .input-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#cvn .cr .input-group label {
+    min-width: 210px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+#cvn .cr .input-group input[type="text"],
+#cvn .cr .input-group input[type="number"],
+#cvn .cr .input-group textarea {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#cvn .cr .input-group textarea {
+    resize: vertical;
+}
+
+#cvn .cr .section {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+/* Stiluri suplimentare pentru cvc și ajustări responsabile, acum raportate la #cvn */
+#cvn .cr p {
+    margin-bottom: 0;
+    font-size:16px;
+}
+
+
+/* Ajustări responsabile pentru .cr în contextul #cvn */
+@media screen and (min-width: 920px) {
+    #cvn .cr {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+@media screen and (max-width: 919px) {
+    #cvn .cr {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+@media screen and (max-width: 520px) {
+    #cvn .cr {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+.btn-fp-link-form{
+    margin-top:20px;
+    background-color: #64025e;
+    color: white;
+    font-size: 16px;
+    box-shadow: rgba(0,0,0,0.3) 0px 2px 4px;
+    padding: 8px 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+.btn-fp-link-form:hover {
+    background-color: #50024a;
+    box-shadow: rgba(0,0,0,0.5) 0px 4px 8px;
+  }
 </style>
+
+<div class="container" id="cvn">
+<%= render 'layouts/sideleft' %>
+
+
+
+
+<p style="color: green"><%= notice %></p>
+
+<main class="cr" style="background-color: aliceblue;">
+    <h1 class="first-tittle">Set documente voluntariat: Ayush Cell Romania</h1>
+    <h2 class="main-title">Achiziționează un nou set de documente pentru voluntariat</h2>
+<p>Completeaza datele necesare pentru fiecare set de documente:</p>
+
+
 
 <%= form_with(model: contracte) do |form| %>
   <% if contracte.errors.any? %>
@@ -22,35 +127,43 @@
   <% end %>
 
   <div class="spanview">
-    <h2 style="font-size:22px;">Pachet contract nr. <%= form.object.id || "Nou" %> din data <%= form.object.created_at&.strftime("%d %B %Y") || "Curentă" %></h2>
+  <h2>Pachet contract nr. Nou din data Curentă</h2>
 
-    <p style="margin:10px 0 0 0;"><strong>Date Asociație:</strong></p>
-    <span><strong>Email contractor: </strong><%= form.text_field :email %></span><span>, </span>
-    <span><strong>Tip Contract: </strong><%= form.text_field :tip %></span><span>, </span>
-    <span><strong>Denumire contract: </strong><%= form.text_field :denumire %></span><span>, </span>
-    <span><strong>Serie Contract: </strong><%= form.text_field :cod_contract %></span><span>, </span>
-    <span><strong>Număr start Contract: </strong><%= form.number_field :contor_start %></span><span>, </span>
-    <span><strong>Reprezentant Instituție: </strong><%= form.text_field :reprezentant_firma %></span><span>, </span>
-    <span><strong>Calitate reprezentant: </strong><%= form.text_field :calitate_reprezentant %></span><span>, </span>
-    <span><strong>Instituție: </strong><%= form.text_field :nume_firma %></span><span>, </span>
-    <span><strong>Sediu Instituție: </strong><%= form.text_field :sediu_firma %></span><span>, </span>
-    <span><strong>Cont Bancar: </strong><%= form.text_field :cont_bancar %></span><span>, </span>
-    <span><strong>Banca Instituției: </strong><%= form.text_field :banca_firma %></span><span>, </span>
-    <span><strong>CUI: </strong><%= form.text_field :cui_firma %></span><span>.</span>
+  <div class="section">
+  <p class="section-title"><strong>Date Asociație:</strong></p>
+  <div class="input-group"><label>Email contractor:</label><input type="text" name="contracte[email]" id="contracte_email" placeholder="exemplu@domeniu.com"></div>
+  <div class="input-group"><label>Tip Contract:</label><input type="text" name="contracte[tip]" id="contracte_tip" placeholder="Prestări servicii, Vânzare-Cumpărare, etc."></div>
+  <div class="input-group"><label>Denumire contract:</label><input type="text" name="contracte[denumire]" id="contracte_denumire" placeholder="Denumirea completă a contractului"></div>
+  <div class="input-group"><label>Serie Contract:</label><input type="text" name="contracte[cod_contract]" id="contracte_cod_contract" placeholder="Seria și numărul contractului"></div>
+  <div class="input-group"><label>Număr start Contract:</label><input type="number" name="contracte[contor_start]" id="contracte_contor_start" placeholder="Numărul de la care începe contractul"></div>
+  <div class="input-group"><label>Reprezentant Instituție:</label><input type="text" name="contracte[reprezentant_firma]" id="contracte_reprezentant_firma" placeholder="Nume și prenume"></div>
+  <div class="input-group"><label>Calitate reprezentant:</label><input type="text" name="contracte[calitate_reprezentant]" id="contracte_calitate_reprezentant" placeholder="Funcția în cadrul instituției"></div>
+  <div class="input-group"><label>Instituție:</label><input type="text" name="contracte[nume_firma]" id="contracte_nume_firma" placeholder="Numele complet al instituției"></div>
+  <div class="input-group"><label>Sediu Instituție:</label><input type="text" name="contracte[sediu_firma]" id="contracte_sediu_firma" placeholder="Adresa completă a sediului"></div>
+  <div class="input-group"><label>Cont Bancar:</label><input type="text" name="contracte[cont_bancar]" id="contracte_cont_bancar" placeholder="Numărul contului bancar"></div>
+  <div class="input-group"><label>Banca Instituției:</label><input type="text" name="contracte[banca_firma]" id="contracte_banca_firma" placeholder="Numele băncii"></div>
+  <div class="input-group"><label>CUI:</label><input type="text" name="contracte[cui_firma]" id="contracte_cui_firma" placeholder="Codul Unic de Înregistrare"></div>
+</div>
 
-    <p style="margin:10px 0 0 0;"><strong>Date Voluntari:</strong></p>
-    <span><strong>Denumire Post Voluntar: </strong><%= form.text_field :denumire_post %></span><span>, </span>
-    <span><strong>Locul desfășurării activității: </strong><%= form.text_field :locul_desfasurarii %></span><span>, </span>
-    <span><strong>Departament: </strong><%= form.text_field :departament %></span><span>, </span>
-    <span><strong>Relații funcționale cu: </strong><%= form.text_field :relatii_functionale %></span><span>, </span>
-    <span><strong>Sarcini voluntar: </strong><%= form.text_area :sarcini_voluntar, rows: 3 %></span><span>, </span>
-    <span><strong>Valabilitate pachet (luni): </strong><%= form.number_field :valabilitate_luni %></span>
-  </div>
+<div class="section">
+  <p class="section-title"><strong>Date Voluntari:</strong></p>
+  <div class="input-group"><label>Denumire Post Voluntar:</label><input type="text" name="contracte[denumire_post]" id="contracte_denumire_post" placeholder="Titlul postului de voluntar"></div>
+  <div class="input-group"><label>Locul desfășurării activității:</label><input type="text" name="contracte[locul_desfasurarii]" id="contracte_locul_desfasurarii" placeholder="Locația exactă a activității"></div>
+  <div class="input-group"><label>Departament:</label><input type="text" name="contracte[departament]" id="contracte_departament" placeholder="Numele departamentului"></div>
+  <div class="input-group"><label>Relații funcționale cu:</label><input type="text" name="contracte[relatii_functionale]" id="contracte_relatii_functionale" placeholder="Roluri sau persoane în relație directă"></div>
+  <div class="input-group"><label>Sarcini voluntar:</label><textarea rows="3" name="contracte[sarcini_voluntar]" id="contracte_sarcini_voluntar" placeholder="Descrieți sarcinile principale ale voluntarului, folosind punct și virgulă (;) pentru separare"></textarea></div>
+  <div class="input-group"><label>Valabilitate pachet (luni):</label><input type="number" name="contracte[valabilitate_luni]" id="contracte_valabilitate_luni" placeholder="Durata în luni a valabilității"></div>
+</div>
 
-  <%= form.submit "Salvează" %>
+</div>
+
+
+<%= form.submit "Salvează", class: "btn-fp-link-form" %>
+
 <% end %>
 
-
+</div>
+</div>
 
 <script>
 var isDrawing = false; // Variabila globală
