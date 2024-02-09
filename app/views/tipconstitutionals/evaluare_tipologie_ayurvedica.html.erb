@@ -1,92 +1,7 @@
-<style>
-@media screen and (min-width: 920px) {
-#evaluare .cr{
-    padding-left:40px;padding-right:40px;
-}
-}
-@media screen and (max-width: 919px) {
-#evaluare .cr{
-    padding-left:20px;padding-right:20px;
-}
-}
-@media screen and (max-width: 520px) {
-#evaluare .cr{
-    padding-left:10px;padding-right:10px;
-}
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: auto; 
-}
-#evaluare .test-vata .table-header{
-    background-color: #c3c3ff;
-}
-.test-vata .row-item3:hover {
-    background-color: #c3c3ff;
-}
-#evaluare .test-pitta .table-header{
-    background-color: #ffc3c3;
-}
-.test-pitta .row-item3:hover {
-    background-color: #ffc3c3;
-}
- #evaluare .test-kapha .table-header{
-    background-color: #bfffc4;
-} 
-.test-kapha .row-item3:hover {
-    background-color: #bfffc4;
-}
- 
-#evaluare .data-table .table-header th, 
-#evaluare .data-table .table-row td {
-  text-align: center;
-  padding: 8px;
-  border: 1px solid #000000;
-}
-#evaluare .data-table .table-header th:nth-child(1), 
-#evaluare .data-table .table-row td:nth-child(1) {
-  width: 5%;
-  min-width:50px;
-}
-#evaluare .data-table .table-row td:nth-child(2) {
-  width: 85%;
-  text-align:left;
-}
-#evaluare .data-table .table-header th:nth-child(2){
-    text-align:center;
-}
-#evaluare .data-table .table-header th:nth-child(3), 
-#evaluare .data-table .table-row td:nth-child(3) {
-  width: 10%;
-  min-width:50px;
-  max-width:75px;
-}
-#evaluare .data-table .table-row:nth-child(even) {
-  background-color: #f9f9f9;
-}
-#evaluare .data-table .punctaj {
-  border: none;
-  background: transparent;
-  text-align: center;
-  height: -webkit-fill-available;
-  width: -webkit-fill-available;
-}
-
-#evaluare .data-table .punctaj:focus {
-  outline: none;
-}
-#evaluare select {
-     width: -webkit-fill-available;
-}
-
-
-</style>
-
-<% content_for :title, "Test pentru evaluarea tipologiei Ayurvedice" %>
-<% content_for :description, "Test pentru evaluarea tipologiei Ayurvedice" %>
-<% content_for :keywords, "evaluare ayurvedică, test dosha online, vata, pitta, kapha, sănătate ayurvedică, echilibru dosha, caracteristici dosha, dieta ayurvedică, stil de viață ayurvedic, Ayush Cell Romania, principii ayurvedice, terapie ayurvedică, prevenție ayurvedică, tratament natural ayurvedic, consultanță ayurvedică, binefaceri ayurveda, detoxifiere ayurvedică, yoga și ayurveda, alimentație sănătoasă ayurvedică" %>
-
-<% content_for :canonical do %>
+<% content_for :title, "Ayush Cell Romania: Evaluare tipologie ayurvedică" %>
+<% content_for :meta_tags do %>
+  <meta name="description" content="Test pentru evaluarea tipologiei Ayurvedice. Descoperă acum tipul tău constituțional cu ajutorul acestui instrument valoros.">
+  <meta name="keywords" content="ayurveda, curs de ayurveda, dosha, vata, pitta, kapha, dosha-prakriti">
   <link rel="canonical" href="https://www.ayushcell.ro/evaluare_tipologie_ayurvedica">
 <% end %>
 
@@ -99,7 +14,7 @@
 
 
 <div class="cr" style="background-color: aliceblue; ">
-    <h1 class="first-tittle">Evaluare tipologie ayurvedică: Ayush Cell Romania</h1>
+    <h1 class="first-tittle">Evaluare tipologie ayurvedică | Ayush Cell Romania</h1>
     <h2 class="main-title" >Test pentru evaluarea tipologiei Ayurvedice</h2>
     <p>În Ayurveda, cunoaşterea predominanţei constituţionale sau, altfel spus, a dosha-ei predominante, reprezintă un aspect esenţial în toate acțiunile ce vizează alegerea adecvată a unui anumit mod de viaţă care să fie cât mai potrivit și favorabil, precum şi pentru a stabili metodele adecvate de vindecare, în cazul în care ființa este afectată de vreo boală sau de vreun dezechilibru. Identificarea corectă a tipului constituţional ayurvedic (dosha-prakriti) este un proces de cunoaștere important, care se realizează ţinând cont de un număr suficient de factori diferențiatori. Unii dintre acești factori pot fi uşor de observat de către oricine, în timp ce alţii factori necesită o observare atentă și o pregătire prealabilă adecvată. </p>
 
@@ -145,386 +60,124 @@
 </table>
 <p>La sfârşitul fiecărui tabel dintre cele trei corespunzătoarea fiecăreia dintre cele trei dosha-uri se va calcula suma punctelor obţinute. </p>
 <p>În cele din urmă, se obţin trei scoruri care sunt corespunzătoare aprecierii noastre asupra predominanţei celor trei dosha-uri. Apoi vom comparara aceste rezultate pentru a afla astfel rezultatul final al aprecierii noastre asupra tipului constituţional (dosha-prakriti) și a predominanţei relative a celor trei dosha-uri în fiinţa noastră. </p>
+
+<% unless current_user %>  
+    <p style="color: red;">⚖️ Pentru a accesa funcțiile automate de calcul și vizualizare a rezultatelor din cadrul acestui test ayurvedic, te invităm să <a href="/users/sign_in?return_to=evaluaretipologie">te loghezi pe site</a>. Dacă nu ai un cont, <a href="/users/sign_up?return_to=evaluaretipologie">creează unul acum</a>, este simplu și gratuit.</p>
+  
+<% end %>
+
+
+
 <h2 class="main-title">Test pentru evaluarea caracteristicilor de tip vata</h2>
     
-    <table class="data-table test-vata">
-    <tr class="table-header">
-      <th class="header-item1">Nr.</th>
-      <th class="header-item2">Caracteristici de tip vata</th>
-      <th class="header-item3">Punctaj</th>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">1</td>
-      <td class="row-item2">Realizez aproape toate activităţile în care mă angrenez cu mare repeziciune şi de aceea par să fiu foarte agitat sau neliniştit</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">2</td>
-      <td class="row-item2">Nu sunt capabil să memorez pentru mult timp, iar ceea ce reţin nu-mi pot aminti cu uşurinţă mai târziu</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">3</td>
-      <td class="row-item2">Sunt plin de entuziasm, am iniţiativă şi sunt foarte vivace prin însăşi constituţia mea, de la natură</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">4</td>
-      <td class="row-item2">Am un trup subţire, slab şi mi-am dat seama că nu-mi pot mări (amplifica) foarte uşor greutatea trupească</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">5</td>
-      <td class="row-item2">Învăţ foarte repede şi înţeleg destul de bine orice fel de aspecte noi</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">6</td>
-      <td class="row-item2">Am un mers uşor care, privit din exterior, pare nehotărât şi chiar şi atunci când mă plimb par grăbit</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">7</td>
-      <td class="row-item2">Am tendinţa de a avea serioase dificultăţi în luarea deciziilor şi a hotărârilor de aproape orice fel</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">8</td>
-      <td class="row-item2">Am tendinţa de a avea foarte uşor gaze intestinale şi adeseori pot deveni cu uşurinţă constipat</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">9</td>
-      <td class="row-item2">Am o circulaţie proastă a sângelui în extremităţile trupului şi am remarcat că am mâinile şi picioarele reci</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">10</td>
-      <td class="row-item2">Am tendinţa fie de a mă lăsa cuprins de anxietate, fie de a deveni îngrijorat, adesea chiar şi fără motiv</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">11</td>
-      <td class="row-item2">Spre deosebire de marea majoritate a oamenilor, eu nu pot tolera apa rece şi nici atmosfera rece de afară</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">12</td>
-      <td class="row-item2">Vorbesc foarte repede şi tocmai de aceea cei din jur consideră că sunt foarte vorbăreţ sau îmi spun adesea că vorbesc „doar de dragul vorbei”</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">13</td>
-      <td class="row-item2">Stările sufleteşti se schimbă în cazul meu cu o mare uşurinţă şi sunt într-o mare măsură o natură puternic emoţională, fluctuantă și variabilă</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">14</td>
-      <td class="row-item2">Am dificultăţi atunci când fiind obosit intenţionez să adorm şi rareori reuşesc să am un somn profund</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">15</td>
-      <td class="row-item2">Pielea mea are tendinţa de a fi uscată, chiar aspră şi crapă pe alocuri, mai ales în timpul iernii</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">16</td>
-      <td class="row-item2">Am o atenție foarte activă, aparent chiar fără odihnă şi am remarcat faptul că am o imaginaţie foarte bogată şi o mare creativitate</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">17</td>
-      <td class="row-item2">Am mişcări foarte rapide şi sunt mai mereu activ, energia mea tinde să se manifeste exploziv, sub forma unor izbucniri cel mai adesea neaşteptate</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">18</td>
-      <td class="row-item2">Sunt foarte uşor excitabil atât din punct de vedere erotic-sexual, cât şi din punct de vedere emoţional</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">19</td>
-      <td class="row-item2">Pot fi foarte uşor tulburat de o situaţie stresantă şi atunci mă cuprinde cel mai adesea frica, teama, neliniștea sau anxietatea</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">20</td>
-      <td class="row-item2">Dacă sunt lăsat să acţionez singur după capul meu, mănânc sau dorm într-un mod neregulat şi dezordonat</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">21</td>
-      <td class="row-item2">Pot învăţa repede şi reţin cu uşurinţă ceea ce am memorat, însă nu pentru mult timp, deoarece uit repede</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1">22</td>
-      <td class="row-item2">Fiind prin însăşi natura mea o fire mai mereu activă, am mai degrabă nevoie de relaxare şi de echilibru</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj"></td>
-    </tr>
-    <tr class="table-row">
-      <td class="row-item1" style="border-right:none;"></td>
-      <td class="row-item2" style="text-align:right; border-left:none;">Totalul punctajului pentru vata: </td>
-      <td class="row-item3">Rezulat calculat</td>
-    </tr>
-  </table>
+<table class="data-table test-vata" id="vata-table">
+<tr class="table-header">
+  <th class="header-item1">Nr.</th>
+  <th class="header-item2">Caracteristici de tip vata</th>
+  <th class="header-item3">Punctaj</th>
+</tr>
+
+<% @vata.each do |vata_item| %>
+  <tr class="table-row">
+    <td class="row-item1"><%= vata_item.nr %></td>
+    <td class="row-item2"><%= vata_item.caracteristica %></td>
+    <td class="row-item3">
+    <select name="punctaj[]" class="punctaj-input" <%= 'disabled' unless current_user %>>
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+  </select>
+    </td>
+  </tr>
+<% end %>
+
+<tr class="table-row">
+  <td colspan="2" style="text-align:right; padding-right:10px; font-weight:500; border-right:none;">Total calculat pentru Vata:  </td>
+  <td id="total-punctaj-vata" style="text-align:center; border-left:none;font-weight:500;">0</td>
+</tr>
+</table>
+
+
+  <h2 class="main-title" style="margin-top:20px;color: #bf0000;">Test pentru evaluarea caracteristicilor de tip pitta</h2>
+  <table class="data-table test-pitta" id="pitta-table">
+  <tr class="table-header">
+  <th class="header-item1">Nr.</th>
+  <th class="header-item2">Caracteristici de tip pitta</th>
+  <th class="header-item3">Punctaj</th>
+</tr>
+
+<% @pitta.each do |vata_item| %>
+  <tr class="table-row">
+    <td class="row-item1"><%= vata_item.nr %></td>
+    <td class="row-item2"><%= vata_item.caracteristica %></td>
+    <td class="row-item3">
+    <select name="punctaj[]" class="punctaj-input" <%= 'disabled' unless current_user %>>
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+    </select>
+  </td>
   
+  </tr>
+<% end %>
 
-  <h2 class="main-title" style="margin-top:20px;">Test pentru evaluarea caracteristicilor de tip pitta</h2>
-  <table class="data-table test-pitta">
-  <tr class="table-header">
-      <th class="header-item1">Nr.</th>
-      <th class="header-item2">Caracteristici de tip pitta</th>
-      <th class="header-item3">Punctaj</th>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">1</td>
-      <td class="row-item2">Mă consider a fi foarte eficient în tot ceea ce întreprind sau realizez şi sunt recunoscut ca fiind eficient</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj1"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">2</td>
-      <td class="row-item2">În aproape toate activităţile pe care le desfăşor am tendinţa de a fi extrem de precis, sever şi sistematic</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj2"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">3</td>
-      <td class="row-item2">Am o concentrare puternică şi într-o mare măsură am un stil de acțiune convingător, antrenant şi viguros</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj3"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">4</td>
-      <td class="row-item2">Resimt o senzaţie pregnantă de disconfort şi de asemenea am remarcat că obosesc cu uşurinţă pe o vreme ce este foarte fierbinte</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj4"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">5</td>
-      <td class="row-item2">Am tendinţa de a transpira foarte uşor şi abundent, chiar dacă temperatura mediului este scăzută</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj5"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">6</td>
-      <td class="row-item2">Chiar dacă nu las întotdeauna să se vadă, am remarcat că pot deveni nervos, mânios sau chiar furios</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj6"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">7</td>
-      <td class="row-item2">Dacă sar peste una dintre mesele zilnice sau dacă întârzi puţin peste ora obişnuită a mesei resimt imediat o senzaţie neplăcută de disconfort</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj7"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">8</td>
-      <td class="row-item2">Am părul încărunţit prematur, pe cap au apărut porţiuni unde părul este mai rar sau chiar mi-a apărut chelie</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj8"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">9</td>
-      <td class="row-item2">Am un apetit foarte puternic, iar dacă fiindu-mi foame doresc să mănânc, pot mânca fără probleme o cantitate de mâncare destul de mare</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj9"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">10</td>
-      <td class="row-item2">Majoritatea celor apropiaţi mă consideră a fi o fire pasională, iute, încăpăţânată şi impulsivă</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj10"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">11</td>
-      <td class="row-item2">Am o digestie foarte bună şi de aceea pot să am mai puţine evacuări (scaune) decât să fiu constipat</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj11"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">12</td>
-      <td class="row-item2">Îmi pot pierde calmul foarte uşor şi pot deveni foarte repede iritabil, combativ şi chiar mânios</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj12"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">13</td>
-      <td class="row-item2">Am tendinţa de a fi mai mereu un perfecţionist în ceea ce priveşte chiar și cele mai mici detalii</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj13"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">14</td>
-      <td class="row-item2">Pot să mă înfuri destul de uşor, dar apoi uit repede ceea ce s-a petrecut</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj14"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">15</td>
-      <td class="row-item2">Îmi plac foarte mult mâncărurile reci cum ar fi de exemplu îngheţata şi sunt de asemenea atras de băuturile nealcoolice reci ori cele cu gheaţă</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj15"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">16</td>
-      <td class="row-item2">Sunt adeseori dispus să simt că aerul într-o încăpere este mai degrabă prea cald, decât prea rece</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj16"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">17</td>
-      <td class="row-item2">Nu pot tolera mâncărurile fierbinţi sau cele foarte condimentate (cu piper, ghimbir sau boia iute, de exemplu)</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj17"></td>
-  </tr>
-  <tr class="table-row">
-      <td class="row-item1">18</td>
-      <td class="row-item2">Nu sunt suficient de tolerant cu situaţiile dezagreabile care survin şi nici cu situațiile neplăcute</td>
-      <td class="row-item3"><input type="text" class="punctaj" name="punctaj18"></td>
-  </tr>
-  <tr class="table-row">
-  <td class="row-item1">19</td>
-  <td class="row-item2">Pot fi foarte uşor tulburat de o situaţie stresantă şi atunci mă cuprinde cel mai adesea frica, teama, neliniștea sau anxietatea</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj19"></td>
-</tr>
 <tr class="table-row">
-  <td class="row-item1">20</td>
-  <td class="row-item2">Dacă sunt lăsat să acţionez singur după capul meu, mănânc sau dorm într-un mod neregulat şi dezordonat</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj20"></td>
+  <td colspan="2" style="text-align:right; padding-right:10px; font-weight:500;">Total calculat pentru Pitta: </td>
+  <td id="total-punctaj-pitta" style="text-align:center;font-weight:500;">0</td>
 </tr>
-<tr class="table-row">
-  <td class="row-item1">21</td>
-  <td class="row-item2">Pot învăţa repede şi reţin cu uşurinţă ceea ce am memorat, însă nu pentru mult timp, deoarece uit repede</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj21"></td>
-</tr>
-<tr class="table-row">
-  <td class="row-item1">22</td>
-  <td class="row-item2">Atunci când este necesar să mă angrenez pentru a realiza o anumită acţiune am nevoie în primul rând de motivație, provocare şi competiţie</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj22"></td>
-</tr>
-<tr class="table-row">
-    <td class="row-item1" style="border-right:none;"></td>
-    <td class="row-item2" style="text-align:right; border-left:none;">Totalul punctajului pentru Pitta: </td>
-    <td class="row-item3">Rezulat calculat</td>
-</tr>       
 </table>
 
-<h2 class="main-title" style="margin-top:20px;">Test pentru evaluarea caracteristicilor de tip Kapha</h2>
+<h2 class="main-title" style="margin-top:20px; color: #036803;">Test pentru evaluarea caracteristicilor de tip Kapha</h2>
 
-<table class="data-table test-kapha">
-  <tr class="table-header">
-      <th class="header-item1">Nr.</th>
-      <th class="header-item2">Caracteristici de tip kapha</th>
-      <th class="header-item3">Punctaj</th>
-  </tr>
-  <tr class="table-row">
-  <td class="row-item1">1</td>
-  <td class="row-item2">Tendinţa mea naturală este aceea de a face aproape orice acțiune într-o manieră înceată, lentă şi relaxată</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj1"></td>
+<table class="data-table test-kapha" id="kapha-table">
+<tr class="table-header">
+<th class="header-item1">Nr.</th>
+<th class="header-item2">Caracteristici de tip kapha</th>
+<th class="header-item3">Punctaj</th>
 </tr>
+
+<% @kapha.each do |vata_item| %>
 <tr class="table-row">
-  <td class="row-item1">2</td>
-  <td class="row-item2">Am o stare ponderală bună şi îmi este destul de dificil să slăbesc, iar slăbirea se realizează la mine încet</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj2"></td>
+  <td class="row-item1"><%= vata_item.nr %></td>
+  <td class="row-item2"><%= vata_item.caracteristica %></td>
+  <td class="row-item3">
+  <select name="punctaj[]" class="punctaj-input" <%= 'disabled' unless current_user %>>
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+  </select>
+  </td>
 </tr>
+<% end %>
+
 <tr class="table-row">
-  <td class="row-item1">3</td>
-  <td class="row-item2">Am aproape tot timpul o dispoziţie liniştită şi calmă şi nu pot fi tulburat</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj3"></td>
+  <td colspan="2" style="text-align:right; padding-right:10px; font-weight:500;">Total calculat pentru Kapha: </td>
+  <td id="total-punctaj-kapha" style="text-align:center;font-weight:500;">0</td>
 </tr>
-<tr class="table-row">
-  <td class="row-item1">4</td>
-  <td class="row-item2">Pot să nu mănânc chiar deloc, pot să sar peste mese cu uşurinţă fără ca să am apoi vreo senzaţie semnificativă de disconfort vital sau de lipsă</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj4"></td>
-</tr>
-<tr class="table-row">
-  <td class="row-item1">5</td>
-  <td class="row-item2">Am o tendinţă crescută către exces de mucus, flegmă, congestie cronică, astm și probleme legate de sinusuri</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj5"></td>
-</tr>
-<tr class="table-row">
-  <td class="row-item1">6</td>
-  <td class="row-item2">Am nevoie de cel puţin opt ore de somn pentru a mă simţi în formă şi confortabil în următoarea zi de lucru</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj6"></td>
-</tr>
-<tr class="table-row">
-  <td class="row-item1">7</td>
-  <td class="row-item2">Indiferent dacă sunt obosit sau nu, dorm adânc și am un somn greu</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj7"></td>
-</tr>
-<tr class="table-row">
-  <td class="row-item1">8</td>
-  <td class="row-item2">Sunt calm, mulţumit, paşnic şi liniştit prin însăşi natura mea şi tocmai de aceea nu mă înfurii prea uşor</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj8"></td>
-</tr>
-<tr class="table-row">
-  <td class="row-item1">9</td>
-  <td class="row-item2">Nu am capacitatea de a învăţa prea repede, însă am o memorie foarte bună şi care este de lungă durată</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj9"></td>
-</tr>
-<tr class="table-row">
-  <td class="row-item1">10</td>
-  <td class="row-item2">Am tendinţa de a deveni cu uşurinţă durduliu şi mă pot îngrăşa uşor, chiar dacă nu mănânc prea mult</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj10"></td>
-</tr>
-<tr class="table-row">
-  <td class="row-item1">11</td>
-  <td class="row-item2">Mă deranjează vremea rece şi umedă, precum şi zonele răcoroase şi umede din zonele de depresiune</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj11"></td>
-</tr>
-<tr class="table-row">
-  <td class="row-item1">12</td>
-  <td class="row-item2">Părul meu este des, bogat, gros, uşor buclat şi are culoare închisă</td>
-  <td class="row-item3"><input type="text" class="punctaj" name="punctaj12"></td>
-</tr>
-<tr class="table-row">
-    <td class="row-item1">13</td>
-    <td class="row-item2">Am o piele netedă şi moale, umed-uleioasă şi rece la atingere, am un ten deschis, alb şi curat</td>
-    <td class="row-item3"><input type="text" class="punctaj" name="punctaj13"></td>
-</tr>
-<tr class="table-row">
-    <td class="row-item1">14</td>
-    <td class="row-item2">Aspectul global (general) al trupului este că acesta pare să fie mare, compact, ferm, solid și tocmai de aceea par voinic şi robust trupește</td>
-    <td class="row-item3"><input type="text" class="punctaj" name="punctaj14"></td>
-</tr>
-<tr class="table-row">
-    <td class="row-item1">15</td>
-    <td class="row-item2">Următoarele calităţi mi se potrivesc destul de bine: senin, liniştit, dulce, iubitor şi iertător</td>
-    <td class="row-item3"><input type="text" class="punctaj" name="punctaj15"></td>
-</tr>
-<tr class="table-row">
-    <td class="row-item1">16</td>
-    <td class="row-item2">Am o digestie slabă care mă face să mă simt îngreunat după ce mănânc o masă ceva mai consistentă</td>
-    <td class="row-item3"><input type="text" class="punctaj" name="punctaj16"></td>
-</tr>
-<tr class="table-row">
-    <td class="row-item1">17</td>
-    <td class="row-item2">Am o mare vitalitate şi o rezistenţă trupească bună şi am constatat că în general am un nivel energetic vital constant, invariabil şi sigur</td>
-    <td class="row-item3"><input type="text" class="punctaj" name="punctaj17"></td>
-</tr>
-<tr class="table-row">
-    <td class="row-item1">18</td>
-    <td class="row-item2">Aproape de fiecare dată merg cu paşi înceţi, fermi şi regulaţi, chiar şi atunci când în mod aparent mă grăbesc</td>
-    <td class="row-item3"><input type="text" class="punctaj" name="punctaj18"></td>
-</tr>
-<tr class="table-row">
-    <td class="row-item1">19</td>
-    <td class="row-item2">Am tendinţa de a dormi prea mult şi sunt cam ameţit şi destul de încet atunci când mă trezesc dimineaţa</td>
-    <td class="row-item3"><input type="text" class="punctaj" name="punctaj19"></td>
-</tr>
-<tr class="table-row">
-    <td class="row-item1">20</td>
-    <td class="row-item2">Sunt foarte încet şi metodic, uneori chiar tipicar, în aproapre toate activităţile pe care le întreprind</td>
-    <td class="row-item3"><input type="text" class="punctaj" name="punctaj20"></td>
-</tr>
-<tr class="table-row">
-    <td class="row-item1">21</td>
-    <td class="row-item2">Vorbesc foarte puţin, încet şi rar (uneori tărăgănat) şi nu încep eu singur vreo conversaţie decât dacă chiar am ceva important de spus</td>
-    <td class="row-item3"><input type="text" class="punctaj" name="punctaj21"></td>
-</tr>
-<tr class="table-row">
-    <td class="row-item1">22</td>
-    <td class="row-item2">Am nevoie de o motivaţie puternică precum şi de faptul de a fi stimulat în mod adecvat pentru a acţiona</td>
-    <td class="row-item3"><input type="text" class="punctaj" name="punctaj22"></td>
-</tr>
-<tr class="table-row">
-    <td class="row-item1" style="border-right:none;"></td>
-    <td class="row-item2" style="text-align:right; border-left:none;">Totalul punctajului pentru Kapha: </td>
-    <td class="row-item3">Rezulat calculat</td>
-</tr>       
 </table>
 
-<p>In urma testului ați obtinut pentru Vata - Procentaj Test vata =( Suma total 3 teste/suma test vata) * 100, pitta...etc</p>
 
-<p>La sfârşitul fiecărui tabel dintre cele trei corespunzătoarea fiecăreia dintre cele trei dosha-uri se va calcula suma punctelor obţinute. În cele din urmă, se obţin trei scoruri care sunt corespunzătoare aprecierii noastre asupra predominanţei celor trei dosha-uri.</p>
-<p> Apoi vom comparara aceste rezultate pentru a afla astfel rezultatul final al aprecierii noastre asupra tipului constituţional (dosha-prakriti) și a predominanţei relative a celor trei dosha-uri în fiinţa noastră. </p>
-<p>Chiar şi o astfel de evaluare sumară a tipului nostru constituţional poate reprezenta o importantă bază care ne oferă un reper pentru adoptarea unui comportament adecvat, capabil de a genera armonie, fericire şi echilibru în viaţă. </p>
+
+<div style="text-align:right; margin-top:10px;"><button id="calculate-sum" class='btn-fp' data-controller="calculate" data-action="click->calculate#submitTotals ">Calculează valorile procentuale</button></div>
+
+<%= turbo_frame_tag 'total-sum-display' do %>
+  <!-- Aici va fi inserat conținutul din răspunsul HTML -->
+<% end %>
+
+
+
 
 
 
@@ -544,3 +197,32 @@
 </div>
 
 </div>
+<script>
+
+  document.addEventListener("turbo:load", function() {
+  calculateTableTotal('vata-table', 'total-punctaj-vata');
+  calculateTableTotal('pitta-table', 'total-punctaj-pitta');
+  calculateTableTotal('kapha-table', 'total-punctaj-kapha');
+});
+
+function calculateTableTotal(tableId, totalId) {
+  const table = document.getElementById(tableId);
+  if (!table) return;
+
+  const inputs = table.getElementsByClassName('punctaj-input');
+
+  const calculateTotal = () => {
+    let total = 0;
+    for (const input of inputs) {
+      total += parseInt(input.value) || 0;
+    }
+    document.getElementById(totalId).innerText = total;
+  };
+
+  for (const input of inputs) {
+    input.addEventListener('change', calculateTotal);
+  }
+}
+
+
+</script>
