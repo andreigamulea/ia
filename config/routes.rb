@@ -1,4 +1,7 @@
 Rails.application.routes.draw do    
+  get 'vajikarana/modul1', to: 'vajikarana#modul1', as: 'vajikarana_modul1'
+
+
     
   get 'traditia_ayurvedica/amnaya', to: 'traditia_ayurvedica#amnaya', as: 'amnaya'
   get 'traditia_ayurvedica/jivaka', to: 'traditia_ayurvedica#jivaka', as: 'jivaka'
