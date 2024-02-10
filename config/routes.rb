@@ -105,7 +105,8 @@ Rails.application.routes.draw do
   
 
 
-
+# config/routes.rb
+post '/stripe_webhooks', to: 'stripe_webhooks_controller#payment_success' #ruta pt trimis notificare (email) cand am factura noua
 post '/stripe-webhooks', to: 'stripe_webhooks#create'
 
 

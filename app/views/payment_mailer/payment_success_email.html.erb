@@ -1,0 +1,17 @@
+
+
+<% if @factura.nume_companie.blank? && @factura.cui.blank? %>
+  <p>persoană fizică:</p>
+<% else %>
+  <p>persoană juridică:</p>
+<% end %>
+
+<p>Detalii factura:</p>
+<ul>
+<li>Nume: <%= @factura.nume + " " + @factura.prenume %></li>
+  <li>Număr Comandă: <%= @factura.numar_comanda %></li>
+  <li>Valoare Totală: <%= @factura.valoare_totala %> RON</li>
+  <li>Nume Companie: <%= @factura.nume_companie || "N/A" %></li>
+  <li>CUI: <%= @factura.cui || "N/A" %></li>
+  <!-- Alte detalii după necesități -->
+</ul>
