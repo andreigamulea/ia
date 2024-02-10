@@ -43,11 +43,7 @@ class HomeController < ApplicationController
   def newsletter
     
   end
-  def vajikarana
-    @prods = Prod.where(curslegatura: 'vajikarana', status: 'activ')
-  end  
-  
-  
+ 
   def rasayana
     @has_access = current_user&.role == 1
   
