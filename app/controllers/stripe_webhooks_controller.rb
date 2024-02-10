@@ -206,6 +206,7 @@ class StripeWebhooksController < ApplicationController
     ###########################
       populeaza_cursuri(user_id, produs)
       creaza_factura(payment_intent)
+      #send_payment_success_email
       #populeaza_cursuri_history(user_id, curs_id, curs, User.find(user_id).email)
 
     else
@@ -336,7 +337,7 @@ class StripeWebhooksController < ApplicationController
     
 
     # Creați o nouă factură
-    Factura.create(
+    factura = Factura.create(
       comanda_id: comanda.id,
       user_id: metadata[:user_id],
       numar: numar_factura,
@@ -358,6 +359,11 @@ class StripeWebhooksController < ApplicationController
       valoare_tva: TVA,
       valoare_totala: produs.pret.to_i
     )
+    send_payment_success_email(factura)
+  end
+  
+  def send_payment_success_email(factura)
+    PaymentMailer.payment_success_email(factura).deliver_now
   end
   
   
