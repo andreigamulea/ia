@@ -3,7 +3,7 @@
 <% if @factura.nume_companie.blank? && @factura.cui.blank? %>
   <p>persoană fizică:</p>
 <% else %>
-  <p>persoană juridică:</p>
+  <p style="color: red;">persoană juridică:</p>
 <% end %>
 
 <p>Detalii factura:</p>
