@@ -29,7 +29,59 @@
     }
 }
 
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.testimonial-container {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  margin-top:20px;
+  margin-bottom:20px;
+  background-color: #b2deff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+.testimonial-title {
+  text-align: center;
+  color: #4b0082;
+  margin-bottom: 10px; 
+  margin-top: 20px;
+}
+
+.testimonial-text {
+  padding: 20px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.testimonial-signature {
+  font-style: italic;
+  color: #333;
+  font-size: 0.9em;
+}
+
+@media (max-width: 720px) {
+  .testimonial-container {
+    max-width: 100%;
+    margin-top:0;
+    margin-bottom:10px;
+  }
+}
+
+
 </style>
+
+
+
 
 
 <% content_for :title, "Program de nutritie Ayurvedica: modulul 1 | Ayush Cell Romania"  %>
@@ -89,11 +141,22 @@
 <h3>⚖️ Corelarea greutății ideale cu Ayurveda</h3>
 <p>Formulele moderne de determinare a greutății ideale, bazate pe înălțime, vârstă și gen, precum și calculul indicelui de masă corporală (IMC) sunt interpretate și corelate cu înțelepciunea străveche din Ayurveda. Această corelare permite o nuanțare mai precisă a standardelor de sănătate în raport cu greutatea ideală pentru fiecare tipologie constituțională ayurvedică.</p>
 
+
+<div class="center-container">
+  <div class="testimonial-container">
+    <h2 class="testimonial-title">Mărturii</h2>
+    <p class="testimonial-text">"Cu o experiență de 21 de ani în nutriție, îmi exprim profunda recunoștință față de acest curs remarcabil. Având ocazia să particip la formări în India și America, constat cu plăcere că acest curs de nutriție ayurvedică se distinge prin abordarea sa completă, care integrează cu eleganță principiile nutriției moderne cu cele ale științei ayurvedice. Deși inițial credeam că am acumulat suficiente cunoștințe, am descoperit că există întotdeauna spațiu pentru învățare nouă. Vă felicit pentru munca depusă și sunt nerăbdătoare să particip și la modulele 2 și 3 ale acestui program de pregătitire"</p>
+    <p class="testimonial-signature">A.P. - wellness coach</p>
+  </div>
+</div>
+
+
+
+
+
 <% if !user_signed_in? || (current_user && !@has_access) %>
 
 <div class="r1c2" style="align-items: center; width:100%;">
-
-
     <%= link_to 'Vizionează înregistrările',  '#VideoNutritie', class: 'register' %>
 </div>
 
