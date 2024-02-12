@@ -359,7 +359,9 @@ class StripeWebhooksController < ApplicationController
       valoare_tva: TVA,
       valoare_totala: produs.pret.to_i
     )
-    send_payment_success_email(factura)
+    if factura.nume_companie.present? || factura.cui.present?
+      send_payment_success_email(factura)
+    end
   end
   
   def send_payment_success_email(factura)
