@@ -135,5 +135,6 @@ class TraditiaAyurvedicaController < ApplicationController
     end
 
   end  
-  
+  def asita
+  end
 end
