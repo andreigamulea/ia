@@ -18,25 +18,22 @@
             </div>
             <ul class="nav-menu" id="navMenu">
                 <li><%= link_to 'Acasa', root_path %></li>
-                <li><%= link_to 'Curs Ayurveda', cursayurveda_path %></li>               
-
+     
+                
+                </li>
                 <li class="nav-item has-submenu">
-                <a class="nav-link" href="#">Tabere Ayurveda</a>
+                <a class="nav-link" href="#">Cursuri</a>
                 <ul class="submenu">
-                <li class="nav-item">
-                    <%= link_to "Tabara ayurveda 2023 etapa de toamna", tayt12_path %>
-                    </li>
                     <li class="nav-item">
-                    <% if current_user %>   
-                      <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', tayv2_path, id: 'tayv2_link' %>
-                    <% else %>   
-                      <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', new_user_session_with_return_path('tayv2'), class: 'button-link' %>
-                    <% end %>
-                  </li>
-                  
-                    
+                       <%= link_to 'Curs de Ayurveda', cursayurveda_path %>
+                    </li>
+                </ul>
+              </li>
 
-                </ul></li>
+
+
+
+                </li>
                 <li class="nav-item has-submenu">
                 <a class="nav-link" href="#">Nutritie</a>
                 <ul class="submenu">
@@ -58,6 +55,25 @@
                   </li>
                 </ul>
               </li>
+
+
+                <li class="nav-item has-submenu">
+                <a class="nav-link" href="#">Tabere</a>
+                <ul class="submenu">
+                <li class="nav-item">
+                    <%= link_to "Tabara ayurveda 2023 etapa de toamna", tayt12_path %>
+                    </li>
+                    <li class="nav-item">
+                    <% if current_user %>   
+                      <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', tayv2_path, id: 'tayv2_link' %>
+                    <% else %>   
+                      <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', new_user_session_with_return_path('tayv2'), class: 'button-link' %>
+                    <% end %>
+                  </li>
+                  
+                    
+
+                </ul>
               
 
                 
