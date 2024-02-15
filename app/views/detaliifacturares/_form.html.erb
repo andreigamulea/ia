@@ -5,11 +5,13 @@
   <div class="row rowrev c1">
   
   <div class="col10">
-  <%= form_with(model: @detaliifacturare, url: @detaliifacturare.new_record? ? detaliifacturares_path(s: @prod.id) 
-: detaliifacturare_path(@detaliifacturare, s: @prod.id), method: @detaliifacturare.new_record? ?
- :post : :patch, remote: true, class: 'needs-validation', data: { turbo: false }) do |f| %>
+  <%= form_with(model: @detaliifacturare, 
+    url: @detaliifacturare.new_record? ? detaliifacturares_path(s: params[:s], cantitate: params[:cantitate],
+    pret_bucata: params[:pret_bucata], pret_total: params[:pret_total]) : detaliifacturare_path(@detaliifacturare, s: params[:s],
+    cantitate: params[:cantitate], pret_bucata: params[:pret_bucata], pret_total: params[:pret_total]), 
+    method: @detaliifacturare.new_record? ? :post : :patch, remote: true, class: 'needs-validation', data: { turbo: false }) do |f| %>
 
-   
+
   
   
 
@@ -186,7 +188,9 @@
   <p><%= @prod.detalii %></p>
  
   <%if current_user.email!="nagy.edvin@yahoo.com"%>
-  <p>Pret unitar: <%= @prod.pret.to_f.round(2)%> lei</p></br>
+  Pret unitar: <%= @pret_bucata.to_f.round(2)%> lei</br>
+  Cantitate: <%= @cantitate%> buc</br>
+  Pret total: <%= @pret_total.to_f.round(2)%> lei</br>
   
   
   
