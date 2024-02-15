@@ -115,9 +115,9 @@
       <td style="text-align: left; height: 50px; vertical-align:middle; width: 40%;"><%= @factura.produs %></td>
       <td style="text-align: center;width: 10%;padding-right: 25px;"><%= @factura.cantitate %></td>      
       <td style="text-align: center;width: 10%;"><%= @factura.pret_unitar %> lei</td>
-      <td style="text-align: center;width: 10%;"><%= @factura.pret_unitar*@factura.cantitate %> lei</td>
+      <td style="text-align: center;width: 10%;"><%= (@factura.valoare_totala/1.19).round(2) %> lei</td>
       <td style="text-align: center;width: 10%;"><%= TVA %> %</td>
-      <td style="text-align: center;width: 10%;"><%= @factura.valoare_totala - @factura.pret_unitar*@factura.cantitate %> lei</td>
+      <td style="text-align: center;width: 10%;"><%= @factura.valoare_totala - (@factura.valoare_totala/1.19).round(2) %> lei</td>
       <td style="text-align: center;width: 10%;"><%= @factura.valoare_totala %> lei</td>
     </tr>
   </table>
@@ -135,11 +135,11 @@
     <table style="width: 90%; margin-left: 10%; border-collapse: collapse;"> <!-- Am ajustat latimea si marginea stanga -->
       <tr>
         <td style="text-align: left; padding: 5px;">Total fara TVA:</td>
-        <td style="text-align: right; padding-right: 40px;"><%= @factura.pret_unitar*@factura.cantitate %> lei</td>
+        <td style="text-align: right; padding-right: 40px;"><%= (@factura.valoare_totala/1.19).round(2) %> lei</td>
       </tr>
       <tr>
         <td style="text-align: left; padding: 5px;">TVA 19%:</td>
-        <td style="text-align: right; padding-right: 40px;"><%= @factura.valoare_totala - @factura.pret_unitar*@factura.cantitate %> lei</td>
+        <td style="text-align: right; padding-right: 40px;"><%= @factura.valoare_totala - (@factura.valoare_totala/1.19).round(2) %> lei</td>
       </tr>
       <tr>
   <td style="text-align: left; padding-right: 40px; border-top: 1px solid black; border-bottom: 1px solid black; line-height:50px; vertical-align:middle;">&nbsp;Total:</td>
