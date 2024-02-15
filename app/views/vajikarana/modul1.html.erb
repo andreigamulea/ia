@@ -24,6 +24,7 @@
     #vajikarana .register{
         margin:0 auto;
         margin-top:20px;
+        margin-left: auto;
     }
     .cm{
         text-align:center;
@@ -168,7 +169,7 @@ Folosirea substanţelor naturale şi a procedurilor cu efect afrodiziac (vajikar
                 <tr>
                     <td><%= prod.nume %></td>                   
                     <td><%= prod.detalii %></td>
-                    <td><%= prod.pret.to_i %> lei</td>
+                    <td><%= prod.pret %></td>
                     <% if current_user %>
                          <td style="text-align:center;">
                            <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
