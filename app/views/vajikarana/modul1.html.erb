@@ -84,7 +84,7 @@ Fiinţa umană poate să nu fie bolnavă, poate să nu aibă alte probleme func�
 Punctul de vedere tradiţional ayurvedic asupra acestor metode practice de Vajikarana alcătuieşte un sistem de prevenţie. 
 </p>
 
-<h3>Sutra-ele 3-4 (Charaka-Samhita, Vajikarana, capitolul 1), partea 1:</h3>
+<h3>Sutra-ele 3-4 (Charaka-Samhita, Vajikarana, capitolul 1):</h3>
 <p>„O fiinţă umană înţeleaptă, care aspiră intens la o viaţă lungă şi fericită, este necesar să urmărească să folosească într-un mod cât mai adecvat substanţele naturale benefice care au efecte afrodiziace, deoarece prin intermediul acestora fiinţa respectivă va putea să ajungă în scurt timp sau chiar foarte rapid la înfăptuirea celor mai importante patru obiective fundamentale ale existenţei umane, şi anume:</p>
 <ol>
   <li>Dharma, obiectiv care constă în realizarea menirii existenţiale, a îndatoririi, a rostului existenţei respectivei fiinţe umane;</li>
@@ -168,7 +168,7 @@ Folosirea substanţelor naturale şi a procedurilor cu efect afrodiziac (vajikar
                 <tr>
                     <td><%= prod.nume %></td>                   
                     <td><%= prod.detalii %></td>
-                    <td><%= prod.pret %></td>
+                    <td><%= prod.pret.to_i %> lei</td>
                     <% if current_user %>
                          <td style="text-align:center;">
                            <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>

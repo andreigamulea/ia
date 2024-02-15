@@ -1,25 +1,26 @@
 <style>
-#nutritie1 .cm h2 {
+#traditia .cm h2 {
     font-size:22px;
 }
-#nutritie1 .register{
+#traditia .register{
     border: 1px solid #4b0082;
     background-color:#4b0082;
 }
-#nutritie1 .cm h3{
+#traditia .cm h3{
     font-size:18px;
     font-weight:800;
     margin-bottom:5px;
 }
-#nutritie1 .register{
+#traditia .register{
     margin:0;
     margin-top:20px;
+    margin-left:10px;
 }
-#nutritie1 .table td {
+#traditia .table td {
     text-align:center;
 }
 @media screen and (max-width: 720px) {
-    #nutritie1 .register{
+    #traditia .register{
         margin:0 auto;
         margin-top:20px;
     }
@@ -37,7 +38,7 @@
   <link rel="canonical" href="https://www.ayushcell.ro/traditia_ayurvedica">
 <% end %>
 
-<div class="container" id="nutritie1">
+<div class="container" id="traditia">
 <%= render 'layouts/sideleft' %>
 
 <div class="cr" style="background-color: white; ">
@@ -56,7 +57,7 @@
     <p>Termenul sanscrit Amnaya are sensul de tradiţie spirituală sacră. Semnificaţia acestui termen este valabilă pentru orice fel de cunoaştere superioară, esenţială, care are o origine dumnezeiască şi care este oferită fiinţelor umane prin intermediul revelaţiilor unor mari spirite şi a unor fiinţe excepţionale ce au fost inspirate în mod direct de Dumnezeu. </p>
     <p>O astfel de tradiţie sacră (Amnaya) este cea care se perpetuează prin menţinerea nealterată a unor stări spirituale model de inspiraţie dumnezeiască şi prin reflectarea călăuzirii interioare dumnezeieşti, fără întrerupere şi în mod constant de-a lungul timpului. </p>
     
-    <%= link_to 'Vizionează acum', '#VideoNutritie', class: 'register' %>
+    <%= link_to 'Vizionează acum', '#traditia-ayurvedica', class: 'register' %>
 
     
      
@@ -75,10 +76,25 @@
 <p>Sfera de conştiinţă a fiecărui înţelept ayurvedic poate fi apelată prin meditaţie profundă, realizată într-o manieră evocatoare superioară, prin raportare la aspectele specifice. Realizarea unor astfle de meditaţii identificatoare cu sfera de conştiinţă a unui mare zeu sau a unui mare înţelept ayurvedic poate revela unele aspecte esenţiale care se constituie ca şi chei subtile ale unor forme superioare de afinitate rezonatorie cu sfera de conştiinţă superioară a acelei fiinţe.</p>
 <p>Dinamizarea adecvată a unei stări superioare de atenţie selectivă, menţinută apoi o anumită perioadă de timp asupra aspectelor reprezentative ale sferei de conştiinţă a unei astfel de fiinţe excepţionale permite structurarea în conştiinţa practicantului unei astfel de forme de meditaţie a unor aspecte reper, care vor constitui apoi veritabile chei rezonatorii de intrare şi de menţinere în stare spirituală de comuniune telepatică cu sfera de conştiinţă a respectivei fiinţe superioare. </p>
 
-<h2 id="VideoNutritie" style="font-size: 22px; padding-top:10px; padding-bottom:10px;">Acces prezentări video</h2>
+<h2 id="traditia-ayurvedica" style="font-size: 22px; padding-top:10px; padding-bottom:10px; text-align:center;">Acces prezentări video</h2>
 
 <section class="line" style="padding-top:10px; padding-bottom:10px;">
-      <div class="col"  style="align-items:center;text-align:center;">
+<div class="col"  style="align-items:center;text-align:center;">
+<h2>Înțeleptul Ayurvedic Asita-Rishi</h2>
+
+<a href="<%= asita_path %>"><img src="<%= image_path('Asita-Rishi.jpg') %>" alt="Asita-Rishi" style='max-width:300px;'></a>
+
+
+<div class="desc">Înțeleptul Asita este descris ca fiind un călugăr în vârstă. Mențiunile scrise, care consemnează opinii ale tradiției populare locale, arată că acesta era un expert în numeroase domenii ale cunoașterii acelor timpuri, un mare erudit și un celebru ascet. Având o disciplină spirituală și de viață considerată exemplară, Asita era văzut ca un model de practicant spiritual și un exemplar yoghin...</div>
+<div class="btn-fp">
+
+   <%= link_to 'Află mai mult..', asita_path, class: 'btn-fp-link' %>
+   
+
+</div>
+</div>
+
+<div class="col"  style="align-items:center;text-align:center;">
          <h2>Înțeleptul Ayurvedic Jivaka-Rishi</h2>
          
          <a href="<%= jivaka_path %>"><img src="<%= image_path('jivaka.jpg') %>" alt="Jivaka-Rishi" style='max-width:300px;'></a>
@@ -92,27 +108,31 @@
          
          </div>
       </div>
-      <div class="col" style="align-items:center;text-align:center;">
-         <h2>Perspectiva cognitronicii asupra gandirii neconvenționale</h2>
-         <a href="<%= cognitronica_path %>"><img src="<%= image_path('cognitronica.jpg') %>" alt="Perspectiva cognitronicii asupra gandirii neconvenționale" style="max-width:300px;"></a>
 
-         <div class="desc">Cognitronica oferă ființelor umane pregătite accesul la o cunoaștere superioară de natură supramentală..</div>
-         <div class="btn-fp">          
-         
-           <%= link_to 'Află mai mult..', cognitronica_path, class: 'btn-fp-link' %>
-         
-       
-       
-         </div>
-      </div>
+
+
     </section>
     
     <section class="line" style="padding-top:10px; padding-bottom:10px;">
+    <div class="col" style="align-items:center;text-align:center;">
+    <h2>Perspectiva cognitronicii asupra gandirii neconvenționale</h2>
+    <a href="<%= cognitronica_path %>"><img src="<%= image_path('cognitronica.jpg') %>" alt="Perspectiva cognitronicii asupra gandirii neconvenționale" style="max-width:300px;"></a>
+
+    <div class="desc">Știința cognitronicii sau știința ezoterică a existenței și manifestării fluxurilor cognitronice (Prabodha-Vijnana) a fost inițiată de către marele înțelept și yoghin Bharadvaja. Cognitronica oferă ființelor umane pregătite accesul la o cunoaștere superioară de natură supramentală..</div>
+    <div class="btn-fp">          
+    
+      <%= link_to 'Află mai mult..', cognitronica_path, class: 'btn-fp-link' %>
+    
+  
+  
+    </div>
+ </div>
+
     <div class="col"  style="align-items:center;text-align:center;">
        <h2>Optimizarea performanțelor cognitive prin practici de pratyahara care pot potența funcțiile inhibitorii cerebrale</h2>
        <a href="<%= optimizarea_performantelor_cognitive_path %>"><img src="<%= image_path('optimizarea_performanțelor_cognitive 2.jpg') %>" alt="Optimizarea performantelor cognitive" style='max-width:300px;'></a>
      
-       <div class="desc">Atunci când parcurgem într-un mod comparativ felul în care este descrisă practica pratyahara (retragerea simțurilor) în tratatele străvechi orientale și felul în care neuroștiința contemporană explică controlul asupra funcțiilor sistemului nervos, descoperim o coincidență remarcabilă. Aceasta subliniază capacitățile noastre inerente de autoreglare a conștiinței, evidențiind o punte între înțelepciunea tradițională și descoperirile științifice moderne...</div>
+       <div class="desc">Atunci când parcurgem într-un mod comparativ felul în care este descrisă practica pratyahara (retragerea simțurilor) în tratatele străvechi orientale și felul în care neuroștiința contemporană explică controlul asupra funcțiilor sistemului nervos, descoperim o coincidență remarcabilă. Aceasta subliniază capacitățile noastre inerente de autoreglare a conștiinței, evidențiind o punte între înțelepciunea tradițională și descoperirile științifice moderne..</div>
        <div class="btn-fp">
        
           <%= link_to 'Află mai mult..', optimizarea_performantelor_cognitive_path, class: 'btn-fp-link' %>
@@ -120,9 +140,9 @@
        
        </div>
     </div>
-    
-  </section>
 
+
+  </section>
 
 <br>
 <h2>Înscriere și participare</h2>
@@ -134,7 +154,7 @@
 <h3><strong>Cum pot viziona?</strong></h3>
 <p>Pentru a accesa prezentarile, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul la vizionarea inregistrarilor se va face direct in pagina de site.</p>
 <h3><strong>Costul participării</strong></h3>
-<p>Vizionarea fiecarei inregistrari are un cost accesibil de 12 lei.</p>
+<p>Vizionarea fiecarei inregistrari are un cost accesibil de doar 12 lei.</p>
 <h3><strong>Durata accesului</strong></h3>
 <p>Accesul la vizionarea înregistrării se realizează pentru o perioadă de 60 de zile de la data efectuarii platii.</p>
 

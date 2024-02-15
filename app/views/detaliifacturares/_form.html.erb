@@ -1,7 +1,9 @@
 
-<% if user_signed_in? %>
+<% if user_signed_in? %> 
 <div class="c1">
+
   <div class="row rowrev c1">
+  
   <div class="col10">
   <%= form_with(model: @detaliifacturare, url: @detaliifacturare.new_record? ? detaliifacturares_path(s: @prod.id) 
 : detaliifacturare_path(@detaliifacturare, s: @prod.id), method: @detaliifacturare.new_record? ?
@@ -179,15 +181,19 @@
 </div>
 
 <div class="col10 col10m">
+
   <h2 style="font-size:1.5em;"><%= @prod.nume %></h2>
   <p><%= @prod.detalii %></p>
+ 
   <%if current_user.email!="nagy.edvin@yahoo.com"%>
-  <p>Pret: <%= @prod.pret.to_i%> lei</p></br>
+  <p>Pret unitar: <%= @prod.pret.to_f.round(2)%> lei</p></br>
+  
+  
   
   <% elsif current_user.email == "nagy.edvin@yahoo.com" && @prod.cod.in?(['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 'cod25']) %>
-  <p>Pret: <%= @prod.pret.to_i-145%> lei</p></br>
+  <p>Pret: <%= @prod.pret.to_f.round(2)-145%> lei</p></br>
   <% elsif current_user.email == "nagy.edvin@yahoo.com" && !['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 'cod25'].include?(@prod.cod) %>
-  <p>Pret: <%= @prod.pret.to_i%> lei</p></br>
+  <p>Pret: <%= @prod.pret.to_f.round(2)%> lei</p></br>
   
   <%end%>
   <div class="column" style="display: flex; justify-content: center;">        
