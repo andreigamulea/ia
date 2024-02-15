@@ -77,6 +77,10 @@ class StripeWebhooksController < ApplicationController
     numar_comanda = metadata[:numar_comanda] #am verificat: id este la fel cu numar_comanda in orice situatie chiar daca sterg records!!
     produs = Prod.find_by(id: metadata[:id_produs])
     emailplata = metadata[:adresaemail]
+    cantitate = payment_intent["metadata"]["cantitate"]
+    pret_bucata = (payment_intent["metadata"]["pret_bucata"]).to_d
+    pret_total = payment_intent["metadata"]["pret_total"]
+    puts("cantitate: #{cantitate}")
     # Acum, găsești comanda în baza de date folosind numar_comanda și o actualizezi
     comanda = Comanda.find_by(numar: numar_comanda)
       
@@ -329,7 +333,8 @@ class StripeWebhooksController < ApplicationController
     if !['cod11', 'cod12', 'cod13', 'cod14', 'cod15', 'cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
        'cod22', 'cod23', 'cod24', 'cod25', 'cod26', 'cod27', 'cod28', 'cod29',
        'cod30', 'cod31', 'cod32', 'cod33', 'cod34', 'cod35', 'cod36', 'cod37',
-       'cod38', 'cod39', 'cod40', 'cod41', 'cod42', 'cod43', 'cod44', 'cod45', 'cod48', 'cod76', 'cod105', 'cod108', 'cod109', 'cod110'].include?(produs.cod)
+       'cod38', 'cod39', 'cod40', 'cod41', 'cod42', 'cod43', 'cod44', 'cod45', 'cod48', 'cod76',
+        'cod105', 'cod108', 'cod109', 'cod110', 'cod111'].include?(produs.cod)
       produsul = produs.nume + ' (' + Date.current.strftime("%d-%m-%Y") + ' - ' + (Date.current + dt.days).strftime("%d-%m-%Y") + ' )'
     else
       produsul = produs.nume
@@ -354,10 +359,11 @@ class StripeWebhooksController < ApplicationController
       strada: metadata[:strada],
       numar_adresa: metadata[:numar],
       produs: produsul,
-      cantitate: 1,
-      pret_unitar: pret_unitar_fara_tva.round(2),
+      cantitate: payment_intent["metadata"]["cantitate"],
+      pret_unitar: ((payment_intent["metadata"]["pret_bucata"]).to_d / BigDecimal("1.19")).round(2),
+      
       valoare_tva: TVA,
-      valoare_totala: produs.pret.to_i
+      valoare_totala: payment_intent["metadata"]["pret_total"]
     )
     if factura.nume_companie.present? || factura.cui.present?
       send_payment_success_email(factura)

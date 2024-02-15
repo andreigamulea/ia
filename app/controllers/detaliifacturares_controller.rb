@@ -1,4 +1,6 @@
 class DetaliifacturaresController < ApplicationController
+  require 'bigdecimal'
+  require 'bigdecimal/util' # For to_d method
   before_action :authenticate_user!
   before_action :restrict_access_to_special_page, only: [:datefacturare]
   before_action :new, only: [:datefacturare] # remove :create
@@ -76,11 +78,31 @@ class DetaliifacturaresController < ApplicationController
 
 
   def update
+    
     puts("sunt in updateeeeeeeeeeeeeeeeeeeeee")
     @detaliifacturare = current_user.detaliifacturare
-
     @prod = Prod.find(detaliifacturare_params[:s])
     puts("Se setează valorile la nil")
+
+     #pret_total = params[:pret_total].to_f
+     if params[:pret_total].present? && params[:pret_total].to_f > 0
+      session[:pret_total] = params[:pret_total]
+      session[:cantitate] = params[:cantitate]
+      session[:pret_bucata] = params[:pret_bucata]
+      session[:multiplu] = true
+    else
+      session[:pret_total] = @prod.pret
+      session[:cantitate] = 1
+      session[:pret_bucata] = @prod.pret
+      session[:multiplu] = false
+
+    end
+  
+    pret_total = session[:pret_total]
+    cantitate = session[:cantitate]
+    pret_bucata = session[:pret_bucata]
+    multiplu = session[:multiplu]
+    puts("pret_total=#{pret_total}")
 
     update_attributes = detaliifacturare_params
     puts "Valoare altedate: #{@detaliifacturare.altedate}"
@@ -131,7 +153,15 @@ end
   
   
   def pay
-   
+    
+    pret_total = session[:pret_total]
+    cantitate = session[:cantitate]
+    pret_bucata = session[:pret_bucata]
+    multiplu = session[:multiplu]
+    puts("pret tot: #{pret_total}")
+    puts("cantite: #{cantitate}")
+    puts("pret bucata: #{pret_bucata}")
+    puts("Multiplu: #{multiplu}")
     puts("sunt in payeeeeeeeeeeeeeeeeeeeeee")
     @prod = Prod.find(params[:id]) 
     if current_user.email=="nagy.edvin@yahoo.com" && @prod.cod.in?(['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 'cod25'])
@@ -176,7 +206,10 @@ end
       user_id: current_user.id,
       validat: "Initiata",
       datainceput: Time.now,
-      datasfarsit: Time.now + @prod.valabilitatezile.to_i.days
+      datasfarsit: Time.now + @prod.valabilitatezile.to_i.days,
+      cantitate: cantitate,
+      pret_bucata: pret_bucata,
+      pret_total: pret_total
     )
 
 ####################start populeaza adresacomenzi
@@ -250,7 +283,10 @@ AdresaComenzi.create!(atribute_adresacomenzi)
       localitate: @detaliifacturare.localitate,
       codpostal: @detaliifacturare.codpostal,
       telefon: @detaliifacturare.telefon,
-      updated_at: @detaliifacturare.updated_at
+      updated_at: @detaliifacturare.updated_at,
+      cantitate: cantitate,
+      pret_bucata: pret_bucata,
+      pret_total: pret_total
     }
   
     # Creează PaymentIntent
@@ -263,7 +299,10 @@ AdresaComenzi.create!(atribute_adresacomenzi)
             product_data: {
               name: @prod.nume
             },
-            unit_amount: (@prod.pret * 100).to_i,
+            #unit_amount: (@prod.pret * 100).to_i,
+            unit_amount: (pret_total.to_d.round(2) * 100).to_i,
+            #unit_amount: 1200,
+            
           },
           quantity: 1,          
         }],
@@ -289,24 +328,26 @@ end
 def datefacturare
   @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare
   @serviciu = params[:serviciu]
-  @prod = Prod.find(params[:s].to_i)
+  @prod = Prod.find(params[:s].to_i) if params[:s].present?
 
-  # Noi parametri preluați din request
-  cantitate = params[:cantitate].to_i
-  pret_bucata = params[:pret_bucata].to_f
-  pret_total = params[:pret_total].to_f # Acesta ar putea fi calculat și în backend, dacă preferi
+  # Verifică dacă parametrii specifici sunt prezenți înainte de a încerca să-i accesezi
+  if params[:cantitate].present? && params[:pret_bucata].present? && params[:pret_total].present?
+    @cantitate = params[:cantitate].to_i
+    @pret_bucata = params[:pret_bucata].to_f
+    @pret_total = params[:pret_total].to_f
 
-  # În funcție de logica aplicației, poți să salvezi aceste valori în baza de date,
-  # sau să le folosești direct pentru a prepara datele pentru facturare sau pentru a afișa în view.
-  
-  # Exemplu de atribuire (ajustează în funcție de modelul tău)
-  
-  #@detaliifacturare.cantitate = cantitate
-  #@detaliifacturare.pret_bucata = pret_bucata
-  #@detaliifacturare.pret_total = pret_total
-  
-  # Asigură-te că salvezi orice modificare dacă este necesar
-  @detaliifacturare.save if @detaliifacturare.changed?
+    # Atribuie valorile la instanța @detaliifacturare
+   
+
+    # Salvează modificările dacă există
+    @detaliifacturare.save if @detaliifacturare.changed?
+  else
+    @cantitate = 1
+    @pret_bucata = @prod.pret
+    @pret_total = @prod.pret
+  end
+
+  # Continuă cu restul logicii metodei, dacă există
 end
 
   

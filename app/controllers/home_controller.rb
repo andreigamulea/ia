@@ -179,7 +179,7 @@ class HomeController < ApplicationController
     # Suma achitată:
     id_produs = @stripe_session.metadata['id_produs'].to_i
     produs = Prod.find(id_produs)  # Presupunem că modelul 'Prod' are o coloană 'pret'
-    @suma_achitata = produs.pret.round(0)
+    @suma_achitata = @stripe_session.metadata[:pret_total]
     @redirect_spre = produs.curslegatura
     if ('cod14'..'cod37').include?(produs.cod)
       @redirect_spre='cursayurveda'
