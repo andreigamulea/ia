@@ -35,10 +35,14 @@
 
 
 
-<p style="color: green"><%= notice %></p>
+
 
 <main class="cr" style="background-color: aliceblue;">
+
     <h1 class="first-tittle">Set documente voluntariat: Ayush Cell Romania</h1>
+    <h5>Aveti achizitionate: <%= @nr_total_contracte_achizitionate %> set-uri de documente.</h5>
+    <h5>Total voluntari: <%= @numar_contracte_useris %> </h5>
+    <h5>Set de documente disponibile: <%= @nr_total_contracte_achizitionate-@numar_contracte_useris %> </h5>
     <h2 class="main-title">Achiziționează un nou set de documente pentru voluntariat</h2>
 <p>Pretul descreste proportional cu numarul de contracte achizitionate. </p>
 <div class="table-responsive" style="margin-right: auto; margin-left: 0;">
@@ -81,8 +85,8 @@
 
 
 
-
-<h2 class="main-title">Contracte de voluntariat</h2>
+<%if @nr_contractes>0%>
+<h2 class="main-title">Modele Contracte de voluntariat</h2>
 
 <table class="table table-striped table-bordered table-hover">
     <thead class="thead-dark">
@@ -117,17 +121,39 @@
     </tbody>
 </table>
 
+<%end%>
 
 
+<%if @nr_total_contracte_achizitionate>0 || current_user.role==1%>
+    <%= link_to "Creaza contract nou", new_contracte_path %>
+<%end%>
 
+<%if  @numar_contracte_useris>0%>
+<h2 class="main-title">Contracte de voluntariat</h2>
+<table class="table table-striped table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr class="desk">
 
-<%= link_to "Creaza contract nou", new_contracte_path %>
-
-
-
-
-
-
+            <th>Nume voluntar</th>
+            <th>Localitate voluntar</th>
+            <th>Acțiuni</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @contracte_useri.each do |c| %>
+            <tr>
+            <td><%= c.nume_voluntar %></td>
+            <td><%= c.localitate_voluntar %></td>
+            <td style="display: flex; flex-direction: column; align-items: center;">
+                
+                <%= link_to 'Edit', edit_contracte_useri_contracte_path(c), class: "btn btn-secondary" %>
+               
+            </td>
+            </tr>
+        <% end %>
+        </tbody>
+</table>
+<%end%>
 
 </div></div>
 
