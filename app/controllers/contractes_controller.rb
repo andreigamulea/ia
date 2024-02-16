@@ -83,11 +83,32 @@ class ContractesController < ApplicationController
   
   def index
     @prod = Prod.find_by(curslegatura: 'voluntari', status: 'activ')
-    @contractes = Contracte.all
-    @contracte = Contracte.last
+    @contractes = Contracte.where(user_id: current_user.id)
+    @nr_contractes = @contractes.count
+    puts("@nr_contractes este: #{@nr_contractes}")
+    #@contracte = Contracte.last
+    produs_dorit = Prod.find_by(cod: 'cod111') #voluntari 5.8 lei/set
+    # Verifică dacă produsul a fost găsit pentru a evita erori în pasul următor
+    if produs_dorit
+      # Acum, găsește toate comenziProd care corespund userului curent și produsului dorit, care sunt și marcate ca 'Finalizata'
+      comenzi_finalizate = ComenziProd.where(user_id: current_user.id, prod_id: produs_dorit.id, validat: 'Finalizata')
+
+      # Calculează suma cantităților pentru toate comenziProd găsite
+      @nr_total_contracte_achizitionate = comenzi_finalizate.sum(:cantitate)
+    else
+      # Dacă produsul dorit nu există, setează numărul total de contracte achiziționate pe 0
+      @nr_total_contracte_achizitionate = 0
+    end
+    puts("numarul: #{@nr_total_contracte_achizitionate}")
+    # Numără ContracteUseris pentru contractele userului curent
+    @numar_contracte_useris = ContracteUseri.joins(:contracte).where(contractes: { user_id: current_user.id }).count
+    puts("numar contracte consumate: #{@numar_contracte_useris}")
+    @contracte_useri = ContracteUseri.where(contracte_id: current_user.contractes.pluck(:id)) 
+    
   end
   def semneaza_contract
-    @contract = Contracte.find_by(id: session[:contract_id])
+    #@contract = Contracte.find_by(id: session[:contract_id])
+    @contract = Contracte.first
     @nume_firma=@contract.nume_firma
     @sediu_firma=@contract.sediu_firma
     @cui_firma=@contract.cui_firma

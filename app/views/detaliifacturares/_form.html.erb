@@ -16,7 +16,7 @@
   
 
 
-    <% if @detaliifacturare.errors.any? %>
+      <% if !@detaliifacturare.new_record? && @detaliifacturare.errors.any? %>
       <div class="alert alert-danger">
       <h4>Urmatoarele campuri nu sunt completate</h4>
 
@@ -188,10 +188,11 @@
   <p><%= @prod.detalii %></p>
  
   <%if current_user.email!="nagy.edvin@yahoo.com"%>
-  Pret unitar: <%= @pret_bucata.to_f.round(2)%> lei</br>
-  Cantitate: <%= @cantitate%> buc</br>
-  Pret total: <%= @pret_total.to_f.round(2)%> lei</br>
-  
+    <%if @cantitate>1%>
+      Pret unitar: <%= @pret_bucata.to_f.round(2)%> lei</br>
+      Cantitate: <%= @cantitate%> buc</br>
+      Pret total: <%= @pret_total.to_f.round(2)%> lei</br>
+    <%end%>
   
   
   <% elsif current_user.email == "nagy.edvin@yahoo.com" && @prod.cod.in?(['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 'cod25']) %>

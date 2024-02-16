@@ -36,6 +36,20 @@ class DetaliifacturaresController < ApplicationController
   end
   def create   
     puts("sunt in createeeeeeeeeeeeeeeeeeeeee")
+    if params[:pret_total].present? && params[:pret_total].to_f > 0
+      session[:pret_total] = params[:pret_total]
+      session[:cantitate] = params[:cantitate]
+      session[:pret_bucata] = params[:pret_bucata]
+      session[:multiplu] = true
+    else
+      session[:pret_total] = @prod.pret
+      session[:cantitate] = 1
+      session[:pret_bucata] = @prod.pret
+      session[:multiplu] = false
+
+    end
+
+
     @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare
    
     @prod = Prod.find(detaliifacturare_params[:s])
