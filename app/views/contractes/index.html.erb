@@ -124,7 +124,7 @@
 <%end%>
 
 
-<%if @nr_total_contracte_achizitionate>0 || current_user.role==1%>
+<%if (@nr_total_contracte_achizitionate>0 &&  @nr_total_contracte_achizitionate-@numar_contracte_useris>0) || current_user.role==1%>
     <%= link_to "Creaza contract nou", new_contracte_path %>
 <%end%>
 
