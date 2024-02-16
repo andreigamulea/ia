@@ -12,8 +12,8 @@ class FacturasController < ApplicationController
       redirect_to new_user_session_path   
 
     elsif @user.role == 1
-      #@facturas = Factura.all.order(id: :desc)
-      @facturas = @user.facturas
+      @facturas = Factura.all.order(id: :desc)
+      #@facturas = @user.facturas
     elsif @user.role == 0
       @facturas = @user.facturas
     
