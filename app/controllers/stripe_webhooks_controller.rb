@@ -99,7 +99,8 @@ class StripeWebhooksController < ApplicationController
       comanda.update(
         statecomanda2: 'Finalizata',
         stateplata1: 'Achitata',
-        stateplata2: "#{produs.pret} lei",
+        stateplata2: "#{pret_total} lei",
+        total: pret_total,
         stateplata3: "acces #{produs.valabilitatezile} zile",
         emailcurrent: emailplata,
         emailplata: customer_email

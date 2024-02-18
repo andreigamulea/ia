@@ -16,17 +16,17 @@
   
 
 
-      <% if !@detaliifacturare.new_record? && @detaliifacturare.errors.any? %>
-      <div class="alert alert-danger">
-      <h4>Urmatoarele campuri nu sunt completate</h4>
+      <% if @detaliifacturare.errors.any? %>
+        <div class="alert alert-danger">
+          <h4>Urmatoarele campuri nu sunt completate</h4>
+          <ul>
+            <% @detaliifacturare.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-        <ul>
-          <% @detaliifacturare.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
     <%= f.hidden_field :s, value: @prod.id %>
     
     <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:prenume].any? %>">
@@ -188,7 +188,11 @@
   <p><%= @prod.detalii %></p>
  
   <%if current_user.email!="nagy.edvin@yahoo.com"%>
-    <%if @cantitate>1%>
+  
+  
+
+    <%if @cantitate.to_i>1%>
+    salut
       Pret unitar: <%= @pret_bucata.to_f.round(2)%> lei</br>
       Cantitate: <%= @cantitate%> buc</br>
       Pret total: <%= @pret_total.to_f.round(2)%> lei</br>
