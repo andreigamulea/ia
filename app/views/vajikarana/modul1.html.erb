@@ -21,6 +21,13 @@
 #vajikarana .table td {
     text-align:center;
 }
+.vajikarana-video{
+    margin-top:40px;
+    display:flex; 
+    flex-direction:column; 
+    align-items:center;
+}
+
 @media screen and (max-width: 720px) {
     #vajikarana .register{
         margin:0 auto;
@@ -34,13 +41,44 @@
         margin-bottom: 10px;
         margin-top: 10px;
     }
+    .vajikarana-video{
+        margin-top:0px;
+    }  
 }
+
+.responsive-iframe-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    /* Setează un raport de aspect implicit */
+    padding-top: 56.25%; /* Raport de aspect 16:9 */
+}
+
+.responsive-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@media (min-width: 769px) {
+    .responsive-iframe-container {
+        /* Limitează lățimea la 640px pentru rezoluții mari */
+        max-width: 640px;
+        margin: auto; /* Centrare container */
+        /* Ajustează padding-top pentru a menține raportul de aspect pentru o lățime de 640px */
+        padding-top: 360px; /* Înălțimea specifică pentru o lățime de 640px la un raport de aspect de 16:9 */
+    }
+}
+
 
 </style>
 <% content_for :title, "Vajikarana - ştiinţa substanţelor afrodiziace | Ayush Cell Romania" %>
 <% content_for :meta_tags do %>
-  <meta name="description" content="Descoperiți importanța adaptării (satmya) alimentației la tipologia constituțională ayurvedică proprie (dosha) și impactul acesteia asupra sănătății.">
-  <meta name="keywords" content="ayurveda, nutritie ayurvedica, dosha, vata, pitta, kapha, dosha-prakriti, greutatea ideala, formule greutate ideala">
+  <meta name="description" content="Participă la cursurile de Vajikarana - Ayush Cell Romania pentru revitalizarea potențialului erotic-amoros.">
+  <meta name="keywords" content="ayurveda, Vajikarana, cursuri Ayurveda, revitalizare erotică, Ayush Cell Romania, principii Ayurvedice, sănătate holistică, practici Ayurvedice, aplicatii Ayurveda">
+ 
   <link rel="canonical" href="https://www.ayushcell.ro/vajikarana">
 <% end %>
 
@@ -48,20 +86,22 @@
 <%= render 'layouts/sideleft' %>
 
 <div class="cr" style="background-color: white; ">
-    <h1 class="first-tittle">Ayush Cell Romania: Vajikarana - Cunoașterea ayurvedică a ingredientelor naturale şi a procedeelor practice cu efecte afrodiziace (Vajikarana)</h1>
+    <h1 class="first-tittle">Ayush Cell Romania: Vajikarana - Cunoașterea ayurvedică a ingredientelor naturale şi a procedeelor practice cu efecte afrodiziace</h1>
     <h2 class="main-title" >Vajikarana</h2>
 
 <section>
 
-
 <div class="row1 center" style="max-width:920px; margin:0 auto;">
-    <div class="r1c1" style="height: 350px;">
+
+
+
+<div class="r1c1" style="height: 350px;">
       
       <img src="<%= image_url('Vajikarana3.jpg') %>" alt="Vajikarana - ştiinţa substanţelor afrodiziace">
     </div>
     <div class="r1c2">
     <p>Ştiinţa specializată a substanţelor naturale afrodiziace (Vajikarana) reprezintă una dintre cele 8 ramuri principale (anga) ale sistemului tradițional indian de cunoaștere asupra vieții, Ayurveda.</p>
-    <p>Întreaga ştiinţă tradiţională Vajikarana oferă fiinţei umane posibilitatea de a dispune de metode practice naturale prin care să pună în valoare într-un mod superior, să trezească şi să amplifice multitudinea, impresionant de mare, adeseori nebănuită, a potenţialităţilor creatoare efective, care pot să rezulte din folosirea înţeleaptă a potenţialului erotic-amoros al fiinţei.
+    <p>Vajikarana oferă fiinţei umane posibilitatea de a dispune de metode practice naturale prin care să pună în valoare într-un mod superior potențialul erotic-amoros al ființei.
     </p>
     <% if !current_user %>      
     <div class="r1c2">
@@ -75,6 +115,9 @@
  </div>
   </div>
 <section class="cm">  
+
+
+
 <br>
 <h2 style="font-size:22px;">Armonizarea si redinamizarea potenţialului erotic prin practicile de tip Vajikarana</h2>
 
@@ -96,6 +139,7 @@ Punctul de vedere tradiţional ayurvedic asupra acestor metode practice de Vajik
 </ol>
 <p>Aceste patru aspecte reprezintă resorturile intime ale motivaţiilor sufleteşti care însoţesc fiinţa umană în decursul existenţei şi a vieţii sale.
 Folosirea substanţelor naturale şi a procedurilor cu efect afrodiziac (vajikarana) generează în fiinţă fenomene tainice de punere în valoare a potenţialul erotic-amoros al fiinţei.”</p>
+
 
 
 
@@ -130,6 +174,8 @@ Folosirea substanţelor naturale şi a procedurilor cu efect afrodiziac (vajikar
 <p>Sesiunile live vor avea loc în zilele de duminică, respectiv pe 3, 10, 17, 24 și 31 martie 2024, precum și pe 7, 14 și 21 aprilie 2024, în intervalul orar 18:30 - 20:30</p>
 <h3><strong>Cum particip?</strong></h3>
 <p>Pentru a vă înscrie la acest modul, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul atît la linkurile de ZOOM cît si la vizionarea inregistrarilor se va face direct in această pagină de site.</p>
+<h3><strong>Se oferă suport de curs?</strong></h3>
+<p>În completarea sesiunilor live, participanții primesc în mod gratuit suportul de curs scris asociat.</p>
 <h3>Costul participării?</h3>
 <p>Investește în educația ta pentru sănătate cu doar 360 lei pentru participarea în timp real la sesiunile live sau 560 lei pentru acces complet atât la sesiunile live cât și la vizionarea înregistrărilor cursului Vajikarana Modulul 1.</p>
 
@@ -138,7 +184,28 @@ Folosirea substanţelor naturale şi a procedurilor cu efect afrodiziac (vajikar
 </p>
 
 
+<div class="vajikarana-video">
+        <h2 style="font-size:22px; text-align:center; max-width:920px;">Prezentare introductiva - Armonizarea si redinamizarea potenţialului erotic prin practicile de tip Vajikarana</h2>
+        <p style="text-align:center; max-width:720px;">Recomandăm vizionarea înregistrării introductive de mai jos pentru a vă familiariza cu subiectele ce vor fi abordate în cadrul acestui curs. Prezentarea  este de asemenea, o ocazie de a face cunoștință cu lectorul de Ayurveda implicat în organizarea și predarea cursului.</p></br>
+        
+        <!-- for non autoplay video //-->
 
+ 
+    
+    <div class="responsive-iframe-container">
+        <iframe
+            src="https://www.youtube.com/embed/7irqyKVfdKA"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+        </iframe>
+    </div>
+       
+
+
+ 
+        </br>
+    
 </section>
 
 
