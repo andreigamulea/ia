@@ -61,18 +61,21 @@
     left: 0;
     width: 100%;
     height: 100%;
-}
+    }
 
 @media (min-width: 769px) {
     .responsive-iframe-container {
-        /* Limitează lățimea la 640px pentru rezoluții mari */
         max-width: 640px;
-        margin: auto; /* Centrare container */
-        /* Ajustează padding-top pentru a menține raportul de aspect pentru o lățime de 640px */
-        padding-top: 360px; /* Înălțimea specifică pentru o lățime de 640px la un raport de aspect de 16:9 */
-    }
+        margin: auto;
+        padding-top: 360px; 
+        margin-top: -20px;
+     }
 }
-
+@media (max-width: 768px) {
+    .responsive-iframe-container {
+        margin-top: -20px;
+     }
+}
 
 </style>
 <% content_for :title, "Vajikarana - ştiinţa substanţelor afrodiziace | Ayush Cell Romania" %>
