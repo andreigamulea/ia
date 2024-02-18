@@ -4,7 +4,9 @@ class Detaliifacturare < ApplicationRecord
   validates :user_id, uniqueness: true
   validates :user_id, presence: true
   
-  validates :prenume, :nume, :tara, :localitate,  :strada, :numar, :telefon, presence: { message: '' }
+  
+  validates :prenume, :nume, :tara, :localitate, :strada, :numar, :telefon, presence: { message: 'este obligatoriu' }
+
   validate :adresaemail_be_present
   validate :codpostal_be_present
   validate :judet_be_present
@@ -18,7 +20,9 @@ class Detaliifacturare < ApplicationRecord
   private
 
   def adresaemail_be_present
-    errors.add(:base, 'Adresa de email') if adresaemail.blank?
+    #errors.add(:base, 'Adresa de email') if adresaemail.blank?
+    errors.add(:adresaemail, 'Adresa de email este obligatorie') if adresaemail.blank?
+
   end
 
   def codpostal_be_present
