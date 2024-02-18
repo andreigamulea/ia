@@ -816,7 +816,91 @@ end
     redirect_to root_path, alert: "There was an error generating the report. Please try again later."
   end
   
+  def export_to_xlsx_plata_vajikarana_modul1
+    begin
+      prod_ids = Prod.where(curslegatura: "vajikarana1").pluck(:id)
+      mapare_valori = Prod.where(curslegatura: "vajikarana1").pluck(:id, :pret).to_h
+      
+      @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
+                                 .where(prod_id: prod_ids, validat: "Finalizata")
+                                 .order(:comanda_id)
+      
+      # Optimize querying for Detaliifacturare
+      user_ids = @comenzi_prod.map(&:user_id).uniq
+      detaliifacturare_hash = Detaliifacturare.where(user_id: user_ids).index_by(&:user_id)
+      
+      workbook = RubyXL::Workbook.new
+      worksheet = workbook[0]
+      
+      # Headers
+      headers = ['Email', 'Nume User', 'Telefon', 'Nume din factură', 'Telefon din factură', 'Data Platii', 'Valoare', 'Comandă ID', 'Nume livrare', 'Telefon livrare', 'Adresă de livrare', 'Plată prin', 'Nume Produs', 'Validat']
+      headers.each_with_index { |header, index| worksheet.add_cell(0, index, header) }
+  
+      @comenzi_prod.each_with_index do |comanda, index|
+        worksheet.add_cell(index + 1, 0, comanda.user.email)
+        worksheet.add_cell(index + 1, 1, comanda.user.name)
+        worksheet.add_cell(index + 1, 2, comanda.user.telefon)
+        # Preiau numele din factura
+        factura = Factura.find_by(comanda_id: comanda.comanda_id)
+        nume_factura = "#{factura.nume} #{factura.prenume}" if factura
+        worksheet.add_cell(index + 1, 3, nume_factura)
 
+        # Telefon din factura
+        telefon_factura = comanda.comanda&.telefon
+        worksheet.add_cell(index + 1, 4, telefon_factura)
+  
+        worksheet.add_cell(index + 1, 5, comanda.datainceput.strftime('%d-%m-%Y')) if comanda.datainceput
+        worksheet.add_cell(index + 1, 6, mapare_valori[comanda.prod_id] || 0)
+        worksheet.add_cell(index + 1, 7, comanda.comanda_id)
+  
+        # Nume din Livrare
+        adresa = comanda.comanda&.adresa_comenzi
+        detaliifacturare = detaliifacturare_hash[comanda.user.id]
+        nume_livrare = if adresa
+                          "#{adresa.nume} #{adresa.prenume}"
+                        elsif detaliifacturare
+                          "#{detaliifacturare.nume} #{detaliifacturare.prenume}"
+                        end
+        worksheet.add_cell(index + 1, 8, nume_livrare)
+      
+      # Telefon din livrare
+      telefon_livrare = adresa&.telefon || detaliifacturare&.telefon
+      worksheet.add_cell(index + 1, 9, telefon_livrare)
+      
+      # Adresă de livrare
+      if adresa
+        prefix = adresa.adresacoincide ? "adresa de livrare este adresa de facturare: " : "adresa de livrare diferita de adresa de facturare: "
+        
+        parts = [prefix, adresa.tara, adresa.judet, adresa.localitate, "cod postal: #{adresa.codpostal}", adresa.strada, adresa.numar, adresa.altedate, adresa.numecompanie, adresa.cui].compact.reject(&:empty?)
+        adresa_livrare = parts.join(', ')
+        
+      elsif detaliifacturare
+        parts = [detaliifacturare.tara, detaliifacturare.judet, detaliifacturare.localitate, "cod postal: #{detaliifacturare.codpostal}", detaliifacturare.strada, detaliifacturare.numar, detaliifacturare.altedate, detaliifacturare.numecompanie, detaliifacturare.cui].compact.reject(&:empty?)
+        adresa_livrare = parts.join(', ')
+        
+      else
+        adresa_livrare = nil
+      end
+        
+  
+        worksheet.add_cell(index + 1, 10, adresa_livrare)
+        worksheet.add_cell(index + 1, 11, comanda.comanda.plataprin)
+        worksheet.add_cell(index + 1, 12, comanda.prod.nume)
+        worksheet.add_cell(index + 1, 13, comanda.validat)
+      end
+      
+      file_path = Rails.root.join('tmp', "comenzi_prod_#{Time.now.to_i}.xlsx")
+      workbook.write(file_path)
+      send_file(file_path)
+    ensure
+      # Cleanup the temporary file
+      #File.delete(file_path) if File.exist?(file_path)
+    end
+  rescue => e
+    # Handle any exception and possibly notify the user or log the error
+    logger.error "Error generating Excel: #{e.message}"
+    redirect_to root_path, alert: "There was an error generating the report. Please try again later."
+  end
 
 
   private
