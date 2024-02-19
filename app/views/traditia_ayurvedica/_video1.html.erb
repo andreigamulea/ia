@@ -1,7 +1,7 @@
 <% border_style = (defined?(previous_video_tip) && previous_video_tip == 'nutritie2' && video.tip == 'nutritie3') ? 'border-top: 3px solid #000;' : '' %>
 
 <tr style="<%= border_style %>">
-<% if video.tip == 'jivaka' || video.tip == 'cognitronica' || video.tip == 'performanta_cognitiva' || video.tip == 'asita'%>   
+<% if video.tip == 'jivaka' || video.tip == 'cognitronica' || video.tip == 'performanta_cognitiva' || video.tip == 'asita' || video.tip == 'jamadagni'%>   
 <td>
   
   <%= video.ordine %>
@@ -18,7 +18,7 @@
   <td><%= video.nume %></td>
   <td><%= video.descriere %></td>
   
-  <% if video.tip == 'jivaka' || video.tip == 'cognitronica' || video.tip == 'performanta_cognitiva' || video.tip == 'asita'%>
+  <% if video.tip == 'jivaka' || video.tip == 'cognitronica' || video.tip == 'performanta_cognitiva' || video.tip == 'asita' video.tip == 'jamadagni'%>
   <td>   
     <%= link_to "Vezi video", myvideo11_path(id: video.id, link: video.link), class: "btn btn-primary" %>
   </td>
