@@ -150,7 +150,28 @@ class ContractesController < ApplicationController
   
 
   # GET /contractes/1 or /contractes/1.json
-  def show
+  def show    
+    @nume_firma = @contract&.nume_firma
+    @email_firma = @contract&.email
+    @tip_contract = @contract&.tip
+    @denumire_contract = @contract&.denumire
+    @serie_contract = @contract&.cod_contract
+    @start_contract = @contract&.contor_start   
+    @sediu_firma = @contract&.sediu_firma
+    @cui_firma = @contract&.cui_firma
+    @cont_bancar = @contract&.cont_bancar
+    @banca_firma = @contract&.banca_firma
+    @reprezentant_firma = @contract&.reprezentant_firma    
+    @calitate_reprezentant = @contract&.calitate_reprezentant    
+
+    @denumire_post_voluntar = @contract&.denumire_post
+    @coordonator_voluntar = @contract&.subordonare
+    @locul_desfasurarii_activitatii_voluntar = @contract&.locul_desfasurarii
+    @departament = @contract&.departament
+    @relatii_functionale_voluntar = @contract&.relatii_functionale 
+    @sarcini_voluntar = @contract&.sarcini_voluntar
+    @valabilitate_luni = @contract&.valabilitate_luni
+
   end
 
   # GET /contractes/new
@@ -161,7 +182,28 @@ class ContractesController < ApplicationController
 
   # GET /contractes/1/edit
   def edit
-    @contracte = Contracte.find(params[:id])
+    @contract = Contracte.find(params[:id])
+    @nume_firma = @contract&.nume_firma
+    @email_firma = @contract&.email
+    @tip_contract = @contract&.tip
+    @denumire_contract = @contract&.denumire
+    @serie_contract = @contract&.cod_contract
+    @start_contract = @contract&.contor_start   
+    @sediu_firma = @contract&.sediu_firma
+    @cui_firma = @contract&.cui_firma
+    @cont_bancar = @contract&.cont_bancar
+    @banca_firma = @contract&.banca_firma
+    @reprezentant_firma = @contract&.reprezentant_firma    
+    @calitate_reprezentant = @contract&.calitate_reprezentant    
+
+    @denumire_post_voluntar = @contract&.denumire_post
+    @coordonator_voluntar = @contract&.subordonare
+    @locul_desfasurarii_activitatii_voluntar = @contract&.locul_desfasurarii
+    @departament = @contract&.departament
+    @relatii_functionale_voluntar = @contract&.relatii_functionale 
+    @sarcini_voluntar = @contract&.sarcini_voluntar
+    @valabilitate_luni = @contract&.valabilitate_luni
+
   end
 
   # POST /contractes or /contractes.json
@@ -335,7 +377,7 @@ end
     
     # Use callbacks to share common setup or constraints between actions.
     def set_contracte
-      @contracte = Contracte.find(params[:id])
+      @contract = Contracte.find(params[:id])
     end
     def set_contracte_useri
       @contracte_useri = ContracteUseri.find(params[:id])

@@ -109,8 +109,8 @@
 
 <main class="cr" style="background-color: aliceblue;">
     <h1 class="first-tittle">Set documente voluntariat: Ayush Cell Romania</h1>
-    <h2 class="main-title">Achiziționează un nou set de documente pentru voluntariat</h2>
-<p>Completeaza datele necesare pentru fiecare set de documente:</p>
+    <h2 class="main-title">Datele necesare pentru setul de documente</h2>
+<p>Completeaza datele necesare pentru setul de documente:</p>
 
 
 
@@ -127,38 +127,120 @@
   <% end %>
 
   <div class="spanview">
-  <h2>Pachet contract nr. Nou din data Curentă</h2>
-
+  <h2>Introdu datele:</h2>
   <div class="section">
   <p class="section-title"><strong>Date Asociație:</strong></p>
-  <div class="input-group"><label>Email contractor:</label><input type="text" name="contracte[email]" id="contracte_email" placeholder="exemplu@domeniu.com"></div>
-  <div class="input-group"><label>Tip Contract:</label><input type="text" name="contracte[tip]" id="contracte_tip" placeholder="Prestări servicii, Vânzare-Cumpărare, etc."></div>
-  <div class="input-group"><label>Denumire contract:</label><input type="text" name="contracte[denumire]" id="contracte_denumire" placeholder="Denumirea completă a contractului"></div>
-  <div class="input-group"><label>Serie Contract:</label><input type="text" name="contracte[cod_contract]" id="contracte_cod_contract" placeholder="Seria și numărul contractului"></div>
-  <div class="input-group"><label>Număr start Contract:</label><input type="number" name="contracte[contor_start]" id="contracte_contor_start" placeholder="Numărul de la care începe contractul"></div>
-  <div class="input-group"><label>Reprezentant Instituție:</label><input type="text" name="contracte[reprezentant_firma]" id="contracte_reprezentant_firma" placeholder="Nume și prenume"></div>
-  <div class="input-group"><label>Calitate reprezentant:</label><input type="text" name="contracte[calitate_reprezentant]" id="contracte_calitate_reprezentant" placeholder="Funcția în cadrul instituției"></div>
-  <div class="input-group"><label>Instituție:</label><input type="text" name="contracte[nume_firma]" id="contracte_nume_firma" placeholder="Numele complet al instituției"></div>
-  <div class="input-group"><label>Sediu Instituție:</label><input type="text" name="contracte[sediu_firma]" id="contracte_sediu_firma" placeholder="Adresa completă a sediului"></div>
-  <div class="input-group"><label>Cont Bancar:</label><input type="text" name="contracte[cont_bancar]" id="contracte_cont_bancar" placeholder="Numărul contului bancar"></div>
-  <div class="input-group"><label>Banca Instituției:</label><input type="text" name="contracte[banca_firma]" id="contracte_banca_firma" placeholder="Numele băncii"></div>
-  <div class="input-group"><label>CUI:</label><input type="text" name="contracte[cui_firma]" id="contracte_cui_firma" placeholder="Codul Unic de Înregistrare"></div>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  <div class="input-group">
+    <%= form.label :email, 'Email contractor:' %>
+    <%= form.text_field :email, id: 'contracte_email', placeholder: 'exemplu@domeniu.com', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :tip, 'Tip Contract:' %>
+    <%= form.text_field :tip, id: 'contracte_tip', placeholder: 'Prestări servicii, Vânzare-Cumpărare, etc.', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :denumire, 'Denumire contract:' %>
+    <%= form.text_field :denumire, id: 'contracte_denumire', placeholder: 'Denumirea completă a contractului', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :cod_contract, 'Serie Contract:' %>
+    <%= form.text_field :cod_contract, id: 'contracte_cod_contract', placeholder: 'Serie contract Ex: INS', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :contor_start, 'Număr start Contract:' %>
+    <%= form.number_field :contor_start, id: 'contracte_contor_start', placeholder: 'Numărul de la care începe contractul Ex: 1', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :reprezentant_firma, 'Reprezentant Instituție:' %>
+    <%= form.text_field :reprezentant_firma, id: 'contracte_reprezentant_firma', placeholder: 'Nume și prenume', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :calitate_reprezentant, 'Calitate reprezentant:' %>
+    <%= form.text_field :calitate_reprezentant, id: 'contracte_calitate_reprezentant', placeholder: 'Funcția în cadrul instituției', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :nume_firma, 'Instituție:' %>
+    <%= form.text_field :nume_firma, id: 'contracte_nume_firma', placeholder: 'Numele complet al instituției', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :sediu_firma, 'Sediu Instituție:' %>
+    <%= form.text_field :sediu_firma, id: 'contracte_sediu_firma', placeholder: 'Adresa completă a sediului', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :cont_bancar, 'Cont Bancar:' %>
+    <%= form.text_field :cont_bancar, id: 'contracte_cont_bancar', placeholder: 'Numărul contului bancar', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :banca_firma, 'Banca Instituției:' %>
+    <%= form.text_field :banca_firma, id: 'contracte_banca_firma', placeholder: 'Numele băncii', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :cui_firma, 'CUI:' %>
+    <%= form.text_field :cui_firma, id: 'contracte_cui_firma', placeholder: 'Codul Unic de Înregistrare', class: 'input-class-name' %>
+  </div>
 </div>
+
 
 <div class="section">
   <p class="section-title"><strong>Date Voluntari:</strong></p>
-  <div class="input-group"><label>Denumire Post Voluntar:</label><input type="text" name="contracte[denumire_post]" id="contracte_denumire_post" placeholder="Titlul postului de voluntar"></div>
-  <div class="input-group"><label>Locul desfășurării activității:</label><input type="text" name="contracte[locul_desfasurarii]" id="contracte_locul_desfasurarii" placeholder="Locația exactă a activității"></div>
-  <div class="input-group"><label>Departament:</label><input type="text" name="contracte[departament]" id="contracte_departament" placeholder="Numele departamentului"></div>
-  <div class="input-group"><label>Relații funcționale cu:</label><input type="text" name="contracte[relatii_functionale]" id="contracte_relatii_functionale" placeholder="Roluri sau persoane în relație directă"></div>
-  <div class="input-group"><label>Sarcini voluntar:</label><textarea rows="3" name="contracte[sarcini_voluntar]" id="contracte_sarcini_voluntar" placeholder="Descrieți sarcinile principale ale voluntarului, folosind punct și virgulă (;) pentru separare"></textarea></div>
-  <div class="input-group"><label>Valabilitate pachet (luni):</label><input type="number" name="contracte[valabilitate_luni]" id="contracte_valabilitate_luni" placeholder="Durata în luni a valabilității"></div>
+  
+  <div class="input-group">
+    <%= form.label :denumire_post, 'Denumire Post Voluntar:' %>
+    <%= form.text_field :denumire_post, id: 'contracte_denumire_post', placeholder: 'Titlul postului de voluntar', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :locul_desfasurarii, 'Locul desfășurării activității:' %>
+    <%= form.text_field :locul_desfasurarii, id: 'contracte_locul_desfasurarii', placeholder: 'Locația exactă a activității', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :departament, 'Departament:' %>
+    <%= form.text_field :departament, id: 'contracte_departament', placeholder: 'Numele departamentului', class: 'input-class-name' %>
+  </div>
+  <div class="input-group">
+    <%= form.label :subordonare, 'Subordonare:' %>
+    <%= form.text_field :subordonare, id: 'subordonare', placeholder: 'Subordonare', class: 'input-class-name' %>
+    </div>
+  <div class="input-group">
+    <%= form.label :relatii_functionale, 'Relații funcționale cu:' %>
+    <%= form.text_field :relatii_functionale, id: 'contracte_relatii_functionale', placeholder: 'Roluri sau persoane în relație directă', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :sarcini_voluntar, 'Sarcini voluntar:' %>
+    <%= form.text_area :sarcini_voluntar, rows: 3, id: 'contracte_sarcini_voluntar', placeholder: 'Descrieți sarcinile principale ale voluntarului, folosind punct și virgulă (;) pentru separare', class: 'input-class-name' %>
+  </div>
+
+  <div class="input-group">
+    <%= form.label :valabilitate_luni, 'Valabilitate pachet (luni):' %>
+    <%= form.number_field :valabilitate_luni, id: 'contracte_valabilitate_luni', placeholder: 'Durata în luni a valabilității', class: 'input-class-name' %>
+  </div>
 </div>
 
+
 </div>
 
 
-<%= form.submit "Salvează", class: "btn-fp-link-form" %>
+<div>
+        
+        <canvas id="signature-pad" width="300" height="150" style="border: 1px solid #000;"></canvas>
+      <button type="button" onclick="clearSignature()">Șterge Semnătura</button>
+      <%= form.hidden_field :semnatura_admin, id: "semnatura_admin" %>
+          <%= form.submit %>
+    </div>
 
 <% end %>
 
