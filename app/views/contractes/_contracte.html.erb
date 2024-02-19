@@ -7,145 +7,50 @@
 </br></br>
 <div class="spanview">
 
-    <h2 style="font-size:22px;">Pachet contract nr. 10 din data de 02 ianuarie 2024</h2>
+    <h2 style="font-size:22px;">Datele modelului de contract:</h2>
 
-    <p style="margin:10px 0 0 0"><strong>Date Asociație:</strong></p>
-    <span><strong>Email contractor: </strong>andreigamulea1@gmail.com</span><span>, </span>
-    <span><strong>Tip Contract: </strong>Contract de voluntariat pentru lectori</span><span>, </span>
-    <span><strong>Denumire contract: </strong>Contract de voluntariat lectori</span><span>, </span>
-    <span><strong>Serie Contract: </strong>LEC</span><span>, </span>
-    <span><strong>Numar start Contract start: </strong> 1</span><span>, </span>
-    <span><strong>Reprezentant Instituție: </strong>Andrei Gămulea</span><span>, </span>
-    <span><strong>Coordonator voluntar: </strong>Andrei Gămulea</span><span> , </span>
-    <span><strong>Calitate reprezentant: </strong>Administrator</span><span>, </span>
-    <span><strong>Instituție: </strong>Ayus Grup S.R.L.</span><span>, </span>
-    <span><strong>Sediu Instituție: </strong>București, România, Str. Ostasilor nr. 15, sector 1</span><span>, </span>
-    <span><strong>Cont Bancar: </strong>RO86INGB0000999902964556</span><span>, </span>
-    <span><strong>Banca Instituției: </strong>ING BANK</span><span>, </span>
-    <span><strong>CUI: </strong>15768237</span><span>.</span>
+    <p style="margin:10px 0 0 0"><strong>Date Asociație:</strong> <%=@nume_firma%></p>
+    <span><strong>Email contractor: </strong><%=@email_firma%></span><span>, </span>
+    <span><strong>Tip Contract: </strong><%=@tip_contract%></span><span>, </span>
+    <span><strong>Denumire contract: </strong><%=@denumire_contract%></span><span>, </span>
+    <span><strong>Serie Contract: </strong><%=@serie_contract%></span><span>, </span>
+    <span><strong>Numar start Contract start: </strong><%=@start_contract%></span><span>, </span>
+    <span><strong>Reprezentant Instituție: </strong><%=@contract&.reprezentant_firma%></span><span>, </span>    
+    <span><strong>Calitate reprezentant: </strong><%=@calitate_reprezentant%></span><span>, </span>
+    <span><strong>Instituție: </strong><%=@nume_firma%></span><span>, </span>
+    <span><strong>Sediu Instituție: </strong><%=@sediu_firma%></span><span>, </span>
+    <span><strong>Cont Bancar: </strong><%=@cont_bancar%></span><span>, </span>
+    <span><strong>Banca Instituției: </strong><%=@banca_firma%></span><span>, </span>
+    <span><strong>CUI: </strong><%=@cui_firma%></span><span>.</span>
 
     <p style="margin:10px 0 0 0;"><strong>Date Voluntari:</strong></p>
-    <span><strong>Denumire Post Voluntar: </strong>Voluntar pentru activități de lector ayurveda</span><span>, </span>
-    <span><strong>Locul desfășurării activității: </strong>Activitatea se desfășoară la sălile și locațiile destinate activităților organizate</span><span>, </span>
-    <span><strong>Departament: </strong>Lectori de ayurveda</span><span>, </span></br>
-    <span><strong>Voluntarul va avea relații funcționale cu: </strong>Cu ceilalți voluntari pentru obținerea de date și informații legate de specificul activității sale</span><span>, </span></br>
-    <span><strong>Sarcini voluntar: </strong>acesta, aceasta, va fi si va face,acesta, aceasta, va fi si va face,acesta, aceasta, va fi si va face,acesta, aceasta, va fi si va face,acesta, aceasta, va fi si va face,acesta, aceasta, va fi si va face,</span><span>, </span></br>
-    <span><strong>Valabilitate pachet (luni): </strong> 24</span>
+    <span><strong>Denumire Post Voluntar: </strong><%=@denumire_post_voluntar%></span><span>, </span>
+    <span><strong>Coordonator voluntar: </strong><%=@coordonator_voluntar%></span><span> , </span>
+    <span><strong>Locul desfășurării activității: </strong><%=@locul_desfasurarii_activitatii_voluntar%></span><span>, </span>
+    <span><strong>Departament: </strong><%=@departament%></span><span>, </span></br>
+    <span><strong>Voluntarul va avea relații funcționale cu: </strong><%=@relatii_functionale_voluntar%></span><span>, </span></br>
+    <strong>Sarcini voluntar:</strong>
+        <% if @sarcini_voluntar.present? %>
+          <ol>
+            <% @sarcini_voluntar.split(';').each do |sarcina| %>
+              <li><%= sarcina.strip %></li>
+            <% end %>
+          </ol>
+        <% else %>
+          <p>Nu există sarcini definite.</p>
+        <% end %>
+
+    <span><strong>Valabilitate pachet (luni): </strong><%=@valabilitate_luni%></span>
     
 
 </div>
 
 
 <div>
-  <%= link_to "Editează acest contract", edit_contracte_path(@contracte) %> |
+  <%= link_to "Editează acest contract", edit_contracte_path(@contract) %> |
   <%= link_to "Înapoi la contracte", contractes_path %>
 
-  <!--<%= button_to "Sterge acest contract", @contracte, method: :delete %>-->
+  <!--<%= button_to "Sterge acest contract", @contract, method: :delete %>-->
 </div>
 
 
-<!--<div id="<%= dom_id contracte %>">
-  <p>
-    <strong>User:</strong>
-    <%= contracte.user_id %>
-  </p>
-
-  <p>
-    <strong>Email:</strong>
-    <%= contracte.email %>
-  </p>
-
-  <p>
-    <strong>Tip:</strong>
-    <%= contracte.tip %>
-  </p>
-
-  <p>
-    <strong>Denumire:</strong>
-    <%= contracte.denumire %>
-  </p>
-
-  <p>
-    <strong>Contor:</strong>
-    <%= contracte.contor %>
-  </p>
-
-  <p>
-    <strong>Textcontract:</strong>
-    <%= contracte.textcontract %>
-  </p>
-  <p>
-    <strong>Nume Firma:</strong>
-    <%= contracte.nume_firma %>
-  </p>
-
-  <p>
-    <strong>Sediu Firma:</strong>
-    <%= contracte.sediu_firma %>
-  </p>
-
-  <p>
-    <strong>Cont Bancar:</strong>
-    <%= contracte.cont_bancar %>
-  </p>
-
-  <p>
-    <strong>Banca Firma:</strong>
-    <%= contracte.banca_firma %>
-  </p>
-
-  <p>
-    <strong>CUI Firma:</strong>
-    <%= contracte.cui_firma %>
-  </p>
-
-  <p>
-    <strong>Reprezentant Firma:</strong>
-    <%= contracte.reprezentant_firma %>
-  </p>
-  <p>
-  <strong>Calitate Reprezentant:</strong>
-  <%= contracte.calitate_reprezentant %>
-</p>
-
-<p>
-  <strong>Cod contract:</strong>
-  <%= contracte.cod_contract %>
-</p>
-
-<p>
-  <strong>Denumire post:</strong>
-  <%= contracte.denumire_post %>
-</p>
-<p>
-  <strong>Locul desfăşurării:</strong>
-  <%= contracte.locul_desfasurarii %>
-</p>
-<p>
-  <strong>Departament:</strong>
-  <%= contracte.departament %>
-</p>
-<p>
-  <strong>Subordonare:</strong>
-  <%= contracte.subordonare %>
-</p>
-<p>
-  <strong>Relatii functionale:</strong>
-  <%= contracte.relatii_functionale %>
-</p>
-<p>
-  <strong>Contor inceput:</strong>
-  <%= contracte.contor_start %>
-</p>
-<p>
-  <strong>valabilitate (luni):</strong>
-  <%= contracte.valabilitate_luni %>
-</p>
-<p>
-  <strong>Sarcini voluntar:</strong>
-  <%= contracte.sarcini_voluntar %>
-</p>
-</div>
--->
-
-</div></div>
