@@ -182,7 +182,7 @@ class ContractesController < ApplicationController
 
   # GET /contractes/1/edit
   def edit
-    @contract = Contracte.find(params[:id])
+   
     @nume_firma = @contract&.nume_firma
     @email_firma = @contract&.email
     @tip_contract = @contract&.tip

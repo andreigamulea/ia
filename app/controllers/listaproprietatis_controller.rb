@@ -1,6 +1,6 @@
 class ListaproprietatisController < ApplicationController
   before_action :set_listaproprietati, only: %i[ show edit update destroy ]
-
+  before_action :set_user_admin, only: %i[index edit show new destroy]
   # GET /listaproprietatis or /listaproprietatis.json
   def index
     @listaproprietatis = Listaproprietati.all
@@ -66,5 +66,15 @@ class ListaproprietatisController < ApplicationController
     # Only allow a list of trusted parameters through.
     def listaproprietati_params
       params.require(:listaproprietati).permit(:idx, :proprietateter, :tipp, :srota, :definire, :sinonime, :selectie, :sel)
+    end
+    def set_user_admin
+      if !current_user
+        redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
+        return
+      end  
+      unless current_user.role == 1
+        redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
+        return
+      end
     end
 end
