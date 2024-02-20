@@ -2,8 +2,12 @@ require 'roo'
 class XlsxtopgController < ApplicationController
   before_action :authenticate_user!, only: %i[index ]
   before_action :require_admin, only: [:index, :preluaredate, :preluaredate1, :preluaredate2, :preluaredate3, :preluaredate4,
-    :preluaredate5, :preluaredate6, :preluaredate7, :preluaredate8, :sterge_inregistrari, :sterge_inregistrari1, :sterge_inregistrari2,
-    :sterge_inregistrari3, :sterge_inregistrari4, :sterge_inregistrari5, :sterge_inregistrari6, :sterge_inregistrari7, :sterge_inregistrari8]
+    :preluaredate5, :preluaredate6, :preluaredate7, :preluaredate8, :preluaredate9, :preluaredate10, :preluaredate11, :preluaredate12,
+    :preluaredate13, :preluaredate14, :preluaredate15, :preluaredate16, :preluaredate17, :preluaredate18, :preluaredate19,
+     :preluaredate20, :preluaredate21, :preluaredate22, :preluaredate23,
+    :sterge_inregistrari, :sterge_inregistrari1, :sterge_inregistrari2,
+    :sterge_inregistrari3, :sterge_inregistrari4, :sterge_inregistrari5, :sterge_inregistrari6, :sterge_inregistrari7, :sterge_inregistrari8,
+    :sterge_inregistrari10]
   def index
   end
   def preluaredate # Preluare date din toate tabelele
