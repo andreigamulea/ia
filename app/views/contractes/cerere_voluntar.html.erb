@@ -1,54 +1,163 @@
-<div class="container" id="cvp1">
+
+<style>
+
+#civ form{
+    width: -webkit-fill-available;
+}
+#civ .form-label, label {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+    margin-bottom: 3px;
+}
+
+#civ .form-input, input[type="text"], input[type="email"], input[type="submit"] {
+    width: auto;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    min-width: 290px;
+}
+
+#civ input[type="submit"] {
+    display: block;
+    margin: 10px auto;
+    border: 1px solid #4b0082;
+    background-color: #4b0082;
+    color: white;
+}
+#civ .semnatura {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        text-align:center;
+    }
+
+   #civ .gazda, #civ .voluntar {
+        max-width: 300px;
+        flex: 1; 
+    }
+  
+
+@media screen and (max-width: 600px) {
+    #civ .form-input, #civ .form-label, #civ input[type="text"], #civ input[type="email"], #civ input[type="submit"], #civ label {
+        width: 100%;
+        display: block;
+        margin-right: 0;
+    }
+    #civ form{
+      display: flex;
+      flex-direction: column;
+    }
+    #civ .gazda{
+      text-align: left;
+      padding-bottom:10px;
+    }
+    #civ .semnatura{
+      flex-direction:column;
+      align-items: center;
+    }
+    #civ #str{
+      width: auto!important;
+    }
+}
+#civ #str{
+  width: 400px;;
+}
+
+#civ .voluntar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-center;
+}
+
+#civ canvas {
+    border: 1px solid #000;
+    margin-top: -15px;
+}
+
+#civ .register {
+    cursor: pointer;
+    margin: 0 auto;
+    width: auto;
+}
+#civ input[type="submit"]{
+  margin-top:20px;
+  width: auto;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+</style>
+
+
+<% content_for :title, "Cerere înscriere Voluntar 1 | Ayush Cell Romania"  %>
+<% content_for :description, "Completare cerere de înscriere voluntar" %>
+
+<% content_for :canonical do %>
+  <link rel="canonical" href="https://www.ayushcell.ro/cerere_voluntar">
+<% end %>
+
+<div class="container" id="civ">
 <%= render 'layouts/sideleft' %>
 
 <div class="cr" style="background-color: aliceblue; ">
-    <form>
-    <h1 style="text-align: center;">CERERE ÎNSCRIERE VOLUNTAR</h1>
-
-        
-        <label for="numar">Nr:</label> <br><br>
-
-        <label for="nume">Numele:</label>
-        <input type="text" id="nume" name="nume">
-        <label for="prenume">și prenumele:</label>
-        <input type="text" id="prenume" name="prenume"><br><br>
-
-        <label>Adresa de domiciliu:</label><br>
-        Str. <input type="text" name="strada">
-        Nr. <input type="text" name="numar_casa" style="width: 50px;"> &nbsp;&nbsp;&nbsp;
-        <input type="text" name="bloc" placeholder="bloc, scară, etaj, apartament" style="width: 400px;"><br><br>
+    <h1 class="first-tittle">Cerere de înscriere voluntar: Ayush Cell Romania</h1>
+    <h2 class="main-title" >Completare cerere de înscriere ca voluntar</h2>
+ 
 
 
-        Localitatea: <input type="text" name="localitate">
-        Județul: <input type="text" name="judet"><br><br>
+<form>
 
-        Telefon: <input type="text" name="telefon">
-        E-mail: <input type="email" name="email"><br><br>
 
-        
-prin prezenta, vă solicit acordul de a participa în calitate de voluntar la activitățile de voluntariat organizate de organizația dvs.
-Menționez că îmi asum toate obligațiile prevăzute în contractul de voluntariat și în fișa de voluntariat.
-        <br><br>
+<label for="numar" class="form-label">Nr: </label><br><br>
 
-        Data: <%= Date.today.strftime('%d-%m-%Y') %><br><br>
+<label for="nume" class="form-label">Subsemnatul/a, cu numele:</label>
+<input type="text" id="nume" name="nume" class="form-input" placeholder="Introduceți numele de familie">
+<label for="prenume" class="form-label">și prenumele:</label>
+<input type="text" id="prenume" name="prenume" class="form-input" placeholder="Introduceți prenumele"><br>
 
-        <div class="voluntar" style="text-align: right;">
-        <p style="padding-left: 30px;">Voluntar: </p>
-        <p style="margin-top:-15px;">
-        <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available; padding-left:5px;">
-            
-        </span>
-        </p>
-        <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000;"></canvas></br></br>
-        <button type="button" onclick="clearSignature(2)", class="register">Șterge Semnătura</button>
-    </div>
+<label class="form-label">având adresa de domiciliu </label>
+strada <input type="text" name="strada" class="form-input" placeholder="Scrieți numele străzii">
+numărul. <input type="text" name="numar_casa" class="form-input" style="width: 50px; min-width: 100px;" placeholder="Numărul">
+<input type="text" name="bloc" placeholder="bloc, scară, etaj, apartament" class="form-input" id="str" ><br>
 
-        <input type="submit" value="Trimite Cererea" class="register" style="border: 1px solid #4b0082; background-color: #4b0082;">
 
-   
-        </div>
+Localitatea: <input type="text" name="localitate" class="form-input" placeholder="Completați localitatea">
+Județul: <input type="text" name="judet" class="form-input" placeholder="Județul"><br>
 
-        </div>
+Telefon: <input type="text" name="telefon" class="form-input" placeholder="adăugați numărul de telefon">
+E-mail: <input type="email" name="email" class="form-input" placeholder="introduceți adresa de e-mail"><br>
+
+
+<p>prin prezenta, vă solicit acordul de a participa în calitate de voluntar la activitățile de voluntariat organizate de organizația dvs.</p>
+<p>Menționez că îmi asum toate obligațiile prevăzute în contractul de voluntariat și în fișa de voluntariat.</p><br>
+
+
+
+<div class="semnatura">
+  <div class="gazda">
+     Data: <span><%= Date.today.strftime('%d-%m-%Y') %></span>
+  </div>
+
+  <div class="voluntar">
+    <p>Semnătura voluntar: </p>
+    <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available;"></span>
+    <canvas id="signature-pad-3" width="auto" height="auto"></canvas><br><br>
+    <button type="button" onclick="clearSignature(2)" class="register" style="margin-top: -30px;">Șterge Semnătura</button>
+
+  </div>
+</div>
+
+
+<input type="submit" value="Trimite Cererea" class="register">
+
+</form>
+
+</div>
+</div>
+
 
         <script>
         document.addEventListener("turbo:load", function() {
