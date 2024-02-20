@@ -1,6 +1,6 @@
 class ProdsController < ApplicationController
   before_action :set_prod, only: %i[ show edit update destroy produscurent]
-  before_action :require_admin, only: %i[index edit show]
+  before_action :require_admin, only: %i[index edit show new update destroy]
   # GET /prods or /prods.json
   def index   
     if current_user.role == 1
