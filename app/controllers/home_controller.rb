@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  before_action :set_user_admin, only: %i[panouadmin cazuriparticulare userip user77 listavegetalegratis]
   def index
     #render layout: false
   end
@@ -308,5 +309,15 @@ end
     # Aici este un exemplu simplu utilizând expresii regulate
     email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
     !!(email =~ email_regex)
+  end
+  def set_user_admin
+    if !current_user
+      redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
+      return
+    end  
+    unless current_user.role == 1
+      redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
+      return
+    end
   end
 end

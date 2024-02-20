@@ -1,6 +1,6 @@
 class ComandasController < ApplicationController
   before_action :set_comanda, only: %i[ show edit update destroy ]
-  before_action :require_admin, only: %i[index edit show]
+  before_action :set_user_admin, only: %i[index edit show new destroy select_comanda_id edit_comenziprod update_comenziprod select_edit_comenziprod ]
   # GET /comandas or /comandas.json
   def index
     @comandas = Comanda.all.order(id: :desc)
@@ -164,10 +164,16 @@ end
     def comanda_params
       params.require(:comanda).permit(:datacomenzii, :numar, :statecomanda1, :statecomanda2, :stateplata1, :stateplata2, :stateplata3, :user_id, :emailcurrent, :emailplata, :total, :plataprin, :prodid, :prodcod, :telefon)
     end
-    def require_admin
-      unless current_user && current_user.role == 1
-        flash[:error] = "Only admins are allowed to access this page."
-        redirect_to root_path
+    
+
+    def set_user_admin
+      if !current_user
+        redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
+        return
+      end  
+      unless current_user.role == 1
+        redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
+        return
       end
     end
 

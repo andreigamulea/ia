@@ -1,6 +1,6 @@
 class GestionareUseriCursuriController < ApplicationController
   before_action :authenticate_user!, only: %i[index ]
-  before_action :require_admin, only: [:index,:import_from_xlsx_cursantinutritie]
+  before_action :require_admin, only: [:index,:import_from_xlsx_cursantinutritie, :stergecursntinutritie]
   def index
     @users = User.all
   end
