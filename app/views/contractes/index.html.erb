@@ -95,18 +95,33 @@
 
 
 <%if @nr_contractes>0%>
+<h3>Legenda:</h3>
+<h6>D1: CERERE ÎNSCRIERE VOLUNTAR</h6>
+<h6>D2: ACORD GDPR</h6>
+<h6>D3: CONTRACT VOLUNTARIAT</h6>
+<h6>D4: FISA POSTULUI - anexă la contractul de voluntariat</h6>
+<h6>D5: FISA SSM DE INSTRUIRE INDIVIDUALĂ PRIVIND SECURITATEA ȘI SĂNĂTATEA ÎN MUNCĂ</h6>
+<h6>D6: FISA ISU DE INSTRUCTAJ ÎN DOMENIUL SITUAȚIILOR DE URGENȚĂ</h6>
+
+
 <h2 class="main-title">Modele Contracte de voluntariat</h2>
+<%if (@nr_total_contracte_achizitionate>0 &&  @nr_total_contracte_achizitionate-@numar_contracte_useris>0) || current_user.role==1%>
+    <%= link_to "Creaza Model contract nou", new_contracte_path %>
+<%end%>
 
 <table class="table table-striped table-bordered table-hover">
     <thead class="thead-dark">
         <tr class="desk">
 
-            <th>Email</th>
-            <th>Tip</th>
+           
             <th>Denumire</th>
             <th>Cod contract</th>
-            <th>Contor start</th>
-            <th>Valabilitate (luni)</th>
+            <th>D1</th>
+            <th>D2</th>
+            <th>D3</th>
+            <th>D4</th>
+            <th>D5</th>
+            <th>D6</th>
             <th>Acțiuni</th>
         </tr>
     </thead>
@@ -114,18 +129,22 @@
         <% @contractes.each do |c| %>
             <tr>
 
-                <td><%= c.email %></td>
-                <td><%= c.tip %></td>
+                
                 <td><%= c.denumire %></td>
                 <td><%= c.cod_contract %></td>
-                <td><%= c.contor_start %></td>
-                <td><%= c.valabilitate_luni %></td>
+                <td><%= c.cod_contract %></td>
+                <td><%= c.cod_contract %></td>
+                <td><%= c.cod_contract %></td>
+                <td><%= c.cod_contract %></td>
+                <td><%= c.cod_contract %></td>
+                <td><%= c.cod_contract %></td>
+                
                 <td style="display: flex; flex-direction: column; align-items: center;">
-                    <%= link_to 'View', c %>
-                    <%= link_to 'Edit', edit_contracte_path(c) %>
-                    <%= button_to 'Delete', c, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button-link' %>
-                    <%= link_to 'Delete', c, data: { turbo_method: :delete, confirm: 'Are you sure?' } %>
-
+                    <%= link_to 'Vezi', c %>
+                    <%= link_to 'Editeaza', edit_contracte_path(c) %>
+                    <%= button_to 'Sterge', c, method: :delete, data: { controller: "confirm", action: "click->confirm#confirm" }, class: 'button-link' %>
+                    
+                    
                 </td>
             </tr>
         <% end %>
@@ -135,9 +154,7 @@
 <%end%>
 
 
-<%if (@nr_total_contracte_achizitionate>0 &&  @nr_total_contracte_achizitionate-@numar_contracte_useris>0) || current_user.role==1%>
-    <%= link_to "Creaza Model contract nou", new_contracte_path %>
-<%end%>
+
 
 <%if  @numar_contracte_useris>0%>
 <h2 class="main-title">Contracte de voluntariat</h2>
