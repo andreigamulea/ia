@@ -20,24 +20,25 @@
 
 #gdpr .semnatura {
     display: flex;
-    flex-direction: row; /* Menține direcția ca rând pentru layout-ul principal */
-    justify-content: space-between; /* Distribuie spațiu între elemente egal */
+    flex-direction: row; 
+    justify-content: space-between; 
     text-align: center;
     margin-top: 20px;
 }
 
 #gdpr .gazda, #gdpr .voluntar {
     display: flex;
-    flex-direction: column; /* Organizează conținutul într-o coloană pentru fiecare secțiune */
-    align-items: center; /* Centrează elementele pe axa transversală */
-    max-width: 300px;
-    width: 100%; /* Asigură că secțiunile se extind pe toată lățimea pe dispozitive mici */
-    margin-bottom: 20px;
+    flex-direction: column; 
+    align-items: center; 
+}
+.address{
+  display: flex;
+    flex-direction: column;
 }
 
 @media screen and (max-width: 600px) {
     #gdpr .semnatura {
-        flex-direction: column; /* Schimbă layout-ul în coloană pe dispozitive mici */
+        flex-direction: column; 
     }
 
     #gdpr .gazda, #gdpr .voluntar {
@@ -48,7 +49,6 @@
 #gdpr canvas {
     border: 1px solid #000;
     margin-top: 10px;
-    width: 100%; /* Ajustează canvas-ul la lățimea disponibilă */
 }
 
 #gdpr .register {
@@ -60,12 +60,12 @@
   
 
 
-<% content_for :title, "Traditia Ayurvedică - Jamadagni-Rishi | Ayush Cell Romania" %>
-<% content_for :description, "Descoperiți cunoasterea lui Jamadagni-Rishi, contributiile sale spirituale pentru o viață armonioasă!" %>
-<% content_for :keywords, "Tradiția Ayurvedică, Jamadagni-Rishi, Ayush Cell Romania, înțelepciune hindusă, vindecare tradițională, spiritualitate, cunoaștere, Ayurveda, înțelept, mitologie hindusă, rishi" %>
+<% content_for :title, "GDPR | Ayush Cell Romania" %>
+<% content_for :description, "Completează fisa GDPR" %>
+<% content_for :keywords, "fisa GDPR, GDPR Ayush Cell Romania" %>
 
 <% content_for :canonical do %>
-  <link rel="canonical" href="https://www.ayushcell.ro/jamadagni">
+  <link rel="canonical" href="https://www.ayushcell.ro/gdpr">
 <% end %>
 
 <div class="container" id="gdpr">
@@ -84,9 +84,9 @@
         <p style="margin-top:-10px;">Adresa: <%=@adresa_firma%></p>
 
         <h2 class="main-title">ACORD GDPR</h1>
-        <p>
-            Subsemnat(ul)/a <input type="text" name="nume" style="width: 200px;"> domiciliat în 
-            <input type="text" name="adresa" style="width: 400px;">, prin semnarea acestui act declar că sunt de acord cu prelucrarea datelor mele cu caracter personal înserate atât în cuprinsul Contractului de Voluntariat, cât și a anexelor sale, care se realizează în conformitate cu dispozițiile art. 6 alin (1) litera b) și c) din Regulamentul nr. 679/2016.
+        <p class="address">
+            Subsemnat(ul)/a <input type="text" name="nume" style="width: 100%; max-width:400px;"> domiciliat în 
+            <input type="text" name="adresa" style="width: auto">, prin semnarea acestui act declar că sunt de acord cu prelucrarea datelor mele cu caracter personal înserate atât în cuprinsul Contractului de Voluntariat, cât și a anexelor sale, care se realizează în conformitate cu dispozițiile art. 6 alin (1) litera b) și c) din Regulamentul nr. 679/2016.
         </p>
         <p>
             Prin semnarea prezentului act îmi dau acordul ca organizația gazdă să poată prelucra toate datele din contractul de voluntariat și anexele sale, în mod special: nume/prenume, adresa, CNP, telefon, e-mail, serie si nr BI sau CI, fotografie legitimație.
@@ -118,9 +118,9 @@
       <button type="button" onclick="clearSignature(2)", class="register", style="margin-top:-30px;">Șterge Semnătura</button>
       </div>
   </div>
-  <% if @show_submit_button %>
+        
      <input type="submit" value="Trimite Acord GDPR" class="register" style="border: 1px solid #4b0082; background-color: #4b0082;">
-     <% end %>      
+              
     </div>
 </section>
 </div>
