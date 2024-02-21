@@ -71,7 +71,7 @@
     </div>
     <div class="section">
     <h2>Art. 2. DURATA CONTRACTULUI</h2>
-    <p>2.1 Prezentul contract se încheie pe perioada 3 ani de zile, cu posibilitatea prelungirii sale pentru noi perioade stabilite de părți.</p>
+    <p>2.1 Prezentul contract se încheie pe perioada de <%=@durata_contract%> luni, cu posibilitatea prelungirii sale pentru noi perioade stabilite de părți.</p>
     <p>2.2 Activitățile de voluntariat care fac obiectul prezentului contract se desfășoară pe timp de zi. Programul, timpul şi perioada de desfăşurare a activității de voluntariat precum și responsabilitățile sunt stabilite prin fişa voluntarului, ataşată prezentului contract.</p>
 </div>
 
@@ -297,7 +297,9 @@
 
 
     </br></br></br>
-<%= form.submit "Salvează Contractul", class: "register", style: "border: 1px solid #4b0082; background-color: #4b0082;" %>
+    <% if @show_submit_button %>
+        <%= form.submit "Salvează Contractul", class: "register", style: "border: 1px solid #4b0082; background-color: #4b0082;" %>
+    <% end %>
 <% end %>
 
 </div>

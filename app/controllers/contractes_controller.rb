@@ -1,5 +1,6 @@
 class ContractesController < ApplicationController
-  before_action :set_contracte, only: %i[ show edit update destroy ]
+  before_action :set_contracte, only: %i[ show edit update destroy]
+  before_action :set_contract, only: %i[ cerere_voluntar1 gdpr1 semneaza_contract1 fisa_postului1]
   before_action :set_contracte_useri, only: %i[vizualizeaza_contract destroy_contracte_useri]
 
   # GET /contractes or /contractes.json
@@ -39,21 +40,51 @@ class ContractesController < ApplicationController
       @adresa_firma = @contract.sediu_firma
       @email_admin = @contract.email
       @nume_admin = @contract.reprezentant_firma
+      @show_submit_button = true
     else
       redirect_to voluntariat_path, alert: "Acces neautorizat."
     end  
   end   
-  def gdpr
+  def cerere_voluntar1
+    if params[:contract_id]
+      @contract = Contracte.find_by(id: params[:contract_id])
+      @gazda = @contract.nume_firma
+      @adresa_firma = @contract.sediu_firma
+      @email_admin = @contract.email
+      @nume_admin = @contract.reprezentant_firma
+      @show_submit_button = false
+    else
+      redirect_to voluntariat_path, alert: "Acces neautorizat."
+    end  
+    render 'contractes/cerere_voluntar'
+  end   
+  def gdpr #pentru voluntar sa-si vada gdpr-ul lui
     if session[:contract_id]
       @contract = Contracte.find_by(id: session[:contract_id])
       @gazda = @contract.nume_firma
       @adresa_firma = @contract.sediu_firma
       @email_admin = @contract.email
       @nume_admin = @contract.reprezentant_firma
+      @show_submit_button = true
     else
       redirect_to voluntariat_path, alert: "Acces neautorizat."
     end  
 
+  end
+  def gdpr1  #pentru contractori sa vada orice gdpr al oricarui voluntar
+    puts("aaaaaaaaaaaaaaaaa")
+    puts("Contractul id este: #{params[:contract_id]}")
+    if params[:contract_id]
+      @contract = Contracte.find_by(id: params[:contract_id])
+      @gazda = @contract.nume_firma
+      @adresa_firma = @contract.sediu_firma
+      @email_admin = @contract.email
+      @nume_admin = @contract.reprezentant_firma
+      @show_submit_button = false
+    else
+      redirect_to voluntariat_path, alert: "Acces neautorizat."
+    end  
+    render 'contractes/gdpr'
   end
   def fisa_postului
     if session[:contract_id]
@@ -67,7 +98,19 @@ class ContractesController < ApplicationController
       redirect_to voluntariat_path, alert: "Acces neautorizat."
     end  
   end    
-  
+  def fisa_postului1
+    if params[:contract_id]
+      @contract = Contracte.find_by(id: params[:contract_id])
+      @gazda = @contract.nume_firma
+      @adresa_firma = @contract.sediu_firma
+      @sarcini = @contract.sarcini_voluntar.split(';').map(&:strip) #atentie sarcinile trebuiesc obligatoriu separate prin ; in tabela postges
+
+      
+    else
+      redirect_to voluntariat_path, alert: "Acces neautorizat."
+    end  
+    render 'contractes/fisa_postului'
+  end    
   def preluare_emailuri_din_text # aceasta metoda va fi adaptata. Contractorii vor pune in formular mailurile care vor semna contracte
     text = params[:text] || "Emailul meu este: luminita.trapcea@gmail.com olga@magicon.co.uk, braferdes@gmail.com;  "
     potential_email_regex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/
@@ -116,6 +159,20 @@ class ContractesController < ApplicationController
     @calitate_reprezentant=@contract.calitate_reprezentant
     @semnatura_admin = @contract.semnatura_admin if @contract
     @contracte_useri = ContracteUseri.new
+    @show_submit_button = true
+  end  
+  def semneaza_contract1
+    
+    @nume_firma=@contract.nume_firma
+    @sediu_firma=@contract.sediu_firma
+    @cui_firma=@contract.cui_firma
+    @reprezentant_firma=@contract.reprezentant_firma    
+    @calitate_reprezentant=@contract.calitate_reprezentant
+    @semnatura_admin = @contract.semnatura_admin if @contract
+    @durata_contract = @contract.valabilitate_luni
+    @contracte_useri = ContracteUseri.new
+    @show_submit_button = false
+    render 'contractes/semneaza_contract'
   end  
   def contracte_all
     @prods = Prod.where(curslegatura: 'documente', status: 'activ')
@@ -376,6 +433,11 @@ end
     # Use callbacks to share common setup or constraints between actions.
     def set_contracte
       @contracte = Contracte.find(params[:id])
+      
+    end
+    def set_contract
+     
+      @contract = Contracte.find(params[:contract_id])
     end
     def set_contracte_useri
       @contracte_useri = ContracteUseri.find(params[:id])

@@ -100,8 +100,8 @@
 <h6>D2: ACORD GDPR</h6>
 <h6>D3: CONTRACT VOLUNTARIAT</h6>
 <h6>D4: FISA POSTULUI - anexă la contractul de voluntariat</h6>
-<h6>D5: FISA SSM DE INSTRUIRE INDIVIDUALĂ PRIVIND SECURITATEA ȘI SĂNĂTATEA ÎN MUNCĂ</h6>
-<h6>D6: FISA ISU DE INSTRUCTAJ ÎN DOMENIUL SITUAȚIILOR DE URGENȚĂ</h6>
+<h6>D5: FISA SSM DE INSTRUIRE INDIVIDUALĂ PRIVIND SECURITATEA ȘI SĂNĂTATEA ÎN MUNCĂ <%= link_to "Descarca PDF", "pdf/voluntariat/Fisa SSM.pdf", download: '' %></h6>
+<h6>D6: FISA ISU DE INSTRUCTAJ ÎN DOMENIUL SITUAȚIILOR DE URGENȚĂ <%= link_to "Descarca PDF", "pdf/voluntariat/Fisa ISU.pdf", download: '' %></h6>
 
 
 <h2 class="main-title">Modele Contracte de voluntariat</h2>
@@ -119,9 +119,7 @@
             <th>D1</th>
             <th>D2</th>
             <th>D3</th>
-            <th>D4</th>
-            <th>D5</th>
-            <th>D6</th>
+            <th>D4</th>           
             <th>Acțiuni</th>
         </tr>
     </thead>
@@ -132,12 +130,14 @@
                 
                 <td><%= c.denumire %></td>
                 <td><%= c.cod_contract %></td>
-                <td><%= c.cod_contract %></td>
-                <td><%= c.cod_contract %></td>
-                <td><%= c.cod_contract %></td>
-                <td><%= c.cod_contract %></td>
-                <td><%= c.cod_contract %></td>
-                <td><%= c.cod_contract %></td>
+                <td><%= link_to "Vezi documentul", cerere_voluntar1_path(contract_id: c.id) %></br>
+                                <%= link_to "Descarcă PDF",  class: "btn btn-primary", download: '' %></td>
+                <td><%= link_to "Vezi documentul", gdpr1_path(contract_id: c.id) %></br>
+                                <%= link_to "Descarcă PDF",  class: "btn btn-primary", download: '' %></td>
+                <td><%= link_to "Vezi documentul", contract_voluntar1_path(contract_id: c.id) %></br>
+                                <%= link_to "Descarcă PDF",  class: "btn btn-primary", download: '' %></td>
+                <td><%= link_to "Vezi documentul", fisa_postului1_path(contract_id: c.id) %></br>
+                                <%= link_to "Descarcă PDF",  class: "btn btn-primary", download: '' %></td>
                 
                 <td style="display: flex; flex-direction: column; align-items: center;">
                     <%= link_to 'Vezi', c %>
