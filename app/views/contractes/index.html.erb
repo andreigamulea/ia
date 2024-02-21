@@ -94,7 +94,7 @@
 
 
 
-<%if @nr_contractes>0%>
+<%if @nr_contractes>0 || current_user.role==1%>
 <h3>Legenda:</h3>
 <h6>D1: CERERE ÎNSCRIERE VOLUNTAR</h6>
 <h6>D2: ACORD GDPR</h6>
