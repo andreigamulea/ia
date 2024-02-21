@@ -150,9 +150,9 @@ E-mail: <input type="email" name="email" class="form-input" placeholder="introdu
   </div>
 </div>
 
-
-<input type="submit" value="Trimite Cererea" class="register">
-
+<% if @show_submit_button %>
+    <input type="submit" value="Trimite Cererea" class="register">
+<% end %>
 </form>
 
 </div>

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'nutritie4/index'
   
   get 'contract/contract_voluntar', to: 'contractes#semneaza_contract', as: 'contract_voluntar'
+  get 'contract/contract_voluntar1', to: 'contractes#semneaza_contract1', as: 'contract_voluntar1'
 
   post '/contractes', to: 'contractes#create', as: 'contractes_create' # Aici, 'contractes_create' este numele rutei
   #get 'contractes/vizualizeaza/:id', to: 'contractes#vizualizeaza_contract', as: 'contracte_vizualizeaza'
@@ -29,8 +30,11 @@ Rails.application.routes.draw do
   get '/voluntariat', to: 'contractes#voluntariat', as: 'voluntariat'
   get '/voluntar', to: 'contractes#voluntar', as: 'voluntar' 
   get '/cerere_voluntar', to: 'contractes#cerere_voluntar', as: 'cerere_voluntar'
-  get '/gdpr', to: 'contractes#gdpr', as: 'gdpr'
+  get '/cerere_voluntar1', to: 'contractes#cerere_voluntar1', as: 'cerere_voluntar1'
+  get '/gdpr', to: 'contractes#gdpr', as: 'gdpr' #pentru voluntari
+  get '/gdpr1', to: 'contractes#gdpr1', as: 'gdpr1' #pentru contractori
   get '/fisa_postului', to: 'contractes#fisa_postului', as: 'fisa_postului'
+  get '/fisa_postului1', to: 'contractes#fisa_postului1', as: 'fisa_postului1'
 
   delete 'contractes/:id/destroy_contracte_useri', to: 'contractes#destroy_contracte_useri', as: 'destroy_contracte_useri'
   post 'verifica_cod', to: 'contractes#verifica_cod'
