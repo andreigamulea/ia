@@ -150,61 +150,59 @@ class ContractesController < ApplicationController
   
 
   # GET /contractes/1 or /contractes/1.json
-  def show    
-    @nume_firma = @contract&.nume_firma
-    @email_firma = @contract&.email
-    @tip_contract = @contract&.tip
-    @denumire_contract = @contract&.denumire
-    @serie_contract = @contract&.cod_contract
-    @start_contract = @contract&.contor_start   
-    @sediu_firma = @contract&.sediu_firma
-    @cui_firma = @contract&.cui_firma
-    @cont_bancar = @contract&.cont_bancar
-    @banca_firma = @contract&.banca_firma
-    @reprezentant_firma = @contract&.reprezentant_firma    
-    @calitate_reprezentant = @contract&.calitate_reprezentant    
-
-    @denumire_post_voluntar = @contract&.denumire_post
-    @coordonator_voluntar = @contract&.subordonare
-    @locul_desfasurarii_activitatii_voluntar = @contract&.locul_desfasurarii
-    @departament = @contract&.departament
-    @relatii_functionale_voluntar = @contract&.relatii_functionale 
-    @sarcini_voluntar = @contract&.sarcini_voluntar
-    @valabilitate_luni = @contract&.valabilitate_luni
-
+  def show
+    @nume_firma = @contracte&.nume_firma
+    @email_firma = @contracte&.email
+    @tip_contract = @contracte&.tip
+    @denumire_contract = @contracte&.denumire
+    @serie_contract = @contracte&.cod_contract
+    @start_contract = @contracte&.contor_start   
+    @sediu_firma = @contracte&.sediu_firma
+    @cui_firma = @contracte&.cui_firma
+    @cont_bancar = @contracte&.cont_bancar
+    @banca_firma = @contracte&.banca_firma
+    @reprezentant_firma = @contracte&.reprezentant_firma    
+    @calitate_reprezentant = @contracte&.calitate_reprezentant    
+  
+    @denumire_post_voluntar = @contracte&.denumire_post
+    @coordonator_voluntar = @contracte&.subordonare
+    @locul_desfasurarii_activitatii_voluntar = @contracte&.locul_desfasurarii
+    @departament = @contracte&.departament
+    @relatii_functionale_voluntar = @contracte&.relatii_functionale 
+    @sarcini_voluntar = @contracte&.sarcini_voluntar
+    @valabilitate_luni = @contracte&.valabilitate_luni
   end
+  
 
   # GET /contractes/new
   def new
     @contracte = Contracte.new
-    #@contracte_useri = ContracteUseri.new
   end
 
   # GET /contractes/1/edit
   def edit
-   
-    @nume_firma = @contract&.nume_firma
-    @email_firma = @contract&.email
-    @tip_contract = @contract&.tip
-    @denumire_contract = @contract&.denumire
-    @serie_contract = @contract&.cod_contract
-    @start_contract = @contract&.contor_start   
-    @sediu_firma = @contract&.sediu_firma
-    @cui_firma = @contract&.cui_firma
-    @cont_bancar = @contract&.cont_bancar
-    @banca_firma = @contract&.banca_firma
-    @reprezentant_firma = @contract&.reprezentant_firma    
-    @calitate_reprezentant = @contract&.calitate_reprezentant    
-
-    @denumire_post_voluntar = @contract&.denumire_post
-    @coordonator_voluntar = @contract&.subordonare
-    @locul_desfasurarii_activitatii_voluntar = @contract&.locul_desfasurarii
-    @departament = @contract&.departament
-    @relatii_functionale_voluntar = @contract&.relatii_functionale 
-    @sarcini_voluntar = @contract&.sarcini_voluntar
-    @valabilitate_luni = @contract&.valabilitate_luni
-
+    @nume_firma = @contracte&.nume_firma
+    @email_firma = @contracte&.email
+    @tip_contract = @contracte&.tip
+    @denumire_contract = @contracte&.denumire
+    @serie_contract = @contracte&.cod_contract
+    @start_contract = @contracte&.contor_start   
+    @sediu_firma = @contracte&.sediu_firma
+    @cui_firma = @contracte&.cui_firma
+    @cont_bancar = @contracte&.cont_bancar
+    @banca_firma = @contracte&.banca_firma
+    @reprezentant_firma = @contracte&.reprezentant_firma    
+    @calitate_reprezentant = @contracte&.calitate_reprezentant    
+  
+    @denumire_post_voluntar = @contracte&.denumire_post
+    @coordonator_voluntar = @contracte&.subordonare
+    @locul_desfasurarii_activitatii_voluntar = @contracte&.locul_desfasurarii
+    @departament = @contracte&.departament
+    @relatii_functionale_voluntar = @contracte&.relatii_functionale 
+    @sarcini_voluntar = @contracte&.sarcini_voluntar
+    @valabilitate_luni = @contracte&.valabilitate_luni
   end
+  
 
   # POST /contractes or /contractes.json
   def create
@@ -377,7 +375,7 @@ end
     
     # Use callbacks to share common setup or constraints between actions.
     def set_contracte
-      @contract = Contracte.find(params[:id])
+      @contracte = Contracte.find(params[:id])
     end
     def set_contracte_useri
       @contracte_useri = ContracteUseri.find(params[:id])

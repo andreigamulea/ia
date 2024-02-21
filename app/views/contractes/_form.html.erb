@@ -13,6 +13,7 @@
     font-size: 24px;
     text-align: center;
     margin-bottom: 0;
+    margin-top: 10px;
 }
 
 #cvn .cr .section-title {
@@ -46,10 +47,10 @@
 
 #cvn .cr .input-group textarea {
     resize: vertical;
+    min-height:150px;
 }
 
 #cvn .cr .section {
-    border-top: 1px solid #eee;
     padding-top: 20px;
 }
 
@@ -71,6 +72,9 @@
     #cvn .cr {
         padding-left: 20px;
         padding-right: 20px;
+    }
+    #cvn form{
+      width: -webkit-fill-available;
     }
 }
 @media screen and (max-width: 520px) {
@@ -128,6 +132,7 @@
 
   <div class="spanview">
   <h2>Introdu datele:</h2>
+  <div style="border-top: 1px solid #eee; width:61.8%; margin:auto;"></div>
   <div class="section">
   <p class="section-title"><strong>Date Asociație:</strong></p>
   <%= form.hidden_field :user_id, value: current_user.id %>
@@ -219,28 +224,40 @@
     <%= form.text_field :relatii_functionale, id: 'contracte_relatii_functionale', placeholder: 'Roluri sau persoane în relație directă', class: 'input-class-name' %>
   </div>
 
-  <div class="input-group">
-    <%= form.label :sarcini_voluntar, 'Sarcini voluntar:' %>
-    <%= form.text_area :sarcini_voluntar, rows: 3, id: 'contracte_sarcini_voluntar', placeholder: 'Descrieți sarcinile principale ale voluntarului, folosind punct și virgulă (;) pentru separare', class: 'input-class-name' %>
+  <div class="input-group" style="display:flex; flex-direction:row;">
+    <%= form.label :sarcini_voluntar, 'Sarcini voluntar:' , style: 'width: -webkit-fill-available;'%>
+    <%= form.text_area :sarcini_voluntar, rows: 3, id: 'contracte_sarcini_voluntar', placeholder: 'Descrieți sarcinile principale ale voluntarului, folosind punct și virgulă (;) pentru separare. Exemplu: Scriere articole; Organizare evenimente; Colectare fonduri;', class: 'input-class-name', class: 'input-class-name', style: 'width: -webkit-fill-available;' %>
   </div>
 
-  <div class="input-group">
-    <%= form.label :valabilitate_luni, 'Valabilitate pachet (luni):' %>
-    <%= form.number_field :valabilitate_luni, id: 'contracte_valabilitate_luni', placeholder: 'Durata în luni a valabilității', class: 'input-class-name' %>
+  <div class="input-group" >
+  <%= form.label :valabilitate_luni, 'Valabilitate pachet (luni):' %>
+  <%= form.number_field :valabilitate_luni, id: 'contracte_valabilitate_luni', placeholder: 'Durata în luni a valabilității', style: 'max-width: 300px;' %>
+  
   </div>
-</div>
 
 
-</div>
 
-
-<div>
-        
+<div style="display:flex; flex-direction:column;width: fit-content;text-align:center; margin: 0 auto;">
+        <label for="signature-pad" style="font-weight: bold;margin-top: 20px;">Semnează aici:</label>
         <canvas id="signature-pad" width="300" height="150" style="border: 1px solid #000;"></canvas>
-      <button type="button" onclick="clearSignature()">Șterge Semnătura</button>
-      <%= form.hidden_field :semnatura_admin, id: "semnatura_admin" %>
-          <%= form.submit %>
-    </div>
+        <button type="button" onclick="clearSignature()" class="register" style="margin-top: 20px; margin-bottom: 30px; background-color: hsla(180,51.4%,51.6%,1); border:1px solid hsla(180,51.4%,51.6%,1); padding: 7px 40px;">Șterge Semnătura</button>
+
+        <%= form.hidden_field :semnatura_admin, id: "semnatura_admin" %><%= form.submit 'Salveaza modelul de contract', class: 'register', style: 'margin-top: 20px;' %>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
 
 <% end %>
 
