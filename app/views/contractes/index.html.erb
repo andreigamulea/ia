@@ -131,13 +131,13 @@
                 <td><%= c.denumire %></td>
                 <td><%= c.cod_contract %></td>
                 <td><%= link_to "Vezi documentul", cerere_voluntar1_path(contract_id: c.id) %></br>
-                                <%= link_to "Descarcă PDF",  class: "btn btn-primary", download: '' %></td>
+                                </td>
                 <td><%= link_to "Vezi documentul", gdpr1_path(contract_id: c.id) %></br>
-                                <%= link_to "Descarcă PDF",  class: "btn btn-primary", download: '' %></td>
+                                </td>
                 <td><%= link_to "Vezi documentul", contract_voluntar1_path(contract_id: c.id) %></br>
-                                <%= link_to "Descarcă PDF",  class: "btn btn-primary", download: '' %></td>
+                                </td>
                 <td><%= link_to "Vezi documentul", fisa_postului1_path(contract_id: c.id) %></br>
-                                <%= link_to "Descarcă PDF",  class: "btn btn-primary", download: '' %></td>
+                                </td>
                 
                 <td style="display: flex; flex-direction: column; align-items: center;">
                     <%= link_to 'Vezi', c %>
