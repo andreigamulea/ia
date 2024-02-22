@@ -1,27 +1,108 @@
 
+<style>
+#fisa-post .semnatura {
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-between; 
+  text-align: center;
+  margin-top: 20px;
+}
+#fisa-post h3{
+font-size: 22px;
+font-weight: 700;
+color: black;
+margin-bottom: 20px;
+text-align: left;
+padding: 5px 0px;
+}
+#fisa-post .gazda, #fisa-post .voluntar {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+}
+.address{
+display: flex;
+  flex-direction: column;
+}
+
+#fisa-post form {
+    width: 100%;
+}
+
+#fisa-post input[type="text"], #gdpr input[type="email"] {
+    padding: 6px 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+
+#fisa-post input[type="submit"] {
+    display: block;
+    margin: 20px auto;
+    border: 1px solid #4b0082;
+    background-color: #4b0082;
+    color: white;
+    cursor: pointer;
+}
+@media screen and (max-width: 600px) {
+  #fisa-post .semnatura {
+      flex-direction: column; 
+  }
+
+  #fisa-post .gazda, #fisa-post .voluntar {
+      max-width: none;
+  }
+}
+
+#fisa-post canvas {
+  border: 1px solid #000;
+  margin-top: 10px;
+}
+
+#fisa-post .register {
+  margin-top: 20px;
+}
+</style>
+
+<% content_for :title, "Fișa postului | Ayush Cell Romania" %>
+<% content_for :description, "Completează fisa postului" %>
+<% content_for :keywords, "fisa postului, Fisa postului Ayush Cell Romania" %>
+
+<% content_for :canonical do %>
+  <link rel="canonical" href="https://www.ayushcell.ro/fisa_postului">
+<% end %>
+
+<div class="container" id="fisa-post">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: white; ">
+    <h1 class="first-tittle">Fișa postului I Ayush Cell Romania</h1>
+    <h2 class="main-title" >Completează Fisa Postului</h2>
+
+<section>
     <div>
-        <h2>Organizație Gazdă:</h2>
-        <p><%=@nume_firma%></p>
-        <p><%=@sediu_firma%></p>
+        <h3>Organizație Gazdă:</h3>
+        <p style="margin-top:-10px;"><%=@nume_firma%></p>
+        <p style="margin-top:-10px;"><%=@sediu_firma%></p>
 
-        <h1>FIȘA POSTULUI</h1>
-        <p>anexă la contractul de voluntariat</p>
+        <h2 class="main-title" style="text-align:center;">Fișa postului</h2>
+        <p style="margin-top:-30px;text-align:center;">anexă la contractul de voluntariat</p>
 
-        <h2>Denumire post: <%=@denumire_contract%></h2>
+
+        <h3>Denumire post: <%=@denumire_contract%></h3>
         <p>Nume și prenume voluntar: <input type="text" name="nume_voluntar" style="width: 300px;"></p>
-        <p>Locul desfășurării activității de voluntariat: <%=@locul_desfasurarii_activitatii_voluntar%></p>
-        <p>Departament: <%=@departament%></p>
-        <p>Subordonare: coordonator <%=@coordonator_voluntar%></p>
-        <p>Relații funcționale: <%=@relatii_functionale_voluntar%></p>
+        <p style="margin-top:-10px;">Locul desfășurării activității de voluntariat: <%=@locul_desfasurarii_activitatii_voluntar%></p>
+        <p style="margin-top:-10px;">Departament: <%=@departament%></p>
+        <p style="margin-top:-10px;">Subordonare: coordonator <%=@coordonator_voluntar%></p>
+        <p style="margin-top:-10px;">Relații funcționale: <%=@relatii_functionale_voluntar%></p>
         <h3>Cerințe specifice postului:</h3>
-        <ul>
+        <ul style="margin-top:-20px;">
             <li>disciplină, seriozitate, responsabilitate și atenție.</li>
         </ul>
         <h3>Scopul postului:</h3>
         <p>realizarea de activități în conformitate cu valorile promovate de asociație</p>
         <div>
         <h3>Sarcini și îndatoriri specifice:</h3> <!-- sarcinile trebuie puse in tabel despartite de ; -->
-        <ul>
+        <ul style="margin-top:-20px;">
         <% @sarcini.each do |sarcina| %>
           <div>
             <li><%= sarcina %></li>
@@ -30,7 +111,7 @@
         </ul>
 
         <h3>Protecția datelor cu caracter personal</h3>
-        <ul>
+        <ul style="margin-top:-20px;">
             <li>Informează în mod corect și complet cu privire la scopurile pentru care vor fi prelucrate datele personale.</li>
             <li>Informează în mod corect și complet cu privire la tipul de date personale care vor fi prelucrate.</li>
             <li>Informează în mod corect și complet cu privire la durata prelucrării datelor (perioada de stocare a datelor).</li>
@@ -41,7 +122,7 @@
         </ul>
 
         <h3>Responsabilități ale postului:</h3>
-        <ul>
+        <ul style="margin-top:-20px;">
             <li>Răspunde pentru neîndeplinirea sau îndeplinirea necorespunzătoare a atribuțiilor ce-i revin.</li>
             <li>Răspunde pentru eventualele prejudicii produse ca efect al activității sale.</li>
             <li>Răspunde de păstrarea confidențialității informațiilor.</li>
@@ -51,7 +132,7 @@
         </ul>
 
         <h3>Autoritatea postului:</h3>
-        <ul>
+        <ul style="margin-top:-20px;">
             <li>În cadrul domeniului de activitate pe care o desfășoară, conform atribuțiilor, sarcinilor, Regulamentului Intern și deciziilor organizației gazdă.</li>
             <li>Informeză  și se consultă cu coordonatorul de voluntari în cazul situațiilor deosebite sau a celor care pot depăși sfera competențelor sale de rezolvare.</li>
         </ul>
@@ -63,7 +144,7 @@
         <p>Se asigură, la cerere, de către organizația gazdă, hrană rece; decontarea cheltuielilor de transport efectuate în scopul desfășurării activităților organizației gazdă.</p>
 
         <h3>Sancțiuni:</h3>
-        <ul>
+        <ul style="margin-top:-20px;">
             <li>Nerespectarea responsabilităților și atribuțiilor postului, a cerințelor de etică, se sancționează conform Regulamentului de ordine interioară.</li>
             <li>Dacă este cazul, răspunde potrivit dispozițiilor legale în vigoare, putând fi obligat și plata de daune în raport cu prejudiciile aduse.</li>
         </ul>
@@ -85,118 +166,24 @@
             <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available; padding-left:5px;">
             <% if @show_submit_button %>
                 <%#= @contracte_useri.nume_voluntar %>
-                ...............
+                Aioanei Constantin
             <%else%>    
 
-              ...............
+           
             <%end%>    
             </span>
             </p>
             <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
             <button type="button" onclick="clearSignature(2)", class="register">Șterge Semnătura</button>
         </div>
-      
-    
+       
         </div>
-        
-        <style>
-    
-        .contract-section {
-            box-sizing: border-box;
-        }
-        
-        
-        .organization-info, .contract-intro {
-            margin-bottom: 15px;
-        }
-        
-        .form-label {
-            display: inline-block; /* Aliniere în linie cu inputurile */
-            margin-right: 5px; /* Spațiere între etichetă și input */
-            vertical-align: middle; /* Centrare verticală în raport cu inputurile */
-        }
-        
-        .form-input {
-            width: auto; /* Lățime ajustată pentru a permite două inputuri pe rând */
-            padding: 8px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-            display: inline-block; /* Afișare în linie pentru aliniere cu etichetele */
-            min-width: 290px;
-          }
-        
-        @media screen and (max-width: 600px) {
-            .form-input, .form-label {
-                width: 100%; /* Lățime completă pe ecrane mici pentru o mai bună vizibilitate */
-                display: block; /* Afișare pe rânduri separate pe ecrane mici */
-                margin-right: 0;
-            }
-        }
-        
-        #cvp1 h1{
-            font-size:25px; 
-            margin:0 auto; 
-            padding:25px 10px;
-            width: max-content;
-        }
-        #cvp1 h2, #cvp1 h3{
-            font-size: 18px;
-        }
-        #cvp1 .form-label {
-            margin-bottom: 0;
-        }
-        #cvp1 button{
-            border: 1px solid #4b0082; 
-            background-color: #4b0082;
-        }
-        .semnatura {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            text-align:center;
-        }
-    
-        .gazda, .voluntar {
-            max-width: 300px;
-            flex: 1; /* Permite ca div-urile să se ajusteze în funcție de spațiul disponibil */
-        }
-    
-        .gazda canvas, .voluntar canvas {
-            border: 1px solid #000;
-            
-        }
-    
-        button {
-            display: block;
-            margin-top: 10px;
-        }
-        .cr{
-            word-wrap: break-word;
-        }
-    
-        /* Media query pentru ecrane cu lățime mai mică de 720px */
-        @media (max-width: 925px) {
-            .gazda, .voluntar {
-                max-width: none;
-                flex-basis: 100%;
-            }
-            .voluntar {
-                margin-top: 20px;
-            }
-        }
-    
-        /* Media query pentru ecrane foarte înguste */
-        @media (max-width: 300px) {
-            .gazda, .voluntar {
-                padding: 0;
-                margin: 0;
-            }
-    
-            .gazda canvas, .voluntar canvas {
-                max-height: 150px; /* Reduce înălțimea canvas-ului pentru ecrane mici */
-            }
-        }
-    </style>
+        <% if @show_submit_button %>
+        <input type="submit" value="Trimite Fisa postului" class="register" style="border: 1px solid #4b0082; background-color: #4b0082; display: flex;">  
+        <%end%> 
+        </section>
+        </div>
+        </div>
     
     <script>
     document.addEventListener("turbo:load", function() {
