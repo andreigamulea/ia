@@ -87,25 +87,69 @@ class ContractesController < ApplicationController
     render 'contractes/gdpr'
   end
   def fisa_postului
+    puts("da1")
     if session[:contract_id]
-      @contract = Contracte.find_by(id: session[:contract_id])
-      @gazda = @contract.nume_firma
-      @adresa_firma = @contract.sediu_firma
-      @sarcini = @contract.sarcini_voluntar.split(';').map(&:strip) #atentie sarcinile trebuiesc obligatoriu separate prin ; in tabela postges
-
+      puts("da2")
+      @contracte = Contracte.find_by(id: session[:contract_id])
       
+       #atentie sarcinile trebuiesc obligatoriu separate prin ; in tabela postges
+#####
+    @nume_firma = @contracte&.nume_firma
+    @email_firma = @contracte&.email
+    @tip_contract = @contracte&.tip
+    @denumire_contract = @contracte&.denumire
+    @serie_contract = @contracte&.cod_contract
+    @start_contract = @contracte&.contor_start   
+    @sediu_firma = @contracte&.sediu_firma
+    @cui_firma = @contracte&.cui_firma
+    @cont_bancar = @contracte&.cont_bancar
+    @banca_firma = @contracte&.banca_firma
+    @reprezentant_firma = @contracte&.reprezentant_firma    
+    @calitate_reprezentant = @contracte&.calitate_reprezentant    
+    @semnatura_admin = @contracte.semnatura_admin if @contracte
+    @denumire_post_voluntar = @contracte&.denumire_post
+    @coordonator_voluntar = @contracte&.subordonare
+    @locul_desfasurarii_activitatii_voluntar = @contracte&.locul_desfasurarii
+    @departament = @contracte&.departament
+    @relatii_functionale_voluntar = @contracte&.relatii_functionale 
+    #puts("Sarcinile: #{@contracte.sarcini_voluntar}")
+    @sarcini = @contracte.sarcini_voluntar.split(';').map(&:strip)
+    #@sarcini=[s1,s2]
+    @valabilitate_luni = @contracte&.valabilitate_luni
+    @show_submit_button = true
     else
       redirect_to voluntariat_path, alert: "Acces neautorizat."
     end  
+    
   end    
   def fisa_postului1
     if params[:contract_id]
-      @contract = Contracte.find_by(id: params[:contract_id])
-      @gazda = @contract.nume_firma
-      @adresa_firma = @contract.sediu_firma
-      @sarcini = @contract.sarcini_voluntar.split(';').map(&:strip) #atentie sarcinile trebuiesc obligatoriu separate prin ; in tabela postges
-
+      @contracte = Contracte.find_by(id: params[:contract_id])
       
+       #atentie sarcinile trebuiesc obligatoriu separate prin ; in tabela postges
+#####
+    @nume_firma = @contracte&.nume_firma
+    @email_firma = @contracte&.email
+    @tip_contract = @contracte&.tip
+    @denumire_contract = @contracte&.denumire
+    @serie_contract = @contracte&.cod_contract
+    @start_contract = @contracte&.contor_start   
+    @sediu_firma = @contracte&.sediu_firma
+    @cui_firma = @contracte&.cui_firma
+    @cont_bancar = @contracte&.cont_bancar
+    @banca_firma = @contracte&.banca_firma
+    @reprezentant_firma = @contracte&.reprezentant_firma    
+    @calitate_reprezentant = @contracte&.calitate_reprezentant    
+    @semnatura_admin = @contracte.semnatura_admin if @contracte
+    @denumire_post_voluntar = @contracte&.denumire_post
+    @coordonator_voluntar = @contracte&.subordonare
+    @locul_desfasurarii_activitatii_voluntar = @contracte&.locul_desfasurarii
+    @departament = @contracte&.departament
+    @relatii_functionale_voluntar = @contracte&.relatii_functionale 
+    
+    @sarcini = @contracte.sarcini_voluntar.split(';').map(&:strip)
+    @valabilitate_luni = @contracte&.valabilitate_luni
+    @show_submit_button = false
     else
       redirect_to voluntariat_path, alert: "Acces neautorizat."
     end  
