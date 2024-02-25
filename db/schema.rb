@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_07_223529) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_25_151148) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -220,6 +220,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_223529) do
     t.integer "contor_start"
     t.integer "valabilitate_luni"
     t.text "sarcini_voluntar"
+    t.text "responsabilitati_voluntar"
+    t.text "conditii_lucru"
   end
 
   create_table "cursuri_history", force: :cascade do |t|
@@ -371,6 +373,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_07_223529) do
     t.string "nume"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "newsletters", force: :cascade do |t|
+    t.string "nume"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "validat"
   end
 
   create_table "paginisites", force: :cascade do |t|

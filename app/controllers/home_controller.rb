@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:newsletter]
   before_action :set_user_admin, only: %i[panouadmin cazuriparticulare userip user77 listavegetalegratis]
   def index
     #render layout: false
@@ -42,8 +43,17 @@ class HomeController < ApplicationController
 
 
   def newsletter
-    
+    Rails.logger.debug "Params: #{params.inspect}"
+  
+    newsletter = Newsletter.new(newsletter_params)
+    if newsletter.save
+      render json: { message: "Înscriere reușită!" }, status: :created
+    else
+      render json: { errors: newsletter.errors.full_messages }, status: :unprocessable_entity
+    end
   end
+  
+
  
   def rasayana
     @has_access = current_user&.role == 1
@@ -320,4 +330,10 @@ end
       return
     end
   end
+  def newsletter_params
+    params.require(:newsletter).permit(:nume, :email, :validat)
+  end
+  
+  
+  
 end

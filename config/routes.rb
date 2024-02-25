@@ -1,4 +1,9 @@
 Rails.application.routes.draw do    
+  post '/newsletter', to: 'home#newsletter'
+
+
+
+
   get 'vajikarana/modul1', to: 'vajikarana#modul1', as: 'vajikarana_modul1'
 
 
