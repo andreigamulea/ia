@@ -42,7 +42,7 @@ class HomeController < ApplicationController
   end  
 
 
-  def newsletter
+  def newsletter #este o metoda de tip POST
     Rails.logger.debug "Params: #{params.inspect}"
   
     newsletter = Newsletter.new(newsletter_params)
@@ -53,7 +53,9 @@ class HomeController < ApplicationController
     end
   end
   
-
+  def lista_newsletter #afiseaza pe cei inscrisi
+    @lista = Newsletter.all
+  end  
  
   def rasayana
     @has_access = current_user&.role == 1
