@@ -161,13 +161,29 @@ document.addEventListener("turbo:load", function() {
       }
     }).then(data => {
       console.log(data.message); // Loghează mesajul de succes din răspuns
-      // Aici poți adăuga cod pentru a afișa mesajul de succes în UI
+
+      // Verifică dacă mesajul de mulțumire există deja pentru a evita duplicarea
+      if (!document.getElementById('thank-you-message')) {
+          // Creează și afișează mesajul de mulțumire
+          var thankYouMessage = document.createElement('div');
+          thankYouMessage.id = 'thank-you-message';
+          thankYouMessage.innerHTML = '<p style="max-width:920px; margin: auto; margin-bottom: 10px; margin-top: -10px;font-size: 17px; line-height: 1.3;">Mulțumim pentru înscriere! Te-ai abonat cu succes!</p>';
+          thankYouMessage.style.textAlign = 'center';
+          thankYouMessage.style.fontSize = '1.2rem';
+          thankYouMessage.style.color = '#64025e';
+          thankYouMessage.style.marginTop = '20px';
+
+          var newsElement = document.querySelector('.news');
+          // Adaugă mesajul de mulțumire imediat după elementul `.news`
+          newsElement.insertAdjacentElement('afterend', thankYouMessage);
+      }
     }).catch(error => {
       console.error('Eroare:', error);
       // Aici poți adăuga cod pentru a afișa erorile în UI
     });
   };
 });
+
 </script>
 
 
