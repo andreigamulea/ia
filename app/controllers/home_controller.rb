@@ -54,7 +54,11 @@ class HomeController < ApplicationController
   end
   
   def lista_newsletter #afiseaza pe cei inscrisi
-    @lista = Newsletter.all
+    if current_user && current_user.role==1
+      @lista = Newsletter.all
+    else
+      redirect_to root_path
+    end  
   end  
  
   def rasayana
