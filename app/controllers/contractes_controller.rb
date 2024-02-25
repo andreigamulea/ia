@@ -274,7 +274,7 @@ class ContractesController < ApplicationController
         adresa << "Bloc #{@contracte_useri.bloc_voluntar}" if @contracte_useri.bloc_voluntar.present?
         adresa << @contracte_useri.judet_voluntar
         @domiciliu = adresa.compact.join(", ")
-        @semnatura_voluntar = @contracte_useri.semnatura2
+        #@semnatura_voluntar = @contracte_useri.semnatura2
       else
         # Aici poți trata cazul în care nu există un contracte_useri asociat
         # De exemplu, poți redirecționa utilizatorul cu un mesaj de eroare
