@@ -110,7 +110,7 @@ color:black
 }  
 footer {
     background-color: #6B1463;
-    padding: 20px;
+    padding: 10px 20px;
     color: #ffffff;
     font-size: 16px;
   }
@@ -128,9 +128,10 @@ footer {
   
   .footer-row2 .footer-column {
     box-sizing: border-box;
-    width: calc(33.33% - 20px);  /* scădem marjele stânga și dreapta de 10px fiecare */
+    width: calc(25% - 20px);  /* scădem marjele stânga și dreapta de 10px fiecare */
     margin: 10px;
     padding: 10px;
+    padding-top: 0;
   }
   
   
