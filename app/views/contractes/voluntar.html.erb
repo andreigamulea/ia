@@ -50,13 +50,15 @@
     <tbody>
     <tr>
       <td>CERERE ÎNSCRIERE VOLUNTAR</td>
-      <td style="text-align:center;color:red; font-style:italic;"><%=@status1%></td>      
+
+      <td style="text-align:center; color:<%= status_color(@status1) %>; font-style:italic;"><%=@status1%></td>
+      
       <td style="text-align:center;"><%= link_to "Completeaza documentul", cerere_voluntar_path, class: "btn btn-primary" %></td>
       <td style="text-align:center;"><%= link_to "Descarca PDF", cerere_voluntar_path, class: "btn btn-primary disabled"  %></td>
     </tr>
     <tr>
       <td>ACORD GDPR</td>
-      <td style="text-align:center;color:red;font-style:italic;"><%=@status2%></td>      
+      <td style="text-align:center; color:<%= status_color(@status2) %>; font-style:italic;"><%=@status2%></td>      
       <td style="text-align:center;"><%= link_to "Completeaza documentul", gdpr_path, class: "btn btn-primary" %></td>
       <td style="text-align:center;"><%= link_to "Descarca PDF", gdpr_path, class: "btn btn-primary disabled" %></td>
     </tr>

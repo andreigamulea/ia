@@ -43,12 +43,11 @@ Rails.application.routes.draw do
     member do
       get 'view_contracte_useri', to: 'contractes#view_contracte_useri'
       get 'edit_contracte_useri', to: 'contractes#edit_contracte_useri'
-      patch 'update_contracte_useri', to: 'contractes#update_contracte_useri'
-
-      #delete 'destroy_contracte_useri', to: 'contractes#destroy_contracte_useri'
-      
+      match 'create_or_update_contracte_useri', to: 'contractes#create_or_update_contracte_useri', via: [:post, :patch]
     end
   end
+  
+
   resources :tipconstitutionals
   get 'evaluare_tipologie_ayurvedica', to: 'tipconstitutionals#evaluare_tipologie_ayurvedica'
   get 'calculate_totals', to: 'tipconstitutionals#process_totals'

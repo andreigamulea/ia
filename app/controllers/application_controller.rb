@@ -141,7 +141,10 @@ class ApplicationController < ActionController::Base
           vajikarana_modul1_path 
         elsif return_to == "optimizarea_performanțelor_cognitive" 
           optimizarea_performantelor_cognitive_path
-        
+        elsif return_to == "voluntar" 
+          voluntar_path
+        elsif return_to == "voluntariat" 
+          voluntariat_path  
         elsif return_to == "evaluaretipologie" 
           evaluare_tipologie_ayurvedica_path  
         elsif return_to == "tri" 

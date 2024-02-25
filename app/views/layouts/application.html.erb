@@ -65,7 +65,9 @@
     
 
     <%= yield %>
-      
+    <%if current_user && current_user.role==1%>
+    <%= render 'layouts/newsleter' %>  
+    <%end%>
     <%= render 'layouts/footer' %> 
     <%= render 'cookie_law/cookie_banner' %>
     <%= javascript_include_tag "epytv.js" %>

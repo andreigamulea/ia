@@ -21,25 +21,41 @@ class ContractesController < ApplicationController
   end
   
   
-  def voluntariat
-    
+  def voluntariat   
+    unless current_user
+      redirect_to new_user_session_with_return_path('voluntariat'), alert: "Trebuie să te autentifici pentru a accesa această pagină."
+      return
+    end  
   end  
   def voluntar
+    @contract = Contracte.find_by(id: session[:contract_id])
+    @contracte_useri = @contract.contracte_useris.find_or_initialize_by(contracte_id: @contract.id, user_id: @current_user.id)
+    # Stocăm ID-ul contractului în sesiune
+    session[:contract_id] = @contract.id if @contract
+    # Dacă @contracte_useri a fost salvat sau există deja în baza de date, stocăm ID-ul său în sesiune
+    session[:contracte_useri_id] = @contracte_useri.id if @contracte_useri.persisted?
     unless session[:verificat]
       redirect_to voluntariat_path, alert: "Acces neautorizat."
     end
-    @status1 = "required"
+    puts("@contract din voluntar este: #{@contract.id}")
+      puts("@contracte_useri din voluntar: #{@contracte_useri.id}")
+    if @contracte_useri.persisted?
+      @status1 = "pending" #folosesc app\helpers\contractes_helper.rb pt a gestiona culorile
+    else  
+      @status1 = "required"
+    end  
     @status2 = "required"
     @status3 = "required"
     @status4 = "required"
   end 
   def cerere_voluntar
+    puts("aaaaaaa")
     if session[:contract_id]
+      puts("ID Contract: #{session[:contract_id]}")
       @contract = Contracte.find_by(id: session[:contract_id])
-      @gazda = @contract.nume_firma
-      @adresa_firma = @contract.sediu_firma
-      @email_admin = @contract.email
-      @nume_admin = @contract.reprezentant_firma
+      @contracte_useri = @contract.contracte_useris.find_or_initialize_by(contracte_id: @contract.id, user_id: @current_user.id)
+      puts("@contract din cerere_voluntar este: #{@contract.id}")
+      puts("@contracte_useri din cerere_voluntar: #{@contracte_useri.id}")
       @show_submit_button = true
     else
       redirect_to voluntariat_path, alert: "Acces neautorizat."
@@ -58,19 +74,46 @@ class ContractesController < ApplicationController
     end  
     render 'contractes/cerere_voluntar'
   end   
-  def gdpr #pentru voluntar sa-si vada gdpr-ul lui
+  def gdpr
+    # Verificăm dacă avem un contract_id în sesiune
     if session[:contract_id]
+      puts("@contract din gdpr este: #{session[:contract_id]}")
       @contract = Contracte.find_by(id: session[:contract_id])
-      @gazda = @contract.nume_firma
-      @adresa_firma = @contract.sediu_firma
-      @email_admin = @contract.email
-      @nume_admin = @contract.reprezentant_firma
-      @show_submit_button = true
+      @contracte_useri = @contract.contracte_useris.find_by(user_id: @current_user.id)
+      # Verificăm dacă am găsit contractul
+      if @contract
+        puts("@contracte_useri din gdpr: #{session[:contracte_useri_id]}")
+        @gazda = @contract.nume_firma
+        @adresa_firma = @contract.sediu_firma
+        @email_admin = @contract.email
+        @nume_admin = @contract.reprezentant_firma
+        @show_submit_button = true
+        
+        # Găsim contracte_useri asociat cu acest contract și utilizatorul curent
+        
+        
+        # Verificăm dacă avem un contracte_useri asociat
+        if @contracte_useri
+          # Construim numele complet al voluntarului
+          @nume_voluntar = "#{@contracte_useri.nume_voluntar} #{@contracte_useri.prenume}"
+          adresa = [@contracte_useri.localitate_voluntar, @contracte_useri.strada_voluntar, "nr. #{@contracte_useri.numarstrada_voluntar}"]
+          adresa << "Bloc #{@contracte_useri.bloc_voluntar}" if @contracte_useri.bloc_voluntar.present?
+          adresa << @contracte_useri.judet_voluntar
+          @domiciliu = adresa.compact.join(", ")
+
+        else
+          # Aici poți trata cazul în care nu există un contracte_useri asociat
+          # De exemplu, poți redirecționa utilizatorul cu un mesaj de eroare
+          redirect_to voluntariat_path, alert: "Nu există informații de GDPR pentru utilizatorul curent."
+        end
+      else
+        redirect_to voluntariat_path, alert: "Contractul specificat nu a fost găsit."
+      end
     else
       redirect_to voluntariat_path, alert: "Acces neautorizat."
-    end  
-
+    end
   end
+  
   def gdpr1  #pentru contractori sa vada orice gdpr al oricarui voluntar
     puts("aaaaaaaaaaaaaaaaa")
     puts("Contractul id este: #{params[:contract_id]}")
@@ -169,6 +212,12 @@ class ContractesController < ApplicationController
   end
   
   def index
+    
+    unless current_user
+      redirect_to new_user_session_with_return_path('voluntariat'), alert: "Trebuie să te autentifici pentru a accesa această pagină."
+      return
+    end  
+    puts("da3")
     @prod = Prod.find_by(curslegatura: 'voluntari', status: 'activ')
     @contractes = Contracte.where(user_id: current_user.id)
     @nr_contractes = @contractes.count
@@ -386,17 +435,45 @@ def edit_contracte_useri
   
 end
 
-def update_contracte_useri
-  @contracte_useri = ContracteUseri.find(params[:id])
-  if @contracte_useri.update(contracte_useri_params)
-    puts("s-a salvat")
-    redirect_to contracte_all_path, notice: 'ContracteUseri was successfully updated.'
-    
+def create_or_update_contracte_useri  #metoda este apelata cand se creaza/updateaza cerere_voluntar (este primul document)
+  # Preia parametrii necesari pentru identificarea sau crearea înregistrării
+  contracte_id = params[:contracte_useri][:contracte_id]
+  user_id = params[:contracte_useri][:user_id]
+  @contract = Contracte.find_by(id: params[:contract_id])
+  @contracte_useri = ContracteUseri.find_or_initialize_by(contracte_id: contracte_id, user_id: user_id)
+  @show_submit_button = true
+  puts("@contract este: #{@contract.id}")
+  puts("@contracte_useri: #{@contracte_useri.id}")
+  # Caută o înregistrare existentă sau inițializează una nouă bazată pe contracte_id ȘI user_id
+  
+  puts("treceeeeee")
+  ## Logica de procesare bazată pe starea înregistrării (nouă sau existentă)
+  if @contracte_useri.new_record?
+    # Dacă înregistrarea este nouă, încearcă să creezi
+    if @contracte_useri.update(contracte_useri_params)
+      redirect_to contracte_all_path, notice: 'ContracteUseri was successfully created/updated.'
+      #redirect_to voluntar_path, notice: 'ContracteUseri was successfully created/updated.'
+    else
+      puts("blabla")
+      flash.now[:alert] = 'Au fost întâmpinate erori.' # opțional, dacă vrei să adaugi un mesaj flash
+      render :cerere_voluntar, status: :unprocessable_entity
+    end
   else
-    puts("nu s-a salvat")
-    render :edit_contracte_useri
+    # Dacă înregistrarea există, încearcă să actualizezi
+    if @contracte_useri.update(contracte_useri_params)
+      redirect_to contracte_all_path, notice: 'ContracteUseri was successfully updated.'
+      #redirect_to voluntar_path, notice: 'ContracteUseri was successfully updated.'
+    else
+      # Re-renderizează view-ul pentru a afișa erorile
+      render :cerere_voluntar, status: :unprocessable_entity
+    end
   end
+  
 end
+
+
+
+
 
 
 
@@ -520,7 +597,7 @@ end
         :nume_voluntar, 
         :prenume,
         :telefon_voluntar,
-        :email, #la GDPR trebuie sa completeze o adresa de email care poate fi diferita de cea a userului
+        :email, # La GDPR trebuie să completeze o adresă de email care poate fi diferită de cea a userului
         :domiciliu_voluntar, 
         :ci_voluntar, 
         :eliberat_de, 
@@ -534,9 +611,20 @@ end
         :judet_voluntar,
         :cod_contract,
         :nr_contract_referinta,
-        :status
+        :status,
+        # Adăugăm câmpurile lipsă identificate
+        :user_id,
+        :idcontractor,
+        :contract_content,
+        :signature_data,
+        :semnatura1,
+        :semnatura2,
+        :semnatura3,
+        :semnatura4,
+        :expira_la
       )
     end
+    
     
     def valid_email?(email)
       email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

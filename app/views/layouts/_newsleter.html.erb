@@ -1,0 +1,63 @@
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-row1">
+      <div class="img-right">
+      <a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home.chooseLanguage" target="_blank">
+        <img src="<%= asset_path 'image1.png' %>" alt="European Consumer Online Dispute Resolution Platform" width="201" height="50">
+      </a>
+
+      </div>
+      <div class="img-left">
+      <a href="https://anpc.ro/ce-este-sal/" target="_blank">
+        <img src="<%= asset_path 'image2.png' %>" alt="Informații despre Sistemul Alternativ de Soluționare a Litigiilor" width="201" height="50">
+      </a>
+
+      </div>
+    </div>
+    <div class="footer-row2">
+      <div class="footer-column">
+      <ul>
+      <li><h2>Contul meu</h2></li>
+      <% if user_signed_in? %>
+      <li><%= link_to 'Contul meu', edit_user_registration_path, class: 'nav-item' %></li>          
+      <li><%= link_to 'Iesi din cont', destroy_user_session_path, id: 'logout_link', data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %></li>
+      <li><%= link_to 'Facturile mele', facturas_path, class: 'nav-item' %></li>
+      <%else%>
+      <li><%= link_to 'Login', new_user_session_with_return_path('menu') %></li>
+      <li><%= link_to 'Creaza cont', new_user_registration_with_return_path('menu') %></li>
+      <%end%>
+      </br>
+      <li><h2>Resurse</h2></li>
+      <li><a href="https://amnromania.ro/" target="_blank">amnromania.ro</a></li>
+      <li><a href="https://animaplant.ro/" target="_blank">animaplant.ro</a></li>
+   </ul>
+
+
+
+   
+
+
+
+      </div>
+      <div class="footer-column">
+        <ul>
+          <li><h2>Ayush Cell Romania</h2></li>
+          <li><%= link_to 'Termeni si conditii', termeni_conditii_path %></li>
+          <li><%= link_to 'Politica de confidentialitate', politica_confidentialitate_path %></li>
+          <li><%= link_to 'Politica de cookies', politica_cookies_path %></li>
+          <li><%= link_to 'Politica de prelucrare a datelor', politica_gdpr_path %></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <ul>
+          <li><h2>Contact</h2></li>
+          <li>Adresa: Str. Ostasilor nr. 15, sector 1, </li>
+          <li>București, România</li>
+          <li>Tel. 0749 079 619 Luni-Vineri 09-16;</li>
+          <li>Email: ayushcellromania@gmail.com  (timp raspuns maxim o zi lucratoare)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
