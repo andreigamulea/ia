@@ -76,7 +76,29 @@
     <h2 class="main-title" >Completează acordul GDPR</h2>
 
 <section>
-      
+    <%= form_with model: [@contract, @contracte_useri], 
+          url: salveaza_gdpr_contracte_path(@contract), 
+          method: :post, 
+          local: true, 
+          html: { class: "form-class" } do |form| %>
+
+          <% if @contracte_useri.errors.any? %>
+          <div id="error_explanation">
+          <h2><%= pluralize(@contracte_useri.errors.count, "error") %> prohibited this contracte_useri from being saved:</h2>
+          <ul>
+          <% @contracte_useri.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+          <% end %>
+          </ul>
+          </div>
+          <% end %>
+
+          <!-- Aici poți adăuga câmpurile specifice pentru GDPR pe care dorești să le colectezi -->
+          <%= form.hidden_field :contracte_id, value: @contract.id if @contract.id.present? %>      
+          <%= form.hidden_field :idcontractor, value: @contract.user_id if @contract&.user_id.present? %>
+          <%= form.hidden_field :user_id, value: current_user.id if current_user.present? %>
+          <%= form.hidden_field :semnatura1, id: "semnatura1" %>
+          <%= hidden_field_tag :contract_id, @contract.id %>
     
     <div>
         <h2 class="main-title">Organizație Gazdă:</h2>
@@ -121,7 +143,7 @@
   <% if @show_submit_button %>
      <input type="submit" value="Trimite Acord GDPR" class="register" style="border: 1px solid #4b0082; background-color: #4b0082;">
      <% end %>   
-    </div>
+    </div><% end %> 
 </section>
 </div>
 </div>

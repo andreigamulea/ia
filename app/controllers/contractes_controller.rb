@@ -471,6 +471,18 @@ def create_or_update_contracte_useri  #metoda este apelata cand se creaza/update
   
 end
 
+def salveaza_gdpr
+  @contract = Contracte.find(params[:id]) # Găsește contractul specific folosind ID-ul din URL
+  @contracte_useri = @contract.contracte_useris.find_by(user_id: current_user.id) # Găsește recordul specific utilizatorului curent
+
+  if @contracte_useri.update(semnatura1: params[:semnatura_voluntar]) # Actualizează campul `semnatura1` cu valoarea primită
+    # Procesare după actualizare cu succes
+    redirect_to voluntar_path, notice: "Semnătura a fost salvată cu succes."
+  else
+    # Procesare în caz de eroare
+    render :edit, alert: "Eroare la salvarea semnăturii."
+  end
+end
 
 
 
