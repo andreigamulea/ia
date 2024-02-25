@@ -43,7 +43,10 @@ Rails.application.routes.draw do
     member do
       get 'view_contracte_useri', to: 'contractes#view_contracte_useri'
       get 'edit_contracte_useri', to: 'contractes#edit_contracte_useri'
+      post :create_or_update_contracte_useri
       match 'create_or_update_contracte_useri', to: 'contractes#create_or_update_contracte_useri', via: [:post, :patch]
+      post 'salveaza_gdpr', to: 'contractes#salveaza_gdpr'
+
     end
   end
   
