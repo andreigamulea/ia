@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       post :create_or_update_contracte_useri
       match 'create_or_update_contracte_useri', to: 'contractes#create_or_update_contracte_useri', via: [:post, :patch]
       post 'salveaza_gdpr', to: 'contractes#salveaza_gdpr'
+      post 'salveaza_contract', to: 'contractes#salveaza_contract'
 
     end
   end
