@@ -96,8 +96,7 @@
           <!-- Aici poți adăuga câmpurile specifice pentru GDPR pe care dorești să le colectezi -->
           <%= form.hidden_field :contracte_id, value: @contract.id if @contract.id.present? %>      
           <%= form.hidden_field :idcontractor, value: @contract.user_id if @contract&.user_id.present? %>
-          <%= form.hidden_field :user_id, value: current_user.id if current_user.present? %>
-          <%= form.hidden_field :semnatura1, id: "semnatura1" %>
+          <%= form.hidden_field :user_id, value: current_user.id if current_user.present? %>          
           <%= hidden_field_tag :contract_id, @contract.id %>
     
     <div>
@@ -136,8 +135,9 @@
           
       </span>
       </p>
-      <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000; margin-top:-30px;"></canvas></br></br>
+      <canvas id="signature-pad" width="auto" height="auto" style="border: 1px solid #000; margin-top:-30px;"></canvas></br></br>
       <button type="button" onclick="clearSignature(2)", class="register", style="margin-top:-30px;">Șterge Semnătura</button>
+      <%= form.hidden_field :semnatura1, id: "semnatura1" %>
       </div>
   </div>
   <% if @show_submit_button %>
@@ -152,121 +152,96 @@
 
 
 
-    <script>
-    document.addEventListener("turbo:load", function() {
-      initializeSignaturePad('signature-pad-3'); // Inițializează doar al doilea canvas
-      
-      var form = document.querySelector('form');
-      form.addEventListener('submit', function() {
-        saveSignatureOnSubmit('signature-pad-3', 'semnatura_voluntar'); // Folosește ID-ul corect al canvas-ului și câmpului ascuns
-      });
-      
-      synchronizeFields('nume-voluntar-sursa',  'nume-voluntar-destinatie');
-    });
-    
-    function synchronizeFields(sourceFieldId, targetElementId) {
-        var sourceField = document.getElementById(sourceFieldId);
-        var targetElement = document.getElementById(targetElementId);
-    
-        if (sourceField && targetElement) {
-            sourceField.addEventListener('input', function() {
-                // Verifică dacă elementul țintă este un câmp de input sau alt tip de element
-                if ('value' in targetElement) {
-                    // Pentru elemente de input, textarea, etc.
-                    targetElement.value = sourceField.value;
-                } else {
-                    // Pentru elemente non-input, cum ar fi span, div, etc.
-                    targetElement.textContent = sourceField.value;
+<script>
+var isDrawing = false; // Variabila globală
+
+document.addEventListener("turbo:load", function() {
+    var canvas = document.getElementById('signature-pad');
+    var hiddenField = document.getElementById('semnatura1');
+
+    if (canvas && hiddenField) {
+        var context = canvas.getContext('2d');
+
+        // Încărcarea semnăturii existente
+        if (hiddenField.value) {
+            var image = new Image();
+            image.onload = function() {
+                context.drawImage(image, 0, 0);
+            };
+            image.src = hiddenField.value;
+        }
+
+        // Evenimentele pentru desenarea pe canvas
+        attachCanvasEvents(canvas, context);
+
+        // Salvarea semnăturii la trimiterea formularului
+        var form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Opriți trimiterea imediată a formularului
+
+                // Verificați dacă există o semnătură pe canvas înainte de a salva
+                if (!isCanvasBlank(canvas)) {
+                    var dataURL = canvas.toDataURL();
+                    hiddenField.value = dataURL;
                 }
+
+                setTimeout(function() {
+                    form.submit(); // Trimiteți formularul după o întârziere
+                }, 100); // Întârziere de 100 milisecunde
             });
         }
     }
-    
-    
-    function saveSignatureOnSubmit(canvasId, hiddenFieldId) {
-        var canvas = document.getElementById(canvasId);
-        if (canvas) {
-            var dataURL = canvas.toDataURL();
-            document.getElementById(hiddenFieldId).value = dataURL; // Setează valoarea câmpului ascuns
+});
+
+function attachCanvasEvents(canvas, context) {
+    canvas.addEventListener('mousedown', function(event) {
+        isDrawing = true;
+        startDrawing(event, context);
+    });
+
+    canvas.addEventListener('mousemove', function(event) {
+        if (isDrawing) {
+            continueDrawing(event, context);
         }
-    }
+    });
+
+    canvas.addEventListener('mouseup', function() {
+        isDrawing = false;
+    });
+
+    canvas.addEventListener('mouseleave', function() {
+        isDrawing = false;
+    });
+}
+
+function startDrawing(event, context) {
+    var x = event.offsetX;
+    var y = event.offsetY;
+    context.beginPath();
+    context.moveTo(x, y);
+}
+
+function continueDrawing(event, context) {
+    context.lineTo(event.offsetX, event.offsetY);
+    context.stroke();
+}
+
+function isCanvasBlank(canvas) {
+    return !canvas.getContext('2d')
+      .getImageData(0, 0, canvas.width, canvas.height).data
+      .some(channel => channel !== 0);
+}
+
+function clearSignature() {
+    var canvas = document.getElementById('signature-pad');
+    var hiddenField = document.getElementById('semnatura1');
     
-    
-    function initializeSignaturePad(canvasId) {
-      var canvas = document.getElementById(canvasId);
-      if (canvas) {
+    if (canvas && hiddenField) {
         var context = canvas.getContext('2d');
-        var isDrawing = false;
-    
-        function startDrawing(event) {
-          event.preventDefault(); // Împiedică derularea în timpul desenării
-          isDrawing = true;
-          var rect = canvas.getBoundingClientRect();
-          var x = (event.clientX || event.touches[0].clientX) - rect.left;
-          var y = (event.clientY || event.touches[0].clientY) - rect.top;
-          context.beginPath();
-          context.moveTo(x, y);
-        }
-    
-        function continueDrawing(event) {
-          event.preventDefault(); // Împiedică derularea în timpul desenării
-          if (!isDrawing) return;
-          var rect = canvas.getBoundingClientRect();
-          var x = (event.clientX || event.touches[0].clientX) - rect.left;
-          var y = (event.clientY || event.touches[0].clientY) - rect.top;
-          context.lineTo(x, y);
-          context.stroke();
-        }
-    
-        function stopDrawing(event) {
-          if (isDrawing) {
-            event.preventDefault();  // Împiedică derularea și alte acțiuni implicite
-            event.stopPropagation(); // Opriți propagarea evenimentului
-            isDrawing = false;
-          }
-        }
-    
-        // Evenimente pentru mouse
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mousemove', continueDrawing);
-        canvas.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('mouseleave', stopDrawing);
-    
-        // Evenimente pentru touch (ecran tactil)
-        canvas.addEventListener('touchstart', startDrawing);
-        canvas.addEventListener('touchmove', continueDrawing);
-        canvas.addEventListener('touchend', stopDrawing);
-      }
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        hiddenField.value = '';
     }
-    
-    
-    function loadExistingSignature(canvasId) {
-      var canvas = document.getElementById(canvasId);
-      var context = canvas.getContext('2d');
-      var existingSignature = "<%= @semnatura_admin %>";
-    
-      if (existingSignature) {
-        var image = new Image();
-        image.onload = function() {
-          context.drawImage(image, 0, 0);
-        };
-        image.src = existingSignature;
-      }
-    }
-    
-    function saveSignature(padNumber) {
-      var canvas = document.getElementById('signature-pad-3');
-      var dataURL = canvas.toDataURL();
-      console.log(dataURL);
-      // Trimite dataURL la server
-    }
-    
-    function clearSignature(padNumber) {
-      var canvas = document.getElementById('signature-pad-3');
-      var context = canvas.getContext('2d');
-      context.clearRect(0, 0, canvas.width, canvas.height);
-    }
-    
-    </script>
-    
-    
+}
+</script>
+
