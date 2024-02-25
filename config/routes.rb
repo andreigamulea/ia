@@ -1,5 +1,8 @@
 Rails.application.routes.draw do    
   post '/newsletter', to: 'home#newsletter'
+  get 'home/lista_newsletter', to: 'home#lista_newsletter', as: 'lista_newsletter'
+
+
 
 
 
