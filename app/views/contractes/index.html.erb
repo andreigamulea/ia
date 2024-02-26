@@ -172,7 +172,10 @@
 
             <th>Nume voluntar</th>
             <th>Localitate voluntar</th>
-            <th>Acțiuni</th>
+            <th>D1</th>
+            <th>D2</th>
+            <th>D3</th>
+            <th>D4</th>
         </tr>
     </thead>
     <tbody>
@@ -180,11 +183,12 @@
             <tr>
             <td><%= c.nume_voluntar %></td>
             <td><%= c.localitate_voluntar %></td>
-            <td style="display: flex; flex-direction: column; align-items: center;">
-                
-                <%= link_to 'Edit', edit_contracte_useri_contracte_path(c), class: "btn btn-secondary" %>
-               
+            <td style=" align-items: center;">                
+            <%= link_to 'Vezi', voluntar_path(c), class: "btn btn-secondary" %>               
             </td>
+            <td style=" align-items: center;"><%= link_to 'Vezi', voluntar_path(c), class: "btn btn-secondary" %></td>
+            <td style=" align-items: center;"><%= link_to 'Vezi', voluntar_path(c), class: "btn btn-secondary" %></td>
+            <td style=" align-items: center;"><%= link_to 'Vezi', voluntar_path(c), class: "btn btn-secondary" %></td>
             </tr>
         <% end %>
         </tbody>
