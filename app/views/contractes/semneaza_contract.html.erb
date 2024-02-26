@@ -285,6 +285,7 @@
         </span>
         </p>
         <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
+        
         <button type="button" onclick="clearSignature(2)", class="register">Șterge Semnătura</button>
         <%= form.hidden_field :semnatura2, id: "semnatura2" %>
     </div>
@@ -309,8 +310,9 @@
 
 <script>
 document.addEventListener("turbo:load", function() {
+    
   initializeSignaturePad('signature-pad-3'); // Inițializează doar al doilea canvas
-  
+  loadExistingSignature('signature-pad-3');
   var form = document.querySelector('form');
   form.addEventListener('submit', function() {
     saveSignatureOnSubmit('signature-pad-3', 'semnatura2'); // Folosește ID-ul corect al canvas-ului și câmpului ascuns
@@ -398,7 +400,7 @@ function initializeSignaturePad(canvasId) {
 function loadExistingSignature(canvasId) {
   var canvas = document.getElementById(canvasId);
   var context = canvas.getContext('2d');
-  var existingSignature = "<%= @semnatura_admin %>";
+  var existingSignature = "<%= @semnatura_voluntar %>";
 
   if (existingSignature) {
     var image = new Image();
