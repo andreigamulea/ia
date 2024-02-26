@@ -64,7 +64,7 @@
     </tr>
     <tr>
       <td>CONTRACT VOLUNTARIAT</td>
-      <td style="text-align:center;color:red;font-style:italic;"><%=@status3%></td>      
+      <td style="text-align:center; color:<%= status_color(@status3) %>; font-style:italic;"><%=@status3%></td>            
       <td style="text-align:center;"><%= link_to "Completeaza documentul", contract_voluntar_path, class: "btn btn-primary" %></td>
       <td style="text-align:center;"><%= link_to "Descarca PDF", contract_voluntar_path, class: "btn btn-primary disabled" %></td>
     </tr>
