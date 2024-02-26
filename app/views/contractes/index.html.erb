@@ -34,7 +34,12 @@
   /*optional*/ text-decoration: underline;
   cursor: pointer;
 }
-
+#cvc{
+    word-break: keep-all;
+}
+#cvc .table{
+    word-break: keep-all;
+}
 </style>
 
 
@@ -49,9 +54,9 @@
 <main class="cr" style="background-color: aliceblue;">
 
     <h1 class="first-tittle">Set documente voluntariat: Ayush Cell Romania</h1>
-    <h5>Aveti achizitionate: <%= @nr_total_contracte_achizitionate %> set-uri de documente.</h5>
-    <h5>Total voluntari: <%= @numar_contracte_useris %> </h5>
-    <h5>Set de documente disponibile: <%= @nr_total_contracte_achizitionate-@numar_contracte_useris %> </h5>
+    <p>Aveti achizitionate: <%= @nr_total_contracte_achizitionate %> set-uri de documente.</p>
+    <p>Total voluntari: <%= @numar_contracte_useris %> </p>
+    <p>Set de documente disponibile: <%= @nr_total_contracte_achizitionate-@numar_contracte_useris %> </p>
     <h2 class="main-title">Achiziționează un nou set de documente pentru voluntariat</h2>
 <p>Pretul descreste proportional cu numarul de contracte achizitionate. </p>
 <div class="table-responsive" style="margin-right: auto; margin-left: 0;">
@@ -95,14 +100,15 @@
 
 
 <%if @nr_contractes>0 || current_user.role==1%>
+<div style="text-align:left;">
 <h3>Legenda:</h3>
-<h6>D1: CERERE ÎNSCRIERE VOLUNTAR</h6>
-<h6>D2: ACORD GDPR</h6>
-<h6>D3: CONTRACT VOLUNTARIAT</h6>
-<h6>D4: FISA POSTULUI - anexă la contractul de voluntariat</h6>
-<h6>D5: FISA SSM DE INSTRUIRE INDIVIDUALĂ PRIVIND SECURITATEA ȘI SĂNĂTATEA ÎN MUNCĂ <%= link_to "Descarca PDF", "pdf/voluntariat/Fisa SSM.pdf", download: '' %></h6>
-<h6>D6: FISA ISU DE INSTRUCTAJ ÎN DOMENIUL SITUAȚIILOR DE URGENȚĂ <%= link_to "Descarca PDF", "pdf/voluntariat/Fisa ISU.pdf", download: '' %></h6>
-
+<p>D1: CERERE ÎNSCRIERE VOLUNTAR</p>
+<p>D2: ACORD GDPR</p>
+<p>D3: CONTRACT VOLUNTARIAT</p>
+<p>D4: FISA POSTULUI - anexă la contractul de voluntariat</p>
+<p>D5: FISA SSM DE INSTRUIRE INDIVIDUALĂ PRIVIND SECURITATEA ȘI SĂNĂTATEA ÎN MUNCĂ <%= link_to "Descarca PDF", "pdf/voluntariat/Fisa SSM.pdf", download: '' %></p>
+<p>D6: FISA ISU DE INSTRUCTAJ ÎN DOMENIUL SITUAȚIILOR DE URGENȚĂ <%= link_to "Descarca PDF", "pdf/voluntariat/Fisa ISU.pdf", download: '' %></p>
+</div>
 
 <h2 class="main-title">Modele Contracte de voluntariat</h2>
 <%if (@nr_total_contracte_achizitionate>0 &&  @nr_total_contracte_achizitionate-@numar_contracte_useris>0) || current_user.role==1%>

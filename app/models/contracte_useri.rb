@@ -2,7 +2,13 @@ class ContracteUseri < ApplicationRecord
     belongs_to :contracte #c.contracte_useris
     validates :nume_voluntar, :prenume, :strada_voluntar, :numarstrada_voluntar, :localitate_voluntar, :judet_voluntar,
      :telefon_voluntar, :email,  presence: true
-     validates :semnatura1, presence: true, on: :gdpr
+     attr_accessor :validare_gdpr
+     validates :semnatura1, presence: true, if: :validare_gdpr?
+
+     
+     #validates :semnatura2, :ci_voluntar, :eliberat_de, :eliberat_data, presence: true, on: :salveaza_contract
+
+
      validate :semnatura_voluntar_must_be_present
 
      def semnatura_voluntar_must_be_present
@@ -23,4 +29,7 @@ class ContracteUseri < ApplicationRecord
       end
       
       #validates :nume_voluntar,presence: true
+      def validare_gdpr?
+        validare_gdpr == true
+      end
 end

@@ -263,6 +263,7 @@ class ContractesController < ApplicationController
       @calitate_reprezentant = @contract.calitate_reprezentant
       @show_submit_button = true
       @semnatura_admin = @contract.semnatura_admin
+      @durata_contract = @contract.valabilitate_luni
       # Găsim contracte_useri asociat cu acest contract și utilizatorul curent
       
       
@@ -274,7 +275,7 @@ class ContractesController < ApplicationController
         adresa << "Bloc #{@contracte_useri.bloc_voluntar}" if @contracte_useri.bloc_voluntar.present?
         adresa << @contracte_useri.judet_voluntar
         @domiciliu = adresa.compact.join(", ")
-        #@semnatura_voluntar = @contracte_useri.semnatura2
+        @semnatura_voluntar = @contracte_useri.semnatura2
       else
         # Aici poți trata cazul în care nu există un contracte_useri asociat
         # De exemplu, poți redirecționa utilizatorul cu un mesaj de eroare
@@ -511,7 +512,9 @@ end
 def salveaza_gdpr
 
   @contract = Contracte.find(params[:id]) # Găsește contractul specific folosind ID-ul din URL
-  @contracte_useri = @contract.contracte_useris.find_by(user_id: current_user.id) # Găsește recordul specific utilizatorului curent
+  @contracte_useri = @contract.contracte_useris.find_by(user_id: current_user.id) # Găsește recordul specificul utilizatorului curent
+  @contracte_useri.validare_gdpr = true
+  @show_submit_button = true
   puts("@contract din salveaza_gdpr este: #{@contract.id}")
   puts("@contracte_useri din salveaza_gdpr: #{@contracte_useri.id}")
   puts("Semnatura1 din salveaza_gdpr: #{params[:contracte_useri][:semnatura1]}")
@@ -521,7 +524,8 @@ def salveaza_gdpr
     redirect_to voluntar_path, notice: "Semnătura a fost salvată cu succes."
   else
     # Procesare în caz de eroare
-    render :edit, alert: "Eroare la salvarea semnăturii."
+    flash.now[:alert] = "Eroare la salvarea semnăturii."
+    render :gdpr, alert: "Eroare la salvarea semnăturii."
   end
 end
 
@@ -530,7 +534,7 @@ def salveaza_contract
   @contracte_useri = @contract.contracte_useris.find_by(user_id: current_user.id) # Găsește recordul specific utilizatorului curent
   puts("@contract din salveaza_contract este: #{@contract.id}")
   puts("@contracte_useri salveaza_contract: #{@contracte_useri.id}")
- 
+  puts("semnatura: #{@contracte_useri.id}")
   if @contracte_useri.update(semnatura2: params[:contracte_useri][:semnatura2]) # Actualizează campul `semnatura1` cu valoarea primită
     # Procesare după actualizare cu succes
     redirect_to voluntar_path, notice: "Semnătura a fost salvată cu succes."
