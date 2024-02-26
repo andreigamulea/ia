@@ -54,7 +54,11 @@ class ContractesController < ApplicationController
     else
       @status3 = "pending"
     end  
-    @status4 = "required"
+    if @contracte_useri.semnatura3==nil
+      @status4 = "required"
+    else
+      @status4 = "pending"
+    end  
   end 
   def cerere_voluntar
     puts("aaaaaaa")
@@ -116,36 +120,15 @@ class ContractesController < ApplicationController
     render 'contractes/gdpr'
   end
   def fisa_postului
-    puts("da1")
-    if session[:contract_id]
-      puts("da2")
-      @contracte = Contracte.find_by(id: session[:contract_id])
-      
-       #atentie sarcinile trebuiesc obligatoriu separate prin ; in tabela postges
-#####
-    @nume_firma = @contracte&.nume_firma
-    @email_firma = @contracte&.email
-    @tip_contract = @contracte&.tip
-    @denumire_contract = @contracte&.denumire
-    @serie_contract = @contracte&.cod_contract
-    @start_contract = @contracte&.contor_start   
-    @sediu_firma = @contracte&.sediu_firma
-    @cui_firma = @contracte&.cui_firma
-    @cont_bancar = @contracte&.cont_bancar
-    @banca_firma = @contracte&.banca_firma
-    @reprezentant_firma = @contracte&.reprezentant_firma    
-    @calitate_reprezentant = @contracte&.calitate_reprezentant    
-    @semnatura_admin = @contracte.semnatura_admin if @contracte
-    @denumire_post_voluntar = @contracte&.denumire_post
-    @coordonator_voluntar = @contracte&.subordonare
-    @locul_desfasurarii_activitatii_voluntar = @contracte&.locul_desfasurarii
-    @departament = @contracte&.departament
-    @relatii_functionale_voluntar = @contracte&.relatii_functionale 
-    #puts("Sarcinile: #{@contracte.sarcini_voluntar}")
-    @sarcini = @contracte.sarcini_voluntar.split(';').map(&:strip)
-    #@sarcini=[s1,s2]
-    @valabilitate_luni = @contracte&.valabilitate_luni
-    @show_submit_button = true
+    if session[:contract_id] 
+      puts("@contract din semneaza_contract este: #{session[:contract_id]}")
+      @contract = Contracte.find_by(id: session[:contract_id])
+      @contracte_useri = @contract.contracte_useris.find_by(user_id: @current_user.id)
+      if !@contracte_useri || @contracte_useri.semnatura_voluntar==nil
+        redirect_to voluntar_path, alert: "Acces neautorizat."
+        return
+      end  
+      set_shared_data(@contract, @contracte_useri)
     else
       redirect_to voluntariat_path, alert: "Acces neautorizat."
     end  
@@ -690,6 +673,20 @@ end
         @cui_firma = @contract.cui_firma      
         @calitate_reprezentant = @contract.calitate_reprezentant     
         @durata_contract = @contract.valabilitate_luni
+
+        @tip_contract = @contract&.tip
+        @denumire_contract = @contract&.denumire
+        @serie_contract = @contract&.cod_contract
+        @start_contract = @contract&.contor_start       
+        @cont_bancar = @contract&.cont_bancar
+        @banca_firma = @contract&.banca_firma       
+        @calitate_reprezentant = @contract&.calitate_reprezentant        
+        @denumire_post_voluntar = @contract&.denumire_post
+        @coordonator_voluntar = @contract&.subordonare
+        @locul_desfasurarii_activitatii_voluntar = @contract&.locul_desfasurarii
+        @departament = @contract&.departament
+        @relatii_functionale_voluntar = @contract&.relatii_functionale     
+        @sarcini = @contract.sarcini_voluntar.split(';').map(&:strip)
       else
         # Gestionarea cazurilor în care contractul sau contracte_useri nu sunt găsite
         redirect_to voluntariat_path, alert: "Nu au fost găsite date pentru configurarea GDPR sau semnătura contractului."
@@ -699,7 +696,12 @@ end
     
     
       
-      
+    
+   
+    
+    
+    
+    
     
     
 end

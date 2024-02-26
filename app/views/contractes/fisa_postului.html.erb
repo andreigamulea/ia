@@ -81,8 +81,8 @@ display: flex;
 <section>
     <div>
         <h3>Organizație Gazdă:</h3>
-        <p style="margin-top:-10px;"><%=@nume_firma%></p>
-        <p style="margin-top:-10px;"><%=@sediu_firma%></p>
+        <p style="margin-top:-10px;"><%=@gazda%></p>
+        <p style="margin-top:-10px;"><%=@adresa_firma%></p>
 
         <h2 class="main-title" style="text-align:center;">Fișa postului</h2>
         <p style="margin-top:-30px;text-align:center;">anexă la contractul de voluntariat</p>
@@ -154,8 +154,8 @@ display: flex;
         
         <div class="gazda">
         <p><%=@nume_firma%>,</p>
-        <p style="margin-top: -15px; border: 2px solid transparent; border-left: none;"><%= @reprezentant_firma %></p>
-        <img src="<%= @semnatura_admin %>" alt="Semnătura reprezentantului AMN-ROMANIA" style="border: none;">
+        <p style="margin-top: -15px; border: 2px solid transparent; border-left: none;"><%= @nume_admin %></p>
+        <img src="<%= @semnatura_admin %>" alt="Semnătura reprezentantului" style="border: none;">
         </div>
     
             

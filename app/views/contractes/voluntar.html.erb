@@ -70,7 +70,7 @@
     </tr>
     <tr>
       <td>FISA POSTULUI - anexă la contractul de voluntariat</td>
-      <td style="text-align:center;color:red;font-style:italic;"><%=@status4%></td>      
+      <td style="text-align:center; color:<%= status_color(@status4) %>; font-style:italic;"><%=@status4%></td>         
       <td style="text-align:center;"><%= link_to "Completeaza documentul", fisa_postului_path, class: "btn btn-primary" %></td>
       <td style="text-align:center;"><%= link_to "Descarca PDF", contract_voluntar_path, class: "btn btn-primary disabled" %></td>
     </tr>

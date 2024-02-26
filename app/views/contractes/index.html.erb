@@ -38,7 +38,7 @@
     word-break: keep-all;
 }
 #cvc .table{
-    word-break: keep-all;
+    word-break: auto-phrase;
 }
 </style>
 
@@ -54,9 +54,11 @@
 <main class="cr" style="background-color: aliceblue;">
 
     <h1 class="first-tittle">Set documente voluntariat: Ayush Cell Romania</h1>
+    <div style="text-align:left">
     <p>Aveti achizitionate: <%= @nr_total_contracte_achizitionate %> set-uri de documente.</p>
     <p>Total voluntari: <%= @numar_contracte_useris %> </p>
     <p>Set de documente disponibile: <%= @nr_total_contracte_achizitionate-@numar_contracte_useris %> </p>
+    </div>
     <h2 class="main-title">Achiziționează un nou set de documente pentru voluntariat</h2>
 <p>Pretul descreste proportional cu numarul de contracte achizitionate. </p>
 <div class="table-responsive" style="margin-right: auto; margin-left: 0;">
@@ -136,13 +138,13 @@
                 
                 <td><%= c.denumire %></td>
                 <td><%= c.cod_contract %></td>
-                <td><%= link_to "Vezi documentul", cerere_voluntar1_path(contract_id: c.id) %></br>
+                <td><%= link_to "Vezi doc.", cerere_voluntar1_path(contract_id: c.id) %></br>
                                 </td>
-                <td><%= link_to "Vezi documentul", gdpr1_path(contract_id: c.id) %></br>
+                <td><%= link_to "Vezi doc.", gdpr1_path(contract_id: c.id) %></br>
                                 </td>
-                <td><%= link_to "Vezi documentul", contract_voluntar1_path(contract_id: c.id) %></br>
+                <td><%= link_to "Vezi doc.", contract_voluntar1_path(contract_id: c.id) %></br>
                                 </td>
-                <td><%= link_to "Vezi documentul", fisa_postului1_path(contract_id: c.id) %></br>
+                <td><%= link_to "Vezi doc.", fisa_postului1_path(contract_id: c.id) %></br>
                                 </td>
                 
                 <td style="display: flex; flex-direction: column; align-items: center;">
