@@ -29,6 +29,11 @@ class ContractesController < ApplicationController
   end  
   def voluntar
     @contract = Contracte.find_by(id: session[:contract_id])
+    unless @contract
+      # Dacă @contract este nil, facem redirect la o pagină dorită cu un mesaj
+      redirect_to voluntariat_path, alert: "Contractul nu a fost găsit."
+      return # Opriți executarea metodei aici
+    end
     @contracte_useri = @contract.contracte_useris.find_or_initialize_by(contracte_id: @contract.id, user_id: @current_user.id)
     # Stocăm ID-ul contractului în sesiune
     session[:contract_id] = @contract.id if @contract
@@ -74,18 +79,31 @@ class ContractesController < ApplicationController
     end  
   end   
   def cerere_voluntar1
+    puts("da000000000")
     if params[:contract_id]
+      puts("da1111111111")
       @contract = Contracte.find_by(id: params[:contract_id])
+      @contracte_useri = ContracteUseri.new
+      puts("da2222222222")
       @gazda = @contract.nume_firma
+      
       @adresa_firma = @contract.sediu_firma
       @email_admin = @contract.email
       @nume_admin = @contract.reprezentant_firma
       @show_submit_button = false
+      @semnatura_admin = @contract.semnatura_admin if @contract.respond_to?(:semnatura_admin)
+        @cui_firma = @contract.cui_firma      
+        @calitate_reprezentant = @contract.calitate_reprezentant     
+        @durata_contract = @contract.valabilitate_luni
+
+        
+      
     else
       redirect_to voluntariat_path, alert: "Acces neautorizat."
     end  
     render 'contractes/cerere_voluntar'
   end   
+  
   def gdpr
     if session[:contract_id] 
       puts("@contract din semneaza_contract este: #{session[:contract_id]}")
@@ -109,6 +127,7 @@ class ContractesController < ApplicationController
     puts("Contractul id este: #{params[:contract_id]}")
     if params[:contract_id]
       @contract = Contracte.find_by(id: params[:contract_id])
+      @contracte_useri = ContracteUseri.new
       @gazda = @contract.nume_firma
       @adresa_firma = @contract.sediu_firma
       @email_admin = @contract.email
@@ -124,7 +143,9 @@ class ContractesController < ApplicationController
       puts("@contract din semneaza_contract este: #{session[:contract_id]}")
       @contract = Contracte.find_by(id: session[:contract_id])
       @contracte_useri = @contract.contracte_useris.find_by(user_id: @current_user.id)
-      if !@contracte_useri || @contracte_useri.semnatura_voluntar==nil
+
+      
+      if !@contracte_useri || @contracte_useri.semnatura2==nil
         redirect_to voluntar_path, alert: "Acces neautorizat."
         return
       end  
@@ -137,7 +158,7 @@ class ContractesController < ApplicationController
   def fisa_postului1
     if params[:contract_id]
       @contracte = Contracte.find_by(id: params[:contract_id])
-      
+      @contracte_useri = ContracteUseri.new
        #atentie sarcinile trebuiesc obligatoriu separate prin ; in tabela postges
 #####
     @nume_firma = @contracte&.nume_firma
@@ -492,7 +513,28 @@ def salveaza_contract
   end
 end
 
-
+def salveaza_fisa_postului
+  @contract = Contracte.find(params[:id]) # Găsește contractul specific folosind ID-ul din URL
+  @contracte_useri = @contract.contracte_useris.find_by(user_id: current_user.id) # Găsește recordul specific utilizatorului curent
+  
+  
+  @contracte_useri.validare_semnatura3 = true
+  @show_submit_button = true
+  puts("@contract din salveaza_fisa_postului este: #{@contract.id}")
+  puts("@contracte_useri ssalveaza_fisa_postului: #{@contracte_useri.id}")
+  puts("semnatura3 in salveaza_fisa_postului este: #{@contracte_useri.semnatura3}")
+  
+ 
+  if @contracte_useri.update(contracte_useri_params) # Actualizează campul `semnatura1` cu valoarea primită
+    # Procesare după actualizare cu succes
+    redirect_to voluntar_path, notice: "Semnătura a fost salvată cu succes."
+  else
+    puts("saluuuuuuuuut")
+    # Procesare în caz de eroare
+    set_shared_data(@contract, @contracte_useri)
+    render :fisa_postului,  status: :unprocessable_entity
+  end
+end
 
 
 
@@ -570,12 +612,16 @@ end
     
     # Use callbacks to share common setup or constraints between actions.
     def set_contracte
+      puts("111")
       @contracte = Contracte.find(params[:id])
-      
+      puts("Contract nr : #{@contracte.id}")
+      puts("222")
     end
     def set_contract
-     
+      puts("333")
       @contract = Contracte.find(params[:contract_id])
+      puts("Contract nr : #{@contract.id}")
+      puts("444")
     end
     def set_contracte_useri
       @contracte_useri = ContracteUseri.find(params[:id])
@@ -630,6 +676,9 @@ end
         :nr_contract_referinta,
         :status,
         :perioada_contract,
+        :data_inceperii,
+        :coordonator_v,
+        :semnatura_administrator,
         # Adăugăm câmpurile lipsă identificate
         :user_id,
         :idcontractor,
@@ -687,6 +736,13 @@ end
         @departament = @contract&.departament
         @relatii_functionale_voluntar = @contract&.relatii_functionale     
         @sarcini = @contract.sarcini_voluntar.split(';').map(&:strip)
+        @expira_la = Date.today + @contract.valabilitate_luni.months
+        @cod_contract = @contract.cod_contract
+        @nr_contract_referinta = ContracteUseri.maximum(:nr_contract_referinta).to_i + 1
+        @status = "Activ"
+        @coordonator_v = @contract&.subordonare
+        @data_inceperii = Date.today
+        @semnatura_administrator = @contract&.semnatura_admin
       else
         # Gestionarea cazurilor în care contractul sau contracte_useri nu sunt găsite
         redirect_to voluntariat_path, alert: "Nu au fost găsite date pentru configurarea GDPR sau semnătura contractului."

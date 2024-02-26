@@ -77,7 +77,40 @@ display: flex;
 <div class="cr" style="background-color: white; ">
     <h1 class="first-tittle">Fișa postului I Ayush Cell Romania</h1>
     <h2 class="main-title" >Completează Fisa Postului</h2>
+  <%= form_with model: [@contract, @contracte_useri], 
+            url: salveaza_fisa_postului_contracte_path(@contract), 
+            method: :post, 
+            local: true, 
+            html: { class: "form-class" } do |form| %>
 
+              
+            
+            <% if @contracte_useri.errors.any? %>
+            <div id="error_explanation" style="color: red;">
+              <h2><%= pluralize(@contracte_useri.errors.count, "error") %> prohibited this contracte_useri from being saved:</h2>
+              <ul>
+              <% @contracte_useri.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+            <% end %>
+            
+              
+                <!-- Aici poți adăuga câmpurile specifice pentru GDPR pe care dorești să le colectezi -->
+                <%= form.hidden_field :contracte_id, value: @contract.id if @contract.id.present? %>      
+                <%= form.hidden_field :idcontractor, value: @contract.user_id if @contract&.user_id.present? %>
+                <%= form.hidden_field :user_id, value: current_user.id if current_user.present? %>   
+                <%= form.hidden_field :cod_contract, value: @cod_contract %>
+                <%= form.hidden_field :nr_contract_referinta, value: @nr_contract_referinta %>
+                <%= form.hidden_field :status, value: @status %>
+                <%= form.hidden_field :expira_la, value: @expira_la %>
+                <%= form.hidden_field :coordonator_v, value: @coordonator_v %>
+                <%= form.hidden_field :data_inceperii, value: @data_inceperii %>
+                <%= form.hidden_field :semnatura_administrator, value: @semnatura_administrator %>
+  
+                <%= hidden_field_tag :contract_id, @contract.id %>
+                <%= form.hidden_field :perioada_contract, value: @contract.valabilitate_luni if @contract&.valabilitate_luni.present? %>
 <section>
     <div>
         <h3>Organizație Gazdă:</h3>
@@ -89,7 +122,7 @@ display: flex;
 
 
         <h3>Denumire post: <%=@denumire_contract%></h3>
-        <p>Nume și prenume voluntar: <input type="text" name="nume_voluntar" style="width: 300px;"></p>
+        <p>Nume și prenume voluntar: <%=@nume_voluntar%></p>
         <p style="margin-top:-10px;">Locul desfășurării activității de voluntariat: <%=@locul_desfasurarii_activitatii_voluntar%></p>
         <p style="margin-top:-10px;">Departament: <%=@departament%></p>
         <p style="margin-top:-10px;">Subordonare: coordonator <%=@coordonator_voluntar%></p>
@@ -161,144 +194,124 @@ display: flex;
             
             
         <div class="voluntar">
-            <p>Voluntar: </p>
-            <p style="margin-top:-15px;">
-            <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available; padding-left:5px;">
-            <% if @show_submit_button %>
-                <%#= @contracte_useri.nume_voluntar %>
-                Aioanei Constantin
-            <%else%>    
+        <p>Voluntar: </p>
+        <p style="margin-top:-15px;">
+        <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available; padding-left:5px;">
+            <%= @contracte_useri.nume_voluntar %>
+        </span>
+        </p>
+        <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
+        
+        <button type="button" onclick="clearSignature(2)", class="register">Șterge Semnătura</button>
+        <%= form.hidden_field :semnatura3, id: "semnatura3" %>
+    </div>
+  
 
-           
-            <%end%>    
-            </span>
-            </p>
-            <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
-            <button type="button" onclick="clearSignature(2)", class="register">Șterge Semnătura</button>
-        </div>
+    </div>
        
         </div>
         <% if @show_submit_button %>
         <input type="submit" value="Trimite Fisa postului" class="register" style="border: 1px solid #4b0082; background-color: #4b0082; display: flex;">  
-        <%end%> 
+        <%end%> <% end %>
         </section>
         </div>
         </div>
     
-    <script>
-    document.addEventListener("turbo:load", function() {
-      initializeSignaturePad('signature-pad-3'); // Inițializează doar al doilea canvas
-      
-      var form = document.querySelector('form');
-      form.addEventListener('submit', function() {
-        saveSignatureOnSubmit('signature-pad-3', 'semnatura_voluntar'); // Folosește ID-ul corect al canvas-ului și câmpului ascuns
-      });
-      
-      synchronizeFields('nume-voluntar-sursa',  'nume-voluntar-destinatie');
-    });
-    
-    function synchronizeFields(sourceFieldId, targetElementId) {
-        var sourceField = document.getElementById(sourceFieldId);
-        var targetElement = document.getElementById(targetElementId);
-    
-        if (sourceField && targetElement) {
-            sourceField.addEventListener('input', function() {
-                // Verifică dacă elementul țintă este un câmp de input sau alt tip de element
-                if ('value' in targetElement) {
-                    // Pentru elemente de input, textarea, etc.
-                    targetElement.value = sourceField.value;
-                } else {
-                    // Pentru elemente non-input, cum ar fi span, div, etc.
-                    targetElement.textContent = sourceField.value;
+        <script>
+        var isDrawing = false; // Variabila globală
+        
+        document.addEventListener("turbo:load", function() {
+            var canvas = document.getElementById('signature-pad-3');
+            var hiddenField = document.getElementById('semnatura3');
+            
+        
+            if (canvas && hiddenField) {
+                var context = canvas.getContext('2d');
+        
+                // Încărcarea semnăturii existente
+                if (hiddenField.value) {
+                    var image = new Image();
+                    image.onload = function() {
+                        context.drawImage(image, 0, 0);
+                    };
+                    image.src = hiddenField.value;
+                }
+        
+                // Evenimentele pentru desenarea pe canvas
+                attachCanvasEvents(canvas, context);
+        
+                // Salvarea semnăturii la trimiterea formularului
+                var form = document.querySelector('form');
+                if (form) {
+                    form.addEventListener('submit', function(event) {
+                        event.preventDefault(); // Opriți trimiterea imediată a formularului
+        
+                        // Verificați dacă există o semnătură pe canvas înainte de a salva
+                        if (!isCanvasBlank(canvas)) {
+                            var dataURL = canvas.toDataURL();
+                            hiddenField.value = dataURL;
+                        }
+        
+                        setTimeout(function() {
+                            form.submit(); // Trimiteți formularul după o întârziere
+                        }, 100); // Întârziere de 100 milisecunde
+                    });
+                }
+            }
+        });
+        
+        function attachCanvasEvents(canvas, context) {
+            canvas.addEventListener('mousedown', function(event) {
+                isDrawing = true;
+                startDrawing(event, context);
+            });
+        
+            canvas.addEventListener('mousemove', function(event) {
+                if (isDrawing) {
+                    continueDrawing(event, context);
                 }
             });
+        
+            canvas.addEventListener('mouseup', function() {
+                isDrawing = false;
+            });
+        
+            canvas.addEventListener('mouseleave', function() {
+                isDrawing = false;
+            });
         }
-    }
-    
-    
-    function saveSignatureOnSubmit(canvasId, hiddenFieldId) {
-        var canvas = document.getElementById(canvasId);
-        if (canvas) {
-            var dataURL = canvas.toDataURL();
-            document.getElementById(hiddenFieldId).value = dataURL; // Setează valoarea câmpului ascuns
+        
+        function startDrawing(event, context) {
+            var x = event.offsetX;
+            var y = event.offsetY;
+            context.beginPath();
+            context.moveTo(x, y);
         }
-    }
-    
-    
-    function initializeSignaturePad(canvasId) {
-      var canvas = document.getElementById(canvasId);
-      if (canvas) {
-        var context = canvas.getContext('2d');
-        var isDrawing = false;
-    
-        function startDrawing(event) {
-          event.preventDefault(); // Împiedică derularea în timpul desenării
-          isDrawing = true;
-          var rect = canvas.getBoundingClientRect();
-          var x = (event.clientX || event.touches[0].clientX) - rect.left;
-          var y = (event.clientY || event.touches[0].clientY) - rect.top;
-          context.beginPath();
-          context.moveTo(x, y);
+        
+        function continueDrawing(event, context) {
+            context.lineTo(event.offsetX, event.offsetY);
+            context.stroke();
         }
-    
-        function continueDrawing(event) {
-          event.preventDefault(); // Împiedică derularea în timpul desenării
-          if (!isDrawing) return;
-          var rect = canvas.getBoundingClientRect();
-          var x = (event.clientX || event.touches[0].clientX) - rect.left;
-          var y = (event.clientY || event.touches[0].clientY) - rect.top;
-          context.lineTo(x, y);
-          context.stroke();
+        
+        function isCanvasBlank(canvas) {
+            return !canvas.getContext('2d')
+              .getImageData(0, 0, canvas.width, canvas.height).data
+              .some(channel => channel !== 0);
         }
-    
-        function stopDrawing(event) {
-          if (isDrawing) {
-            event.preventDefault();  // Împiedică derularea și alte acțiuni implicite
-            event.stopPropagation(); // Opriți propagarea evenimentului
-            isDrawing = false;
-          }
+        
+        function clearSignature() {
+            var canvas = document.getElementById('signature-pad-3');
+            var hiddenField = document.getElementById('semnatura3');
+            
+            if (canvas && hiddenField) {
+                var context = canvas.getContext('2d');
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                hiddenField.value = '';
+            }
         }
-    
-        // Evenimente pentru mouse
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mousemove', continueDrawing);
-        canvas.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('mouseleave', stopDrawing);
-    
-        // Evenimente pentru touch (ecran tactil)
-        canvas.addEventListener('touchstart', startDrawing);
-        canvas.addEventListener('touchmove', continueDrawing);
-        canvas.addEventListener('touchend', stopDrawing);
-      }
-    }
-    
-    
-    function loadExistingSignature(canvasId) {
-      var canvas = document.getElementById(canvasId);
-      var context = canvas.getContext('2d');
-      var existingSignature = "<%= @semnatura_admin %>";
-    
-      if (existingSignature) {
-        var image = new Image();
-        image.onload = function() {
-          context.drawImage(image, 0, 0);
-        };
-        image.src = existingSignature;
-      }
-    }
-    
-    function saveSignature(padNumber) {
-      var canvas = document.getElementById('signature-pad-3');
-      var dataURL = canvas.toDataURL();
-      console.log(dataURL);
-      // Trimite dataURL la server
-    }
-    
-    function clearSignature(padNumber) {
-      var canvas = document.getElementById('signature-pad-3');
-      var context = canvas.getContext('2d');
-      context.clearRect(0, 0, canvas.width, canvas.height);
-    }
-    
-    </script>
-    
+        </script>
+        
+        
+          
+        
+        

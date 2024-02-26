@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   get '/voluntariat', to: 'contractes#voluntariat', as: 'voluntariat'
   get '/voluntar', to: 'contractes#voluntar', as: 'voluntar' 
   get '/cerere_voluntar', to: 'contractes#cerere_voluntar', as: 'cerere_voluntar'
+  
   get '/cerere_voluntar1', to: 'contractes#cerere_voluntar1', as: 'cerere_voluntar1'
   get '/gdpr', to: 'contractes#gdpr', as: 'gdpr' #pentru voluntari
   get '/gdpr1', to: 'contractes#gdpr1', as: 'gdpr1' #pentru contractori
@@ -55,6 +56,7 @@ Rails.application.routes.draw do
       match 'create_or_update_contracte_useri', to: 'contractes#create_or_update_contracte_useri', via: [:post, :patch]
       post 'salveaza_gdpr', to: 'contractes#salveaza_gdpr'
       post 'salveaza_contract', to: 'contractes#salveaza_contract'
+      post 'salveaza_fisa_postului', to: 'contractes#salveaza_fisa_postului'
 
     end
   end
