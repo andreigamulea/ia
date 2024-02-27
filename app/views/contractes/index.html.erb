@@ -184,17 +184,17 @@
           <td><%= c.nume_voluntar+' '+c.prenume %></td>
           <td><%= c.localitate_voluntar %></td>
           <td style="text-align: center;">
-        <%= link_to 'Vezi document D1', show_cerere_voluntar_path(c.id), class: "btn btn-secondary" %>               
+        <%= link_to 'Vezi D1', show_cerere_voluntar_path(c.id), class: "btn btn-secondary" %>               
             </td>
 
           <td style="text-align: center;">
-            <%= link_to 'Vezi document D2', show_gdpr_voluntar_path(c.id), class: "btn btn-secondary" %>
+            <%= link_to 'Vezi D2', show_gdpr_voluntar_path(c.id), class: "btn btn-secondary" %>
           </td>
           <td style="text-align: center;">
-            <%= link_to 'Vezi document D3', show_contract_voluntar_path(c.id), class: "btn btn-secondary" %>
+            <%= link_to 'Vezi D3', show_contract_voluntar_path(c.id), class: "btn btn-secondary" %>
           </td>
           <td style="text-align: center;">
-            <%= link_to 'Vezi document D4', show_fisa_postului_voluntar_path(c.id), class: "btn btn-secondary" %>
+            <%= link_to 'Vezi D4', show_fisa_postului_voluntar_path(c.id), class: "btn btn-secondary" %>
           </td>
         </tr>
       <% end %>
