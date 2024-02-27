@@ -145,7 +145,7 @@
       <%= form.hidden_field :contracte_id, value: @contract.id if @contract.id.present? %>      
       <%= form.hidden_field :idcontractor, value: @contract.user_id if @contract&.user_id.present? %>
       <%= form.hidden_field :user_id, value: current_user.id if @current_user.present? %>
-      <%= form.hidden_field :semnatura_voluntar, id: "semnatura_voluntar" %>
+      
       <%= hidden_field_tag :contract_id, @contract.id %>
 
       
@@ -192,7 +192,7 @@
           <canvas id="signature-pad" width="300" height="150" style="border: 1px solid #000;"></canvas><br><br>
           <button type="button" onclick="clearSignature(2)" class="register" style="margin-top: -30px;">Șterge Semnătura</button>
               
-              <%= form.hidden_field :semnatura_voluntar, id: "semnatura_admin" %>
+              <%= form.hidden_field :semnatura_voluntar, id: "semnatura_voluntar" %>
           </div>
         </div>
     
@@ -211,7 +211,7 @@ var isDrawing = false; // Variabila globală
 
 document.addEventListener("turbo:load", function() {
     var canvas = document.getElementById('signature-pad');
-    var hiddenField = document.getElementById('semnatura_admin');
+    var hiddenField = document.getElementById('semnatura_voluntar');
 
     if (canvas && hiddenField) {
         var context = canvas.getContext('2d');
@@ -274,19 +274,17 @@ function attachCanvasEvents(canvas, context) {
     // Evenimente pentru touch
     canvas.addEventListener('touchstart', function(event) {
         isDrawing = true;
-        var touch = event.touches[0];
-        var touchPos = getTouchPos(canvas, touch);
+        var touchPos = getTouchPos(canvas, event);
         startDrawing(touchPos, context);
-        event.preventDefault();
+        event.preventDefault(); // Prevenirea scroll-ului pe dispozitivele touch
     });
 
     canvas.addEventListener('touchmove', function(event) {
         if (isDrawing) {
-            var touch = event.touches[0];
-            var touchPos = getTouchPos(canvas, touch);
+            var touchPos = getTouchPos(canvas, event);
             continueDrawing(touchPos, context);
         }
-        event.preventDefault();
+        event.preventDefault(); // Prevenirea scroll-ului pe dispozitivele touch
     });
 
     canvas.addEventListener('touchend', function() {
@@ -328,7 +326,7 @@ function isCanvasBlank(canvas) {
 
 function clearSignature() {
     var canvas = document.getElementById('signature-pad');
-    var hiddenField = document.getElementById('semnatura_admin');
+    var hiddenField = document.getElementById('semnatura_voluntar');
     if (canvas && hiddenField) {
         var context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -336,4 +334,3 @@ function clearSignature() {
     }
 }
 </script>
-
