@@ -202,7 +202,7 @@ display: flex;
         <p>Voluntar: </p>
         <p style="margin-top:-15px;">
         <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available; padding-left:5px;">
-            <%= @contracte_useri.nume_voluntar %>
+            <%= @contracte_useri.nume_voluntar + ' '+@contracte_useri.prenume%>
         </span>
         </p>
         <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
@@ -266,14 +266,15 @@ display: flex;
         });
         
         function attachCanvasEvents(canvas, context) {
+            // Evenimente pentru mouse
             canvas.addEventListener('mousedown', function(event) {
                 isDrawing = true;
-                startDrawing(event, context);
+                startDrawing(getMousePos(canvas, event), context);
             });
         
             canvas.addEventListener('mousemove', function(event) {
                 if (isDrawing) {
-                    continueDrawing(event, context);
+                    continueDrawing(getMousePos(canvas, event), context);
                 }
             });
         
@@ -284,17 +285,56 @@ display: flex;
             canvas.addEventListener('mouseleave', function() {
                 isDrawing = false;
             });
+        
+            // Evenimente pentru touch
+            canvas.addEventListener('touchstart', function(event) {
+                isDrawing = true;
+                var touch = event.touches[0];
+                startDrawing(getTouchPos(canvas, touch), context);
+                event.preventDefault(); // Preveniți comportamentul implicit al scroll-ului
+            });
+        
+            canvas.addEventListener('touchmove', function(event) {
+                if (isDrawing) {
+                    var touch = event.touches[0];
+                    continueDrawing(getTouchPos(canvas, touch), context);
+                }
+                event.preventDefault(); // Preveniți comportamentul implicit al scroll-ului
+            });
+        
+            canvas.addEventListener('touchend', function(event) {
+                isDrawing = false;
+            });
         }
         
-        function startDrawing(event, context) {
-            var x = event.offsetX;
-            var y = event.offsetY;
+        
+        
+        
+        
+        function getMousePos(canvas, event) {
+            var rect = canvas.getBoundingClientRect();
+            return {
+              x: event.clientX - rect.left,
+              y: event.clientY - rect.top
+            };
+        }
+        
+        // Funcție pentru a obține poziția touch
+        function getTouchPos(canvas, touch) {
+            var rect = canvas.getBoundingClientRect();
+            return {
+              x: touch.clientX - rect.left,
+              y: touch.clientY - rect.top
+            };
+        }
+        
+        function startDrawing(pos, context) {
             context.beginPath();
-            context.moveTo(x, y);
+            context.moveTo(pos.x, pos.y);
         }
         
-        function continueDrawing(event, context) {
-            context.lineTo(event.offsetX, event.offsetY);
+        function continueDrawing(pos, context) {
+            context.lineTo(pos.x, pos.y);
             context.stroke();
         }
         

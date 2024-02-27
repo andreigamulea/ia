@@ -249,14 +249,17 @@ document.addEventListener("turbo:load", function() {
 });
 
 function attachCanvasEvents(canvas, context) {
+    // Evenimente pentru mouse
     canvas.addEventListener('mousedown', function(event) {
         isDrawing = true;
-        startDrawing(event, context);
+        var mousePos = getMousePos(canvas, event);
+        startDrawing(mousePos, context);
     });
 
     canvas.addEventListener('mousemove', function(event) {
         if (isDrawing) {
-            continueDrawing(event, context);
+            var mousePos = getMousePos(canvas, event);
+            continueDrawing(mousePos, context);
         }
     });
 
@@ -267,17 +270,53 @@ function attachCanvasEvents(canvas, context) {
     canvas.addEventListener('mouseleave', function() {
         isDrawing = false;
     });
+
+    // Evenimente pentru touch
+    canvas.addEventListener('touchstart', function(event) {
+        isDrawing = true;
+        var touch = event.touches[0];
+        var touchPos = getTouchPos(canvas, touch);
+        startDrawing(touchPos, context);
+        event.preventDefault();
+    });
+
+    canvas.addEventListener('touchmove', function(event) {
+        if (isDrawing) {
+            var touch = event.touches[0];
+            var touchPos = getTouchPos(canvas, touch);
+            continueDrawing(touchPos, context);
+        }
+        event.preventDefault();
+    });
+
+    canvas.addEventListener('touchend', function() {
+        isDrawing = false;
+    });
 }
 
-function startDrawing(event, context) {
-    var x = event.offsetX;
-    var y = event.offsetY;
+function getMousePos(canvas, event) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+    };
+}
+
+function getTouchPos(canvas, touchEvent) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: touchEvent.touches[0].clientX - rect.left,
+        y: touchEvent.touches[0].clientY - rect.top
+    };
+}
+
+function startDrawing(pos, context) {
     context.beginPath();
-    context.moveTo(x, y);
+    context.moveTo(pos.x, pos.y);
 }
 
-function continueDrawing(event, context) {
-    context.lineTo(event.offsetX, event.offsetY);
+function continueDrawing(pos, context) {
+    context.lineTo(pos.x, pos.y);
     context.stroke();
 }
 
@@ -290,7 +329,6 @@ function isCanvasBlank(canvas) {
 function clearSignature() {
     var canvas = document.getElementById('signature-pad');
     var hiddenField = document.getElementById('semnatura_admin');
-    
     if (canvas && hiddenField) {
         var context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height);
