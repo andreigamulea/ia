@@ -332,6 +332,8 @@ class ContractesController < ApplicationController
   def contracte_all
     @prods = Prod.where(curslegatura: 'documente', status: 'activ')
     @contracte_useri = ContracteUseri.all
+    @contract = Contracte.all
+
   end  
   def vizualizeaza_contract    
     @contract = Contracte.first
@@ -472,7 +474,7 @@ class ContractesController < ApplicationController
     @contracte.destroy
 
     respond_to do |format|
-      format.html { redirect_to contractes_url, notice: "Contracte was successfully destroyed." }
+      format.html { redirect_to contracte_all_url, notice: "Contracte was successfully destroyed." }
       format.json { head :no_content }
     end
   end
