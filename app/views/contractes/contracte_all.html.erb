@@ -17,16 +17,20 @@
 <table class="table table-striped table-hover">
 <thead>
   <tr>
-    <th style="width: 10%;">ID</th>
-    <th style="width: 70%;">Nume</th>
-    <th style="width: 70%;">Email</th>
+  <th style="width: 20%;">Contract ID</th>
+    <th style="width: 10%;">Cod contract</th>
+    <th style="width: 20%;">CUI Firma</th>
+    <th style="width: 20%;">ID-user</th>
+    <th style="width: 20%;">Email model</th>
     <th>Acțiuni</th>
   </tr>
 </thead>
 <tbody>
   <% @contract.each do |contract| %>
     <tr>
-      <td><%= contract.id %></td>
+    <td><%= contract.id %></td>
+      <td><%= contract.cod_contract %></td>
+      <td><%= contract.cui_firma %></td>
       <td><%= contract.user_id %></td>
       <td><%= contract.email %></td>
       <td>
@@ -58,16 +62,18 @@
 <table class="table table-striped table-hover">
 <thead>
   <tr>
-    <th style="width: 10%;">ID</th>
-    <th style="width: 70%;">Nume</th>
+  <th style="width: 20%;">Contract ID</th>
+    <th style="width: 20%;">Nume</th>
+    <th style="width: 10%;">ID-contractor</th>
     <th>Acțiuni</th>
   </tr>
 </thead>
 <tbody>
   <% @contracte_useri.each do |contract_user| %>
     <tr>
-      <td><%= contract_user.id %></td>
-      <td><%= contract_user.nume_voluntar %></td>
+    <td><%= contract_user.contracte_id %></td>
+      <td><%= contract_user.nume_voluntar+' '+contract_user.prenume %></td>
+      <td><%= contract_user.idcontractor %></td>
       <td>
         <div class="action-buttons">
           <%= link_to 'View', vizualizeaza_contract_contracte_path(contract_user), class: 'btn btn-primary' %>
