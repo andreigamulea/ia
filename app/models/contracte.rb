@@ -1,8 +1,9 @@
 class Contracte < ApplicationRecord #acest tabel este pentru contractori
     belongs_to :user
     has_many :contracte_acces_emails
-    has_many :contracte_useris
-    validates :cod_contract, uniqueness: { scope: :user_id, message: "Nu puteți adăuga mai multe modele de contracte cu aceiasi Serie Contract." }
+    has_many :contracte_useris, dependent: :restrict_with_error
+    validates :cod_contract, uniqueness: { scope: :cui_firma, message: "Nu puteți adăuga mai multe modele de contracte cu aceeași combinație de Serie Contract și CUI firmă." }
+
 
     validates :email, presence: true
     validates :tip, presence: true
