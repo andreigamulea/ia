@@ -216,8 +216,8 @@ padding: 5px 0px;
         </span>
         </p>
         <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
-        
-        <button type="button" onclick="clearSignature(2)", class="register">Șterge Semnătura</button>
+        <% if @show_submit_button %>
+        <button type="button" onclick="clearSignature(2)", class="register">Șterge Semnătura</button><%end%>
         <%= form.hidden_field :semnatura3, id: "semnatura3" %>
     </div>
   
