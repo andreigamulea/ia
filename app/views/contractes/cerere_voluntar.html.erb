@@ -190,7 +190,8 @@
           <p>Semnătura voluntar: </p>
           <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available;"></span>
           <canvas id="signature-pad" width="300" height="150" style="border: 1px solid #000;"></canvas><br><br>
-          <button type="button" onclick="clearSignature(2)" class="register" style="margin-top: -30px;">Șterge Semnătura</button>
+          <% if @show_submit_button %>
+          <button type="button" onclick="clearSignature(2)" class="register" style="margin-top: -30px;">Șterge Semnătura</button><% end %>
               
               <%= form.hidden_field :semnatura_voluntar, id: "semnatura_voluntar" %>
           </div>
