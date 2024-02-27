@@ -179,18 +179,25 @@
         </tr>
     </thead>
     <tbody>
-        <% @contracte_useri.each do |c| %>
-            <tr>
-            <td><%= c.nume_voluntar %></td>
-            <td><%= c.localitate_voluntar %></td>
-            <td style=" align-items: center;">                
-            <%= link_to 'Vezi', voluntar_path(c), class: "btn btn-secondary" %>               
-            </td>
-            <td style=" align-items: center;"><%= link_to 'Vezi', voluntar_path(c), class: "btn btn-secondary" %></td>
-            <td style=" align-items: center;"><%= link_to 'Vezi', voluntar_path(c), class: "btn btn-secondary" %></td>
-            <td style=" align-items: center;"><%= link_to 'Vezi', voluntar_path(c), class: "btn btn-secondary" %></td>
-            </tr>
-        <% end %>
+    <% @contracte_useri.each do |c| %>
+        <tr>
+          <td><%= c.nume_voluntar %></td>
+          <td><%= c.localitate_voluntar %></td>
+          <td style="align-items: center;">
+            <%= link_to 'Vezi', show_cerere_voluntar_path(c.id), class: "btn btn-secondary" %>               
+          </td>
+          <td style="align-items: center;">
+            <%= link_to 'Vezi', show_gdpr_voluntar_path(c.id), class: "btn btn-secondary" %>
+          </td>
+          <td style="align-items: center;">
+            <%= link_to 'Vezi', show_contract_voluntar_path(c.id), class: "btn btn-secondary" %>
+          </td>
+          <td style="align-items: center;">
+            <%= link_to 'Vezi', show_fisa_postului_voluntar_path(c.id), class: "btn btn-secondary" %>
+          </td>
+        </tr>
+      <% end %>
+      
         </tbody>
 </table>
 <%end%>

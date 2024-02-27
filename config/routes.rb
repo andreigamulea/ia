@@ -1,4 +1,11 @@
 Rails.application.routes.draw do    
+
+  get '/show_cerere_voluntar/:id', to: 'contractes#show_cerere_voluntar', as: 'show_cerere_voluntar'
+  get '/show_gdpr_voluntar/:id', to: 'contractes#show_gdpr_voluntar', as: 'show_gdpr_voluntar'
+  get '/show_contract_voluntar/:id', to: 'contractes#show_contract_voluntar', as: 'show_contract_voluntar'
+  get '/show_fisa_postului_voluntar/:id', to: 'contractes#show_fisa_postului_voluntar', as: 'show_fisa_postului_voluntar'
+
+
   post '/newsletter', to: 'home#newsletter'
   get 'home/lista_newsletter', to: 'home#lista_newsletter', as: 'lista_newsletter'
 
