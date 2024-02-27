@@ -20,7 +20,7 @@ class ContractesController < ApplicationController
       # Dacă contractul există, setează variabilele necesare pentru view
       
       set_shared_data(@contract, @contracte_useri)
-  
+      @show_submit_button = false
       # Randare view specific
       render 'contractes/gdpr'
     else
