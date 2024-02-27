@@ -780,7 +780,7 @@ end
           contracte_useri.localitate_voluntar,
           contracte_useri.strada_voluntar,
           "nr. #{contracte_useri.numarstrada_voluntar}",
-          ("Bloc #{contracte_useri.bloc_voluntar}" if contracte_useri.bloc_voluntar.present?),
+          (" #{contracte_useri.bloc_voluntar}" if contracte_useri.bloc_voluntar.present?),
           contracte_useri.judet_voluntar
         ].compact.join(", ")
         
