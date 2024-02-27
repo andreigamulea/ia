@@ -41,4 +41,39 @@
 </tbody>
 </table>
 
-</div></div></div></div>
+</div></div>
+
+<div class="tbland">
+<div class="tbr">
+<table class="table table-striped table-hover">
+<thead>
+  <tr>
+    <th style="width: 10%;">ID</th>
+    <th style="width: 70%;">Nume</th>
+    <th style="width: 70%;">Email</th>
+    <th>Acțiuni</th>
+  </tr>
+</thead>
+<tbody>
+  <% @contract.each do |contract| %>
+    <tr>
+      <td><%= contract.id %></td>
+      <td><%= contract.user_id %></td>
+      <td><%= contract.email %></td>
+      <td>
+      <div class="action-buttons">
+      <%= link_to 'View', contracte_path(contract), class: 'btn btn-primary' %>
+      <%= link_to 'Edit', edit_contracte_path(contract), class: 'btn btn-secondary' %>
+      <%= button_to 'Delete', contracte_path(contract), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      
+    </div>
+  </td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+
+</div></div>
+
+
+</div></div>

@@ -54,7 +54,7 @@
 <main class="cr" style="background-color: aliceblue;">
 
     <h1 class="first-tittle">Set documente voluntariat: Ayush Cell Romania</h1>
-    <div style="text-align:left">
+    <div style="text-align:left; width: 100%;">
     <p>Aveti achizitionate: <%= @nr_total_contracte_achizitionate %> set-uri de documente.</p>
     <p>Total voluntari: <%= @numar_contracte_useris %> </p>
     <p>Set de documente disponibile: <%= @nr_total_contracte_achizitionate-@numar_contracte_useris %> </p>
@@ -102,7 +102,7 @@
 
 
 <%if @nr_contractes>0 || current_user.role==1%>
-<div style="text-align:left;">
+<div style="text-align:left; width: 100%;">
 <h3>Legenda:</h3>
 <p>D1: CERERE ÎNSCRIERE VOLUNTAR</p>
 <p>D2: ACORD GDPR</p>
