@@ -156,12 +156,11 @@ display: flex;
 
         <h3>Responsabilități ale postului:</h3>
         <ul style="margin-top:-20px;">
-            <li>Răspunde pentru neîndeplinirea sau îndeplinirea necorespunzătoare a atribuțiilor ce-i revin.</li>
-            <li>Răspunde pentru eventualele prejudicii produse ca efect al activității sale.</li>
-            <li>Răspunde de păstrarea confidențialității informațiilor.</li>
-            <li>Răspunde de păstrarea documentelor legate de activitățile asociației.</li>
-            <li>Răspunde de utilizarea resurselor puse la dispoziție exclusiv în interesul acesteia.</li>
-            <li>Respectă prevederile normativelor interne și procedurile de lucru privitoare la postul său.</li>
+        <% @responsabilitati_voluntar.each do |responsabilitati| %>
+          <div>
+            <li><%= responsabilitati %></li>
+          </div>
+        <% end %>
         </ul>
 
         <h3>Autoritatea postului:</h3>
@@ -171,7 +170,13 @@ display: flex;
         </ul>
 
         <h3>Condiții de lucru:</h3>
-        <p>Program de activități conform precizărilor organizației.</p>
+        <ul style="margin-top:-20px;">
+        <% @conditii_lucru.each do |conditii| %>
+          <div>
+            <li><%= conditii %></li>
+          </div>
+        <% end %>
+        </ul>
 
         <h3>Facilități:</h3>
         <p>Se asigură, la cerere, de către organizația gazdă, hrană rece; decontarea cheltuielilor de transport efectuate în scopul desfășurării activităților organizației gazdă.</p>

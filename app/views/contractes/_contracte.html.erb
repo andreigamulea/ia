@@ -40,6 +40,30 @@
           <p>Nu există sarcini definite.</p>
         <% end %>
 
+        </br>
+        <strong>Responsabilitati voluntar:</strong>
+            <% if @responsabilitati_voluntar.present? %>
+              <ol>
+                <% @responsabilitati_voluntar.split(';').each do |responsabilitati| %>
+                  <li><%= responsabilitati.strip %></li>
+                <% end %>
+              </ol>
+            <% else %>
+              <p>Nu există sarcini definite.</p>
+            <% end %>
+
+            </br>
+            <strong>Conditii de lucru voluntar:</strong>
+                <% if @conditii_lucru.present? %>
+                  <ol>
+                    <% @conditii_lucru.split(';').each do |responsabilitati| %>
+                      <li><%= responsabilitati.strip %></li>
+                    <% end %>
+                  </ol>
+                <% else %>
+                  <p>Nu există sarcini definite.</p>
+                <% end %>
+
     <span><strong>Valabilitate pachet (luni): </strong><%=@valabilitate_luni%></span>
     
 

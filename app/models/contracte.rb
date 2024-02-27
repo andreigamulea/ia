@@ -24,4 +24,6 @@ class Contracte < ApplicationRecord #acest tabel este pentru contractori
     validates :contor_start, presence: true, numericality: { greater_than_or_equal_to: 1 }
     validates :valabilitate_luni, presence: true
     validates :sarcini_voluntar, presence: true
+    validates :responsabilitati_voluntar, presence: true
+    validates :conditii_lucru, presence: true
 end
