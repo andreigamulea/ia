@@ -1,8 +1,63 @@
 class ContractesController < ApplicationController
   before_action :set_contracte, only: %i[ show edit update destroy]
   before_action :set_contract, only: %i[ cerere_voluntar1 gdpr1 semneaza_contract1 fisa_postului1]
-  before_action :set_contracte_useri, only: %i[vizualizeaza_contract destroy_contracte_useri]
+  before_action :set_contracte_useri, only: %i[vizualizeaza_contract destroy_contracte_useri show_cerere_voluntar
+    show_gdpr_voluntar show_contract_voluntar show_fisa_postului_voluntar]
 
+  def show_cerere_voluntar
+    contracte_id = @contracte_useri.contracte_id
+    @contract = Contracte.find_by(id: contracte_id)
+    set_shared_data(@contract, @contracte_useri)
+    @show_submit_button = false
+   
+
+    render 'contractes/cerere_voluntar' 
+  end  
+  def show_gdpr_voluntar
+    contracte_id = @contracte_useri.contracte_id
+    @contract = Contracte.find_by(id: contracte_id)
+    if @contract
+      # Dacă contractul există, setează variabilele necesare pentru view
+      
+      set_shared_data(@contract, @contracte_useri)
+  
+      # Randare view specific
+      render 'contractes/gdpr'
+    else
+      # Dacă contractul nu există, redirecționează utilizatorul cu un mesaj de eroare
+      redirect_to root_path, alert: "Contractul specificat nu a fost găsit."
+    end
+  end  
+  def show_contract_voluntar
+    contracte_id = @contracte_useri.contracte_id
+    @contract = Contracte.find_by(id: contracte_id)
+    if @contract
+      set_shared_data(@contract, @contracte_useri)
+      # Dacă contractul există, setează variabilele necesare pentru view
+      @show_submit_button = false
+  
+      # Randare view specific
+      render 'contractes/semneaza_contract'
+    else
+      # Dacă contractul nu există, redirecționează utilizatorul cu un mesaj de eroare
+      redirect_to root_path, alert: "Contractul specificat nu a fost găsit."
+    end
+  end  
+  def show_fisa_postului_voluntar
+    contracte_id = @contracte_useri.contracte_id
+    @contract = Contracte.find_by(id: contracte_id)
+    if @contract
+      set_shared_data(@contract, @contracte_useri)
+      # Dacă contractul există, setează variabilele necesare pentru view
+      @show_submit_button = false
+  
+      # Randare view specific
+      render 'contractes/fisa_postului'
+    else
+      # Dacă contractul nu există, redirecționează utilizatorul cu un mesaj de eroare
+      redirect_to root_path, alert: "Contractul specificat nu a fost găsit."
+    end
+  end  
   # GET /contractes or /contractes.json
   def verifica_cod
     prefix = params[:code_part1]
