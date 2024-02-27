@@ -229,6 +229,19 @@
     <%= form.text_area :sarcini_voluntar, rows: 3, id: 'contracte_sarcini_voluntar', placeholder: 'Descrieți sarcinile principale ale voluntarului, folosind punct și virgulă (;) pentru separare. Exemplu: Scriere articole; Organizare evenimente; Colectare fonduri;', class: 'input-class-name', class: 'input-class-name', style: 'width: -webkit-fill-available;' %>
   </div>
 
+
+  <div class="input-group" style="display:flex; flex-direction:row;">
+    <%= form.label :responsabilitati_voluntar, 'Responsabilitati voluntar:' , style: 'width: -webkit-fill-available;'%>
+    <%= form.text_area :responsabilitati_voluntar, rows: 3, id: 'responsabilitati_voluntar', placeholder: 'Descrieți responsabilitatile principale ale voluntarului, folosind punct și virgulă (;) pentru separare. Exemplu: răspunde pentru neîndeplinirea sau îndeplinirea necorespunzătoare a atribuțiilor ce-i revin;	răspunde pentru eventualele prejudicii produse ca efect al activității sale; etc', class: 'input-class-name', class: 'input-class-name', style: 'width: -webkit-fill-available;' %>
+  </div>
+
+  <div class="input-group" style="display:flex; flex-direction:row;">
+  <%= form.label :conditii_lucru, 'Conditii lucru voluntar:' , style: 'width: -webkit-fill-available;'%>
+  <%= form.text_area :conditii_lucru, rows: 3, id: 'conditii_lucru', placeholder: 'Conditiile de lucru ale voluntarului, folosind punct și virgulă (;) pentru separare. Exemplu: program de activități conform precizarilor organizației; etc', class: 'input-class-name', class: 'input-class-name', style: 'width: -webkit-fill-available;' %>
+</div>
+
+
+
   <div class="input-group" >
   <%= form.label :valabilitate_luni, 'Valabilitate pachet (luni):' %>
   <%= form.number_field :valabilitate_luni, id: 'contracte_valabilitate_luni', placeholder: 'Durata în luni a valabilității', style: 'max-width: 300px;' %>

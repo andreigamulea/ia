@@ -382,6 +382,8 @@ class ContractesController < ApplicationController
     @departament = @contracte&.departament
     @relatii_functionale_voluntar = @contracte&.relatii_functionale 
     @sarcini_voluntar = @contracte&.sarcini_voluntar
+    @responsabilitati_voluntar = @contracte&.responsabilitati_voluntar
+    @conditii_lucru = @contracte&.conditii_lucru
     @valabilitate_luni = @contracte&.valabilitate_luni
   end
   
@@ -714,7 +716,9 @@ end
         :semnatura_admin,
         :contor_start,
         :valabilitate_luni,
-        :sarcini_voluntar
+        :sarcini_voluntar,
+        :responsabilitati_voluntar,
+        :conditii_lucru
       )
     end
     def contracte_useri_params
@@ -766,7 +770,9 @@ end
         @adresa_firma = contract.sediu_firma
         @email_admin = contract.email
         @nume_admin = contract.reprezentant_firma
-        @show_submit_button = true
+        @responsabilitati_voluntar =  contract.responsabilitati_voluntar.split(';').map(&:strip) 
+        @conditii_lucru = contract.conditii_lucru.split(';').map(&:strip)
+        @show_submit_button = true 
         
         # Setări specifice pentru contracte_useri
         @nume_voluntar = "#{contracte_useri.nume_voluntar} #{contracte_useri.prenume}"
