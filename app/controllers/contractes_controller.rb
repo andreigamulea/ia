@@ -265,7 +265,11 @@ class ContractesController < ApplicationController
     end  
     puts("da3")
     @prod = Prod.find_by(curslegatura: 'voluntari', status: 'activ')
+    if current_user && current_user.role==1
+      @contractes = Contracte.all
+    else  
     @contractes = Contracte.where(user_id: current_user.id)
+    end
     @nr_contractes = @contractes.count
     puts("@nr_contractes este: #{@nr_contractes}")
     #@contracte = Contracte.last
