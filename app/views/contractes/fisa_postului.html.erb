@@ -21,8 +21,8 @@ padding: 5px 0px;
   align-items: center; 
 }
 .address{
-display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 #fisa-post form {
@@ -33,7 +33,7 @@ display: flex;
     padding: 6px 8px;
     margin-bottom: 10px;
     box-sizing: border-box;
-  }
+}
 
 #fisa-post input[type="submit"] {
     display: block;
@@ -43,6 +43,11 @@ display: flex;
     color: white;
     cursor: pointer;
 }
+@media screen and (max-width: 920px) {
+      #fisa-post .anexa {
+        margin-top: -10px!important;
+    }
+}
 @media screen and (max-width: 600px) {
   #fisa-post .semnatura {
       flex-direction: column; 
@@ -51,8 +56,13 @@ display: flex;
   #fisa-post .gazda, #fisa-post .voluntar {
       max-width: none;
   }
+
 }
 
+#fisa-post .anexa {
+    margin-top:-30px;
+    text-align:center;
+}
 #fisa-post canvas {
   border: 1px solid #000;
   margin-top: 10px;
@@ -118,7 +128,7 @@ display: flex;
         <p style="margin-top:-10px;"><%=@adresa_firma%></p>
 
         <h2 class="main-title" style="text-align:center;">Fișa postului</h2>
-        <p style="margin-top:-30px;text-align:center;">anexă la contractul de voluntariat</p>
+        <p class="anexa">anexă la contractul de voluntariat</p>
 
 
         <h3>Denumire post: <%=@denumire_contract%></h3>
