@@ -164,7 +164,7 @@
 
 
 
-<%if  @numar_contracte_useris>0%>
+<%if  @numar_contracte_useris>0 || current_user.role == 1%>
 <h2 class="main-title">Contracte de voluntariat</h2>
 <table class="table table-striped table-bordered table-hover">
     <thead class="thead-dark">
@@ -184,16 +184,16 @@
           <td><%= c.nume_voluntar %></td>
           <td><%= c.localitate_voluntar %></td>
           <td style="align-items: center;">
-            <%= link_to 'Vezi', show_cerere_voluntar_path(c.id), class: "btn btn-secondary" %>               
+            <%= link_to 'Vezi document', show_cerere_voluntar_path(c.id), class: "btn btn-secondary" %>               
           </td>
           <td style="align-items: center;">
-            <%= link_to 'Vezi', show_gdpr_voluntar_path(c.id), class: "btn btn-secondary" %>
+            <%= link_to 'Vezi document', show_gdpr_voluntar_path(c.id), class: "btn btn-secondary" %>
           </td>
           <td style="align-items: center;">
-            <%= link_to 'Vezi', show_contract_voluntar_path(c.id), class: "btn btn-secondary" %>
+            <%= link_to 'Vezi document', show_contract_voluntar_path(c.id), class: "btn btn-secondary" %>
           </td>
           <td style="align-items: center;">
-            <%= link_to 'Vezi', show_fisa_postului_voluntar_path(c.id), class: "btn btn-secondary" %>
+            <%= link_to 'Vezi document', show_fisa_postului_voluntar_path(c.id), class: "btn btn-secondary" %>
           </td>
         </tr>
       <% end %>

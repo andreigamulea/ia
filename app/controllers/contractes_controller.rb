@@ -284,8 +284,15 @@ class ContractesController < ApplicationController
     # Numără ContracteUseris pentru contractele userului curent
     @numar_contracte_useris = ContracteUseri.joins(:contracte).where(contractes: { user_id: current_user.id }).count
     puts("numar contracte consumate: #{@numar_contracte_useris}")
-    @contracte_useri = ContracteUseri.where(contracte_id: current_user.contractes.pluck(:id)) 
-    
+    #@contracte_useri = ContracteUseri.where(contracte_id: current_user.contractes.pluck(:id)) 
+    puts("user 222 out")
+    if current_user.role == 1
+      puts("user 222 in if")
+      @contracte_useri = ContracteUseri.all
+    else  
+      puts("user 222 in else")
+      @contracte_useri = ContracteUseri.where(contracte_id: current_user.contractes.pluck(:id)) 
+    end  
   end
   def semneaza_contract
     #contracte_useri.validare_semnatura_contract = true
