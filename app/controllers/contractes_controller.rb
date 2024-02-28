@@ -797,7 +797,11 @@ end
         @sarcini = @contract.sarcini_voluntar.split(';').map(&:strip)
         @expira_la = Date.today + @contract.valabilitate_luni.months
         @cod_contract = @contract.cod_contract
-        @nr_contract_referinta = ContracteUseri.maximum(:nr_contract_referinta).to_i + 1
+
+
+        @nr_contract_referinta = calculate_nr_contract_referinta(contract.id)
+        #@nr_contract_referinta = ContracteUseri.maximum(:nr_contract_referinta).to_i + 1
+
         @status = "Activ"
         @coordonator_v = @contract&.subordonare
         @data_inceperii = Date.today
@@ -808,7 +812,15 @@ end
       end
     end
     
-    
+    def calculate_nr_contract_referinta(contract_id)
+      max_nr_contract_referinta = ContracteUseri.where(contracte_id: contract_id).maximum(:nr_contract_referinta)
+      if max_nr_contract_referinta
+        max_nr_contract_referinta + 1
+      else
+        @start_contract
+      end
+    end
+
     def set_user_admin
       if !current_user
         redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."

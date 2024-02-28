@@ -118,25 +118,25 @@ padding: 5px 0px;
                 <%= form.hidden_field :coordonator_v, value: @coordonator_v %>
                 <%= form.hidden_field :data_inceperii, value: @data_inceperii %>
                 <%= form.hidden_field :semnatura_administrator, value: @semnatura_administrator %>
-  
+                
                 <%= hidden_field_tag :contract_id, @contract.id %>
                 <%= form.hidden_field :perioada_contract, value: @contract.valabilitate_luni if @contract&.valabilitate_luni.present? %>
 <section>
     <div>
         <h3>Organizație Gazdă:</h3>
-        <p style="margin-top:-10px;"><%=@gazda%></p>
-        <p style="margin-top:-10px;"><%=@adresa_firma%></p>
+        <p style="margin-top:-10px;"><b><%=@gazda%></b></p>
+        <p style="margin-top:-10px;"><b><%=@adresa_firma%></b></p>
 
         <h2 class="main-title" style="text-align:center;">Fișa postului</h2>
         <p class="anexa">anexă la contractul de voluntariat</p>
 
 
         <h3>Denumire post: <%=@denumire_contract%></h3>
-        <p>Nume și prenume voluntar: <%=@nume_voluntar%></p>
-        <p style="margin-top:-10px;">Locul desfășurării activității de voluntariat: <%=@locul_desfasurarii_activitatii_voluntar%></p>
-        <p style="margin-top:-10px;">Departament: <%=@departament%></p>
-        <p style="margin-top:-10px;">Subordonare: coordonator <%=@coordonator_voluntar%></p>
-        <p style="margin-top:-10px;">Relații funcționale: <%=@relatii_functionale_voluntar%></p>
+        <p>Nume și prenume voluntar: <b><%=@nume_voluntar%></b></p>
+        <p style="margin-top:-10px;">Locul desfășurării activității de voluntariat: <b><%=@locul_desfasurarii_activitatii_voluntar%></b></p>
+        <p style="margin-top:-10px;">Departament: <b><%=@departament%></b></p>
+        <p style="margin-top:-10px;">Coordonator:  <b><%=@coordonator_voluntar%></b></p>
+        <p style="margin-top:-10px;">Relații funcționale: <b><%=@relatii_functionale_voluntar%></b></p>
         <h3>Cerințe specifice postului:</h3>
         <ul style="margin-top:-20px;">
             <li>disciplină, seriozitate, responsabilitate și atenție.</li>
@@ -148,7 +148,7 @@ padding: 5px 0px;
         <ul style="margin-top:-20px;">
         <% @sarcini.each do |sarcina| %>
           <div>
-            <li><%= sarcina %></li>
+            <li><b><%= sarcina %></b></li>
           </div>
         <% end %>
         </ul>
@@ -168,7 +168,7 @@ padding: 5px 0px;
         <ul style="margin-top:-20px;">
         <% @responsabilitati_voluntar.each do |responsabilitati| %>
           <div>
-            <li><%= responsabilitati %></li>
+            <li><b><%= responsabilitati %></b></li>
           </div>
         <% end %>
         </ul>
@@ -183,7 +183,7 @@ padding: 5px 0px;
         <ul style="margin-top:-20px;">
         <% @conditii_lucru.each do |conditii| %>
           <div>
-            <li><%= conditii %></li>
+            <li><b><%= conditii %></b></li>
           </div>
         <% end %>
         </ul>
@@ -201,8 +201,8 @@ padding: 5px 0px;
  
         
         <div class="gazda">
-        <p><%=@nume_firma%>,</p>
-        <p style="margin-top: -15px; border: 2px solid transparent; border-left: none;"><%= @nume_admin %></p>
+        <p><b><%=@gazda%></b>,</p>
+        <p style="margin-top: -15px; border: 2px solid transparent; border-left: none;"><b><%= @nume_admin %></b></p>
         <img src="<%= @semnatura_admin %>" alt="Semnătura reprezentantului" style="border: none;">
         </div>
     
@@ -212,7 +212,8 @@ padding: 5px 0px;
         <p>Voluntar: </p>
         <p style="margin-top:-15px;">
         <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available; padding-left:5px;">
-            Nume voluntar
+        <%= @nume_voluntar || "Nume voluntar" %>
+
         </span>
         </p>
         <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
