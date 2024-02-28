@@ -5,6 +5,8 @@ module ContractesHelper
           'red'
         when 'pending'
           '#29B6F6'
+        when 'succes'
+          '#28a745'  
         else
           'defaultColor' # Sau orice altă culoare implicită
         end

@@ -118,8 +118,12 @@ class ContractesController < ApplicationController
     if @contracte_useri.semnatura3==nil
       @status4 = "required"
     else
-      @status4 = "pending"
+      @status1 = "succes"
+      @status2 = "succes"
+      @status3 = "succes"
+      @status4 = "succes"
     end  
+    @status5 = "required"
   end 
   def cerere_voluntar
     puts("aaaaaaa")
@@ -215,29 +219,10 @@ class ContractesController < ApplicationController
     if params[:contract_id]
       @contracte = Contracte.find_by(id: params[:contract_id])
       @contracte_useri = ContracteUseri.new
+      set_shared_data(@contract, @contracte_useri)
        #atentie sarcinile trebuiesc obligatoriu separate prin ; in tabela postges
 #####
-    @nume_firma = @contracte&.nume_firma
-    @email_firma = @contracte&.email
-    @tip_contract = @contracte&.tip
-    @denumire_contract = @contracte&.denumire
-    @serie_contract = @contracte&.cod_contract
-    @start_contract = @contracte&.contor_start   
-    @sediu_firma = @contracte&.sediu_firma
-    @cui_firma = @contracte&.cui_firma
-    @cont_bancar = @contracte&.cont_bancar
-    @banca_firma = @contracte&.banca_firma
-    @reprezentant_firma = @contracte&.reprezentant_firma    
-    @calitate_reprezentant = @contracte&.calitate_reprezentant    
-    @semnatura_admin = @contracte.semnatura_admin if @contracte
-    @denumire_post_voluntar = @contracte&.denumire_post
-    @coordonator_voluntar = @contracte&.subordonare
-    @locul_desfasurarii_activitatii_voluntar = @contracte&.locul_desfasurarii
-    @departament = @contracte&.departament
-    @relatii_functionale_voluntar = @contracte&.relatii_functionale 
     
-    @sarcini = @contracte.sarcini_voluntar.split(';').map(&:strip)
-    @valabilitate_luni = @contracte&.valabilitate_luni
     @show_submit_button = false
     else
       redirect_to voluntariat_path, alert: "Acces neautorizat."
@@ -323,14 +308,13 @@ class ContractesController < ApplicationController
   end  
   def semneaza_contract1
     
-    @nume_firma=@contract.nume_firma
-    @sediu_firma=@contract.sediu_firma
-    @cui_firma=@contract.cui_firma
-    @reprezentant_firma=@contract.reprezentant_firma    
-    @calitate_reprezentant=@contract.calitate_reprezentant
-    @semnatura_admin = @contract.semnatura_admin if @contract
-    @durata_contract = @contract.valabilitate_luni
-    @contracte_useri = ContracteUseri.new
+    if params[:contract_id]
+      @contracte = Contracte.find_by(id: params[:contract_id])
+      @contracte_useri = ContracteUseri.new
+      set_shared_data(@contract, @contracte_useri)
+       #atentie sarcinile trebuiesc obligatoriu separate prin ; in tabela postges
+#####
+    end
     @show_submit_button = false
     render 'contractes/semneaza_contract'
   end  
