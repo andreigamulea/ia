@@ -152,7 +152,7 @@
     <section class="contract-section">
     <div class="section-content">
         <p class="organization-info">
-            Între <span class="dynamic-content"><%= @gazda %></span>, cu sediul în <span class="dynamic-content"><%= @adresa_firma %></span>, identificată cu CUI <span class="dynamic-content"><%= @cui_firma %></span>, reprezentată de <span class="dynamic-content"><%= @nume_admin %></span> în calitate de <span class="dynamic-content"><%= @calitate_reprezentant %></span>, numită în continuare Organizația gazdă și
+            Între <span class="dynamic-content"><b><%= @gazda %></b></span>, cu sediul în <span class="dynamic-content"><b><%= @adresa_firma %></b></span>, identificată cu CUI <span class="dynamic-content"><b><%= @cui_firma %></b></span>, reprezentată de <span class="dynamic-content"><b><%= @nume_admin %></b></span> în calitate de <span class="dynamic-content"><b><%= @calitate_reprezentant %></b></span>, numită în continuare Organizația gazdă și
         </p>
 
         <div class="volunteer-info">
@@ -187,7 +187,7 @@
     </div>
     <div class="section">
     <h2>Art. 2. DURATA CONTRACTULUI</h2>
-    <p>2.1 Prezentul contract se încheie pe perioada de <%=@durata_contract%> luni, cu posibilitatea prelungirii sale pentru noi perioade stabilite de părți.</p>
+    <p>2.1 Prezentul contract se încheie pe perioada de <b><%=@durata_contract%></b> luni, cu posibilitatea prelungirii sale pentru noi perioade stabilite de părți.</p>
     <p>2.2 Activitățile de voluntariat care fac obiectul prezentului contract se desfășoară pe timp de zi. Programul, timpul şi perioada de desfăşurare a activității de voluntariat precum și responsabilitățile sunt stabilite prin fişa voluntarului, ataşată prezentului contract.</p>
 </div>
 
@@ -289,8 +289,8 @@
  
         
     <div class="gazda">
-    <p><%=@gazda%>,</p>
-    <p style="margin-top: -15px; border: 2px solid transparent; border-left: none;"><%= @nume_admin %></p>
+    <p><b><%=@gazda%></b>,</p>
+    <p style="margin-top: -15px; border: 2px solid transparent; border-left: none;"><b><%= @nume_admin %></b></p>
     <img src="<%= @semnatura_admin %>" alt="Semnătura reprezentantului" style="border: none;">
     </div>
 
@@ -300,7 +300,7 @@
         <p>Voluntar: </p>
         <p style="margin-top:-15px;">
         <span id="nume-voluntar-destinatie" style="width: -webkit-fill-available; padding-left:5px;">
-            <%= @contracte_useri.nume_voluntar %>
+            <%=@nume_voluntar%>
         </span>
         </p>
         <canvas id="signature-pad-3" width="auto" height="auto" style="border: 1px solid #000;"></canvas>
