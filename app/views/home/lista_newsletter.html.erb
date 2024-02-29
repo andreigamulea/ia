@@ -13,7 +13,7 @@
 <div class="cr" style="background-color: white; ">
     <h1 class="first-tittle">Ayush Cell Romania: Program de pregătire Nutritie Ayurvedică modulul 3</h1>
     <h2 class="main-title" >Lista celor inscrisi la Newsletter</h2>
-
+    <h5>Total inscrisi: <%=@nr_inscrisi%></h5>
 <section>
 
 
@@ -29,16 +29,19 @@
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
                 <tr class= "desk">
+                    <th style="height: 40px; vertical-align:middle; width: 5%;">Nr</th>
                     <th style="height: 40px; vertical-align:middle; width: 30%;">Nume</th>                    
-                    <th style="height: 40px; vertical-align:middle; width: 30%;">Email</th>
-                    
+                    <th style="height: 40px; vertical-align:middle; width: 30%;">Email</th>                    
                     <th style="height: 40px; vertical-align:middle; width: 14%;">Valid</th>
-                    
+                    <th style="height: 40px; vertical-align:middle; width: 14%;">Data inscrierii</th>
                 </tr>      
             </thead>
             <tbody>
+            
             <% @lista.each do |l| %>
+                <%@n=@n+1%>
                     <tr>
+                    <td><%=@n%></td>
                     <td>
                         <%= l.nume%>
                     </td>                      
@@ -48,7 +51,8 @@
                          <%else%>
                             <td style="text-align:center;">Nu</td>
                          <% end %>
-                       
+                         <td><%= l.created_at.strftime("%d/%m/%Y") %></td>
+
                         </tr>  
                 <% end %>  
             </tbody>

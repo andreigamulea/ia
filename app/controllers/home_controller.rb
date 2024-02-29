@@ -56,6 +56,8 @@ class HomeController < ApplicationController
   def lista_newsletter #afiseaza pe cei inscrisi
     if current_user && current_user.role==1
       @lista = Newsletter.all
+      @n=0
+      @nr_inscrisi=@lista.count
     else
       redirect_to root_path
     end  
