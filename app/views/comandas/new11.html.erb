@@ -1,0 +1,6 @@
+<h2>Adaugă Comandă Prod1 Nouă</h2>
+
+<%= form_with(model: @comenzi_prod1, url: create11_comandas_path, local: true) do |form| %>
+  <%= render 'form11', form: form %>
+  <%= form.submit 'Salvează' %>
+<% end %>

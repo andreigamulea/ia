@@ -150,9 +150,25 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   post 'select_edit_comenziprod', to: 'comandas#select_edit_comenziprod'
 
   resources :prods
-  resources :comandas
+  get 'comandas/index11', to: 'comandas#index11', as: :index11_comandas
+  get 'comandas/new11', to: 'comandas#new11', as: :new11_comandas
+  post 'comandas/create11', to: 'comandas#create11', as: :create11_comandas
 
+  # Configurația unificată pentru resources :comandas
+  resources :comandas do
+    collection do
+      # Poti adauga aici alte rute de tip collection dacă este necesar
+    end
+    member do
+      
+      patch 'update11', to: 'comandas#update11'
+      get 'edit11', to: 'comandas#edit11', as: :edit11_comanda
+      
+      delete 'destroy11', to: 'comandas#destroy11', as: :destroy11_comanda
+    end
+  end
   
+ 
   
   #post 'detaliifacturares/create'
   mount Ahoy::Engine => "/ahoy"

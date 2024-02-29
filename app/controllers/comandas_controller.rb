@@ -1,6 +1,9 @@
 class ComandasController < ApplicationController
   before_action :set_comanda, only: %i[ show edit update destroy ]
   before_action :set_user_admin, only: %i[index edit show new destroy select_comanda_id edit_comenziprod update_comenziprod select_edit_comenziprod ]
+
+  before_action :set_comenzi_prod1, only: [:edit11, :update11, :destroy11] #pt tabela ComenziProd1
+
   # GET /comandas or /comandas.json
   def index
     @comandas = Comanda.all.order(id: :desc)
@@ -153,7 +156,41 @@ end
       format.json { head :no_content }
     end
   end
+####################
+def index11
+  @comenzi_prod1 = ComenziProd1.all.order(id: :desc)
+end  
+def new11  
+  @comenzi_prod1 = ComenziProd1.new
+end
 
+def edit11  
+  
+end
+def create11
+  @comenzi_prod1 = ComenziProd1.new(comenziprod1_params)
+
+  if @comenzi_prod1.save
+    redirect_to index11_comandas_path, notice: 'Comanda produs a fost creată cu succes.'
+  else
+    render :new11, status: :unprocessable_entity
+  end
+end
+
+
+def update11
+  if @comenzi_prod1.update(comenziprod1_params)
+    redirect_to index11_comandas_path, notice: 'Comanda produs a fost actualizată cu succes.'
+  else
+    render :edit11
+  end
+end
+def destroy11
+  @comenzi_prod1.destroy
+  redirect_to index11_comandas_path, notice: 'Comanda produs a fost ștearsă.'
+end
+
+####################
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comanda
@@ -178,7 +215,13 @@ end
     end
 
     def comenziprod_params
-      params.require(:comenzi_prod).permit(:user_id, :prod_id, :comanda_id, :datainceput, :datasfarsit, :validat, :taxa2324)
+      params.require(:comenzi_prod).permit(:user_id, :prod_id, :comanda_id, :datainceput, :datasfarsit, :validat, :taxa2324, :cantitate, :pret_bucata, :pret_total)
     end
-    
+    def comenziprod1_params
+      params.require(:comenzi_prod1).permit(:user_id, :prod_id, :comanda_id, :datainceput, :datasfarsit, :validat, :taxa2324, :cantitate, :pret_bucata, :pret_total)
+    end
+    def set_comenzi_prod1
+      @comenzi_prod1 = ComenziProd1.find(params[:id])
+    end
+
 end
