@@ -1,0 +1,6 @@
+<h2>Editare Comandă Prod1</h2>
+
+<%= form_with(model: @comenzi_prod1, url: update11_comanda_path(@comenzi_prod1), method: :patch, local: true) do |form| %>
+  <%= render 'form11', form: form %>
+  <%= form.submit 'Actualizează' %>
+<% end %>

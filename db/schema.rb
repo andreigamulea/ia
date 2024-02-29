@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_25_163355) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_29_212243) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -128,6 +128,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_25_163355) do
     t.string "telefon"
     t.index ["prodcod"], name: "index_comandas_on_prodcod"
     t.index ["prodid"], name: "index_comandas_on_prodid"
+  end
+
+  create_table "comenzi_prod1s", force: :cascade do |t|
+    t.bigint "prod_id"
+    t.bigint "user_id"
+    t.date "datainceput"
+    t.date "datasfarsit"
+    t.string "validat"
+    t.integer "taxa2324"
+    t.integer "cantitate"
+    t.decimal "pret_bucata", precision: 10, scale: 2
+    t.decimal "pret_total", precision: 10, scale: 2
+    t.bigint "comanda_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "comenzi_prods", force: :cascade do |t|
