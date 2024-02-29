@@ -289,7 +289,7 @@ end
   def tabeleahoy
     if current_user.role==1
     @ahoy_visits = Ahoy::Visit.order(started_at: :desc).limit(30).includes(:user).reverse
-    @ahoy_events = Ahoy::Event.order(time: :desc).limit(3000).includes(:user)
+    @ahoy_events = Ahoy::Event.order(time: :desc).limit(5000).includes(:user)
     @ahoy_events = @ahoy_events.map do |event|
       event.properties = event.properties[0..99] if event.properties.present?
       event
