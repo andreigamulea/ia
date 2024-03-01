@@ -826,8 +826,6 @@ end
       
       @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
                                  .where(prod_id: prod_ids, validat: "Finalizata")
-                                 .order(:comanda_id)
-      
       # Optimize querying for Detaliifacturare
       user_ids = @comenzi_prod.map(&:user_id).uniq
       detaliifacturare_hash = Detaliifacturare.where(user_id: user_ids).index_by(&:user_id)
