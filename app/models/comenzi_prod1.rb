@@ -1,4 +1,6 @@
 class ComenziProd1 < ApplicationRecord
-    # Logică de model aici
+  belongs_to :prod
+  belongs_to :comanda
+  belongs_to :user, optional: true
   end
   
