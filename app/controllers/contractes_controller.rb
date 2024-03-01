@@ -1,6 +1,6 @@
 class ContractesController < ApplicationController
   before_action :set_contracte, only: %i[ show edit update destroy]
-  before_action :set_user_admin, only: %i[contracte_all]
+  before_action :set_user_admin, only: %i[contracte_all preluare_emailuri_din_text]
   before_action :set_contract, only: %i[ cerere_voluntar1 gdpr1 semneaza_contract1 fisa_postului1]
   before_action :set_contracte_useri, only: %i[vizualizeaza_contract destroy_contracte_useri show_cerere_voluntar
     show_gdpr_voluntar show_contract_voluntar show_fisa_postului_voluntar]
