@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_01_145537) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_01_215925) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -214,7 +214,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_01_145537) do
     t.date "data_posta_isu"
     t.date "data_bifa_isu"
     t.date "data_cv"
-    t.date "data_fisha_postului"
+    t.date "data_fisa_postului"
   end
 
   create_table "contractes", force: :cascade do |t|
