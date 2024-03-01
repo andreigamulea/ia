@@ -1,6 +1,6 @@
 class ComandasController < ApplicationController
   before_action :set_comanda, only: %i[ show edit update destroy ]
-  before_action :set_user_admin, only: %i[index edit show new destroy select_comanda_id edit_comenziprod update_comenziprod select_edit_comenziprod ]
+  before_action :set_user_admin, only: %i[index edit show new destroy select_comanda_id edit_comenziprod update_comenziprod select_edit_comenziprod index11 edit11 new11]
 
   before_action :set_comenzi_prod1, only: [:edit11, :update11, :destroy11] #pt tabela ComenziProd1
 
