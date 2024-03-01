@@ -9,6 +9,19 @@ class VajikaranaController < ApplicationController
                                    .joins(:prod)
                                    .where(prods: { curslegatura: 'vajikarana1', status: 'activ' })
                                    .pluck('prods.cod')
+      purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
+                                   validat: 'Finalizata', 
+                                   datainceput: ..Date.new(2024, 5, 24))
+                            .joins(:prod)
+                            .where(prods: { curslegatura: 'vajikarana1', status: 'activ' })
+                            .pluck('prods.cod')
+# Adaugă codurile la array-ul existent și elimină duplicatele
+purchased_prod_coduri.concat(purchased_prod_coduri1)
+purchased_prod_coduri.concat(purchased_prod_coduri1).uniq!
+
+
+
+
 
   
       # Logica pentru determinarea produselor de afișat în funcție de ce a cumpărat current_user
