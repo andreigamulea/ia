@@ -25,7 +25,7 @@ class ContractesController < ApplicationController
       # Randare view specific
       render 'contractes/gdpr'
     else
-      # Dacă contractul nu există, redirecționează utilizatorul cu un mesaj de eroare
+      ## Dacă contractul nu există, redirecționează utilizatorul cu un mesaj de eroare
       redirect_to root_path, alert: "Contractul specificat nu a fost găsit."
     end
   end  
