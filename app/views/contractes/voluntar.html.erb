@@ -62,34 +62,42 @@
       <td style="text-align:center;"><%= link_to "Completeaza documentul", gdpr_path, class: "btn btn-primary" %></td>
       <td style="text-align:center;"><%= link_to "Descarca PDF", gdpr_path, class: "btn btn-primary disabled" %></td>
     </tr>
+
+
+
     <tr>
-      <td>CONTRACT VOLUNTARIAT</td>
+      <td>FISA SSM DE INSTRUIRE INDIVIDUALĂ PRIVIND SECURITATEA ȘI SĂNĂTATEA ÎN MUNCĂ</td>
       <td style="text-align:center; color:<%= status_color(@status3) %>; font-style:italic;"><%=@status3%></td>            
-      <td style="text-align:center;"><%= link_to "Completeaza documentul", contract_voluntar_path, class: "btn btn-primary" %></td>
-      <td style="text-align:center;"><%= link_to "Descarca PDF", contract_voluntar_path, class: "btn btn-primary disabled" %></td>
+      <td style="text-align:center;"><%= link_to "Completeaza documentul", ssm_path, class: "btn btn-primary" %></td>
+      <td style="text-align:center;"><%= link_to "Descarca PDF", "pdf/voluntariat/Fisa SSM.pdf", class: "btn btn-primary", download: '' %></td>
     </tr>
+
+
+    <tr>
+      <td>FISA ISU DE INSTRUCTAJ ÎN DOMENIUL SITUAȚIILOR DE URGENȚĂ</td>
+      <td style="text-align:center; color:<%= status_color(@status3) %>; font-style:italic;"><%=@status4%></td>            
+      <td style="text-align:center;"><%= link_to "Completeaza documentul", isu_path, class: "btn btn-primary" %></td>
+      <td style="text-align:center;"><%= link_to "Descarca PDF", "pdf/voluntariat/Fisa ISU.pdf", class: "btn btn-primary", download: '' %></td>
+    </tr>
+
+
+    <tr>
+    <td>CONTRACT VOLUNTARIAT</td>
+    <td style="text-align:center; color:<%= status_color(@status3) %>; font-style:italic;"><%=@status5%></td>            
+    <td style="text-align:center;"><%= link_to "Completeaza documentul", contract_voluntar_path, class: "btn btn-primary" %></td>
+    <td style="text-align:center;"><%= link_to "Descarca PDF", contract_voluntar_path, class: "btn btn-primary disabled" %></td>
+  </tr>
+
+
+  
     <tr>
       <td>FISA POSTULUI - anexă la contractul de voluntariat</td>
-      <td style="text-align:center; color:<%= status_color(@status4) %>; font-style:italic;"><%=@status4%></td>                 
+      <td style="text-align:center; color:<%= status_color(@status4) %>; font-style:italic;"><%=@status6%></td>                 
       <td style="text-align:center;"><%= link_to "Completeaza documentul", fisa_postului_path, class: "btn btn-primary" %></td>
       <td style="text-align:center;"><%= link_to "Descarca PDF", contract_voluntar_path, class: "btn btn-primary disabled" %></td>
     </tr>
   
-    <tr>
-      <td>FISA SSM DE INSTRUIRE INDIVIDUALĂ PRIVIND SECURITATEA ȘI SĂNĂTATEA ÎN MUNCĂ</td>
-      <td style="text-align:center;color:red;font-style:italic;"><%=@status5%></td>      
-      <td style="text-align:center;"></td>
-      <td style="text-align:center;"><%= link_to "Descarca PDF", "pdf/voluntariat/Fisa SSM.pdf", class: "btn btn-primary", download: '' %></td>
-      
-    </tr>
-    <tr>
-      <td>FISA ISU DE INSTRUCTAJ ÎN DOMENIUL SITUAȚIILOR DE URGENȚĂ</td>
-      <td style="text-align:center;color:red;font-style:italic;"><%=@status5%></td>      
-      <td style="text-align:center;"></td>
-      <td style="text-align:center;"><%= link_to "Descarca PDF", "pdf/voluntariat/Fisa ISU.pdf", class: "btn btn-primary", download: '' %></td>
-      
-      
-    </tr>
+    
     </tbody>
 </table>
 </div>

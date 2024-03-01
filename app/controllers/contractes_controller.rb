@@ -124,6 +124,7 @@ class ContractesController < ApplicationController
       @status4 = "succes"
     end  
     @status5 = "required"
+    @status6 = "required"
   end 
   def cerere_voluntar
     puts("aaaaaaa")
@@ -163,7 +164,11 @@ class ContractesController < ApplicationController
     end  
     render 'contractes/cerere_voluntar'
   end   
-  
+
+  def ssm
+  end  
+  def isu
+  end
   def gdpr
     if session[:contract_id] 
       puts("@contract din semneaza_contract este: #{session[:contract_id]}")
