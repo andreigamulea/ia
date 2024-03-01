@@ -49,6 +49,10 @@ Rails.application.routes.draw do
   get '/cerere_voluntar1', to: 'contractes#cerere_voluntar1', as: 'cerere_voluntar1'
   get '/gdpr', to: 'contractes#gdpr', as: 'gdpr' #pentru voluntari
   get '/gdpr1', to: 'contractes#gdpr1', as: 'gdpr1' #pentru contractori
+
+  get '/ssm', to: 'contractes#ssm', as: 'ssm' #pentru voluntari
+  get '/isu', to: 'contractes#isu', as: 'isu' #pentru voluntari
+
   get '/fisa_postului', to: 'contractes#fisa_postului', as: 'fisa_postului'
   get '/fisa_postului1', to: 'contractes#fisa_postului1', as: 'fisa_postului1'
 
