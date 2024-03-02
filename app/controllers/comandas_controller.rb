@@ -169,10 +169,12 @@ def edit11
 end
 def create11
   @comenzi_prod1 = ComenziProd1.new(comenziprod1_params)
+  puts("ComenziProd1 este: #{@comenzi_prod1.id}")
 
   if @comenzi_prod1.save
     redirect_to index11_comandas_path, notice: 'Comanda produs a fost creată cu succes.'
   else
+    puts @comenzi_prod1.errors.full_messages
     render :new11, status: :unprocessable_entity
   end
 end
