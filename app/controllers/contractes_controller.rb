@@ -132,6 +132,10 @@ class ContractesController < ApplicationController
       puts("ID Contract: #{session[:contract_id]}")
       @contract = Contracte.find_by(id: session[:contract_id])
       @contracte_useri = @contract.contracte_useris.find_or_initialize_by(contracte_id: @contract.id, user_id: @current_user.id)
+      set_shared_data(@contract, @contracte_useri)
+
+
+      
       puts("@contract din cerere_voluntar este: #{@contract.id}")
       puts("@contracte_useri din cerere_voluntar: #{@contracte_useri.id}")
       @show_submit_button = true
@@ -500,7 +504,9 @@ def create_or_update_contracte_useri  #metoda este apelata cand se creaza/update
   contracte_id = params[:contracte_useri][:contracte_id]
   user_id = params[:contracte_useri][:user_id]
   @contract = Contracte.find_by(id: params[:contract_id])
+  puts("daaaaaaaaa1")
   @contracte_useri = ContracteUseri.find_or_initialize_by(contracte_id: contracte_id, user_id: user_id)
+  puts("daaaaaaaaa2")
   @show_submit_button = true
   puts("@contract este: #{@contract.id}")
   puts("@contracte_useri: #{@contracte_useri.id}")
@@ -541,7 +547,7 @@ def salveaza_gdpr
   puts("@contracte_useri din salveaza_gdpr: #{@contracte_useri.id}")
   puts("Semnatura1 din salveaza_gdpr: #{params[:contracte_useri][:semnatura1]}")
   puts("pana aici")
-  if @contracte_useri.update(semnatura1: params[:contracte_useri][:semnatura1]) # Actualizează campul `semnatura1` cu valoarea primită
+  if @contracte_useri.update(semnatura1: params[:contracte_useri][:semnatura1],data_gdpr: params[:contracte_useri][:data_gdpr]) # Actualizează campul `semnatura1` cu valoarea primită
     # Procesare după actualizare cu succes
     redirect_to voluntar_path, notice: "Semnătura a fost salvată cu succes."
   else
@@ -738,7 +744,7 @@ end
         :nr_contract_referinta,
         :status,
         :perioada_contract,
-        :data_inceperii,
+        :data_inceperii, #aceasta e data ce se inregistreaza dupa completarea fisei postului
         :coordonator_v,
         :semnatura_administrator,
         # Adăugăm câmpurile lipsă identificate
@@ -750,8 +756,16 @@ end
         :semnatura2,
         :semnatura3,
         :semnatura4,
-        :expira_la
-      )
+        :expira_la,
+        :data_cerere,
+        :data_gdpr,
+        :data_posta_ssm,
+        :data_bifa_ssm,
+        :data_posta_isu,
+        :data_bifa_isu,
+        :data_cv,
+        :data_fisa_postului #aceasta e data ce se inregistreaza dupa completarea fisei postului
+        )
     end
     
     
@@ -779,7 +793,8 @@ end
           (" #{contracte_useri.bloc_voluntar}" if contracte_useri.bloc_voluntar.present?),
           contracte_useri.judet_voluntar
         ].compact.join(", ")
-        
+        @data_cerere = contracte_useri.data_cerere
+        @data_gdpr = contracte_useri.data_gdpr
         # Alte setări necesare, cum ar fi semnătura voluntarului/adminului, dacă este necesar
         @semnatura_voluntar = contracte_useri.semnatura2 if contracte_useri.respond_to?(:semnatura2)
         @semnatura_admin = contract.semnatura_admin if contract.respond_to?(:semnatura_admin)

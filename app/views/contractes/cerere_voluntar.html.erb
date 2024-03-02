@@ -145,7 +145,13 @@
       <%= form.hidden_field :contracte_id, value: @contract.id if @contract.id.present? %>      
       <%= form.hidden_field :idcontractor, value: @contract.user_id if @contract&.user_id.present? %>
       <%= form.hidden_field :user_id, value: current_user.id if @current_user.present? %>
+      <%if @data_cerere%>
       
+      <%= form.hidden_field :data_cerere, value: @data_cerere %>
+      <%else%>
+      
+      <%= form.hidden_field :data_cerere, value: Date.today %>
+      <%end%>
       <%= hidden_field_tag :contract_id, @contract.id %>
 
       
@@ -183,7 +189,14 @@
     
       <div class="semnatura">
         <div class="gazda">
-          Data: <span><%= Date.today.strftime('%d-%m-%Y') %></span>
+        Data: 
+        <%if @data_cerere%>        
+        
+        <span><%= @data_cerere %></span>
+        <%else%>
+        
+        <span><%=Date.today.strftime('%d-%m-%Y') %></span>
+        <%end%>  
         </div>
     
         <div class="voluntar">
