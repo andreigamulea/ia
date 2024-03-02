@@ -18,9 +18,7 @@ class VajikaranaController < ApplicationController
 # Adaugă codurile la array-ul existent și elimină duplicatele
 purchased_prod_coduri.concat(purchased_prod_coduri1)
 purchased_prod_coduri.concat(purchased_prod_coduri1).uniq!
-
-
-
+@a_cumparat_macar_un_cod = purchased_prod_coduri.any? || current_user.role == 1
 
 
   

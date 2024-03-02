@@ -98,6 +98,13 @@
           <%= form.hidden_field :idcontractor, value: @contract.user_id if @contract&.user_id.present? %>
           <%= form.hidden_field :user_id, value: current_user.id if current_user.present? %>          
           <%= hidden_field_tag :contract_id, @contract.id %>
+          <%if @data_gdpr%>
+      
+          <%= form.hidden_field :data_gdpr, value: @data_gdpr %>
+          <%else%>
+          
+          <%= form.hidden_field :data_gdpr, value: Date.today %>
+          <%end%>
     
     <div>
         <h2 class="main-title">Organizație Gazdă:</h2>
@@ -125,7 +132,13 @@
         
   <div class="semnatura">
       <div class="gazda">
-          Data: <%= Date.today.strftime('%d-%m-%Y') %>
+      <%if @data_gdpr%>        
+        
+      <span><%= @data_gdpr %></span>
+      <%else%>
+      
+      <span><%=Date.today.strftime('%d-%m-%Y') %></span>
+      <%end%>  
       </div>
 
       <div class="voluntar">

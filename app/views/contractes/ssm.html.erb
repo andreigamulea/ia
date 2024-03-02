@@ -1,0 +1,81 @@
+<style>
+#ssm .custom-checkbox {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    position: relative;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+#ssm .custom-checkbox input[type="checkbox"] {
+    visibility: hidden;
+}
+
+#ssm .custom-checkbox span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+}
+
+#ssm .custom-checkbox input[type="checkbox"]:checked + span {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+#ssm .custom-checkbox input[type="checkbox"]:checked + span:after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+</style>
+
+<% content_for :title, "Fisa SSM | Ayush Cell Romania"  %>
+<% content_for :description, "Fisa SSM de instruire individuală privind securitatea și sănătatea în muncă" %>
+
+<% content_for :canonical do %>
+  <link rel="canonical" href="https://www.ayushcell.ro/ssm">
+<% end %>
+
+<div class="container" id="ssm">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: aliceblue; ">
+    <h1 class="first-tittle">Completare fisa de instruire individuală privind securitatea și sănătatea în muncă: Ayush Cell Romania</h1>
+    <h2 class="main-title" >Completare fișa SSM</h2>
+    
+
+    <h3 style="font-size:18px;">Instrucțiuni pentru completarea fișei SSM</h1>
+    <ol>
+    <li><strong>Descarcă fișierul PDF:</strong> Accesează 
+    <a href="#" title="Descarcă fișierul PDF">linkul de descarcare</a> și downloadează fișierul PDF pe computerul tău. Acesta conține fișa SSM pe care trebuie să o completezi.
+</li>
+
+    <li><strong>Tipărește fișierul descărcat:</strong> Odată ce fișierul PDF este salvat pe dispozitivul tău, deschide-l și tipărirește-l, pentru a obține o versiune fizică a fișei SSM.</li>
+    <li><strong>Completează manual datele necesare pe fișa tipărită:</strong> Utilizează un stilou sau un pix pentru a completa toate secțiunile necesare din fișa SSM tipărită. Asigură-te că scrii clar și lizibil pentru a evita orice confuzie sau neînțelegeri.</li>
+    <li><strong>Expediază fișa completată prin poșta sau curier rapid:</strong> După ce ai completat fișa, plasează-o într-un plic adecvat și trimite-o prin poștă la adresa specificată: Bulevardul Decebal nr. 31, Sector 3, București, Cod poștal 623355. </li>
+</ol>
+    <form>
+    <label>
+        <p>Confirma expedierea documentului completat și finalizează această etapă.</p>
+        <input type="checkbox" name="confirmation" value="confirmed" style="transform: scale(1.2); margin-right: 8px; vertical-align: middle;"> 
+        Confirm că am trimis prin colet poștal formularul tipărit la adresa menționată mai sus in data de .... 
+    </label>
+    </form>
+
+    <a href="javascript:window.history.back()">Revino la pagina anterioară</a>
+    
+</div>
+</div>
