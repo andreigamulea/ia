@@ -373,7 +373,8 @@ class StripeWebhooksController < ApplicationController
     if user && factura.persisted?   
       puts("daaaaaaaaaaaa") 
       puts("User id este: #{user.id}")  
-      PaymentMailer.billing_details_email(user, factura).deliver_now   
+      PaymentMailer.billing_details_email(user, factura).deliver_now
+   
     else
       puts("nuuuuuuuuuuu")  
     end
@@ -382,11 +383,7 @@ class StripeWebhooksController < ApplicationController
     PaymentMailer.payment_success_email(factura).deliver_now
   end
   
-  def billing_details_email(user, factura)
-    @user = user
-    @factura = factura
-    mail(to: @user.email, subject: "Confirmarea Comenzii Numărul „#{@factura.numar_comanda}” - AyushCell.ro")
-  end
+ 
   
 end
 
