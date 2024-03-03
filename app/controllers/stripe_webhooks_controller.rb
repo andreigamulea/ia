@@ -369,13 +369,24 @@ class StripeWebhooksController < ApplicationController
     if factura.nume_companie.present? || factura.cui.present?
       send_payment_success_email(factura)
     end
+    user = User.find_by(id: metadata[:user_id])
+    if user && factura.persisted?   
+      puts("daaaaaaaaaaaa") 
+      puts("User id este: #{user.id}")  
+      PaymentMailer.billing_details_email(user, factura).deliver_now   
+    else
+      puts("nuuuuuuuuuuu")  
+    end
   end
-  
   def send_payment_success_email(factura)
     PaymentMailer.payment_success_email(factura).deliver_now
   end
   
-  
+  def billing_details_email(user, factura)
+    @user = user
+    @factura = factura
+    mail(to: @user.email, subject: "Confirmarea Comenzii Numărul „#{@factura.numar_comanda}” - AyushCell.ro")
+  end
   
 end
 
