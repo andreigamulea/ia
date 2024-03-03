@@ -14,7 +14,8 @@ class PaymentMailer < ApplicationMailer
       @user = user
       @factura = factura
       #mail(to: @user.email, subject: "Confirmarea Comenzii Numărul „#{@factura.numar_comanda}” - AyushCell.ro")
-      mail(to: "ilates@yahoo.com", subject: "Confirmarea Comenzii Numărul „#{@factura.numar_comanda}” - AyushCell.ro")
+      #mail(to: "ilates@yahoo.com", subject: "Confirmarea Comenzii Numărul „#{@factura.numar_comanda}” - AyushCell.ro")
+      mail(to: "ilates@yahoo.com", subject: 'Confirmare plata comanda noua pe ayushcell.ro', from: 'comenzi@ayushcell.ro')
     end
   end
   

@@ -7,7 +7,7 @@
 <ul>
   <li>Numărul Comenzii: <%= @factura.numar_comanda %></li>
   <li>Data Comenzii: <%= @factura.data_emiterii.strftime("%d/%m/%Y") %></li>
-  <li>Produse Comandate: <%= @factura.produs %> - Cantitate: <%= @factura.cantitate %>, la prețul unitar de <%= @factura.pret_unitar %> RON (fără TVA)</li>
+  <li>Produse Comandate: <%= @factura.produs %> - Cantitate: <%= @factura.cantitate %>, la prețul unitar de <%= @factura.pret_unitar.round(2) %> RON (fără TVA)</li>
   <li>Total Achitat: <%= @factura.valoare_totala %> RON</li>
 </ul>
 
