@@ -102,6 +102,7 @@ class ApplicationController < ActionController::Base
         elsif return_to == "lg"
           # Cod pentru cazul în care sursa este butonul
           lista_vegetales_path # Înlocuiește cu calea corespunzătoare
+        
         elsif return_to == "nutritie1"
           # Cod pentru cazul în care sursa este butonul
           nutritie1_path # Înlocuiește cu calea corespunzătoare  
