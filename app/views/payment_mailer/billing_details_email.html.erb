@@ -1,0 +1,25 @@
+
+<p>Dragă <%= @factura.prenume %> <%= @factura.nume %>,</p>
+
+<p>Îți mulțumim că ai ales AyushCell.ro! Suntem încântați să îți confirmăm că procesarea comenzii tale a fost finalizată cu succes. Iată detaliile comenzii tale:</p>
+
+<h3>Detalii Comandă</h3>
+<ul>
+  <li>Numărul Comenzii: <%= @factura.numar_comanda %></li>
+  <li>Data Comenzii: <%= @factura.data_emiterii.strftime("%d/%m/%Y") %></li>
+  <li>Produse Comandate: <%= @factura.produs %> - Cantitate: <%= @factura.cantitate %>, la prețul unitar de <%= @factura.pret_unitar %> RON (fără TVA)</li>
+  <li>Total Achitat: <%= @factura.valoare_totala %> RON</li>
+</ul>
+
+<p>Factura asociată acestei plăți poate fi accesată pe pagina: <a href="https://ayushcell.ro/factura">https://ayushcell.ro/factura</a></p>
+
+<h3>Acces la Resurse</h3>
+<p>Pentru a accesa produsele sau resursele asociate acestora, fiind logat în cont, te rugăm să accesezi link-ul produsului pentru care ai realizat plata.</p>
+
+<h3>Asistență Tehnică</h3>
+<p>Dacă întâmpini dificultăți în accesarea produselor sau ai alte întrebări, te rugăm să nu eziti să ne contactezi la adresa de email: <a href="mailto:ayushcellromania@gmail.com">ayushcellromania@gmail.com</a>. Echipa noastră de suport este aici pentru a te asista!</p>
+
+<p>Îți mulțumim încă o dată pentru alegerea făcută și îți dorim să ai o experiență cât mai plăcută și relaxantă.</p>
+
+<p>Cu respect,<br>
+Echipa AyushCell.ro</p>
