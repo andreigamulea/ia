@@ -8,14 +8,18 @@ class PaymentMailer < ApplicationMailer
       end  
     end
 
-
+    
 
     def billing_details_email(user, factura)
       @user = user
       @factura = factura
-      #mail(to: @user.email, subject: "Confirmarea Comenzii Numărul „#{@factura.numar_comanda}” - AyushCell.ro")
-      #mail(to: "ilates@yahoo.com", subject: "Confirmarea Comenzii Numărul „#{@factura.numar_comanda}” - AyushCell.ro")
-      mail(to: "ilates@yahoo.com", subject: 'Confirmare plata comanda noua pe ayushcell.ro', from: 'comenzi@ayushcell.ro')
+      
+      #mail(to: "ilates@yahoo.com", subject: 'Confirmare plata comanda noua pe ayushcell.ro', from: 'comenzi@ayushcell.ro')
+
+      mail(to: "ilates@yahoo.com", 
+          subject: 'Confirmare plata comanda noua pe ayushcell.ro', 
+          reply_to: 'ayushcellromania@gmail.com', 
+          from: 'comenzi@ayushcell.ro')
     end
   end
   
