@@ -19,6 +19,8 @@ class VideosController < ApplicationController
   #ATENTIE POT FOLOSI set_user11, only: %i[myvideo11]  PT ORICE VIDEO INDIVIDUAL CARE ARE PRET- gen: video asociat cu produs cu pret=12lei
   
   before_action :set_user12, only: %i[myvideo12] #pt nutritie4 
+  before_action :set_user13, only: %i[myvideo13] #este pt vajikarana1
+  before_action :set_user133, only: %i[myvideo133] #este pt vajikarana1 resurse
   before_action :require_admin, only: %i[index new edit update create]
   # GET /videos or /videos.json
   def index
@@ -243,6 +245,16 @@ end
     render 'myvideo1'
   end
   def myvideo12 #pt nutritie4
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo13 #pt vajikarana1
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo133 #pt vajikarana1 resurse
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
@@ -823,6 +835,79 @@ end
     
       true
 end
+
+def set_user13
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+
+  if current_user.role == 1
+    return true
+  elsif current_user.role == 0
+    date_condition = Date.today <= Date.new(2024, 5, 25)
+
+          exists_cod110 = ComenziProd.joins(:prod)
+          .where(user_id: current_user.id, 
+                prods: { cod: ["cod110"] }, 
+                validat: "Finalizata")
+          .exists?
+
+          # Verifică dacă există produse cu codul "cod108" și "cod109"
+          exists_cod108_and_cod109 = ComenziProd.joins(:prod)
+                        .where(user_id: current_user.id, 
+                                prods: { cod: ["cod108"] }, 
+                                validat: "Finalizata")
+                        .exists? &&
+              ComenziProd.joins(:prod)
+                        .where(user_id: current_user.id, 
+                                prods: { cod: ["cod109"] }, 
+                                validat: "Finalizata")
+                        .exists?
+
+    # has_access este true dacă sunt îndeplinite condițiile pentru cod110 sau ambele cod108 și cod109
+    has_access = date_condition && (exists_cod110 || exists_cod108_and_cod109)
+
+
+    has_recent_access = ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
+                                  .where("datainceput > ?", Date.new(2024, 1, 1))
+                                  .where(prod_id: Prod.where(cod: ["cod12", "cod38"]).select(:id))
+                                  .order(datainceput: :desc)
+                                  .first
+                                  .yield_self { |comanda_recenta| comanda_recenta && (Date.today <= comanda_recenta.datainceput + comanda_recenta.prod.valabilitatezile.days) }
+
+    unless has_access || has_recent_access
+      flash[:alert] = "Nu aveți acces la acest curs."
+      redirect_to vajikarana_modul1_path # Schimbați cu calea dorită
+      return false
+    end
+  else
+    flash[:alert] = "Nu aveți permisiuni suficiente pentru a accesa acest curs."
+    redirect_to vajikarana_modul1_path # Schimbați cu calea dorită
+    return false
+  end
+
+  true
+end
+
+def set_user133
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path # Presupunând că aceasta este calea către login
+    return
+  end
+
+  if current_user.role == 1
+    return true
+  end
+  if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod110", "cod108", "cod109"] }, validat: "Finalizata").exists?
+  return true
+  else
+    redirect_to vajikarana_modul1_path # Schimbați cu calea dorită
+    return false
+  end
+end  
 
     def require_admin
       unless current_user && current_user.role == 1
