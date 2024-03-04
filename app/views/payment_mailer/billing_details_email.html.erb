@@ -1,5 +1,27 @@
 
-<p>Dragă <%= @factura.prenume %> <%= @factura.nume %>,</p>
+<style>
+
+p {
+    color: #333;
+    line-height: 1.5;
+}
+h3 {
+    color: #64025e;;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+ul li {
+    margin-bottom: 5px;
+    color: #000;
+}
+</style>
+
+<p style="color: #64025e;margin-top: 20px;margin-bottom: 10px;font-size: 14px;">Dragă <%= @factura.prenume %> <%= @factura.nume %>,</p>
 
 <p>Îți mulțumim că ai ales AyushCell.ro! Suntem încântați să îți confirmăm că procesarea comenzii tale a fost finalizată cu succes. Iată detaliile comenzii tale:</p>
 
@@ -7,7 +29,7 @@
 <ul>
   <li>Numărul Comenzii: <%= @factura.numar_comanda %></li>
   <li>Data Comenzii: <%= @factura.data_emiterii.strftime("%d/%m/%Y") %></li>
-  <li>Produse Comandate: <%= @factura.produs %> - Cantitate: <%= @factura.cantitate %>, la prețul unitar de <%= @factura.pret_unitar.round(2) %> RON (fără TVA)</li>
+  <li>Produse Comandate: <%= @factura.produs %> - Cantitate: <%= @factura.cantitate %>, la prețul unitar de <%= @factura.pret_unitar %> RON (fără TVA)</li>
   <li>Total Achitat: <%= @factura.valoare_totala %> RON</li>
 </ul>
 
