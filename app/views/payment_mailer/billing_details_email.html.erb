@@ -29,7 +29,7 @@ ul li {
 <ul>
   <li>Numărul Comenzii: <%= @factura.numar_comanda %></li>
   <li>Data Comenzii: <%= @factura.data_emiterii.strftime("%d/%m/%Y") %></li>
-  <li>Produse Comandate: <%= @factura.produs %> - Cantitate: <%= @factura.cantitate %></li>
+  <li>Produse Comandate: <%= @factura.cantitate %> x <%= @factura.produs %></li>
   <li>Total Achitat: <%= @factura.valoare_totala %> RON</li>
 </ul>
 
