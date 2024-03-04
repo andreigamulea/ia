@@ -261,6 +261,32 @@ Folosirea substanţelor naturale şi a procedurilor cu efect afrodiziac (vajikar
     </div>
 
 
+    <%if current_user && @has_access%>
+    <h2 class="alimente-nutritionale" id="jamadagni-rishi" style= "text-align: center;font-size:28px;">Înregistrări video </h2>
+
+
+
+    <div id="videos">
+      <table class="table">
+        <thead>
+        <tr>
+            <th>Nr</th>
+            <th>Curs</th>
+            <th>Descriere</th>       
+            <th>Actiune</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        <% @myvideo13.each do |video| %>
+            <%= render partial: 'video1', locals: { video: video } %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <%end%>
+
 
 <%if !current_user || @prods.count>0%>
 <h1 class="alimente-nutritionale" id="Vajikarana" style="font-size:28px;">Acces Modul 1 Vajikarana</h1>
