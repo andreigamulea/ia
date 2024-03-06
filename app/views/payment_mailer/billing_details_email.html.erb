@@ -1,47 +1,26 @@
 
-<style>
 
-p {
-    color: #333;
-    line-height: 1.5;
-}
-h3 {
-    color: #64025e;;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 15px;
-}
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-ul li {
-    margin-bottom: 5px;
-    color: #000;
-}
-</style>
-
-<p style="color: #64025e;margin-top: 20px;margin-bottom: 10px;font-size: 14px;">Dragă <%= @factura.prenume %> <%= @factura.nume %>,</p>
+<p style="color: #64025e;margin-top: 20px;margin-bottom: 0px;font-size: 15px; font-weight: 600;">Dragă <%= @factura.prenume %> <%= @factura.nume %>,</p>
 
 <p>Îți mulțumim că ai ales AyushCell.ro! Suntem încântați să îți confirmăm că procesarea comenzii tale a fost finalizată cu succes. Iată detaliile comenzii tale:</p>
 
-<h3>Detalii Comandă</h3>
-<ul>
-  <li>Numărul Comenzii: <%= @factura.numar_comanda %></li>
-  <li>Data Comenzii: <%= @factura.data_emiterii.strftime("%d/%m/%Y") %></li>
-  <li>Produse Comandate: <%= @factura.cantitate %> x <%= @factura.produs %></li>
-  <li>Total Achitat: <%= @factura.valoare_totala %> RON</li>
+<h3 style="color: #64025e; margin-top: 20px; margin-bottom: 10px; font-size: 15px;">Detalii Comandă</h3>
+<ul style="list-style-type: none;padding: 0;">
+  <li style="margin-bottom: 5px; color: #000;">Numărul Comenzii: <%= @factura.numar_comanda %></li>
+  <li style="margin-bottom: 5px; color: #000;">Data Comenzii: <%= @factura.data_emiterii.strftime("%d/%m/%Y") %></li>
+  <li style="margin-bottom: 5px; color: #000;">Produse Comandate: <%= @factura.cantitate %> x <%= @factura.produs %></li>
+  <li style="margin-bottom: 5px; color: #000;">Total Achitat: <%= @factura.valoare_totala %> RON</li>
 </ul>
 
 <p>Factura asociată acestei plăți poate fi accesată pe pagina: <a href="https://ayushcell.ro/factura">https://ayushcell.ro/factura</a></p>
 
-<h3>Acces la Resurse</h3>
+<h3 style="color: #64025e; margin-top: 20px; margin-bottom: 0px; font-size: 15px;">Acces la Resurse</h3>
 <p>Pentru a accesa produsele sau resursele asociate acestora, fiind logat în cont, te rugăm să accesezi link-ul produsului pentru care ai realizat plata.</p>
 
-<h3>Asistență Tehnică</h3>
-<p>Dacă întâmpini dificultăți în accesarea produselor sau ai alte întrebări, te rugăm să nu eziti să ne contactezi la adresa de email: <a href="mailto:ayushcellromania@gmail.com">ayushcellromania@gmail.com</a>. Echipa noastră de suport este aici pentru a te asista!</p>
+<h3 style="color: #64025e; margin-top: 20px; margin-bottom: 0px; font-size: 15px;">Asistență Tehnică</h3>
+<p style="color: #333;line-height: 1.5;">Dacă întâmpini dificultăți în accesarea produselor sau ai alte întrebări, te rugăm să nu eziti să ne contactezi la adresa de email: <a href="mailto:ayushcellromania@gmail.com">ayushcellromania@gmail.com</a>. Echipa noastră de suport este aici pentru a te asista!</p>
 
-<p>Îți mulțumim încă o dată pentru alegerea făcută și îți dorim să ai o experiență cât mai plăcută și relaxantă.</p>
+<p style="color: #333;line-height: 1.5;">Îți mulțumim încă o dată pentru alegerea făcută și îți dorim să ai o experiență cât mai plăcută și relaxantă.</p>
 
-<p>Cu respect,<br>
+<p style="color: #333;line-height: 1.5;">Cu respect,<br>
 Echipa AyushCell.ro</p>
