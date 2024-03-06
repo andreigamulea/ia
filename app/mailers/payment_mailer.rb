@@ -16,10 +16,13 @@ class PaymentMailer < ApplicationMailer
       
       #mail(to: "ilates@yahoo.com", subject: 'Confirmare plata comanda noua pe ayushcell.ro', from: 'comenzi@ayushcell.ro')
 
-      mail(to: "ilates@yahoo.com", 
+      mail(to: @user.email, 
           subject: 'Confirmare plata comanda noua pe ayushcell.ro', 
           reply_to: 'ayushcellromania@gmail.com', 
-          from: 'comenzi@ayushcell.ro')
+          from: '"Comanda AyushCell" <comenzi@ayushcell.ro>',
+          bcc: "ayushcellromania@gmail.com")
+          
+
     end
   end
   
