@@ -106,7 +106,7 @@ class FacturasController < ApplicationController
     #facturas = Factura.where(numar: 1536..1654)#noiembrie
     #facturas = Factura.where(numar: 1649..1716)#decembrie
     #facturas = Factura.where(numar: 1713..1782)#ianuarie
-    facturas = Factura.where(numar: 1870..1871)#ianuarie
+    facturas = Factura.where(numar: 1780..1922)#februarie
     # Generați PDF-uri pentru fiecare factură
     pdf_files = facturas.map do |factura|
       @factura = factura
