@@ -106,6 +106,8 @@ h1.display-4{
     <h1 class="display-4">Rapoarte de date</h1>
    
     <%= link_to "Export fisier xlsx plata nutriție 3", export_plata_nutritie3_path, class: "btn btn-secondary" %></br></br>
+    <%= link_to "Export fișier xlsx plati Amnaya", export_plata_amnaya_path, class: "btn btn-secondary" %></br></br>
+
     <%= link_to "Export fisier xlsx plata An 1 dupa email", export_plata_an1_path(order_by: 'email'), class: "btn btn-secondary" %></br></br>
     <%= link_to "Export fisier xlsx plata An 1 dupa data", export_plata_an1_path(order_by: 'created_at'), class: "btn btn-secondary" %></br></br>
     <%= link_to "Export fisier xlsx plata An 1 care au platit doar 60 lei", export_plata_an1_path(order_by: 'email_unique'), class: "btn btn-secondary" %></br></br></br>
