@@ -7,6 +7,7 @@
 <thead class="thead-dark">
 <tr class= "desk">
       <th>User ID</th>
+      <th>Email user</th>
       <th>Produs ID</th>      
       <th>Data inceput</th>
       <th>Data sfarsit</th>
@@ -14,8 +15,7 @@
       <th>Taxa2324</th>
       <th>Cantitate</th>
       <th>Pret bucata</th>
-      <th>Pret total</th>
-      <th>Comanda id</th>
+      <th>Pret total</th>      
       <th>Data crearii</th>
       <!-- Adaugă alte câmpuri după necesități -->
       <th>Acțiuni</th>
@@ -25,6 +25,7 @@
     <% @comenzi_prod1.each do |comanda| %>
       <tr>
         <td><%= comanda.user_id %></td>
+        <td><%= comanda.user.email %></td>
         <td><%= comanda.prod_id %></td>        
         <td><%= comanda.datainceput %></td>
         <td><%= comanda.datasfarsit %></td>
@@ -32,8 +33,7 @@
         <td><%= comanda.taxa2324 %></td>
         <td><%= comanda.cantitate %></td>
         <td><%= comanda.pret_bucata %></td>
-        <td><%= comanda.pret_total%></td>
-        <td><%= comanda.comanda_id %></td>
+        <td><%= comanda.pret_total%></td>       
         <td><%= comanda.created_at.strftime("%d/%m/%Y") %></td>
         <!-- Afisează alte câmpuri aici -->
         <td>
