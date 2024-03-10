@@ -1,4 +1,9 @@
-<% border_style = (defined?(previous_video_tip) && previous_video_tip == 'nutritie2' && video.tip == 'vajikarana1') ? 'border-top: 3px solid #000;' : '' %>
+<%
+# Inițializează variabila border_style cu un string gol sau cu stilul dorit în funcție de condițiile specificate
+border_style = defined?(previous_video_tip) && previous_video_tip == 'nutritie2' && video.tip == 'vajikarana1' ? 'border-top: 3px solid #000;' : ''
+%>
+
+
 
 <tr style="<%= border_style %>">
 
@@ -30,11 +35,13 @@
     <%= link_to "Vezi video", myvideo13_path(id: video.id, link: video.link), class: "btn btn-primary" %>
     <% end %>
   </td>
-  <% if defined?(previous_video_tip) %>
+  <% if video.tip == 'vajikarana1' && video.linkpdf.present? %>
+
   <td>
-  <%= link_to "Descarcă PDF", video.linkpdf, class: "btn btn-primary", download: '' %>
-
-
+    <%= link_to "Descarcă PDF", video.linkpdf, class: "btn btn-primary", download: '' %>
   </td>
-  <%end%>
+<% else %>
+  <td></td>
+<% end %>
+
 </tr>
