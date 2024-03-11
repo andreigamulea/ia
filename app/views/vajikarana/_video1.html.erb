@@ -5,6 +5,8 @@ border_style = defined?(previous_video_tip) && previous_video_tip == 'nutritie2'
 
 
 
+
+
 <tr style="<%= border_style %>">
 
 
@@ -18,28 +20,36 @@ border_style = defined?(previous_video_tip) && previous_video_tip == 'nutritie2'
  
   <td>   
   <% if (video.ordine > 1000 && video.ordine < 2000) || (video.ordine > 2000 && video.ordine < 3000)%>
-  <%= link_to "Vezi video", myvideo133_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+  <%= link_to "Vezi video1", myvideo133_path(id: video.id, link: video.link), class: "btn btn-primary" %>
   <% elsif video.ordine > 3000 && video.ordine < 4000 %>
       <%if current_user.role==1%>
-        <%= link_to "Vezi video", myvideo133_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+        <%= link_to "Vezi video2", myvideo133_path(id: video.id, link: video.link), class: "btn btn-primary" %>
         
         <% elsif current_user.nutritieabsolvit.nil? || current_user.nutritieabsolvit < 2 %>
       
       
         <% else %>
-        <%= link_to "Vezi video", myvideo133_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+        
+        <%= link_to "Vezi video3", myvideo133_path(id: video.id, link: video.link), class: "btn btn-primary" %>
       <% end %>
 
   
   <% else %>
+  <% if @has_access %>
     <%= link_to "Vezi video", myvideo13_path(id: video.id, link: video.link), class: "btn btn-primary" %>
-    <% end %>
+    <% else %>
+    <%= link_to "Vezi video", myvideo13_path(id: video.id, link: video.link), class: "btn btn-primary disabled" %>
+    <% end %><% end %>
   </td>
   <% if video.tip == 'vajikarana1' && video.linkpdf.present? %>
 
   <td>
-    <%= link_to "Descarcă PDF", video.linkpdf, class: "btn btn-primary", download: '' %>
+  <%= link_to "Descarcă Fișier", vajikarana_download_path(linkzip: video.linkpdf), class: "btn btn-primary" %>
+
+
   </td>
+
+
 <% else %>
   <td></td>
 <% end %>
