@@ -261,8 +261,8 @@ Folosirea substanţelor naturale şi a procedurilor cu efect afrodiziac (vajikar
     </div>
 
 
-    <%if current_user && @has_access%>
-    <h2 class="alimente-nutritionale" id="Vajikarana" style= "text-align: center;font-size:28px;">Înregistrări video </h2>
+    <%if current_user && @a_cumparat_macar_un_cod%>
+    <h2 class="alimente-nutritionale" id="Vajikarana" style= "text-align: center;font-size:28px;">Înregistrări video si materiale PDF</h2>
 
 
 
@@ -274,7 +274,7 @@ Folosirea substanţelor naturale şi a procedurilor cu efect afrodiziac (vajikar
             <th>Curs</th>
             <th>Descriere</th>       
             <th>Actiune</th>
-            <th>Descarca PDF</th>
+            <th>Acces fisiere PDF</th>
             
         </tr>
         </thead>
@@ -288,7 +288,8 @@ Folosirea substanţelor naturale şi a procedurilor cu efect afrodiziac (vajikar
 
     <%end%>
 
-
+   
+  
 <%if !current_user || @prods.count>0%>
 <h1 class="alimente-nutritionale" id="Vajikarana" style="font-size:28px;">Acces Modul 1 Vajikarana</h1>
 

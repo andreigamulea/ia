@@ -837,6 +837,7 @@ end
 end
 
 def set_user13
+  puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   unless user_signed_in?
     flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
     redirect_to new_user_session_path
@@ -870,14 +871,11 @@ def set_user13
     has_access = date_condition && (exists_cod110 || exists_cod108_and_cod109)
 
 
-    has_recent_access = ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
-                                  .where("datainceput > ?", Date.new(2024, 1, 1))
-                                  .where(prod_id: Prod.where(cod: ["cod12", "cod38"]).select(:id))
-                                  .order(datainceput: :desc)
-                                  .first
-                                  .yield_self { |comanda_recenta| comanda_recenta && (Date.today <= comanda_recenta.datainceput + comanda_recenta.prod.valabilitatezile.days) }
+    
 
-    unless has_access || has_recent_access
+    puts("has_access este: #{has_access}")
+   
+    unless has_access
       flash[:alert] = "Nu aveți acces la acest curs."
       redirect_to vajikarana_modul1_path # Schimbați cu calea dorită
       return false
@@ -892,6 +890,7 @@ def set_user13
 end
 
 def set_user133
+  
   unless user_signed_in?
     flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
     redirect_to new_user_session_path # Presupunând că aceasta este calea către login
