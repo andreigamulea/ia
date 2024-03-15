@@ -15,7 +15,7 @@
         </ul>
       </div>
     <% end %>
-    
+  
     <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:prenume].any? %>">
         <%= f.label "Prenume*", class: "form-label" %>
         <%= f.text_field :prenume, class: "form-control" %>
