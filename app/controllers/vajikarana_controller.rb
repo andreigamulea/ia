@@ -68,8 +68,8 @@ purchased_prod_coduri.concat(purchased_prod_coduri1).uniq!
     # Determină tipul fișierului și setează tipul MIME corespunzător
     file_extension = File.extname(decoded_linkzip).downcase
     content_type = case file_extension
-                   when ".zip"
-                     'application/zip'
+                   when ".rar"
+                     'application/rar'
                    when ".7z"
                      'application/x-7z-compressed'
                    when ".pdf"
