@@ -867,8 +867,18 @@ def set_user13
                                 validat: "Finalizata")
                         .exists?
 
+
+          purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
+                        validat: 'Finalizata', 
+                        datainceput: ..Date.new(2024, 5, 24))
+                        .joins(:prod)
+                        .where(prods: { curslegatura: 'vajikarana1', status: 'activ' })
+                        .pluck('prods.cod')
+
+                       
+
     # has_access este true dacă sunt îndeplinite condițiile pentru cod110 sau ambele cod108 și cod109
-    has_access = date_condition && (exists_cod110 || exists_cod108_and_cod109)
+    has_access = date_condition && (exists_cod110 || exists_cod108_and_cod109 || purchased_prod_coduri1.include?('cod110'))
 
 
     
