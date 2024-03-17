@@ -15,9 +15,11 @@ class VajikaranaController < ApplicationController
                             .joins(:prod)
                             .where(prods: { curslegatura: 'vajikarana1', status: 'activ' })
                             .pluck('prods.cod')
+                            
 # Adaugă codurile la array-ul existent și elimină duplicatele
 purchased_prod_coduri.concat(purchased_prod_coduri1)
 purchased_prod_coduri.concat(purchased_prod_coduri1).uniq!
+puts("produsele cumparate sunt: #{purchased_prod_coduri}")
 @a_cumparat_macar_un_cod = purchased_prod_coduri.any? || current_user.role == 1
 
 
@@ -26,11 +28,13 @@ purchased_prod_coduri.concat(purchased_prod_coduri1).uniq!
       if purchased_prod_coduri.include?('cod108') && purchased_prod_coduri.include?('cod109')
         @prods = Prod.none
         @has_access = true
+      elsif purchased_prod_coduri.include?('cod110')
+              @has_access = true
+              @prods = Prod.none
+
       elsif purchased_prod_coduri.include?('cod108')
         @prods = Prod.where(cod: 'cod109')
-      elsif purchased_prod_coduri.include?('cod110')
-        @has_access = true
-        @prods = Prod.none
+      
       else
         # Dacă nu a cumpărat niciunul, afișează produsele cu cod=cod108 și cod=cod110
         @prods = Prod.where(cod: ['cod108', 'cod110'])
