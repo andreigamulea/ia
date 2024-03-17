@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get 'traditia_ayurvedica/jivaka', to: 'traditia_ayurvedica#jivaka', as: 'jivaka'
   get 'traditia_ayurvedica/asita', to: 'traditia_ayurvedica#asita', as: 'asita'
   get 'traditia_ayurvedica/jamadagni', to: 'traditia_ayurvedica#jamadagni', as: 'jamadagni'
+  get 'traditia_ayurvedica/hiranyaksha', to: 'traditia_ayurvedica#hiranyaksha', as: 'hiranyaksha'
   get 'traditia_ayurvedica/cognitronica', to: 'traditia_ayurvedica#cognitronica', as: 'cognitronica'
   #get 'traditia_ayurvedica/performanta_cognitiva', to: 'traditia_ayurvedica#performanta_cognitiva', as: 'performanta_cognitiva'
   # Definirea rutei cu un nume personalizat pentru helper-ul de cale
