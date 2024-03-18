@@ -170,6 +170,19 @@ class ContractesController < ApplicationController
   end   
 
   def ssm
+    if session[:contract_id] 
+      puts("@contract din semneaza_contract este: #{session[:contract_id]}")
+      @contract = Contracte.find_by(id: session[:contract_id])
+      @contracte_useri = @contract.contracte_useris.find_by(user_id: @current_user.id)
+      if !@contracte_useri || @contracte_useri.semnatura_voluntar==nil
+        redirect_to voluntar_path, alert: "Acces neautorizat."
+        return
+      end  
+      set_shared_data(@contract, @contracte_useri)
+    else
+      # Gestionarea cazurilor în care contractul sau contracte_useri nu sunt găsite
+      redirect_to voluntar_path, alert: "Contractul sau datele de utilizator asociate nu au fost găsite."
+    end
   end  
   def isu
   end
@@ -559,6 +572,31 @@ def salveaza_gdpr
     #redirect_to gdpr_path, notice: "Semnătura a fost salvată cu succes."
   end
 end
+
+def salveaza_ssm
+
+  @contract = Contracte.find(params[:id]) # Găsește contractul specific folosind ID-ul din URL
+  @contracte_useri = @contract.contracte_useris.find_by(user_id: current_user.id) # Găsește recordul specificul utilizatorului curent
+  @contracte_useri.validare_gdpr = true
+  @show_submit_button = true
+  puts("@contract din salveaza_ssm este: #{@contract.id}")
+  puts("@contracte_useri din salveaza_ssm: #{@contracte_useri.id}")
+
+  puts("pana aici")
+  if @contracte_useri.update(data_posta_ssm: params[:contracte_useri][:data_posta_ssm],data_bifa_ssm: params[:contracte_useri][:data_bifa_ssm]) # Actualizează campul `semnatura1` cu valoarea primită
+    # Procesare după actualizare cu succes
+    redirect_to voluntar_path, notice: "Semnătura a fost salvată cu succes."
+  else
+    set_shared_data(@contract, @contracte_useri)
+    
+    # Procesare în caz de eroare
+    flash.now[:alert] = "Eroare la salvarea semnăturii."
+    render :gdpr, status: :unprocessable_entity
+    #redirect_to gdpr_path, notice: "Semnătura a fost salvată cu succes."
+  end
+end
+
+
 
 def salveaza_contract
   @contract = Contracte.find(params[:id]) # Găsește contractul specific folosind ID-ul din URL
