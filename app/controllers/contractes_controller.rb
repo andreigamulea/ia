@@ -110,7 +110,7 @@ class ContractesController < ApplicationController
     else
       @status2 = "pending"
     end  
-    if @contracte_useri.semnatura2==nil
+    if @contracte_useri.data_posta_ssm==nil
       @status3 = "required"
     else
       @status3 = "pending"

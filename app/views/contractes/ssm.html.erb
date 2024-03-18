@@ -117,7 +117,11 @@
     <%= form.check_box :activare_submit, id: 'activare-submit-checkbox', class: 'form-checkbox' %>
     <%= form.label :activare_submit, 'Am trimis prin colet poștal formularul tipărit la adresa menționată mai sus în data de' %>
 
-    <%= form.date_field :data_bifa_ssm, id: 'data-bifa-ssm', class: 'form-input', max: Date.today.to_s %><br><br>
+    <%= form.date_field :data_bifa_ssm, 
+                    id: 'data-bifa-ssm', 
+                    class: 'form-input', 
+                    max: Date.today.to_s, 
+                    min: @contracte_useri.data_gdpr.to_s %><br><br>
 
     <%= form.submit "Confirma", id: 'submit-button', class: 'btn btn-primary btn-fp-link', disabled: true %>
 
