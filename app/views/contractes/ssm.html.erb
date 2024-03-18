@@ -1,4 +1,16 @@
 <style>
+
+.btn-fp-link {
+    background-color: transparent !important; /* Fundal transparent */
+    border: none !important; /* Fără bordură */
+    color: #007bff !important; /* Culoare similară cu link-urile Bootstrap, ajustează după necesități */
+    text-decoration: underline !important; /* Subliniere ca la link-uri */
+    box-shadow: none !important; /* Elimină orice umbre aplicate de Bootstrap */
+}
+
+
+
+
 #ssm .custom-checkbox {
     display: inline-block;
     width: 20px;
@@ -60,22 +72,75 @@
     <h3 style="font-size:18px;">Instrucțiuni pentru completarea fișei SSM</h1>
     <ol>
     <li><strong>Descarcă fișierul PDF:</strong> Accesează 
-    <a href="#" title="Descarcă fișierul PDF">linkul de descarcare</a> și downloadează fișierul PDF pe computerul tău. Acesta conține fișa SSM pe care trebuie să o completezi.
+    <a href="#" title="Descarcă fișierul PDF"><%= link_to "linkul de descarcare", "pdf/voluntariat/Fisa SSM.pdf", download: '' %></a> și downloadează fișierul PDF pe computerul tău. Acesta conține fișa SSM pe care trebuie să o completezi.
 </li>
 
     <li><strong>Tipărește fișierul descărcat:</strong> Odată ce fișierul PDF este salvat pe dispozitivul tău, deschide-l și tipărirește-l, pentru a obține o versiune fizică a fișei SSM.</li>
     <li><strong>Completează manual datele necesare pe fișa tipărită:</strong> Utilizează un stilou sau un pix pentru a completa toate secțiunile necesare din fișa SSM tipărită. Asigură-te că scrii clar și lizibil pentru a evita orice confuzie sau neînțelegeri.</li>
     <li><strong>Expediază fișa completată prin poșta sau curier rapid:</strong> După ce ai completat fișa, plasează-o într-un plic adecvat și trimite-o prin poștă la adresa specificată: Bulevardul Decebal nr. 31, Sector 3, București, Cod poștal 623355. </li>
 </ol>
-    <form>
-    <label>
-        <p>Confirma expedierea documentului completat și finalizează această etapă.</p>
-        <input type="checkbox" name="confirmation" value="confirmed" style="transform: scale(1.2); margin-right: 8px; vertical-align: middle;"> 
-        Confirm că am trimis prin colet poștal formularul tipărit la adresa menționată mai sus in data de .... 
-    </label>
-    </form>
-
-    <a href="javascript:window.history.back()">Revino la pagina anterioară</a>
+   
     
+
+ <p>Confirma expedierea documentului completat și finalizează această etapă.</p>
+
+    <%= form_with model: [@contract, @contracte_useri], 
+    url: salveaza_ssm_contracte_path(@contract), 
+    method: :post, 
+    local: true, 
+    html: { class: "form-class" } do |form| %>
+
+    <% if @contracte_useri.errors.any? %>
+    <div id="error_explanation">
+    <h2><%= pluralize(@contracte_useri.errors.count, "error") %> prohibited this contracte_useri from being saved:</h2>
+    <ul>
+    <% @contracte_useri.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+    </ul>
+    </div>
+    <% end %>
+
+    <!-- Aici poți adăuga câmpurile specifice pentru GDPR pe care dorești să le colectezi -->
+    <%= form.hidden_field :contracte_id, value: @contract.id if @contract.id.present? %>      
+    <%= form.hidden_field :idcontractor, value: @contract.user_id if @contract&.user_id.present? %>
+    <%= form.hidden_field :user_id, value: current_user.id if current_user.present? %>          
+    <%= hidden_field_tag :contract_id, @contract.id %>
+    <%if @data_posta_ssm%>
+
+    <%= form.hidden_field :data_posta_ssm, value: @data_posta_ssm %>
+    <%else%>
+    
+    <%= form.hidden_field :data_posta_ssm, value: Date.today %>
+    <%end%>
+
+    <%= form.check_box :activare_submit, id: 'activare-submit-checkbox', class: 'form-checkbox' %>
+    <%= form.label :activare_submit, 'Am trimis prin colet poștal formularul tipărit la adresa menționată mai sus în data de' %>
+
+    <%= form.date_field :data_bifa_ssm, id: 'data-bifa-ssm', class: 'form-input', max: Date.today.to_s %><br><br>
+
+    <%= form.submit "Confirma", id: 'submit-button', class: 'btn btn-primary btn-fp-link', disabled: true %>
+
+
+
+<% end %>
+
+
+
+
 </div>
 </div>
+<script>
+document.addEventListener("turbo:load", function() {
+    const checkbox = document.getElementById('activare-submit-checkbox');
+    const dateField = document.getElementById('data-bifa-ssm');
+    const submitButton = document.getElementById('submit-button');
+
+    function updateSubmitButtonState() {
+      submitButton.disabled = !checkbox.checked || dateField.value === '';
+    }
+
+    checkbox.addEventListener('change', updateSubmitButtonState);
+    dateField.addEventListener('change', updateSubmitButtonState);
+  });
+</script>
