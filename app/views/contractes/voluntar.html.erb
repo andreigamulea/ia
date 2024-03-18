@@ -52,9 +52,14 @@
       <td>CERERE ÎNSCRIERE VOLUNTAR</td>
 
       <td style="text-align:center; color:<%= status_color(@status1) %>; font-style:italic;"><%=@status1%></td>
+      <%if @status6=="succes"%>
+      <td style="text-align:center;"><%= button_tag "Completeaza documentul", type: 'button', class: "btn btn-primary", disabled: true %></td>
       
+      <%else%>
       <td style="text-align:center;"><%= link_to "Completeaza documentul", cerere_voluntar_path, class: "btn btn-primary" %></td>
       <td style="text-align:center;"><%= link_to "Descarca PDF", cerere_voluntar_path, class: "btn btn-primary disabled"  %></td>
+      <%end%>
+      
     </tr>
     <tr>
       <td>ACORD GDPR</td>
@@ -83,7 +88,7 @@
 
     <tr>
     <td>CONTRACT VOLUNTARIAT</td>
-    <td style="text-align:center; color:<%= status_color(@status4) %>; font-style:italic;"><%=@status5%></td>            
+    <td style="text-align:center; color:<%= status_color(@status5) %>; font-style:italic;"><%=@status5%></td>            
     <td style="text-align:center;"><%= link_to "Completeaza documentul", contract_voluntar_path, class: "btn btn-primary" %></td>
     <td style="text-align:center;"><%= link_to "Descarca PDF", contract_voluntar_path, class: "btn btn-primary disabled" %></td>
   </tr>
@@ -92,7 +97,7 @@
   
     <tr>
       <td>FISA POSTULUI - anexă la contractul de voluntariat</td>
-      <td style="text-align:center; color:<%= status_color(@status4) %>; font-style:italic;"><%=@status6%></td>                 
+      <td style="text-align:center; color:<%= status_color(@status6) %>; font-style:italic;"><%=@status6%></td>                 
       <td style="text-align:center;"><%= link_to "Completeaza documentul", fisa_postului_path, class: "btn btn-primary" %></td>
       <td style="text-align:center;"><%= link_to "Descarca PDF", contract_voluntar_path, class: "btn btn-primary disabled" %></td>
     </tr>
