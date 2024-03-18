@@ -115,16 +115,26 @@ class ContractesController < ApplicationController
     else
       @status3 = "pending"
     end  
-    if @contracte_useri.semnatura3==nil
+    if @contracte_useri.data_posta_isu==nil
       @status4 = "required"
+    else
+      @status4 = "pending"
+    end  
+    if @contracte_useri.semnatura2==nil
+      @status5 = "required"
+    else
+      @status5 = "pending"
+    end  
+    if @contracte_useri.semnatura3==nil
+      @status6 = "required"
     else
       @status1 = "succes"
       @status2 = "succes"
       @status3 = "succes"
       @status4 = "succes"
+      @status5 = "succes"
+      @status6 = "succes"
     end  
-    @status5 = "required"
-    @status6 = "required"
   end 
   def cerere_voluntar
     puts("aaaaaaa")
@@ -174,7 +184,7 @@ class ContractesController < ApplicationController
       puts("@contract din semneaza_contract este: #{session[:contract_id]}")
       @contract = Contracte.find_by(id: session[:contract_id])
       @contracte_useri = @contract.contracte_useris.find_by(user_id: @current_user.id)
-      if !@contracte_useri || @contracte_useri.semnatura_voluntar==nil
+      if !@contracte_useri || @contracte_useri.semnatura1==nil
         redirect_to voluntar_path, alert: "Acces neautorizat."
         return
       end  
@@ -185,6 +195,19 @@ class ContractesController < ApplicationController
     end
   end  
   def isu
+    if session[:contract_id] 
+      puts("@contract din semneaza_contract este: #{session[:contract_id]}")
+      @contract = Contracte.find_by(id: session[:contract_id])
+      @contracte_useri = @contract.contracte_useris.find_by(user_id: @current_user.id)
+      if !@contracte_useri || @contracte_useri.data_posta_ssm==nil
+        redirect_to voluntar_path, alert: "Acces neautorizat."
+        return
+      end  
+      set_shared_data(@contract, @contracte_useri)
+    else
+      # Gestionarea cazurilor în care contractul sau contracte_useri nu sunt găsite
+      redirect_to voluntar_path, alert: "Contractul sau datele de utilizator asociate nu au fost găsite."
+    end
   end
   def gdpr
     if session[:contract_id] 
@@ -313,7 +336,7 @@ class ContractesController < ApplicationController
     puts("@contract din semneaza_contract este: #{session[:contract_id]}")
     @contract = Contracte.find_by(id: session[:contract_id])
     @contracte_useri = @contract.contracte_useris.find_by(user_id: @current_user.id)
-    if !@contracte_useri || @contracte_useri.semnatura1==nil
+    if !@contracte_useri || @contracte_useri.data_posta_isu==nil
       redirect_to voluntar_path, alert: "Acces neautorizat."
       return
     end  
@@ -596,7 +619,28 @@ def salveaza_ssm
   end
 end
 
+def salveaza_isu
 
+  @contract = Contracte.find(params[:id]) # Găsește contractul specific folosind ID-ul din URL
+  @contracte_useri = @contract.contracte_useris.find_by(user_id: current_user.id) # Găsește recordul specificul utilizatorului curent
+  @contracte_useri.validare_gdpr = true
+  @show_submit_button = true
+  puts("@contract din salveaza_ssm este: #{@contract.id}")
+  puts("@contracte_useri din salveaza_ssm: #{@contracte_useri.id}")
+
+  puts("pana aici")
+  if @contracte_useri.update(data_posta_isu: params[:contracte_useri][:data_posta_isu],data_bifa_isu: params[:contracte_useri][:data_bifa_isu]) # Actualizează campul `semnatura1` cu valoarea primită
+    # Procesare după actualizare cu succes
+    redirect_to voluntar_path, notice: "Semnătura a fost salvată cu succes."
+  else
+    set_shared_data(@contract, @contracte_useri)
+    
+    # Procesare în caz de eroare
+    flash.now[:alert] = "Eroare la salvarea semnăturii."
+    render :gdpr, status: :unprocessable_entity
+    #redirect_to gdpr_path, notice: "Semnătura a fost salvată cu succes."
+  end
+end
 
 def salveaza_contract
   @contract = Contracte.find(params[:id]) # Găsește contractul specific folosind ID-ul din URL

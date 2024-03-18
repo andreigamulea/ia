@@ -909,7 +909,7 @@ end
 
   def export_to_xlsx_plata_amnaya
     begin
-      cursuri = ['jamadagni', 'asita', 'performanta_cognitiva', 'cognitronica', 'jivaka', 'traditia_ayurvedica']
+      cursuri = ['jamadagni', 'asita', 'performanta_cognitiva', 'cognitronica', 'jivaka', 'traditia_ayurvedica','hiranyaksha']
       prod_ids = Prod.where(curslegatura: cursuri).pluck(:id)
       mapare_valori = Prod.where(curslegatura: cursuri).pluck(:id, :pret).to_h
       
