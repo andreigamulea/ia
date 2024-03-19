@@ -134,6 +134,8 @@ class ApplicationController < ActionController::Base
           asita_path  
         elsif return_to == "jamadagni" 
           jamadagni_path  
+        elsif return_to == "hiranyaksha" 
+          hiranyaksha_path
         elsif return_to == "vajikarana" 
           vajikarana_path  
         elsif return_to == "cognitronica"   
