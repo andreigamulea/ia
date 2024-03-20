@@ -1,5 +1,8 @@
 Rails.application.routes.draw do    
-  resources :tvs
+  resources :tvs, except: [:show]
+  get 'tvs/canal1', to: 'tvs#canal1'
+  get 'tvs/canal2', to: 'tvs#canal2'
+  get 'tvs/canal3', to: 'tvs#canal3'
 
   get '/show_cerere_voluntar/:id', to: 'contractes#show_cerere_voluntar', as: 'show_cerere_voluntar'
   get '/show_gdpr_voluntar/:id', to: 'contractes#show_gdpr_voluntar', as: 'show_gdpr_voluntar'
