@@ -2,6 +2,18 @@ class TvsController < ApplicationController
   before_action :set_tv, only: %i[ show edit update destroy ]
 
   # GET /tvs or /tvs.json
+
+  def canal1
+
+  end
+  def canal2
+    @myvideo1 = Tv.second
+    @myvideo = @myvideo1.link if @myvideo1
+  end
+  def canal3
+    @myvideo1 = Tv.first
+    @myvideo = @myvideo1.link if @myvideo1
+  end  
   def index
     @tvs = Tv.all
   end
