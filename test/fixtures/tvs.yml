@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  denumire: MyString
+  link: MyString
+  cine: MyString
+  canal: 1
+  datainceput: 2024-03-20
+  orainceput: 2024-03-20 16:37:55
+  mininceput: 1
+  datasfarsit: 2024-03-20
+  orasfarsit: 2024-03-20 16:37:55
+  minsfarsit: 1
+  user_id: 1
+  referinta: MyString
+
+two:
+  denumire: MyString
+  link: MyString
+  cine: MyString
+  canal: 1
+  datainceput: 2024-03-20
+  orainceput: 2024-03-20 16:37:55
+  mininceput: 1
+  datasfarsit: 2024-03-20
+  orasfarsit: 2024-03-20 16:37:55
+  minsfarsit: 1
+  user_id: 1
+  referinta: MyString

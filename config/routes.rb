@@ -1,4 +1,5 @@
 Rails.application.routes.draw do    
+  resources :tvs
 
   get '/show_cerere_voluntar/:id', to: 'contractes#show_cerere_voluntar', as: 'show_cerere_voluntar'
   get '/show_gdpr_voluntar/:id', to: 'contractes#show_gdpr_voluntar', as: 'show_gdpr_voluntar'

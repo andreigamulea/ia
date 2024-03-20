@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_01_215925) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_20_144437) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -370,6 +370,27 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_01_215925) do
     t.index ["specie"], name: "index_lista_vegetales_on_specie"
   end
 
+  create_table "listacanal1s", force: :cascade do |t|
+    t.string "email"
+    t.string "nume"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "listacanal2s", force: :cascade do |t|
+    t.string "email"
+    t.string "nume"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "listacanal3s", force: :cascade do |t|
+    t.string "email"
+    t.string "nume"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "listacursuris", force: :cascade do |t|
     t.string "nume"
     t.datetime "created_at", null: false
@@ -556,6 +577,23 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_01_215925) do
     t.integer "idxcp"
     t.string "cp"
     t.string "explicatie"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tvs", force: :cascade do |t|
+    t.string "denumire"
+    t.string "link"
+    t.string "cine"
+    t.integer "canal"
+    t.date "datainceput"
+    t.time "orainceput"
+    t.integer "mininceput"
+    t.date "datasfarsit"
+    t.time "orasfarsit"
+    t.integer "minsfarsit"
+    t.integer "user_id"
+    t.string "referinta"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
