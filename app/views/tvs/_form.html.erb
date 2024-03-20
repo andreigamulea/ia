@@ -1,0 +1,77 @@
+<%= form_with(model: tv) do |form| %>
+  <% if tv.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(tv.errors.count, "error") %> prohibited this tv from being saved:</h2>
+
+      <ul>
+        <% tv.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :denumire, style: "display: block" %>
+    <%= form.text_field :denumire %>
+  </div>
+
+  <div>
+    <%= form.label :link, style: "display: block" %>
+    <%= form.text_field :link %>
+  </div>
+
+  <div>
+    <%= form.label :cine, style: "display: block" %>
+    <%= form.text_field :cine %>
+  </div>
+
+  <div>
+    <%= form.label :canal, style: "display: block" %>
+    <%= form.number_field :canal %>
+  </div>
+
+  <div>
+    <%= form.label :datainceput, style: "display: block" %>
+    <%= form.date_field :datainceput %>
+  </div>
+
+  <div>
+    <%= form.label :orainceput, style: "display: block" %>
+    <%= form.time_field :orainceput %>
+  </div>
+
+  <div>
+    <%= form.label :mininceput, style: "display: block" %>
+    <%= form.number_field :mininceput %>
+  </div>
+
+  <div>
+    <%= form.label :datasfarsit, style: "display: block" %>
+    <%= form.date_field :datasfarsit %>
+  </div>
+
+  <div>
+    <%= form.label :orasfarsit, style: "display: block" %>
+    <%= form.time_field :orasfarsit %>
+  </div>
+
+  <div>
+    <%= form.label :minsfarsit, style: "display: block" %>
+    <%= form.number_field :minsfarsit %>
+  </div>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.number_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :referinta, style: "display: block" %>
+    <%= form.text_field :referinta %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
