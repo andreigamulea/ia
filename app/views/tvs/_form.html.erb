@@ -1,8 +1,7 @@
-<%= form_with(model: tv) do |form| %>
+<%= form_with(model: tv, local: true, html: {class: "needs-validation", novalidate: "", style: "width: 40%; margin: 0 auto;"}) do |form| %>
   <% if tv.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(tv.errors.count, "error") %> prohibited this tv from being saved:</h2>
-
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading"><%= pluralize(tv.errors.count, "error") %> a împiedicat salvarea acestei înregistrări:</h4>
       <ul>
         <% tv.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -11,67 +10,49 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :denumire, style: "display: block" %>
-    <%= form.text_field :denumire %>
+  <div class="mb-3">
+    <%= form.label :denumire, class: "form-label" %>
+    <%= form.text_field :denumire, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :link, style: "display: block" %>
-    <%= form.text_field :link %>
+  <div class="mb-3">
+    <%= form.label :link, class: "form-label" %>
+    <%= form.text_field :link, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :cine, style: "display: block" %>
-    <%= form.text_field :cine %>
+  <div class="mb-3">
+    <%= form.label :cine, "Lista celor care au acces", class: "form-label" %>
+    <%= form.select :cine, [['Listacanal1', 'Listacanal1'], ['Listacanal2', 'Listacanal2'], ['Listacanal3', 'Listacanal3']], { include_blank: true }, {class: "form-select"} %>
   </div>
 
-  <div>
-    <%= form.label :canal, style: "display: block" %>
-    <%= form.number_field :canal %>
+  <div class="mb-3">
+    <%= form.label :canal, class: "form-label" %>
+    <%= form.number_field :canal, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :datainceput, style: "display: block" %>
-    <%= form.date_field :datainceput %>
+  <div class="mb-3">
+    <%= form.label :datainceput, class: "form-label" %>
+    <%= form.date_field :datainceput, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :orainceput, style: "display: block" %>
-    <%= form.time_field :orainceput %>
+  <div class="mb-3">
+    <%= form.label :orainceput, class: "form-label" %>
+    <%= form.time_field :orainceput, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :mininceput, style: "display: block" %>
-    <%= form.number_field :mininceput %>
+  <div class="mb-3">
+    <%= form.label :datasfarsit, class: "form-label" %>
+    <%= form.date_field :datasfarsit, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :datasfarsit, style: "display: block" %>
-    <%= form.date_field :datasfarsit %>
+  <div class="mb-3">
+    <%= form.label :orasfarsit, class: "form-label" %>
+    <%= form.time_field :orasfarsit, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :orasfarsit, style: "display: block" %>
-    <%= form.time_field :orasfarsit %>
-  </div>
+  <%= form.hidden_field :user_id, value: current_user.id %>
 
   <div>
-    <%= form.label :minsfarsit, style: "display: block" %>
-    <%= form.number_field :minsfarsit %>
-  </div>
-
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.number_field :user_id %>
-  </div>
-
-  <div>
-    <%= form.label :referinta, style: "display: block" %>
-    <%= form.text_field :referinta %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
