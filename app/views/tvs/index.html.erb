@@ -1,14 +1,46 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Tvs</h1>
+<h1  style="text-align: center;">Orar vizionari</h1></br>
+<%= link_to "Creaza o noua inregistrare", new_tv_path, class: "btn btn-primary" %></br></br>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nr</th>
+      <th>Denumire</th>
+      <th>Link</th>
+      <th>Cine</th>
+      <th>Canal</th>
+      <th>Data Inceput</th>
+      <th>Ora Inceput</th>
+      <th>Data Sfarsit</th>
+      <th>Ora Sfarsit</th>
+      <th>User ID</th>
+      
+      <th>Actiune</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tvs.each_with_index do |tv, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= tv.denumire %></td>
+        <td><%= tv.link %></td>
+        <td><%= tv.cine %></td>
+        <td><%= tv.canal %></td>
+        <td><%= tv.datainceput %></td>
+        <td><%= tv.orainceput.strftime("%H:%M") unless tv.orainceput.nil? %></td>
+        <td><%= tv.datasfarsit %></td>
+        <td><%= tv.orasfarsit.strftime("%H:%M") unless tv.orasfarsit.nil? %></td>
+        <td><%= tv.user_id %></td>
+        
+        <td>
+          
+          <%= link_to 'Edit', edit_tv_path(tv) %>
+          <%= link_to 'Delete', tv, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<div id="tvs">
-  <% @tvs.each do |tv| %>
-    <%= render tv %>
-    <p>
-      <%= link_to "Show this tv", tv %>
-    </p>
-  <% end %>
-</div>
 
-<%= link_to "New tv", new_tv_path %>
