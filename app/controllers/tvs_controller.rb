@@ -130,6 +130,86 @@ class TvsController < ApplicationController
       end
 
   end  
+  def listacanal1
+    xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'listacanal1.xlsx'))
+    emailuri_importate = 0
+  
+    # Golește tabela Listacanal1 înainte de import
+    Listacanal1.destroy_all
+  
+    xlsx.each_row_streaming(offset: 1) do |row| # Presupunem că prima rând are anteturi
+      email = row[0]&.value&.strip&.downcase
+      next unless email
+  
+      # Creează o înregistrare în Listacanal1 pentru fiecare email
+      Listacanal1.create!(email: email)
+      emailuri_importate += 1
+    end
+  
+    # Afișează un mesaj cu numărul de emailuri importate
+    if emailuri_importate > 0
+      flash[:notice] = "#{emailuri_importate} adrese de email au fost importate cu succes în listacanal1."
+    else
+      flash[:alert] = "Niciun email nou nu a fost adăugat în listacanal1."
+    end
+  
+    # Redirecționează la o pagină după finalizarea importului, de exemplu înapoi la index
+    redirect_to panouadmin_path
+  end
+
+  def listacanal2
+    xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'listacanal2.xlsx'))
+    emailuri_importate = 0
+  
+    # Golește tabela Listacanal2 înainte de import
+    Listacanal2.destroy_all
+  
+    xlsx.each_row_streaming(offset: 1) do |row| # Presupunem că prima rând are anteturi
+      email = row[0]&.value&.strip&.downcase
+      next unless email
+  
+      # Creează o înregistrare în Listacanal2 pentru fiecare email
+      Listacanal2.create!(email: email)
+      emailuri_importate += 1
+    end
+  
+    # Afișează un mesaj cu numărul de emailuri importate
+    if emailuri_importate > 0
+      flash[:notice] = "#{emailuri_importate} adrese de email au fost importate cu succes în listacanal2."
+    else
+      flash[:alert] = "Niciun email nou nu a fost adăugat în listacanal2."
+    end
+  
+    # Redirecționează la o pagină după finalizarea importului, de exemplu înapoi la index
+    redirect_to panouadmin_path
+  end
+  
+  def listacanal3
+    xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'listacanal3.xlsx'))
+    emailuri_importate = 0
+  
+    # Golește tabela Listacanal2 înainte de import
+    Listacanal3.destroy_all
+  
+    xlsx.each_row_streaming(offset: 1) do |row| # Presupunem că prima rând are anteturi
+      email = row[0]&.value&.strip&.downcase
+      next unless email
+  
+      # Creează o înregistrare în Listacanal2 pentru fiecare email
+      Listacanal3.create!(email: email)
+      emailuri_importate += 1
+    end
+  
+    # Afișează un mesaj cu numărul de emailuri importate
+    if emailuri_importate > 0
+      flash[:notice] = "#{emailuri_importate} adrese de email au fost importate cu succes în listacanal3."
+    else
+      flash[:alert] = "Niciun email nou nu a fost adăugat în listacanal3."
+    end
+  
+    # Redirecționează la o pagină după finalizarea importului, de exemplu înapoi la index
+    redirect_to panouadmin_path
+  end
 
   def index
     @tvs = Tv.order(created_at: :desc)
