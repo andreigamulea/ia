@@ -1,3 +1,58 @@
+<style>
+#jamadagni .cm h2 {
+    font-size:22px;
+}
+#jamadagni .register{
+    border: 1px solid #eb8213;
+    background-color: #d98a1d;
+}
+#jamadagni .cm h3{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+#jamadagni .register{
+    margin:0;
+    margin-top:20px;
+    margin-left:10px;
+}
+#jamadagni .table td {
+    text-align:center;
+}
+@media screen and (max-width: 720px) {
+    #jamadagni .register{
+        margin:0 auto;
+        margin-top:20px;
+        margin-left: auto;
+    }
+    .cm{
+        text-align:center;
+    }
+}
+</style>
+
+
+
+<% content_for :title, "Canal 2 - Canal 2 | Ayush Cell Romania" %>
+<% content_for :description, "Descoperiți cunoasterea lui Jamadagni-Rishi, contributiile sale spirituale pentru o viață armonioasă!" %>
+<% content_for :keywords, "Tradiția Ayurvedică, Jamadagni-Rishi, Ayush Cell Romania, înțelepciune hindusă, vindecare tradițională, spiritualitate, cunoaștere, Ayurveda, înțelept, mitologie hindusă, rishi" %>
+
+<% content_for :canonical do %>
+  <link rel="canonical" href="https://www.ayushcell.ro/jamadagni">
+<% end %>
+
+<div class="container" id="jamadagni">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: white; ">
+    <h1 class="first-tittle">Ayuscell Tv Canal 2 - Ayuscell Tv Canal 2 Ayush Cell Romania</h1>
+    <h2 class="main-title" >Ayuscell Tv Canal 2 - Ayuscell Tv Canal 2</h2>
+
+
+
+
+
+
 <% if @exista_video %>
 
 <h2><%=@denumire%></h2>
@@ -16,3 +71,5 @@
 
 <h1>In acest moment nu există nici o revizionare.</h1>
 <% end %>
+</div>
+</div>
