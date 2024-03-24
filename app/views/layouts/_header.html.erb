@@ -146,7 +146,7 @@
                         <% if current_user %>
                         <li><%= link_to 'Facturile mele', facturas_path, class: 'nav-item' %></li>
                         <% end %>
-                        <% if current_user && (["mihaelachazli@gmail.com", "ade.dinu@gmail.com", "arkosi.mariann@gmail.com"].include?(current_user.email) || current_user.role == 1)%>
+                        <% if current_user && (["mihaelachazli@gmail.com", "ade.dinu@gmail.com", "arkosi.mariann@gmail.com", "ce.hermkens@gmail.com", "tatiana_aldescu@yahoo.com"].include?(current_user.email) || current_user.role == 1)%>
                         <li><%= link_to 'An 2', an2_path %></li>
                         <% end %>
                         <li><%= link_to 'Delogare', destroy_user_session_path, class: 'nav-item', id: 'logout_link',  data: { turbo_action: 'replace', turbo_method: 'delete' } %></li>
