@@ -221,7 +221,7 @@ class CursuriayurvedasController < ApplicationController
 
 
         #@prods=Prod.where(curslegatura: "an2").order(:linkstripe) 
-        email_eligibile = ["mihaelachazli@gmail.com", "ade.dinu@gmail.com", "arkosi.mariann@gmail.com"]   
+        email_eligibile = ["mihaelachazli@gmail.com", "ade.dinu@gmail.com", "arkosi.mariann@gmail.com","ce.hermkens@gmail.com","tatiana_aldescu@yahoo.com"]   
         @has_access = current_user && (email_eligibile.include?(current_user.email) || current_user.role == 1)
         
         coduri_produse_platite = ComenziProd.joins(:prod)
