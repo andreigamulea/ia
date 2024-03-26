@@ -87,3 +87,15 @@ document.addEventListener("DOMContentLoaded", function() {
         Cookies.set('cookiesAccepted', 'true', { expires: 365 });
     });
 });
+
+
+
+// Notificare când o vizită Turbo începe
+console.log("turbo:visit - O vizită Turbo a început.");
+
+// Condițional verifică și încarcă epytv.js dacă nu există deja
+if (!document.querySelector('script[src="<%= asset_path('epytv.js') %>"]')) {
+    var script = document.createElement("script");
+    script.src = "<%= asset_path('epytv.js') %>";
+    document.body.appendChild(script);
+}
