@@ -6,7 +6,14 @@ class TvsController < ApplicationController
   def canal1
     now_bucharest = Time.current.in_time_zone('Europe/Bucharest')
     @now_bucharest = now_bucharest
+    data_curenta = @now_bucharest.to_date
+    # Colectează toate 'orainceput' pentru înregistrările din data curentă
+    #@orare_inceput_azi = Tv.where(datainceput: data_curenta).pluck(:orainceput, :orasfarsit)
+    @orare_inceput_sfarsit_azi = Tv.where(datainceput: data_curenta, canal: 1).pluck(:orainceput, :orasfarsit).flat_map { |orainceput, orasfarsit| [orainceput, orasfarsit] }.uniq
+
    
+    # Convertim fiecare ora de inceput in format HH:MM pentru a facilita comparatia in JavaScript
+    @orare_inceput_sfarsit_azi = @orare_inceput_sfarsit_azi.map { |ora| ora.strftime('%H:%M') }
 
     @myvideo1 = Tv.where(canal: 1)
               .where("datainceput <= ? AND datasfarsit >= ?", now_bucharest.to_date, now_bucharest.to_date)
@@ -52,7 +59,7 @@ class TvsController < ApplicationController
     data_curenta = @now_bucharest.to_date
     # Colectează toate 'orainceput' pentru înregistrările din data curentă
     #@orare_inceput_azi = Tv.where(datainceput: data_curenta).pluck(:orainceput, :orasfarsit)
-    @orare_inceput_sfarsit_azi = Tv.where(datainceput: data_curenta).pluck(:orainceput, :orasfarsit).flat_map { |orainceput, orasfarsit| [orainceput, orasfarsit] }.uniq
+    @orare_inceput_sfarsit_azi = Tv.where(datainceput: data_curenta, canal: 2).pluck(:orainceput, :orasfarsit).flat_map { |orainceput, orasfarsit| [orainceput, orasfarsit] }.uniq
 
    
     # Convertim fiecare ora de inceput in format HH:MM pentru a facilita comparatia in JavaScript
@@ -101,6 +108,14 @@ class TvsController < ApplicationController
   def canal3
     now_bucharest = Time.current.in_time_zone('Europe/Bucharest')
     @now_bucharest = now_bucharest
+    data_curenta = @now_bucharest.to_date
+    # Colectează toate 'orainceput' pentru înregistrările din data curentă
+    #@orare_inceput_azi = Tv.where(datainceput: data_curenta).pluck(:orainceput, :orasfarsit)
+    @orare_inceput_sfarsit_azi = Tv.where(datainceput: data_curenta, canal: 3).pluck(:orainceput, :orasfarsit).flat_map { |orainceput, orasfarsit| [orainceput, orasfarsit] }.uniq
+
+   
+    # Convertim fiecare ora de inceput in format HH:MM pentru a facilita comparatia in JavaScript
+    @orare_inceput_sfarsit_azi = @orare_inceput_sfarsit_azi.map { |ora| ora.strftime('%H:%M') }
    
 
     @myvideo1 = Tv.where(canal: 3)
