@@ -49,7 +49,15 @@ class TvsController < ApplicationController
   def canal2
     now_bucharest = Time.current.in_time_zone('Europe/Bucharest')
     @now_bucharest = now_bucharest
+    data_curenta = @now_bucharest.to_date
+    # Colectează toate 'orainceput' pentru înregistrările din data curentă
+    #@orare_inceput_azi = Tv.where(datainceput: data_curenta).pluck(:orainceput, :orasfarsit)
+    @orare_inceput_sfarsit_azi = Tv.where(datainceput: data_curenta).pluck(:orainceput, :orasfarsit).flat_map { |orainceput, orasfarsit| [orainceput, orasfarsit] }.uniq
+
    
+    # Convertim fiecare ora de inceput in format HH:MM pentru a facilita comparatia in JavaScript
+    @orare_inceput_sfarsit_azi = @orare_inceput_sfarsit_azi.map { |ora| ora.strftime('%H:%M') }
+    
 
     @myvideo1 = Tv.where(canal: 2)
               .where("datainceput <= ? AND datasfarsit >= ?", now_bucharest.to_date, now_bucharest.to_date)
@@ -80,6 +88,7 @@ class TvsController < ApplicationController
         @exista_video = true
         @denumire = @myvideo1.denumire      
         @data_sfarsit = @myvideo1.datasfarsit.strftime("%d.%m.%Y") if @myvideo1&.datasfarsit
+        @ora_inceput = @myvideo1.orainceput if @myvideo1&.orainceput
         @valabilitate_ora_sfarsit = @myvideo1.orasfarsit.strftime("%H:%M") if @myvideo1.orasfarsit     
         
       else
