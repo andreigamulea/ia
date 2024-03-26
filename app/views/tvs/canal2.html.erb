@@ -51,3 +51,41 @@
 <% end %>
 </div>
 </div>
+<script>
+console.log("Pagina22.");
+</script>
+<script>
+console.log("Pagina a fost încărcată/reîncărcată1.");
+
+document.addEventListener("turbo:load", () => {
+    var orareInceputAzi = <%= raw @orare_inceput_sfarsit_azi.to_json %>;
+    
+    console.log("Orare de inceput:", orareInceputAzi);
+
+    function verificaSiReincarcaPagina() {
+      var oraCurenta = new Date().toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Bucharest' });
+      console.log("Ora curenta:", oraCurenta); // Vezi ce ora exactă se generează
+
+      if (orareInceputAzi.includes(oraCurenta)) {
+        console.log("Se face refresh!");
+        window.location.reload();
+      } else {
+        console.log("Nu se face refresh, ora curentă nu este în array.");
+      }
+    }
+
+    setInterval(verificaSiReincarcaPagina, 60000);
+
+
+    // Notificare când o vizită Turbo începe
+    console.log("turbo:visit - O vizită Turbo a început.");
+
+    // Condițional verifică și încarcă epytv.js dacă nu există deja
+    if (!document.querySelector('script[src="<%= asset_path('epytv.js') %>"]')) {
+        var script = document.createElement("script");
+        script.src = "<%= asset_path('epytv.js') %>";
+        document.body.appendChild(script);
+    }
+});
+</script>
+
