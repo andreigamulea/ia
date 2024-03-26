@@ -87,22 +87,3 @@ document.addEventListener("DOMContentLoaded", function() {
         Cookies.set('cookiesAccepted', 'true', { expires: 365 });
     });
 });
-
-
-
-document.addEventListener('turbo:load', loadEpytvScript);
-document.addEventListener('turbo:visit', () => {
-  console.log('turbo:visit - O vizită Turbo a început.');
-});
-
-function loadEpytvScript() {
-  console.log('Pagina a fost încărcată/reîncărcată.');
-
-  if (!document.querySelector('script[src="/path/to/epytv.js"]')) { // Asigură-te că ajustezi calea
-    var script = document.createElement('script');
-    script.src = '/path/to/epytv.js'; // Înlocuiește cu calea corectă către epytv.js
-    document.body.appendChild(script);
-  }
-}
-
-  

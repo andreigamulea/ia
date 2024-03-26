@@ -17,4 +17,6 @@ pin 'os', to: 'https://ga.jspm.io/npm:@jspm/core@2.0.0-beta.27/nodelibs/browser/
 pin "js-cookie", to: "node_modules/js-cookie/dist/js.cookie.js"
 
 
+pin "epytv", to: "epytv.js"
+
 
