@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_20_144437) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_26_125732) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -215,6 +215,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_20_144437) do
     t.date "data_bifa_isu"
     t.date "data_cv"
     t.date "data_fisa_postului"
+    t.boolean "vazut_video_ssm", default: false
+    t.boolean "vazut_video_isu", default: false
   end
 
   create_table "contractes", force: :cascade do |t|
@@ -382,6 +384,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_20_144437) do
     t.string "nume"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "telefon"
+    t.string "platit"
   end
 
   create_table "listacanal3s", force: :cascade do |t|
@@ -389,6 +393,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_20_144437) do
     t.string "nume"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "telefon"
+    t.string "platit"
   end
 
   create_table "listacursuris", force: :cascade do |t|
