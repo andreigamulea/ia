@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ro">
 
@@ -64,15 +65,20 @@
       <%= render 'layouts/header' %>  
     <% end %>
     
-
+    
     <%= yield %>
     
     <%= render 'layouts/newsleter' %>  
    
     <%= render 'layouts/footer' %> 
     <%= render 'cookie_law/cookie_banner' %>
-    
+    <%= javascript_include_tag "epytv.js" %>
     <script type='text/javascript' src='//www.youtube.com/iframe_api'></script>
+
+
+
+
+    
   </body>
   
 </html> 
