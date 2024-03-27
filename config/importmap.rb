@@ -7,7 +7,6 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js", preload: true
 pin_all_from "app/javascript/controllers", under: "controllers"
 pin "@rails/request.js", to: "rails_request.mjs", preload: true
 pin "headermobil", to: "headermobil.js"
-pin "epytv", to: "epytv.js"
 
 pin 'chartkick', to: 'https://ga.jspm.io/npm:chartkick@4.2.0/dist/chartkick.js'
 pin 'Chart.bundle', to: 'Chart.bundle.js'
@@ -16,8 +15,6 @@ pin 'os', to: 'https://ga.jspm.io/npm:@jspm/core@2.0.0-beta.27/nodelibs/browser/
 
 # config/importmap.rb
 pin "js-cookie", to: "node_modules/js-cookie/dist/js.cookie.js"
-
-
 
 
 
