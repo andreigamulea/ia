@@ -229,9 +229,11 @@
 </div>
 <script>
 
-
+console.log("Pagina încărcată inainte de Turbo!");
 document.addEventListener("turbo:load", function() {
   console.log("Pagina încărcată cu Turbo!");
 });
-
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("Pagina încărcată cu Dom!");
+  });
 </script>

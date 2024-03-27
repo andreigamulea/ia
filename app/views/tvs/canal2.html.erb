@@ -53,9 +53,19 @@
 </div>
 
 <script>
-console.log("Pagina a fost încărcată/reîncărcată1.");
+console.log('Script simplu!');
+</script>
+<script>
 
-document.addEventListener("turbo:load", () => {
+
+
+console.log("Pagina a fost încărcată/reîncărcată canal2.");
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("Pagina încărcată cu Dom! canal2");
+  });
+    
+    document.addEventListener("turbo:load", function() {
     var orareInceputAzi = <%= raw @orare_inceput_sfarsit_azi.to_json %>;
     
     console.log("Orare de inceput:", orareInceputAzi);
@@ -74,9 +84,9 @@ document.addEventListener("turbo:load", () => {
 
     setInterval(verificaSiReincarcaPagina, 60000);
     
-
+    // Notificare când o vizită Turbo începe
+    
    
 });
 </script>
 
-<%= javascript_include_tag "epytv.js" %>
