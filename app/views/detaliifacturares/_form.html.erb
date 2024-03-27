@@ -97,7 +97,7 @@
   <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:adresaemail].any? %>">
   <%= f.label "Email*", class: "form-label" %>
 
-bla
+
     
     <%= f.text_field :adresaemail, class: "form-control", value: f.object.adresaemail.presence || current_user.email, readonly: true %>
 
