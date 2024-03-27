@@ -36,6 +36,44 @@ var errorMessages = {
     5:"OK",
     6:"Processing video"
 };
+/**
+ * Version: 2.0.4 - Pro
+ */
+
+"use strict";                           /** DO NOT EDIT !!! */
+
+var defaultPlayerParameters = {
+    "vq" : "hd1080",                    /** DEFAULT VIDEO QUALITY. POSSIBLE OPTIONS: highres, hd1080, hd720, large, medium and small */
+    "loop" : "1",                       /** LOOP VIDEO */
+    "controls" : "1",                   /** SHOW PLAYER CONTROLS */
+    "showinfo" : "1",                   /** SHOW VIDEO DETAILS */
+    "autohide" : "1",                   /** AUTOHIDE PLAYER COMMANDS AND VIDEO DETAILS */
+    "modestbranding" : "1",             /** SHOW ONLY MINIMAL YOUTUBE BRANDING */
+    "rel" : "1",                        /** SHOW RELATED VIDEOS AT THE END OF PLAYED VIDEO */
+    "cc_load_policy" : "1",             /** Setting the parameter"s value to 1 causes closed captions to be shown by default, even if the user has turned captions off. */
+    "color" : "red",                    /** This parameter specifies the color that will be used in the player"s video progress bar to highlight the amount of the video that the viewer has already seen. Valid parameter values are red and white. */
+    "disablekb" : "1",                  /** Setting the parameter"s value to 1 causes the player to not respond to keyboard controls. */
+    "fs" : "1",                         /** Setting this parameter to 0 prevents the fullscreen button from displaying in the player. */
+    "hl" : "en",                        /** Sets the player"s interface language. See http://www.loc.gov/standards/iso639-2/php/code_list.php for full language code list. */
+    "iv_load_policy" : "1",             /** Setting the parameter"s value to 1 causes video annotations to be shown by default, whereas setting to 3 causes video annotations to not be shown by default. */
+    "playsinline" : "1",                /** This parameter controls whether videos play inline or fullscreen in an HTML5 player on iOS. */
+    "mute" : "1",                       /** Prevents autoplay issue - https://www.reddit.com/r/youtube/comments/8ksool/embedded_autoplay_youtube_videos_stopped_playing/ */
+    "allow" : "autoplay"
+    };
+
+/**
+ * Define error messages
+ * in your language here.
+ */
+var errorMessages = {
+    0:"Service unavailable",
+    1:"Unregistered video",  
+    2:"Unregistered client",  
+    3:"No client ID",  
+    4:"Video unavailable",
+    5:"OK",
+    6:"Processing video"
+};
 
 
 /** --------------------------------------------------------------------- DON NOT EDIT ANYTHING BELLOW ---------------------------------------------------------------------- */
