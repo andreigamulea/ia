@@ -1,3 +1,7 @@
+
+
+
+
 <style>
 #revizionari1 .cr h2 {
     font-size:22px;
@@ -26,7 +30,7 @@
 
 
 
-
+    
 
     
 
@@ -69,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
     
     document.addEventListener("turbo:load", function() {
+      console.log("Pagina încărcată cu Turbo canal2");
     var orareInceputAzi = <%= raw @orare_inceput_sfarsit_azi.to_json %>;
     
     console.log("Orare de inceput:", orareInceputAzi);
@@ -87,9 +92,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     setInterval(verificaSiReincarcaPagina, 60000);
     
-    // Notificare când o vizită Turbo începe
     
    
 });
 </script>
 
+<div data-controller="epytv">
+    <!-- Elementul DOM aici va fi controlat de epytv_controller.js -->
+</div>
