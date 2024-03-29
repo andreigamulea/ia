@@ -120,9 +120,11 @@ class TvsController < ApplicationController
         @myvideo = @myvideo1.link
         @exista_video = true
         @denumire = @myvideo1.denumire      
+        @data_inceput = @myvideo1.datainceput.strftime("%d.%m.%Y") if @myvideo1&.datainceput
         @data_sfarsit = @myvideo1.datasfarsit.strftime("%d.%m.%Y") if @myvideo1&.datasfarsit
         @ora_inceput = @myvideo1.orainceput if @myvideo1&.orainceput
-        @valabilitate_ora_sfarsit = @myvideo1.orasfarsit.strftime("%H:%M") if @myvideo1.orasfarsit     
+        @valabilitate_ora_inceput = @myvideo1.orainceput.strftime("%H:%M") if @myvideo1.orainceput  
+        @valabilitate_ora_sfarsit = @myvideo1.orasfarsit.strftime("%H:%M") if @myvideo1.orasfarsit   
         
       else
         @myvideo1 = nil
