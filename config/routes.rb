@@ -1,4 +1,5 @@
 Rails.application.routes.draw do    
+  
  # Rute personalizate care au prioritate
  get 'tvs/canal1', to: 'tvs#canal1'
  get 'tvs/canal2', to: 'tvs#canal2'
@@ -7,7 +8,13 @@ Rails.application.routes.draw do
  get 'tvs/listacanal2', to: 'tvs#listacanal2', as: 'listacanal2'
  get 'tvs/listacanal3', to: 'tvs#listacanal3', as: 'listacanal3'
  # Rutele CRUD standard pentru tvs, inclusiv show
+ 
  resources :tvs
+resources :listacanal2s
+patch 'listacanal2s/:id', to: 'listacanal2s#update', as: :update_listacanal2
+
+
+ 
 
   get '/show_cerere_voluntar/:id', to: 'contractes#show_cerere_voluntar', as: 'show_cerere_voluntar'
   get '/show_gdpr_voluntar/:id', to: 'contractes#show_gdpr_voluntar', as: 'show_gdpr_voluntar'

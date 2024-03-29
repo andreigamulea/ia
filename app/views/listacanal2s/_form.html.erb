@@ -1,0 +1,39 @@
+<!-- app/views/listacanal2s/_form.html.erb -->
+
+<%= form_with(model: listacanal2) do |form| %>
+  <% if listacanal2.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(listacanal2.errors.count, "error") %> prohibited this listacanal2 from being saved:</h2>
+
+      <ul>
+      <% listacanal2.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :listacanal2_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :platit %>
+    <%= form.text_field :platit, id: :listacanal2_platit %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nume %>
+    <%= form.text_field :nume, id: :listacanal2_nume %>
+  </div>
+
+  <div class="field">
+    <%= form.label :telefon %>
+    <%= form.text_field :telefon, id: :listacanal2_telefon %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

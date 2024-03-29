@@ -54,6 +54,32 @@ class TvsController < ApplicationController
 
   end
   def canal2
+    lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie"]
+  
+    # Utilizatorii cu role == 1 au acces automat
+      unless current_user.role == 1
+        inregistrare_user = Listacanal2.find_by(email: current_user.email)
+    
+        # Dacă nu există înregistrare pentru user și nu are rolul 1, redirecționează
+        if inregistrare_user.nil?
+          redirect_to root_path and return
+        end
+    
+        # Verifică dacă valoarea lui 'platit' este "nimic" pentru utilizatorii care nu sunt rolul 1
+        if inregistrare_user.platit == "nimic"
+          redirect_to root_path and return
+        end
+    
+        # Găsește indexul lunii 'platit' din înregistrarea userului și determină luna curentă în română
+        luna_curenta_romana = luna_in_romana(Time.current.in_time_zone('Europe/Bucharest').strftime("%B"))
+        index_luna_curenta = lunile.index(luna_curenta_romana)
+        index_luna_platit = lunile.index(inregistrare_user.platit)
+    
+        # Dacă luna 'platit' este mai mică decât luna curentă, redirect către root_path
+        if index_luna_platit.nil? || index_luna_curenta.nil? || index_luna_platit < index_luna_curenta
+          redirect_to root_path and return
+        end
+      end
     now_bucharest = Time.current.in_time_zone('Europe/Bucharest')
     @now_bucharest = now_bucharest
     data_curenta = @now_bucharest.to_date
@@ -106,6 +132,32 @@ class TvsController < ApplicationController
   end
   
   def canal3
+    lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie"]
+  
+    # Utilizatorii cu role == 1 au acces automat
+      unless current_user.role == 1
+        inregistrare_user = Listacanal3.find_by(email: current_user.email)
+    
+        # Dacă nu există înregistrare pentru user și nu are rolul 1, redirecționează
+        if inregistrare_user.nil?
+          redirect_to root_path and return
+        end
+    
+        # Verifică dacă valoarea lui 'platit' este "nimic" pentru utilizatorii care nu sunt rolul 1
+        if inregistrare_user.platit == "nimic"
+          redirect_to root_path and return
+        end
+    
+        # Găsește indexul lunii 'platit' din înregistrarea userului și determină luna curentă în română
+        luna_curenta_romana = luna_in_romana(Time.current.in_time_zone('Europe/Bucharest').strftime("%B"))
+        index_luna_curenta = lunile.index(luna_curenta_romana)
+        index_luna_platit = lunile.index(inregistrare_user.platit)
+    
+        # Dacă luna 'platit' este mai mică decât luna curentă, redirect către root_path
+        if index_luna_platit.nil? || index_luna_curenta.nil? || index_luna_platit < index_luna_curenta
+          redirect_to root_path and return
+        end
+      end
     now_bucharest = Time.current.in_time_zone('Europe/Bucharest')
     @now_bucharest = now_bucharest
     data_curenta = @now_bucharest.to_date
@@ -192,8 +244,30 @@ class TvsController < ApplicationController
       email = row[0]&.value&.strip&.downcase
       next unless email
   
-      # Creează o înregistrare în Listacanal2 pentru fiecare email
-      Listacanal2.create!(email: email)
+      # Crează un array cu valorile de la row[3] până la row[13], inclusiv nil unde nu există valori
+      valori_array = (3..13).map { |i| row[i]&.value }
+  
+      # Afișează valorile obținute în consolă
+      puts "Valorile obținute sunt: #{valori_array}"
+  
+      # Găsește indexul ultimului element din array care nu este nil
+      index_ultim_element_non_nil = valori_array.each_with_index.reject { |val, _| val.nil? }.last&.last
+  
+      lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie"]
+  
+      # Determină luna corespunzătoare ultimului element non-nil, dacă există
+      luna_corespunzatoare = nil
+      if index_ultim_element_non_nil && index_ultim_element_non_nil.between?(0, 10)
+        luna_corespunzatoare = lunile[index_ultim_element_non_nil]
+        puts "Ultima lună care nu este nil este: #{luna_corespunzatoare}"
+      else
+        puts "Nu s-a găsit o valoare non-nil în intervalul specificat."
+        luna_corespunzatoare = "nimic"
+      end
+  
+      # Creează o înregistrare în Listacanal2 pentru fiecare email, inclusiv luna corespunzătoare, dacă este disponibilă
+      Listacanal2.create!(email: email, platit: luna_corespunzatoare)
+  
       emailuri_importate += 1
     end
   
@@ -208,19 +282,44 @@ class TvsController < ApplicationController
     redirect_to panouadmin_path
   end
   
+  
+  
+  
   def listacanal3
     xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'listacanal3.xlsx'))
     emailuri_importate = 0
   
-    # Golește tabela Listacanal2 înainte de import
+    # Golește tabela Listacanal3 înainte de import
     Listacanal3.destroy_all
   
     xlsx.each_row_streaming(offset: 1) do |row| # Presupunem că prima rând are anteturi
       email = row[0]&.value&.strip&.downcase
       next unless email
   
-      # Creează o înregistrare în Listacanal2 pentru fiecare email
-      Listacanal3.create!(email: email)
+      # Crează un array cu valorile de la row[3] până la row[13], inclusiv nil unde nu există valori
+      valori_array = (3..13).map { |i| row[i]&.value }
+  
+      # Afișează valorile obținute în consolă
+      puts "Valorile obținute sunt: #{valori_array}"
+  
+      # Găsește indexul ultimului element din array care nu este nil
+      index_ultim_element_non_nil = valori_array.each_with_index.reject { |val, _| val.nil? }.last&.last
+  
+      lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie"]
+  
+      # Determină luna corespunzătoare ultimului element non-nil, dacă există
+      luna_corespunzatoare = nil
+      if index_ultim_element_non_nil && index_ultim_element_non_nil.between?(0, 10)
+        luna_corespunzatoare = lunile[index_ultim_element_non_nil]
+        puts "Ultima lună care nu este nil este: #{luna_corespunzatoare}"
+      else
+        puts "Nu s-a găsit o valoare non-nil în intervalul specificat."
+        luna_corespunzatoare = "nimic"
+      end
+  
+      # Creează o înregistrare în Listacanal2 pentru fiecare email, inclusiv luna corespunzătoare, dacă este disponibilă
+      Listacanal3.create!(email: email, platit: luna_corespunzatoare)
+  
       emailuri_importate += 1
     end
   

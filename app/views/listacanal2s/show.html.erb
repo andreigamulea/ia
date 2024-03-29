@@ -1,0 +1,27 @@
+<!-- app/views/listacanal2s/show.html.erb -->
+
+<h1>Detalii Canal</h1>
+
+<p>
+  <strong>Email:</strong>
+  <%= @listacanal2.email %>
+</p>
+
+<p>
+  <strong>Plătit:</strong>
+  <%= @listacanal2.platit %>
+</p>
+
+<p>
+  <strong>Nume:</strong>
+  <%= @listacanal2.nume %>
+</p>
+
+<p>
+  <strong>Telefon:</strong>
+  <%= @listacanal2.telefon %>
+</p>
+
+<%= link_to 'Înapoi', listacanal2s_path %>
+<%= link_to 'Editează', edit_listacanal2_path(@listacanal2) %>
+<%= link_to 'Șterge', @listacanal2, method: :delete, data: { confirm: 'Ești sigur?' } %>

@@ -1,0 +1,32 @@
+<!-- app/views/listacanal2s/index.html.erb -->
+
+<h1>Lista Canale 2</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Plătit</th>
+      <th>Nume</th>
+      <th>Telefon</th>
+      <th>Acțiuni</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @listacanal2s.each do |item| %>
+      <tr>
+        <td><%= item.email %></td>
+        <td><%= item.platit %></td>
+        <td><%= item.nume %></td>
+        <td><%= item.telefon %></td>
+        <td>
+          
+          <%= link_to 'Editează', edit_listacanal2_path(item) %>
+          
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
