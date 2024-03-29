@@ -37,7 +37,7 @@
 <% if @exista_video %>
 
 <h2><%=@denumire%></h2>
-<h4>Aceasta inregistrare se poate reviziona pana la: <%=@data_sfarsit%> ora <%=@valabilitate_ora_sfarsit%></h4>
+<h4>Aceasta inregistrare se poate reviziona de la <%=@data_inceput%> ora <%=@valabilitate_ora_inceput%> pana la <%=@data_sfarsit%> ora <%=@valabilitate_ora_sfarsit%></h4>
 
 
 <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>); background-size: 100%;">
