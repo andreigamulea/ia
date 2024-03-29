@@ -1,0 +1,2 @@
+module Listacanal2sHelper
+end
