@@ -207,22 +207,44 @@ class CursuriayurvedasController < ApplicationController
 
   end
   def an2
-        
-        # Selectează toate ID-urile de produse care au fost plătite de către utilizatorul curent
-         produse_platite_ids = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
-            .where('datasfarsit IS NULL OR datasfarsit >= ?', Date.current)
-            .pluck(:prod_id)
+    lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie"]
+    inregistrari_valide = Listacanal2.where(platit: lunile)
+  
+    unless current_user.role == 1 || inregistrari_valide.exists?(email: current_user.email)
+      redirect_to root_path and return
+    end
+  
+    inregistrare_user = Listacanal2.find_by(email: current_user.email)
+    luna_curenta_romana = luna_in_romana(Time.current.in_time_zone('Europe/Bucharest').strftime("%B"))
+    index_luna_curenta = lunile.index(luna_curenta_romana)
+    if current_user.role!=1
+      index_luna_platit = lunile.index(inregistrare_user.platit)
+      puts("Ultima luna platita: #{index_luna_platit}")
+    end
+    produse_platite_ids = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                       .where('datasfarsit IS NULL OR datasfarsit >= ?', Date.current)
+                                       .pluck(:prod_id)
+  
+    # Selectează doar produsele până la luna plătită
+    if current_user.role==1
+      @prods = Prod.where(curslegatura: "an2")
+    else  
+     # Prelucrarea inițială pentru a determina produsele valide
+      produse_valide_ids = Prod.where(curslegatura: "an2")
+      .where.not(id: produse_platite_ids)
+      .select { |prod| lunile.index(prod.luna) <= index_luna_platit }
+      .map(&:id)
+
+      # Utilizarea ID-urilor produselor valide pentru a face o interogare ordonată
+      @prods = Prod.where(id: produse_valide_ids).order(:linkstripe)
+
+  
+    end  
 
 
-        # Obține toate produsele care nu sunt în lista de produse plătite
-        @prods = Prod.where(curslegatura: "an2").where.not(id: produse_platite_ids).order(:linkstripe)
+    #email_eligibile = ["mihaelachazli@gmail.com", "ade.dinu@gmail.com", "arkosi.mariann@gmail.com","ce.hermkens@gmail.com","tatiana_aldescu@yahoo.com"]   
 
-
-
-
-        #@prods=Prod.where(curslegatura: "an2").order(:linkstripe) 
-        email_eligibile = ["mihaelachazli@gmail.com", "ade.dinu@gmail.com", "arkosi.mariann@gmail.com","ce.hermkens@gmail.com","tatiana_aldescu@yahoo.com"]   
-        @has_access = current_user && (email_eligibile.include?(current_user.email) || current_user.role == 1)
+   
         
         coduri_produse_platite = ComenziProd.joins(:prod)
                                           .where(user_id: current_user.id, validat: 'Finalizata')
@@ -246,6 +268,9 @@ class CursuriayurvedasController < ApplicationController
     
         puts("@platit= #{@platit}")
     
+
+
+        @prod = Prod.find_by(curslegatura: 'platageneralacurs', status: 'activ')
     end  
 
   private
