@@ -186,8 +186,7 @@ class ContractesController < ApplicationController
       @contract = Contracte.find_by(id: session[:contract_id])
       @contracte_useri = @contract.contracte_useris.find_by(user_id: @current_user.id)
 
-      @myvideo1 = Video.find_by(link: 'h6OXnu8DAbA')
-      @myvideo = @myvideo1.link if @myvideo1
+     
 
       if !@contracte_useri || @contracte_useri.semnatura1==nil
         redirect_to voluntar_path, alert: "Acces neautorizat."
