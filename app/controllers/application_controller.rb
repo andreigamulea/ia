@@ -65,8 +65,9 @@ class ApplicationController < ActionController::Base
       def after_sign_in_path_for(resource)
         Rails.logger.info "In after_sign_in_path_for, user id: #{resource.id}"
         pagina = Paginisite.find_by(nume: "Login")
-      
+        puts("asaaaaaaaaaaa")
         if pagina
+          puts("bbbbbbbbbbbbbbb")
           user_pagina = UserPaginisite.new(user_id: resource.id, paginisite_id: pagina.id)
           if user_pagina.save
             Rails.logger.info "Created UserPaginisite record for user id: #{resource.id} and pagina id: #{pagina.id}"

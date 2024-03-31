@@ -79,10 +79,10 @@
     <li><strong>Completează manual datele necesare pe fișa tipărită:</strong> Utilizează un stilou sau un pix pentru a completa toate secțiunile necesare din fișa SSM tipărită. Asigură-te că scrii clar și lizibil pentru a evita orice confuzie sau neînțelegeri.</li>
     <li><strong>Expediază fișa completată prin poșta sau curier rapid:</strong> După ce ai completat fișa, plasează-o într-un plic adecvat și trimite-o prin poștă la adresa specificată: Bulevardul Decebal nr. 31, Sector 3, București, Cod poștal 623355. </li>
 </ol>
-   
+<p>Confirma vizionarea despre SSM si expedierea documentului completat și finalizează această etapă.</p>
     
 
- <p>Confirma expedierea documentului completat și finalizează această etapă.</p>
+ 
 
     <%= form_with model: [@contract, @contracte_useri], 
     url: salveaza_ssm_contracte_path(@contract), 
@@ -113,9 +113,31 @@
     
     <%= form.hidden_field :data_posta_ssm, value: Date.today %>
     <%end%>
+    
+    <h2 class="name">Prezentare SSM</h2>
+    
+    <!-- for non autoplay video //-->
+    <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+        <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
+            <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+            <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+            <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+            <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+        </div>
+    </div>
+    </br>
 
+
+
+    <%= form.check_box :vazut_video_ssm, id: 'vazut-video-ssm-checkbox', class: 'form-checkbox' %>
+    <%= form.label :vazut_video_ssm, 'Am vizionat in intregime video-ul despre SSM' %></br>
+
+    
     <%= form.check_box :activare_submit, id: 'activare-submit-checkbox', class: 'form-checkbox' %>
     <%= form.label :activare_submit, 'Am trimis prin colet poștal formularul tipărit la adresa menționată mai sus în data de' %>
+
+
+    
 
     <%= form.date_field :data_bifa_ssm, 
                     id: 'data-bifa-ssm', 
@@ -136,15 +158,18 @@
 </div>
 <script>
 document.addEventListener("turbo:load", function() {
-    const checkbox = document.getElementById('activare-submit-checkbox');
-    const dateField = document.getElementById('data-bifa-ssm');
-    const submitButton = document.getElementById('submit-button');
+  const checkboxVideo = document.getElementById('vazut-video-ssm-checkbox');
+  const checkboxSubmit = document.getElementById('activare-submit-checkbox');
+  const dateField = document.getElementById('data-bifa-ssm');
+  const submitButton = document.getElementById('submit-button');
 
-    function updateSubmitButtonState() {
-      submitButton.disabled = !checkbox.checked || dateField.value === '';
-    }
+  function updateSubmitButtonState() {
+    submitButton.disabled = !checkboxVideo.checked || !checkboxSubmit.checked || dateField.value === '';
+  }
 
-    checkbox.addEventListener('change', updateSubmitButtonState);
-    dateField.addEventListener('change', updateSubmitButtonState);
-  });
+  checkboxVideo.addEventListener('change', updateSubmitButtonState);
+  checkboxSubmit.addEventListener('change', updateSubmitButtonState);
+  dateField.addEventListener('change', updateSubmitButtonState);
+});
+
 </script>

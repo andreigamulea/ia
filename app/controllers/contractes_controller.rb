@@ -181,14 +181,20 @@ class ContractesController < ApplicationController
 
   def ssm
     if session[:contract_id] 
+
       puts("@contract din semneaza_contract este: #{session[:contract_id]}")
       @contract = Contracte.find_by(id: session[:contract_id])
       @contracte_useri = @contract.contracte_useris.find_by(user_id: @current_user.id)
+
+      @myvideo1 = Video.find_by(link: 'h6OXnu8DAbA')
+      @myvideo = @myvideo1.link if @myvideo1
+
       if !@contracte_useri || @contracte_useri.semnatura1==nil
         redirect_to voluntar_path, alert: "Acces neautorizat."
         return
       end  
       set_shared_data(@contract, @contracte_useri)
+      @contracte_useri.vazut_video_ssm = false
     else
       # Gestionarea cazurilor în care contractul sau contracte_useri nu sunt găsite
       redirect_to voluntar_path, alert: "Contractul sau datele de utilizator asociate nu au fost găsite."
@@ -606,7 +612,9 @@ def salveaza_ssm
   puts("@contracte_useri din salveaza_ssm: #{@contracte_useri.id}")
 
   puts("pana aici")
-  if @contracte_useri.update(data_posta_ssm: params[:contracte_useri][:data_posta_ssm],data_bifa_ssm: params[:contracte_useri][:data_bifa_ssm]) # Actualizează campul `semnatura1` cu valoarea primită
+  if @contracte_useri.update(data_posta_ssm: params[:contracte_useri][:data_posta_ssm], 
+    data_bifa_ssm: params[:contracte_useri][:data_bifa_ssm], 
+    vazut_video_ssm: params[:contracte_useri][:vazut_video_ssm]) # Actualizează campul `semnatura1` cu valoarea primită
     # Procesare după actualizare cu succes
     redirect_to voluntar_path, notice: "Semnătura a fost salvată cu succes."
   else
@@ -846,6 +854,8 @@ end
         :data_posta_isu,
         :data_bifa_isu,
         :data_cv,
+        :vazut_video_ssm,
+        :vazut_video_isu,
         :data_fisa_postului #aceasta e data ce se inregistreaza dupa completarea fisei postului
         )
     end
@@ -877,6 +887,8 @@ end
         ].compact.join(", ")
         @data_cerere = contracte_useri.data_cerere
         @data_gdpr = contracte_useri.data_gdpr
+        @vazut_video_ssm = true
+        @vazut_video_isu = true
         # Alte setări necesare, cum ar fi semnătura voluntarului/adminului, dacă este necesar
         @semnatura_voluntar = contracte_useri.semnatura2 if contracte_useri.respond_to?(:semnatura2)
         @semnatura_admin = contract.semnatura_admin if contract.respond_to?(:semnatura_admin)
@@ -899,7 +911,7 @@ end
         @sarcini = @contract.sarcini_voluntar.split(';').map(&:strip)
         @expira_la = Date.today + @contract.valabilitate_luni.months
         @cod_contract = @contract.cod_contract
-
+        
 
         @nr_contract_referinta = calculate_nr_contract_referinta(contract.id)
         #@nr_contract_referinta = ContracteUseri.maximum(:nr_contract_referinta).to_i + 1
