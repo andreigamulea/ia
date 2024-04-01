@@ -14,9 +14,7 @@
  *= require_self
  *= require cookie_law
  */
- .ytp-expand-pause-overlay, .ytp-pause-overlay{
-  display: none !important;
-}
+
  input[type="submit"]:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
@@ -646,4 +644,10 @@ footer {
     margin-top: -30px;
     text-align: center;
       }
+}
+.epyv-video-container .ytp-expand-pause-overlay {
+  display: none !important;
+}
+.epyv-video-container .ytp-pause-overlay {
+  display: none !important;
 }
