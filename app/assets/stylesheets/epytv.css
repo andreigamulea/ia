@@ -1,0 +1,6 @@
+.epyv-video-container .ytp-expand-pause-overlay {
+    display: none !important;
+  }
+  .epyv-video-container .ytp-pause-overlay {
+    display: none !important;
+  }
