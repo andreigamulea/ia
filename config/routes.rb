@@ -4,6 +4,8 @@ Rails.application.routes.draw do
  get 'tvs/canal1', to: 'tvs#canal1'
  get 'tvs/canal2', to: 'tvs#canal2'
  get 'tvs/canal3', to: 'tvs#canal3'
+ get 'tvs/seminarii', to: 'tvs#seminarii'
+
  get 'tvs/listacanal1', to: 'tvs#listacanal1', as: 'listacanal1'
  get 'tvs/listacanal2', to: 'tvs#listacanal2', as: 'listacanal2'
  get 'tvs/listacanal3', to: 'tvs#listacanal3', as: 'listacanal3'

@@ -1,0 +1,107 @@
+
+
+
+
+<style>
+#revizionari1 .cr h2 {
+    font-size:22px;
+}
+#revizionari1 .cr h3{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+</style>
+
+<% content_for :title, "Seminarii | Ayush Cell Romania" %>
+<% content_for :description, "Descoperiți cunoasterea ayurvedică!" %>
+<% content_for :keywords, "Ayush Cell Romania, revizionari, cursuri, ayurveda, cursuri ayurveda" %>
+
+<% content_for :canonical do %>
+  <link rel="canonical" href="https://www.ayushcell.ro/jamadagni">
+<% end %>
+
+<div class="container" id="revizionari1">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: white; ">
+    <h1 class="first-tittle">Seminarii  I  Ayush Cell Romania</h1>
+    <h2 class="main-title" >Seminarii - Vizionari cursuri Ayurveda</h2>
+
+
+
+    
+
+    
+    
+            <% if @exista_video %>
+                <% if current_user %>
+                        <h2><%=@denumire%></h2>
+                        <h4>Aceasta inregistrare se poate reviziona de la <%=@data_inceput%> ora <%=@valabilitate_ora_inceput%> pana la <%=@data_sfarsit%> ora <%=@valabilitate_ora_sfarsit%></h4>
+
+
+                        <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>); background-size: 100%;">
+                            <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
+                                <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+                                <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+                                <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+                                <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+                            </div>
+                        </div></br>
+                <% else %>
+                    <h3>Va rugam sa va logati pentru acces la prezentarea video</h3>
+                <% end %>
+            <% else %>
+
+            <h3>In acest moment nu există nici o revizionare.</h3>
+
+            <% end %>
+    
+
+</div>
+</div>
+
+<script>
+console.log('Script simplu! canal2');
+</script>
+
+
+
+<script>
+
+
+
+console.log("Pagina a fost încărcată/reîncărcată canal2.");
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("Pagina încărcată cu Dom! canal2");
+  });
+    
+    document.addEventListener("turbo:load", function() {
+      console.log("Pagina încărcată cu Turbo canal2");
+    var orareInceputAzi = <%= raw @orare_inceput_sfarsit_azi.to_json %>;
+    
+    console.log("Orare de inceput:", orareInceputAzi);
+
+    function verificaSiReincarcaPagina() {
+      var oraCurenta = new Date().toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Bucharest' });
+      console.log("Ora curenta:", oraCurenta); // Vezi ce ora exactă se generează
+
+      if (orareInceputAzi.includes(oraCurenta)) {
+        console.log("Se face refresh!");
+        window.location.reload();
+      } else {
+        console.log("Nu se face refresh, ora curentă nu este în array.");
+      }
+    }
+
+    setInterval(verificaSiReincarcaPagina, 60000);
+    
+    
+   
+});
+</script>
+
+<div data-controller="epytv">
+    <!-- Elementul DOM aici va fi controlat de epytv_controller.js -->
+</div>
