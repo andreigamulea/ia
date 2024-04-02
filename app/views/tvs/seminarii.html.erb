@@ -3,10 +3,10 @@
 
 
 <style>
-#revizionari1 .cr h2 {
+#seminarii .cr h2 {
     font-size:22px;
 }
-#revizionari1 .cr h3{
+#seminarii .cr h3{
     font-size:18px;
     font-weight:800;
     margin-bottom:5px;
@@ -14,22 +14,22 @@
 </style>
 
 <% content_for :title, "Seminarii | Ayush Cell Romania" %>
-<% content_for :description, "Descoperiți cunoasterea ayurvedică!" %>
+<% content_for :description, "Descoperiți tradiția ayurvedică!" %>
 <% content_for :keywords, "Ayush Cell Romania, revizionari, cursuri, ayurveda, cursuri ayurveda" %>
 
 <% content_for :canonical do %>
-  <link rel="canonical" href="https://www.ayushcell.ro/jamadagni">
+  <link rel="canonical" href="https://www.ayushcell.ro/seminarii">
 <% end %>
 
-<div class="container" id="revizionari1">
+<div class="container" id="seminarii">
 <%= render 'layouts/sideleft' %>
 
 <div class="cr" style="background-color: white; ">
     <h1 class="first-tittle">Seminarii  I  Ayush Cell Romania</h1>
-    <h2 class="main-title" >Seminarii - Vizionari cursuri Ayurveda</h2>
+    <h2 class="main-title" >Seminarii - Vizionari - Cursuri Ayurveda</h2>
 
 
-
+<p>Bine ați venit pe pagina noastră dedicată reluărilor seminariilor Ayush Cell România! Aici aveți oportunitatea unică de a viziona gratuit ultimele noastre seminarii, o comoară de cunoaștere și înțelepciune ayurvedică. Seminariile noastre acoperă o gamă largă de subiecte, oferindu-vă șansa să explorați diverse aspecte ale Ayurvedei. Indiferent de nivelul dvs. de experiență sau interes, aici veți găsi informații valoroase care să vă îmbogățească cunoașterea și să vă inspire in practica dumneavoastră spirituală.</p>
     
 
     
@@ -54,6 +54,7 @@
             <% else %>
 
             <h3>In acest moment nu există nici o revizionare.</h3>
+            <p>Următoarea revizionare va avea loc in ziua de marti in intervalul orar 18:00 - 24:00</p>
 
             <% end %>
     
@@ -62,7 +63,7 @@
 </div>
 
 <script>
-console.log('Script simplu! canal4');
+console.log('Script simplu! canal2');
 </script>
 
 
@@ -71,14 +72,14 @@ console.log('Script simplu! canal4');
 
 
 
-console.log("Pagina a fost încărcată/reîncărcată canal4.");
+console.log("Pagina a fost încărcată/reîncărcată canal2.");
 
 document.addEventListener('DOMContentLoaded', function() {
-  console.log("Pagina încărcată cu Dom! canal4");
+  console.log("Pagina încărcată cu Dom! canal2");
   });
     
     document.addEventListener("turbo:load", function() {
-      console.log("Pagina încărcată cu Turbo canal4");
+      console.log("Pagina încărcată cu Turbo canal2");
     var orareInceputAzi = <%= raw @orare_inceput_sfarsit_azi.to_json %>;
     
     console.log("Orare de inceput:", orareInceputAzi);
