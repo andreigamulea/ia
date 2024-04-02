@@ -276,6 +276,9 @@ class TvsController < ApplicationController
 
 
   def listacanal1
+    unless current_user&.role == 1
+      redirect_to root_path, alert: "Acces restricționat!" and return
+    end
     xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'listacanal1.xlsx'))
     emailuri_importate = 0
   
@@ -303,6 +306,9 @@ class TvsController < ApplicationController
   end
 
   def listacanal2
+    unless current_user&.role == 1
+      redirect_to root_path, alert: "Acces restricționat!" and return
+    end
     xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'listacanal2.xlsx'))
     emailuri_importate = 0
   
@@ -355,6 +361,9 @@ class TvsController < ApplicationController
   
   
   def listacanal3
+    unless current_user&.role == 1
+      redirect_to root_path, alert: "Acces restricționat!" and return
+    end
     xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'listacanal3.xlsx'))
     emailuri_importate = 0
   
@@ -404,24 +413,39 @@ class TvsController < ApplicationController
   end
 
   def index
+    unless current_user&.role == 1
+      redirect_to root_path, alert: "Acces restricționat!" and return
+    end
     @tvs = Tv.order(created_at: :desc)
   end
 
   # GET /tvs/1 or /tvs/1.json
   def show
+    unless current_user.role == 1
+      redirect_to root_path, alert: "Accesul restricționat!" and return
+    end
   end
 
   # GET /tvs/new
   def new
+    unless current_user&.role == 1
+      redirect_to root_path, alert: "Acces restricționat!" and return
+    end
     @tv = Tv.new
   end
 
   # GET /tvs/1/edit
   def edit
+    unless current_user&.role == 1
+      redirect_to root_path, alert: "Acces restricționat!" and return
+    end
   end
 
   # POST /tvs or /tvs.json
   def create
+    unless current_user&.role == 1
+      redirect_to root_path, alert: "Acces restricționat!" and return
+    end
     @tv = Tv.new(tv_params)
 
     respond_to do |format|
