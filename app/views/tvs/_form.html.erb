@@ -22,8 +22,9 @@
 
   <div class="mb-3">
     <%= form.label :cine, "Lista celor care au acces", class: "form-label" %>
-    <%= form.select :cine, [['Listacanal1', 'Listacanal1'], ['Listacanal2', 'Listacanal2'], ['Listacanal3', 'Listacanal3']], { include_blank: true }, {class: "form-select"} %>
+    <%= form.select :cine, [['all', 'all'], ['Listacanal1', 'Listacanal1'], ['Listacanal2', 'Listacanal2'], ['Listacanal3', 'Listacanal3']], { include_blank: true }, {class: "form-select"} %>
   </div>
+
 
   <div class="mb-3">
     <%= form.label :canal, class: "form-label" %>
