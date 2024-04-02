@@ -305,7 +305,7 @@ class TvsController < ApplicationController
     redirect_to panouadmin_path
   end
 
-  def listacanal2
+  def listacanal2 #atentie ; este facut si un controler listacanal2 pt CRUD
     unless current_user&.role == 1
       redirect_to root_path, alert: "Acces restricționat!" and return
     end
