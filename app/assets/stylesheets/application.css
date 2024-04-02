@@ -14,7 +14,6 @@
  *= require_self
  *= require cookie_law
  */
-
  input[type="submit"]:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
