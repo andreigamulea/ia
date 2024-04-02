@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_26_125732) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_02_123921) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -158,6 +158,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_26_125732) do
     t.integer "cantitate"
     t.decimal "pret_bucata", precision: 10, scale: 2
     t.decimal "pret_total", precision: 10, scale: 2
+    t.string "obs"
     t.index ["comanda_id"], name: "index_comenzi_prods_on_comanda_id"
     t.index ["prod_id"], name: "index_comenzi_prods_on_prod_id"
     t.index ["taxa2324"], name: "index_comenzi_prods_on_taxa2324"
