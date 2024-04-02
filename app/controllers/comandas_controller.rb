@@ -217,10 +217,10 @@ end
     end
 
     def comenziprod_params
-      params.require(:comenzi_prod).permit(:user_id, :prod_id, :comanda_id, :datainceput, :datasfarsit, :validat, :taxa2324, :cantitate, :pret_bucata, :pret_total)
+      params.require(:comenzi_prod).permit(:user_id, :prod_id, :comanda_id, :datainceput, :datasfarsit, :validat, :taxa2324, :cantitate, :pret_bucata, :pret_total, :obs)
     end
     def comenziprod1_params
-      params.require(:comenzi_prod1).permit(:user_id, :prod_id, :comanda_id, :datainceput, :datasfarsit, :validat, :taxa2324, :cantitate, :pret_bucata, :pret_total)
+      params.require(:comenzi_prod1).permit(:user_id, :prod_id, :comanda_id, :datainceput, :datasfarsit, :validat, :taxa2324, :cantitate, :pret_bucata, :pret_total, :obs)
     end
     def set_comenzi_prod1
       @comenzi_prod1 = ComenziProd1.find(params[:id])
