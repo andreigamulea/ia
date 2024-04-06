@@ -203,7 +203,7 @@ class CursuriayurvedasController < ApplicationController
 
 
 
- #########################stop acces produse video an 1
+ ##########################stop acces produse video an 1
 
   end
   def an2
