@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_02_125142) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_06_140841) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -249,6 +249,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_02_125142) do
     t.text "sarcini_voluntar"
     t.text "responsabilitati_voluntar"
     t.text "conditii_lucru"
+    t.string "video_ssm"
+    t.string "video_isu"
   end
 
   create_table "cursuri_history", force: :cascade do |t|
