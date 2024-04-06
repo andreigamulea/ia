@@ -227,7 +227,7 @@ class CursuriayurvedasController < ApplicationController
   
     # Selectează doar produsele până la luna plătită
     if current_user.role==1
-      @prods = Prod.where(curslegatura: "an2")
+      @prods = Prod.where(curslegatura: "an2").order(:linkstripe)
     else  
      # Prelucrarea inițială pentru a determina produsele valide
       produse_valide_ids = Prod.where(curslegatura: "an2")
