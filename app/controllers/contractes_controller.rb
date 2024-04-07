@@ -185,7 +185,8 @@ class ContractesController < ApplicationController
       puts("@contract din semneaza_contract este: #{session[:contract_id]}")
       @contract = Contracte.find_by(id: session[:contract_id])
       @contracte_useri = @contract.contracte_useris.find_by(user_id: @current_user.id)
-
+     
+      @myvideo = @contract.video_ssm
      
 
       if !@contracte_useri || @contracte_useri.semnatura1==nil
@@ -209,6 +210,7 @@ class ContractesController < ApplicationController
         return
       end  
       set_shared_data(@contract, @contracte_useri)
+      @contracte_useri.vazut_video_isu = false
     else
       # Gestionarea cazurilor în care contractul sau contracte_useri nu sunt găsite
       redirect_to voluntar_path, alert: "Contractul sau datele de utilizator asociate nu au fost găsite."
@@ -426,6 +428,8 @@ class ContractesController < ApplicationController
     @responsabilitati_voluntar = @contracte&.responsabilitati_voluntar
     @conditii_lucru = @contracte&.conditii_lucru
     @valabilitate_luni = @contracte&.valabilitate_luni
+    @video_ssm=@contracte&.video_ssm
+    @video_isu=@contracte&.video_isu
   end
   
 
@@ -537,6 +541,7 @@ def edit_contracte_useri
   @semnatura_admin = @contract&.semnatura_admin
 
   @contracte_useri = ContracteUseri.find(params[:id])
+  #@contracte_useri = ContracteUseri.find(447)
   
 end
 
@@ -636,8 +641,13 @@ def salveaza_isu
   puts("@contracte_useri din salveaza_ssm: #{@contracte_useri.id}")
 
   puts("pana aici")
-  if @contracte_useri.update(data_posta_isu: params[:contracte_useri][:data_posta_isu],data_bifa_isu: params[:contracte_useri][:data_bifa_isu]) # Actualizează campul `semnatura1` cu valoarea primită
-    # Procesare după actualizare cu succes
+ 
+
+  if @contracte_useri.update(data_posta_isu: params[:contracte_useri][:data_posta_isu], 
+      data_bifa_isu: params[:contracte_useri][:data_bifa_isu], 
+      vazut_video_isu: params[:contracte_useri][:vazut_video_isu]) # Actualizează campul `semnatura1` cu valoarea primită
+
+
     redirect_to voluntar_path, notice: "Semnătura a fost salvată cu succes."
   else
     set_shared_data(@contract, @contracte_useri)
@@ -809,7 +819,9 @@ end
         :valabilitate_luni,
         :sarcini_voluntar,
         :responsabilitati_voluntar,
-        :conditii_lucru
+        :conditii_lucru,
+        :video_ssm,
+        :video_isu
       )
     end
     def contracte_useri_params
@@ -874,6 +886,8 @@ end
         @responsabilitati_voluntar =  contract.responsabilitati_voluntar.split(';').map(&:strip) 
         @conditii_lucru = contract.conditii_lucru.split(';').map(&:strip)
         @show_submit_button = true 
+        @video_ssm=contract.video_ssm
+        @video_isu=contract.video_isu
         
         # Setări specifice pentru contracte_useri
         @nume_voluntar = "#{contracte_useri.nume_voluntar} #{contracte_useri.prenume}"
