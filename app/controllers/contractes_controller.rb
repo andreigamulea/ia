@@ -205,6 +205,7 @@ class ContractesController < ApplicationController
       puts("@contract din semneaza_contract este: #{session[:contract_id]}")
       @contract = Contracte.find_by(id: session[:contract_id])
       @contracte_useri = @contract.contracte_useris.find_by(user_id: @current_user.id)
+      @myvideo = @contract.video_isu
       if !@contracte_useri || @contracte_useri.data_posta_ssm==nil
         redirect_to voluntar_path, alert: "Acces neautorizat."
         return
