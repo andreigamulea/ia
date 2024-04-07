@@ -273,6 +273,80 @@ class CursuriayurvedasController < ApplicationController
         @prod = Prod.find_by(curslegatura: 'platageneralacurs', status: 'activ')
     end  
 
+
+
+    def an3
+      lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie"]
+      inregistrari_valide = Listacanal3.where(platit: lunile)
+    
+      unless current_user.role == 1 || inregistrari_valide.exists?(email: current_user.email)
+        redirect_to root_path and return
+      end
+    
+      inregistrare_user = Listacanal3.find_by(email: current_user.email)
+      luna_curenta_romana = luna_in_romana(Time.current.in_time_zone('Europe/Bucharest').strftime("%B"))
+      index_luna_curenta = lunile.index(luna_curenta_romana)
+      if current_user.role!=1
+        index_luna_platit = lunile.index(inregistrare_user.platit)
+        puts("Ultima luna platita: #{index_luna_platit}")
+      end
+      produse_platite_ids = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                         .where('datasfarsit IS NULL OR datasfarsit >= ?', Date.current)
+                                         .pluck(:prod_id)
+    
+      # Selectează doar produsele până la luna plătită
+      if current_user.role==1
+        @prods = Prod.where(curslegatura: "an3").order(:linkstripe)
+      else  
+       # Prelucrarea inițială pentru a determina produsele valide
+        produse_valide_ids = Prod.where(curslegatura: "an3")
+        .where.not(id: produse_platite_ids)
+        .select { |prod| lunile.index(prod.luna) <= index_luna_platit }
+        .map(&:id)
+  
+        # Utilizarea ID-urilor produselor valide pentru a face o interogare ordonată
+        @prods = Prod.where(id: produse_valide_ids).order(:linkstripe)
+  
+    
+      end  
+  
+  
+      #email_eligibile = ["mihaelachazli@gmail.com", "ade.dinu@gmail.com", "arkosi.mariann@gmail.com","ce.hermkens@gmail.com","tatiana_aldescu@yahoo.com"]   
+  
+     
+          
+          coduri_produse_platite = ComenziProd.joins(:prod)
+                                            .where(user_id: current_user.id, validat: 'Finalizata')
+                                            .where('datasfarsit IS NULL OR datasfarsit >= ?', Date.current)
+                                            .pluck('prods.cod')
+  
+          # Obține toate videoclipurile care au un cod corespunzător produselor plătite
+          if current_user.role==1
+            @myvideo = Video.where(tip: 'an3')
+                          .where('ordine > ? AND ordine < ?', 0, 1000)
+                          .order(ordine: :asc)
+          else  
+          @myvideo = Video.where(tip: 'an3')
+                          .where('ordine > ? AND ordine < ?', 0, 1000)
+                          .where(cod: coduri_produse_platite)
+                          .order(ordine: :asc) 
+          end  
+          @platit = if current_user
+            current_user.role == 1 || coduri_produse_platite.count > 0
+          end
+      
+          puts("@platit= #{@platit}")
+      
+  
+  
+          @prod = Prod.find_by(curslegatura: 'platageneralacurs', status: 'activ')
+      end  
+
+
+def an
+  @prod = Prod.find_by(curslegatura: 'platageneralacurs', status: 'activ')
+end  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cursuriayurveda

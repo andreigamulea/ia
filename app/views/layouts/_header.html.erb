@@ -153,6 +153,13 @@
 
                         <li><%= link_to 'An 2', an2_path %></li>
                         <% end %>
+                        <% if current_user && (Listacanal3.exists?(email: current_user.email) || current_user.role==1) %>
+
+                        <li><%= link_to 'An 3', an3_path %></li>
+                        <% end %>
+                        <% if current_user && (current_user.role == 1 || current_user.email.in?(['karunasland@hotmail.com', 'george.bondor@yahoo.com'])) %>
+                            <li><%= link_to 'Contributie Curs Ayurveda', an_path %></li>
+                        <% end %>
                         <li><%= link_to 'Delogare', destroy_user_session_path, class: 'nav-item', id: 'logout_link',  data: { turbo_action: 'replace', turbo_method: 'delete' } %></li>
                 
                         <% if current_user && current_user.role==1 %>                
