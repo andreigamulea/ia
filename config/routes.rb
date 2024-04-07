@@ -113,6 +113,8 @@ patch 'listacanal2s/:id', to: 'listacanal2s#update', as: :update_listacanal2
 
   get '/cursayurveda', to: 'cursuriayurvedas#cursayurveda'
   get '/an2', to: 'cursuriayurvedas#an2'
+  get '/an3', to: 'cursuriayurvedas#an3'
+  get '/an', to: 'cursuriayurvedas#an'
 
   resources :cursuriayurvedas
   get 'nutritie1', to: 'nutritie1#index'

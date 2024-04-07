@@ -1,0 +1,117 @@
+<% content_for :title, "Cursuri de Ayurveda I Aplicații Plante I Vizionări Tabere și Seminarii" %>
+<% content_for :description, "Ayush Cell Romania: Cursuri de Ayurveda, Nutriție, Aplicații Plante Medicinale și Resurse Vegetale" %>
+<% content_for :keywords, "cursuri de ayurveda, cursuri de nutritie, plante medicinale, alimentație sănătoasă, calculator nutrițional, dieta, tabere de ayurveda," %>
+<% content_for :canonical do %>
+  <link rel="canonical" href="https://www.ayushcell.ro">
+<% end %>
+<div class="container" id="first-page">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: aliceblue;">
+    <h1 class="first-tittle">Ayush Cell Romania: Cursuri, Aplicații, Tabere, Vizionări</h1>
+    <h2 class="main-title" >Anul de studiu 2023 - 2024</h2>
+    
+
+   <h2 class="cr-title" style="margin-top: 10px;">Ayush Cell Romania</h2>
+
+<%if current_user && (current_user.role==1 || current_user.email=='karunasland@hotmail.com' || current_user.email=='george.bondor@yahoo.com')%>
+<h2 style= "text-align: center;padding: 0 10px;">Contributie Curs Ayurveda</h2></br>
+<%= form_with url: datefacturare_path(s: @prod.id), local: true do |form| %>
+  <%= form.hidden_field :s, value: @prod.id %>
+  
+<div class="table-responsive" style="margin-right: auto; margin-left: 0;">
+<table class="table table-striped table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr class="desk">
+            <th>Servicii</th>
+            <th>Detalii</th>
+            <th>Detalii plata*</th>
+            <th>Cantitate</th>              
+            <th>Pret bucata</th>                
+            <th>Pret total</th>
+            <th>Actiune</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td> <%= @prod.nume %> </td>
+            <td><%= @prod.detalii %></td>
+            <td><%= form.text_field :obs, placeholder: "Lunile:", class: "form-control" %></td>
+            <td style="text-align:center;">
+                <select id="cantitateSelect" name="cantitate" class="form-control">
+                    <% (1..11).each do |numar| %>
+                        <option value="<%= numar %>"><%= numar %></option>
+                    <% end %>
+                </select>
+            </td>
+            <td id="pretBucata" style="text-align:center;"><%= @prod.pret.to_f %> lei</td>                
+            <td id="pretTotal" style="text-align:center;">---</td>
+            <td style="text-align:center;"> <%= link_to 'Comanda', datefacturare_path(s: @prod.id), id: 'linkComanda', class: 'btn btn-primary', "data-turbo": "false" %>
+            
+
+            </td>
+
+            <td style="text-align:center;display:none;">
+            <%= form.submit "Comanda", id: 'buttonComanda', class: 'btn btn-primary' %>
+
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</div><% end %></div></div></div></div>
+
+<script>
+console.log("Script încărcat");
+document.addEventListener("turbo:load", function() {
+console.log("Turbo load triggered");
+initComandaLink();
+});
+
+function initComandaLink() {
+updatePret();
+updateLink();
+
+document.getElementById('cantitateSelect').addEventListener('change', function() {
+    updatePret();
+    updateLink();
+});
+}
+
+function calculeazaPret(n) {
+var pretPeBucata = parseFloat(document.getElementById('pretBucata').textContent.replace(' lei', ''));
+return pretPeBucata * n;
+}
+
+function updatePret() {
+var cantitate = parseInt(document.getElementById('cantitateSelect').value, 10);
+var pretTotal = calculeazaPret(cantitate);
+
+document.getElementById('pretTotal').textContent = pretTotal.toFixed(2) + ' lei';
+}
+
+function updateLink() {
+console.log('Actualizare link comandă');
+var cantitate = document.getElementById('cantitateSelect').value;
+var pretPeBucata = parseFloat(document.getElementById('pretBucata').textContent.replace(' lei', ''));
+var pretTotal = parseFloat(document.getElementById('pretTotal').textContent.replace(' lei', ''));
+var link = document.getElementById('linkComanda');
+var baseUrl = link.href;
+
+let newUrl = new URL(baseUrl);
+newUrl.searchParams.set('cantitate', cantitate);
+newUrl.searchParams.set('pret_bucata', pretPeBucata.toFixed(2));
+newUrl.searchParams.set('pret_total', pretTotal.toFixed(2));
+
+link.href = newUrl.toString();
+}
+</script>
+
+
+<% end %>
+
+
+
+
+</div></div>
+
