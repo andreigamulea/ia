@@ -104,16 +104,43 @@ html: { class: "form-class" } do |form| %>
 <%= form.hidden_field :data_posta_isu, value: Date.today %>
 <%end%>
 
-<%= form.check_box :activare_submit, id: 'activare-submit-checkbox', class: 'form-checkbox' %>
-<%= form.label :activare_submit, 'Am trimis prin colet poștal formularul tipărit la adresa menționată mai sus în data de' %>
 
-<%= form.date_field :data_bifa_isu, 
-                id: 'data-bifa-isu', 
-                class: 'form-input', 
-                max: Date.today.to_s, 
-                min: @contracte_useri.data_bifa_ssm.to_s %><br><br>
+<h2 class="name">Prezentare ISU</h2>
+    
+    
+    
+<!-- for non autoplay video //-->
+<div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+    <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
+        <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+        <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+        <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+        <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+    </div>
+</div>
+</br>
 
-<%= form.submit "Confirma", id: 'submit-button', class: 'btn btn-primary btn-fp-link', disabled: true %>
+
+
+
+
+<%= form.check_box :vazut_video_isu, id: 'vazut-video-isu-checkbox', class: 'form-checkbox' %>
+    <%= form.label :vazut_video_isu, 'Am vizionat in intregime video-ul despre ISU' %></br>
+
+    
+    <%= form.check_box :activare_submit, id: 'activare-submit-checkbox', class: 'form-checkbox' %>
+    <%= form.label :activare_submit, 'Am trimis prin colet poștal formularul tipărit la adresa menționată mai sus în data de' %>
+
+
+    
+
+    <%= form.date_field :data_bifa_isu, 
+                    id: 'data-bifa-isu', 
+                    class: 'form-input', 
+                    max: Date.today.to_s, 
+                    min: @contracte_useri.data_gdpr.to_s %><br><br>
+
+    <%= form.submit "Confirma", id: 'submit-button', class: 'btn btn-primary btn-fp-link', disabled: true %>
 
 
 
@@ -126,15 +153,18 @@ html: { class: "form-class" } do |form| %>
 </div>
 <script>
 document.addEventListener("turbo:load", function() {
-const checkbox = document.getElementById('activare-submit-checkbox');
-const dateField = document.getElementById('data-bifa-isu');
-const submitButton = document.getElementById('submit-button');
+  const checkboxVideo = document.getElementById('vazut-video-isu-checkbox');
+  const checkboxSubmit = document.getElementById('activare-submit-checkbox');
+  const dateField = document.getElementById('data-bifa-isu');
+  const submitButton = document.getElementById('submit-button');
 
-function updateSubmitButtonState() {
-  submitButton.disabled = !checkbox.checked || dateField.value === '';
-}
+  function updateSubmitButtonState() {
+    submitButton.disabled = !checkboxVideo.checked || !checkboxSubmit.checked || dateField.value === '';
+  }
 
-checkbox.addEventListener('change', updateSubmitButtonState);
-dateField.addEventListener('change', updateSubmitButtonState);
+  checkboxVideo.addEventListener('change', updateSubmitButtonState);
+  checkboxSubmit.addEventListener('change', updateSubmitButtonState);
+  dateField.addEventListener('change', updateSubmitButtonState);
 });
+
 </script>
