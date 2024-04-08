@@ -18,8 +18,8 @@ class ContractesController < ApplicationController
     contracte_id = @contracte_useri.contracte_id
     @contract = Contracte.find_by(id: contracte_id)
     if @contract
-      # Dacă contractul există, setează variabilele necesare pentru view
-      
+      ## Dacă contractul există, setează variabilele necesare pentru view
+      #
       set_shared_data(@contract, @contracte_useri)
       @show_submit_button = false
       # Randare view specific
