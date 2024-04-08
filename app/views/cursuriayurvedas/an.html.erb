@@ -36,7 +36,8 @@
         <tr>
             <td> <%= @prod.nume %> </td>
             <td><%= @prod.detalii %></td>
-            <td><%= form.text_field :obs, placeholder: "Lunile:", class: "form-control" %></td>
+            <td id="obs" style="text-align:center;"><%= form.text_field :obs, placeholder: "Lunile:", class: "form-control", id: "obsInput" %>
+            </td>
             <td style="text-align:center;">
                 <select id="cantitateSelect" name="cantitate" class="form-control">
                     <% (1..11).each do |numar| %>
@@ -91,20 +92,25 @@ document.getElementById('pretTotal').textContent = pretTotal.toFixed(2) + ' lei'
 }
 
 function updateLink() {
-console.log('Actualizare link comandă');
-var cantitate = document.getElementById('cantitateSelect').value;
-var pretPeBucata = parseFloat(document.getElementById('pretBucata').textContent.replace(' lei', ''));
-var pretTotal = parseFloat(document.getElementById('pretTotal').textContent.replace(' lei', ''));
-var link = document.getElementById('linkComanda');
-var baseUrl = link.href;
+    var cantitate = document.getElementById('cantitateSelect').value;
+    var pretPeBucata = parseFloat(document.getElementById('pretBucata').textContent.replace(' lei', '')).toFixed(2);
+    var pretTotal = parseFloat(document.getElementById('pretTotal').textContent.replace(' lei', '')).toFixed(2);
+    
+    var obsValue = document.getElementById('obsInput').value;
+    
 
-let newUrl = new URL(baseUrl);
-newUrl.searchParams.set('cantitate', cantitate);
-newUrl.searchParams.set('pret_bucata', pretPeBucata.toFixed(2));
-newUrl.searchParams.set('pret_total', pretTotal.toFixed(2));
+    var link = document.getElementById('linkComanda');
+    var baseUrl = link.href;
 
-link.href = newUrl.toString();
+    let newUrl = new URL(baseUrl);
+    newUrl.searchParams.set('cantitate', encodeURIComponent(cantitate));
+    newUrl.searchParams.set('pret_bucata', encodeURIComponent(pretPeBucata));
+    newUrl.searchParams.set('pret_total', encodeURIComponent(pretTotal));
+    newUrl.searchParams.set('obs', encodeURIComponent(obsValue));
+
+    link.href = newUrl.toString();
 }
+
 </script>
 
 
