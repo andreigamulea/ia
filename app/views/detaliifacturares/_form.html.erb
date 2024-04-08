@@ -7,8 +7,8 @@
   <div class="col10">
   <%= form_with(model: @detaliifacturare, 
     url: @detaliifacturare.new_record? ? detaliifacturares_path(s: params[:s], cantitate: params[:cantitate],
-    pret_bucata: params[:pret_bucata], pret_total: params[:pret_total]) : detaliifacturare_path(@detaliifacturare, s: params[:s],
-    cantitate: params[:cantitate], pret_bucata: params[:pret_bucata], pret_total: params[:pret_total]), 
+    pret_bucata: params[:pret_bucata], pret_total: params[:pret_total], obs: params[:obs])  : detaliifacturare_path(@detaliifacturare, s: params[:s],
+    cantitate: params[:cantitate], pret_bucata: params[:pret_bucata], pret_total: params[:pret_total],obs: params[:obs]), 
     method: @detaliifacturare.new_record? ? :post : :patch, remote: true, class: 'needs-validation', data: { turbo: false }) do |f| %>
 
 

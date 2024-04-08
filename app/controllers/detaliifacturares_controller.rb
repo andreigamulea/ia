@@ -35,6 +35,7 @@ class DetaliifacturaresController < ApplicationController
     end
   end
   def create   
+    puts("sunt in create")
     @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare   
     @prod = Prod.find(detaliifacturare_params[:s])
     puts("sunt in createeeeeeeeeeeeeeeeeeeeee")
@@ -115,12 +116,13 @@ class DetaliifacturaresController < ApplicationController
       session[:cantitate] = params[:cantitate]
       session[:pret_bucata] = params[:pret_bucata]
       session[:multiplu] = true
+      session[:obs] =  params[:obs]
     else
       session[:pret_total] = @prod.pret
       session[:cantitate] = 1
       session[:pret_bucata] = @prod.pret
       session[:multiplu] = false
-
+      session[:obs] = 'curent'
     end
   
     @cantitate = session[:cantitate].to_i
@@ -184,12 +186,14 @@ end
     @cantitate = session[:cantitate].to_i
     @pret_bucata = session[:pret_bucata].to_d
     @pret_total = session[:pret_total].to_d
+    @obs = session[:obs]
     @multiplu = session[:multiplu] == 'true'
 
     puts("pret tot: #{@pret_total}")
     puts("cantite: #{@cantitate}")
     puts("pret bucata: #{@pret_bucata}")
     puts("Multiplu: #{@multiplu}")
+    puts("Obs: #{@obs}")
     puts("sunt in payeeeeeeeeeeeeeeeeeeeeee")
     @prod = Prod.find(params[:id]) 
     
@@ -240,7 +244,8 @@ end
       datasfarsit: Time.now + @prod.valabilitatezile.to_i.days,
       cantitate: @cantitate,
       pret_bucata: @pret_bucata,
-      pret_total: @pret_total
+      pret_total: @pret_total,
+      obs: @obs
     )
 
 ####################start populeaza adresacomenzi
@@ -365,10 +370,11 @@ def datefacturare
   @cantitate = (params[:cantitate] || 1).to_i  
   @pret_bucata = (params[:pret_bucata] || (@prod&.pret || 0)).to_d
   @pret_total = (params[:pret_total] || (@prod&.pret || 0) * @cantitate).to_d
-
+  @obs=params[:obs]
   puts("pret total din datefacturare: #{@pret_total}")
   puts("cantitate: #{@cantitate}")
   puts("pret bucata: #{@pret_bucata}")
+  puts("obs: #{@obs}")
 end
 
 
