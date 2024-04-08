@@ -25,7 +25,7 @@
         <tr class="desk">
             <th>Servicii</th>
             <th>Detalii</th>
-            <th>Detalii plata*</th>
+            
             <th>Cantitate</th>              
             <th>Pret bucata</th>                
             <th>Pret total</th>
@@ -36,8 +36,7 @@
         <tr>
             <td> <%= @prod.nume %> </td>
             <td><%= @prod.detalii %></td>
-            <td id="obs" style="text-align:center;"><%= form.text_field :obs, placeholder: "Lunile:", class: "form-control", id: "obsInput" %>
-            </td>
+            
             <td style="text-align:center;">
                 <select id="cantitateSelect" name="cantitate" class="form-control">
                     <% (1..11).each do |numar| %>
@@ -96,7 +95,7 @@ function updateLink() {
     var pretPeBucata = parseFloat(document.getElementById('pretBucata').textContent.replace(' lei', '')).toFixed(2);
     var pretTotal = parseFloat(document.getElementById('pretTotal').textContent.replace(' lei', '')).toFixed(2);
     
-    var obsValue = document.getElementById('obsInput').value;
+   
     
 
     var link = document.getElementById('linkComanda');
@@ -106,7 +105,7 @@ function updateLink() {
     newUrl.searchParams.set('cantitate', encodeURIComponent(cantitate));
     newUrl.searchParams.set('pret_bucata', encodeURIComponent(pretPeBucata));
     newUrl.searchParams.set('pret_total', encodeURIComponent(pretTotal));
-    newUrl.searchParams.set('obs', encodeURIComponent(obsValue));
+    
 
     link.href = newUrl.toString();
 }
