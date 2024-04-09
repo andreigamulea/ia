@@ -44,7 +44,7 @@
                     <% end %>
                 </select>
             </td>
-            <td id="pretBucata" style="text-align:center;"><%= @prod.pret.to_f %> lei</td>                
+            <td id="pretBucata" style="text-align:center;"><%= @prod.pret.to_f.to_i %> lei</td>                
             <td id="pretTotal" style="text-align:center;">---</td>
             <td style="text-align:center;"> <%= link_to 'Comanda', datefacturare_path(s: @prod.id), id: 'linkComanda', class: 'btn btn-primary', "data-turbo": "false" %>
             
@@ -87,7 +87,7 @@ function updatePret() {
 var cantitate = parseInt(document.getElementById('cantitateSelect').value, 10);
 var pretTotal = calculeazaPret(cantitate);
 
-document.getElementById('pretTotal').textContent = pretTotal.toFixed(2) + ' lei';
+document.getElementById('pretTotal').textContent = pretTotal.toFixed(0) + ' lei';
 }
 
 function updateLink() {
