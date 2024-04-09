@@ -54,14 +54,14 @@
     <li>Îmbunătățește imaginea companiei tale: Implică-te în proiecte sociale și demonstrează responsabilitatea ta socială.</li>
     <li>Contribuie la o cauză nobilă: Sprijină o cauză importantă pentru tine și pentru comunitatea ta.</li>
 </ul>
-
+<% if current_user && (current_user.role==1 || current_user.email=="andreigamulea@gmail.com")%>
   <div id="log" style="margin-top: 0px;">
     <h3 style="font-size: 18px;"> <%= link_to 'Acceseaza pagina pentru organizația gazdă', contractes_path, class: "btn btn-primary", style: 'background-color: #64025e; color: white; border: none; padding: 2px 10px; font-size:14px; margin-top:5px; box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 4px; transition: background-color 0.3s, box-shadow 0.3s;' %>
 
 
     </h3>
   </div>
-
+  <% end %>
 <h2 style="font-size: 18px; margin-top: 20px;"><strong>Simplificăm voluntariatul:</strong></h2>
 <ul style="margin-bottom: 0;">
     <li><strong>Gestionează documentele legale:</strong> Te ajutăm cu redactarea și semnarea contractelor de voluntariat online.</li>
