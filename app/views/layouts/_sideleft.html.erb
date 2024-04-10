@@ -1,5 +1,5 @@
 <aside class="cl">
-      <%if current_user%>
+      <%if current_user && (current_user.role==1 || current_user.email=="andreigamulea@gmail.com")%>
         <p class="tl">Voluntariat</p>        
         <h2><%= link_to 'Platforma Voluntariat', voluntariat_path, class: 'alink' %></h2>
       <% end %>

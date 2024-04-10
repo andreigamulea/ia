@@ -78,9 +78,15 @@ class ContractesController < ApplicationController
   
   
   def voluntariat   
-    unless current_user
+    if current_user && (current_user.role==0 && current_user.email!="andreigamulea@gmail.com")
+      puts("trueeee")
+      redirect_to root_path
+      return
+    end  
+    unless current_user 
       redirect_to new_user_session_with_return_path('voluntariat'), alert: "Trebuie să te autentifici pentru a accesa această pagină."
       return
+   
     end  
   end  
   def voluntar
