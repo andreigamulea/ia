@@ -60,10 +60,33 @@
 </table>
 
 </div><% end %></div></div></div></div>
+<button id="myButton">Apasă-mă</button>
+
+<script>
+document.addEventListener("turbo:load", function() {
+    document.getElementById("myButton").addEventListener("click", function() {
+        console.log("Funcția a fost apelată.1 super tare");
+        myFunction();
+    });
+});
+
+function myFunction() {
+    console.log("Funcția a fost apelată.2 super tare");
+}
+</script>
+
 
 <script>
 console.log("Script încărcat");
 document.addEventListener("turbo:load", function() {
+
+
+
+
+
+
+
+
 console.log("Turbo load triggered");
 initComandaLink();
 });
