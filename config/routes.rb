@@ -384,6 +384,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
     #root to: "devise/sessions#new"
   #end
   
-  match '*unmatched', to: 'application#redirect_to_root', via: :all
+ 
+match '*path', to: 'application#handle_routing_error', via: :all
 
 end

@@ -191,7 +191,9 @@
 </header>
 
 <script>
+console.log("script din _header1");
   document.getElementById('valorinutritionales_link').addEventListener('click', function(event) {
+    console.log("script din _header2");
     event.preventDefault();
     window.location.href = '<%= valorinutritionales_path %>';
   });

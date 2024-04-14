@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
     rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_root
     rescue_from ActionController::RoutingError, with: :redirect_to_root
+    puts("111111")
     
     before_action :track_ahoy_visit
     before_action :configure_permitted_parameters, if: :devise_controller?
@@ -8,6 +9,11 @@ class ApplicationController < ActionController::Base
     skip_before_action :check_user_active, only: [:after_sign_in_path_for]
     before_action :check_sign_in_token
     before_action :set_stripe_key
+    puts("22222222")
+    def handle_routing_error
+      redirect_to root_url, alert: "No route matches for this request."
+    end
+  
     def luna_in_romana(luna_engleza)
       traduceri = {
         "January" => "ianuarie",
@@ -33,6 +39,7 @@ class ApplicationController < ActionController::Base
       ahoy.track "Processed #{controller_name}##{action_name}", request.filtered_parameters
     end
     def redirect_to_root
+      puts("3333")
       unless request.path.start_with?('/assets', '/thumbnails')
         RedirectionLog.create(original_path: request.fullpath, redirected_to: root_path)
       end
@@ -52,6 +59,7 @@ class ApplicationController < ActionController::Base
         end
     end
     def redirect_to_root
+      puts("4444")
       @skip_tracking = true
       redirect_to root_path
     end
