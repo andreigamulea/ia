@@ -1,3 +1,7 @@
+<!-- Partea de sus a fișierului app/views/home/about.html.erb -->
+<% content_for :custom_js do %>
+    <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
+    <% end %>
 <style>
 #revizionari1 .cr h2 {
     font-size:22px;
@@ -85,4 +89,14 @@ document.addEventListener("turbo:load", () => {
         document.body.appendChild(script);
     }
 });
+</script>
+<script>
+  document.addEventListener("turbo:load", function() {
+    document.querySelectorAll('.no-turbo').forEach(link => {
+      link.setAttribute('data-turbo', 'false');
+    });
+  });
+</script>
+<script>
+<%= yield :custom_js %>
 </script>

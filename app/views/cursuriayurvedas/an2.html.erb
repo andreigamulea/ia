@@ -36,7 +36,7 @@
               <td><%= prod.detalii %></td> 
               
               <td><%= prod.pret.to_i %> lei</td>
-              <td> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn' %> </td>      
+              <td> <%= link_to 'Comanda', datefacturare_path(s: prod.id), class: 'btn no-turbo' %> </td>      
           </tr>  
       <% end %>
       

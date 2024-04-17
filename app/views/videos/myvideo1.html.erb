@@ -1,3 +1,7 @@
+<!-- Partea de sus a fișierului app/views/home/about.html.erb -->
+<% content_for :custom_js do %>
+    <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
+    <% end %>
 <section class="c1" style= "padding: 0 10px;"></br>
 <h1 style= "text-align: center;padding: 0 10px;"><%=@myvideo1.nume%></h1></br>
 <!-- for non autoplay video //-->
@@ -10,3 +14,13 @@
     </div>
 </div></br></br></br>
 </section>
+<script>
+  document.addEventListener("turbo:load", function() {
+    document.querySelectorAll('.no-turbo').forEach(link => {
+      link.setAttribute('data-turbo', 'false');
+    });
+  });
+</script>
+<script>
+<%= yield :custom_js %>
+</script>

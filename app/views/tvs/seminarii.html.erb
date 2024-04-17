@@ -1,4 +1,7 @@
-
+<!-- Partea de sus a fișierului app/views/home/about.html.erb -->
+<% content_for :custom_js do %>
+    <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
+    <% end %>
 
 
 
@@ -106,3 +109,13 @@ document.addEventListener('DOMContentLoaded', function() {
 <div data-controller="epytv">
     <!-- Elementul DOM aici va fi controlat de epytv_controller.js -->
 </div>
+<script>
+  document.addEventListener("turbo:load", function() {
+    document.querySelectorAll('.no-turbo').forEach(link => {
+      link.setAttribute('data-turbo', 'false');
+    });
+  });
+</script>
+<script>
+<%= yield :custom_js %>
+</script>
