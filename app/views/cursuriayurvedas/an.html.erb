@@ -60,10 +60,7 @@
 </table>
 
 </div><% end %></div></div></div></div>
-<div id="messageContainer">
-    <h3 id="toggleMessage">Acest mesaj va apărea și dispărea la click.</h3>
-</div>
-<button id="myButton">Apasă-mă</button>
+
 <script>
 console.log("Script încărcat");
 document.addEventListener("turbo:load", function() {
@@ -119,31 +116,7 @@ function updateLink() {
 <% end %>
 
 
-<script>
-document.addEventListener("turbo:load", function() {
-    const button = document.getElementById('myButton');
-    const message = document.getElementById('toggleMessage');
 
-    button.addEventListener('click', function() {
-        // Comută vizibilitatea elementului h3
-        if (message.style.display === 'none') {
-            message.style.display = 'block'; // Afișează mesajul
-            console.log("AFISAT"); // Loghează că mesajul a fost afișat
-        } else {
-            message.style.display = 'none'; // Ascunde mesajul
-        }
-    });
-    // Adaugă event listener pentru mouseover
-    message.addEventListener('mouseover', function() {
-        message.style.backgroundColor = 'red'; // Setează fundalul la roșu
-    });
-
-    // Adaugă event listener pentru mouseout
-    message.addEventListener('mouseout', function() {
-        message.style.backgroundColor = ''; // Revine la fundalul original
-    });
-});
-</script>
 
 </div></div>
 
