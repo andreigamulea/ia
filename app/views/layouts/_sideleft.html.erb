@@ -1,26 +1,26 @@
 <aside class="cl">
       <%if current_user && (current_user.role==1 || current_user.email=="andreigamulea@gmail.com")%>
         <p class="tl">Voluntariat</p>        
-        <h2><%= link_to 'Platforma Voluntariat', voluntariat_path, class: 'alink' %></h2>
+        <h2><%= link_to 'Platforma Voluntariat', voluntariat_path, class: 'alink no-turbo' %></h2>
       <% end %>
 
     <p class="tl">Cursuri</p>
-    <h2><%= link_to 'Curs de Vajikarana', vajikarana_modul1_path, class: 'alink' %></h2>
+    <h2><%= link_to 'Curs de Vajikarana', vajikarana_modul1_path, class: 'alink no-turbo' %></h2>
 
 
     <h2><a class="alink" href="<%= cursayurveda_path %>">Curs de Ayurveda octombrie 2023 - iulie 2024</a></h2>
 
     
     
-  <h2><%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 1', nutritie1_path, class: 'alink' %></h2>
+  <h2><%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 1', nutritie1_path, class: 'alink no-turbo' %></h2>
 
-<h2><%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 2', nutritie2_path, class: 'alink' %></h2>    
-<h2><%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 3', nutritie3_path, class: 'alink' %></h2>   
+<h2><%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 2', nutritie2_path, class: 'alink no-turbo' %></h2>    
+<h2><%= link_to 'Program de pregătire Nutritie Ayurvedică aplicată modul 3', nutritie3_path, class: 'alink no-turbo' %></h2>   
 <img src="<%= image_path('cursuri.jpg') %>" alt="Curs de Ayurveda">
    <p class="tl">Ayurveda - Aplicații</p>
    <h2>
  
-    <%= link_to 'Aplicație valori nutriționale', aplicatie_path, class: 'alink' %>
+    <%= link_to 'Aplicație valori nutriționale', aplicatie_path, class: 'alink no-turbo' %>
  
 </h2>
 
@@ -28,17 +28,17 @@
 <h2>
 <% if current_user %>
   <% if current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) } %>
-    <%= link_to 'Consultare lista Resurse Vegetale', lista_vegetales_path, class: 'alink' %>
+    <%= link_to 'Consultare lista Resurse Vegetale', lista_vegetales_path, class: 'alink no-turbo' %>
   <% else %>
-    <%= link_to 'Consultare lista Resurse Vegetale', servicii_path, class: 'alink button-link' %>
+    <%= link_to 'Consultare lista Resurse Vegetale', servicii_path, class: 'alink button-link no-turbo' %>
   <% end %>
 <% else %>
-  <%= link_to 'Consultare lista Resurse Vegetale', new_user_session_with_return_path('lg'), class: 'alink button-link' %>
+  <%= link_to 'Consultare lista Resurse Vegetale', new_user_session_with_return_path('lg'), class: 'alink button-link no-turbo' %>
 <% end %>
 </h2>
 
-<h2><%= link_to 'Evaluare tipologie ayurvedică', evaluare_tipologie_ayurvedica_path, class: 'alink button-link' %> </h2>
-<h2><%= link_to 'Tradiția Ayurvedică - Amnaya Tantraka', amnaya_path, class: 'alink button-link' %> </h2>
+<h2><%= link_to 'Evaluare tipologie ayurvedică', evaluare_tipologie_ayurvedica_path, class: 'alink button-link no-turbo' %> </h2>
+<h2><%= link_to 'Tradiția Ayurvedică - Amnaya Tantraka', amnaya_path, class: 'alink button-link no-turbo' %> </h2>
 
 <p style="padding: 5px 10px;border-radius: 5px;font-size: 18px;margin: -20px 0 0 0;font-weight: 600;color: indigo;border-bottom: 1px solid #ccc;margin-bottom: 5px;margin-top: -10px;">În curând</p>
 <h2><a class="alink" href="#mentiuni-nutritionale">Mențiuni nutritionale și de sănătate</a></h2>
@@ -55,14 +55,14 @@
 <img src="<%= image_path('Ayurveda-aplicatii.jpg') %>" alt="Curs de Ayurveda">
    <p class="tl">Tabere</p>
    <h2>
-    <%= link_to "Tabăra de Ayurveda 2023 etapa de toamnă", tayt12_path, class: 'alink' %>  </h2> 
+    <%= link_to "Tabăra de Ayurveda 2023 etapa de toamnă", tayt12_path, class: 'alink no-turbo' %>  </h2> 
    
 
     <h2>
     <% if current_user %>   
-      <%= link_to 'Tabăra de Ayurveda 2023 etapa de vară partea 2', tayv2_path, class: 'alink', id: 'tayv2_link' %>
+      <%= link_to 'Tabăra de Ayurveda 2023 etapa de vară partea 2', tayv2_path, class: 'alink no-turbo', id: 'tayv2_link' %>
    <% else %>   
-      <%= link_to 'Tabăra de Ayurveda 2023 etapa de vară partea 2', new_user_session_with_return_path('tayv2'), class: 'alink button-link' %>
+      <%= link_to 'Tabăra de Ayurveda 2023 etapa de vară partea 2', new_user_session_with_return_path('tayv2'), class: 'alink button-link no-turbo' %>
    <% end %>
    </h2>
    <img src="<%= image_path('tabara.jpg') %>" alt="Imagine">

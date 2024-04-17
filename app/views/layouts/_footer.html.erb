@@ -20,9 +20,9 @@
       <ul>
       <li><h2>Contul meu</h2></li>
       <% if user_signed_in? %>
-      <li><%= link_to 'Contul meu', edit_user_registration_path, class: 'nav-item' %></li>          
-      <li><%= link_to 'Iesi din cont', destroy_user_session_path, id: 'logout_link', data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link" %></li>
-      <li><%= link_to 'Facturile mele', facturas_path, class: 'nav-item' %></li>
+      <li><%= link_to 'Contul meu', edit_user_registration_path, class: 'nav-item no-turbo' %></li>          
+      <li><%= link_to 'Iesi din cont', destroy_user_session_path, id: 'logout_link', data: { turbo_action: 'replace', turbo_method: 'delete' }, class: "nav-link no-turbo" %></li>
+      <li><%= link_to 'Facturile mele', facturas_path, class: 'nav-item no-turbo' %></li>
       <%else%>
       <li><%= link_to 'Login', new_user_session_with_return_path('menu') %></li>
       <li><%= link_to 'Creaza cont', new_user_registration_with_return_path('menu') %></li>
@@ -35,10 +35,10 @@
       <div class="footer-column">
         <ul>
           <li><h2>Ayush Cell Romania</h2></li>
-          <li><%= link_to 'Termeni si conditii', termeni_conditii_path %></li>
-          <li><%= link_to 'Politica de confidentialitate', politica_confidentialitate_path %></li>
-          <li><%= link_to 'Politica de cookies', politica_cookies_path %></li>
-          <li><%= link_to 'Politica de prelucrare a datelor', politica_gdpr_path %></li>
+          <li><%= link_to 'Termeni si conditii', termeni_conditii_path, class: 'no-turbo' %></li>
+          <li><%= link_to 'Politica de confidentialitate', politica_confidentialitate_path, class: 'no-turbo' %></li>
+          <li><%= link_to 'Politica de cookies', politica_cookies_path, class: 'no-turbo' %></li>
+          <li><%= link_to 'Politica de prelucrare a datelor', politica_gdpr_path, class: 'no-turbo' %></li>
         </ul>
       </div>
 

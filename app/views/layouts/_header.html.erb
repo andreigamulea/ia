@@ -17,7 +17,7 @@
             
             </div>
             <ul class="nav-menu" id="navMenu">
-                <li><%= link_to 'Acasa', root_path %></li>
+                <li><%= link_to 'Acasa', root_path, class: 'no-turbo' %></li>
      
                 
                 </li>
@@ -25,23 +25,23 @@
                 <a class="nav-link" href="#">Cursuri</a>
                 <ul class="submenu">
                     <li class="nav-item">
-                       <%= link_to 'Curs de Ayurveda', cursayurveda_path %>
+                       <%= link_to 'Curs de Ayurveda', cursayurveda_path, class: 'no-turbo' %>
                     </li>
                     <li class="nav-item">
-                       <%= link_to 'Curs Vajikarana', vajikarana_modul1_path %>
+                       <%= link_to 'Curs Vajikarana', vajikarana_modul1_path, class: 'no-turbo' %>
                     </li>
                     <% if current_user && (current_user.role == 1 || Listacanal2.exists?(email: current_user.email)) %>
                     <li class="nav-item">
-                      <%= link_to 'Ayush Cell Tv 2', '/tvs/canal2' %>
+                      <%= link_to 'Ayush Cell Tv 2', '/tvs/canal2', class: 'no-turbo' %>
                     </li>
                     <% end %>
                     <% if current_user && (current_user.role == 1 || Listacanal3.exists?(email: current_user.email)) %>
                     <li class="nav-item">
-                      <%= link_to 'Ayush Cell Tv 3', '/tvs/canal3' %>
+                      <%= link_to 'Ayush Cell Tv 3', '/tvs/canal3', class: 'no-turbo' %>
                     </li>
                     <% end %>
                     <li class="nav-item">
-                       <%= link_to 'Ayush Cell Tv Seminarii', '/tvs/seminarii' %>
+                       <%= link_to 'Ayush Cell Tv Seminarii', '/tvs/seminarii', class: 'no-turbo' %>
                     </li>
                 </ul>
               </li>
@@ -56,17 +56,17 @@
                 
                   <li class="nav-item">
                    
-                      <%= link_to 'Nutritie modulul 1', nutritie1_path %>
+                      <%= link_to 'Nutritie modulul 1', nutritie1_path, class: 'no-turbo' %>
                     
                   </li>
                   <li class="nav-item">
                     
-                      <%= link_to 'Nutritie modulul 2', nutritie2_path %>
+                      <%= link_to 'Nutritie modulul 2', nutritie2_path, class: 'no-turbo' %>
                     
                   </li>
                   <li class="nav-item">
                     
-                      <%= link_to 'Nutritie modulul 3', nutritie3_path %>
+                      <%= link_to 'Nutritie modulul 3', nutritie3_path, class: 'no-turbo' %>
                     
                   </li>
                 </ul>
@@ -77,13 +77,13 @@
                 <a class="nav-link" href="#">Tabere</a>
                 <ul class="submenu">
                 <li class="nav-item">
-                    <%= link_to "Tabara ayurveda 2023 etapa de toamna", tayt12_path %>
+                    <%= link_to "Tabara ayurveda 2023 etapa de toamna", tayt12_path, class: 'no-turbo' %>
                     </li>
                     <li class="nav-item">
                     <% if current_user %>   
-                      <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', tayv2_path, id: 'tayv2_link' %>
+                      <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', tayv2_path, id: 'tayv2_link', class: 'no-turbo' %>
                     <% else %>   
-                      <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', new_user_session_with_return_path('tayv2'), class: 'button-link' %>
+                      <%= link_to 'Tabara ayurveda 2023 etapa de vara partea 2', new_user_session_with_return_path('tayv2'), class: 'button-link no-turbo' %>
                     <% end %>
                   </li>
                   
@@ -101,29 +101,29 @@
                 <li class="nav-item has-submenu">
                 <a class="nav-link" href="#">Aplicatii</a>
                 <ul class="submenu">
-                    <li><%= link_to 'Tradiția Ayurvedică - Amnaya Tantraka', amnaya_path, class: 'nav-item' %> </li>
-                    <li><%= link_to 'Evaluare tipologie ayurvedică', evaluare_tipologie_ayurvedica_path, class: 'nav-item' %> </li>
+                    <li><%= link_to 'Tradiția Ayurvedică - Amnaya Tantraka', amnaya_path, class: 'nav-item no-turbo' %> </li>
+                    <li><%= link_to 'Evaluare tipologie ayurvedică', evaluare_tipologie_ayurvedica_path, class: 'nav-item no-turbo' %> </li>
                     <li class="nav-item">
                    
-                      <%= link_to 'Aplicație de calcul nutrițional', aplicatie_path %>
+                      <%= link_to 'Aplicație de calcul nutrițional', aplicatie_path, class: 'no-turbo' %>
                     
                   </li>            
 
                     <%if current_user && (current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) })%>
                     <li class="nav-item">
-                    <%= link_to 'Lista ingredientelor vegetale', lista_vegetales_path, id: 'lista_vegetales_link' %>
+                    <%= link_to 'Lista ingredientelor vegetale', lista_vegetales_path, id: 'lista_vegetales_link' , class: 'no-turbo'%>
                     </li>
                     <% elsif current_user %>   
                     <li class="nav-item">
-                    <%= link_to 'Lista ingredientelor vegetale', servicii_path, class: 'button-link' %>
+                    <%= link_to 'Lista ingredientelor vegetale', servicii_path, class: 'button-link no-turbo' %>
                     </li>
                     <% else %>   
                     <li class="nav-item">
-                    <%= link_to 'Lista ingredientelor vegetale', new_user_session_with_return_path('lg'), class: 'button-link' %>
+                    <%= link_to 'Lista ingredientelor vegetale', new_user_session_with_return_path('lg'), class: 'button-link no-turbo' %>
                     </li>
                     <% end %>                   
                     
-                    <li><%= link_to 'Servicii', servicii_path %></li>         
+                    <li><%= link_to 'Servicii', servicii_path, class: 'no-turbo' %></li>         
                   
                 </ul>
             </li>
@@ -136,7 +136,7 @@
 
                 <% if current_user && current_user.role == 1 %>  
                 <li class="nav-item">
-                    <%= link_to 'Admin', panouadmin_path %>
+                    <%= link_to 'Admin', panouadmin_path, class: 'no-turbo' %>
                 </li>
                 <% end %>
                 <% if user_signed_in? %>
@@ -145,28 +145,28 @@
                     <a class="nav-link" href="#">Cont</a>
                     <ul class="submenu">
                         
-                        <li><%= link_to 'Cont', edit_user_registration_path, class: 'nav-item' %></li>
+                        <li><%= link_to 'Cont', edit_user_registration_path, class: 'nav-item no-turbo' %></li>
                         <% if current_user %>
-                        <li><%= link_to 'Facturile mele', facturas_path, class: 'nav-item' %></li>
+                        <li><%= link_to 'Facturile mele', facturas_path, class: 'nav-item no-turbo' %></li>
                         <% end %>
                         <% if current_user && (Listacanal2.exists?(email: current_user.email) || current_user.role==1) %>
 
-                        <li><%= link_to 'An 2', an2_path %></li>
+                        <li><%= link_to 'An 2', an2_path, class: 'no-turbo' %></li>
                         <% end %>
                         <% if current_user && (Listacanal3.exists?(email: current_user.email) || current_user.role==1) %>
 
-                        <li><%= link_to 'An 3', an3_path %></li>
+                        <li><%= link_to 'An 3', an3_path, class: 'no-turbo' %></li>
                         <% end %>
                         <% if current_user && (current_user.role == 1 || current_user.email.in?(['karunasland@hotmail.com', 'george.bondor@yahoo.com'])) %>
-                            <li><%= link_to 'Contributie Curs Ayurveda', an_path %></li>
+                            <li><%= link_to 'Contributie Curs Ayurveda', an_path, class: 'no-turbo' %></li>
                         <% end %>
-                        <li><%= link_to 'Delogare', destroy_user_session_path, class: 'nav-item', id: 'logout_link',  data: { turbo_action: 'replace', turbo_method: 'delete' } %></li>
+                        <li><%= link_to 'Delogare', destroy_user_session_path, class: 'nav-item no-turbo', id: 'logout_link',  data: { turbo_action: 'replace', turbo_method: 'delete' } %></li>
                 
                         <% if current_user && current_user.role==1 %>                
 
-                        <li><%= link_to 'PC', show_crypto_price_path, class: 'nav-item' %> </li>                       
-                        <li><%= link_to 'Documente', documente_path, class: 'nav-item' %></li>
-                        <li><%= link_to 'Voluntariat', voluntariat_path, class: 'nav-item' %></li>
+                        <li><%= link_to 'PC', show_crypto_price_path, class: 'nav-item no-turbo' %> </li>                       
+                        <li><%= link_to 'Documente', documente_path, class: 'nav-item no-turbo' %></li>
+                        <li><%= link_to 'Voluntariat', voluntariat_path, class: 'nav-item no-turbo' %></li>
                         <% end %>
                        
                     </ul>
@@ -174,7 +174,7 @@
 
                 
                 <% else %>
-                <li><%= link_to 'Login', new_user_session_with_return_path('menu') %></li>
+                <li><%= link_to 'Login', new_user_session_with_return_path('menu'), class: 'no-turbo' %></li>
                
 
                 <% end %>
@@ -183,18 +183,25 @@
          
               
 
-                <li><%= link_to 'Contact', contact_path %></li> 
+                <li><%= link_to 'Contact', contact_path, class: 'no-turbo' %></li> 
                
             </ul>
         </nav>
     </div>
 </header>
 
+
+
 <script>
-console.log("script din _header1");
-  document.getElementById('valorinutritionales_link').addEventListener('click', function(event) {
-    console.log("script din _header2");
-    event.preventDefault();
-    window.location.href = '<%= valorinutritionales_path %>';
+  document.addEventListener("turbo:load", function() {
+    console.log("script din _header1");
+    var linkElement = document.getElementById('valorinutritionales_link');
+    if (linkElement) {
+      linkElement.addEventListener('click', function(event) {
+        console.log("script din _header2");
+        event.preventDefault();
+        window.location.href = '<%= valorinutritionales_path %>';
+      });
+    }
   });
 </script>

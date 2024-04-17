@@ -1,3 +1,7 @@
+<!-- Partea de sus a fișierului app/views/home/about.html.erb -->
+<% content_for :custom_js do %>
+    <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
+    <% end %>
 <!-- for non autoplay video //-->
 <div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
@@ -7,3 +11,13 @@
         <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
     </div>
 </div></br></br></br>
+<script>
+  document.addEventListener("turbo:load", function() {
+    document.querySelectorAll('.no-turbo').forEach(link => {
+      link.setAttribute('data-turbo', 'false');
+    });
+  });
+</script>
+<script>
+<%= yield :custom_js %>
+</script>
