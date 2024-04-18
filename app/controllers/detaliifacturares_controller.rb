@@ -3,7 +3,7 @@ class DetaliifacturaresController < ApplicationController
   require 'bigdecimal/util' # For to_d method
   before_action :authenticate_user!
   before_action :restrict_access_to_special_page, only: [:datefacturare]
-  before_action :new, only: [:datefacturare] # remove :create
+  before_action :new, only: [:datefacturare, :datefacturarep] # remove :create
   skip_before_action :verify_authenticity_token, only: [:pay]
   before_action :require_admin, only: %i[index edit edit1 show]
 
@@ -37,28 +37,51 @@ class DetaliifacturaresController < ApplicationController
   def create   
     puts("sunt in create")
     @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare   
-    @prod = Prod.find(detaliifacturare_params[:s])
-    puts("sunt in createeeeeeeeeeeeeeeeeeeeee")
-    if params[:pret_total].present? && params[:pret_total].to_f > 0
-      session[:pret_total] = params[:pret_total]
-      session[:cantitate] = params[:cantitate]
-      session[:pret_bucata] = params[:pret_bucata]
-      session[:multiplu] = true
-      puts("cantitate in controller: #{}")
-    else
-      session[:pret_total] = @prod.pret
-      session[:cantitate] = 1
-      session[:pret_bucata] = @prod.pret
-      session[:multiplu] = false
+    if session[:din_datefacturarep]==false
+      @prod = Prod.find(detaliifacturare_params[:s])   
+      
+      puts("Se setează valorile la nil")
 
-    end
+      #pret_total = params[:pret_total].to_f
+      if params[:pret_total].present? && params[:pret_total].to_f > 0
+        session[:pret_total] = params[:pret_total]
+        session[:cantitate] = params[:cantitate]
+        session[:pret_bucata] = params[:pret_bucata]
+        session[:multiplu] = true
+        session[:obs] =  params[:obs]
+      else
+        session[:pret_total] = @prod.pret
+        session[:cantitate] = 1
+        session[:pret_bucata] = @prod.pret
+        session[:multiplu] = false
+        session[:obs] = 'curent'
+      end
+      @cantitate = session[:cantitate].to_i
+      @pret_bucata = session[:pret_bucata].to_d
+      @pret_total = session[:pret_total].to_d
+      #@multiplu = session[:multiplu] == 'true'
+      puts("pret_total din create11111=#{@pret_total}")
+else
+        @prod=Prod.find(session[:s])  
+    
+    
+        @cantitate = session[:cantitate].to_i
+        @pret_bucata = session[:pret_bucata].to_d
+        @pret_total = session[:pret_total].to_d
+        @obs = session[:obs]
+        if @cantitate>1
+          @multiplu = session[:multiplu] == 'true'
+        else
+          @multiplu = session[:multiplu] == 'false'
+        end
+        puts("Produs ID: #{@prod.id}")
+        puts("pret_total din creaeeeeeeee2222222=#{@pret_total}")
 
-    @pret_total = session[:pret_total]
-    @cantitate = session[:cantitate]
-    @pret_bucata = session[:pret_bucata]
-    @multiplu = session[:multiplu]
-    puts("pret_total din contoler1=#{@pret_total}")
-    puts("cantitate din contoler1=#{@cantitate}")
+end  
+
+
+puts("pret_total din updateeeeeeee=#{@pret_total}")
+
     
     detaliifacturare_params_without_s = detaliifacturare_params.except(:s)
     @detaliifacturare.assign_attributes(detaliifacturare_params_without_s)    
@@ -99,6 +122,7 @@ class DetaliifacturaresController < ApplicationController
 
 
 
+ 
 
 
 
@@ -107,30 +131,50 @@ class DetaliifacturaresController < ApplicationController
     
     puts("sunt in updateeeeeeeeeeeeeeeeeeeeee")
     @detaliifacturare = current_user.detaliifacturare
-    @prod = Prod.find(detaliifacturare_params[:s])
-    puts("Se setează valorile la nil")
+    if session[:din_datefacturarep]==false
+            @prod = Prod.find(detaliifacturare_params[:s])   
+            
+            puts("Se setează valorile la nil")
 
-     #pret_total = params[:pret_total].to_f
-     if params[:pret_total].present? && params[:pret_total].to_f > 0
-      session[:pret_total] = params[:pret_total]
-      session[:cantitate] = params[:cantitate]
-      session[:pret_bucata] = params[:pret_bucata]
-      session[:multiplu] = true
-      session[:obs] =  params[:obs]
+            #pret_total = params[:pret_total].to_f
+            if params[:pret_total].present? && params[:pret_total].to_f > 0
+              session[:pret_total] = params[:pret_total]
+              session[:cantitate] = params[:cantitate]
+              session[:pret_bucata] = params[:pret_bucata]
+              session[:multiplu] = true
+              session[:obs] =  params[:obs]
+            else
+              session[:pret_total] = @prod.pret
+              session[:cantitate] = 1
+              session[:pret_bucata] = @prod.pret
+              session[:multiplu] = false
+              session[:obs] = 'curent'
+            end
+            @cantitate = session[:cantitate].to_i
+            @pret_bucata = session[:pret_bucata].to_d
+            @pret_total = session[:pret_total].to_d
+            #@multiplu = session[:multiplu] == 'true'
+            puts("pret_total din updateeeeeeee11111=#{@pret_total}")
     else
-      session[:pret_total] = @prod.pret
-      session[:cantitate] = 1
-      session[:pret_bucata] = @prod.pret
-      session[:multiplu] = false
-      session[:obs] = 'curent'
-    end
-  
-    @cantitate = session[:cantitate].to_i
-    @pret_bucata = session[:pret_bucata].to_d
-    @pret_total = session[:pret_total].to_d
-    @multiplu = session[:multiplu] == 'true'
+              @prod=Prod.find(session[:s])  
+          
+          
+              @cantitate = session[:cantitate].to_i
+              @pret_bucata = session[:pret_bucata].to_d
+              @pret_total = session[:pret_total].to_d
+              @obs = session[:obs]
+              if @cantitate>1
+                @multiplu = session[:multiplu] == 'true'
+              else
+                @multiplu = session[:multiplu] == 'false'
+              end
+              puts("Produs ID: #{@prod.id}")
+              puts("pret_total din updateeeeeeee2222222=#{@pret_total}")
 
-    puts("pret_total=#{@pret_total}")
+    end  
+    
+
+    puts("pret_total din updateeeeeeee=#{@pret_total}")
 
     update_attributes = detaliifacturare_params
     puts "Valoare altedate: #{@detaliifacturare.altedate}"
@@ -360,6 +404,7 @@ AdresaComenzi.create!(atribute_adresacomenzi)
 end
 
 def datefacturare
+  
   @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare
   @serviciu = params[:serviciu]
 
@@ -375,9 +420,48 @@ def datefacturare
   puts("cantitate: #{@cantitate}")
   puts("pret bucata: #{@pret_bucata}")
   puts("obs: #{@obs}")
+  session[:s] = @prod.id if @prod.present?
+  session[:cantitate] = @cantitate
+  session[:pret_bucata] = @pret_bucata
+  session[:pret_total] = @pret_total
+  session[:obs] = @obs
+  session[:multiplu] = (@cantitate > 1).to_s # De exemplu, presupunând că multiplu înseamnă mai mult de o unitate
+  session[:din_datefacturarep] = false 
+  puts("pret total din datefacturarepost: #{@pret_total}")
+  puts("cantitate: #{@cantitate}")
+  puts("pret bucata: #{@pret_bucata}")
+  puts("obs: #{@obs}")
+  render 'datefacturare'
 end
 
+def datefacturarep
+  
+  @detaliifacturare = current_user.detaliifacturare || current_user.build_detaliifacturare
+  @serviciu = params[:serviciu]
 
+  # Preia ID-ul produsului din params în loc de session
+  @prod = Prod.find(params[:s].to_i) if params[:s].present?
+
+  # Folosește valorile din params pentru a seta variabilele, cu o conversie adecvată
+  @cantitate = (params[:cantitate] || 1).to_i  
+  @pret_bucata = (params[:pret_bucata] || (@prod&.pret || 0)).to_d
+  @pret_total = (params[:pret_total] || (@prod&.pret || 0) * @cantitate).to_d
+  @obs=params[:obs]
+
+  # Salvarea valorilor în sesiune
+  session[:s] = @prod.id if @prod.present?
+  session[:cantitate] = @cantitate
+  session[:pret_bucata] = @pret_bucata
+  session[:pret_total] = @pret_total
+  session[:obs] = @obs
+  session[:multiplu] = (@cantitate > 1).to_s # De exemplu, presupunând că multiplu înseamnă mai mult de o unitate
+  session[:din_datefacturarep] = true 
+  puts("pret total din datefacturarepost: #{@pret_total}")
+  puts("cantitate: #{@cantitate}")
+  puts("pret bucata: #{@pret_bucata}")
+  puts("obs: #{@obs}")
+  render 'datefacturare'
+end
 
 
   
@@ -391,6 +475,11 @@ end
     @pret_total = session[:pret_total].to_d
     @multiplu = session[:multiplu] == 'true'
     # Orice alte variabile necesare pentru view
+    puts("pret total din set: #{@pret_total}")
+    puts("cantitate: #{@cantitate}")
+    puts("pret bucata: #{@pret_bucata}")
+    puts("obs: #{@obs}")
+
   end
 
   def new
