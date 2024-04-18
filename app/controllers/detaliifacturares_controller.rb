@@ -425,7 +425,7 @@ def datefacturare
   session[:pret_bucata] = @pret_bucata
   session[:pret_total] = @pret_total
   session[:obs] = @obs
-  session[:multiplu] = (@cantitate > 1).to_s # De exemplu, presupunând că multiplu înseamnă mai mult de o unitate
+  session[:multiplu] = (@cantitate > 1).to_s ## De exemplu, presupunând că multiplu înseamnă mai mult de o unitate
   session[:din_datefacturarep] = false 
   puts("pret total din datefacturarepost: #{@pret_total}")
   puts("cantitate: #{@cantitate}")
