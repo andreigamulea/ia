@@ -1011,7 +1011,11 @@ end
       worksheet = workbook[0]
   
       #headers = ['Email', 'Nume User', 'Telefon', 'Nume din Factura', 'Telefon din factura', 'Data Platii', 'Valoare', 'Comanda ID', 'Adresă de livrare', 'Plată prin', 'Nume Produs', 'Validat']
-      headers = ['Email', 'Nume User', 'Telefon', 'Nume din factură', 'Telefon din factură', 'Data Platii', 'Valoare', 'Comandă ID', 'Nume livrare', 'Telefon livrare', 'Adresă de livrare', 'Plată prin', 'Nume Produs', 'Validat', 'Observații']
+     
+
+      headers = ['Email', 'Nume User', 'Telefon', 'Nume din factură', 'Telefon din factură', 'Data Platii', 'Valoare', 'Cantitate', 'Total', 'Comandă ID', 'Nume livrare', 'Telefon livrare', 'Adresă de livrare', 'Plată prin', 'Nume Produs', 'Validat', 'Observații']
+
+
       headers.each_with_index { |header, index| worksheet.add_cell(0, index, header) }
   
       @comenzi_prod.each_with_index do |comanda, index|
@@ -1031,8 +1035,12 @@ end
   
         valoare = mapare_valori[comanda.prod_id] || 0
         worksheet.add_cell(index + 1, 6, valoare)
+        cantitate = comanda.cantitate || "N/A" # Assuming 'cantitate' field exists
+        worksheet.add_cell(index + 1, 7, cantitate)
+        total = comanda.pret_total || "N/A" # Assuming 'pret_total' field exists
+        worksheet.add_cell(index + 1, 8, total)
   
-        worksheet.add_cell(index + 1, 7, comanda.comanda_id)
+        worksheet.add_cell(index + 1, 9, comanda.comanda_id)
   
          # Nume din Livrare
          adresa = comanda.comanda&.adresa_comenzi
@@ -1042,11 +1050,11 @@ end
                          elsif detaliifacturare
                            "#{detaliifacturare.nume} #{detaliifacturare.prenume}"
                          end
-         worksheet.add_cell(index + 1, 8, nume_livrare)
+         worksheet.add_cell(index + 1, 10, nume_livrare)
        
          # Telefon din livrare
          telefon_livrare = adresa&.telefon || detaliifacturare&.telefon
-         worksheet.add_cell(index + 1, 9, telefon_livrare)
+         worksheet.add_cell(index + 1, 11, telefon_livrare)
          
          # Adresă de livrare
          if adresa
@@ -1062,15 +1070,15 @@ end
          else
            adresa_livrare = nil
          end
-         worksheet.add_cell(index + 1, 10, adresa_livrare)
+         worksheet.add_cell(index + 1, 12, adresa_livrare)
    
-         worksheet.add_cell(index + 1, 11, comanda.comanda.plataprin) if comanda.comanda
+         worksheet.add_cell(index + 1, 13, comanda.comanda.plataprin) if comanda.comanda
    
-         worksheet.add_cell(index + 1, 12, comanda.prod.nume)
+         worksheet.add_cell(index + 1, 14, comanda.prod.nume)
          
-         worksheet.add_cell(index + 1, 13, comanda.validat)
+         worksheet.add_cell(index + 1, 15, comanda.validat)
          obs = comanda.obs || "N/A"  # Fallback to "N/A" if obs is NULL
-         worksheet.add_cell(index + 1, 14, obs)
+         worksheet.add_cell(index + 1, 16, obs)
        end
    
        file_path = Rails.root.join('tmp', "comenzi_prod_#{Time.now.to_i}.xlsx")
