@@ -425,6 +425,17 @@ def datefacturare
   session[:pret_bucata] = @pret_bucata
   session[:pret_total] = @pret_total
   session[:obs] = @obs
+  if params[:s] == '114'
+    puts("s este 114 cantitate: #{session[:cantitate]}")
+    @pret_bucata, @pret_total = calculate_price_for_contractes(session[:cantitate])
+    session[:pret_bucata] = @pret_bucata
+    session[:pret_total] = @pret_total
+
+
+
+  else
+    puts("s nu este 114: #{params[:s]}")  
+  end  
   session[:multiplu] = (@cantitate > 1).to_s ## De exemplu, presupunând că multiplu înseamnă mai mult de o unitate
   session[:din_datefacturarep] = false 
   puts("pret total din datefacturarepost: #{@pret_total}")
@@ -454,6 +465,20 @@ def datefacturarep
   session[:pret_bucata] = @pret_bucata
   session[:pret_total] = @pret_total
   session[:obs] = @obs
+
+  if params[:s] == '114'
+    puts("s este 114 cantitate: #{session[:cantitate]}")
+    @pret_bucata, @pret_total = calculate_price_for_contractes(session[:cantitate])
+    session[:pret_bucata] = @pret_bucata
+    session[:pret_total] = @pret_total
+
+
+
+  else
+    puts("s nu este 114: #{params[:s]}")  
+  end  
+
+
   session[:multiplu] = (@cantitate > 1).to_s # De exemplu, presupunând că multiplu înseamnă mai mult de o unitate
   session[:din_datefacturarep] = true 
   puts("pret total din datefacturarepost: #{@pret_total}")
@@ -488,8 +513,22 @@ end
 
   end
   
+  def calculate_price_for_contractes(quantity)
+    price_per_unit = case quantity
+                     when 1..10
+                       -0.0667 * quantity + 5.8667
+                     when 11..20
+                       -0.04 * quantity + 5.6
+                     when 21..100
+                       -0.0125 * quantity + 5.05
+                     else
+                       3.8
+                     end
   
-
+    total_price = price_per_unit * quantity
+    return price_per_unit, total_price  # Returns both values
+  end
+  
 def restrict_access_to_special_page
   # Dacă utilizatorul este admin, nu aplica restricții
   return if current_user && current_user.role == 1
