@@ -799,42 +799,67 @@ end
     end  
 
     def set_user12
-      unless user_signed_in?
-        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
-        redirect_to new_user_session_path
-        return false
-      end
+      puts("aaaaaaaaa nutritie4")
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+
+  if current_user.role == 1
+    return true
+  elsif current_user.role == 0
+    date_condition = Date.today <= Date.new(2024, 8, 25)
+
+          exists_cod110 = ComenziProd.joins(:prod)
+          .where(user_id: current_user.id, 
+                prods: { cod: ["cod86"] }, 
+                validat: "Finalizata")
+          .exists?
+
+          # Verifică dacă există produse cu codul "cod108" și "cod109"
+          # Verifică dacă există produse cu codul "cod85" și "cod88"
+          exists_cod85_and_cod88 = ComenziProd.joins(:prod)
+                        .where(user_id: current_user.id, 
+                                prods: { cod: ["cod85"] }, 
+                                validat: "Finalizata")
+                        .exists? &&
+              ComenziProd.joins(:prod)
+                        .where(user_id: current_user.id, 
+                                prods: { cod: ["cod88"] }, 
+                                validat: "Finalizata")
+                        .exists?
+
+
+          purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
+                        validat: 'Finalizata', 
+                        datainceput: ..Date.new(2024, 8, 24))
+                        .joins(:prod)
+                        .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
+                        .pluck('prods.cod')
+
+                       
+
+    # has_access este true dacă sunt îndeplinite condițiile pentru cod110 sau ambele cod108 și cod109
+    has_access = date_condition && (exists_cod86 || exists_cod85_and_cod88 || purchased_prod_coduri1.include?('cod86'))
+
+
     
-      if current_user.role == 1
-        return true
-      elsif current_user.role == 0
-        date_condition = Date.today <= Date.new(2024, 1, 31)
-        has_access = date_condition && ComenziProd.joins(:prod)
-                                                  .where(user_id: current_user.id, 
-                                                          prods: { cod: ["cod11", "cod12", "cod13"] }, 
-                                                          validat: "Finalizata")
-                                                  .where("to_char(datainceput, 'YYYY') = ?", "2023")
-                                                  .exists?
-    
-        has_recent_access = ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
-                                      .where("datainceput > ?", Date.new(2024, 1, 1))
-                                      .where(prod_id: Prod.where(cod: ["cod12", "cod38"]).select(:id))
-                                      .order(datainceput: :desc)
-                                      .first
-                                      .yield_self { |comanda_recenta| comanda_recenta && (Date.today <= comanda_recenta.datainceput + comanda_recenta.prod.valabilitatezile.days) }
-    
-        unless has_access || has_recent_access
-          flash[:alert] = "Nu aveți acces la acest curs."
-          redirect_to nutritie3_path # Schimbați cu calea dorită
-          return false
-        end
-      else
-        flash[:alert] = "Nu aveți permisiuni suficiente pentru a accesa acest curs."
-        redirect_to nutritie3_path # Schimbați cu calea dorită
-        return false
-      end
-    
-      true
+
+    puts("has_access este: #{has_access}")
+   
+    unless has_access
+      flash[:alert] = "Nu aveți acces la acest curs."
+      redirect_to nutritie4_index_path # Schimbați cu calea dorită
+      return false
+    end
+  else
+    flash[:alert] = "Nu aveți permisiuni suficiente pentru a accesa acest curs."
+    redirect_to nutritie4_index_path # Schimbați cu calea dorită
+    return false
+  end
+
+  true
 end
 
 def set_user13

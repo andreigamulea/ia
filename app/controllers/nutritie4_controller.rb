@@ -5,13 +5,13 @@ class Nutritie4Controller < ApplicationController
       # Obține ID-urile produselor cumpărate de current_user, care sunt valide și a căror datasfarsit este azi sau în viitor
       purchased_prod_coduri = ComenziProd.where(user_id: current_user.id, 
                                           validat: 'Finalizata', 
-                                          datainceput: ..Date.new(2024, 5, 24))                                          
+                                          datainceput: ..Date.new(2024, 8, 24))                                          
                                    .joins(:prod)
                                    .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
                                    .pluck('prods.cod')
       purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
                                    validat: 'Finalizata', 
-                                   datainceput: ..Date.new(2024, 5, 24))
+                                   datainceput: ..Date.new(2024, 8, 24))
                             .joins(:prod)
                             .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
                             .pluck('prods.cod')

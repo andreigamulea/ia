@@ -274,7 +274,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get 'vajikarana', to: 'home#vajikarana'
   get 'rasayana', to: 'home#rasayana' 
   get 'newsletter', to: 'home#newsletter'
-  get 'testnutritie4', to: 'home#testnutritie4' 
+  
   get 'documente', to: 'home#documente'
   get 'user77', to: 'home#user77'
   get 'evaluare_tipologie_ayurvedica', to: 'home#evaluare_tipologie_ayurvedica'
