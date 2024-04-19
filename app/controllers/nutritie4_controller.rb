@@ -37,10 +37,10 @@ puts("produsele cumparate sunt: #{purchased_prod_coduri}")
       
       else
         # Dacă nu a cumpărat niciunul, afișează produsele cu cod=cod108 și cod=cod110
-        @prods = Prod.where(cod: ['cod85', 'cod86'])
+        @prods = Prod.where(cod: ['cod85', 'cod86']).order(:id)
       end
   
-      @prods_cumparate = Prod.where(cod: purchased_prod_coduri)
+      @prods_cumparate = Prod.where(cod: purchased_prod_coduri).order(:id)
              
     else
       # Dacă nu există un current_user, afișează produsele cu cod=cod108 și cod=cod110
