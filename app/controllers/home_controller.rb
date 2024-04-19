@@ -110,36 +110,7 @@ class HomeController < ApplicationController
   end  
  
   
-  def testnutritie4
-    @has_access = current_user&.role == 1
-  
-    # Verifică dacă userul curent există în UserModulecursuri cu condițiile specificate   
-    @condition1 = if current_user
-      current_user.role == 1 || ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
-                 .where(prod_id: Prod.where(cod: ['cod85','cod87']).select(:id))
-                 .exists?
-    end
-    @condition2 = if current_user
-      current_user.role == 1 || ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
-                 .where(prod_id: Prod.where(cod: ['cod86']).select(:id))
-                 .exists?
-    end
 
-    if @has_access || @condition1 || @condition2
-      @myvideo4 = Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 3000, 4000).order(ordine: :asc)
-  
-    end  
-    if !current_user      
-      @prods = Prod.where(curslegatura: 'nutritie4', status: 'activ', cod: ['cod85', 'cod86','cod87'])
-    elsif current_user && (@has_access || @condition1)
-      @prods = Prod.none
-      @platit=true # variabila care permite accesul la video
-      @myvideo = Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 0, 1000).order(ordine: :asc)  
-    elsif !@condition1
-     
-      @prods = Prod.where(curslegatura: 'nutritie4', status: 'activ', cod:  ['cod85', 'cod86','cod87'])
-    end  
-  end
  
   def listavegetalegratis
     @acces = params[:acces]
