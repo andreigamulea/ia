@@ -13,6 +13,7 @@ class DateFacturaresController < ApplicationController
   # GET /date_facturares/new
   def new
     @date_facturare = DateFacturare.new
+    
   end
 
   # GET /date_facturares/1/edit
