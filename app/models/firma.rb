@@ -1,0 +1,2 @@
+class Firma < ApplicationRecord
+end

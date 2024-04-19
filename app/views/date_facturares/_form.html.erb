@@ -1,0 +1,107 @@
+<%= form_with(model: date_facturare) do |form| %>
+  <% if date_facturare.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(date_facturare.errors.count, "error") %> prohibited this date_facturare from being saved:</h2>
+
+      <ul>
+        <% date_facturare.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.number_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :firma_id, style: "display: block" %>
+    <%= form.number_field :firma_id %>
+  </div>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :prenume, style: "display: block" %>
+    <%= form.text_field :prenume %>
+  </div>
+
+  <div>
+    <%= form.label :nume, style: "display: block" %>
+    <%= form.text_field :nume %>
+  </div>
+
+  <div>
+    <%= form.label :numecompanie, style: "display: block" %>
+    <%= form.text_field :numecompanie %>
+  </div>
+
+  <div>
+    <%= form.label :cui, style: "display: block" %>
+    <%= form.text_field :cui %>
+  </div>
+
+  <div>
+    <%= form.label :tara, style: "display: block" %>
+    <%= form.text_field :tara %>
+  </div>
+
+  <div>
+    <%= form.label :codpostal, style: "display: block" %>
+    <%= form.text_field :codpostal %>
+  </div>
+
+  <div>
+    <%= form.label :strada, style: "display: block" %>
+    <%= form.text_field :strada %>
+  </div>
+
+  <div>
+    <%= form.label :numar, style: "display: block" %>
+    <%= form.text_field :numar %>
+  </div>
+
+  <div>
+    <%= form.label :altedate, style: "display: block" %>
+    <%= form.text_area :altedate %>
+  </div>
+
+  <div>
+    <%= form.label :telefon, style: "display: block" %>
+    <%= form.text_field :telefon %>
+  </div>
+
+  <div>
+    <%= form.label :adresaemail, style: "display: block" %>
+    <%= form.text_field :adresaemail %>
+  </div>
+
+  <div>
+    <%= form.label :localitate, style: "display: block" %>
+    <%= form.text_field :localitate %>
+  </div>
+
+  <div>
+    <%= form.label :judet, style: "display: block" %>
+    <%= form.text_field :judet %>
+  </div>
+
+  <div>
+    <%= form.label :grupa2324, style: "display: block" %>
+    <%= form.text_field :grupa2324 %>
+  </div>
+
+  <div>
+    <%= form.label :cpa, style: "display: block" %>
+    <%= form.text_field :cpa %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

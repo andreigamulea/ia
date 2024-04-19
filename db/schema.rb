@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_06_140841) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_19_223515) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -286,6 +286,29 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_06_140841) do
     t.index ["user_id"], name: "index_cursuris_on_user_id"
   end
 
+  create_table "date_facturares", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "firma_id"
+    t.string "email"
+    t.string "prenume"
+    t.string "nume"
+    t.string "numecompanie"
+    t.string "cui"
+    t.string "tara"
+    t.string "codpostal"
+    t.string "strada"
+    t.string "numar"
+    t.text "altedate"
+    t.string "telefon"
+    t.string "adresaemail"
+    t.string "localitate"
+    t.string "judet"
+    t.string "grupa2324"
+    t.string "cpa"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "descriereeroris", force: :cascade do |t|
     t.text "descriere"
     t.datetime "created_at", null: false
@@ -350,6 +373,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_06_140841) do
     t.index ["comanda_id"], name: "index_facturas_on_comanda_id"
     t.index ["status"], name: "index_facturas_on_status"
     t.index ["user_id"], name: "index_facturas_on_user_id"
+  end
+
+  create_table "firmas", force: :cascade do |t|
+    t.string "nume_institutie"
+    t.string "cui"
+    t.string "rc"
+    t.string "adresa"
+    t.string "banca"
+    t.string "cont"
+    t.string "serie"
+    t.integer "nrinceput"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "importanta", force: :cascade do |t|

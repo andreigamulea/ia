@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Date facturares</h1>
+
+<div id="date_facturares">
+  <% @date_facturares.each do |date_facturare| %>
+    <%= render date_facturare %>
+    <p>
+      <%= link_to "Show this date facturare", date_facturare %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New date facturare", new_date_facturare_path %>

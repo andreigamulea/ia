@@ -1,0 +1,41 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  firma_id: 1
+  email: MyString
+  prenume: MyString
+  nume: MyString
+  numecompanie: MyString
+  cui: MyString
+  tara: MyString
+  codpostal: MyString
+  strada: MyString
+  numar: MyString
+  altedate: MyText
+  telefon: MyString
+  adresaemail: MyString
+  localitate: MyString
+  judet: MyString
+  grupa2324: MyString
+  cpa: MyString
+
+two:
+  user_id: 1
+  firma_id: 1
+  email: MyString
+  prenume: MyString
+  nume: MyString
+  numecompanie: MyString
+  cui: MyString
+  tara: MyString
+  codpostal: MyString
+  strada: MyString
+  numar: MyString
+  altedate: MyText
+  telefon: MyString
+  adresaemail: MyString
+  localitate: MyString
+  judet: MyString
+  grupa2324: MyString
+  cpa: MyString

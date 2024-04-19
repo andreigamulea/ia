@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @date_facturare %>
+
+<div>
+  <%= link_to "Edit this date facturare", edit_date_facturare_path(@date_facturare) %> |
+  <%= link_to "Back to date facturares", date_facturares_path %>
+
+  <%= button_to "Destroy this date facturare", @date_facturare, method: :delete %>
+</div>
