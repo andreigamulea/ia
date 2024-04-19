@@ -1,4 +1,6 @@
 Rails.application.routes.draw do    
+  resources :firmas
+  resources :date_facturares
   
  # Rute personalizate care au prioritate
  get 'tvs/canal1', to: 'tvs#canal1'
