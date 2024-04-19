@@ -1,20 +1,30 @@
 class Nutritie4Controller < ApplicationController
   def index 
+  #logica este astfel: daca cumpara inainte de 19 mai sa zicem pe 10mai are acces la 90 de zile incepand cu 19 mai adica 19mai+90zile
+  #daca cumpara dupa , sa zicem pe 25mai are acces 25mai+90 zile
+
     @has_access = current_user&.role == 1
     if current_user  
       # Obține ID-urile produselor cumpărate de current_user, care sunt valide și a căror datasfarsit este azi sau în viitor
+      # Definirea datei prag
+      data_prag = Date.new(2024, 5, 19)
+
+      # Construirea interogării cu ajustarea datei de început
       purchased_prod_coduri = ComenziProd.where(user_id: current_user.id, 
-                                          validat: 'Finalizata', 
-                                          datainceput: ..Date.new(2024, 8, 24))                                          
-                                   .joins(:prod)
-                                   .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
-                                   .pluck('prods.cod')
+                                             validat: 'Finalizata')
+                                      .joins(:prod)
+                                      .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
+                                      .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
+                                             data_prag, data_prag, data_prag + 90.days)
+                                      .pluck('prods.cod')
+
       purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
-                                   validat: 'Finalizata', 
-                                   datainceput: ..Date.new(2024, 8, 24))
-                            .joins(:prod)
-                            .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
-                            .pluck('prods.cod')
+                                            validat: 'Finalizata')
+                                      .joins(:prod)
+                                      .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
+                                      .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
+                                            data_prag, data_prag, data_prag + 90.days)
+                                      .pluck('prods.cod')
                             
 # Adaugă codurile la array-ul existent și elimină duplicatele
 purchased_prod_coduri.concat(purchased_prod_coduri1)
