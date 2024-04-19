@@ -1,9 +1,156 @@
-<h1>New date facturare</h1>
+<style>
+#nutritie1 .cm h2 {
+    font-size:22px;
+}
+#nutritie1 .register{
+    border: 1px solid #4b0082;
+    background-color:#4b0082;
+}
+#nutritie1 .cm h3{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:0;
+}
+#nutritie1 .register{
+    margin:0;
+    margin-top:20px;
+}
+#nutritie1 .table td {
+    text-align:center;
+}
+@media screen and (max-width: 720px) {
+    #nutritie1 .register{
+        margin:0 auto;
+        margin-top:20px;
+    }
+    .cm{
+        text-align:center;
+    }
+}
 
-<%= render "form", date_facturare: @date_facturare %>
+</style>
+<% content_for :title, "Ayush Cell Romania: Program de nutritie Ayurvedica: modulul 4" %>
+<% content_for :meta_tags do %>
+  <meta name="description" content="Descoperiți importanța adaptării (satmya) alimentației la tipologia constituțională ayurvedică proprie (dosha) și impactul acesteia asupra sănătății.">
+  <meta name="keywords" content="ayurveda, nutritie ayurvedica, dosha, vata, pitta, kapha, dosha-prakriti, greutatea ideala, formule greutate ideala">
+  <link rel="canonical" href="https://www.ayushcell.ro/nutritie1">
+<% end %>
+
+<div class="container" id="nutritie1">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: white; ">
+    <h1 class="first-tittle">Ayush Cell Romania: Program de pregătire Nutritie Ayurvedică modulul 4</h1>
+    <h2 class="main-title" >Formular date facturare</h2>
+
+<section>
+<h1>Introdu datele facturare</h1>
+
+<%= form_with(model: @date_facturare, local: true) do |form| %>
+
+  <% if @date_facturare.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@date_facturare.errors.count, "error") %> prohibited this date_facturare from being saved:</h2>
+
+      <ul>
+        <% @date_facturare.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+ 
+
+  <div>
+    <%= form.label :prenume, style: "display: block" %>
+    <%= form.text_field :prenume %>
+  </div>
+
+  <div>
+    <%= form.label :nume, style: "display: block" %>
+    <%= form.text_field :nume %>
+  </div>
+
+  <div>
+    <%= form.label :numecompanie, style: "display: block" %>
+    <%= form.text_field :numecompanie %>
+  </div>
+
+  <div>
+    <%= form.label :cui, style: "display: block" %>
+    <%= form.text_field :cui %>
+  </div>
+
+  <div>
+    <%= form.label :tara, style: "display: block" %>
+    <%= form.text_field :tara %>
+  </div>
+
+  <div>
+    <%= form.label :codpostal, style: "display: block" %>
+    <%= form.text_field :codpostal %>
+  </div>
+
+  <div>
+    <%= form.label :strada, style: "display: block" %>
+    <%= form.text_field :strada %>
+  </div>
+
+  <div>
+    <%= form.label :numar, style: "display: block" %>
+    <%= form.text_field :numar %>
+  </div>
+
+  <div>
+    <%= form.label :altedate, style: "display: block" %>
+    <%= form.text_area :altedate %>
+  </div>
+
+  <div>
+    <%= form.label :telefon, style: "display: block" %>
+    <%= form.text_field :telefon %>
+  </div>
+
+  <div>
+    <%= form.label :adresaemail, style: "display: block" %>
+    <%= form.text_field :adresaemail %>
+  </div>
+
+  <div>
+    <%= form.label :localitate, style: "display: block" %>
+    <%= form.text_field :localitate %>
+  </div>
+
+  <div>
+    <%= form.label :judet, style: "display: block" %>
+    <%= form.text_field :judet %>
+  </div>
+
+  <div>
+    <%= form.label :grupa2324, style: "display: block" %>
+    <%= form.text_field :grupa2324 %>
+  </div>
+
+  <div>
+    <%= form.label :cpa, style: "display: block" %>
+    <%= form.text_field :cpa %>
+  </div>
+
+  <div>
+  </br><%= form.submit "Creează" %>
+
+  </div>
+<% end %>
 
 <br>
 
 <div>
-  <%= link_to "Back to date facturares", date_facturares_path %>
+  <%= link_to "Inapoi la toate datele facturare", date_facturares_path %>
 </div>
+
+</section>
+
+</div></div>
