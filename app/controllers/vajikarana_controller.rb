@@ -7,13 +7,13 @@ class VajikaranaController < ApplicationController
                                           validat: 'Finalizata', 
                                           datainceput: ..Date.new(2024, 5, 24))                                          
                                    .joins(:prod)
-                                   .where(prods: { curslegatura: 'vajikarana1', status: 'activ' })
+                                   .where(prods: { curslegatura: 'vajikarana1' })
                                    .pluck('prods.cod')
       purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
                                    validat: 'Finalizata', 
                                    datainceput: ..Date.new(2024, 5, 24))
                             .joins(:prod)
-                            .where(prods: { curslegatura: 'vajikarana1', status: 'activ' })
+                            .where(prods: { curslegatura: 'vajikarana1' })
                             .pluck('prods.cod')
                             
 # Adaugă codurile la array-ul existent și elimină duplicatele
@@ -37,7 +37,7 @@ puts("produsele cumparate sunt: #{purchased_prod_coduri}")
       
       else
         # Dacă nu a cumpărat niciunul, afișează produsele cu cod=cod108 și cod=cod110
-        @prods = Prod.where(cod: ['cod108', 'cod110'])
+        @prods = Prod.where(cod: ['cod108', 'cod110'], status: 'activ')
       end
   
       @prods_cumparate = Prod.where(cod: purchased_prod_coduri)
