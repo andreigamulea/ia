@@ -886,7 +886,7 @@ def set_user13
                         validat: 'Finalizata', 
                         datainceput: ..Date.new(2024, 5, 24))
                         .joins(:prod)
-                        .where(prods: { curslegatura: 'vajikarana1', status: 'activ' })
+                        .where(prods: { curslegatura: 'vajikarana1' })
                         .pluck('prods.cod')
 
                        
