@@ -53,7 +53,7 @@
       <img src="<%= image_url('Nutritie4.webp') %>" alt="Program Nutriție Ayurvedică">
     </div>
     <div class="r1c2">
-    <p>Programul de pregătire în nutriția ayurvedică practică aplicată este conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</p>
+    <p>Programul de pregătire în nutriția ayurvedică practică aplicată este conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață.</p>
     <% if !current_user %>      
     <div class="r1c2">
         <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie4'), class: 'register' %>
@@ -80,7 +80,7 @@
 <h3>⏳ Recomandări nutriționale adaptate diferitelor perioade ce alcătuiesc ciclurile temporale descrise în ayurveda</h3>
 <p>În Ayurveda, adaptarea alimentației la diferitele momente temporale, cum ar fi trecerile dintre anotimpuri sau manifestările ciclice ale celor trei dosha-uri în timpul intervalului zi-noapte, este considerată esențială. Această adaptare susține funcționarea optimă și contribuie la consolidarea stării de sănătate generală, asigurând că organismul răspunde eficient la variațiile naturale ale mediului.</p>
 
-<p>Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</p>
+
 <% if !user_signed_in? || (current_user && !@has_access) %>
 
 <div class="r1c2" style="align-items: center; width:100%;">
@@ -116,7 +116,16 @@
 <%end%>
 <%end%>
 <% if current_user && @has_access %>
-<p>Programul de pregătire în nutriția ayurvedică practică aplicată este conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</h1>
+
+<h3><strong>Modalitatea de desfășurare a cursului</strong></h3>
+    <ol>
+        <li>Participare online, directă și interactivă, pe platforma ZOOM. Cursurile live vor avea loc in zilele de 19, 26 mai, 2, 9, 23, 30 iunie, 7 și 14 iulie 2024 in intervalul orar 10:00 - 12:00.</li>
+        <li>Participare online, cu acces direct pe platforma ZOOM și posibilitatea de a viziona înregistrările sesiunilor ulterior  timp de 90 de zile de la data achizitionarii acestei optiuni. Aceasta permite participanților să vizioneze înregistrarile acestui modul la orice oră și fără restricții de timp.</li>
+    </ol>
+
+
+
+
 <%else%>
 
 <%end%>
