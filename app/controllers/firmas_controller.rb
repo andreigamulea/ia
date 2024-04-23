@@ -65,6 +65,6 @@ class FirmasController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def firma_params
-      params.require(:firma).permit(:nume_institutie, :cui, :rc, :adresa, :banca, :cont, :serie, :nrinceput)
+      params.require(:firma).permit(:nume_institutie, :cui, :rc, :adresa, :banca, :cont, :serie, :nrinceput, :cod)
     end
 end
