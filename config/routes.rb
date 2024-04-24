@@ -51,6 +51,7 @@ patch 'listacanal2s/:id', to: 'listacanal2s#update', as: :update_listacanal2
 
   # ...alte rute...
   get 'nutritie4/index'
+  get 'nutritie4/export_to_xlsx', to: 'nutritie4#export_to_xlsx_plata_nutritie4', as: 'export_nutritie4_xlsx'
   
   get 'contract/contract_voluntar', to: 'contractes#semneaza_contract', as: 'contract_voluntar'
   get 'contract/contract_voluntar1', to: 'contractes#semneaza_contract1', as: 'contract_voluntar1'
