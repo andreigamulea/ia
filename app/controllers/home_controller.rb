@@ -290,7 +290,34 @@ end
     end
   
   end
+  def export_newsletter_subscribers
+    subscribers = Newsletter.all.order(:id)  # Assuming you want to export all records
 
+    # Create a new workbook
+    workbook = RubyXL::Workbook.new
+    worksheet = workbook[0]
+    worksheet.sheet_name = 'Subscribers'
+
+    # Define headers for the spreadsheet
+    headers = ['ID', 'Name', 'Email']
+    headers.each_with_index do |header, index|
+      worksheet.add_cell(0, index, header)
+    end
+
+    # Fill the spreadsheet with subscriber data
+    subscribers.each_with_index do |subscriber, index|
+      worksheet.add_cell(index + 1, 0, subscriber.id)
+      worksheet.add_cell(index + 1, 1, subscriber.nume)
+      worksheet.add_cell(index + 1, 2, subscriber.email)
+    end
+
+    # Save the workbook to a file
+    file_path = Rails.root.join('tmp', 'newsletter_subscribers.xlsx')
+    workbook.write(file_path)
+
+    # Send the file to the user
+    send_file(file_path, filename: 'newsletter_subscribers.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  end
   private
 
   def valid_email?(email)
