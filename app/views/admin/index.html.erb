@@ -13,7 +13,9 @@
       <%= button_to 'Show All Users', url_for(controller: 'admin', action: 'index'), method: :get, class: 'btn btn-secondary ml-2' %>
     </div>
   </div>
-  Numar useri: <%=User.count%>
+  Numar useri: <%=User.count%>  <%= link_to 'Export Users to XLSX', export_admin_users_path, class: 'btn btn-primary' %>
+
+
   <table class="table table-striped">
     <thead class="thead-dark">
       <tr>

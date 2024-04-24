@@ -29,8 +29,8 @@ patch 'listacanal2s/:id', to: 'listacanal2s#update', as: :update_listacanal2
   post '/newsletter', to: 'home#newsletter'
   get 'home/lista_newsletter', to: 'home#lista_newsletter', as: 'lista_newsletter'
 
-
-
+  get 'admin/users/export', to: 'admin#export_users_to_xlsx', as: 'export_admin_users'
+  get 'home/newsletters/export', to: 'home#export_newsletter_subscribers', as: 'export_newsletter_subscribers'
 
 
 

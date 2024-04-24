@@ -5,10 +5,48 @@ class AdminController < ApplicationController
   
   def index
     @q = User.ransack(params[:q])
-    @users = @q.result.page(params[:page]).per(15)
-
-    
+    # Sorts the result by `id` in ascending order
+    @users = @q.result.order(id: :asc).page(params[:page]).per(15)
   end
+
+
+  def export_users_to_xlsx
+    users = User.all.order(:id)  # Fetches all users and orders them by ID
+  
+    # Create a new workbook
+    workbook = RubyXL::Workbook.new
+  
+    # Use the first worksheet
+    worksheet = workbook[0]
+    worksheet.sheet_name = 'Users'
+  
+    # Define the headers
+    headers = ['ID', 'Email', 'Name', 'Telefon']
+    headers.each_with_index do |header, index|
+      worksheet.add_cell(0, index, header)  # Adds headers to the first row
+    end
+  
+    # Populate the worksheet with user data
+    users.each_with_index do |user, index|
+      worksheet.add_cell(index + 1, 0, user.id)
+      worksheet.add_cell(index + 1, 1, user.email)
+      worksheet.add_cell(index + 1, 2, user.name)
+      worksheet.add_cell(index + 1, 3, user.telefon)
+    end
+  
+    # Save the workbook to a file
+    file_path = Rails.root.join('tmp', 'users.xlsx')
+    workbook.write(file_path)
+  
+    # Optionally, send the file to the user
+    send_file(file_path, filename: 'users.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  end
+  
+
+
+
+
+  
   def new #se creaza un utilizator nou
     @user = User.new
   end
