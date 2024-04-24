@@ -12,8 +12,10 @@ class DateFacturaresController < ApplicationController
 
   # GET /date_facturares/new
   def new
-    @date_facturare = DateFacturare.new
-    
+    #@date_facturare = DateFacturare.new
+    @date_facturare = DateFacturare.new(user_id: current_user.id, email: current_user.email)
+    email_exists = Listacanal3.exists?(email: current_user&.email)
+    @has_access = current_user && (email_exists || current_user.role == 1)
   end
 
   # GET /date_facturares/1/edit

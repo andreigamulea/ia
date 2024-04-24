@@ -123,8 +123,10 @@ input[type="submit"]:hover {
 <section>
 
  <p>Vă rugăm să actualizați datele din formularul de mai jos, acestea fiind necesare pentru emiterea facturilor aferente plăților de curs și pentru asigurarea conformității cu reglementările fiscale actuale. Vă mulțumim pentru cooperare și apreciem înțelegerea dumneavoastră.</p>
-
+ <% if @has_access %>
 <%= form_with(model: @date_facturare, local: true) do |form| %>
+  <%= form.hidden_field :user_id %>
+  <%= form.hidden_field :email %>
 
   <% if @date_facturare.errors.any? %>
     <div style="color: red">
@@ -138,7 +140,7 @@ input[type="submit"]:hover {
     </div>
   <% end %>
 
-
+  
 
 
   <form>
@@ -152,6 +154,8 @@ input[type="submit"]:hover {
     <%= form.text_field :nume %>
   </div>
 
+
+  <% if current_user&.role == 1 %>
   <div class="form-group">
     <%= form.label :numecompanie, "Nume Companie" %>
     <%= form.text_field :numecompanie %>
@@ -161,6 +165,9 @@ input[type="submit"]:hover {
     <%= form.label :CUI %>
     <%= form.text_field :cui %>
   </div>
+  <% end %>
+
+
 
   <div class="form-group">
     <%= form.label :Tara %>
@@ -173,7 +180,7 @@ input[type="submit"]:hover {
   </div>
 
   <div class="form-group">
-    <%= form.label :Judet %>
+    <%= form.label :judet, "Judet / Sector" %>
     <%= form.text_field :judet %>
   </div>
 
@@ -187,12 +194,12 @@ input[type="submit"]:hover {
     <%= form.label :Numar %>
     <%= form.text_field :numar %>
   </div>
-
+  <% if current_user&.role == 1 %>
   <div class="form-group">
     <%= form.label :altedate, "Bloc, scara, etaj, apartament" %>
     <%= form.text_area :altedate %>
   </div>
-
+  <% end %>
   <div class="form-group">
     <%= form.label :codpostal, "Cod Postal" %>
     <%= form.text_field :codpostal %>
@@ -202,28 +209,32 @@ input[type="submit"]:hover {
     <%= form.label :Telefon %>
     <%= form.text_field :telefon %>
   </div>
-
+  <% if current_user&.role == 1 %>
   <div class="form-group">
     <%= form.label :adresaemail, "Adresa email" %>
     <%= form.text_field :adresaemail %>
   </div>
+  <% end %>
 
   <div class="form-group">
     <%= form.label :grupa_curs_ayurveda, "Grupa curs ayurveda (ex. 2, 3, etc)" %>
-    <%= form.text_field :grupa_curs_ayurveda %>
+    <%= form.text_field :grupa2324 %>
   </div>
-
+  <% if current_user&.role == 1 %>
   <div class="form-group">
     <%= form.label :cpa, "CPA (cod practicant ayurveda)" %>
     <%= form.text_field :cpa %>
   </div>
-
+  <% end %>
   <div class="form-group">
     <%= form.submit "Trimite" %>
   </div>
 
 </form>
 
+<% end %>
+<%else%>
+<h2 class="main-title" >Va rugam sa va logati pentru a avea acces la acest formular</h2>
 <% end %>
 
 <br>
