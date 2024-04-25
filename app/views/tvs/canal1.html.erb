@@ -34,8 +34,8 @@
     
 
 
-
-<% if @exista_video %>
+    <% if @has_access %>
+<% if @exista_video %> 
 
 <h2><%=@denumire%></h2>
 <h4>Aceasta inregistrare se poate reviziona pana la: <%=@data_sfarsit%> ora <%=@valabilitate_ora_sfarsit%></h4>
@@ -53,7 +53,7 @@
 <h3>In acest moment nu există nici o revizionare.</h3>
 
 <% end %>
-
+<% end %>
 </div>
 </div>
 <script>

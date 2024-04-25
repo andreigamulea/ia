@@ -4,6 +4,10 @@ class TvsController < ApplicationController
   # GET /tvs or /tvs.json
 
   def canal1
+    @has_access = false
+    if current_user && (Listacanal1.exists?(email: current_user.email) || current_user.role == 1)
+      @has_access = true
+    end
     now_bucharest = Time.current.in_time_zone('Europe/Bucharest')
     @now_bucharest = now_bucharest
     data_curenta = @now_bucharest.to_date
