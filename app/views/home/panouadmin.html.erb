@@ -52,12 +52,12 @@ h1.display-4{
       <%= link_to 'Module curs', modulecursuris_path %><br>
       
       
-      <%= link_to 'Lista Users', admin_index_path %><br>
+      <%= link_to 'Lista Users', admin_index_path %> (<%=User.count%>)<br>
       <%= link_to 'Pagini site', paginisites_path %><br>
       <%= link_to 'Useri care s-au logat', userilogati_path %><br>
       <%= link_to 'Statistici', statistics_path %><br>
       <%= link_to 'Gestionare Cursuri', gestionare_useri_cursuri_index_path %><br>
-      <%= link_to 'Lista Newsletter', lista_newsletter_path %><br>
+      <%= link_to 'Lista Newsletter', lista_newsletter_path %> (<%=Newsletter.count%>)<br>
       <%= link_to 'Gratuitati', index11_comandas_path %><br>
 
 
