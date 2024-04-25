@@ -30,6 +30,11 @@
                     <li class="nav-item">
                        <%= link_to 'Curs Vajikarana', vajikarana_modul1_path, class: 'no-turbo' %>
                     </li>
+                    <% if current_user && (current_user.role == 1 || Listacanal1.exists?(email: current_user.email)) %>
+                    <li class="nav-item">
+                      <%= link_to 'Ayush Cell Tv 1', '/tvs/canal1', class: 'no-turbo' %>
+                    </li>
+                    <% end %>
                     <% if current_user && (current_user.role == 1 || Listacanal2.exists?(email: current_user.email)) %>
                     <li class="nav-item">
                       <%= link_to 'Ayush Cell Tv 2', '/tvs/canal2', class: 'no-turbo' %>
