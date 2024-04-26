@@ -44,6 +44,7 @@ patch 'listacanal2s/:id', to: 'listacanal2s#update', as: :update_listacanal2
   get 'traditia_ayurvedica/jamadagni', to: 'traditia_ayurvedica#jamadagni', as: 'jamadagni'
   get 'traditia_ayurvedica/hiranyaksha', to: 'traditia_ayurvedica#hiranyaksha', as: 'hiranyaksha'
   get 'traditia_ayurvedica/sharaloma', to: 'traditia_ayurvedica#sharaloma', as: 'sharaloma'
+  get 'traditia_ayurvedica/saunaka', to: 'traditia_ayurvedica#saunaka', as: 'saunaka'
   get 'traditia_ayurvedica/cognitronica', to: 'traditia_ayurvedica#cognitronica', as: 'cognitronica'
   #get 'traditia_ayurvedica/performanta_cognitiva', to: 'traditia_ayurvedica#performanta_cognitiva', as: 'performanta_cognitiva'
   # Definirea rutei cu un nume personalizat pentru helper-ul de cale
