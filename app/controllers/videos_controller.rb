@@ -813,7 +813,7 @@ end
     purchased_prod_coduri = ComenziProd.where(user_id: current_user.id, 
                         validat: 'Finalizata')
                     .joins(:prod)
-                    .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
+                    .where(prods: { curslegatura: 'nutritie4' })
                     .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
                         data_prag, data_prag, data_prag + 90.days)
                     .pluck('prods.cod')
@@ -821,7 +821,7 @@ end
     purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
                       validat: 'Finalizata')
                     .joins(:prod)
-                    .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
+                    .where(prods: { curslegatura: 'nutritie4' })
                     .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
                       data_prag, data_prag, data_prag + 90.days)
                     .pluck('prods.cod')
