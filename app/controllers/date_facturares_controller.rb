@@ -15,6 +15,7 @@ class DateFacturaresController < ApplicationController
     #@date_facturare = DateFacturare.new
     @date_facturare = DateFacturare.new(user_id: current_user.id, email: current_user.email)
     email_exists = Listacanal3.exists?(email: current_user&.email)
+    puts("Sa vedem daca exista: #{email_exists}")
     @has_access = current_user && (email_exists || current_user.role == 1)
   end
 
