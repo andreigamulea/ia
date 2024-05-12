@@ -78,7 +78,9 @@ class TvsController < ApplicationController
         luna_curenta_romana = luna_in_romana(Time.current.in_time_zone('Europe/Bucharest').strftime("%B"))
         index_luna_curenta = lunile.index(luna_curenta_romana)
         index_luna_platit = lunile.index(inregistrare_user.platit)
-    
+        puts("luna_curenta_romana: #{luna_curenta_romana}")
+        puts("index_luna_curenta: #{index_luna_curenta}")
+        puts("index_luna_platit: #{index_luna_platit}")
         # Dacă luna 'platit' este mai mică decât luna curentă, redirect către root_path
         if index_luna_platit.nil? || index_luna_curenta.nil? || index_luna_platit < index_luna_curenta
           redirect_to root_path and return
