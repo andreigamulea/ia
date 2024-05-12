@@ -360,6 +360,7 @@ class StripeWebhooksController < ApplicationController
       strada: metadata[:strada],
       numar_adresa: metadata[:numar],
       produs: produsul,
+      status: "Achitata",
       cantitate: payment_intent["metadata"]["cantitate"],
       pret_unitar: ((payment_intent["metadata"]["pret_bucata"]).to_d / BigDecimal("1.19")).round(2),
       
