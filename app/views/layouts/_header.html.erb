@@ -159,6 +159,14 @@
                         <% if current_user %>
                         <li><%= link_to 'Facturile mele', facturas_path, class: 'nav-item no-turbo' %></li>
                         <% end %>
+
+                        <% if current_user %>
+                          <% if @newsauupdate == 1 %>
+                          <li><%= link_to 'Date Facturare', new_date_facturare_path, class: 'nav-item no-turbo' %></li>
+                          <% elsif @newsauupdate == 2 && @date_facturare %>
+                          <li><%= link_to 'Date Facturare', edit_date_facturare_path(@date_facturare), class: 'nav-item no-turbo' %></li>
+                          <% end %>
+                        <% end %>
                         <% if current_user && (Listacanal2.exists?(email: current_user.email) || current_user.role==1) %>
 
                         <li><%= link_to 'An 2', an2_path, class: 'no-turbo' %></li>

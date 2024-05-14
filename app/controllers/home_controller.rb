@@ -13,7 +13,21 @@ class HomeController < ApplicationController
   def politica_gdpr
   end 
   def panouadmin
+    @newsauupdate = 0 #acest cod este pt preluarea datelor de facturare pt an3 atat. 
+    email_exists_in_listacanal3 = Listacanal3.exists?(email: current_user&.email)
+    
+    # Găsește înregistrarea DateFacturare pentru emailul utilizatorului curent, dacă există
+    @date_facturare = DateFacturare.find_by(email: current_user&.email)
+  
+    if email_exists_in_listacanal3 || current_user.role == 1     
+      if @date_facturare
+        @newsauupdate = 2
+      else  
+        @newsauupdate = 1
+      end  
+    end  
   end
+  
  
   def resetareparola    
   end

@@ -1,10 +1,247 @@
-<h1>Editing date facturare</h1>
+<style>
+#nutritie1 .cm h2 {
+    font-size:22px;
+}
+#nutritie1 .register{
+    border: 1px solid #4b0082;
+    background-color:#4b0082;
+}
+#nutritie1 .cm h3{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:0;
+}
+#nutritie1 .register{
+    margin:0;
+    margin-top:20px;
+}
+#nutritie1 .table td {
+    text-align:center;
+}
+@media screen and (max-width: 720px) {
+    #nutritie1 .register{
+        margin:0 auto;
+        margin-top:20px;
+    }
+    .cm{
+        text-align:center;
+    }
+}
 
-<%= render "form", date_facturare: @date_facturare %>
+
+
+  /* Basic Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Styling the form */
+form {
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-width:600px;
+}
+
+.form-group textarea {
+  height: 100px; /* Fixed height for textarea */
+}
+
+input[type="submit"] {
+  width: auto;
+  padding: 10px 50px;
+  border: none;
+  background-color: #4B0082;;
+  color: white;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #35025a;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  form {
+    padding: 10px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+  }
+
+  .form-group input[type="text"],
+  .form-group textarea {
+    font-size: 12px;
+  }
+
+  input[type="submit"] {
+    font-size: 14px;
+  }
+}
+</style>
+<% content_for :title, "Ayush Cell Romania: Editare Date Facturare" %>
+<% content_for :meta_tags do %>
+  <meta name="description" content="Editați datele de facturare conform necesităților dumneavoastră.">
+  <meta name="keywords" content="ayurveda, editare date facturare">
+  <link rel="canonical" href="https://www.ayushcell.ro/nutritie1/edit">
+<% end %>
+
+<div class="container" id="nutritie1">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: white; ">
+    <h1 class="first-tittle">Ayush Cell Romania: Editare Date Facturare</h1>
+    <h2 class="main-title">Formular de Editare Date Facturare</h2>
+
+<section>
+ <p>Verificati datele necesare pentru facturarea serviciilor noastre si modificati-le daca este necesar. Vă mulțumim.</p>
+ <% if @has_access %>
+ <% if @date_facturare.errors.any? %>
+ <div style="color: red">
+   <h2><%= pluralize(@date_facturare.errors.count, "error") %> prevented this date_facturare from being saved:</h2>
+   <ul>
+     <% @date_facturare.errors.each do |error| %>
+       <li><%= error.full_message %></li>
+     <% end %>
+   </ul>
+ </div>
+ <% end %>
+ <%= form_with(model: @date_facturare, local: true) do |form| %>
+  <%= form.hidden_field :user_id %>
+  <%= form.hidden_field :email %>
+  <%= form.hidden_field :cod %>
+
+  
+
+
+  <form>
+  <div class="form-group">
+    <%= form.label :Prenume %>
+    <%= form.text_field :prenume %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :Nume %>
+    <%= form.text_field :nume %>
+  </div>
+
+
+  <% if current_user&.role == 1 %>
+  <div class="form-group">
+    <%= form.label :numecompanie, "Nume Companie" %>
+    <%= form.text_field :numecompanie %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :CUI %>
+    <%= form.text_field :cui %>
+  </div>
+  <% end %>
+
+
+
+  <div class="form-group">
+    <%= form.label :Tara %>
+    <%= form.text_field :tara %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :Localitate %>
+    <%= form.text_field :localitate %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :judet, "Judet / Sector" %>
+    <%= form.text_field :judet %>
+  </div>
+
+
+  <div class="form-group">
+    <%= form.label :Strada %>
+    <%= form.text_field :strada %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :Numar %>
+    <%= form.text_field :numar %>
+  </div>
+  <% if current_user&.role == 1 %>
+  <div class="form-group">
+    <%= form.label :altedate, "Bloc, scara, etaj, apartament" %>
+    <%= form.text_area :altedate %>
+  </div>
+  <% end %>
+  <div class="form-group">
+    <%= form.label :codpostal, "Cod Postal" %>
+    <%= form.text_field :codpostal %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :Telefon %>
+    <%= form.text_field :telefon %>
+  </div>
+  <% if current_user&.role == 1 %>
+  <div class="form-group">
+    <%= form.label :adresaemail, "Adresa email" %>
+    <%= form.text_field :adresaemail %>
+  </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :grupa_curs_ayurveda, "Grupa curs ayurveda (ex. 2, 3, etc)" %>
+    <%= form.select :grupa2324, options_for_select([3, 30], @date_facturare.grupa2324), {}, { class: 'form-control' } %>
+  </div>
+
+  <% if current_user&.role == 1 %>
+  <div class="form-group">
+    <%= form.label :cpa, "CPA (cod practicant ayurveda)" %>
+    <%= form.text_field :cpa %>
+  </div>
+  <% end %>
+  <div class="form-group">
+  <%= form.submit "Actualizează" %>
+</div>
+
+</form>
+
+<% end %>
+<%else%>
+<h2 class="main-title">Vă rugăm să vă logați pentru a accesa acest formular.</h2>
+<% end %>
 
 <br>
-
+<%if current_user&.role==1%>
 <div>
-  <%= link_to "Show this date facturare", @date_facturare %> |
-  <%= link_to "Back to date facturares", date_facturares_path %>
+  <%= link_to "Înapoi la datele de facturare", date_facturares_path, class: "register" %>
 </div>
+<% end %>
+
+</section>
+</div></div>
