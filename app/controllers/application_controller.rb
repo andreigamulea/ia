@@ -2,7 +2,8 @@ class ApplicationController < ActionController::Base
     rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_root
     rescue_from ActionController::RoutingError, with: :redirect_to_root
     puts("111111")
-    
+    before_action :set_facturare_access
+    before_action :redirect_if_exists, if: :date_facturare_controller?
     before_action :track_ahoy_visit
     before_action :configure_permitted_parameters, if: :devise_controller?
     before_action :check_user_active
@@ -199,9 +200,36 @@ class ApplicationController < ActionController::Base
       end
       
       
- 
+      def set_facturare_access
+        return unless current_user  # Asigură-te că avem un utilizator conectat
+    
+        email_exists_in_listacanal3 = Listacanal3.exists?(email: current_user.email)
+        @date_facturare = DateFacturare.find_by(email: current_user.email)
+    
+        if email_exists_in_listacanal3 || current_user.role == 1
+          @newsauupdate = @date_facturare ? 2 : 1
+        else
+          @newsauupdate = 0
+        end
+        puts("Vloarea lui @newsauupdate este #{@newsauupdate}")
+      end
 
-  
+      def redirect_if_exists
+        # Asigură-te că logica este aplicată numai când utilizatorul este logat
+        return unless current_user
+    
+        # Asumând că logica de verificare este specifică pentru anumite acțiuni din controlerul DateFacturares
+        if controller_name == 'date_facturares' && action_name == 'new'
+          existing_facturare = DateFacturare.find_by(email: current_user.email)
+          redirect_to edit_date_facturare_path(existing_facturare) if existing_facturare
+        end
+      end
+    
+      def date_facturare_controller?
+        # Aici poți defini condiții sub care logica să fie aplicată,
+        # de exemplu, numai pentru controlerul DateFacturares
+        controller_name == 'date_facturares'
+      end
       
       
 end

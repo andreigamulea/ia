@@ -1,19 +1,32 @@
 class DateFacturaresController < ApplicationController
   before_action :set_date_facturare, only: %i[ show edit update destroy ]
-
+  before_action :authenticate_user!, only: [:new, :index, :destroy, :show]
+  before_action :require_admin, only: [:index, :destroy, :show]
   # GET /date_facturares or /date_facturares.json
   def index
     @date_facturares = DateFacturare.all
+    puts("sunt in date_facturares_controller.rb index")
+    email_exists = Listacanal3.exists?(email: current_user&.email)
+    puts("Sa vedem daca exista: #{email_exists}")
+    @has_access = current_user && (email_exists || current_user.role == 1)
   end
 
   # GET /date_facturares/1 or /date_facturares/1.json
   def show
+    puts("sunt in date_facturares_controller.rb show")
+    email_exists = Listacanal3.exists?(email: current_user&.email)
+    puts("Sa vedem daca exista: #{email_exists}")
+    @has_access = current_user && (email_exists || current_user.role == 1)
   end
 
   # GET /date_facturares/new
   def new
+    
+    puts("sunt in date_facturares_controller.rb new")
     #@date_facturare = DateFacturare.new
-    @date_facturare = DateFacturare.new(user_id: current_user.id, email: current_user.email)
+    firma_id = Firma.find_by(cod: "cod1").id
+
+    @date_facturare = DateFacturare.new(user_id: current_user.id, email: current_user.email, cod: "cod1",firma_id: firma_id)
     email_exists = Listacanal3.exists?(email: current_user&.email)
     puts("Sa vedem daca exista: #{email_exists}")
     @has_access = current_user && (email_exists || current_user.role == 1)
@@ -21,15 +34,24 @@ class DateFacturaresController < ApplicationController
 
   # GET /date_facturares/1/edit
   def edit
+    puts("sunt in date_facturares_controller.rb show")
+    email_exists = Listacanal3.exists?(email: current_user&.email)
+    puts("Sa vedem daca exista: #{email_exists}")
+    @has_access = current_user && (email_exists || current_user.role == 1)
   end
 
   # POST /date_facturares or /date_facturares.json
   def create
+    puts("sunt in date_facturares_controller.rb show")
+    email_exists = Listacanal3.exists?(email: current_user&.email)
+    puts("Sa vedem daca exista: #{email_exists}")
+    @has_access = current_user && (email_exists || current_user.role == 1)
+    puts("sunt in date_facturares_controller.rb create")
     @date_facturare = DateFacturare.new(date_facturare_params)
-
+  
     respond_to do |format|
       if @date_facturare.save
-        format.html { redirect_to date_facturare_url(@date_facturare), notice: "Date facturare was successfully created." }
+        format.html { redirect_to edit_date_facturare_path(@date_facturare), notice: "Date facturare was successfully created and can now be reviewed or edited." }
         format.json { render :show, status: :created, location: @date_facturare }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,12 +59,19 @@ class DateFacturaresController < ApplicationController
       end
     end
   end
+  
 
   # PATCH/PUT /date_facturares/1 or /date_facturares/1.json
   def update
+    puts("sunt in date_facturares_controller.rb update")
+    email_exists = Listacanal3.exists?(email: current_user&.email)
+    puts("Sa vedem daca exista: #{email_exists}")
+    @has_access = current_user && (email_exists || current_user.role == 1)
+    puts("sunt in date_facturares_controller.rb update")
+    
     respond_to do |format|
       if @date_facturare.update(date_facturare_params)
-        format.html { redirect_to date_facturare_url(@date_facturare), notice: "Date facturare was successfully updated." }
+        format.html { redirect_to edit_date_facturare_path(@date_facturare), notice: "Date facturare was successfully created and can now be reviewed or edited." }
         format.json { render :show, status: :ok, location: @date_facturare }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -69,6 +98,12 @@ class DateFacturaresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def date_facturare_params
-      params.require(:date_facturare).permit(:user_id, :firma_id, :email, :prenume, :nume, :numecompanie, :cui, :tara, :codpostal, :strada, :numar, :altedate, :telefon, :adresaemail, :localitate, :judet, :grupa2324, :cpa)
+      params.require(:date_facturare).permit(:user_id, :firma_id, :email, :prenume, :nume, :numecompanie, :cui, :tara, :codpostal, :strada, :numar, :altedate, :telefon, :adresaemail, :localitate, :judet, :grupa2324, :cpa, :cod)
     end
+    def require_admin
+      unless current_user && current_user.role == 1
+        flash[:error] = "Only admins are allowed to access this page."
+        redirect_to root_path
+      end
+  end
 end

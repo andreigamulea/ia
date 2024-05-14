@@ -148,8 +148,16 @@ h1.display-4{
     <h1 class="display-4">Pagini in lucru</h1>
     <p class="lead">
     <%= link_to 'Date Institutii', firmas_path %></br>
-    <%= link_to 'Date Facturare', date_facturares_path %></br>
-    <%= link_to 'Adaugă Date Facturare', new_date_facturare_path %></br></br>
+    <%= link_to 'Tabel Useri cu Date Facturare', date_facturares_path %></br>
+
+    <% if current_user %>
+      <% if @newsauupdate == 1 %>
+        <%= link_to 'Date Facturare', new_date_facturare_path %><br><br>
+      <% elsif @newsauupdate == 2 && @date_facturare %>
+        <%= link_to 'Date Facturare', edit_date_facturare_path(@date_facturare) %><br><br>
+      <% end %>
+    <% end %>
+
 
 
     <%= link_to 'Transport international', tayt12_transport_international_path('tri'), class: 'nav-item' %></br>
