@@ -33,12 +33,36 @@ class DateFacturaresController < ApplicationController
   end
 
   # GET /date_facturares/1/edit
-  def edit
-    puts("sunt in date_facturares_controller.rb show")
-    email_exists = Listacanal3.exists?(email: current_user&.email)
-    puts("Sa vedem daca exista: #{email_exists}")
-    @has_access = current_user && (email_exists || current_user.role == 1)
+ # GET /date_facturares/1/edit
+# GET /date_facturares/1/edit
+# GET /date_facturares/1/edit
+def edit
+  # Logare pentru a urmări acțiunea
+  puts("Se intră în acțiunea de editare din date_facturares_controller.rb")
+
+  # Verifică dacă emailul utilizatorului curent există în Listacanal3 și loghează rezultatul
+  email_exists = current_user && Listacanal3.exists?(email: current_user.email)
+  puts("Există emailul: #{email_exists}")
+
+  # Asigură-te că există un utilizator autentificat înainte de a verifica rolul și proprietatea resursei
+  if current_user
+    # Verifică dacă utilizatorul curent este administrator sau dacă este proprietarul resursei și emailul său există în Listacanal3
+    if current_user.role == 1 || (current_user.role == 0 && current_user.id == @date_facturare.user_id && email_exists)
+      # Utilizatorul are acces: fie este administrator, fie este proprietarul resursei și emailul său există în Listacanal3
+      @has_access = true
+    else
+      # Utilizatorul nu are dreptul de a edita această resursă, îl redirecționăm cu un avertisment
+      redirect_to(root_url, alert: 'Nu aveți autorizația necesară pentru a accesa această pagină.')
+      return # Oprește execuția ulterioară a acestei acțiuni
+    end
+  else
+    # Nu există un utilizator autentificat, redirecționează către pagina de login
+    redirect_to(new_user_session_url, alert: 'Trebuie să vă autentificați pentru a accesa această pagină.')
+    return # Oprește execuția ulterioară a acestei acțiuni
   end
+end
+
+
 
   # POST /date_facturares or /date_facturares.json
   def create
