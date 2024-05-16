@@ -1,0 +1,49 @@
+<!-- app/views/listacanal3s/edit.html.erb -->
+<h1>Editare Listacanal3</h1>
+
+
+<%= form_with(model: @listacanal3, url: update_listacanal3_path(@listacanal3), method: :patch, local: true) do |form| %>
+ 
+  
+
+
+    
+    
+  <% if @listacanal3.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@listacanal3.errors.count, "error") %> impiedica salvarea acestei inregistrari:</h2>
+
+      <ul>
+      <% @listacanal3.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.email_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :platit %>
+    <%= form.text_field :platit %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nume %>
+    <%= form.text_field :nume %>
+  </div>
+
+  <div class="field">
+    <%= form.label :telefon %>
+    <%= form.telephone_field :telefon %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<%= link_to 'Inapoi', listacanal3s_path %>

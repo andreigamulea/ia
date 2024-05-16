@@ -11,12 +11,13 @@ Rails.application.routes.draw do
  get 'tvs/listacanal1', to: 'tvs#listacanal1', as: 'listacanal1'
  get 'tvs/listacanal2', to: 'tvs#listacanal2', as: 'listacanal2'
  get 'tvs/listacanal3', to: 'tvs#listacanal3', as: 'listacanal3'
- # Rutele CRUD standard pentru tvs, inclusiv show
+ ### Rutele CRUD standard pentru tvs, inclusiv show
  
  resources :tvs
 resources :listacanal2s
 patch 'listacanal2s/:id', to: 'listacanal2s#update', as: :update_listacanal2
-
+resources :listacanal3s
+patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
 
  
 

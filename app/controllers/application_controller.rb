@@ -218,7 +218,7 @@ class ApplicationController < ActionController::Base
         # Asigură-te că logica este aplicată numai când utilizatorul este logat
         return unless current_user
     
-        # Asumând că logica de verificare este specifică pentru anumite acțiuni din controlerul DateFacturares
+        ## Asumând că logica de verificare este specifică pentru anumite acțiuni din controlerul DateFacturares
         if controller_name == 'date_facturares' && action_name == 'new'
           existing_facturare = DateFacturare.find_by(email: current_user.email)
           redirect_to edit_date_facturare_path(existing_facturare) if existing_facturare
