@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Facturaproformas</h1>
+
+<div id="facturaproformas">
+  <% @facturaproformas.each do |facturaproforma| %>
+    <%= render facturaproforma %>
+    <p>
+      <%= link_to "Show this facturaproforma", facturaproforma %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New facturaproforma", new_facturaproforma_path %>

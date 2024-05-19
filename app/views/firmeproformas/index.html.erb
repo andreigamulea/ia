@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Firmeproformas</h1>
+
+<div id="firmeproformas">
+  <% @firmeproformas.each do |firmeproforma| %>
+    <%= render firmeproforma %>
+    <p>
+      <%= link_to "Show this firmeproforma", firmeproforma %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New firmeproforma", new_firmeproforma_path %>

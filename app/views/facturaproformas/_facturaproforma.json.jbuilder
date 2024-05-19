@@ -1,0 +1,2 @@
+json.extract! facturaproforma, :id, :comanda_id, :user_id, :prod_id, :numar_factura, :numar_comanda, :data_emiterii, :prenume, :nume, :nume_companie, :cui, :tara, :localitate, :judet, :strada, :numar_adresa, :cod_postal, :altedate, :telefon, :produs, :cantitate, :pret_unitar, :valoare_tva, :valoare_totala, :cod_firma, :status, :created_at, :updated_at
+json.url facturaproforma_url(facturaproforma, format: :json)

@@ -1,0 +1,92 @@
+<%= form_with(model: an32324) do |form| %>
+  <% if an32324.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(an32324.errors.count, "error") %> prohibited this an32324 from being saved:</h2>
+
+      <ul>
+        <% an32324.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :nume, style: "display: block" %>
+    <%= form.text_field :nume %>
+  </div>
+
+  <div>
+    <%= form.label :telefon, style: "display: block" %>
+    <%= form.text_field :telefon %>
+  </div>
+
+  <div>
+    <%= form.label :sep, style: "display: block" %>
+    <%= form.text_field :sep %>
+  </div>
+
+  <div>
+    <%= form.label :oct, style: "display: block" %>
+    <%= form.text_field :oct %>
+  </div>
+
+  <div>
+    <%= form.label :nov, style: "display: block" %>
+    <%= form.text_field :nov %>
+  </div>
+
+  <div>
+    <%= form.label :dec, style: "display: block" %>
+    <%= form.text_field :dec %>
+  </div>
+
+  <div>
+    <%= form.label :ian, style: "display: block" %>
+    <%= form.text_field :ian %>
+  </div>
+
+  <div>
+    <%= form.label :feb, style: "display: block" %>
+    <%= form.text_field :feb %>
+  </div>
+
+  <div>
+    <%= form.label :mar, style: "display: block" %>
+    <%= form.text_field :mar %>
+  </div>
+
+  <div>
+    <%= form.label :apr, style: "display: block" %>
+    <%= form.text_field :apr %>
+  </div>
+
+  <div>
+    <%= form.label :mai, style: "display: block" %>
+    <%= form.text_field :mai %>
+  </div>
+
+  <div>
+    <%= form.label :iun, style: "display: block" %>
+    <%= form.text_field :iun %>
+  </div>
+
+  <div>
+    <%= form.label :iul, style: "display: block" %>
+    <%= form.text_field :iul %>
+  </div>
+
+  <div>
+    <%= form.label :pret, style: "display: block" %>
+    <%= form.text_field :pret %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

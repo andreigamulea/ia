@@ -1,4 +1,11 @@
 Rails.application.routes.draw do    
+  resources :facturaproformas
+  resources :firmeproformas
+  resources :an32324s do
+    collection do
+      get 'preluarean3'
+    end
+  end
   resources :firmas
   resources :date_facturares
   
@@ -140,6 +147,7 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get 'videos/:id/myvideo9', to: 'videos#myvideo9', as: 'myvideo9'
   get 'videos/:id/myvideo10', to: 'videos#myvideo10', as: 'myvideo10'
   get 'videos/:id/myvideo11', to: 'videos#myvideo11', as: 'myvideo11'
+  get 'videos/:id/myvideo12', to: 'videos#myvideo12', as: 'myvideo12'
   get 'videos/:id/myvideo13', to: 'videos#myvideo13', as: 'myvideo13'
   get 'videos/:id/myvideo133', to: 'videos#myvideo133', as: 'myvideo133'
  

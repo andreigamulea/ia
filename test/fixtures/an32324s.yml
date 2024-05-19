@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: MyString
+  nume: MyString
+  telefon: MyString
+  sep: MyString
+  oct: MyString
+  nov: MyString
+  dec: MyString
+  ian: MyString
+  feb: MyString
+  mar: MyString
+  apr: MyString
+  mai: MyString
+  iun: MyString
+  iul: MyString
+  pret: MyString
+
+two:
+  email: MyString
+  nume: MyString
+  telefon: MyString
+  sep: MyString
+  oct: MyString
+  nov: MyString
+  dec: MyString
+  ian: MyString
+  feb: MyString
+  mar: MyString
+  apr: MyString
+  mai: MyString
+  iun: MyString
+  iul: MyString
+  pret: MyString

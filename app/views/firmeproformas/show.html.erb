@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @firmeproforma %>
+
+<div>
+  <%= link_to "Edit this firmeproforma", edit_firmeproforma_path(@firmeproforma) %> |
+  <%= link_to "Back to firmeproformas", firmeproformas_path %>
+
+  <%= button_to "Destroy this firmeproforma", @firmeproforma, method: :delete %>
+</div>
