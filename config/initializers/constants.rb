@@ -42,7 +42,7 @@
         iunie: 155,
         iulie: 155,
         an: 1550
-        }.freeze
+        }
 
         taxaay1 = ['Octombrie', 'Noiembrie', 'Decembrie', 'Ianuarie', 'Februarie', 
         'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie']

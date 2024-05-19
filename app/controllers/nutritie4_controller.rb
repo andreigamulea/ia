@@ -38,13 +38,14 @@ puts("produsele cumparate sunt: #{purchased_prod_coduri}")
       if purchased_prod_coduri.include?('cod85') && purchased_prod_coduri.include?('cod88')
         @prods = Prod.none
         @has_access = true
+        
       elsif purchased_prod_coduri.include?('cod86')
               @has_access = true
               @prods = Prod.none
 
       elsif purchased_prod_coduri.include?('cod85')
         @prods = Prod.where(cod: 'cod88')
-      
+        puts("are doar 580 platit")
       else
         # Dacă nu a cumpărat niciunul, afișează produsele cu cod=cod108 și cod=cod110
         @prods = Prod.where(cod: ['cod85', 'cod86']).order(:id)
@@ -59,19 +60,44 @@ puts("produsele cumparate sunt: #{purchased_prod_coduri}")
       @videos_correspondente = Video.none
     end
 
-      if @a_cumparat_macar_un_cod
-              if current_user && current_user.limba=='EN'
-                @myvideo13 = Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
-              else  
-                    @myvideo13 = Video.where(tip: 'nutritie4').where('ordine <= ?', 1000).order(ordine: :asc)
-              end  
-      else  
-                @myvideo13 = Video.none
-      end
-
-
-
+     
       puts("Are acces? : #{@has_access}")
+
+#####
+if current_user
+  limba_en = current_user.limba == 'EN'
+
+  if @a_cumparat_macar_un_cod
+    puts("a cumparat macar un cod")
+    @myvideo13 = Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
+  else
+    puts("nu a cumparat macar un cod")
+    @myvideo13 = Video.none
+  end
+
+  if @has_access
+    @platit=true
+    puts("sunt in has acces")
+    if limba_en
+      puts("sunt in limba en")
+      @myvideo = Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
+    else
+      puts("NU sunt in limba en")
+      
+      @myvideo = Video.where(tip: 'nutritie4').where('ordine <= ?', 1000).order(ordine: :asc)
+      puts("Numarul: #{@myvideo.count}")
+    end
+  else
+    puts("sunt in has acces NU")
+    @myvideo13 = Video.none
+  end
+end
+
+
+#####
+
+
+
 
   end
   def download

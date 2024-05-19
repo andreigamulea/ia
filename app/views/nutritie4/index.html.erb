@@ -196,7 +196,7 @@
   <table class="table">
     <thead>
     <tr>
-        <th>Data</th>
+        
         <th>Nume</th>
         <th>Descriere</th>       
         <th>Actiune</th>
@@ -220,12 +220,8 @@
 
 
 <%end%>
-<% if current_user && @has_access %>
 
-<%else%>
-<br>
-<%end%>
-    <% if current_user && (@has_access || @has_access1)%>
+    <% if current_user && (@has_access || @has_access1) && @myvideo13.count>0%>
         <h2 style= "text-align: center;padding: 0 10px; font-size:28px;margin-top:35px;">Resurse</h2></br>
 
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_19_224324) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_19_134210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -106,6 +106,26 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_19_224324) do
     t.datetime "started_at"
     t.index ["user_id"], name: "index_ahoy_visits_on_user_id"
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
+  end
+
+  create_table "an32324s", force: :cascade do |t|
+    t.string "email"
+    t.string "nume"
+    t.string "telefon"
+    t.string "sep"
+    t.string "oct"
+    t.string "nov"
+    t.string "dec"
+    t.string "ian"
+    t.string "feb"
+    t.string "mar"
+    t.string "apr"
+    t.string "mai"
+    t.string "iun"
+    t.string "iul"
+    t.string "pret"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "comandas", force: :cascade do |t|
@@ -347,6 +367,39 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_19_224324) do
     t.boolean "use_alternate_shipping", default: false
   end
 
+  create_table "facturaproformas", force: :cascade do |t|
+    t.bigint "comanda_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "prod_id", null: false
+    t.string "numar_factura"
+    t.string "numar_comanda"
+    t.date "data_emiterii"
+    t.string "prenume"
+    t.string "nume"
+    t.string "nume_companie"
+    t.string "cui"
+    t.string "tara"
+    t.string "localitate"
+    t.string "judet"
+    t.string "strada"
+    t.string "numar_adresa"
+    t.string "cod_postal"
+    t.string "altedate"
+    t.string "telefon"
+    t.string "produs"
+    t.integer "cantitate"
+    t.decimal "pret_unitar"
+    t.decimal "valoare_tva"
+    t.decimal "valoare_totala"
+    t.string "cod_firma"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comanda_id"], name: "index_facturaproformas_on_comanda_id"
+    t.index ["prod_id"], name: "index_facturaproformas_on_prod_id"
+    t.index ["user_id"], name: "index_facturaproformas_on_user_id"
+  end
+
   create_table "facturas", force: :cascade do |t|
     t.bigint "comanda_id", null: false
     t.bigint "user_id", null: false
@@ -388,6 +441,21 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_19_224324) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "cod"
+  end
+
+  create_table "firmeproformas", force: :cascade do |t|
+    t.string "nume_institutie"
+    t.string "cui"
+    t.string "rc"
+    t.string "adresa"
+    t.string "banca"
+    t.string "cont"
+    t.string "serie"
+    t.string "nrinceput"
+    t.string "tva"
+    t.string "cod"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "importanta", force: :cascade do |t|
@@ -788,6 +856,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_19_224324) do
   add_foreign_key "comenzi_prods", "prods"
   add_foreign_key "cursuri_history", "listacursuris"
   add_foreign_key "cursuri_history", "users", on_delete: :nullify
+  add_foreign_key "facturaproformas", "comandas"
+  add_foreign_key "facturaproformas", "prods"
+  add_foreign_key "facturaproformas", "users"
   add_foreign_key "facturas", "comandas"
   add_foreign_key "facturas", "users"
   add_foreign_key "user_ips", "users"

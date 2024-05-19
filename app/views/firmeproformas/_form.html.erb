@@ -1,0 +1,67 @@
+<%= form_with(model: firmeproforma) do |form| %>
+  <% if firmeproforma.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(firmeproforma.errors.count, "error") %> prohibited this firmeproforma from being saved:</h2>
+
+      <ul>
+        <% firmeproforma.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :nume_institutie, style: "display: block" %>
+    <%= form.text_field :nume_institutie %>
+  </div>
+
+  <div>
+    <%= form.label :cui, style: "display: block" %>
+    <%= form.text_field :cui %>
+  </div>
+
+  <div>
+    <%= form.label :rc, style: "display: block" %>
+    <%= form.text_field :rc %>
+  </div>
+
+  <div>
+    <%= form.label :adresa, style: "display: block" %>
+    <%= form.text_field :adresa %>
+  </div>
+
+  <div>
+    <%= form.label :banca, style: "display: block" %>
+    <%= form.text_field :banca %>
+  </div>
+
+  <div>
+    <%= form.label :cont, style: "display: block" %>
+    <%= form.text_field :cont %>
+  </div>
+
+  <div>
+    <%= form.label :serie, style: "display: block" %>
+    <%= form.text_field :serie %>
+  </div>
+
+  <div>
+    <%= form.label :nrinceput, style: "display: block" %>
+    <%= form.text_field :nrinceput %>
+  </div>
+
+  <div>
+    <%= form.label :tva, style: "display: block" %>
+    <%= form.text_field :tva %>
+  </div>
+
+  <div>
+    <%= form.label :cod, style: "display: block" %>
+    <%= form.text_field :cod %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
