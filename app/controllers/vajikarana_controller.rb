@@ -2,19 +2,28 @@ class VajikaranaController < ApplicationController
   def modul1
     @has_access = current_user&.role == 1
     if current_user  
+      data_prag = Date.new(2024, 2, 25)
       # Obține ID-urile produselor cumpărate de current_user, care sunt valide și a căror datasfarsit este azi sau în viitor
+     
+      
       purchased_prod_coduri = ComenziProd.where(user_id: current_user.id, 
-                                          validat: 'Finalizata', 
-                                          datainceput: ..Date.new(2024, 5, 24))                                          
-                                   .joins(:prod)
-                                   .where(prods: { curslegatura: 'vajikarana1' })
-                                   .pluck('prods.cod')
-      purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
-                                   validat: 'Finalizata', 
-                                   datainceput: ..Date.new(2024, 5, 24))
+                                   validat: 'Finalizata')
                             .joins(:prod)
-                            .where(prods: { curslegatura: 'vajikarana1' })
+                            .where(prods: { curslegatura: 'vajikarana1', status: 'activ' })
+                            .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
+                                   data_prag, data_prag, data_prag + 90.days)
                             .pluck('prods.cod')
+
+    puts("produsele cumparate aici sunt: #{purchased_prod_coduri}")
+     
+
+      purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
+                                            validat: 'Finalizata')
+                                      .joins(:prod)
+                                      .where(prods: { curslegatura: 'vajikarana1', status: 'activ' })
+                                      .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
+                                            data_prag, data_prag, data_prag + 90.days)
+                                      .pluck('prods.cod')
                             
 # Adaugă codurile la array-ul existent și elimină duplicatele
 purchased_prod_coduri.concat(purchased_prod_coduri1)
