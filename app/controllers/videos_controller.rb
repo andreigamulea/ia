@@ -861,38 +861,27 @@ def set_user13
   if current_user.role == 1
     return true
   elsif current_user.role == 0
-    date_condition = Date.today <= Date.new(2024, 5, 25)
+    data_prag = Date.new(2024, 2, 25)
+    purchased_prod_coduri = ComenziProd.where(user_id: current_user.id, 
+                        validat: 'Finalizata')
+                    .joins(:prod)
+                    .where(prods: { curslegatura: 'vajikarana1' })
+                    .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
+                        data_prag, data_prag, data_prag + 90.days)
+                    .pluck('prods.cod')
 
-          exists_cod110 = ComenziProd.joins(:prod)
-          .where(user_id: current_user.id, 
-                prods: { cod: ["cod110"] }, 
-                validat: "Finalizata")
-          .exists?
-
-          # Verifică dacă există produse cu codul "cod108" și "cod109"
-          exists_cod108_and_cod109 = ComenziProd.joins(:prod)
-                        .where(user_id: current_user.id, 
-                                prods: { cod: ["cod108"] }, 
-                                validat: "Finalizata")
-                        .exists? &&
-              ComenziProd.joins(:prod)
-                        .where(user_id: current_user.id, 
-                                prods: { cod: ["cod109"] }, 
-                                validat: "Finalizata")
-                        .exists?
-
-
-          purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
-                        validat: 'Finalizata', 
-                        datainceput: ..Date.new(2024, 5, 24))
-                        .joins(:prod)
-                        .where(prods: { curslegatura: 'vajikarana1' })
-                        .pluck('prods.cod')
-
-                       
-
-    # has_access este true dacă sunt îndeplinite condițiile pentru cod110 sau ambele cod108 și cod109
-    has_access = date_condition && (exists_cod110 || exists_cod108_and_cod109 || purchased_prod_coduri1.include?('cod110'))
+    purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
+                      validat: 'Finalizata')
+                    .joins(:prod)
+                    .where(prods: { curslegatura: 'vajikarana1' })
+                    .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
+                      data_prag, data_prag, data_prag + 90.days)
+                    .pluck('prods.cod')
+          
+    purchased_prod_coduri.concat(purchased_prod_coduri1)
+    purchased_prod_coduri.concat(purchased_prod_coduri1).uniq!
+    puts("produsele cumparate sunt: #{purchased_prod_coduri}")
+    has_access = purchased_prod_coduri.include?('cod109') || purchased_prod_coduri.include?('cod110') 
 
 
     
@@ -901,12 +890,12 @@ def set_user13
    
     unless has_access
       flash[:alert] = "Nu aveți acces la acest curs."
-      redirect_to vajikarana_modul1_path # Schimbați cu calea dorită
+      redirect_to nutritie4_index_path # Schimbați cu calea dorită
       return false
     end
   else
     flash[:alert] = "Nu aveți permisiuni suficiente pentru a accesa acest curs."
-    redirect_to vajikarana_modul1_path # Schimbați cu calea dorită
+    redirect_to nutritie4_index_path # Schimbați cu calea dorită
     return false
   end
 
