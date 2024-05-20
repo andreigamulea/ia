@@ -1,5 +1,9 @@
 Rails.application.routes.draw do    
-  resources :facturaproformas
+  resources :facturaproformas do
+    collection do
+      get 'creareproforma'
+    end
+  end
   resources :firmeproformas
   resources :an32324s do
     collection do
