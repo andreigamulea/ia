@@ -13,6 +13,7 @@ class FacturasController < ApplicationController
 
     elsif @user.role == 1
       @facturas = Factura.all.order(id: :desc)
+
       #@facturas = @user.facturas
     elsif @user.role == 0
       @facturas = @user.facturas.where(status: "Achitata")
@@ -23,7 +24,22 @@ class FacturasController < ApplicationController
     end
     Rails.logger.debug "@facturas: #{@facturas.inspect}"
     Rails.logger.debug "@user: #{@user.inspect}"
+    ###
+    if !current_user
+      redirect_to new_user_session_path   
 
+    elsif @user.role == 1
+      @facturasp = Facturaproforma.all.order(id: :desc)
+      
+      #@facturas = @user.facturas
+    elsif @user.role == 0
+      @facturasp = @user.facturaproformas.where(status: ["Achitata", "Proforma"]).order(id: :desc)
+
+    
+    else
+      #@facturas = @user.facturas
+      # Cod pentru alte roluri sau un mesaj de eroare
+    end
   end
   def facturicomenzi
     #aceasta metoda ordoneaza facturile in functie de cate sunt pt o comanda

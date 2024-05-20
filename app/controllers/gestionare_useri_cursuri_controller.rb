@@ -7,7 +7,7 @@ class GestionareUseriCursuriController < ApplicationController
   def import_from_xlsx_cursantinutritie
     xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'cursantinutritie.xlsx'))
   
-    xlsx.each_row_streaming(offset: 0) do |row|
+    xlsx.each_row_streaming(offset: 0, pad_cells: true) do |row|
       email = row[0]&.value
       name = row[1]&.value
       next if email.nil?

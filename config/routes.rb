@@ -1,7 +1,8 @@
 Rails.application.routes.draw do    
   resources :facturaproformas do
     collection do
-      get 'creareproforma'
+      get :generare_facturi
+      post :creareproforma
     end
   end
   resources :firmeproformas
@@ -10,8 +11,12 @@ Rails.application.routes.draw do
       get 'preluarean3'
     end
   end
+
   resources :firmas
+  
+
   resources :date_facturares
+  get 'export_datefacturare', to: 'date_facturares#export_datefacturare', as: :export_datefacturare
   
  # Rute personalizate care au prioritate
  get 'tvs/canal1', to: 'tvs#canal1'

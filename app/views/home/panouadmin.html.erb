@@ -154,8 +154,13 @@ h1.display-4{
       <% if @newsauupdate == 1 %>
         <%= link_to 'Date Facturare', new_date_facturare_path %><br><br>
       <% elsif @newsauupdate == 2 && @date_facturare %>
-        <%= link_to 'Date Facturare', edit_date_facturare_path(@date_facturare) %><br><br>
+        <%= link_to 'Date Facturare', edit_date_facturare_path(@date_facturare) %><br>
       <% end %>
+      <%= link_to 'Tabel cu datele de facturare', date_facturares_path %>      
+      <%= link_to ' Export', export_datefacturare_path %>
+<br><br>
+
+
     <% end %>
 
 
@@ -200,7 +205,7 @@ h1.display-4{
     
     <%= link_to 'Preluare An3', preluarean3_an32324s_path %> din an32324.xlsx in tabela an32324 pt a vedea pe cine facturez</br>
     <%= link_to 'Firme folosite la  Proforme', firmeproformas_path %> Ayus Grup etc</br> 
-    <%= link_to 'Creare Factură Proforma', creareproforma_facturaproformas_path %>
+    <%= link_to 'Generare Facturi', generare_facturi_facturaproformas_path, class: 'btn btn-primary' %>
 
 
  se creaza inregistrari in 3 tabele Comanda ComenziProd si 

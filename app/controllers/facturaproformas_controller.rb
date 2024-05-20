@@ -56,131 +56,165 @@ class FacturaproformasController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  # GET /facturaproformas/creareproforma
+  def generare_facturi
+    @prod = Prod.where(cod: ['cod36', 'cod37'])
+  end  
+  # POST /facturaproformas/creareproforma
+  #DESCRIERE metoda de mai jos: Daca userul nu are cont si este in tabela An32324 NU i se va face 
+  #factura- nu se vor crea inregistrari in cele 3 tabele : Comanda, ComenziProd si Facturaproforma
+  #daca in tabela An32324 pret == nil sau 0 nu se creaza inregistrari si deci nici factura
+  #se creaza inregistrari in cele 3 tabele doar pt useri cu cont sa fie in An32324 cu pret>0
+  #daca in An32324  la pret este trecut gr. va fi preluat cu 0 deci nu se va factura
   def creareproforma
+    
+
+
     begin
-      ActiveRecord::Base.transaction do
-        # Obține produsul
-        puts "Căutare produs cu codul 'cod27'"
-        @prod = Prod.find_by(cod: "cod27")
-        raise ActiveRecord::RecordNotFound, "Produsul nu a fost găsit" unless @prod
-        puts "Produs găsit: #{@prod.inspect}"
-
-        # Găsește utilizatorul pe baza emailului
-        puts "Căutare intrare în An2324"
-        an_entry = An32324.first
-        puts "Intrare găsită în An2324: #{an_entry.inspect}"
-        puts "Căutare utilizator cu emailul: #{an_entry.email}"
-        user = User.find_by(email: an_entry.email)
-        raise ActiveRecord::RecordNotFound, "Utilizatorul nu a fost găsit" unless user
-        puts "Utilizator găsit: #{user.inspect}"
-
-        # Creează înregistrarea în tabela Comanda
-        puts "Creare înregistrare în tabela Comanda"
-        comanda = Comanda.create!(
-          datacomenzii: Time.now,
-          statecomanda1: 'Initiata',
-          statecomanda2: 'Asteptare',
-          stateplata1: 'Asteptare',
-          stateplata2: 'Asteptare',
-          stateplata3: 'Asteptare',
-          user_id: user.id,
-          emailcurrent: an_entry.email,
-          telefon: an_entry.telefon,
-          total: @prod.pret,
-          plataprin: 'Asteptare',
-          prodid: @prod.id,
-          prodcod: @prod.cod
-        )
-        puts "Comandă creată: #{comanda.inspect}"
-
-        # Actualizează numărul comenzii
-        puts "Actualizare număr comandă"
-        numar_comanda = Comanda.maximum(:id).to_i
-        comanda.update!(numar: numar_comanda)
-        puts "Număr comandă actualizat: #{comanda.numar}"
-
-        # Creează înregistrarea în tabela ComenziProd
-        puts "Creare înregistrare în tabela ComenziProd"
-        ComenziProd.create!(
-          comanda_id: comanda.id,
-          prod_id: @prod.id,
-          user_id: user.id,
-          validat: "Initiata",
-          datainceput: Time.now,
-          datasfarsit: Time.now + @prod.valabilitatezile.to_i.days,
-          cantitate: 1,
-          pret_bucata: @prod.pret,
-          pret_total: @prod.pret,
-          obs: "fara"
-        )
-        puts "Înregistrare ComenziProd creată"
-
-        # Găsește datele de facturare
-        puts "Căutare date de facturare pentru email: #{an_entry.email}"
-        df = DateFacturare.find_by(email: an_entry.email)
-        raise ActiveRecord::RecordNotFound, "Datele de facturare nu au fost găsite" unless df
-        puts "Date de facturare găsite: #{df.inspect}"
-
-        # Obține numărul de factură
-        puts "Obținere număr de factură"
-        last_factura = Facturaproforma.maximum(:numar_factura).to_i
-        if last_factura == 0
-          numar_factura = 240001
-        else
-          numar_factura = last_factura + 1
-        end
-        numar_factura = numar_factura.to_s # Convertește numărul de factură în string dacă este necesar
-        puts "Număr de factură: #{numar_factura}"
-
-
-        # Obține detaliile firmei
-        puts "Căutare firmă cu codul 'cod1'"
-        firma = Firmeproforma.find_by(cod: 'cod1')
-        raise ActiveRecord::RecordNotFound, "Firma nu a fost găsită" unless firma
-        puts "Firmă găsită: #{firma.inspect}"
-
-        # Creează înregistrarea în tabela Facturaproforma
-        puts "Creare înregistrare în tabela Facturaproforma"
-        Facturaproforma.create!(
-          comanda_id: comanda.id,
-          user_id: user.id,
-          prod_id: @prod.id,
-          numar_factura: numar_factura,
-          numar_comanda: comanda.id,
-          data_emiterii: Date.today,
-          prenume: df.prenume,
-          nume: df.nume,
-          nume_companie: df.numecompanie,
-          cui: df.cui,
-          tara: df.tara,
-          localitate: df.localitate,
-          judet: df.judet,
-          strada: df.strada,
-          numar_adresa: df.numar,
-          cod_postal: df.codpostal,
-          altedate: df.altedate,
-          telefon: df.telefon,
-          produs: @prod.nume,
-          cantitate: 1,
-          pret_unitar: @prod.pret,
-          valoare_tva: firma.tva,
-          valoare_totala: @prod.pret,
-          cod_firma: firma.cod,
-          status: "Proforma"
-        )
-        puts "Înregistrare Facturaproforma creată"
+      produs_id = params[:produs_id]
+      @prod = Prod.find(produs_id)
+  
+      # Setăm datele în funcție de codul produsului
+      case @prod.cod
+      when 'cod36'
+        datacomenzii = Date.new(2024, 5, 31)
+      when 'cod37'
+        datacomenzii = Date.new(2024, 6, 30)
+      else
+        raise "Codul produsului nu este recunoscut"
       end
-
-      flash[:success] = "Factura proforma a fost creată cu succes."
-      redirect_to root_path # Înlocuiește cu calea corespunzătoare
+  
+      datainceput = datacomenzii
+      datasfarsit = datacomenzii + @prod.valabilitatezile.to_i.days
+      data_emiterii = datacomenzii
+  
+      An32324.find_each do |an_entry|
+        user = User.find_by(email: an_entry.email)
+        next unless user # Sarim daca utilizatorul nu este găsit
+  
+        # Verifică prețul din tabela An32324
+        pret = an_entry.pret
+        next if pret.nil? || pret.to_f == 0.0 # Sarim dacă prețul este nul sau 0
+  
+        # Verifică dacă există deja o factură proforma pentru acest user și produs
+        if Facturaproforma.exists?(user_id: user.id, prod_id: produs_id)
+          puts "Există deja o factură proforma pentru utilizatorul #{user.id} și produsul #{produs_id}."
+          next
+        end
+  
+        ActiveRecord::Base.transaction do
+          # Creează înregistrarea în tabela Comanda
+          comanda = Comanda.create!(
+            datacomenzii: datacomenzii,
+            statecomanda1: 'Initiata',
+            statecomanda2: 'Asteptare',
+            stateplata1: 'Asteptare',
+            stateplata2: 'Asteptare',
+            stateplata3: 'Asteptare',
+            user_id: user.id,
+            emailcurrent: an_entry.email,
+            telefon: an_entry.telefon,
+            total: pret,
+            plataprin: 'Asteptare',
+            prodid: @prod.id,
+            prodcod: @prod.cod
+          )
+  
+          # Actualizează numărul comenzii
+          numar_comanda = Comanda.maximum(:id).to_i
+          comanda.update!(numar: numar_comanda)
+  
+          # Creează înregistrarea în tabela ComenziProd
+          ComenziProd.create!(
+            comanda_id: comanda.id,
+            prod_id: @prod.id,
+            user_id: user.id,
+            validat: "Initiata",
+            datainceput: datainceput,
+            datasfarsit: datasfarsit,
+            cantitate: 1,
+            pret_bucata: pret,
+            pret_total: pret,
+            obs: "fara"
+          )
+  
+          # Găsește datele de facturare
+          df = DateFacturare.find_by(email: an_entry.email)
+  
+          # Setează valorile implicite dacă datele de facturare nu sunt găsite
+          nume = an_entry.nume
+          localitate = "Bucuresti"
+  
+          if df
+            nume_companie = df.numecompanie
+            cui = df.cui
+            tara = df.tara
+            judet = df.judet
+            strada = df.strada
+            numar_adresa = df.numar
+            cod_postal = df.codpostal
+            altedate = df.altedate
+            telefon = df.telefon
+          else
+            nume_companie = nil
+            cui = nil
+            tara = nil
+            judet = nil
+            strada = nil
+            numar_adresa = nil
+            cod_postal = nil
+            altedate = nil
+            telefon = an_entry.telefon
+          end
+  
+          # Obține numărul de factură
+          last_factura = Facturaproforma.maximum(:numar_factura).to_i
+          numar_factura = last_factura == 0 ? 240001 : last_factura + 1
+          numar_factura = numar_factura.to_s
+  
+          # Obține detaliile firmei
+          firma = Firmeproforma.find_by(cod: 'cod1')
+          raise ActiveRecord::RecordNotFound, "Firma nu a fost găsită" unless firma
+  
+          # Creează înregistrarea în tabela Facturaproforma
+          Facturaproforma.create!(
+            comanda_id: comanda.id,
+            user_id: user.id,
+            prod_id: @prod.id,
+            numar_factura: numar_factura,
+            numar_comanda: comanda.id,
+            data_emiterii: data_emiterii,
+            nume: nume,
+            nume_companie: nume_companie,
+            cui: cui,
+            tara: tara,
+            localitate: localitate,
+            judet: judet,
+            strada: strada,
+            numar_adresa: numar_adresa,
+            cod_postal: cod_postal,
+            altedate: altedate,
+            telefon: telefon,
+            produs: @prod.nume,
+            cantitate: 1,
+            pret_unitar: pret,
+            valoare_tva: firma.tva,
+            valoare_totala: pret,
+            cod_firma: firma.cod,
+            status: "Proforma"
+          )
+        end
+      end
+  
+      flash[:success] = "Facturile proforma au fost create cu succes."
+      redirect_to panouadmin_path # Înlocuiește cu calea corespunzătoare
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
       puts "Eroare: #{e.message}"
       flash[:error] = "A apărut o eroare: #{e.message}"
       redirect_to root_path # Înlocuiește cu calea corespunzătoare
     end
   end
+  
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

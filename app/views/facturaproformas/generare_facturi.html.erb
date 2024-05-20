@@ -1,0 +1,8 @@
+<h1>Alege luna pentru care doresti facturarea:</h1>
+
+<%= form_with url: creareproforma_facturaproformas_path, method: :post do %>
+  <%= label_tag :produs, "Alege un produs:" %>
+  <%= select_tag :produs_id, options_from_collection_for_select(@prod, 'id', 'nume'), prompt: 'Selectează un produs' %>
+  
+  <%= submit_tag 'Generare Factură' %>
+<% end %>
