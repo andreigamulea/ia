@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }
   
-
+  has_many :facturaproformas, foreign_key: :user_id
   #def self.from_omniauth(auth)
    # user = find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
     #  user.email = auth.info.email

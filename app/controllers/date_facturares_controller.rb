@@ -113,7 +113,50 @@ end
       format.json { head :no_content }
     end
   end
+  def export_datefacturare
+    date_facturares = DateFacturare.all.order(:id)  # Assuming you want to export all records
 
+    # Create a new workbook
+    workbook = RubyXL::Workbook.new
+    worksheet = workbook[0]
+    worksheet.sheet_name = 'Date Facturare'
+
+    # Define headers for the spreadsheet
+    headers = ['User ID', 'Firma ID', 'Email', 'Prenume', 'Nume', 'Nume Companie', 'CUI', 'Țara', 'Cod Poștal', 'Stradă', 'Număr', 'Alte Date', 'Telefon', 'Adresa Email', 'Localitate', 'Județ', 'Grupa 2324', 'CPA', 'COD']
+    headers.each_with_index do |header, index|
+      worksheet.add_cell(0, index, header)
+    end
+
+    # Fill the spreadsheet with date facturare data
+    date_facturares.each_with_index do |date_facturare, index|
+      worksheet.add_cell(index + 1, 0, date_facturare.user_id)
+      worksheet.add_cell(index + 1, 1, date_facturare.firma_id)
+      worksheet.add_cell(index + 1, 2, date_facturare.email)
+      worksheet.add_cell(index + 1, 3, date_facturare.prenume)
+      worksheet.add_cell(index + 1, 4, date_facturare.nume)
+      worksheet.add_cell(index + 1, 5, date_facturare.numecompanie)
+      worksheet.add_cell(index + 1, 6, date_facturare.cui)
+      worksheet.add_cell(index + 1, 7, date_facturare.tara)
+      worksheet.add_cell(index + 1, 8, date_facturare.codpostal)
+      worksheet.add_cell(index + 1, 9, date_facturare.strada)
+      worksheet.add_cell(index + 1, 10, date_facturare.numar)
+      worksheet.add_cell(index + 1, 11, date_facturare.altedate)
+      worksheet.add_cell(index + 1, 12, date_facturare.telefon)
+      worksheet.add_cell(index + 1, 13, date_facturare.adresaemail)
+      worksheet.add_cell(index + 1, 14, date_facturare.localitate)
+      worksheet.add_cell(index + 1, 15, date_facturare.judet)
+      worksheet.add_cell(index + 1, 16, date_facturare.grupa2324)
+      worksheet.add_cell(index + 1, 17, date_facturare.cpa)
+      worksheet.add_cell(index + 1, 18, date_facturare.cod)
+    end
+
+    # Save the workbook to a file
+    file_path = Rails.root.join('tmp', 'date_facturare.xlsx')
+    workbook.write(file_path)
+
+    # Send the file to the user
+    send_file(file_path, filename: 'date_facturare.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_date_facturare

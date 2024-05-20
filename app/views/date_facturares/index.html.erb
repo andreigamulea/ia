@@ -1,14 +1,52 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Tabel cu Datele de facturare ale cursantilor</h1>
 
-<div id="date_facturares">
-  <% @date_facturares.each do |date_facturare| %>
-    <%= render date_facturare %>
-    <p>
-      <%= link_to "Show this date facturare", date_facturare %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "Introdu date de facturare", new_date_facturare_path %>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Firma ID</th>
+      <th>Email</th>
+      <th>Prenume</th>
+      <th>Nume</th>
+      <th>Nume Companie</th>
+      <th>CUI</th>
+      <th>Țara</th>
+      <th>Cod Poștal</th>
+      <th>Stradă</th>
+      <th>Număr</th>
+      <th>Alte Date</th>
+      <th>Telefon</th>
+      <th>Adresa Email</th>
+      <th>Localitate</th>
+      <th>Județ</th>
+      <th>Grupa 2324</th>
+      <th>CPA</th>
+      <th>COD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @date_facturares.each do |date_facturare| %>
+      <tr>
+        <td><%= date_facturare.user_id %></td>
+        <td><%= date_facturare.firma_id %></td>
+        <td><%= date_facturare.email %></td>
+        <td><%= date_facturare.prenume %></td>
+        <td><%= date_facturare.nume %></td>
+        <td><%= date_facturare.numecompanie %></td>
+        <td><%= date_facturare.cui %></td>
+        <td><%= date_facturare.tara %></td>
+        <td><%= date_facturare.codpostal %></td>
+        <td><%= date_facturare.strada %></td>
+        <td><%= date_facturare.numar %></td>
+        <td><%= date_facturare.altedate %></td>
+        <td><%= date_facturare.telefon %></td>
+        <td><%= date_facturare.adresaemail %></td>
+        <td><%= date_facturare.localitate %></td>
+        <td><%= date_facturare.judet %></td>
+        <td><%= date_facturare.grupa2324 %></td>
+        <td><%= date_facturare.cpa %></td>
+        <td><%= date_facturare.cod %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

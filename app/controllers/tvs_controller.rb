@@ -291,7 +291,7 @@ class TvsController < ApplicationController
     # Golește tabela Listacanal1 înainte de import
     Listacanal1.destroy_all
   
-    xlsx.each_row_streaming(offset: 1) do |row| # Presupunem că prima rând are anteturi
+    xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row| # Presupunem că prima rând are anteturi
       email = row[0]&.value&.strip&.downcase
       next unless email
   
@@ -321,7 +321,7 @@ class TvsController < ApplicationController
     # Golește tabela Listacanal2 înainte de import
     Listacanal2.destroy_all
   
-    xlsx.each_row_streaming(offset: 1) do |row| # Presupunem că prima rând are anteturi
+    xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row| # Presupunem că prima rând are anteturi
       email = row[0]&.value&.strip&.downcase
       next unless email
   
@@ -376,7 +376,7 @@ class TvsController < ApplicationController
     # Golește tabela Listacanal3 înainte de import
     Listacanal3.destroy_all
   
-    xlsx.each_row_streaming(offset: 1) do |row| # Presupunem că prima rând are anteturi
+    xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row| # Presupunem că prima rând are anteturi
       email = row[0]&.value&.strip&.downcase
       next unless email
   

@@ -567,7 +567,7 @@ def preluaredate11 #preluare useri noi (doar noi ) doar atat. email,name,pass,ro
   #acum e optim pt a prelua din excel email,name,telefon
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
 
-  xlsx.each_row_streaming(offset: 0) do |row|
+  xlsx.each_row_streaming(offset: 0, pad_cells: true) do |row|
     email = row[0]&.value&.strip&.downcase # Adăugat downcase
     name = row[1]&.value&.strip
     #limba = row[2]&.value&.strip
@@ -603,7 +603,7 @@ def preluaredate12 # pune in tabela Userprod userii din tabela preluata mai sus 
   # Dacă produsul nu există, iesi din metodă
   return unless prod
 
-  xlsx.each_row_streaming(offset: 0) do |row|
+  xlsx.each_row_streaming(offset: 0, pad_cells: true) do |row|
     email = row[0]&.value&.strip&.downcase # Adăugat downcase aici
     next unless email
 
@@ -620,7 +620,7 @@ def preluaredate13  #verifica daca s-au preluat toti userii din tabela de mai su
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
   @emails_negasite = []
 
-  xlsx.each_row_streaming(offset: 0) do |row|
+  xlsx.each_row_streaming(offset: 0, pad_cells: true) do |row|
     email = row[0]&.value&.strip&.downcase # Adăugat downcase aici
     next unless email
 
@@ -642,7 +642,7 @@ end
 def preluaredate14 #preia din tabela excel telefoanele si le pune la useri
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
 
-  xlsx.each_row_streaming(offset: 0) do |row|
+  xlsx.each_row_streaming(offset: 0, pad_cells: true) do |row|
     email = row[0]&.value&.strip&.downcase # Adăugat downcase
     name = row[1]&.value&.strip
     telefon = row[2]&.value&.strip
@@ -676,7 +676,7 @@ def preluaredate15 #preluare useri noi (doar noi ) doar atat. grupa email,name,p
   #pot prelua de mai multe ori daca deja exista nu se petrece nimic; sunt pusi doar cei noi
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
 
-  xlsx.each_row_streaming(offset: 1) do |row|
+  xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row|
     grupa = row[0]&.value&.to_s&.strip
     email = row[1]&.value&.strip&.downcase # Adăugat downcase
     name = row[2]&.value&.strip
@@ -704,7 +704,7 @@ def preluaredate16  #fac update la grupa pentru toti userii din tabela xlsx cu c
 
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
 
-  xlsx.each_row_streaming(offset: 1) do |row|
+  xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row|
     grupa_noua = row[0]&.value&.to_s&.strip
     email = row[1]&.value&.to_s&.strip&.downcase
 
@@ -727,7 +727,7 @@ def preluaredate17 # fac update la telefon pentru toti userii din tabela xlsx cu
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
   
 
-  xlsx.each_row_streaming(offset: 1) do |row|
+  xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row|
     telefon_nou = row[3]&.value&.to_s&.strip
     email = row[1]&.value&.to_s&.strip&.downcase
 
@@ -763,7 +763,7 @@ def preluaredate18 #preluare useri noi (doar noi ) doar atat. grupa email,name,p
   #pot prelua de mai multe ori daca deja exista nu se petrece nimic; sunt pusi doar cei noi
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
 
-  xlsx.each_row_streaming(offset: 1) do |row|
+  xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row|
     grupa = row[0]&.value&.to_s&.strip
     email = row[1]&.value&.strip&.downcase # Adăugat downcase
     name = row[2]&.value&.strip
@@ -791,7 +791,7 @@ def preluaredate19  #fac update la grupa pentru toti userii din tabela xlsx cu c
 
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
 
-  xlsx.each_row_streaming(offset: 1) do |row|
+  xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row|
     grupa_noua = row[0]&.value&.to_s&.strip
     email = row[1]&.value&.to_s&.strip&.downcase
 
@@ -814,7 +814,7 @@ def preluaredate20 # fac update la telefon pentru toti userii din tabela xlsx cu
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
   
 
-  xlsx.each_row_streaming(offset: 1) do |row|
+  xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row|
     telefon_nou = row[3]&.value&.to_s&.strip
     email = row[1]&.value&.to_s&.strip&.downcase
 
@@ -842,7 +842,7 @@ def preluaredate21
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
 
   # Parcurge fiecare rând din fișier
-  xlsx.each_row_streaming(offset: 0) do |row|
+  xlsx.each_row_streaming(offset: 0, pad_cells: true) do |row|
     # Extrage valoarea emailului și normalizează-o (înlătură spațiile și convertește la litere mici)
     email = row[0]&.value&.strip&.downcase
     next unless email
@@ -864,7 +864,7 @@ def preluaredate22 # pune inregistri in tabela UserModulecursuri doar daca combi
 
   xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'adaugauseri.xlsx'))
  
-  xlsx.each_row_streaming(offset: 0) do |row|
+  xlsx.each_row_streaming(offset: 0, pad_cells: true) do |row|
     email = row[0]&.value&.strip&.downcase
     name = row[1]&.value&.strip
     telefon = row[2]&.value&.to_s&.strip

@@ -58,29 +58,37 @@ class An32324sController < ApplicationController
   end
   def preluarean3
     An32324.destroy_all
-    xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'an32324.xlsx'))
   
-    xlsx.each_row_streaming(offset: 1) do |row|
-      email = row[0]&.value&.strip&.downcase
+    xlsx = if Rails.env.production?
+             Roo::Spreadsheet.open('/opt/render/project/src/app/fisierele/an32324.xlsx')
+           else
+             Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'an32324.xlsx'))
+           end
+  
+    xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row|
+      email = row[0]&.value&.to_s&.strip&.downcase
       next if email.nil?  # Sari peste rândurile unde email-ul este nil
   
-      name = row[1]&.value&.strip
+      name = row[1]&.value&.to_s&.strip
       telefon = row[2]&.value&.to_s&.strip
-      sep = row[3]&.value&.to_s&.strip
-      oct = row[4]&.value&.to_s&.strip
-      nov = row[5]&.value&.to_s&.strip
-      dec = row[6]&.value&.to_s&.strip
-      ian = row[7]&.value&.to_s&.strip
-      feb = row[8]&.value&.to_s&.strip
-      mar = row[9]&.value&.to_s&.strip
-      apr = row[10]&.value&.to_s&.strip
-      mai = row[11]&.value&.to_s&.strip
-      iun = row[12]&.value&.to_s&.strip
-      iul = row[13]&.value&.to_s&.strip
-      pret = row[14]&.value&.to_s&.strip  # Presupunem că prețul este în coloana 16 și e numeric
+      sep = row[3]&.value&.to_s&.strip.presence
+      oct = row[4]&.value&.to_s&.strip.presence
+      nov = row[5]&.value&.to_s&.strip.presence
+      dec = row[6]&.value&.to_s&.strip.presence
+      ian = row[7]&.value&.to_s&.strip.presence
+      feb = row[8]&.value&.to_s&.strip.presence
+      mar = row[9]&.value&.to_s&.strip.presence
+      apr = row[10]&.value&.to_s&.strip.presence
+      mai = row[11]&.value&.to_s&.strip.presence
+      iun = row[12]&.value&.to_s&.strip.presence
+      iul = row[13]&.value&.to_s&.strip.presence
+      pret = row[14]&.value&.to_f
+  
+      # Verificăm dacă prețul este nul sau zero
+      #next if pret.nil? || pret == 0.0
   
       # Crearea și salvarea noii înregistrări
-      An32324.create(
+      An32324.create!(
         email: email,
         nume: name,
         telefon: telefon,
@@ -95,11 +103,12 @@ class An32324sController < ApplicationController
         mai: mai,
         iun: iun,
         iul: iul,
-        pret: pret  # Adăugat câmp pentru preț
+        pret: pret
       )
     end
     redirect_to root_path
   end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_an32324
