@@ -5,6 +5,8 @@ class DateFacturaresController < ApplicationController
   # GET /date_facturares or /date_facturares.json
   def index
     @date_facturares = DateFacturare.all
+    @nr_an3= @date_facturares.count
+    @necesari_an3=Listacanal3.count-@nr_an3
     puts("sunt in date_facturares_controller.rb index")
     email_exists = Listacanal3.exists?(email: current_user&.email)
     puts("Sa vedem daca exista: #{email_exists}")
