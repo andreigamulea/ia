@@ -65,6 +65,7 @@ class FacturaproformasController < ApplicationController
   #daca in tabela An32324 pret == nil sau 0 nu se creaza inregistrari si deci nici factura
   #se creaza inregistrari in cele 3 tabele doar pt useri cu cont sa fie in An32324 cu pret>0
   #daca in An32324  la pret este trecut gr. va fi preluat cu 0 deci nu se va factura
+  #AS VREA sa preaiau nume+prenume din ce pun userii pt ca acum preiau din An32324 dati de Nina (are doar nume)
   def creareproforma
     
 
