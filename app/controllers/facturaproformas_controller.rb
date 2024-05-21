@@ -214,7 +214,13 @@ class FacturaproformasController < ApplicationController
       redirect_to root_path # Înlocuiește cu calea corespunzătoare
     end
   end
-  
+
+  def not_in_users #lista userilor de an 3 care nu au cont
+    listacanal3_emails = Listacanal3.pluck(:email)
+    user_emails = User.pluck(:email)
+
+    @emails_not_in_users = listacanal3_emails - user_emails
+  end
   
 
   private

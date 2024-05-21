@@ -1,0 +1,12 @@
+
+<h1>Email-uri care sunt in Listacanal3 dar nu sunt in tabela User</h1>
+
+<% if @emails_not_in_users.any? %>
+  <ul>
+    <% @emails_not_in_users.each do |email| %>
+      <li><%= email %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No emails found.</p>
+<% end %>

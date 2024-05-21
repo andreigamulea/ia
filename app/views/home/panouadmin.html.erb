@@ -149,7 +149,10 @@ h1.display-4{
     <p class="lead">
     <%= link_to 'Date Institutii', firmas_path %></br>
     <%= link_to 'Tabel Useri cu Date Facturare', date_facturares_path %>
-    <%= link_to ' Export', export_datefacturare_path %>
+    <%= link_to ' Export', export_datefacturare_path %></br>
+    <%= link_to 'Useri de an 3 care nu au cont pe site', not_in_users_facturaproformas_path %></br>
+    
+    
 
     <% if current_user %>
       <% if @newsauupdate == 1 %>
@@ -207,6 +210,7 @@ h1.display-4{
     <%= link_to 'Preluare An3', preluarean3_an32324s_path %> din an32324.xlsx in tabela an32324 pt a vedea pe cine facturez</br>
     <%= link_to 'Firme folosite la  Proforme', firmeproformas_path %> Ayus Grup etc</br> 
     <%= link_to 'Generare Facturi', generare_facturi_facturaproformas_path, class: 'btn btn-primary' %>
+    
 
 
  se creaza inregistrari in 3 tabele Comanda ComenziProd si 
