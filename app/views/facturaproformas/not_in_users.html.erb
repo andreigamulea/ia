@@ -1,6 +1,7 @@
 
 <h1>Email-uri care sunt in Listacanal3 dar nu sunt in tabela User</h1>
 <p>Total: <%= @emails_not_in_users.count %> utilizatori care nu au cont pe ayushcell.ro</p>
+<p>Este necesar sa aiba cont pe site pentru a li se putea genera facturi</p>
 <% if @emails_not_in_users.any? %>
   <ul>
     <% @emails_not_in_users.each do |email| %>
