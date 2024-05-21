@@ -3,6 +3,8 @@ Rails.application.routes.draw do
     collection do
       get :generare_facturi
       post :creareproforma
+      get 'facturaproformas/not_in_users', to: 'facturaproformas#not_in_users', as: 'not_in_users_facturaproformas'
+      get :not_in_users, to: 'facturaproformas#not_in_users', as: 'not_in_users'
     end
   end
   resources :firmeproformas
