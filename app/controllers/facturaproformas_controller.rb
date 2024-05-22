@@ -218,8 +218,10 @@ class FacturaproformasController < ApplicationController
   def not_in_users #lista userilor de an 3 care nu au cont
     listacanal3_emails = Listacanal3.pluck(:email)
     user_emails = User.pluck(:email)
+    date_facturare = DateFacturare.pluck(:email)
 
     @emails_not_in_users = listacanal3_emails - user_emails
+    @emails_useri_care_nu_au_completat = listacanal3_emails - date_facturare
   end
   
 
