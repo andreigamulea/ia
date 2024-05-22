@@ -295,13 +295,16 @@ Folosirea substanţelor naturale şi a procedurilor cu efect afrodiziac (vajikar
             </thead>
             <tbody>
             <% @prods.each do |prod| %>
+                <%if prod.cod!='cod108'%>
                 <tr>
                     <td><%= prod.nume %></td>                   
                     <td><%= prod.detalii %></td>
                     <td><%= prod.pret.to_i %> lei</td>
                     <% if current_user %>
                          <td style="text-align:center;">
+                         
                            <%= link_to 'Acceseaza cursul', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
+                           
                          </td>
                        <% else %>
                          <td style="text-align:center;">
@@ -310,7 +313,7 @@ Folosirea substanţelor naturale şi a procedurilor cu efect afrodiziac (vajikar
                        <% end %>
                     
               </tr>
-                <% end %>  
+                <% end %>  <% end %>
             </tbody>
         </table>
         <%end%>
