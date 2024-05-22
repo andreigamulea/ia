@@ -1,30 +1,35 @@
 
-
-<h1>Email-uri useri care nu au completat datele de facturare</h1>
-<p>Total: <%= @emails_useri_care_nu_au_completat.count %> utilizatori care nu au completat datele de facturare</p>
-<p>Este necesar sa aiba cont pe site pentru a li se putea genera facturi</p>
-<% if @emails_useri_care_nu_au_completat.any? %>
-  <ul>
-    <% @emails_useri_care_nu_au_completat.each do |email| %>
-      <li><%= email %></li>
+<div style="display: flex; justify-content: space-between;">
+  <div style="width: 48%;">
+    <h1>Email-uri useri care nu au completat datele de facturare</h1>
+    <p>Total: <%= @emails_useri_care_nu_au_completat.count %> utilizatori care nu au completat datele de facturare</p>
+    <p>Este necesar sa aiba cont pe site pentru a li se putea genera facturi</p>
+    <% if @emails_useri_care_nu_au_completat.any? %>
+      <ul>
+        <% @emails_useri_care_nu_au_completat.each do |email| %>
+          <li><%= email %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No emails found.</p>
     <% end %>
-  </ul>
-<% else %>
-  <p>No emails found.</p>
-<% end %>
+  </div>
 
-<h1>Email-uri care nu au cont pe site</h1>
-<p>Total: <%= @emails_not_in_users.count %> utilizatori care nu au cont pe ayushcell.ro</p>
-<p>Este necesar sa aiba cont pe site pentru a li se putea genera facturi</p>
-<% if @emails_not_in_users.any? %>
-  <ul>
-    <% @emails_not_in_users.each do |email| %>
-      <li><%= email %></li>
+  <div style="width: 48%;">
+    <h1>Email-uri care nu au cont pe site</h1>
+    <p>Total: <%= @emails_not_in_users.count %> utilizatori care nu au cont pe ayushcell.ro</p>
+    <p>Este necesar sa aiba cont pe site pentru a li se putea genera facturi</p>
+    <% if @emails_not_in_users.any? %>
+      <ul>
+        <% @emails_not_in_users.each do |email| %>
+          <li><%= email %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No emails found.</p>
     <% end %>
-  </ul>
-<% else %>
-  <p>No emails found.</p>
-<% end %>
+  </div>
+</div>
 
 
 
