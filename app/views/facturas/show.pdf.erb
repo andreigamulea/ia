@@ -59,14 +59,16 @@
 
 <div class="wrapper" style="height: 40%;">
   <div class="half-div"></br></br>
+
     <h3 style="font-size: 1.4em;">CUMPARATOR</h3>
-    <h4 style="font-size: 1.2em; margin-bottom:-10px;">Adresa de facturare:</h4></br>
+    
     <p style="font-size: 1.1em">
     <%= @factura.prenume %> <%= @factura.nume %><br>
     <% if factura.nume_companie.present? && factura.cui.present? %>
     Firma: <%= @factura.nume_companie %><br>
     CUI: <%= @factura.cui %><br>
     <%end%>
+    <h4 style="font-size: 1.2em; margin-bottom:-10px;">Adresa de facturare:</h4></br>
     Str <%= @factura.strada %> nr <%= @factura.numar_adresa %>,<br>
     <%= @factura.localitate %><br>
     <% if ['1', '2', '3', '4', '5', '6'].include?(@factura.judet) %>
