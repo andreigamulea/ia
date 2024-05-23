@@ -1,6 +1,6 @@
 class FacturaproformasController < ApplicationController
   before_action :set_facturaproforma, only: %i[ show edit update destroy ]
-
+  before_action :set_user_admin, only: %i[generare_facturi not_in_users]
   # GET /facturaproformas or /facturaproformas.json
   def index
     @facturaproformas = Facturaproforma.all
@@ -234,5 +234,15 @@ class FacturaproformasController < ApplicationController
     # Only allow a list of trusted parameters through.
     def facturaproforma_params
       params.require(:facturaproforma).permit(:comanda_id, :user_id, :prod_id, :numar_factura, :numar_comanda, :data_emiterii, :prenume, :nume, :nume_companie, :cui, :tara, :localitate, :judet, :strada, :numar_adresa, :cod_postal, :altedate, :telefon, :produs, :cantitate, :pret_unitar, :valoare_tva, :valoare_totala, :cod_firma, :status)
+    end
+    def set_user_admin
+      if !current_user
+        redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
+        return
+      end  
+      unless current_user.role == 1
+        redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
+        return
+      end
     end
 end
