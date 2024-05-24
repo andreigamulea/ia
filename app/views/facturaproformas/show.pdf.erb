@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Factura</title>
+  <style type="text/css">
+    body {
+      font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
+    .wrapper {
+      width: 90%;
+      margin: 0 auto;
+    }
+    .half-div {
+      width: 50%;
+      float: left;
+    }
+    .clearfix {
+      clear: both;
+    }
+    .full-width {
+      width: 100%;
+    }
+    .align-right {
+      text-align: right;
+    }
+    img {
+      width: 300px; /* Ajustează dimensiunea logo-ului */
+    }
+  </style>
+</head>
+<body>
+
+
+<!-- Primul div -->
+<div class="wrapper" style="height: 20%;">
+  <div class="half-div">
+    <h3 style="font-size: 1.4em;">FURNIZOR</h3>
+    <h3 style="font-weight: normal; font-size: 1.2em;"><%= @nume_institutie %></h3>
+    <h3 style="font-weight: normal; font-size: 1.1em; margin-top:-10px;">CUI <%= @cui %></h3>
+    <h5 style="font-weight: normal; font-size: 1.1em; margin-top:-10px;"><%= @rc %></h5>
+    <h5 style="font-weight: normal; font-size: 1.1em; margin-top:-20px;"><%= @adresa %></h5>
+    <h5 style="font-weight: normal; font-size: 1.1em; margin-top:-20px;"><%= @banca %> cont nr.:  </h5>
+    <h5 style="font-weight: normal; font-size: 1.1em; margin-top:-20px;"><%= @cont %></h5>
+  </div>
+  
+ <div class="half-div align-right">
+  <img src="<%= asset_url 'ayus_logo1.jpg' %>" alt="Ayus grup" class="logo" style="transform: scale(3);width: 200px;">
+</div>
+
+
+</div>
+
+
+
+  <div class="clearfix"></div>
+</div>
+
+<div style="width: 100%; height: 1px; background-color: #000;"></div>
+
+
+<div class="wrapper" style="height: 40%;">
+  <div class="half-div"></br></br>
+    <h3 style="font-size: 1.4em;">CUMPARATOR</h3>
+    
+    <p style="font-size: 1.1em">
+    <%= @factura.nume %><br>
+    <% if factura.nume_companie.present? && factura.cui.present? %>
+    Firma: <%= @factura.nume_companie %><br>
+    CUI: <%= @factura.cui %><br>
+    <%end%>
+    <h4 style="font-size: 1.2em; margin-bottom:-10px;">Adresa de facturare:</h4></br>
+    Str <%= @factura.strada %> nr <%= @factura.numar_adresa %>,<br>
+    <%= @factura.localitate %><br>
+    <% if ['1', '2', '3', '4', '5', '6'].include?(@factura.judet) %>
+        Sector <%= @factura.judet %><br>
+        <% else %>
+        Judet <%= @factura.judet %><br>
+    <% end %>
+    <% if @tva=="0" %>
+    
+    <% end %>
+
+    <%= @factura.cod_postal %><br><br><br>
+    Numar factura: Seria <%= @serie %> Nr. <%= @factura.numar_factura %><br>
+    Numar comanda: <%= @factura.numar_comanda %><br><br>
+    </p>
+    <% if @tva!="0" %>
+    <h4>TVA LA INCASARE</h4><br><br>
+    <% end %>
+  </div>
+  <div class="half-div align-right">
+    <h1>FACTURA</h1>
+    <!-- Adauga cate `<br>` ai nevoie pentru a alinia la nivelul dorit -->
+    <br><br><br><br><br><br><br><br><br><br><br>
+    <p style="font-size: 1.1em">
+    Data factura: <%= @factura.data_emiterii.strftime("%d/%m/%Y") %><br>
+    </p>
+
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+<div style="width: 100%; height: 1px; background-color: #000;"></div>
+
+<!-- Al treilea div -->
+<div class="full-width" style="width: 100%; margin: auto;">
+  <table style="border-collapse: collapse; width: 90%; margin: auto;">
+    <tr>
+      <td style="text-align: left; height: 50px; vertical-align:middle; width: 40%;">Produs</td>
+      <td style="text-align: center; height: 50px; vertical-align:middle; width: 10%; ">Cantitate</td>
+      <td style="text-align: center; height: 50px; vertical-align:middle; width: 10%; ">Pret</td>
+      <% if @tva!="0" %>
+      <td style="text-align: center; height: 50px; vertical-align:middle; width: 10%; ">Valoare<br>fara TVA</td>
+      <td style="text-align: center; height: 50px; vertical-align:middle; width: 10%; ">TVA %</td>
+      <td style="text-align: center; height: 50px; vertical-align:middle; width: 10%; ">Val TVA</td>
+      <td style="text-align: center; height: 50px; vertical-align:middle; width: 10%; ">Valoare<br>cu TVA</td>
+      <%else %>
+      <td style="text-align: center; height: 50px; vertical-align:middle; width: 10%; ">Valoare<br>totala</td>
+      <% end %>
+    </tr>
+  </table>
+  <div style="width: 100%; height: 1px; background-color: #000;"></div> 
+  <table style="border-collapse: collapse; width: 90%; margin: auto;">
+    <tr>
+      <td style="text-align: left; height: 50px; vertical-align:middle; width: 40%;"><%= @factura.produs %></td>
+      <td style="text-align: center;width: 10%;padding-right: 25px;"><%= @factura.cantitate %></td>      
+      <td style="text-align: center;width: 10%;"><%= @factura.pret_unitar %> lei</td>
+      <% if @tva!="0" %>
+      <td style="text-align: center;width: 10%;"><%= (@factura.valoare_totala/1.19).round(2) %> lei</td>
+      <td style="text-align: center;width: 10%;"><%= TVA %> %</td>
+      <td style="text-align: center;width: 10%;"><%= @factura.valoare_totala - (@factura.valoare_totala/1.19).round(2) %> lei</td>
+      <% end %>
+      
+      <td style="text-align: center;width: 10%;"><%= @factura.valoare_totala %> lei</td>
+    </tr>
+  </table>
+</div>
+
+
+
+
+<br></br>
+
+<!-- Al patrulea div -->
+<div class="wrapper" style="width: 100%; margin: auto;">
+  <div style="width: 65%; float: left;"></div> <!-- Spațiul liber din stânga -->
+  <div style="width: 35%; float: right;">
+    <table style="width: 90%; margin-left: 10%; border-collapse: collapse;"> <!-- Am ajustat latimea si marginea stanga -->
+    <% if @tva!="0" %>
+    <tr>
+        <td style="text-align: left; padding: 5px;">Total fara TVA:</td>
+        <td style="text-align: right; padding-right: 40px;"><%= (@factura.valoare_totala/1.19).round(2) %> lei</td>
+      </tr>
+      <tr>
+        <td style="text-align: left; padding: 5px;">TVA 19%:</td>
+        <td style="text-align: right; padding-right: 40px;"><%= @factura.valoare_totala - (@factura.valoare_totala/1.19).round(2) %> lei</td>
+      </tr>
+      <% end %>
+
+      <tr>
+  <td style="text-align: left; padding-right: 40px; border-top: 1px solid black; border-bottom: 1px solid black; line-height:50px; vertical-align:middle;">&nbsp;Total:</td>
+  <td style="text-align: right; padding-right: 40px; border-top: 1px solid black; border-bottom: 1px solid black; line-height:50px;vertical-align:middle;"><%= @factura.valoare_totala %> lei</td>
+</tr>
+
+    </table>
+   
+  </div>
+  <div style="clear: both;"></div> <!-- Necesar pentru a evita problemele de înălțime cauzate de elementele "plutitoare" -->
+</div>
+
+
+
+<% if @factura.status && @factura.status == 'anulata' %>
+<img src="<%= asset_url 'anulare_factura.png' %>" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+
+<%end%>
+</body>
+</html>
