@@ -1,14 +1,95 @@
 class FacturaproformasController < ApplicationController
   before_action :set_facturaproforma, only: %i[ show edit update destroy ]
   before_action :set_user_admin, only: %i[generare_facturi not_in_users]
+  before_action :set_user, only: %i[index show edit update destroy]
   # GET /facturaproformas or /facturaproformas.json
   def index
     @facturaproformas = Facturaproforma.all
   end
 
+
+
+
+
+  def download
+    factura = Facturaproforma.find(params[:id])
+    # logica pentru generarea PDF-ului aici
+  end
+  def download1
+    if current_user.role==1
+    @facturas = Facturaproforma.all # Aici obținem toate facturile
+    # Adaugă orice alte verificări de securitate necesare aici
+    #puts @facturas.inspect
+    respond_to do |format|
+      format.html
+      format.pdf do
+        html = render_to_string(
+          template: 'facturas/download1',
+          locals: { facturas: @facturas },
+          encoding: 'UTF8'
+        )
+        pdf = PDFKit.new(html).to_pdf
+        send_data pdf, filename: "Toate_Facturile.pdf",
+          type: 'application/pdf',
+          disposition: 'attachment'
+      end
+    end
+  end
+  end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   # GET /facturaproformas/1 or /facturaproformas/1.json
   def show
+    @factura = Facturaproforma.find(params[:id])
+    @df = DateFacturare.find_by(user_id: @factura.user_id)
+   
+    
+    if @df.nil?
+      @df = DateFacturare.new
+      @df.nume=@factura.nume
+      puts "nume=#{@df.nume}"
+    else
+      puts "itsnonil"
+    end
+    
+    preluare_date_furnizor(@factura.cod_firma)
+    puts("seriaaa:#{@serie}")
+    puts("factura este azi : #{@factura.id}") 
+    puts("factura este azi a user: #{@factura.user_id}")
+    unless @factura.user_id == @user.id || @user.role == 1
+      redirect_to root_path, alert: "Nu aveți permisiunea de a vizualiza această factură"
+      return
+    end
+  
+    respond_to do |format|
+      format.html
+      format.pdf do
+        html = render_to_string(
+          template: 'facturaproformas/show', # Asigură-te că denumirea și calea sunt corecte
+          locals: { factura: @factura },
+          encoding: 'UTF8'
+        )
+        pdf = PDFKit.new(html).to_pdf
+        filename_prefix = @factura.numar_factura
+        filename = "Factura_#{filename_prefix}_din_#{@factura.data_emiterii.strftime('%d.%m.%Y')}.pdf"
+        send_data pdf, filename: filename, type: 'application/pdf', disposition: 'attachment'
+      end
+    end
   end
+  
 
   # GET /facturaproformas/new
   def new
@@ -146,6 +227,8 @@ class FacturaproformasController < ApplicationController
           localitate = "Bucuresti"
   
           if df
+            nume = df.nume+' '+df.prenume
+            localitate = df.localitate
             nume_companie = df.numecompanie
             cui = df.cui
             tara = df.tara
@@ -231,7 +314,7 @@ class FacturaproformasController < ApplicationController
       @facturaproforma = Facturaproforma.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+    ## Only allow a list of trusted parameters through.
     def facturaproforma_params
       params.require(:facturaproforma).permit(:comanda_id, :user_id, :prod_id, :numar_factura, :numar_comanda, :data_emiterii, :prenume, :nume, :nume_companie, :cui, :tara, :localitate, :judet, :strada, :numar_adresa, :cod_postal, :altedate, :telefon, :produs, :cantitate, :pret_unitar, :valoare_tva, :valoare_totala, :cod_firma, :status)
     end
@@ -245,4 +328,26 @@ class FacturaproformasController < ApplicationController
         return
       end
     end
+
+    def preluare_date_furnizor(cod1)
+      furnizor = Firmeproforma.find_by(cod: cod1)
+      if furnizor
+        @nume_institutie = furnizor.nume_institutie
+        @cui = furnizor.cui
+        @rc = furnizor.rc
+        @adresa = furnizor.adresa
+        @banca = furnizor.banca
+        @cont = furnizor.cont
+        @serie = furnizor.serie
+        @nrinceput = furnizor.nrinceput
+        @tva = furnizor.tva
+        @cod = furnizor.cod
+      else
+        redirect_to root_path, alert: "Furnizorul cu codul specificat nu a fost găsit"
+      end
+    end
+    def set_user
+      @user = current_user # presupunând că current_user este disponibil
+    end
+
 end

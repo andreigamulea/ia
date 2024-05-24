@@ -6,6 +6,11 @@ Rails.application.routes.draw do
       get 'facturaproformas/not_in_users', to: 'facturaproformas#not_in_users', as: 'not_in_users_facturaproformas'
       get :not_in_users, to: 'facturaproformas#not_in_users', as: 'not_in_users'
     end
+  
+    member do
+      get :download1, to: 'facturaproformas#download1', as: 'download1'
+      get :download, to: 'facturaproformas#download', as: 'download'
+    end
   end
   resources :firmeproformas
   resources :an32324s do
