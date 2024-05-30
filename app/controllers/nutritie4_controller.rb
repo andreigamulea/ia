@@ -1,105 +1,114 @@
 class Nutritie4Controller < ApplicationController
-  def index 
-  #logica este astfel: daca cumpara inainte de 19 mai sa zicem pe 10mai are acces la 90 de zile incepand cu 19 mai adica 19mai+90zile
-  #daca cumpara dupa , sa zicem pe 25mai are acces 25mai+90 zile
-
-    @has_access = current_user&.role == 1
-    if current_user  
-      # Obține ID-urile produselor cumpărate de current_user, care sunt valide și a căror datasfarsit este azi sau în viitor
-      # Definirea datei prag
-      data_prag = Date.new(2024, 5, 19)
-
-      # Construirea interogării cu ajustarea datei de început
-      purchased_prod_coduri = ComenziProd.where(user_id: current_user.id, 
-                                             validat: 'Finalizata')
-                                      .joins(:prod)
-                                      .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
-                                      .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
-                                             data_prag, data_prag, data_prag + 90.days)
-                                      .pluck('prods.cod')
-
-      purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
-                                            validat: 'Finalizata')
-                                      .joins(:prod)
-                                      .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
-                                      .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
-                                            data_prag, data_prag, data_prag + 90.days)
-                                      .pluck('prods.cod')
-                            
-# Adaugă codurile la array-ul existent și elimină duplicatele
-purchased_prod_coduri.concat(purchased_prod_coduri1)
-purchased_prod_coduri.concat(purchased_prod_coduri1).uniq!
-puts("produsele cumparate sunt: #{purchased_prod_coduri}")
-@a_cumparat_macar_un_cod = purchased_prod_coduri.any? || current_user.role == 1
-
-
+  def index
+    data_prag = Date.new(2024, 5, 19)
   
-      # Logica pentru determinarea produselor de afișat în funcție de ce a cumpărat current_user
-      if purchased_prod_coduri.include?('cod85') && purchased_prod_coduri.include?('cod88')
-        @prods = Prod.none
+    if current_user
+      puts("User logat: #{current_user.id}")
+  
+      if current_user.role == 1
+        # Utilizator cu role 1 are acces direct la video-uri
         @has_access = true
-        
-      elsif purchased_prod_coduri.include?('cod86')
-              @has_access = true
-              @prods = Prod.none
-
-      elsif purchased_prod_coduri.include?('cod85')
-        @prods = Prod.where(cod: 'cod88')
-        puts("are doar 580 platit")
+        valid_prods = ['cod86']
+        expired_prods = []
+        all_purchased = ['cod86']
+        @a_cumparat_macar_un_cod = true
+        @prods = Prod.none
+        @prods_cumparate = Prod.where(cod: all_purchased)
       else
-        # Dacă nu a cumpărat niciunul, afișează produsele cu cod=cod108 și cod=cod110
-        @prods = Prod.where(cod: ['cod85', 'cod86']).order(:id)
+        # Obține codurile produselor cumpărate și datele de început și sfârșit
+        purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                     .joins(:prod)
+                                     .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
+                                     .pluck('prods.cod', 'datainceput', 'datasfarsit')
+  
+        purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                       .joins(:prod)
+                                       .where(prods: { curslegatura: 'nutritie4', status: 'activ' })
+                                       .pluck('prods.cod', 'datainceput', 'datasfarsit')
+  
+        purchased_prods ||= []
+        purchased_prods1 ||= []
+  
+        all_purchased_prods = purchased_prods + purchased_prods1
+  
+        puts("Produse cumpărate cu date: #{all_purchased_prods}")
+  
+        valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 90.days >= Date.today }.map(&:first)
+        expired_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 90.days < Date.today }.map(&:first)
+  
+        puts("Produse valabile: #{valid_prods}")
+  
+        all_purchased = all_purchased_prods.map(&:first).uniq
+        @a_cumparat_macar_un_cod = all_purchased.any?
+  
+        if @a_cumparat_macar_un_cod
+          if all_purchased.include?('cod85') && all_purchased.include?('cod88')
+            @prods = Prod.none
+            @has_access = true
+          elsif all_purchased.include?('cod86')
+            @has_access = true
+            @prods = Prod.none
+          elsif all_purchased.include?('cod85')
+            @prods = Prod.where(cod: 'cod88')
+            puts("are doar cod85 platit")
+          else
+            @prods = Prod.where(cod: ['cod85', 'cod86']).order(:id)
+          end
+        else
+          @prods = Prod.where(cod: ['cod85', 'cod86']).order(:id)
+        end
+  
+        @has_access ||= valid_prods.include?('cod86') || valid_prods.include?('cod88')
+        @prods_cumparate = Prod.where(cod: all_purchased)
       end
   
-      @prods_cumparate = Prod.where(cod: purchased_prod_coduri).order(:id)
-             
+      puts("Produse afișate: #{@prods.pluck(:cod) if @prods}")
+      puts("Are acces? : #{@has_access}")
+      puts("Produse cumpărate: #{@prods_cumparate.pluck(:cod) if @prods_cumparate}")
+  
+      @myvideo13 = if @a_cumparat_macar_un_cod
+                     if current_user.limba == 'EN'
+                       Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
+                     else
+                       Video.none
+                     end
+                   else
+                     Video.none
+                   end
+  
+      if @has_access
+        @platit = true
+        puts("sunt in has acces")
+        if current_user.limba == 'EN'
+          puts("sunt in limba en")
+          @myvideo = Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
+        else
+          puts("NU sunt in limba en")
+          @myvideo = Video.where(tip: 'nutritie4').where('ordine <= ?', 1000).order(ordine: :asc)
+          puts("Numarul: #{@myvideo.count}")
+        end
+      else
+        puts("sunt in has acces NU")
+        @myvideo13 = Video.none
+      end
     else
-      # Dacă nu există un current_user, afișează produsele cu cod=cod108 și cod=cod110
+      # Utilizator neautentificat
+      puts("User nelogat")
       @prods = Prod.where(curslegatura: 'nutritie4', status: 'activ').where(cod: ['cod85', 'cod86']).order(:id)
+      @has_access = false
       @prods_cumparate = Prod.none
       @videos_correspondente = Video.none
+      @myvideo13 = Video.none
+      @a_cumparat_macar_un_cod = false
     end
-
-     
-      puts("Are acces? : #{@has_access}")
-
-#####
-if current_user
-  limba_en = current_user.limba == 'EN'
-
-  if @a_cumparat_macar_un_cod
-    puts("a cumparat macar un cod")
-    @myvideo13 = Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
-  else
-    puts("nu a cumparat macar un cod")
-    @myvideo13 = Video.none
-  end
-
-  if @has_access
-    @platit=true
-    puts("sunt in has acces")
-    if limba_en
-      puts("sunt in limba en")
-      @myvideo = Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
-    else
-      puts("NU sunt in limba en")
-      
-      @myvideo = Video.where(tip: 'nutritie4').where('ordine <= ?', 1000).order(ordine: :asc)
-      puts("Numarul: #{@myvideo.count}")
+  
+    if data_prag
+      puts("Data prag + 90 zile= : #{data_prag + 90.days}")
     end
-  else
-    puts("sunt in has acces NU")
-    @myvideo13 = Video.none
   end
-end
-
-
+  
 #####
 
-
-
-
-  end
   def download
     linkzip = params[:linkzip]
     Rails.logger.debug "Parametrul linkzip este: #{linkzip}"

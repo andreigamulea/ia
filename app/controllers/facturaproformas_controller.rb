@@ -1,7 +1,16 @@
 class FacturaproformasController < ApplicationController
-  before_action :set_facturaproforma, only: %i[ show edit update destroy ]
+  require 'bigdecimal'
+  require 'bigdecimal/util' # For to_d method
+  before_action :set_facturaproforma, only: %i[ show edit update destroy]
   before_action :set_user_admin, only: %i[generare_facturi not_in_users]
   before_action :set_user, only: %i[index show edit update destroy]
+  #before_action :reset_stripe_session, only: [:pay1]
+  skip_before_action :verify_authenticity_token, only: [:create_stripe_session]
+  #skip_before_action :verify_authenticity_token, only: [:create_stripe_session]
+  before_action :set_stripe_key, only: [:pay1, :create_stripe_session]
+  before_action :authenticate_user!, except: [:create_stripe_session]
+
+  
   # GET /facturaproformas or /facturaproformas.json
   def index
     @facturaproformas = Facturaproforma.all
@@ -38,18 +47,93 @@ class FacturaproformasController < ApplicationController
   end
 
 
+  def pay1
+    @factura = Facturaproforma.find(params[:id])
+    render :create_stripe_session
+  end
 
+  def create_stripe_session
+    @factura = Facturaproforma.find(params[:id])
+    Rails.logger.info "Factura proforma gasita: #{@factura.inspect}"
 
+    @comanda = Comanda.find(@factura.comanda_id)
+    Rails.logger.info "Comanda asociata gasita: #{@comanda.inspect}"
 
+    @user = User.find(@factura.user_id)
+    Rails.logger.info "Utilizatorul asociat gasit: #{@user.inspect}"
 
+    @detaliifacturare = DateFacturare.find_by(user_id: @user.id)
+    Rails.logger.info "Detalii facturare gasite: #{@detaliifacturare.inspect}"
 
+    @prod = Prod.find(@factura.prod_id)
+    Rails.logger.info "Produs asociat gasit: #{@prod.inspect}"
 
+    # Asigurare că utilizatorul are un client Stripe
+    if @user.stripe_customer_id.nil?
+      begin
+        customer = Stripe::Customer.create(email: @user.email)
+        @user.update(stripe_customer_id: customer.id)
+      rescue => e
+        Rails.logger.error "Stripe customer creation failed for user #{@user.id}: #{e.message}"
+        # Gestionare erori
+        return
+      end
+    end
 
+    # Metadata pentru Stripe
+    metadata = {
+      user_id: @user.id.to_s,
+      email: @user.email,
+      numar_comanda: @comanda.id,
+      id_produs: @prod.id,
+      nume: @detaliifacturare.nume,
+      prenume: @detaliifacturare.prenume,
+      numecompanie: @detaliifacturare.numecompanie,
+      cui: @detaliifacturare.cui,
+      tara: @detaliifacturare.tara,
+      strada: @detaliifacturare.strada,
+      numar: @detaliifacturare.numar,
+      altedate: @detaliifacturare.altedate,
+      adresaemail: @detaliifacturare.adresaemail,
+      judet: @detaliifacturare.judet,
+      localitate: @detaliifacturare.localitate,
+      codpostal: @detaliifacturare.codpostal,
+      telefon: @detaliifacturare.telefon,
+      updated_at: @detaliifacturare.updated_at,
+      cantitate: @factura.cantitate,
+      pret_bucata: @factura.pret_unitar,
+      pret_total: @factura.valoare_totala
+    }
 
-
-
-
-
+    # Creează sesiune Stripe
+    begin
+      @session = Stripe::Checkout::Session.create({
+        payment_method_types: ['card'],
+        line_items: [{
+          price_data: {
+            currency: 'ron',
+            product_data: {
+              name: @factura.produs
+            },
+            unit_amount: (@factura.valoare_totala * 100).to_i,
+          },
+          quantity: 1,
+        }],
+        payment_intent_data: {
+          metadata: metadata
+        },
+        mode: 'payment',
+        success_url: "#{successtripe_url}?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url: root_url,
+        metadata: metadata
+      })
+      
+      render json: { message: "Sesiune creată cu succes", session_id: @session.id }
+    rescue => e
+      Rails.logger.error "Failed to create checkout session: #{e.message}"
+      render json: { error: e.message }, status: :internal_server_error
+    end
+  end
 
   # GET /facturaproformas/1 or /facturaproformas/1.json
   def show
@@ -349,5 +433,19 @@ class FacturaproformasController < ApplicationController
     def set_user
       @user = current_user # presupunând că current_user este disponibil
     end
-
+    def reset_stripe_session
+      session[:stripe_session_id] = nil
+    end
+    def set_stripe_key
+      if Rails.env.development?
+        @stripe_public_key = Rails.application.credentials.dig(:stripe, :development, :publishable_key)
+        @stripe_secret_key = Rails.application.credentials.dig(:stripe, :development, :secret_key)
+      elsif Rails.env.production?
+        @stripe_public_key = Rails.application.credentials.dig(:stripe, :production, :publishable_key)
+        @stripe_secret_key = Rails.application.credentials.dig(:stripe, :production, :secret_key)
+      end
+    end
+    
+  
+   
 end

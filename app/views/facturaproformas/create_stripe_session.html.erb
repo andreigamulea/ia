@@ -1,0 +1,43 @@
+<!-- app/views/facturaproformas/create_stripe_session.html.erb -->
+
+<div class="column" style="display: flex; justify-content: center;">
+  <img src="<%= image_url('nutritie-ayushcell.jpg') %>" alt="Imagine">
+</div>
+
+<script>
+  console.log("Initializare plata Stripe...");
+
+  document.addEventListener("turbo:load", function() {
+    console.log("DOM fully loaded and parsed with Turbo");
+
+    fetch('/facturaproformas/<%= @factura.id %>/create_stripe_session', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': '<%= form_authenticity_token %>'
+      }
+    })
+    .then(function(response) {
+        console.log("Fetch response received");
+        if (response.ok) {
+            return response.json();
+        } else {
+            console.error('Eroare la crearea sesiunii de plată');
+            throw new Error('Eroare la crearea sesiunii de plată');
+        }
+    })
+    .then(function(data) {
+        console.log("Stripe session data:", data);
+        var stripe = Stripe("<%= @stripe_public_key %>");
+        return stripe.redirectToCheckout({ sessionId: data.session_id });
+    })
+    .then(function(result) {
+        if (result.error) {
+            console.error("Stripe redirection error:", result.error.message);
+        }
+    })
+    .catch(function(error) {
+        console.error('Eroare:', error);
+    });
+  });
+</script>

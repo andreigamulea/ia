@@ -800,55 +800,60 @@ end
 
     def set_user12
       puts("aaaaaaaaa nutritie4")
-  unless user_signed_in?
-    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
-    redirect_to new_user_session_path
-    return false
-  end
-
-  if current_user.role == 1
-    return true
-  elsif current_user.role == 0
-    data_prag = Date.new(2024, 5, 19)
-    purchased_prod_coduri = ComenziProd.where(user_id: current_user.id, 
-                        validat: 'Finalizata')
-                    .joins(:prod)
-                    .where(prods: { curslegatura: 'nutritie4' })
-                    .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
-                        data_prag, data_prag, data_prag + 90.days)
-                    .pluck('prods.cod')
-
-    purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
-                      validat: 'Finalizata')
-                    .joins(:prod)
-                    .where(prods: { curslegatura: 'nutritie4' })
-                    .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
-                      data_prag, data_prag, data_prag + 90.days)
-                    .pluck('prods.cod')
-          
-    purchased_prod_coduri.concat(purchased_prod_coduri1)
-    purchased_prod_coduri.concat(purchased_prod_coduri1).uniq!
-    puts("produsele cumparate sunt: #{purchased_prod_coduri}")
-    has_access = purchased_prod_coduri.include?('cod86') || purchased_prod_coduri.include?('cod88') 
-
-
+      unless user_signed_in?
+        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+        redirect_to new_user_session_path
+        return false
+      end
     
-
-    puts("has_access este: #{has_access}")
-   
-    unless has_access
-      flash[:alert] = "Nu aveți acces la acest curs."
-      redirect_to nutritie4_index_path # Schimbați cu calea dorită
-      return false
+      if current_user.role == 1
+        return true
+      elsif current_user.role == 0
+        data_prag = Date.new(2024, 5, 19)
+    
+        # Obține codurile produselor cumpărate și datele de început și sfârșit
+        purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                     .joins(:prod)
+                                     .where(prods: { curslegatura: 'nutritie4' })
+                                     .pluck('prods.cod', 'datainceput', 'datasfarsit')
+    
+        purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                       .joins(:prod)
+                                       .where(prods: { curslegatura: 'nutritie4' })
+                                       .pluck('prods.cod', 'datainceput', 'datasfarsit')
+    
+        # Dacă nu există produse cumpărate, inițializează array-ul cu produse cumpărate ca gol
+        purchased_prods ||= []
+        purchased_prods1 ||= []
+    
+        # Combină listele de produse
+        all_purchased_prods = purchased_prods + purchased_prods1
+    
+        puts("Produse cumpărate cu date: #{all_purchased_prods}")
+    
+        # Filtrare produse valabile
+        valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput + 90.days >= Date.today }.map(&:first)
+    
+        puts("Produse valabile: #{valid_prods}")
+    
+        has_access = valid_prods.include?('cod86') || valid_prods.include?('cod88')
+    
+        puts("has_access este: #{has_access}")
+    
+        unless has_access
+          flash[:alert] = "Nu aveți acces la acest curs."
+          redirect_to nutritie4_index_path # Schimbați cu calea dorită
+          return false
+        end
+      else
+        flash[:alert] = "Nu aveți permisiuni suficiente pentru a accesa acest curs."
+        redirect_to nutritie4_index_path # Schimbați cu calea dorită
+        return false
+      end
+    
+      true
     end
-  else
-    flash[:alert] = "Nu aveți permisiuni suficiente pentru a accesa acest curs."
-    redirect_to nutritie4_index_path # Schimbați cu calea dorită
-    return false
-  end
-
-  true
-end
+    
 
 def set_user13
   puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
@@ -862,32 +867,36 @@ def set_user13
     return true
   elsif current_user.role == 0
     data_prag = Date.new(2024, 2, 25)
-    purchased_prod_coduri = ComenziProd.where(user_id: current_user.id, 
-                        validat: 'Finalizata')
-                    .joins(:prod)
-                    .where(prods: { curslegatura: 'vajikarana1' })
-                    .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
-                        data_prag, data_prag, data_prag + 90.days)
-                    .pluck('prods.cod')
 
-    purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
-                      validat: 'Finalizata')
-                    .joins(:prod)
-                    .where(prods: { curslegatura: 'vajikarana1' })
-                    .where("datainceput <= ? OR (datainceput > ? AND datainceput <= ?)", 
-                      data_prag, data_prag, data_prag + 90.days)
-                    .pluck('prods.cod')
-          
-    purchased_prod_coduri.concat(purchased_prod_coduri1)
-    purchased_prod_coduri.concat(purchased_prod_coduri1).uniq!
-    puts("produsele cumparate sunt: #{purchased_prod_coduri}")
-    has_access = purchased_prod_coduri.include?('cod109') || purchased_prod_coduri.include?('cod110') 
+    # Obține codurile produselor cumpărate și datele de început și sfârșit
+    purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                 .joins(:prod)
+                                 .where(prods: { curslegatura: 'vajikarana1' })
+                                 .pluck('prods.cod', 'datainceput', 'datasfarsit')
 
+    purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                   .joins(:prod)
+                                   .where(prods: { curslegatura: 'vajikarana1' })
+                                   .pluck('prods.cod', 'datainceput', 'datasfarsit')
 
-    
+    # Dacă nu există produse cumpărate, inițializează array-ul cu produse cumpărate ca gol
+    purchased_prods ||= []
+    purchased_prods1 ||= []
+
+    # Combină listele de produse
+    all_purchased_prods = purchased_prods + purchased_prods1
+
+    puts("Produse cumpărate cu date: #{all_purchased_prods}")
+
+    # Filtrare produse valabile
+    valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput + 90.days >= Date.today }.map(&:first)
+
+    puts("Produse valabile: #{valid_prods}")
+
+    has_access = valid_prods.include?('cod109') || valid_prods.include?('cod110')
 
     puts("has_access este: #{has_access}")
-   
+
     unless has_access
       flash[:alert] = "Nu aveți acces la acest curs."
       redirect_to nutritie4_index_path # Schimbați cu calea dorită
@@ -901,6 +910,7 @@ def set_user13
 
   true
 end
+
 
 def set_user133
   
