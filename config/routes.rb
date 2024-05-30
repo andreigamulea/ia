@@ -1,4 +1,5 @@
 Rails.application.routes.draw do    
+  get 'tabere/tayv24', to: 'tabere#tayv24'
   resources :facturaproformas do
     collection do
       get :generare_facturi
@@ -10,8 +11,19 @@ Rails.application.routes.draw do
     member do
       get :download1, to: 'facturaproformas#download1', as: 'download1'
       get :download, to: 'facturaproformas#download', as: 'download'
+      get :pay1
+      get :create_stripe_session
+      #get :intermediate_redirect
+      
+      
     end
   end
+  
+  
+  
+  get 'cancelstripe', to: 'home#cancelstripe', as: 'cancelstripe'
+  
+
   resources :firmeproformas
   resources :an32324s do
     collection do
