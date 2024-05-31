@@ -368,7 +368,8 @@ class FacturaproformasController < ApplicationController
             valoare_tva: firma.tva,
             valoare_totala: pret,
             cod_firma: firma.cod,
-            status: "Proforma"
+            status: "Proforma",
+            serie_factura: firma.serie
           )
         end
       end
@@ -400,7 +401,7 @@ class FacturaproformasController < ApplicationController
 
     ## Only allow a list of trusted parameters through.
     def facturaproforma_params
-      params.require(:facturaproforma).permit(:comanda_id, :user_id, :prod_id, :numar_factura, :numar_comanda, :data_emiterii, :prenume, :nume, :nume_companie, :cui, :tara, :localitate, :judet, :strada, :numar_adresa, :cod_postal, :altedate, :telefon, :produs, :cantitate, :pret_unitar, :valoare_tva, :valoare_totala, :cod_firma, :status)
+      params.require(:facturaproforma).permit(:comanda_id, :user_id, :prod_id, :numar_factura, :numar_comanda, :data_emiterii, :prenume, :nume, :nume_companie, :cui, :tara, :localitate, :judet, :strada, :numar_adresa, :cod_postal, :altedate, :telefon, :produs, :cantitate, :pret_unitar, :valoare_tva, :valoare_totala, :cod_firma, :status, :serie_factura, :plata_prin, :data_platii)
     end
     def set_user_admin
       if !current_user

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_19_134210) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_31_141925) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -395,6 +395,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_19_134210) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "serie_factura"
+    t.string "plata_prin"
+    t.date "data_platii"
     t.index ["comanda_id"], name: "index_facturaproformas_on_comanda_id"
     t.index ["prod_id"], name: "index_facturaproformas_on_prod_id"
     t.index ["user_id"], name: "index_facturaproformas_on_user_id"
