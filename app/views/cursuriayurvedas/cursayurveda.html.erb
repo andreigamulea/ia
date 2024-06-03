@@ -113,7 +113,7 @@
                 <td><%= @prodgrupa1_taxainscriere_all.pret.to_i %> lei</td>
 
                 <% if current_user %>
-                <td><%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxainscriere_all.id), class: 'btn no-turbo' %> </td>   
+                <td><% link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxainscriere_all.id), class: 'btn no-turbo' %> </td>   
                 <% else %>
                 <td><%= link_to 'Comanda', new_user_session_path(return_to: 'taxainscriere'), class: 'btn btn-primary no-turbo' %></td>   
                 <% end %>

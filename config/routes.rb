@@ -11,13 +11,10 @@ Rails.application.routes.draw do
     member do
       get :download1, to: 'facturaproformas#download1', as: 'download1'
       get :download, to: 'facturaproformas#download', as: 'download'
-      get :pay1
-      get :create_stripe_session
-      #get :intermediate_redirect
-      
-      
+      post :create_stripe_session
     end
   end
+  
   
   
   

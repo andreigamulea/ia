@@ -215,7 +215,10 @@ h1.display-4{
 
  se creaza inregistrari in 3 tabele Comanda ComenziProd si 
             Facturaproforma</br> 
-
+ATENTIE! Din sepembrie cand o sa adaugam produsele pt platile pe lunile 2024-2025 trebuie adaugate in
+ C:\ia\app\controllers\stripe_webhooks_controller.rb in 2 locuri 
+  if !["cod36", "cod37"].include?(produs.cod) pt ca raspunsul de la Stripe sa nu genereze noi facturi
+    ci sa actualizeze facturile proforme
 
   </div>
   <% end %>

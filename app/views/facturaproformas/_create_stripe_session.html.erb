@@ -1,0 +1,51 @@
+<!-- app/views/facturaproformas/_create_stripe_session.html.erb -->
+
+<div class="column" style="display: flex; justify-content: center;">
+  <img src="<%= image_url('nutritie-ayushcell.jpg') %>" alt="Imagine">
+</div>
+
+<div id="stripe-session">
+  <p>Scriptul create_stripe_session.js.erb a fost încărcat.</p>
+</div>
+
+<script>
+  console.log("Scriptul create_stripe_session.js.erb a fost executat.");
+
+  // Încarcă Stripe.js
+  var script = document.createElement('script');
+  script.src = "https://js.stripe.com/v3/";
+  script.onload = function() {
+    console.log("Stripe.js a fost încărcat corect.");
+
+    var stripePublicKey = "<%= stripe_public_key %>";
+    var sessionId = "<%= session_id %>";
+    console.log("Stripe public key:", stripePublicKey);
+    console.log("Session ID:", sessionId);
+
+    if (stripePublicKey && sessionId) {
+      console.log("Initializare plata Stripe...");
+
+      var stripe = Stripe(stripePublicKey);
+      stripe.redirectToCheckout({ sessionId: sessionId })
+        .then(function (result) {
+          if (result.error) {
+            console.error("Stripe redirection error:", result.error.message);
+          } else {
+            console.log("Redirecționare reușită către Stripe.");
+          }
+        })
+        .catch(function (error) {
+          console.error("Error in redirectToCheckout:", error);
+        });
+
+      console.log("Stripe session initialized.");
+    } else {
+      console.log("Stripe public key or session ID is missing.");
+    }
+  };
+  script.onerror = function() {
+    console.error("Eroare la încărcarea Stripe.js.");
+  };
+
+  document.head.appendChild(script);
+</script>

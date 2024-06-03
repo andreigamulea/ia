@@ -155,16 +155,13 @@
         </td>
         <%if factura.status=='Proforma'%>
         <td style="text-align: center; height: 50px; vertical-align:middle;">
-        
-        <%= link_to 'Plătește acum', pay1_facturaproforma_path(factura), method: :get, class: 'btn btn-primary' %>
-        
-        
 
-
-      </td>
+              <%= button_to 'Plătește acum', create_stripe_session_facturaproforma_path(factura), method: :post, class: 'btn btn-primary', data: { turbo: false } %>
+        </td>
 
         <%else%>
-        <td>Achitata</td>
+        <td style="text-align: center; height: 50px; vertical-align: middle; color: green;">Achitata</td>
+
         <%end%>
       </tr>
     <% end %>
