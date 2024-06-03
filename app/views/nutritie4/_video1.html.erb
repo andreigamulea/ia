@@ -5,7 +5,8 @@
 
 
 
-  <td><%= video.nume %></td>
+<td><%= video.nume.gsub('EN', '<span style="color: red;">EN</span>').gsub('RO', '<span style="color: blue;">RO</span>').html_safe %></td>
+
   <td><%= video.descriere %></td>
  
   <td>   
