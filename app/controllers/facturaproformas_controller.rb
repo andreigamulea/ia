@@ -7,8 +7,9 @@ class FacturaproformasController < ApplicationController
   #before_action :reset_stripe_session, only: [:pay1]
   skip_before_action :verify_authenticity_token, only: [:create_stripe_session]
   #skip_before_action :verify_authenticity_token, only: [:create_stripe_session]
-  before_action :set_stripe_key, only: [:pay1, :create_stripe_session]
+  #before_action :set_stripe_key, only: [:pay1, :create_stripe_session]
   before_action :authenticate_user!, except: [:create_stripe_session]
+  before_action :set_stripe_key, only: [:create_stripe_session]
 
   
   # GET /facturaproformas or /facturaproformas.json
@@ -47,65 +48,63 @@ class FacturaproformasController < ApplicationController
   end
 
 
-  def pay1
-    @factura = Facturaproforma.find(params[:id])
-    render :create_stripe_session
-  end
-
+  #Functionare plati Stripe:
+  #aceasta metoda este apelata de un Buton dintr-un view C:\ia\app\views\facturas\index.html.erb
+  # din alt controller Facturas.Butonul are turbo: false. Metoda de mai jos este POST si nu are un View.
+  # are un js.erb unde este cod pt Stripe. Enjoy!
   def create_stripe_session
     @factura = Facturaproforma.find(params[:id])
     Rails.logger.info "Factura proforma gasita: #{@factura.inspect}"
-
+  
     @comanda = Comanda.find(@factura.comanda_id)
     Rails.logger.info "Comanda asociata gasita: #{@comanda.inspect}"
-
+  
     @user = User.find(@factura.user_id)
     Rails.logger.info "Utilizatorul asociat gasit: #{@user.inspect}"
-
+  
     @detaliifacturare = DateFacturare.find_by(user_id: @user.id)
     Rails.logger.info "Detalii facturare gasite: #{@detaliifacturare.inspect}"
 
     @prod = Prod.find(@factura.prod_id)
     Rails.logger.info "Produs asociat gasit: #{@prod.inspect}"
-
-    # Asigurare că utilizatorul are un client Stripe
+  
+    an_record = @detaliifacturare.nil? ? An32324.find_by(email: @user.email) : nil
+    Rails.logger.info "Detalii din An32324 gasite: #{an_record.inspect}" if an_record
+  
+    metadata = {
+      user_id: @user.id.to_s,
+      email: @user.email,
+      numar_comanda: @comanda.id,
+      id_produs: @prod.id,
+      nume: @detaliifacturare&.nume || an_record&.nume,
+      prenume: @detaliifacturare&.prenume || nil,
+      numecompanie: @detaliifacturare&.numecompanie || nil,
+      cui: @detaliifacturare&.cui || nil,
+      tara: @detaliifacturare&.tara || nil,
+      strada: @detaliifacturare&.strada || nil,
+      numar: @detaliifacturare&.numar || nil,
+      altedate: @detaliifacturare&.altedate || nil,
+      adresaemail: @detaliifacturare&.adresaemail || nil,
+      judet: @detaliifacturare&.judet || nil,
+      localitate: @detaliifacturare&.localitate || "Bucuresti",
+      codpostal: @detaliifacturare&.codpostal || nil,
+      telefon: @detaliifacturare&.telefon || nil,
+      updated_at: @detaliifacturare&.updated_at || nil,
+      cantitate: @factura.cantitate,
+      pret_bucata: @factura.pret_unitar,
+      pret_total: @factura.valoare_totala
+    }
+  
     if @user.stripe_customer_id.nil?
       begin
         customer = Stripe::Customer.create(email: @user.email)
         @user.update(stripe_customer_id: customer.id)
       rescue => e
         Rails.logger.error "Stripe customer creation failed for user #{@user.id}: #{e.message}"
-        # Gestionare erori
         return
       end
     end
-
-    # Metadata pentru Stripe
-    metadata = {
-      user_id: @user.id.to_s,
-      email: @user.email,
-      numar_comanda: @comanda.id,
-      id_produs: @prod.id,
-      nume: @detaliifacturare.nume,
-      prenume: @detaliifacturare.prenume,
-      numecompanie: @detaliifacturare.numecompanie,
-      cui: @detaliifacturare.cui,
-      tara: @detaliifacturare.tara,
-      strada: @detaliifacturare.strada,
-      numar: @detaliifacturare.numar,
-      altedate: @detaliifacturare.altedate,
-      adresaemail: @detaliifacturare.adresaemail,
-      judet: @detaliifacturare.judet,
-      localitate: @detaliifacturare.localitate,
-      codpostal: @detaliifacturare.codpostal,
-      telefon: @detaliifacturare.telefon,
-      updated_at: @detaliifacturare.updated_at,
-      cantitate: @factura.cantitate,
-      pret_bucata: @factura.pret_unitar,
-      pret_total: @factura.valoare_totala
-    }
-
-    # Creează sesiune Stripe
+  
     begin
       @session = Stripe::Checkout::Session.create({
         payment_method_types: ['card'],
@@ -127,14 +126,20 @@ class FacturaproformasController < ApplicationController
         cancel_url: root_url,
         metadata: metadata
       })
-      
-      render json: { message: "Sesiune creată cu succes", session_id: @session.id }
+  
+      Rails.logger.info "Stripe session created: #{@session.id}"
+  
+      respond_to do |format|
+        format.html {
+          render partial: "facturaproformas/create_stripe_session", locals: { stripe_public_key: @stripe_public_key, session_id: @session.id }
+        }
+      end
     rescue => e
       Rails.logger.error "Failed to create checkout session: #{e.message}"
       render json: { error: e.message }, status: :internal_server_error
     end
   end
-
+  
   # GET /facturaproformas/1 or /facturaproformas/1.json
   def show
     @factura = Facturaproforma.find(params[:id])

@@ -99,6 +99,7 @@ class StripeWebhooksController < ApplicationController
       comanda.update(
         statecomanda2: 'Finalizata',
         stateplata1: 'Achitata',
+        plataprin: 'Stripe',
         stateplata2: "#{pret_total} lei",
         total: pret_total,
         stateplata3: "acces #{produs.valabilitatezile} zile",
@@ -316,6 +317,8 @@ class StripeWebhooksController < ApplicationController
     comanda = Comanda.find_by(numar: metadata[:numar_comanda])
     produs = Prod.find_by(id: metadata[:id_produs])
   
+
+    if !["cod36", "cod37"].include?(produs.cod)
     # Generează numărul de factură
     ultima_factura = Factura.order(:numar).last
     numar_factura = ultima_factura ? ultima_factura.numar + 1 : 1001
@@ -329,7 +332,7 @@ class StripeWebhooksController < ApplicationController
       pret_unitar_fara_tva = 29.41 #custom
       produs.pret = 35
     end  
-
+    end
     dt = produs.valabilitatezile
     if !['cod11', 'cod12', 'cod13', 'cod14', 'cod15', 'cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
        'cod22', 'cod23', 'cod24', 'cod25', 'cod26', 'cod27', 'cod28', 'cod29',
@@ -341,7 +344,7 @@ class StripeWebhooksController < ApplicationController
       produsul = produs.nume
     end
     
-
+    if !["cod36", "cod37"].include?(produs.cod)
     # Creați o nouă factură
     factura = Factura.create(
       comanda_id: comanda.id,
@@ -367,6 +370,16 @@ class StripeWebhooksController < ApplicationController
       valoare_tva: TVA,
       valoare_totala: payment_intent["metadata"]["pret_total"]
     )
+    else
+      factura = Facturaproforma.find_by(comanda_id: comanda.id)
+      if factura
+        factura.update(
+          plata_prin: 'Stripe', 
+          data_platii: Date.current, 
+          status: 'Achitata'
+        )
+      end
+    end
     if factura.nume_companie.present? || factura.cui.present?
       send_payment_success_email(factura)
     end
