@@ -81,12 +81,13 @@ class Nutritie4Controller < ApplicationController
         puts("sunt in has acces")
         if current_user.limba == 'EN'
           puts("sunt in limba en")
-          @myvideo = Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
+          @myvideo = Video.where(tip: 'nutritie4').where('(ordine >= ? AND ordine <= ?) OR (ordine > ? AND ordine < ?)', 1, 1000, 4000, 5000).order(ordine: :asc)
         else
           puts("NU sunt in limba en")
           @myvideo = Video.where(tip: 'nutritie4').where('ordine <= ?', 1000).order(ordine: :asc)
-          puts("Numarul: #{@myvideo.count}")
         end
+        puts("Numarul: #{@myvideo.count}")
+        
       else
         puts("sunt in has acces NU")
         @myvideo13 = Video.none
