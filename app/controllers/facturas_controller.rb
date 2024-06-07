@@ -117,7 +117,7 @@ class FacturasController < ApplicationController
     temp_folder = Rails.root.join('tmp', 'pdfs')
     FileUtils.mkdir_p(temp_folder)
     
-    # Extrageți facturile pe care doriți să le includeți
+    # #Extrageți facturile pe care doriți să le includeți
     #facturas = Factura.where(numar: 1204..1542)#octombrie
     #facturas = Factura.where(numar: 1536..1654)#noiembrie
     #facturas = Factura.where(numar: 1649..1716)#decembrie
