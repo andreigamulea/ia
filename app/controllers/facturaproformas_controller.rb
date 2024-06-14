@@ -12,7 +12,7 @@ class FacturaproformasController < ApplicationController
   before_action :set_stripe_key, only: [:create_stripe_session]
 
   
-  ## GET /facturaproformas or /facturaproformas.json
+  # GET /facturaproformas or /facturaproformas.json
   def index
     @facturaproformas = Facturaproforma.all
   end
