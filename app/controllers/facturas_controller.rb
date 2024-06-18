@@ -1,5 +1,6 @@
 class FacturasController < ApplicationController 
   require 'zip'
+  require 'builder'
   before_action :set_factura, only: %i[ show edit update destroy ]
   before_action :set_user, only: %i[index show edit update destroy]
   before_action :set_user_admin, only: %i[download_all download1 edit destroy facturicomenzi]
@@ -52,11 +53,20 @@ class FacturasController < ApplicationController
       GROUP BY comanda_id
     ) AS subquery ON facturas.comanda_id = subquery.comanda_id")
   .order('subquery.factura_count DESC, facturas.comanda_id DESC')
-
-
-
-
   end  
+
+
+  def facturi_xml
+    @facturas = Factura.order(created_at: :asc)
+    @facturas_pe_firma = @facturas.select { |factura| factura.cui =~ /\d{2,}/ }
+  end
+
+  def download_xml
+    factura = Factura.find(params[:id])
+    xml = generate_invoice_xml(factura)
+
+    send_data xml, type: 'application/xml', filename: "factura_#{factura.numar}.xml"
+  end
 
 
   def download
@@ -258,16 +268,143 @@ end
     end
     
     
-    def generate_pdf_for_factura(factura)
-      html = render_to_string(
-        template: 'facturas/download1',   # Aici folosim același template ca în download1
-        locals: { factura: factura },
-        encoding: 'UTF8'
-      )
-      PDFKit.new(html).to_pdf
+    def generate_invoice_xml(factura)
+      builder = Builder::XmlMarkup.new(indent: 2)
+      builder.Invoice(
+        'xmlns:cbc' => "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+        'xmlns:udt' => "urn:oasis:names:specification:ubl:schema:xsd:UnqualifiedDataTypes-2",
+        'xmlns:cac' => "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+        'xmlns:ccts' => "urn:un:unece:uncefact:documentation:2",
+        'xmlns' => "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2",
+        'xmlns:qdt' => "urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2",
+        'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance"
+      ) do |invoice|
+        invoice.cbc :UBLVersionID, '2.1'
+        invoice.cbc :CustomizationID, 'urn:cen.eu:en16931:2017#compliant#urn:efactura.mfinante.ro:CIUS-RO:1.0.1'
+        invoice.cbc :ID, "ACDA#{factura.numar}"
+        invoice.cbc :IssueDate, factura.created_at.strftime('%Y-%m-%d')
+        invoice.cbc :DueDate, factura.created_at.strftime('%Y-%m-%d')
+        invoice.cbc :InvoiceTypeCode, '380'
+        invoice.cbc :Note, 'TVA la incasare'
+        invoice.cbc :Note, "Nr.comanda: #{factura.comanda_id}"
+        invoice.cbc :DocumentCurrencyCode, 'RON'
+        invoice.cbc :TaxCurrencyCode, 'RON'
+  
+        invoice.cac :AccountingSupplierParty do |supplier|
+          supplier.cac :Party do |party|
+            party.cbc :EndpointID, 'doringrasu@gmail.com', schemeID: 'EM'
+            party.cac :PartyIdentification do |identification|
+              identification.cbc :ID, '5509227'
+            end
+            party.cac :PostalAddress do |address|
+              address.cbc :StreetName, 'str. OSTASILOR nr. 15 et. P ap. 1A'
+              address.cbc :CityName, 'SECTOR1'
+              address.cbc :CountrySubentity, 'RO-B'
+              address.cac :Country do |country|
+                country.cbc :IdentificationCode, 'RO'
+              end
+            end
+            party.cac :PartyTaxScheme do |tax_scheme|
+              tax_scheme.cbc :CompanyID, 'RO5509227'
+              tax_scheme.cac :TaxScheme do |tax|
+                tax.cbc :ID, 'VAT'
+              end
+            end
+            party.cac :PartyLegalEntity do |legal_entity|
+              legal_entity.cbc :RegistrationName, 'S.C. AYUSH CELL ROMANIA S.R.L.'
+              legal_entity.cbc :CompanyID, 'J40/6720/1994'
+            end
+            party.cac :Contact do |contact|
+              contact.cbc :Name, 'GAMULEA ANDREI FLORIN'
+              contact.cbc :Telephone, '0749079619'
+              contact.cbc :ElectronicMail, 'doringrasu@gmail.com'
+            end
+          end
+        end
+  
+        invoice.cac :AccountingCustomerParty do |customer|
+          customer.cac :Party do |party|
+            party.cac :PartyIdentification do |identification|
+              identification.cbc :ID, factura.cui
+            end
+            party.cac :PostalAddress do |address|
+              address.cbc :StreetName, "#{factura.strada}, NR. #{factura.numar_adresa}"
+              address.cbc :CityName, factura.localitate
+              address.cbc :CountrySubentity, "RO-#{factura.judet}"
+              address.cac :Country do |country|
+                country.cbc :IdentificationCode, 'RO'
+              end
+            end
+            party.cac :PartyTaxScheme do |tax_scheme|
+              tax_scheme.cbc :CompanyID, factura.cui
+              tax_scheme.cac :TaxScheme do |tax|
+                tax.cbc :ID, 'VAT'
+              end
+            end
+            party.cac :PartyLegalEntity do |legal_entity|
+              legal_entity.cbc :RegistrationName, factura.nume_companie if factura.nume_companie.present?
+              legal_entity.cbc :CompanyID, factura.cui
+            end
+          end
+        end
+  
+        invoice.cac :PaymentMeans do |payment|
+          payment.cbc :PaymentMeansCode, '42'
+          payment.cac :PayeeFinancialAccount do |account|
+            account.cbc :ID, 'RO53INGB0000999902918784'
+            account.cbc :Name, 'ING BANK ROMANIA'
+          end
+        end
+  
+        total_without_vat = factura.pret_unitar * factura.cantitate
+        vat_amount = (total_without_vat * (factura.valoare_tva / 100)).round(2)
+        total_with_vat = (total_without_vat + vat_amount).round(2)
+  
+        invoice.cac :TaxTotal do |tax_total|
+          tax_total.cbc :TaxAmount, vat_amount, currencyID: 'RON'
+          tax_total.cac :TaxSubtotal do |tax_subtotal|
+            tax_subtotal.cbc :TaxableAmount, total_without_vat, currencyID: 'RON'
+            tax_subtotal.cbc :TaxAmount, vat_amount, currencyID: 'RON'
+            tax_subtotal.cac :TaxCategory do |tax_category|
+              tax_category.cbc :ID, 'S'
+              tax_category.cbc :Percent, factura.valoare_tva
+              tax_category.cac :TaxScheme do |tax_scheme|
+                tax_scheme.cbc :ID, 'VAT'
+              end
+            end
+          end
+        end
+  
+        invoice.cac :LegalMonetaryTotal do |total|
+          total.cbc :LineExtensionAmount, total_without_vat, currencyID: 'RON'
+          total.cbc :TaxExclusiveAmount, total_without_vat, currencyID: 'RON'
+          total.cbc :TaxInclusiveAmount, total_with_vat, currencyID: 'RON'
+          total.cbc :PayableAmount, total_with_vat, currencyID: 'RON'
+        end
+  
+        invoice.cac :InvoiceLine do |line|
+          line.cbc :ID, '1'
+          line.cbc :InvoicedQuantity, factura.cantitate, unitCode: 'E48'
+          line.cbc :LineExtensionAmount, total_without_vat, currencyID: 'RON'
+          line.cac :Item do |item|
+            item.cbc :Description, "Comanda nr. #{factura.comanda_id}"
+            item.cbc :Name, factura.produs
+            item.cac :ClassifiedTaxCategory do |tax_category|
+              tax_category.cbc :ID, 'S'
+              tax_category.cbc :Percent, factura.valoare_tva
+              tax_category.cac :TaxScheme do |tax_scheme|
+                tax_scheme.cbc :ID, 'VAT'
+              end
+            end
+          end
+          line.cac :Price do |price|
+            price.cbc :PriceAmount, factura.pret_unitar, currencyID: 'RON'
+          end
+        end
+      end
+  
+      builder.target!
     end
-    
-    
     
     
 end
