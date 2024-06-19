@@ -9,10 +9,11 @@
       <thead>
         <tr>
           <th>#</th>
-         
           <th>Număr</th>
           <th>Data Emiterii</th>
           <th>Client</th>
+          <th>Firma</th>
+          <th>Cui</th>
           <th>Acțiune</th>
         </tr>
       </thead>
@@ -20,10 +21,11 @@
         <% @facturas_pe_firma.each_with_index do |factura, index| %>
           <tr>
             <td><%= index + 1 %></td>
-            
             <td><%= factura.numar %></td>
             <td><%= factura.created_at.strftime('%Y-%m-%d') %></td>
             <td><%= factura.prenume %> <%= factura.nume %></td>
+            <td><%= factura.nume_companie %></td>
+            <td><%= factura.cui %></td>
             <td>
               <%= link_to 'Descarcă XML', download_xml_factura_path(factura), method: :get, class: 'btn btn-primary' %>
             </td>
@@ -39,10 +41,11 @@
       <thead>
         <tr>
           <th>#</th>
-          
           <th>Număr</th>
           <th>Data Emiterii</th>
           <th>Client</th>
+          <th>Firma</th>
+          <th>Cui</th>
           <th>Acțiune</th>
         </tr>
       </thead>
@@ -50,10 +53,11 @@
         <% @facturas.each_with_index do |factura, index| %>
           <tr>
             <td><%= index + 1 %></td>
-            
             <td><%= factura.numar %></td>
             <td><%= factura.created_at.strftime('%Y-%m-%d') %></td>
             <td><%= factura.prenume %> <%= factura.nume %></td>
+            <td><%= factura.nume_companie %></td>
+            <td><%= factura.cui %></td>
             <td>
               <%= link_to 'Descarcă XML', download_xml_factura_path(factura), method: :get, class: 'btn btn-primary' %>
             </td>
