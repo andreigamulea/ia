@@ -64,7 +64,8 @@ class FacturasController < ApplicationController
   def download_xml
     factura = Factura.find(params[:id])
     xml = generate_invoice_xml(factura)
-    filename = "F_#{factura.cui}_ACDA#{factura.numar}_#{factura.created_at.strftime('%d-%m-%Y')}.xml"
+    supplier_cui = '5509227'  # Codul fiscal al furnizorului
+    filename = "F_#{supplier_cui}_ACDA#{factura.numar}_#{factura.created_at.strftime('%d-%m-%Y')}.xml"
     send_data xml, type: 'application/xml', filename: filename
   end
 
