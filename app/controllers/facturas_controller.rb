@@ -325,8 +325,18 @@ end
   
         invoice.cac :AccountingCustomerParty do |customer|
           customer.cac :Party do |party|
-            party.cac :PartyIdentification do |identification|
-              identification.cbc :ID, factura.cui
+            if factura.cui =~ /\d{2,}/
+              party.cac :PartyIdentification do |identification|
+                identification.cbc :ID, factura.cui
+              end
+              party.cac :PartyLegalEntity do |legal_entity|
+                legal_entity.cbc :RegistrationName, factura.nume_companie if factura.nume_companie.present?
+                legal_entity.cbc :CompanyID, factura.cui
+              end
+            else
+              party.cac :PartyName do |party_name|
+                party_name.cbc :Name, "#{factura.nume} #{factura.prenume}"
+              end
             end
             party.cac :PostalAddress do |address|
               address.cbc :StreetName, "#{factura.strada}, NR. #{factura.numar_adresa}"
@@ -336,15 +346,13 @@ end
                 country.cbc :IdentificationCode, 'RO'
               end
             end
-            party.cac :PartyTaxScheme do |tax_scheme|
-              tax_scheme.cbc :CompanyID, factura.cui
-              tax_scheme.cac :TaxScheme do |tax|
-                tax.cbc :ID, 'VAT'
+            if factura.cui =~ /\d{2,}/
+              party.cac :PartyTaxScheme do |tax_scheme|
+                tax_scheme.cbc :CompanyID, factura.cui
+                tax_scheme.cac :TaxScheme do |tax|
+                  tax.cbc :ID, 'VAT'
+                end
               end
-            end
-            party.cac :PartyLegalEntity do |legal_entity|
-              legal_entity.cbc :RegistrationName, factura.nume_companie if factura.nume_companie.present?
-              legal_entity.cbc :CompanyID, factura.cui
             end
           end
         end
@@ -406,6 +414,5 @@ end
   
       builder.target!
     end
-    
     
 end
