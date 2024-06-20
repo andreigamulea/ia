@@ -551,7 +551,7 @@ end
               linie.Valoare (factura.pret_unitar * factura.cantitate).round(2)
               linie.ProcTVA factura.valoare_tva
               linie.TVA ((factura.pret_unitar * factura.cantitate) * (factura.valoare_tva / 100)).round(2)
-              linie.Description "Comanda nr. #{factura.comanda_id}"
+              linie.InformatiiSuplimentare "Comanda nr. #{factura.comanda_id}"
             end
           end
           detalii.txtObservatii1 "Nr.comanda: #{factura.comanda_id}"
