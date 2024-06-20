@@ -185,6 +185,10 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   resources :videos
   get 'facturas/facturi_xml', to: 'facturas#facturi_xml', as: 'facturi_xml'#pt xml
   get 'facturas/:id/download_xml', to: 'facturas#download_xml', as: 'download_xml_factura' #pt xml
+  get 'facturas/:id/download_xml_company', to: 'facturas#download_xml_company', as: 'download_xml_company_factura'
+  get 'facturas/:id/download_xml_individual', to: 'facturas#download_xml_individual', as: 'download_xml_individual_factura'
+
+  # Root route
   get 'facturas/generate_pdf', to: 'facturas#generate_pdf', as: 'generate_pdf_facturas'
   #get 'facturas/download_all', to: 'facturas#download_all', defaults: { format: 'pdf' } 
   #get 'facturas/download_all', to: 'facturas#download_all', as: 'download_all_facturas'

@@ -63,11 +63,13 @@ class FacturasController < ApplicationController
 
   def download_xml
     factura = Factura.find(params[:id])
-    xml = generate_invoice_xml(factura)
+    xml = factura.cui =~ /\d{2,}/ ? generate_invoice_xml_company(factura) : generate_invoice_xml_individual(factura)
     supplier_cui = '5509227'  # Codul fiscal al furnizorului
     filename = "F_#{supplier_cui}_ACDA#{factura.numar}_#{factura.created_at.strftime('%d-%m-%Y')}.xml"
+  
     send_data xml, type: 'application/xml', filename: filename
   end
+  
 
 
   def download
@@ -414,5 +416,168 @@ end
   
       builder.target!
     end
+    ### metoda PJ start
+    def generate_invoice_xml_company(factura)
+      builder = Builder::XmlMarkup.new(indent: 2)
+      builder.Facturi do |facturi|
+        facturi.Factura do |factura_xml|
+          factura_xml.Antet do |antet|
+            antet.FurnizorNume 'S.C. AYUSH CELL ROMANIA S.R.L.'
+            antet.FurnizorCIF 'RO5509227'
+            antet.FurnizorNrRegCom 'J40/6720/1994'
+            antet.FurnizorCapital '205.00'
+            antet.FurnizorAdresa 'BUCURESTI sect. 1 str. OSTASILOR nr. 15 ap. 1A'
+            antet.FurnizorBanca 'CEC BANK SA'
+            antet.FurnizorIBAN 'RO49CECEB20701RON0591530'
+            antet.FurnizorInformatiiSuplimentare 'Banca ING BANK IBAN RO53INGB0000999902918784'
+            antet.ClientNume factura.nume_companie
+            antet.ClientInformatiiSuplimentare ''
+            antet.ClientCIF factura.cui
+            antet.ClientNrRegCom ''
+            antet.ClientJudet factura.judet
+            antet.ClientLocalitate factura.localitate
+            antet.ClientTara 'RO'
+            antet.ClientAdresa "#{factura.localitate}, STR. #{factura.strada}, NR. #{factura.numar_adresa}"
+            antet.ClientTelefon ''
+            antet.ClientEmail ''
+            antet.ClientBanca ''
+            antet.ClientIBAN ''
+            antet.FacturaNumar "ACDA#{factura.numar}"
+            antet.FacturaData factura.created_at.strftime('%d.%m.%Y')
+            antet.FacturaScadenta factura.created_at.strftime('%d.%m.%Y')
+            antet.FacturaTaxareInversa 'Nu'
+            antet.FacturaTVAIncasare 'Da'
+            antet.FacturaEFactura 'Nu'
+            antet.FacturaInformatiiSuplimentare ''
+            antet.FacturaMoneda 'RON'
+            antet.FacturaCotaTVA 'TVA (19%)'
+            antet.FacturaGreutate '0.000'
+            antet.FacturaAccize '0.00'
+          end
     
-end
+          factura_xml.Detalii do |detalii|
+            detalii.Continut do |continut|
+              continut.Linie do |linie|
+                linie.LinieNrCrt '1'
+                linie.Descriere factura.produs
+                linie.CodArticolFurnizor ''
+                linie.CodArticolClient ''
+                linie.InformatiiSuplimentare ''
+                linie.UM ''
+                linie.Cantitate factura.cantitate
+                linie.Pret factura.pret_unitar.round(2)
+                linie.Valoare (factura.pret_unitar * factura.cantitate).round(2)
+                linie.ProcTVA factura.valoare_tva
+                linie.TVA ((factura.pret_unitar * factura.cantitate) * (factura.valoare_tva / 100)).round(2)
+              end
+            end
+            detalii.txtObservatii1 "Nr.comanda: #{factura.comanda_id}"
+          end
+    
+          factura_xml.Sumar do |sumar|
+            total_valoare = (factura.pret_unitar * factura.cantitate).round(2)
+            total_tva = (total_valoare * (factura.valoare_tva / 100)).round(2)
+            total = (total_valoare + total_tva).round(2)
+    
+            sumar.TotalValoare total_valoare
+            sumar.TotalTVA total_tva
+            sumar.Total total
+            sumar.LinkPlata ''
+          end
+    
+          factura_xml.Observatii do |observatii|
+            observatii.txtObservatii ''
+            observatii.SoldClient ''
+            observatii.ModalitatePlata ''
+          end
+        end
+      end
+    
+      builder.target!
+    end
+    
+    ###metoda PJ final
+  
+  ###metoda PF start
+  def generate_invoice_xml_individual(factura)
+    builder = Builder::XmlMarkup.new(indent: 2)
+    builder.Facturi do |facturi|
+      facturi.Factura do |factura_xml|
+        factura_xml.Antet do |antet|
+          antet.FurnizorNume 'S.C. AYUSH CELL ROMANIA S.R.L.'
+          antet.FurnizorCIF 'RO5509227'
+          antet.FurnizorNrRegCom 'J40/6720/1994'
+          antet.FurnizorCapital '205.00'
+          antet.FurnizorAdresa 'BUCURESTI sect. 1 str. OSTASILOR nr. 15 ap. 1A'
+          antet.FurnizorBanca 'CEC BANK SA'
+          antet.FurnizorIBAN 'RO49CECEB20701RON0591530'
+          antet.FurnizorInformatiiSuplimentare 'Banca ING BANK IBAN RO53INGB0000999902918784'
+          antet.ClientNume "#{factura.nume} #{factura.prenume}"
+          antet.ClientInformatiiSuplimentare ''
+          antet.ClientCIF ''
+          antet.ClientNrRegCom ''
+          antet.ClientJudet factura.judet
+          antet.ClientLocalitate factura.localitate
+          antet.ClientTara 'RO'
+          antet.ClientAdresa "#{factura.localitate}, STR. #{factura.strada}, NR. #{factura.numar_adresa}"
+          antet.ClientTelefon ''
+          antet.ClientEmail ''
+          antet.ClientBanca ''
+          antet.ClientIBAN ''
+          antet.FacturaNumar "ACDA#{factura.numar}"
+          antet.FacturaData factura.created_at.strftime('%d.%m.%Y')
+          antet.FacturaScadenta factura.created_at.strftime('%d.%m.%Y')
+          antet.FacturaTaxareInversa 'Nu'
+          antet.FacturaTVAIncasare 'Da'
+          antet.FacturaEFactura 'Nu'
+          antet.FacturaInformatiiSuplimentare ''
+          antet.FacturaMoneda 'RON'
+          antet.FacturaCotaTVA 'TVA (19%)'
+          antet.FacturaGreutate '0.000'
+          antet.FacturaAccize '0.00'
+        end
+  
+        factura_xml.Detalii do |detalii|
+          detalii.Continut do |continut|
+            continut.Linie do |linie|
+              linie.LinieNrCrt '1'
+              linie.Descriere factura.produs
+              linie.CodArticolFurnizor ''
+              linie.CodArticolClient ''
+              linie.InformatiiSuplimentare ''
+              linie.UM ''
+              linie.Cantitate factura.cantitate
+              linie.Pret factura.pret_unitar.round(2)
+              linie.Valoare (factura.pret_unitar * factura.cantitate).round(2)
+              linie.ProcTVA factura.valoare_tva
+              linie.TVA ((factura.pret_unitar * factura.cantitate) * (factura.valoare_tva / 100)).round(2)
+            end
+          end
+          detalii.txtObservatii1 "Nr.comanda: #{factura.comanda_id}"
+        end
+  
+        factura_xml.Sumar do |sumar|
+          total_valoare = (factura.pret_unitar * factura.cantitate).round(2)
+          total_tva = (total_valoare * (factura.valoare_tva / 100)).round(2)
+          total = (total_valoare + total_tva).round(2)
+  
+          sumar.TotalValoare total_valoare
+          sumar.TotalTVA total_tva
+          sumar.Total total
+          sumar.LinkPlata ''
+        end
+  
+        factura_xml.Observatii do |observatii|
+          observatii.txtObservatii ''
+          observatii.SoldClient ''
+          observatii.ModalitatePlata ''
+        end
+      end
+    end
+  
+    builder.target!
+  end
+  
+  ###metoda PF final
+  
+  end
