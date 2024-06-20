@@ -291,7 +291,7 @@ class FacturaproformasController < ApplicationController
           )
   
           # Actualizează numărul comenzii
-          numar_comanda = Comanda.maximum(:id).to_i
+          numar_comanda = Comanda.maximum(:id).to_i #asta asigura ca id este la fel cu numar_comanda
           comanda.update!(numar: numar_comanda)
   
           # Creează înregistrarea în tabela ComenziProd
