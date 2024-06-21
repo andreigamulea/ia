@@ -28,7 +28,7 @@ class TabereController < ApplicationController
    
 
    #@has_access_cursuri = ComenziProd.exists?(user_id: current_user.id, prod_id: 56)
-   #verific daca userul poate vedea videourile taberei(a platit?)
+   ##verific daca userul poate vedea videourile taberei(a platit?)
    if current_user
      prod_id_cod54 = Prod.find_by(cod: 'cod54')&.id
      prod_id_cod64 = Prod.find_by(cod: 'cod64')&.id
