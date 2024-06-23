@@ -114,7 +114,7 @@
      
       
       <th style="text-align: center; height: 50px; vertical-align:middle;">Valoare Totala</th>
-      <th style="text-align: center; height: 50px; vertical-align:middle;">Opțiuni</th>
+
       <th style="text-align: center; height: 50px; vertical-align:middle;width:15%;">Status</th>
     </tr>
   </thead>
@@ -145,22 +145,19 @@
 
 
 
-        <td>       
-        <%if current_user.role==3%>
-        <%= link_to 'Vizualizează', factura, class: "btn btn-info btn-sm" %>
-        <%= link_to 'Editează', edit_facturaproforma_path(factura), class: "btn btn-warning btn-sm" %>
-        <%= link_to 'Șterge', factura, method: :delete, data: { confirm: 'Ești sigur că vrei să ștergi această factură?' }, class: "btn btn-danger btn-sm" %>
-        <%end%>  
-        <%= link_to 'Factura PDF', facturaproforma_path(factura, format: :pdf), class: "btn btn-primary btn-sm" %>
-        </td>
+
         <%if factura.status=='Proforma'%>
         <td style="text-align: center; height: 50px; vertical-align:middle;">
-
+              <%= link_to 'Factura PDF', facturaproforma_path(factura, format: :pdf), class: "btn btn-primary btn-sm" %>
               <%= button_to 'Plătește acum', create_stripe_session_facturaproforma_path(factura), method: :post, class: 'btn btn-primary', data: { turbo: false } %>
+              
         </td>
 
         <%else%>
-        <td style="text-align: center; height: 50px; vertical-align: middle; color: green;">Achitata</td>
+
+        
+        <td style="text-align: center; height: 50px; vertical-align: middle; color: green;"><%= link_to 'Factura PDF', facturaproforma_path(factura, format: :pdf), class: "btn btn-primary btn-sm" %>
+        Achitata</td>
 
         <%end%>
       </tr>
