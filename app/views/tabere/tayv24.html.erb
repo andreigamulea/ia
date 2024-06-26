@@ -30,10 +30,10 @@
 }
 
 </style>
-<% content_for :title, "Ayush Cell Romania: Tabăra de ayurveda etapa de Vară 2024" %>
+<% content_for :title, "Ayush Cell Romania: Tabăra de Ayurveda etapa de Vară 2024" %>
 <% content_for :meta_tags do %>
   <meta name="description" content="Participă la Tabara de Ayurveda și aprofundează subiectele prezentate">
-  <meta name="keywords" content="ayurveda, nutritie ayurvedica, dosha, vata, pitta, kapha, dosha-prakriti, greutatea ideala, formule greutate ideala">
+  <meta name="keywords" content="ayurveda, tabara de ayurveda, dosha, Pancha-Kosha, Vijnana-Svasthya, vata, pitta, kapha, dosha-prakriti">
   <link rel="canonical" href="https://www.ayushcell.ro/tayv2024">
 <% end %>
 
@@ -41,7 +41,7 @@
 <%= render 'layouts/sideleft' %>
 
 <div class="cr" style="background-color: white; ">
-    <h1 class="first-tittle">Ayush Cell Romania: Tabăra de ayurveda etapa de vară 2024</h1>
+    <h1 class="first-tittle">Ayush Cell Romania: Tabăra de Ayurveda etapa de vară 2024</h1>
     <h2 class="main-title" >Tabara de Ayurveda etapa de vară 2024</h2>
 
 <section>
@@ -87,7 +87,7 @@
 <div class="r1c2" style="align-items: center; width:100%;">
 
 
-    <%= link_to 'Vizionează înregistrările',  '#VideoNutritie', class: 'register' %>
+    <%= link_to 'Vizionează înregistrările',  '#tayv2024', class: 'register' %>
 </div>
 
 <br>
@@ -95,28 +95,29 @@
 <br>
 
 <h3><strong>Cine poate participa?</strong></h3>
-<p>Tabăra este destinată tuturor celor interesați să aprofundeze diverse subiecte practice din domeniul ayurvedei. La aceasta pot participa atât lectorii de ayurveda din cadrul AMN-România, cât și cursanții, precum și alte persoane care nu urmează aceste cursuri.</p>
+<p>Tabăra este destinată tuturor celor interesați să aprofundeze diverse subiecte practice din domeniul ayurvedei. La aceasta pot participa atât lectorii de Ayurveda din cadrul AMN-România, cursanții Ayurveda, precum și alte persoane care nu urmează aceste cursuri.</p>
 <h3><strong>Modalitatea de desfășurare a taberei</strong></h3>
     <ol>
         <li>Participare online, pe platforma ZOOM în intervalul orar 18:30 - 21:30</li>
         <li>Participare online, cu acces direct pe platforma ZOOM și posibilitatea de a viziona înregistrările sesiunilor ulterior timp de 90 de zile de la data achizitionarii acestei optiuni. Aceasta permite participanților să vizioneze înregistrarile acestui din cadrul taberei la orice oră și fără restricții de timp.</li>
     </ol>
 <h3><strong>Procesul de înscriere</strong></h3>
-<p>Pentru a vă înscrie la atabara de ayurveda, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul la link-ul de Zoom sau la vizionarea inregistrarilor se va face direct in pagina de site.</p>
+<p>Pentru a vă înscrie la tabara de Ayurveda, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul la link-ul de Zoom sau la vizionarea inregistrarilor se va face direct in pagina de site.</p>
 <h3><strong>Costul participării</strong></h3>
-    <h4 style="font-size:16px">Lectori de ayurveda din cadrul AMN-România:</h4>
-    <ul>
-        <li>Lector Ayurveda cu participare live: 115 lei. Opțiunea permite acces la sesiunile live fără posibilitate de revizionare.</li>
-        <li>Lector Ayurveda cu participare live + acces la înregistrări: 235 lei. Opțiunea permite acces la sesiunile live și la vizionarea înregistrărilor acestora pe site pentru revizionare ulterioară timp de 90 de zile de la data de început a taberei sau de la data plății.</li>
-    </ul>
-    <h4 style="font-size:16px">Participanți:</h4>
+<h4 style="font-size:16px">Participanți:</h4>
     <ul>
         <li>Participare live: 235 lei. Opțiunea permite acces la sesiunile live fără posibilitate de revizionare.</li>
         <li>Participare live + acces la înregistrări: 350 lei. Opțiunea permite acces la sesiunile live precum și la vizionarea înregistrărilor acestora direct pe site pentru revizionare ulterioară timp de 90 de zile de la data de început a taberei sau de la data plății.</li>
     </ul>
+    <h4 style="font-size:16px">Lectori de Ayurveda din cadrul AMN-România:</h4>
+    <ul>
+        <li>Lector Ayurveda cu participare live: 115 lei. Opțiunea permite acces la sesiunile live fără posibilitate de revizionare.</li>
+        <li>Lector Ayurveda cu participare live + acces la înregistrări: 235 lei. Opțiunea permite acces la sesiunile live și la vizionarea înregistrărilor acestora pe site pentru revizionare ulterioară timp de 90 de zile de la data de început a taberei sau de la data plății.</li>
+    </ul>
+    
     <h4 style="font-size:16px">Opțiune suplimentară:</h4>
     <ul>
-        <li>Upgrade la acces la înregistrări: 120 lei. Opțiunea permite accesul la vizionarea înregistrărilor sesiunilor direct pe site pentru cei care inițial au optat doar pentru participarea live, timp de 90 de zile de la data de început a taberei sau de la data plății.</li>
+        <li>Extinderea accesului la înregistrări: 120 lei. Opțiunea permite accesul la vizionarea înregistrărilor sesiunilor direct pe site pentru cei care inițial au optat doar pentru participarea live, timp de 90 de zile de la data de început a taberei sau de la data plății.</li>
     </ul>
 
 </section>
@@ -125,18 +126,23 @@
 <section>
 
 <%end%>
+
 <% if current_user && (@a_cumparat_macar_un_cod || current_user.role==1) %>
+<p>Link-ul de ZOOM va fi afișat în această pagină cu o zi inainte de inceprea taberei.</p>
+<!--
 <h3 style="color: rgb(7 6 187);">Link participare ZOOM</h3>
 <p><a href="https://us02web.zoom.us/j/82924232613?pwd=ZFFRcVlvd01qQ0FhVFdFdEViOEc1QT09">https://us02web.zoom.us/j/82924232613?pwd=ZFFRcVlvd01qQ0FhVFdFdEViOEc1QT09</a></p>
 <p style="margin-top: -20px;">Meeting ID: 829 2423 2613</p>
 <p style="margin-top: -20px;">Passcode: 640171</p>
-<%end%>
+--><%end%>
+
+
 <% if current_user && @has_access %>
 
-<h3><strong>Modalitatea de desfășurare a cursului</strong></h3>
+<h3><strong>Modalitatea de desfășurare a taberei</strong></h3>
     <ol>
-        <li>Participare online, directă și interactivă, pe platforma ZOOM. Cursurile live vor avea loc in zilele de 19, 26 mai, 2, 9, 23, 30 iunie, 7 și 14 iulie 2024 in intervalul orar 10:00 - 12:00.</li>
-        <li>Participare online, cu acces direct pe platforma ZOOM și posibilitatea de a viziona înregistrările sesiunilor ulterior  timp de 90 de zile de la data achizitionarii acestei optiuni. Aceasta permite participanților să vizioneze înregistrarile acestui modul la orice oră și fără restricții de timp.</li>
+        <li>Participare online, pe platforma ZOOM. Prezentarile  vor putea fi urmarite in zilele de 16 - 21 iulie precum si 23 - 28 iulie, în intervalul orar 18:30 - 21:30. </li>
+        <li>Participare online, cu acces direct pe platforma ZOOM precum și posibilitatea de a viziona înregistrările sesiunilor ulterior timp de 90 de zile de la data achizitionarii acestei optiuni. Aceasta permite participanților să vizioneze înregistrarile acestui modul la orice oră și fără restricții de timp.</li>
     </ol>
 
 
