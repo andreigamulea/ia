@@ -1,5 +1,6 @@
 Rails.application.routes.draw do    
-  get 'tabere/tayv24', to: 'tabere#tayv24'
+  get 'tabere/tayv24', to: 'tabere#tayv24', as: 'tayv24'
+
   resources :facturaproformas do
     collection do
       get :generare_facturi

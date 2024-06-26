@@ -134,6 +134,8 @@ class ApplicationController < ActionController::Base
         elsif return_to == "tayv2"
           # Cod pentru cazul în care sursa este butonul
           tayv2_path # Înlocuiește cu calea corespunzătoare  taxainscriere
+        elsif return_to == "tayv24"         
+          tayv24_path
         elsif return_to == "taxainscriere" 
           cursayurveda_path
         elsif return_to == "traditia_ayurvedica" 
