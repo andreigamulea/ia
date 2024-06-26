@@ -93,7 +93,7 @@ class TabereController < ApplicationController
         @myvideo13 = Video.none
       end
     else
-      # Utilizator neautentificat
+      ## Utilizator neautentificat
       puts("User nelogat")
       @prods = Prod.where(curslegatura: 'nutritie4', status: 'activ').where(cod: ['cod85', 'cod86']).order(:id)
       @has_access = false
