@@ -12,6 +12,30 @@
 <main class="cr" style="background-color: aliceblue;">
     <h1 class="first-tittle">Ayush Cell Romania: Cursuri, Aplicații, Tabere, Vizionări</h1>
     <h2 class="main-title" > 🌞 Actualitate</h2>
+
+    <div class="line">
+      <div class="col" style="width:100%;">
+         <h2>Inscrieri tabara de Ayurveda - etapa de vara 2024</h2>
+         <div class="desc"><p>Partea 1: 16 - 21 iulie - Pancha-Kosha</p><p style="margin-top: -15px">Partea 2: 23 - 28 iulie - Vijnana-Svasthya</p>
+         
+         </div>
+         <div class="btn-fp">
+         <%= link_to 'Vezi mai mult..', tayv24_path, class: 'btn-fp-link' %>
+       </div>
+       
+      </div>
+      <div class="col" style="width:100%;">
+         <h2>Revizionare Tabăra de Ayurveda 2023 Etapa de Toamnă</h2>
+         <div class="desc">Partea 1 - Prezentarea celor 10 calități cu rol formator - Nirmanya-Guna, Partea 2 - Prezentarea celor 20 calități generale - Vimshati-Guna..</div>
+         <div class="btn-fp">
+         <%= link_to 'Vezi înregistrările', tayt12_path, class: 'btn-fp-link' %>
+
+         </div>
+      </div>
+      
+    </div>
+
+
     <div class="line">
     <div class="col"  style="align-items:center;text-align:center;">
        <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 4</h2>
@@ -40,25 +64,7 @@
     </div>
  </div>
    
-    <div class="line">
-      <div class="col" style="width:100%;">
-         <h2>Curs de Ayurveda sesiunea octombrie 2023 - iulie 2024</h2>
-         <div class="desc">Participa la cursurile de Ayurveda organizate de catre Ayush Cell Romania & AMN-Romania. Acest curs este accesibil tuturor celor interesați indiferent de pregătirea profesională.</div>
-         <div class="btn-fp">
-         <%= link_to 'Înscrie-te la curs', cursayurveda_path, class: 'btn-fp-link' %>
-       </div>
-       
-      </div>
-      <div class="col" style="width:100%;">
-         <h2>Revizionare Tabăra de Ayurveda 2023 Etapa de Toamnă</h2>
-         <div class="desc">Partea 1 - Prezentarea celor 10 calități cu rol formator - Nirmanya-Guna, Partea 2 - Prezentarea celor 20 calități generale - Vimshati-Guna..</div>
-         <div class="btn-fp">
-         <%= link_to 'Vezi înregistrările', tayt12_path, class: 'btn-fp-link' %>
 
-         </div>
-      </div>
-      
-    </div>
  
 
  <h2 class="cr-title" > 📜 Tradiția Ayurvedică</h2>
@@ -148,18 +154,7 @@
          </div>
       </div>
  
-      <div class="col">
-         <h2>Tabăra Ayurveda 2023 Etapa de Vară partea a doua</h2>
-         <div class="desc">Tema taberei: Gupta-Cikitsa. Expresia Gupta-Cikitsa este tradusă ad litteram ca fiind „o medicină secretă”. Termenul sanscrit „gupta” înseamnă ascuns sau secret, iar „cikitsa” înseamnă tratament,  sistem terapeutic sau medicină. Expresia Gupta-Cikitsa reprezintă gândirea principială pe baza căreia se constituie strategiile de tratament ayurvedic, cunoaștere deosebit de valoroasă ce a fost oferită într-un mod original de către marele înțelept Atreya.</div>
-         <div class="btn-fp">
-         <% if current_user %>   
-         <%= link_to 'Revizionează', tayv2_path, class: 'btn-fp-link' %>
-       <% else %>   
-         <%= link_to 'Revizionează', new_user_session_with_return_path('tayv2'), class: 'btn-fp-link' %>
-       <% end %>
-       
-         </div>
-      </div>
+      
    </section>
    <h2 class="cr-title"> 📚 Cursuri</h2>   
    <section class="line">
