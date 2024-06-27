@@ -33,8 +33,8 @@ class TabereController < ApplicationController
   
         puts("Produse cumpărate cu date: #{all_purchased_prods}")
   
-        valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 80.days >= Date.today }.map(&:first)
-        expired_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 80.days < Date.today }.map(&:first)
+        valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 90.days >= Date.today }.map(&:first)
+        expired_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 90.days < Date.today }.map(&:first)
   
         puts("Produse valabile: #{valid_prods}")
   
@@ -106,7 +106,7 @@ class TabereController < ApplicationController
     end
   
     if data_prag
-      puts("Data prag + 80 zile= : #{data_prag + 80.days}")
+      puts("Data prag + 90 zile= : #{data_prag + 90.days}")
     end
 end
 end
