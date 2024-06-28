@@ -338,15 +338,18 @@ class StripeWebhooksController < ApplicationController
       'cod22', 'cod23', 'cod24', 'cod25', 'cod26', 'cod27', 'cod28', 'cod29',
       'cod30', 'cod31', 'cod32', 'cod33', 'cod34', 'cod35', 'cod36', 'cod37',
       'cod38', 'cod39', 'cod40', 'cod41', 'cod42', 'cod43', 'cod44', 'cod45', 'cod48', 'cod76', 'cod85', 'cod86', 'cod88',
-      'cod105', 'cod108', 'cod109', 'cod110', 'cod111', 'cod126'].include?(produs.cod)
+      'cod105', 'cod108', 'cod109', 'cod110', 'cod111', 'cod126', 'cod174', 'cod175'].include?(produs.cod)
       produsul = produs.nume + ' (' + Date.current.strftime("%d-%m-%Y") + ' - ' + (Date.current + dt.days).strftime("%d-%m-%Y") + ' )'
     
     else
       produsul = produs.nume
     end
-    if ['cod176', 'cod177', 'cod178'].include?(produs.cod)
-      produsul = produs.nume + ' (' + Date.new(2024, 7, 16).strftime("%d-%m-%Y") + ' - ' + (Date.new(2024, 7, 16) + dt.days).strftime("%d-%m-%Y") + ' )'
+    if Date.today < Date.new(2024, 7, 16)
+      if ['cod176', 'cod177', 'cod178'].include?(produs.cod)
+        produsul = produs.nume + ' (' + Date.new(2024, 7, 16).strftime("%d-%m-%Y") + ' - ' + (Date.new(2024, 7, 16) + dt.days).strftime("%d-%m-%Y") + ' )'
+      end
     end
+    
     if !["cod36", "cod37"].include?(produs.cod)
     # Creați o nouă factură
     factura = Factura.create(
