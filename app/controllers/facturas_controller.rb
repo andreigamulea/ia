@@ -113,11 +113,18 @@ class FacturasController < ApplicationController
       user = Factura.find_by(user_id: user_id)
 
       # Dacă nu găsim user în Factura, încercăm în Facturaproforma
-      if user
+       # Dacă nu găsim user în Factura, încercăm în Facturaproforma
+       if user
         full_name = "#{user.prenume} #{user.nume}"
       else
         proforma_user = Facturaproforma.find_by(user_id: user_id)
-        full_name = proforma_user ? proforma_user.nume : '-'
+        if proforma_user
+          full_name = proforma_user.nume
+        else
+          # Dacă nu găsim user nici în Factura, nici în Facturaproforma, căutăm în User
+          user_record = User.find_by(id: user_id)
+          full_name = user_record ? user_record.name : '-'
+        end
       end
 
       # Verifică dacă există date în tabela date_facturare
