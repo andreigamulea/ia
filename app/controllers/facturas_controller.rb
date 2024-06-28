@@ -138,6 +138,9 @@ class FacturasController < ApplicationController
                   user_record ? user_record.grupa : '-'
                 end
 
+      # Setăm an_curs la "2023-2024" dacă grupa este găsită în tabela User
+      an_curs = "2023-2024" if user_record && user_record.grupa == "2023-2024"
+
       if @report[user_id]
         @report[user_id][:numar_accesari] += 1
         @report[user_id][:data_accesare_pagina] = [event.time, @report[user_id][:data_accesare_pagina]].max
