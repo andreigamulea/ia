@@ -1,0 +1,28 @@
+<h1 style="width: 80%; margin: 0 auto;">Raport Accesare Facturi</h1><br>
+
+<table class="table table-striped" style="width: 80%; margin: 0 auto;">
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>Nume</th>
+      <th>Data Accesare Pagina</th>
+      <th>Numar Accesari</th>
+      <th>Numar Download</th>
+      <th>Data Ultimului Download</th>
+      <th>An curs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @report.each do |row| %>
+      <tr>
+        <td><%= row[:user_id] %></td>
+        <td><%= row[:nume] %></td>
+        <td><%= row[:data_accesare_pagina].strftime("%Y-%m-%d") %></td>
+        <td><%= row[:numar_accesari] %></td>
+        <td><%= row[:numar_download] %></td>
+        <td><%= row[:data_ultimului_download]&.strftime("%Y-%m-%d") %></td>
+        <td><%= row[:an_curs] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

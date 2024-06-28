@@ -1,12 +1,13 @@
 Rails.application.routes.draw do    
   get 'tabere/tayv24', to: 'tabere#tayv24', as: 'tayv24'
-
+  get 'facturas/raport_accesare_facturi', to: 'facturas#raport_accesare_facturi', as: 'raport_accesare_facturi'
   resources :facturaproformas do
     collection do
       get :generare_facturi
       post :creareproforma
       get 'facturaproformas/not_in_users', to: 'facturaproformas#not_in_users', as: 'not_in_users_facturaproformas'
       get :not_in_users, to: 'facturaproformas#not_in_users', as: 'not_in_users'
+      
     end
   
     member do
