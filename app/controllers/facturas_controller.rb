@@ -113,8 +113,7 @@ class FacturasController < ApplicationController
       user = Factura.find_by(user_id: user_id)
 
       # Dacă nu găsim user în Factura, încercăm în Facturaproforma
-       # Dacă nu găsim user în Factura, încercăm în Facturaproforma
-       if user
+      if user
         full_name = "#{user.prenume} #{user.nume}"
       else
         proforma_user = Facturaproforma.find_by(user_id: user_id)
@@ -127,12 +126,15 @@ class FacturasController < ApplicationController
         end
       end
 
+      # Obținem emailul utilizatorului din tabela User
+      user_record = User.find_by(id: user_id)
+      email = user_record ? user_record.email : nil
+
       # Verifică dacă există date în tabela date_facturare
       date_facturare_record = DateFacturare.find_by(user_id: user_id)
       an_curs = if date_facturare_record
                   date_facturare_record.grupa2324
                 else
-                  user_record = User.find_by(id: user_id)
                   user_record ? user_record.grupa : '-'
                 end
 
@@ -147,7 +149,8 @@ class FacturasController < ApplicationController
           numar_accesari: 1,
           numar_download: 0,
           data_ultimului_download: nil,
-          an_curs: an_curs
+          an_curs: an_curs,
+          email: email
         }
       end
     end
@@ -162,10 +165,18 @@ class FacturasController < ApplicationController
       @report[user_id][:data_ultimului_download] = [event.time, @report[user_id][:data_ultimului_download]].compact.max
     end
 
+    # Verifică dacă emailul există în tabela listacanal3 și setează an_curs la 3 dacă este găsit
+    @report.each do |user_id, record|
+      if record[:email]
+        listacanal3_record = Listacanal3.find_by(email: record[:email])
+        record[:an_curs] = '3' if listacanal3_record
+      end
+      record.delete(:email) # Elimină emailul din raport
+    end
+
     # Convertim hash-ul la array și sortăm după an_curs
     @report = @report.values.sort_by { |record| record[:an_curs] == '3' ? 0 : 1 }
   end
-  
   
   # GET /facturas/1 or /facturas/1.json
   def show
