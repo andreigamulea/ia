@@ -98,7 +98,66 @@ class FacturasController < ApplicationController
   end
   end
   
-  
+  def raport_accesare_facturi
+    start_date = DateTime.parse('2024-06-05')
+    @report = {}
+
+    # Extrage înregistrările din ahoy_events după data specificată
+    events = Ahoy::Event.where('time > ?', start_date)
+
+    # Faza 1: Procesare facturas#index
+    events.where(name: 'Processed facturas#index').each do |event|
+      user_id = event.user_id
+      next unless user_id # Sare peste evenimentele fără user_id
+
+      user = Factura.find_by(user_id: user_id)
+
+      # Dacă nu găsim user în Factura, încercăm în Facturaproforma
+      if user
+        full_name = "#{user.prenume} #{user.nume}"
+      else
+        proforma_user = Facturaproforma.find_by(user_id: user_id)
+        full_name = proforma_user ? proforma_user.nume : '-'
+      end
+
+      # Verifică dacă există date în tabela date_facturare
+      date_facturare_record = DateFacturare.find_by(user_id: user_id)
+      an_curs = if date_facturare_record
+                  date_facturare_record.grupa2324
+                else
+                  user_record = User.find_by(id: user_id)
+                  user_record ? user_record.grupa : '-'
+                end
+
+      if @report[user_id]
+        @report[user_id][:numar_accesari] += 1
+        @report[user_id][:data_accesare_pagina] = [event.time, @report[user_id][:data_accesare_pagina]].max
+      else
+        @report[user_id] = {
+          user_id: user_id,
+          nume: full_name,
+          data_accesare_pagina: event.time,
+          numar_accesari: 1,
+          numar_download: 0,
+          data_ultimului_download: nil,
+          an_curs: an_curs
+        }
+      end
+    end
+
+    # Faza 2: Procesare facturaproformas#show
+    events.where(name: 'Processed facturaproformas#show').each do |event|
+      user_id = event.user_id
+      next unless user_id # Sare peste evenimentele fără user_id
+      next unless @report[user_id]
+
+      @report[user_id][:numar_download] += 1
+      @report[user_id][:data_ultimului_download] = [event.time, @report[user_id][:data_ultimului_download]].compact.max
+    end
+
+    # Convertim hash-ul la array și sortăm după an_curs
+    @report = @report.values.sort_by { |record| record[:an_curs] == '3' ? 0 : 1 }
+  end
   
   
   # GET /facturas/1 or /facturas/1.json
