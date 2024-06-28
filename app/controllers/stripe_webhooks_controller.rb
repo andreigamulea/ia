@@ -340,13 +340,13 @@ class StripeWebhooksController < ApplicationController
       'cod38', 'cod39', 'cod40', 'cod41', 'cod42', 'cod43', 'cod44', 'cod45', 'cod48', 'cod76', 'cod85', 'cod86', 'cod88',
       'cod105', 'cod108', 'cod109', 'cod110', 'cod111', 'cod126'].include?(produs.cod)
       produsul = produs.nume + ' (' + Date.current.strftime("%d-%m-%Y") + ' - ' + (Date.current + dt.days).strftime("%d-%m-%Y") + ' )'
-    elsif ['cod176', 'cod177', 'cod178'].include?(produs.cod)
-      produsul = produs.nume + ' (' + Date.new(2024, 7, 16).strftime("%d-%m-%Y") + ' - ' + (Date.new(2024, 7, 16) + dt.days).strftime("%d-%m-%Y") + ' )'
+    
     else
       produsul = produs.nume
     end
-
-    
+    if ['cod176', 'cod177', 'cod178'].include?(produs.cod)
+      produsul = produs.nume + ' (' + Date.new(2024, 7, 16).strftime("%d-%m-%Y") + ' - ' + (Date.new(2024, 7, 16) + dt.days).strftime("%d-%m-%Y") + ' )'
+    end
     if !["cod36", "cod37"].include?(produs.cod)
     # Creați o nouă factură
     factura = Factura.create(
