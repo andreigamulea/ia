@@ -208,7 +208,7 @@ class TvsController < ApplicationController
                   end
   
     puts "Video selectat: #{@myvideo1 ? @myvideo1.id : 'Niciunul'}"
-    # Setează variabilele în funcție de rezultatul interogării
+    ## Setează variabilele în funcție de rezultatul interogării
     if @myvideo1
       @myvideo = @myvideo1.link
       @exista_video = true
