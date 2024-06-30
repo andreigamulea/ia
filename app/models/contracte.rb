@@ -21,6 +21,7 @@ class Contracte < ApplicationRecord #acest tabel este pentru contractori
     validates :locul_desfasurarii, presence: true
     validates :departament, presence: true
     validates :subordonare, presence: true
+    validates :email_coordonator, presence: true
     validates :relatii_functionale, presence: true
     validates :contor_start, presence: true, numericality: { greater_than_or_equal_to: 1 }
     validates :valabilitate_luni, presence: true
