@@ -828,7 +828,8 @@ end
         :responsabilitati_voluntar,
         :conditii_lucru,
         :video_ssm,
-        :video_isu
+        :video_isu,
+        :email_coordonator
       )
     end
     def contracte_useri_params
