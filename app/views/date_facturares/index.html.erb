@@ -1,5 +1,5 @@
 <h1>Tabel cu Datele de facturare ale cursantilor</h1>
-<h4>An 3: Au completat <%=@nr_an3%> useri. Rest useri care mai trebuie sa completeze: <%=@necesari_an3%>  useri</h4>
+<h4>An 3: Au completat <%= @nr_an3 %> useri. Rest useri care mai trebuie sa completeze: <%= @necesari_an3 %> useri</h4>
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
@@ -10,6 +10,7 @@
       <th>Nume</th>
       <th>Nume Companie</th>
       <th>CUI</th>
+      <th>CNP</th>
       <th>Țara</th>
       <th>Cod Poștal</th>
       <th>Stradă</th>
@@ -22,6 +23,7 @@
       <th>Grupa 2324</th>
       <th>CPA</th>
       <th>COD</th>
+      <th>Acțiuni</th>
     </tr>
   </thead>
   <tbody>
@@ -34,6 +36,7 @@
         <td><%= date_facturare.nume %></td>
         <td><%= date_facturare.numecompanie %></td>
         <td><%= date_facturare.cui %></td>
+        <td><%= date_facturare.cnp %></td>
         <td><%= date_facturare.tara %></td>
         <td><%= date_facturare.codpostal %></td>
         <td><%= date_facturare.strada %></td>
@@ -46,7 +49,13 @@
         <td><%= date_facturare.grupa2324 %></td>
         <td><%= date_facturare.cpa %></td>
         <td><%= date_facturare.cod %></td>
+        <td>
+          <%= link_to 'Show', date_facturare_path(date_facturare), class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_date_facturare_path(date_facturare), class: 'btn btn-warning' %>
+          <%= link_to 'Delete', date_facturare_path(date_facturare), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+

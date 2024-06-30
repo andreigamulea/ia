@@ -167,8 +167,13 @@ end
 
     # Only allow a list of trusted parameters through.
     def date_facturare_params
-      params.require(:date_facturare).permit(:user_id, :firma_id, :email, :prenume, :nume, :numecompanie, :cui, :tara, :codpostal, :strada, :numar, :altedate, :telefon, :adresaemail, :localitate, :judet, :grupa2324, :cpa, :cod)
+      params.require(:date_facturare).permit(
+        :user_id, :firma_id, :email, :prenume, :nume, :numecompanie, :cui, :tara, 
+        :codpostal, :strada, :numar, :altedate, :telefon, :adresaemail, :localitate, 
+        :judet, :grupa2324, :cpa, :cod, :cnp
+      )
     end
+    
     def require_admin
       unless current_user && current_user.role == 1
         flash[:error] = "Only admins are allowed to access this page."

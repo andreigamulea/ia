@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_31_141925) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_30_155116) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -328,6 +328,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_31_141925) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "cod"
+    t.string "cnp"
   end
 
   create_table "descriereeroris", force: :cascade do |t|
@@ -811,6 +812,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_31_141925) do
     t.string "telefon3"
     t.integer "grupa"
     t.float "nutritieabsolvit"
+    t.string "cpa"
+    t.string "cnp"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["grupa"], name: "index_users_on_grupa"
     t.index ["limba"], name: "index_users_on_limba"
