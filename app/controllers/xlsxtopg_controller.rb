@@ -902,9 +902,50 @@ def preluaredate23
     UserModulecursuri.find_or_create_by(user_id: user.id, modulecursuri_id: 3, validat: "Finalizata")
   end
 end
+#din tabela xlsxcpaan3.xlsx in tabela User
+def preluare_nume_cpa
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'cpaan3.xlsx'))
+ 
+  xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row|
+    email = row[0]&.value&.to_s&.strip&.downcase
+    nume = row[1]&.value&.to_s&.strip
+    cpa = row[2]&.value&.to_s&.strip
 
+    next if email.nil?
 
+    user = User.find_by(email: email)
 
+    if user
+      user.update(name: nume, cpa: cpa)
+    end
+  end
+
+  flash[:notice] = 'Preluarea numelor CPA a fost finalizată.'
+  redirect_to root_path
+end
+
+def actualizare_cpa_date_facturare
+  xlsx = Roo::Spreadsheet.open(File.join(Rails.root, 'app', 'fisierele', 'cpaan3.xlsx'))
+
+  xlsx.each_row_streaming(offset: 1, pad_cells: true) do |row|
+    email = row[0]&.value&.to_s&.strip&.downcase
+    cpa = row[2]&.value&.to_s&.strip
+
+    next if email.nil?
+
+    user = User.find_by(email: email)
+
+    if user
+      date_facturare = DateFacturare.find_by(user_id: user.id)
+      if date_facturare
+        date_facturare.update(cpa: cpa)
+      end
+    end
+  end
+
+  flash[:notice] = 'Actualizarea CPA în Date Facturare a fost finalizată.'
+  redirect_to root_path
+end
 
 ######################################
   def sterge_inregistrari

@@ -144,7 +144,8 @@ class FacturaproformasController < ApplicationController
   def show
     @factura = Facturaproforma.find(params[:id])
     @df = DateFacturare.find_by(user_id: @factura.user_id)
-   
+    @user = User.find_by(id: @factura.user_id)
+    @cpa = @user&.cpa || '-'
     
     if @df.nil?
       @df = DateFacturare.new
