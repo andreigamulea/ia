@@ -244,8 +244,10 @@ h1.display-4{
 ATENTIE! Din sepembrie cand o sa adaugam produsele pt platile pe lunile 2024-2025 trebuie adaugate in
  C:\ia\app\controllers\stripe_webhooks_controller.rb in 2 locuri 
   if !["cod36", "cod37"].include?(produs.cod) pt ca raspunsul de la Stripe sa nu genereze noi facturi
-    ci sa actualizeze facturile proforme
-
+    ci sa actualizeze facturile proforme  </br>
+    <%= link_to 'Preluare - Nume si CPA in User', preluare_nume_cpa_xlsxtopg_path, method: :get %><br>
+    <%= link_to 'Actualizare CPA in DateFacturare', actualizare_cpa_date_facturare_xlsxtopg_path, method: :get %></br>
+  
   </div>
   <% end %>
 </div>
