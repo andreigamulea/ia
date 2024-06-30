@@ -1,4 +1,5 @@
-Rails.application.routes.draw do    
+Rails.application.routes.draw do 
+  get 'tabere/export_to_xlsx', to: 'tabere#export_to_xlsx_plata_tayv24', as: 'export_tayv24_xlsx'
   get 'tabere/tayv24', to: 'tabere#tayv24', as: 'tayv24'
   get 'facturas/raport_accesare_facturi', to: 'facturas#raport_accesare_facturi', as: 'raport_accesare_facturi'
   resources :facturaproformas do
