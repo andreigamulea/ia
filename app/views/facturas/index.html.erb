@@ -91,8 +91,13 @@
 
 <% if @facturasp.present? %>
 
-<h2 class="my-4">Facturi curs Ayurveda</h2>
+<h2 class="my-4" id="facturi_ayus_grup">Facturi curs Ayurveda</h2>
 <div class="table-responsive">
+<% if current_user.role==1 %>
+<div class="flex-container" style="display: flex; justify-content: flex-end;">
+  <a href="#numar_facturi" class="btn btn-primary">Mergi la Facturile Ayushcell</a>
+</div>
+<%end%>
 
 <table class="table table-striped table-bordered table-hover">
     <thead class="thead-dark">
@@ -185,7 +190,13 @@
 <%= link_to 'Inapoi la Panou administrare', panouadmin_path, class: "btn btn-primary" %>
 <%= link_to "Exporta Toate Facturile in format pdf", download1_factura_path(format: 'pdf'), class: "btn btn-secondary" %>
 
-<h3>Numar facturi: <%=@facturas.count%></h3>
+
+<h3 id="numar_facturi">Numar facturi: <%= @facturas.count %></h3>
+<%end%>
+<% if current_user.role==1 %>
+<div class="flex-container" style="display: flex; justify-content: flex-end;">
+  <a href="#facturi_ayus_grup" class="btn btn-primary">Mergi la Facturile Ayus Grup</a>
+</div>
 <%end%>
 <div class="table-responsive">
 
