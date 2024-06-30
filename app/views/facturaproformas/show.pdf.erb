@@ -35,7 +35,8 @@
 <div class="wrapper" style="height: 20%;">
   <div class="half-div">
     <h3 style="font-size: 1.4em;">FURNIZOR</h3>
-    <h3 style="font-weight: normal; font-size: 1.2em;"><%= @nume_institutie %></h3>
+    <h3 style="font-weight: normal; font-size: 1.2em; "><%= @nume_institutie %></h3>
+    <h3 style="font-weight: normal; font-size: 1em; margin-top:-20px;margin-bottom:25px;">Centrul de perfecționare și de pregătire de specialitate în Ayurveda</h3>
     <h3 style="font-weight: normal; font-size: 1.1em; margin-top:-10px;">CUI <%= @cui %></h3>
     <h5 style="font-weight: normal; font-size: 1.1em; margin-top:-10px;"><%= @rc %></h5>
     <h5 style="font-weight: normal; font-size: 1.1em; margin-top:-20px;"><%= @adresa %></h5>
@@ -64,6 +65,7 @@
     
     <p style="font-size: 1.1em">
     <%= @factura.nume %><br>
+    <p style="font-size: 1.1em; margin-top:-15px;margin-bottom:-15px;">CNP: *************</p>
     <% if factura.nume_companie.present? && factura.cui.present? %>
     Firma: <%= @factura.nume_companie %><br>
     CUI: <%= @factura.cui %><br>
@@ -90,6 +92,8 @@
   </div>
   <div class="half-div align-right">
     <h1>FACTURA</h1>
+    <p style="font-size: 1.1em; margin-top:50px; margin-bottom:-10px;">CPA (Cod Practician Ayurveda)</p>
+    <p style="font-size: 1.1em; margin-top: 10px; margin-bottom:-10px;">11547</p>
     <!-- Adauga cate `<br>` ai nevoie pentru a alinia la nivelul dorit -->
     <br><br><br><br><br><br><br><br><br><br><br>
     <p style="font-size: 1.1em">

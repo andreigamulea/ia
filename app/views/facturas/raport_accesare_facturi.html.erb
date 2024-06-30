@@ -6,10 +6,11 @@
       <th>Nr.</th>
       <th>User ID</th>
       <th>Nume</th>
-      <th>Ultima accesare a paginii</th>
-      <th>Numar Accesari</th>
-      <th>Numar Download</th>
-      <th>Ultimul Download PDF</th>
+      <th>Ultima accesare</th>
+      <th>Accesari pagina</th>
+      
+      <th>Ultimul download (F. an 3)</th>
+      <th>Download-ari (F. an 3)</th>
       <th>An curs 2023-2024</th>
     </tr>
   </thead>
@@ -21,8 +22,9 @@
         <td><%= row[:nume] %></td>
         <td><%= row[:data_accesare_pagina].strftime("%Y-%m-%d") %></td>
         <td><%= row[:numar_accesari] %></td>
-        <td><%= row[:numar_download] %></td>
         <td><%= row[:data_ultimului_download]&.strftime("%Y-%m-%d") %></td>
+        <td><%= row[:numar_download] %></td>
+        
         <td><%= row[:an_curs] %></td>
       </tr>
     <% end %>

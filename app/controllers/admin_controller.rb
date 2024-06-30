@@ -178,9 +178,15 @@ class AdminController < ApplicationController
     @user = User.find(params[:id])
   end
 
- 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :limba, :role, :active, :gdpr, :telefon, cursuri: {})
+    params.require(:user).permit(
+      :name, :email, :password, :password_confirmation, :limba, :role, :active, 
+      :gdpr, :telefon, :telefon2, :telefon3, :grupa, :nutritieabsolvit, 
+      :reset_password_token, :reset_password_sent_at, :remember_created_at, 
+      :stripe_customer_id, :current_sign_in_token, :google_token, :provider, 
+      :uid, :google_refresh_token, :last_sign_in_at, :current_sign_in_at, 
+      :last_sign_in_ip, :current_sign_in_ip, :sign_in_count, :cpa, :cnp, cursuri: {}
+    )
   end
   
  
