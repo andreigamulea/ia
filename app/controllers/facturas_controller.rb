@@ -70,6 +70,7 @@ class FacturasController < ApplicationController
     send_data xml, type: 'application/xml', filename: filename
   end
   
+  
 
 
   def download
@@ -352,7 +353,9 @@ end
     end
     
     
-    def generate_invoice_xml(factura)
+    
+    ### metoda PJ start
+    def generate_invoice_xml_company(factura)
       builder = Builder::XmlMarkup.new(indent: 2)
       builder.Invoice(
         'xmlns:cbc' => "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
@@ -373,7 +376,7 @@ end
         invoice.cbc :Note, "Nr.comanda: #{factura.comanda_id}"
         invoice.cbc :DocumentCurrencyCode, 'RON'
         invoice.cbc :TaxCurrencyCode, 'RON'
-  
+    
         invoice.cac :AccountingSupplierParty do |supplier|
           supplier.cac :Party do |party|
             party.cbc :EndpointID, 'doringrasu@gmail.com', schemeID: 'EM'
@@ -405,21 +408,11 @@ end
             end
           end
         end
-  
+    
         invoice.cac :AccountingCustomerParty do |customer|
           customer.cac :Party do |party|
-            if factura.cui =~ /\d{2,}/
-              party.cac :PartyIdentification do |identification|
-                identification.cbc :ID, factura.cui
-              end
-              party.cac :PartyLegalEntity do |legal_entity|
-                legal_entity.cbc :RegistrationName, factura.nume_companie if factura.nume_companie.present?
-                legal_entity.cbc :CompanyID, factura.cui
-              end
-            else
-              party.cac :PartyName do |party_name|
-                party_name.cbc :Name, "#{factura.nume} #{factura.prenume}"
-              end
+            party.cac :PartyIdentification do |identification|
+              identification.cbc :ID, factura.cui
             end
             party.cac :PostalAddress do |address|
               address.cbc :StreetName, "#{factura.strada}, NR. #{factura.numar_adresa}"
@@ -429,17 +422,19 @@ end
                 country.cbc :IdentificationCode, 'RO'
               end
             end
-            if factura.cui =~ /\d{2,}/
-              party.cac :PartyTaxScheme do |tax_scheme|
-                tax_scheme.cbc :CompanyID, factura.cui
-                tax_scheme.cac :TaxScheme do |tax|
-                  tax.cbc :ID, 'VAT'
-                end
+            party.cac :PartyTaxScheme do |tax_scheme|
+              tax_scheme.cbc :CompanyID, factura.cui
+              tax_scheme.cac :TaxScheme do |tax|
+                tax.cbc :ID, 'VAT'
               end
+            end
+            party.cac :PartyLegalEntity do |legal_entity|
+              legal_entity.cbc :RegistrationName, factura.nume_companie if factura.nume_companie.present?
+              legal_entity.cbc :CompanyID, factura.cui
             end
           end
         end
-  
+    
         invoice.cac :PaymentMeans do |payment|
           payment.cbc :PaymentMeansCode, '42'
           payment.cac :PayeeFinancialAccount do |account|
@@ -447,11 +442,11 @@ end
             account.cbc :Name, 'ING BANK ROMANIA'
           end
         end
-  
+    
         total_without_vat = factura.pret_unitar * factura.cantitate
         vat_amount = (total_without_vat * (factura.valoare_tva / 100)).round(2)
         total_with_vat = (total_without_vat + vat_amount).round(2)
-  
+    
         invoice.cac :TaxTotal do |tax_total|
           tax_total.cbc :TaxAmount, vat_amount, currencyID: 'RON'
           tax_total.cac :TaxSubtotal do |tax_subtotal|
@@ -466,14 +461,14 @@ end
             end
           end
         end
-  
+    
         invoice.cac :LegalMonetaryTotal do |total|
           total.cbc :LineExtensionAmount, total_without_vat, currencyID: 'RON'
           total.cbc :TaxExclusiveAmount, total_without_vat, currencyID: 'RON'
           total.cbc :TaxInclusiveAmount, total_with_vat, currencyID: 'RON'
           total.cbc :PayableAmount, total_with_vat, currencyID: 'RON'
         end
-  
+    
         invoice.cac :InvoiceLine do |line|
           line.cbc :ID, '1'
           line.cbc :InvoicedQuantity, factura.cantitate, unitCode: 'E48'
@@ -494,85 +489,6 @@ end
           end
         end
       end
-  
-      builder.target!
-    end
-    ### metoda PJ start
-    def generate_invoice_xml_company(factura)
-      builder = Builder::XmlMarkup.new(indent: 2)
-      builder.Facturi do |facturi|
-        facturi.Factura do |factura_xml|
-          factura_xml.Antet do |antet|
-            antet.FurnizorNume 'S.C. AYUSH CELL ROMANIA S.R.L.'
-            antet.FurnizorCIF 'RO5509227'
-            antet.FurnizorNrRegCom 'J40/6720/1994'
-            antet.FurnizorCapital '205.00'
-            antet.FurnizorAdresa 'BUCURESTI sect. 1 str. OSTASILOR nr. 15 ap. 1A'
-            antet.FurnizorBanca 'CEC BANK SA'
-            antet.FurnizorIBAN 'RO49CECEB20701RON0591530'
-            antet.FurnizorInformatiiSuplimentare 'Banca ING BANK IBAN RO53INGB0000999902918784'
-            antet.ClientNume factura.nume_companie
-            antet.ClientInformatiiSuplimentare ''
-            antet.ClientCIF factura.cui
-            antet.ClientNrRegCom ''
-            antet.ClientJudet factura.judet
-            antet.ClientLocalitate factura.localitate
-            antet.ClientTara 'RO'
-            antet.ClientAdresa "#{factura.localitate}, STR. #{factura.strada}, NR. #{factura.numar_adresa}"
-            antet.ClientTelefon ''
-            antet.ClientEmail ''
-            antet.ClientBanca ''
-            antet.ClientIBAN ''
-            antet.FacturaNumar "ACDA#{factura.numar}"
-            antet.FacturaData factura.created_at.strftime('%d.%m.%Y')
-            antet.FacturaScadenta factura.created_at.strftime('%d.%m.%Y')
-            antet.FacturaTaxareInversa 'Nu'
-            antet.FacturaTVAIncasare 'Da'
-            antet.FacturaEFactura 'Nu'
-            antet.FacturaInformatiiSuplimentare ''
-            antet.FacturaMoneda 'RON'
-            antet.FacturaCotaTVA 'TVA (19%)'
-            antet.FacturaGreutate '0.000'
-            antet.FacturaAccize '0.00'
-          end
-    
-          factura_xml.Detalii do |detalii|
-            detalii.Continut do |continut|
-              continut.Linie do |linie|
-                linie.LinieNrCrt '1'
-                linie.Descriere factura.produs
-                linie.CodArticolFurnizor ''
-                linie.CodArticolClient ''
-                linie.InformatiiSuplimentare ''
-                linie.UM ''
-                linie.Cantitate factura.cantitate
-                linie.Pret factura.pret_unitar.round(2)
-                linie.Valoare (factura.pret_unitar * factura.cantitate).round(2)
-                linie.ProcTVA factura.valoare_tva
-                linie.TVA ((factura.pret_unitar * factura.cantitate) * (factura.valoare_tva / 100)).round(2)
-              end
-            end
-            detalii.txtObservatii1 "Nr.comanda: #{factura.comanda_id}"
-          end
-    
-          factura_xml.Sumar do |sumar|
-            total_valoare = (factura.pret_unitar * factura.cantitate).round(2)
-            total_tva = (total_valoare * (factura.valoare_tva / 100)).round(2)
-            total = (total_valoare + total_tva).round(2)
-    
-            sumar.TotalValoare total_valoare
-            sumar.TotalTVA total_tva
-            sumar.Total total
-            sumar.LinkPlata ''
-          end
-    
-          factura_xml.Observatii do |observatii|
-            observatii.txtObservatii ''
-            observatii.SoldClient ''
-            observatii.ModalitatePlata ''
-          end
-        end
-      end
     
       builder.target!
     end
@@ -582,83 +498,142 @@ end
   ###metoda PF start
   def generate_invoice_xml_individual(factura)
     builder = Builder::XmlMarkup.new(indent: 2)
-    builder.Facturi do |facturi|
-      facturi.Factura do |factura_xml|
-        factura_xml.Antet do |antet|
-          antet.FurnizorNume 'S.C. AYUSH CELL ROMANIA S.R.L.'
-          antet.FurnizorCIF 'RO5509227'
-          antet.FurnizorNrRegCom 'J40/6720/1994'
-          antet.FurnizorCapital '205.00'
-          antet.FurnizorAdresa 'BUCURESTI sect. 1 str. OSTASILOR nr. 15 ap. 1A'
-          antet.FurnizorBanca 'CEC BANK SA'
-          antet.FurnizorIBAN 'RO49CECEB20701RON0591530'
-          antet.FurnizorInformatiiSuplimentare 'Banca ING BANK IBAN RO53INGB0000999902918784'
-          antet.ClientNume "#{factura.nume} #{factura.prenume}"
-          antet.ClientInformatiiSuplimentare ''
-          antet.ClientCIF ''
-          antet.ClientNrRegCom ''
-          antet.ClientJudet factura.judet
-          antet.ClientLocalitate factura.localitate
-          antet.ClientTara 'RO'
-          antet.ClientAdresa "#{factura.localitate}, STR. #{factura.strada}, NR. #{factura.numar_adresa}"
-          antet.ClientTelefon ''
-          antet.ClientEmail ''
-          antet.ClientBanca ''
-          antet.ClientIBAN ''
-          antet.FacturaNumar "ACDA#{factura.numar}"
-          antet.FacturaData factura.created_at.strftime('%d.%m.%Y')
-          antet.FacturaScadenta factura.created_at.strftime('%d.%m.%Y')
-          antet.FacturaTaxareInversa 'Nu'
-          antet.FacturaTVAIncasare 'Da'
-          antet.FacturaEFactura 'Nu'
-          antet.FacturaInformatiiSuplimentare ''
-          antet.FacturaMoneda 'RON'
-          antet.FacturaCotaTVA 'TVA (19%)'
-          antet.FacturaGreutate '0.000'
-          antet.FacturaAccize '0.00'
-        end
+    builder.Invoice(
+      'xmlns:cbc' => "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2",
+      'xmlns:udt' => "urn:oasis:names:specification:ubl:schema:xsd:UnqualifiedDataTypes-2",
+      'xmlns:cac' => "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2",
+      'xmlns:ccts' => "urn:un:unece:uncefact:documentation:2",
+      'xmlns' => "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2",
+      'xmlns:qdt' => "urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2",
+      'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance"
+    ) do |invoice|
+      invoice.cbc :UBLVersionID, '2.1'
+      invoice.cbc :CustomizationID, 'urn:cen.eu:en16931:2017#compliant#urn:efactura.mfinante.ro:CIUS-RO:1.0.1'
+      invoice.cbc :ID, "ACDA#{factura.numar}"
+      invoice.cbc :IssueDate, factura.created_at.strftime('%Y-%m-%d')
+      invoice.cbc :DueDate, factura.created_at.strftime('%Y-%m-%d')
+      invoice.cbc :InvoiceTypeCode, '380'
+      invoice.cbc :Note, 'TVA la incasare'
+      invoice.cbc :Note, "Nr.comanda: #{factura.comanda_id}"
+      invoice.cbc :DocumentCurrencyCode, 'RON'
+      invoice.cbc :TaxCurrencyCode, 'RON'
   
-        factura_xml.Detalii do |detalii|
-          detalii.Continut do |continut|
-            continut.Linie do |linie|
-              linie.LinieNrCrt '1'
-              linie.Descriere factura.produs
-              linie.CodArticolFurnizor ''
-              linie.CodArticolClient ''
-              linie.InformatiiSuplimentare ''
-              linie.UM 'SERV'
-              linie.Cantitate factura.cantitate
-              linie.Pret factura.pret_unitar.round(2)
-              linie.Valoare (factura.pret_unitar * factura.cantitate).round(2)
-              linie.ProcTVA factura.valoare_tva
-              linie.TVA ((factura.pret_unitar * factura.cantitate) * (factura.valoare_tva / 100)).round(2)
-              linie.InformatiiSuplimentare "Comanda nr. #{factura.comanda_id}"
+      invoice.cac :AccountingSupplierParty do |supplier|
+        supplier.cac :Party do |party|
+          party.cbc :EndpointID, 'doringrasu@gmail.com', schemeID: 'EM'
+          party.cac :PartyIdentification do |identification|
+            identification.cbc :ID, '5509227'
+          end
+          party.cac :PostalAddress do |address|
+            address.cbc :StreetName, 'str. OSTASILOR nr. 15 et. P ap. 1A'
+            address.cbc :CityName, 'SECTOR1'
+            address.cbc :CountrySubentity, 'RO-B'
+            address.cac :Country do |country|
+              country.cbc :IdentificationCode, 'RO'
             end
           end
-          detalii.txtObservatii1 "Nr.comanda: #{factura.comanda_id}"
+          party.cac :PartyTaxScheme do |tax_scheme|
+            tax_scheme.cbc :CompanyID, 'RO5509227'
+            tax_scheme.cac :TaxScheme do |tax|
+              tax.cbc :ID, 'VAT'
+            end
+          end
+          party.cac :PartyLegalEntity do |legal_entity|
+            legal_entity.cbc :RegistrationName, 'S.C. AYUSH CELL ROMANIA S.R.L.'
+            legal_entity.cbc :CompanyID, 'J40/6720/1994'
+          end
+          party.cac :Contact do |contact|
+            contact.cbc :Name, 'GAMULEA ANDREI FLORIN'
+            contact.cbc :Telephone, '0749079619'
+            contact.cbc :ElectronicMail, 'doringrasu@gmail.com'
+          end
         end
+      end
   
-        factura_xml.Sumar do |sumar|
-          total_valoare = (factura.pret_unitar * factura.cantitate).round(2)
-          total_tva = (total_valoare * (factura.valoare_tva / 100)).round(2)
-          total = (total_valoare + total_tva).round(2)
-  
-          sumar.TotalValoare total_valoare
-          sumar.TotalTVA total_tva
-          sumar.Total total
-          sumar.LinkPlata ''
+      invoice.cac :AccountingCustomerParty do |customer|
+        customer.cac :Party do |party|
+          party.cac :PartyIdentification do |identification|
+            identification.cbc :ID, factura.cui
+          end
+          party.cac :PostalAddress do |address|
+            address.cbc :StreetName, "#{factura.strada}, NR. #{factura.numar_adresa}"
+            address.cbc :CityName, factura.localitate
+            address.cbc :CountrySubentity, "RO-#{factura.judet}"
+            address.cac :Country do |country|
+              country.cbc :IdentificationCode, 'RO'
+            end
+          end
+          party.cac :PartyTaxScheme do |tax_scheme|
+            tax_scheme.cbc :CompanyID, factura.cui
+            tax_scheme.cac :TaxScheme do |tax|
+              tax.cbc :ID, 'VAT'
+            end
+          end
+          party.cac :PartyLegalEntity do |legal_entity|
+            legal_entity.cbc :RegistrationName, "#{factura.nume} #{factura.prenume}"
+            legal_entity.cbc :CompanyID, factura.cui
+          end
         end
+      end
   
-        factura_xml.Observatii do |observatii|
-          observatii.txtObservatii ''
-          observatii.SoldClient ''
-          observatii.ModalitatePlata ''
+      invoice.cac :PaymentMeans do |payment|
+        payment.cbc :PaymentMeansCode, '42'
+        payment.cac :PayeeFinancialAccount do |account|
+          account.cbc :ID, 'RO53INGB0000999902918784'
+          account.cbc :Name, 'ING BANK ROMANIA'
+        end
+      end
+  
+      total_without_vat = factura.pret_unitar * factura.cantitate
+      vat_amount = (total_without_vat * (factura.valoare_tva / 100)).round(2)
+      total_with_vat = (total_without_vat + vat_amount).round(2)
+  
+      invoice.cac :TaxTotal do |tax_total|
+        tax_total.cbc :TaxAmount, vat_amount, currencyID: 'RON'
+        tax_total.cac :TaxSubtotal do |tax_subtotal|
+          tax_subtotal.cbc :TaxableAmount, total_without_vat, currencyID: 'RON'
+          tax_subtotal.cbc :TaxAmount, vat_amount, currencyID: 'RON'
+          tax_subtotal.cac :TaxCategory do |tax_category|
+            tax_category.cbc :ID, 'S'
+            tax_category.cbc :Percent, factura.valoare_tva
+            tax_category.cac :TaxScheme do |tax_scheme|
+              tax_scheme.cbc :ID, 'VAT'
+            end
+          end
+        end
+      end
+  
+      invoice.cac :LegalMonetaryTotal do |total|
+        total.cbc :LineExtensionAmount, total_without_vat, currencyID: 'RON'
+        total.cbc :TaxExclusiveAmount, total_without_vat, currencyID: 'RON'
+        total.cbc :TaxInclusiveAmount, total_with_vat, currencyID: 'RON'
+        total.cbc :PayableAmount, total_with_vat, currencyID: 'RON'
+      end
+  
+      invoice.cac :InvoiceLine do |line|
+        line.cbc :ID, '1'
+        line.cbc :InvoicedQuantity, factura.cantitate, unitCode: 'E48'
+        line.cbc :LineExtensionAmount, total_without_vat, currencyID: 'RON'
+        line.cac :Item do |item|
+          item.cbc :Description, "Comanda nr. #{factura.comanda_id}"
+          item.cbc :Name, factura.produs
+          item.cac :ClassifiedTaxCategory do |tax_category|
+            tax_category.cbc :ID, 'S'
+            tax_category.cbc :Percent, factura.valoare_tva
+            tax_category.cac :TaxScheme do |tax_scheme|
+              tax_scheme.cbc :ID, 'VAT'
+            end
+          end
+        end
+        line.cac :Price do |price|
+          price.cbc :PriceAmount, factura.pret_unitar, currencyID: 'RON'
         end
       end
     end
   
     builder.target!
   end
+  
   
   ###metoda PF final
   
