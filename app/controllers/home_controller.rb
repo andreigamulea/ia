@@ -36,7 +36,7 @@ class HomeController < ApplicationController
   def cazuriparticulare
   end  
   def documente
-    @prod = Prod.find_by(curslegatura: 'documente', status: 'activ')
+    @prod = Prod.where(curslegatura: 'documente', status: 'activ')
   end  
   def userip
     @userip= UserIp.all
