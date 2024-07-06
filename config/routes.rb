@@ -1,4 +1,11 @@
 Rails.application.routes.draw do 
+  resources :localitatis do
+    collection do
+      post 'import_judete'
+      post 'import_tari'
+      post 'import_localitati'
+    end
+  end
   get 'tabere/export_to_xlsx', to: 'tabere#export_to_xlsx_plata_tayv24', as: 'export_tayv24_xlsx'
   get 'tabere/tayv24', to: 'tabere#tayv24', as: 'tayv24'
   get 'facturas/raport_accesare_facturi', to: 'facturas#raport_accesare_facturi', as: 'raport_accesare_facturi'

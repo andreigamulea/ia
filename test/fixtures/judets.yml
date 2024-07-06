@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  oasp: MyString
+  denjud: MyString
+  cod: MyString
+  idjudet: 1
+  cod_j: MyString
+
+two:
+  oasp: MyString
+  denjud: MyString
+  cod: MyString
+  idjudet: 1
+  cod_j: MyString

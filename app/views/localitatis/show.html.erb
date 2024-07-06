@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @localitati %>
+
+<div>
+  <%= link_to "Edit this localitati", edit_localitati_path(@localitati) %> |
+  <%= link_to "Back to localitatis", localitatis_path %>
+
+  <%= button_to "Destroy this localitati", @localitati, method: :delete %>
+</div>

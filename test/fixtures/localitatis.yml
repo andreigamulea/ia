@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cod: MyString
+  judetid: 1
+  denumire: MyString
+  denj: MyString
+  abr: MyString
+  cod_vechi: MyString
+
+two:
+  cod: MyString
+  judetid: 1
+  denumire: MyString
+  denj: MyString
+  abr: MyString
+  cod_vechi: MyString

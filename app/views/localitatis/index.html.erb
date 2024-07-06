@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Localitatis</h1>
+
+<div id="localitatis">
+  <% @localitatis.each do |localitati| %>
+    <%= render localitati %>
+    <p>
+      <%= link_to "Show this localitati", localitati %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New localitati", new_localitati_path %>
