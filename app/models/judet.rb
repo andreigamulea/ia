@@ -1,0 +1,2 @@
+class Judet < ApplicationRecord
+end

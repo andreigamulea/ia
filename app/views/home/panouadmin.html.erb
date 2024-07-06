@@ -68,17 +68,42 @@ h1.display-4{
   </div>
 </div>
 
-<div class="jumbotron">
-    <h1 class="display-4">XML</h1>
-    <p class="lead">
-    <%= link_to 'Facturi XML Ayush Cell  S.R.L.', facturi_xml_path %><br>
 
-      
-      
+</div>
+
+
+
+
+
+<div class="square">
+<div class="jumbotron">
+<h1 class="display-4">XML</h1>
+<p class="lead">
+<%= link_to 'Facturi XML Ayush Cell  S.R.L.', facturi_xml_path %><br>
+
+  
+  
+
+</p>
+</div>
+
+  <div class="jumbotron">
+    <h1 class="display-4">Preluare localitati SAGA</h1>
+    <p class="lead">
+    <%= link_to 'Importă județele', import_judete_localitatis_path, method: :post, data: { turbo_method: :post } %><br>
+    <%= link_to 'Importă țările', import_tari_localitatis_path, method: :post, data: { turbo_method: :post } %><br>
+    <%= link_to 'Importă localitățile', import_localitati_localitatis_path, method: :post, data: { turbo_method: :post } %><br>
+
 
     </p>
+   
   </div>
 </div>
+
+
+
+
+
 
 
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_30_230700) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_06_103120) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -471,6 +471,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_30_230700) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "judets", force: :cascade do |t|
+    t.string "oasp"
+    t.string "denjud"
+    t.string "cod"
+    t.integer "idjudet"
+    t.string "cod_j"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "lista_vegetales", force: :cascade do |t|
     t.string "specie"
     t.string "sinonime"
@@ -532,6 +542,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_30_230700) do
     t.index ["idx"], name: "index_listaproprietatis_on_idx"
     t.index ["proprietateter"], name: "index_listaproprietatis_on_proprietateter"
     t.index ["srota"], name: "index_listaproprietatis_on_srota"
+  end
+
+  create_table "localitatis", force: :cascade do |t|
+    t.string "cod"
+    t.integer "judetid"
+    t.string "denumire"
+    t.string "denj"
+    t.string "abr"
+    t.string "cod_vechi"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "modulecursuris", force: :cascade do |t|
@@ -683,6 +704,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_30_230700) do
     t.datetime "updated_at", null: false
     t.index ["codsr"], name: "index_srota_on_codsr"
     t.index ["codsrota"], name: "index_srota_on_codsrota"
+  end
+
+  create_table "taris", force: :cascade do |t|
+    t.string "nume"
+    t.string "abr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tipconstitutionals", force: :cascade do |t|

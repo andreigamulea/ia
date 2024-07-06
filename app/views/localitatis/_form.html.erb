@@ -1,0 +1,47 @@
+<%= form_with(model: localitati) do |form| %>
+  <% if localitati.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(localitati.errors.count, "error") %> prohibited this localitati from being saved:</h2>
+
+      <ul>
+        <% localitati.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :cod, style: "display: block" %>
+    <%= form.text_field :cod %>
+  </div>
+
+  <div>
+    <%= form.label :judetid, style: "display: block" %>
+    <%= form.number_field :judetid %>
+  </div>
+
+  <div>
+    <%= form.label :denumire, style: "display: block" %>
+    <%= form.text_field :denumire %>
+  </div>
+
+  <div>
+    <%= form.label :denj, style: "display: block" %>
+    <%= form.text_field :denj %>
+  </div>
+
+  <div>
+    <%= form.label :abr, style: "display: block" %>
+    <%= form.text_field :abr %>
+  </div>
+
+  <div>
+    <%= form.label :cod_vechi, style: "display: block" %>
+    <%= form.text_field :cod_vechi %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
