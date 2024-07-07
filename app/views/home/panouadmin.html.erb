@@ -77,9 +77,9 @@ h1.display-4{
 
 <div class="square">
 <div class="jumbotron">
-<h1 class="display-4">XML</h1>
+<h1 class="display-4">Rapoarte diverse</h1>
 <p class="lead">
-<%= link_to 'Facturi XML Ayush Cell  S.R.L.', facturi_xml_path %><br>
+<%= link_to 'Rapoarte lunare', situatii_lunare_facturaproformas_path %><br>
 
   
   
@@ -88,11 +88,12 @@ h1.display-4{
 </div>
 
   <div class="jumbotron">
-    <h1 class="display-4">Preluare localitati SAGA</h1>
+    <h1 class="display-4">Preluare SAGA</h1>
     <p class="lead">
-    <%= link_to 'Importă județele', import_judete_localitatis_path, method: :post, data: { turbo_method: :post } %><br>
-    <%= link_to 'Importă țările', import_tari_localitatis_path, method: :post, data: { turbo_method: :post } %><br>
-    <%= link_to 'Importă localitățile', import_localitati_localitatis_path, method: :post, data: { turbo_method: :post } %><br>
+    <%= link_to 'Facturi XML Ayush Cell  S.R.L.', facturi_xml_path %><br>
+    <%= link_to 'Importă județele', '#', style: 'pointer-events: none; color: gray; text-decoration: none;' %><br>
+    <%= link_to 'Importă țările', '#', style: 'pointer-events: none; color: gray; text-decoration: none;' %><br>
+    <%= link_to 'Importă localitățile', '#', style: 'pointer-events: none; color: gray; text-decoration: none;' %><br>
 
 
     </p>
@@ -201,8 +202,8 @@ h1.display-4{
     <%= link_to 'Date Institutii', firmas_path %></br>
     <%= link_to 'Tabel Useri cu Date Facturare', date_facturares_path %>
     <%= link_to ' Export', export_datefacturare_path %></br>
-    <%= link_to 'Useri de an 3 situatii', not_in_users_facturaproformas_path %></br>
     
+     <%= link_to 'Useri de an 3 situatii', not_in_users_facturaproformas_path, class: 'btn btn-secondary' %><br>
     
 
     <% if current_user %>

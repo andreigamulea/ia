@@ -227,6 +227,43 @@ class FacturaproformasController < ApplicationController
       format.json { head :no_content }
     end
   end
+  def situatii_lunare
+    @months = ['Iunie 2024', 'Iulie 2024', 'August 2024', 'Septembrie 2024', 'Octombrie 2024', 'Noiembrie 2024', 'Decembrie 2024']
+  end
+
+  def analiza_lunara #atentie merge doar pt 2024
+    month_mapping = {
+      'Iunie 2024' => 6,
+      'Iulie 2024' => 7,
+      'August 2024' => 8,
+      'Septembrie 2024' => 9,
+      'Octombrie 2024' => 10,
+      'Noiembrie 2024' => 11,
+      'Decembrie 2024' => 12
+    }
+    @selected_month = params[:month]
+    @month_number = month_mapping[@selected_month]
+    @anul = @selected_month.scan(/\d{4}/).first.to_i
+    puts("Luna selectata este: #{@selected_month}") #Iulie 2024
+    puts("Numarul lunii selectate este: #{@month_number}")  #7
+    puts("Anul selectat este: #{@anul}")  # 2024
+    # Aici adaugi logica pentru generarea raportului pe baza lunii selectate
+    # Filtrarea rândurilor din tabela facturaproformas pentru anul și luna selectată
+    @facturi = Facturaproforma.where("EXTRACT(YEAR FROM data_platii) = ? AND EXTRACT(MONTH FROM data_platii) = ?", @anul, @month_number)
+
+    # Filtrarea rândurilor pentru cele care au data_platii în luna selectată
+    @facturi_platite = @facturi.where.not(data_platii: nil)
+    @total_plati_aygr = @facturi_platite.sum(:valoare_totala)
+    ######### incep sa iau date din tabela Factura
+     # Filtrarea rândurilor din tabela facturas pentru anul, luna selectată și status "Achitata"
+     @facturas_achitate = Factura.where("EXTRACT(YEAR FROM updated_at) = ? AND EXTRACT(MONTH FROM updated_at) = ? AND status = ?", @anul, @month_number, "Achitata")
+
+     # Calcularea totalului plăților din tabela facturas
+     @total_plati_facturas = @facturas_achitate.sum(:valoare_totala)
+
+    
+  end
+
   def generare_facturi
     @prod = Prod.where(cod: ['cod36', 'cod37'])
   end  

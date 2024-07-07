@@ -1,0 +1,8 @@
+<h3>Alege luna pentru care doresti situatia facturilor achitate in Ayushcell pentru Ayus Grup:</h3>
+
+<%= form_with url: analiza_lunara_facturaproformas_path, method: :get do %>
+  <%= label_tag :month, "Alege o lună:" %>
+  <%= select_tag :month, options_for_select(@months), prompt: 'Selectează o lună' %>
+  
+  <%= submit_tag 'Generare Analiză' %>
+<% end %>
