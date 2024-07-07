@@ -228,11 +228,19 @@ class FacturaproformasController < ApplicationController
     end
   end
   def situatii_lunare
-    @months = ['Iunie 2024', 'Iulie 2024', 'August 2024', 'Septembrie 2024', 'Octombrie 2024', 'Noiembrie 2024', 'Decembrie 2024']
+    @months = [
+      'Ianuarie 2024', 'Februarie 2024', 'Martie 2024', 'Aprilie 2024', 'Mai 2024',
+      'Iunie 2024', 'Iulie 2024', 'August 2024', 'Septembrie 2024', 'Octombrie 2024',
+      'Noiembrie 2024', 'Decembrie 2024'
+    ]
   end
-
   def analiza_lunara #atentie merge doar pt 2024
     month_mapping = {
+      'Ianuarie 2024' => 1,
+      'Februarie 2024' => 2,
+      'Martie 2024' => 3,
+      'Aprilie 2024' => 4,
+      'Mai 2024' => 5,
       'Iunie 2024' => 6,
       'Iulie 2024' => 7,
       'August 2024' => 8,
