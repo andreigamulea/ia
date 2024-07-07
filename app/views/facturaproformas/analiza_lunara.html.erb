@@ -1,0 +1,46 @@
+<h3 style="text-align: center;">Raport pentru luna <%= @selected_month %> facturi achitate in Ayushcell</h3><br>
+
+<div class="row">
+<h3>Plati Ayus Grup</h3>
+  <div class="col-md-6">
+  
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nume</th>
+          <th>Număr Factură</th>
+          <th>Număr Comandă</th>
+          <th>Data Emiterii</th>
+          <th>Data Plății</th>
+          <th>Valoare</th>
+          <th>Download PDF</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @facturi_platite.each do |factura| %>
+          <tr>
+            <td><%= factura.nume %></td>
+            <td><%= factura.numar_factura %></td>
+            <td><%= factura.numar_comanda %></td>
+            <td><%= factura.data_emiterii %></td>
+            <td><%= factura.data_platii %></td>
+            <td><%= factura.valoare_totala %></td>
+            <td><%= link_to 'Factura PDF', facturaproforma_path(factura, format: :pdf), class: "btn btn-primary btn-sm" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Plati <%= @selected_month %></h5>
+      <p class="card-text">Facturi Ayus Grup: <%= @total_plati_aygr %> RON</p>
+       <p class="card-text">Facturi Aushcell: <%= @total_plati_facturas %> RON</p>
+       <p class="card-text">Total Ayus Grup + Aushcell: <%= @total_plati_aygr+@total_plati_facturas %> RON</p>
+    </div>
+  </div>
+  <%= link_to 'Inapoi', situatii_lunare_facturaproformas_path, class: "btn btn-secondary btn-sm mt-3" %>
+</div>
+</div>
