@@ -676,7 +676,7 @@ end
       if current_user.role == 1
         return true
       end
-      if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod11", "cod12", "cod13"] }, validat: "Finalizata").exists?
+      if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod11", "cod12", "cod13","cod38"] }, validat: "Finalizata").exists?
       return true
       else
         redirect_to nutritie3_path # Schimbați cu calea dorită

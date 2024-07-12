@@ -1,7 +1,7 @@
 <h3 style="text-align: center;">Raport pentru luna <%= @selected_month %> facturi achitate in Ayushcell</h3><br>
 
 <div class="row">
-<h3>Facturi Ayus Grup achitate in Ayushcell</h3></br></br>
+<h3>Facturi Ayus Grup (CUI 15768237) achitate in Ayushcell</h3></br></br>
   <div class="col-md-6">
   
     <table class="table table-striped">
@@ -36,11 +36,13 @@
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">Plati <%= @selected_month %></h5>
-      <p class="card-text">Facturi Ayus Grup: <%= @total_plati_aygr %> RON</p>
-       <p class="card-text">Facturi Aushcell: <%= @total_plati_facturas %> RON</p>
+      <p class="card-text" style="font-weight: bold;">Total facturi Ayus Grup (CUI 15768237): <%= @total_plati_aygr %> RON</p>
+
+       <p class="card-text">Total facturi Aushcell (CUI 5509227): <%= @total_plati_facturas %> RON</p>
        <p class="card-text">Total Ayus Grup + Aushcell: <%= @total_plati_aygr+@total_plati_facturas %> RON</p>
     </div>
   </div>
   <%= link_to 'Inapoi', situatii_lunare_facturaproformas_path, class: "btn btn-secondary btn-sm mt-3" %>
+  <%= link_to 'Genereaza PDF', download_analiza_lunara_facturaproformas_path(month: @selected_month, format: :pdf), class: "btn btn-primary btn-sm mt-3" %>
 </div>
 </div>

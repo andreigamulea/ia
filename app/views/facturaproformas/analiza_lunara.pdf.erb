@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Raport pentru luna <%= @selected_month %></title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .table th, .table td {
+      border: 1px solid #000;
+      padding: 8px;
+      text-align: left;
+    }
+    .table th {
+      background-color: #f2f2f2;
+    }
+    .table td {
+      background-color: #ffffff;
+    }
+    .card {
+      border: 1px solid #000;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .card-title {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+    .card-text {
+      margin-bottom: 10px;
+    }
+    .total-row td {
+      border: none;
+    }
+    .total-row .total-label {
+      text-align: right;
+      border-top: 1px solid #000;
+      border-bottom: 1px solid #000;
+      border-left: 1px solid #000;
+      font-weight: bold;
+    }
+    .total-row .total-value {
+      border: 1px solid #000;
+      border-left: none;
+      text-align: left;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<h3 style="text-align: center;">Raport pentru luna <%= @selected_month %> facturi achitate in Ayush Cell</h3><br>
+
+<div class="row">
+  <h3>Facturi Ayus Grup (CUI 15768237) achitate in Ayush Cell</h3><br><br>
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nume</th>
+          <th>Număr Factură</th>
+          <th>Număr Comandă</th>
+          <th>Data Emiterii</th>
+          <th>Data Plății</th>
+          <th>Valoare</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @facturi_platite.each do |factura| %>
+          <tr>
+            <td><%= factura.nume %></td>
+            <td><%= factura.numar_factura %></td>
+            <td><%= factura.numar_comanda %></td>
+            <td><%= factura.data_emiterii %></td>
+            <td><%= factura.data_platii %></td>
+            <td><%= factura.valoare_totala %></td>
+          </tr>
+        <% end %>
+        <tr class="total-row">
+          <td colspan="4"></td>
+          <td class="total-label">Total</td>
+          <td class="total-value"><%= @total_plati_aygr %> RON</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Plati <%= @selected_month %></h5>
+      <p class="card-text">Facturi Ayus Grup (CUI 15768237): <%= @total_plati_aygr %> RON</p>
+      <p class="card-text">Facturi Ayush Cell (CUI 5509227): <%= @total_plati_facturas %> RON</p>
+      <p class="card-text">Total Ayus Grup + Ayush Cell: <%= @total_plati_aygr + @total_plati_facturas %> RON</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

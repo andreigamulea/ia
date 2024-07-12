@@ -234,44 +234,43 @@ class FacturaproformasController < ApplicationController
       'Noiembrie 2024', 'Decembrie 2024'
     ]
   end
-  def analiza_lunara #atentie merge doar pt 2024
-    month_mapping = {
-      'Ianuarie 2024' => 1,
-      'Februarie 2024' => 2,
-      'Martie 2024' => 3,
-      'Aprilie 2024' => 4,
-      'Mai 2024' => 5,
-      'Iunie 2024' => 6,
-      'Iulie 2024' => 7,
-      'August 2024' => 8,
-      'Septembrie 2024' => 9,
-      'Octombrie 2024' => 10,
-      'Noiembrie 2024' => 11,
-      'Decembrie 2024' => 12
-    }
-    @selected_month = params[:month]
-    @month_number = month_mapping[@selected_month]
-    @anul = @selected_month.scan(/\d{4}/).first.to_i
-    puts("Luna selectata este: #{@selected_month}") #Iulie 2024
-    puts("Numarul lunii selectate este: #{@month_number}")  #7
-    puts("Anul selectat este: #{@anul}")  # 2024
-    # Aici adaugi logica pentru generarea raportului pe baza lunii selectate
-    # Filtrarea rândurilor din tabela facturaproformas pentru anul și luna selectată
-    @facturi = Facturaproforma.where("EXTRACT(YEAR FROM data_platii) = ? AND EXTRACT(MONTH FROM data_platii) = ?", @anul, @month_number)
 
-    # Filtrarea rândurilor pentru cele care au data_platii în luna selectată
+  def analiza_lunara
+    set_month_and_year
+
+    @facturi = Facturaproforma.where("EXTRACT(YEAR FROM data_platii) = ? AND EXTRACT(MONTH FROM data_platii) = ? AND status = ?", @anul, @month_number, "Achitata")
     @facturi_platite = @facturi.where.not(data_platii: nil)
     @total_plati_aygr = @facturi_platite.sum(:valoare_totala)
-    ######### incep sa iau date din tabela Factura
-     # Filtrarea rândurilor din tabela facturas pentru anul, luna selectată și status "Achitata"
-     @facturas_achitate = Factura.where("EXTRACT(YEAR FROM updated_at) = ? AND EXTRACT(MONTH FROM updated_at) = ? AND status = ?", @anul, @month_number, "Achitata")
 
-     # Calcularea totalului plăților din tabela facturas
-     @total_plati_facturas = @facturas_achitate.sum(:valoare_totala)
-
-    
+    @facturas_achitate = Factura.where("EXTRACT(YEAR FROM updated_at) = ? AND EXTRACT(MONTH FROM updated_at) = ? AND status = ?", @anul, @month_number, "Achitata")
+    @total_plati_facturas = @facturas_achitate.sum(:valoare_totala)
   end
 
+  def download_analiza_lunara
+    set_month_and_year
+
+    @facturi = Facturaproforma.where("EXTRACT(YEAR FROM data_platii) = ? AND EXTRACT(MONTH FROM data_platii) = ? AND status = ?", @anul, @month_number, "Achitata")
+    @facturi_platite = @facturi.where.not(data_platii: nil)
+    @total_plati_aygr = @facturi_platite.sum(:valoare_totala)
+
+    @facturas_achitate = Factura.where("EXTRACT(YEAR FROM updated_at) = ? AND EXTRACT(MONTH FROM updated_at) = ? AND status = ?", @anul, @month_number, "Achitata")
+    @total_plati_facturas = @facturas_achitate.sum(:valoare_totala)
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        html = render_to_string(
+          template: 'facturaproformas/analiza_lunara', # Asigură-te că denumirea și calea sunt corecte
+          locals: { facturi: @facturi_platite, total_plati_aygr: @total_plati_aygr, total_plati_facturas: @total_plati_facturas, selected_month: @selected_month },
+          encoding: 'UTF8'
+        )
+        pdf = PDFKit.new(html).to_pdf
+        filename = "Raport_Analiza_Lunara_#{@selected_month}.pdf"
+        send_data pdf, filename: filename, type: 'application/pdf', disposition: 'attachment'
+      end
+    end
+  end
+  ###############
   def generare_facturi
     @prod = Prod.where(cod: ['cod36', 'cod37'])
   end  
@@ -498,6 +497,24 @@ class FacturaproformasController < ApplicationController
       end
     end
     
-  
+    def set_month_and_year
+      month_mapping = {
+        'Ianuarie 2024' => 1,
+        'Februarie 2024' => 2,
+        'Martie 2024' => 3,
+        'Aprilie 2024' => 4,
+        'Mai 2024' => 5,
+        'Iunie 2024' => 6,
+        'Iulie 2024' => 7,
+        'August 2024' => 8,
+        'Septembrie 2024' => 9,
+        'Octombrie 2024' => 10,
+        'Noiembrie 2024' => 11,
+        'Decembrie 2024' => 12
+      }
+      @selected_month = params[:month]
+      @month_number = month_mapping[@selected_month]
+      @anul = @selected_month.scan(/\d{4}/).first.to_i
+    end
    
 end
