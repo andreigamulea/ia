@@ -65,8 +65,18 @@ class Nutritie4Controller < ApplicationController
       puts("Produse afișate: #{@prods.pluck(:cod) if @prods}")
       puts("Are acces? : #{@has_access}")
       puts("Produse cumpărate: #{@prods_cumparate.pluck(:cod) if @prods_cumparate}")
+
+
+      @myvideo122 = if @a_cumparat_macar_un_cod #1001-2000 sunt pt video si material pdf
+        
+          Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
+       
+      else
+        Video.none
+      end
+
   
-      @myvideo13 = if @a_cumparat_macar_un_cod
+      @myvideo13 = if @a_cumparat_macar_un_cod #2001-3000 sunt pt video si material pdf
                      if current_user.limba == 'EN'
                        Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
                      else
@@ -75,7 +85,7 @@ class Nutritie4Controller < ApplicationController
                    else
                      Video.none
                    end
-  
+      
       if @has_access
         @platit = true
         puts("sunt in has acces")
@@ -93,7 +103,7 @@ class Nutritie4Controller < ApplicationController
         @myvideo13 = Video.none
       end
     else
-      # Utilizator neautentificat
+      ## Utilizator neautentificat
       puts("User nelogat")
       @prods = Prod.where(curslegatura: 'nutritie4', status: 'activ').where(cod: ['cod85', 'cod86']).order(:id)
       @has_access = false

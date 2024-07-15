@@ -18,7 +18,8 @@ class VideosController < ApplicationController
   before_action :set_user11, only: %i[myvideo11] #pt jivaka si cognitronica si performanta_cognitiva saunaka si hiranyaksha
   #ATENTIE POT FOLOSI set_user11, only: %i[myvideo11]  PT ORICE VIDEO INDIVIDUAL CARE ARE PRET- gen: video asociat cu produs cu pret=12lei
   
-  before_action :set_user12, only: %i[myvideo12] #pt nutritie4 
+  before_action :set_user12, only: %i[myvideo12] ##pt nutritie4 
+  before_action :set_user12, only: %i[myvideo122] ##pt nutritie4 aspecte organizatorice
   before_action :set_user13, only: %i[myvideo13] #este pt vajikarana1
   before_action :set_user133, only: %i[myvideo133] #este pt vajikarana1 resurse
   before_action :require_admin, only: %i[index new edit update create]
@@ -854,7 +855,23 @@ end
       true
     end
     
-
+    def set_user122 # este pt aspecte organizatorice nutritie4
+      unless user_signed_in?
+        flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+        redirect_to new_user_session_path # Presupunând că aceasta este calea către login
+        return
+      end
+    
+      if current_user.role == 1
+        return true
+      end
+      if ComenziProd.joins(:prod).where(user_id: current_user.id, prods: { cod: ["cod85", "cod86", "cod87","cod88","cod89"] }, validat: "Finalizata").exists?
+      return true
+      else
+        redirect_to nutritie3_path # Schimbați cu calea dorită
+        return false
+      end
+    end  
 def set_user13
   puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   unless user_signed_in?
