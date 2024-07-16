@@ -83,7 +83,7 @@ class TabereController < ApplicationController
         puts("sunt in has acces")
         if current_user.limba == 'EN'
           puts("sunt in limba en")
-          @myvideo = Video.where(tip: 'tayv24').where('(ordine >= ? AND ordine <= ?) OR (ordine > ? AND ordine < ?)', 1, 1000, 1000, 2000).order(ordine: :asc)
+          @myvideo = Video.where(tip: 'tayv24').where('(ordine >= ? AND ordine <= ?)', 1000, 2000).order(ordine: :asc)
         else
           puts("NU sunt in limba en")
           @myvideo = Video.where(tip: 'tayv24').where('ordine <= ?', 1000).order(ordine: :asc)
