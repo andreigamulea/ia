@@ -108,6 +108,9 @@ class TabereController < ApplicationController
     if data_prag
       puts("Data prag + 90 zile= : #{data_prag + 90.days}")
     end
+    if current_user && current_user.email== "kalianasundara@protonmail.com"
+      @prods = Prod.where(curslegatura: 'tayv24', status: 'activ').where(cod: ['cod174', 'cod175', 'cod176', 'cod177']).order(:id)
+    end  
 end
 
 
