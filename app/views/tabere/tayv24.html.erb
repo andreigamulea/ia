@@ -1,4 +1,7 @@
-
+<!-- Partea de sus a fișierului app/views/home/about.html.erb -->
+<% content_for :custom_js do %>
+    <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
+    <% end %>
 <style>
 #tayv2024 .cm h2 {
     font-size:22px;
@@ -198,9 +201,20 @@
  
 </section>
 
- 
-
-
+<section>
+<p>Vijnana-Svasthya oferă o abordare integrativă a sănătății holistice și a conștiinței cu ajutorul cunoașterii supramentale, amplificând astfel echilibrul și armonia întregii ființe în viața de zi cu zi.</p>
+<h3 style="font-size:18px; text-align:center;">Prezentare introductiva Vijnana-Svasthya</h3></br>
+<!-- for non autoplay video //-->
+<div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+    <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
+        <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+        <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+        <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+        <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+    </div>
+</div>
+</br>
+</section>
 
 
 
@@ -323,3 +337,20 @@
 
 </div>
 </div>
+<script>
+  document.addEventListener("turbo:load", function() {
+    document.querySelectorAll('.no-turbo').forEach(link => {
+      link.setAttribute('data-turbo', 'false');
+    });
+  });
+</script>
+<script>
+  document.addEventListener("turbo:load", function() {
+    document.querySelectorAll('.no-turbo').forEach(link => {
+      link.setAttribute('data-turbo', 'false');
+    });
+  });
+</script>
+<script>
+<%= yield :custom_js %>
+</script>
