@@ -1,8 +1,8 @@
 class TabereController < ApplicationController
   def tayv24
     data_prag = Date.new(2024, 7, 16)
-    @myvideo0 = Video.find_by(link: 'tDYGbQMGTNE')
-    @myvideo01 = @myvideo1.link if @myvideo0
+    #@myvideo0 = Video.find_by(link: 'tDYGbQMGTNE') 
+    @myvideo01 = "tDYGbQMGTNE"
     if current_user
       puts("User logat: #{current_user.id}")
   
