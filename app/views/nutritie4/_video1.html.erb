@@ -11,16 +11,16 @@
  
   <td>   
   <% if (video.ordine > 1000 && video.ordine < 2000) || (video.ordine > 2000 && video.ordine < 3000)%>
-  <%= link_to "Vezi video", myvideo7_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+  <%= link_to "Vezi video", myvideo122_path(id: video.id, link: video.link), class: "btn btn-primary" %>
   <% elsif video.ordine > 3000 && video.ordine < 4000 %>
       <%if current_user.role==1%>
-        <%= link_to "Vezi video", myvideo7_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+        <%= link_to "Vezi video", myvideo12_path(id: video.id, link: video.link), class: "btn btn-primary" %>
         
         <% elsif current_user.nutritieabsolvit.nil? || current_user.nutritieabsolvit < 2 %>
       
       
         <% else %>
-        <%= link_to "Vezi video", myvideo7_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+        <%= link_to "Vezi video", myvideo12_path(id: video.id, link: video.link), class: "btn btn-primary" %>
       <% end %>
 
   

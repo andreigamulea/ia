@@ -186,6 +186,7 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get 'videos/:id/myvideo10', to: 'videos#myvideo10', as: 'myvideo10'
   get 'videos/:id/myvideo11', to: 'videos#myvideo11', as: 'myvideo11'
   get 'videos/:id/myvideo12', to: 'videos#myvideo12', as: 'myvideo12'
+  get 'videos/:id/myvideo122', to: 'videos#myvideo122', as: 'myvideo122'
   get 'videos/:id/myvideo13', to: 'videos#myvideo13', as: 'myvideo13'
   get 'videos/:id/myvideo133', to: 'videos#myvideo133', as: 'myvideo133'
   get 'videos/:id/myvideo14', to: 'videos#myvideo14', as: 'myvideo14'

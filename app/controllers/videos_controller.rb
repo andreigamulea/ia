@@ -19,7 +19,7 @@ class VideosController < ApplicationController
   #ATENTIE POT FOLOSI set_user11, only: %i[myvideo11]  PT ORICE VIDEO INDIVIDUAL CARE ARE PRET- gen: video asociat cu produs cu pret=12lei
   
   before_action :set_user12, only: %i[myvideo12] ##pt nutritie4 
-  before_action :set_user12, only: %i[myvideo122] ##pt nutritie4 aspecte organizatorice
+  before_action :set_user122, only: %i[myvideo122] ##pt nutritie4 aspecte organizatorice
   before_action :set_user13, only: %i[myvideo13] #este pt vajikarana1
   before_action :set_user133, only: %i[myvideo133] #este pt vajikarana1 resurse
   before_action :set_user14, only: %i[myvideo14] #este pt tayv24 video principale
@@ -248,6 +248,11 @@ end
     render 'myvideo1'
   end
   def myvideo12 #pt nutritie4
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo122 #pt nutritie4 resurse
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'

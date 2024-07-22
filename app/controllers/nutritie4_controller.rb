@@ -80,7 +80,7 @@ class Nutritie4Controller < ApplicationController
                      if current_user.limba == 'EN'
                        Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
                      else
-                       Video.none
+                      Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
                      end
                    else
                      Video.none
