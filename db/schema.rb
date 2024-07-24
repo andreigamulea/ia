@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_06_103120) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_24_222256) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -180,6 +180,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_06_103120) do
     t.decimal "pret_bucata", precision: 10, scale: 2
     t.decimal "pret_total", precision: 10, scale: 2
     t.string "obs"
+    t.integer "taxa2425"
     t.index ["comanda_id"], name: "index_comenzi_prods_on_comanda_id"
     t.index ["prod_id"], name: "index_comenzi_prods_on_prod_id"
     t.index ["taxa2324"], name: "index_comenzi_prods_on_taxa2324"
@@ -843,6 +844,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_06_103120) do
     t.float "nutritieabsolvit"
     t.string "cpa"
     t.string "cnp"
+    t.integer "grupa2425"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["grupa"], name: "index_users_on_grupa"
     t.index ["limba"], name: "index_users_on_limba"

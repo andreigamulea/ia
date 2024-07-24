@@ -129,7 +129,7 @@ class StripeWebhooksController < ApplicationController
           Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2324 pt taxa inscriere nu a fost pusa  #{produs.cod}
           pt #{current_user.name}")
         else
-          # Caută o înregistrare existentă sau inițializează una nouă
+          ## Caută o înregistrare existentă sau inițializează una nouă
           acces = Accescurs2324.find_or_initialize_by(user_id: user_id)
           
           if acces.new_record?
