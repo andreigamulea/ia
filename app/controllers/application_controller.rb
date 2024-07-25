@@ -138,6 +138,8 @@ class ApplicationController < ActionController::Base
           tayv24_path
         elsif return_to == "taxainscriere" 
           cursayurveda_path
+        elsif return_to == "cay2425"
+          cursayurveda2425_path  
         elsif return_to == "traditia_ayurvedica" 
           traditia_ayurvedica_path
         elsif return_to == "jivaka" 
