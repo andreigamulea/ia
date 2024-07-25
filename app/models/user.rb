@@ -58,6 +58,9 @@ class User < ApplicationRecord
   has_many :videos, through: :user_videos
   
   has_many :accescurs2324s
+  
+  has_many :accescurs2425, class_name: 'Accescurs2425', foreign_key: 'user_id', inverse_of: :user
+  
  
   has_many :userprods
   has_many :prods, through: :userprods

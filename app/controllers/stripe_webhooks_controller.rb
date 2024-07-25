@@ -1,30 +1,62 @@
 class StripeWebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
   # Definim o hartă care asociază fiecare cod cu luna corespunzătoare
-  MAP_COD_LUNA = {
-    "cod16" => :octombrie,
-    "cod17" => :noiembrie,
-    "cod18" => :decembrie,
-    "cod19" => :ianuarie,
-    "cod20" => :februarie,
-    "cod21" => :martie,
-    "cod22" => :aprilie,
-    "cod23" => :mai,
-    "cod24" => :iunie,
-    "cod25" => :iulie
-  }
-  MAP_COD_TAXA = {
-    "cod16" => 2,
-    "cod17" => 3,
-    "cod18" => 4,
-    "cod19" => 5,
-    "cod20" => 6,
-    "cod21" => 7,
-    "cod22" => 8,
-    "cod23" => 9,
-    "cod24" => 10,
-    "cod25" => 11
+  # Definirea constantei pentru lunile și taxele corespunzătoare pentru 2023-2024
+MAP_COD_LUNA = {
+  "cod16" => :octombrie,
+  "cod17" => :noiembrie,
+  "cod18" => :decembrie,
+  "cod19" => :ianuarie,
+  "cod20" => :februarie,
+  "cod21" => :martie,
+  "cod22" => :aprilie,
+  "cod23" => :mai,
+  "cod24" => :iunie,
+  "cod25" => :iulie
+}.merge("cod14" => :septembrie, "cod15" => :all).freeze
+
+MAP_COD_TAXA = {
+  "cod16" => 2,
+  "cod17" => 3,
+  "cod18" => 4,
+  "cod19" => 5,
+  "cod20" => 6,
+  "cod21" => 7,
+  "cod22" => 8,
+  "cod23" => 9,
+  "cod24" => 10,
+  "cod25" => 11
+}.merge("cod14" => 1, "cod15" => 12).freeze
+
+# Definirea constantei pentru lunile și taxele corespunzătoare pentru 2024-2025
+MAP_COD_LUNA_2425 = {
+  "cod197" => :octombrie,
+  "cod198" => :noiembrie,
+  "cod199" => :decembrie,
+  "cod200" => :ianuarie,
+  "cod201" => :februarie,
+  "cod202" => :martie,
+  "cod203" => :aprilie,
+  "cod204" => :mai,
+  "cod205" => :iunie,
+  "cod206" => :iulie,
+  "cod207" => :septembrie
 }.freeze
+
+MAP_COD_TAXA_2425 = {  
+  "cod197" => 2,
+  "cod198" => 3,
+  "cod199" => 4,
+  "cod200" => 5,
+  "cod201" => 6,
+  "cod202" => 7,
+  "cod203" => 8,
+  "cod204" => 9,
+  "cod205" => 10,
+  "cod206" => 11,
+  "cod207" => 1
+}.freeze
+
 
   def create
     payload = request.body.read
@@ -119,97 +151,151 @@ class StripeWebhooksController < ApplicationController
         UserModulecursuri.create(user_id: user_id, modulecursuri_id: 2, validat: 'Finalizata')
       end
 
-      #1start creaza o inregistrare in accescurs2324 dc nu exista iar daca exista fa doar update (pt taxa inscriere an 1)      
-      if produs.cod == "cod14"
-        user = User.find_by(id: user_id)
+      # Cod pentru anul 2023-2024
+if produs.cod == "cod14"
+  user = User.find_by(id: user_id)
 
-        user.update(grupa: 1)
-        unless cp.update(taxa2324: 1)
-          # Cod pentru tratamentul erorilor
-          Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2324 pt taxa inscriere nu a fost pusa  #{produs.cod}
-          pt #{current_user.name}")
-        else
-          ## Caută o înregistrare existentă sau inițializează una nouă
-          acces = Accescurs2324.find_or_initialize_by(user_id: user_id)
-          
-          if acces.new_record?
-            # Dacă este o nouă înregistrare (nu a fost găsită în baza de date)
-            acces.septembrie = true
-            acces.save
-          else
-            # Dacă este o înregistrare existentă, actualizează valorile necesare
-            acces.update(septembrie: true)
-          end
-        end
-      end
-      #1end
-      #2start creaza o inregistrare in accescurs2324 dc nu exista iar daca exista fa doar update (pt taxa inscriere an 1)      
-      if produs.cod == "cod15" #cand se plateste taxa anuala1620 lei
-        unless cp.update(taxa2324: 12)
-          # Cod pentru tratamentul erorilor
-          Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2324 pt taxa inscriere nu a fost pusa  #{produs.cod}
-          pt #{current_user.name}")
-        else
-          # Caută o înregistrare existentă sau inițializează una nouă
-          acces = Accescurs2324.find_or_initialize_by(user_id: user_id)
-          
-          luni_hash = {
-            septembrie: true,
-            octombrie: true,
-            noiembrie: true,
-            decembrie: true,
-            ianuarie: true,
-            februarie: true,
-            martie: true,
-            aprilie: true,
-            mai: true,
-            iunie: true,
-            iulie: true,
-            all: true
-          }
-          
-          if acces.new_record?
-            # Dacă este o nouă înregistrare (nu a fost găsită în baza de date)
-            luni_hash.each do |luna, val|
-              acces[luna] = val
-            end
-            acces.save
-          else
-            # Dacă este o înregistrare existentă, actualizează valorile necesare
-            acces.update(luni_hash)
-          end
-          
-        end
-      end
-      #2end
-    ############################
+  user.update(grupa: 1)
+  unless cp.update(taxa2324: 1)
+    Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2324 pt taxa inscriere nu a fost pusa #{produs.cod} pt #{current_user.name}")
+  else
+    acces = Accescurs2324.find_or_initialize_by(user_id: user_id)
     
-   
-    # Verificăm dacă codul produsului se află în lista de coduri pe care o avem
-    if MAP_COD_LUNA.key?(produs.cod)
-      valoare_taxa = MAP_COD_TAXA[produs.cod]
-      
-      unless cp.update(taxa2324: valoare_taxa)
-        # Cod pentru tratamentul erorilor
-        Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2324 nu a fost pusa pentru #{produs.cod} pt #{current_user.name}")
-      else
-        # Caută o înregistrare existentă sau inițializează una nouă
-        acces = Accescurs2324.find_or_initialize_by(user_id: user_id)
-        
-        luna_curenta = MAP_COD_LUNA[produs.cod]
+    if acces.new_record?
+      acces.septembrie = true
+      acces.save
+    else
+      acces.update(septembrie: true)
+    end
+  end
+end
 
-        if acces.new_record?
-          # Dacă este o nouă înregistrare (nu a fost găsită în baza de date)
-          acces[luna_curenta] = true
-          acces.save
-        else
-          # Dacă este o înregistrare existentă, actualizează valorile necesare
-          acces.update(luna_curenta => true)
-        end
+if produs.cod == "cod15"
+  unless cp.update(taxa2324: 12)
+    Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2324 pt taxa inscriere nu a fost pusa #{produs.cod} pt #{current_user.name}")
+  else
+    acces = Accescurs2324.find_or_initialize_by(user_id: user_id)
+    
+    luni_hash = {
+      septembrie: true,
+      octombrie: true,
+      noiembrie: true,
+      decembrie: true,
+      ianuarie: true,
+      februarie: true,
+      martie: true,
+      aprilie: true,
+      mai: true,
+      iunie: true,
+      iulie: true,
+      all: true
+    }
+    
+    if acces.new_record?
+      luni_hash.each do |luna, val|
+        acces[luna] = val
+      end
+      acces.save
+    else
+      acces.update(luni_hash)
+    end
+  end
+end
+
+if MAP_COD_LUNA.key?(produs.cod)
+  valoare_taxa = MAP_COD_TAXA[produs.cod]
+  
+  unless cp.update(taxa2324: valoare_taxa)
+    Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2324 nu a fost pusa pentru #{produs.cod} pt #{current_user.name}")
+  else
+    acces = Accescurs2324.find_or_initialize_by(user_id: user_id)
+    luna_curenta = MAP_COD_LUNA[produs.cod]
+    
+    if acces.new_record?
+      acces[luna_curenta] = true
+      acces.save
+    else
+      acces.update(luna_curenta => true)
+    end
+  end
+end
+
+# start Cod pentru anul 2024-2025
+if produs.cod == "cod195"
+  user = User.find_by(id: user_id)
+
+  user.update(grupa2425: 1)
+  unless cp.update(taxa2425: 1)
+    Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2425 pt taxa inscriere nu a fost pusa #{produs.cod} pt #{current_user.name}")
+  else
+    acces = Accescurs2425.find_or_initialize_by(user_id: user_id)
+    
+    if acces.new_record?
+      acces.septembrie = true
+      acces.save
+    else
+      acces.update(septembrie: true)
+    end
+  end
+end
+
+if produs.cod == "cod196"
+  unless cp.update(taxa2425: 12)
+    Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2425 pt taxa inscriere nu a fost pusa #{produs.cod} pt #{current_user.name}")
+  else
+    acces = Accescurs2425.find_or_initialize_by(user_id: user_id)
+    
+    luni_hash = {
+      septembrie: true,
+      octombrie: true,
+      noiembrie: true,
+      decembrie: true,
+      ianuarie: true,
+      februarie: true,
+      martie: true,
+      aprilie: true,
+      mai: true,
+      iunie: true,
+      iulie: true,
+      all: true
+    }
+    
+    if acces.new_record?
+      luni_hash.each do |luna, val|
+        acces[luna] = val
+      end
+      acces.save
+    else
+      acces.update(luni_hash)
+    end
+  end
+end
+
+if MAP_COD_LUNA_2425.key?(produs.cod)
+  valoare_taxa = MAP_COD_TAXA_2425[produs.cod]
+  
+  # Verifică dacă valoarea `taxa2425` deja există și este corectă
+  existing_cp = ComenziProd.find_by(user_id: user_id, prod_id: cp.prod_id)
+  if existing_cp && existing_cp.taxa2425 == valoare_taxa
+    Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2425 deja setata la #{valoare_taxa} pentru #{produs.cod} pt #{current_user.name}")
+  else
+    unless cp.update(taxa2425: valoare_taxa)
+      Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2425 nu a fost pusa pentru #{produs.cod} pt #{current_user.name}")
+    else
+      acces = Accescurs2425.find_or_initialize_by(user_id: user_id)
+      luna_curenta = MAP_COD_LUNA_2425[produs.cod]
+      
+      if acces.new_record?
+        acces[luna_curenta] = true
+        acces.save
+      else
+        acces.update(luna_curenta => true)
       end
     end
+  end
+end
 
-    ###########################
+    ###########################end an1 2024-2025
       populeaza_cursuri(user_id, produs)
       creaza_factura(payment_intent)
       #send_payment_success_email
@@ -334,11 +420,14 @@ class StripeWebhooksController < ApplicationController
     end  
     end
     dt = produs.valabilitatezile
-    if !['cod11', 'cod12', 'cod13', 'cod14', 'cod15', 'cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
+    if ![
+      'cod11', 'cod12', 'cod13', 'cod14', 'cod15', 'cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
       'cod22', 'cod23', 'cod24', 'cod25', 'cod26', 'cod27', 'cod28', 'cod29',
       'cod30', 'cod31', 'cod32', 'cod33', 'cod34', 'cod35', 'cod36', 'cod37',
       'cod38', 'cod39', 'cod40', 'cod41', 'cod42', 'cod43', 'cod44', 'cod45', 'cod48', 'cod76', 'cod85', 'cod86', 'cod88',
-      'cod105', 'cod108', 'cod110', 'cod111', 'cod126', 'cod174', 'cod175'].include?(produs.cod)
+      'cod105', 'cod108', 'cod110', 'cod111', 'cod126', 'cod174', 'cod175',
+      'cod195', 'cod196', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204','cod205','cod206','cod207'
+    ].include?(produs.cod)
       produsul = produs.nume + ' (' + Date.current.strftime("%d-%m-%Y") + ' - ' + (Date.current + dt.days).strftime("%d-%m-%Y") + ' )'
     
     else

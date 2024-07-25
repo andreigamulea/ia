@@ -1,0 +1,287 @@
+<!-- app/views/cursuriayurvedas/cursayurveda2425.html.erb -->
+<% content_for :custom_js do %>
+  <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
+<% end %>
+
+<% content_for :title, "Curs de Ayurveda | Ayush Cell Romania" %>
+<% content_for :description, "Descoperiți Ayurveda: echilibrarea dosha-urilor, alimentație, terapii naturale și sesiuni live. Curs adaptat pentru oricine, cu suport complet." %>
+<% content_for :keywords, "Ayurveda curs online, învățături tradiționale Ayurveda, tipologii constituționale umane, armonizare constituțională Ayurveda, alimentație naturală Ayurveda, plante medicinale Ayurveda, cromoterapie, meloterapie, digitopunctură, automasaj Ayurvedic, reîntinerire naturală, tonus erotic-amoros, purificare corporală, efecte plante medicinale, utilizare plante aromatice, cursuri Ayurveda pentru toți, sesiuni live Ayurveda, suport de curs Ayurveda, acces înregistrări curs Ayurveda, înscriere curs Ayurveda, participare curs Ayurveda, metode naturale de vindecare, adaptare viață modernă, echilibrul dosha, sănătate holistică, cunoaștere tradițională aplicată" %>
+
+<% content_for :canonical do %>
+  <link rel="canonical" href="https://www.ayushcell.ro/cursayurveda2425">
+<% end %>
+
+<div class="cont">
+  <h1 class="name" style="font-size:1.8em;"><%= @titlu_pagina %></h1>
+
+  <% if !(current_user && (current_user.role == 1 || (current_user.grupa2425 == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2425).to_i >= 2))) %>
+  <div class="row1">
+    <div class="r1c1">
+      <img src="<%= image_url('iarba-sarpelui-1.jpg') %>" alt="Curs de Ayurveda">
+    </div>
+    <div class="r1c2">
+      <h2>Subiecte abordate</h2>
+      <p>- Expunerea sistematică a unor învăţături tradiţionale fundamentale despre viaţă, bazată pe scrierile autentice de AYURVEDA, realizată în cadrul acestui curs într-o manieră originală şi unică, ce este mereu actualizată necesităţilor vieţii omului modern.</p>
+      <p>- Prezentarea şi descrierea detaliată a tipologiilor constituţionale umane, cu multiple aplicaţii imediate în viaţa de zi cu zi, în multe dintre domeniile curente.</p>
+      <p>- Prezentarea unor modalităţi practice naturale de armonizare constituţională, specifice sistemului AYURVEDA: alimentaţie naturală, folosirea înţeleaptă a plantelor medicinale şi aromatice, cromoterapie, meloterapie, digitopunctură, modalităţi simple de automasaj, etc.</p>
+      <p>- Expunerea unor modalităţi tradiţionale de reîntinerire, de revitalizare şi de redobândire a tonusului erotic-amoros, precum şi de purificare a trupului, toate acestea realizate prin folosirea unor mijloace naturale, bazate în principal pe folosirea plantelor cu proprietăţi vindecătoare ori afrodiziace.</p>
+      <p>- Descrierea multiplelor efecte binefăcătoare ale plantelor medicinale şi aromatice atât românești cât și indiene, împreună cu prezentarea unor modalităţi practice inedite şi foarte eficiente de utilizare a acestora.</p>
+    </div>
+  </div>
+  <div class="r2">
+    <h2 class="name" style="font-size:1.6em;">Înscriere și participare</h2>
+    <p><strong>Cum și când se desfășoară cursul?</strong><br>
+    <span class="bullet">Cursul se desfășoară on-line, LIVE, o dată pe săptămână, în fiecare vineri de la ora 18:00. </span></p>
+
+    <p><strong>Pot participa doar medicii sau și alte persoane interesate de acest domeniu al cunoașterii?</strong><br>
+    <span class="bullet">Acest curs este accesibil tuturor celor interesați indiferent de pregătirea profesională.</span></p>
+
+    <p><strong>Cât durează cursul?</strong><br>
+    <span class="bullet">Cursul de ayurveda este structurat pe module anuale în care sunt studiate gradat numeroase ramuri ale ayurvedei. Astfel putem studia ayurveda chiar mai mulți ani, în funcție de cât de mult dorim să aprofundăm această cunoaștere tradițională.</span></p>
+
+    <p><strong>Se oferă suport de curs?</strong><br>
+    <span class="bullet">În completarea sesiunilor live, participanții primesc în mod gratuit suportul de curs scris asociat.</span></p>
+
+    <p><strong>Costul participării la cursul de Ayurveda pentru sesiunea octombrie 2024 – iulie 2025 este de 1800 lei.</strong><br>
+    <span class="bullet">Înscrierea presupune parcurgerea următorilor doi pași:</span></p>
+
+    <ol>
+      <li>Achitarea o singura data a sumei de 60 lei, necesară pentru realizarea înscrierii.</li>
+      <li>Achitarea participării pentru anul de curs octombrie 2024 – iulie 2025 in valoare de 1800 lei. Plata poate fi realizată integral la înscriere sau poate fi distribuită în tranșe lunare de câte 180 lei. Optând pentru plata completă inițială, se beneficiază de o reducere corespunzătoare cu valoarea unei luni de participare, reducându-se astfel suma totală de plată de la 1800 lei la 1620 lei pentru acest an de curs.</li>
+    </ol>
+    <span class="bullet" style="margin-top: -15px;">Link-ul de ZOOM necesar participării LIVE va fi transmis prin email, în fiecare zi de vineri doar persoanelor care sunt la zi cu plata cursului.</span>
+    <p><strong>Acces la vizionarea înregistrărilor</strong><br>
+    <span class="bullet">Participanții care se înscriu după data de 1 octombrie și astfel nu au participat la lecțiile LIVE desfășurate până la momentul înscrierii lor sau cei care nu pot fi prezenți la o lecție LIVE, au la dispoziție opțiunea de a viziona înregistrările acestor sesiuni direct pe site achitând suma de 22 lei/lecție.</span><br>
+    <span class="bullet">Pentru a avea acces la înregistrări, este necesară achitarea tuturor sumelor restante pentru lunile anterioare (integral pentru tot anul sau 180 lei lunar), începând cu luna Octombrie și până în luna curentă. Dacă plățile nu sunt la zi, participanții nu vor avea posibilitatea de a achita revizionarea pe site pentru cursurile anterioare sau de a participa la lecțiile live din luna curentă.</span>
+    </p>
+
+    <a href="#register" class="register">Inscrie-te la curs</a>
+  </div>
+  <% end %>
+
+  <h2 class="name"><%= @myvideo1.nume %></h2>
+  <p style="text-align:center;"><%= @myvideo1.descriere %></p>
+  <!-- for non autoplay video //-->
+  <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+    <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
+      <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+      <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+      <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+      <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+    </div>
+  </div>
+  </br>
+
+  <% if !current_user || current_user.grupa2425 == nil %>  
+  <h2 class="name" id="register">Inscrieri curs Ayurveda grupa 1 octombrie 2024 - iulie 2025</h2>
+  <p style="margin-top:20px;"><strong>Costul participării la cursul de Ayurveda pentru sesiunea octombrie 2024 – iulie 2025 este de 1800 lei.</strong><br><br>
+  <span>Înscrierea presupune parcurgerea următorilor doi pași:</span></p>
+  
+  <ol>
+    <li>Achitarea o singura data a sumei de 60 lei, necesară pentru realizarea înscrierii.</li>
+    <li>Achitarea participării pentru anul de curs octombrie 2024 – iulie 2025 in valoare de 1800 lei. Plata poate fi realizată integral la înscriere sau poate fi distribuită în tranșe lunare de câte 180 lei. Optând pentru plata completă inițială, se beneficiază de o reducere corespunzătoare cu valoarea unei luni de participare, reducându-se astfel suma totală de plată de la 1800 lei la 1620 lei pentru acest an de curs.</li>
+  </ol>
+  <div class="tbland">
+    <div class="tbr">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th style="width: auto;">Curs de Ayurveda</th>
+            <th style="width: auto;">Detalii</th>
+            <th style="width: auto;">Pret</th>
+            <th style="width: auto;">Selecție</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @prodgrupa1_taxainscriere_all && @prodgrupa1_taxainscriere_all.curslegatura == 'cay2425' %>
+          <tr>
+            <td><%= @prodgrupa1_taxainscriere_all.nume %></td>                        
+            <td><%= @prodgrupa1_taxainscriere_all.detalii %></td> 
+            <td><%= @prodgrupa1_taxainscriere_all.pret.to_i %> lei</td>
+            <% if current_user %>
+            <td><%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxainscriere_all.id), class: 'btn no-turbo' %></td>
+            <% else %>
+            <td><%= link_to 'Comanda', new_user_session_path(return_to: 'cay2425'), class: 'btn btn-primary no-turbo' %></td>   
+            <% end %>
+          </tr>  
+          <% end %>  
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <% end %>
+
+  <% if @textan1 && @textan1 == 1 %>
+  <p style="margin-top:20px;"><strong>Costul participării la cursul de Ayurveda pentru sesiunea octombrie 2024 – iulie 2025 este de 1800 lei.</strong><br><br>
+  <span>Înscrierea presupune parcurgerea următorilor doi pași:</span></p>
+
+  <ol>
+    <li>Achitarea o singura data a sumei de 60 lei, necesară pentru realizarea înscrierii.</li>
+    <li>Achitarea participării pentru anul de curs octombrie 2024 – iulie 2025 in valoare de 1800 lei. Plata poate fi realizată integral la înscriere sau poate fi distribuită în tranșe lunare de câte 180 lei. Optând pentru plata completă inițială, se beneficiază de o reducere corespunzătoare cu valoarea unei luni de participare, reducându-se astfel suma totală de plată de la 1800 lei la 1620 lei pentru acest an de curs.</li>
+  </ol>
+  <% end %>
+
+  <% if @prodgrupa1_taxainscriere %>  
+  <div class="tbland">
+    <div class="tbr">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th style="width: auto;">Curs de Ayurveda</th>
+            <th style="width: auto;">Detalii</th>
+            <th style="width: auto;">Pret</th>
+            <th style="width: auto;">Selecție</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @prodgrupa1_taxainscriere && @prodgrupa1_taxainscriere.curslegatura == 'cay2425' %>
+          <tr>
+            <td><%= @prodgrupa1_taxainscriere.nume %></td>                        
+            <td><%= @prodgrupa1_taxainscriere.detalii %></td> 
+            <td><%= @prodgrupa1_taxainscriere.pret.to_i %> lei</td>
+            <td><%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxainscriere.id), class: 'btn no-turbo' %></td>      
+          </tr>  
+          <% end %>  
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <% end %>
+
+  <% if @ultima_luna_platita %>
+  <h2 style="text-align: center;font-size: 1.2rem;">Ultima luna pentru care a fost achitata participarea: <%= @ultima_luna_platita %></h2>
+  <% end %>
+
+  <% if @prodgrupa1_taxaanuala || @prodgrupa1_taxalunara %>
+  <div class="tbland">
+    <div class="tbr">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th style="width: auto;">Curs de Ayurveda</th>
+            <th style="width: auto;">Detalii</th>
+            <th style="width: auto;">Pret</th>
+            <th style="width: auto;">Actiune</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @prodgrupa1_taxaanuala %>
+          <tr>
+            <td><%= @prodgrupa1_taxaanuala.nume %></td>                        
+            <td><%= @prodgrupa1_taxaanuala.detalii %></td> 
+            <td><%= @prodgrupa1_taxaanuala.pret.to_i %> lei</td>
+            <td><%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxaanuala.id), class: 'btn no-turbo' %></td>      
+          </tr>  
+          <% end %>
+
+          <% if @prodgrupa1_taxalunara %>
+          <tr>
+            <td><%= @prodgrupa1_taxalunara.nume %></td>                        
+            <td><%= @prodgrupa1_taxalunara.detalii %></td> 
+            <td><%= @prodgrupa1_taxalunara.pret.to_i %> lei</td>
+            <td><%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxalunara.id), class: 'btn no-turbo' %></td>      
+          </tr>  
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <% end %>
+
+  <% if current_user && (current_user.role == 1 || (current_user.grupa2425 == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2425).to_i >= 2)) %>
+  <% if @are_prioritate || current_user.role == 1 %>
+  <h2 style="padding: 0; text-align: center;">Datele de logare pe platforma ZOOM:</h2>
+  <p style="text-align: left;margin-top: 10px;">Link acces ZOOM: <a style="word-wrap: break-word; overflow-wrap: break-word;" href="https://us02web.zoom.us/j/85022539934?pwd=QURRRFZMZXppVHJJZzJRZFU0OGxJZz09" target="_blank">https://us02web.zoom.us/j/85022539934?pwd=QURRRFZMZXppVHJJZzJRZFU0OGxJZz09</a></p>
+  <p style="text-align: left;">Meeting ID: 850 2253 9934</p>
+  <p style="text-align: left;margin-top: -20px;">Passcode: 167175</p>
+  <% end %>
+
+  <% if current_user %>
+  <h2 style="text-align: center;padding: 0 10px;">Aspecte organizatorice</h2></br>
+  <div id="videos">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nr</th>
+          <th>Nume</th>
+          <th>Descriere</th>
+          <th>Actiune</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @myvideo3.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video } %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <% end %>
+
+  <h2 style="padding: 0; text-align: center;">Accesare cursuri Ayurveda</h2>
+  <div class="tbland">
+    <div class="tbr">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th style="width: auto;">Nume</th>
+            <th style="width: auto;">Detalii</th>
+            <th style="width: auto;">Pret</th>
+            <th style="width: auto;">Actiune</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @produse_accesibile_an1.each_with_index do |produs, index| %>
+          <tr>
+            <td><%= produs.nume %></td>                        
+            <td><%= produs.detalii %></td> 
+            <td><%= produs.pret.to_i %> lei</td>
+            <td><%= link_to 'Comanda', datefacturare_path(s: produs.id), class: 'btn no-turbo' %></td>      
+          </tr>  
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <% if @myvideo2.any? %>
+  <h2 style="padding: 0; text-align: center;">Înregistrări video Cursuri grupa 1 </h2>
+  <div id="videos">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nr</th>
+          <th>Nume</th>
+          <th>Descriere</th>
+          <th>Actiune</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @myvideo2.each do |video| %>
+        <% if video.ordine < 1000 %>
+        <%= render partial: 'video1', locals: { video: video } %>
+        <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <% end %>
+  <% end %>
+</div>
+
+<script>
+  document.addEventListener("turbo:load", function() {
+    document.querySelectorAll('.no-turbo').forEach(link => {
+      link.setAttribute('data-turbo', 'false');
+    });
+  });
+</script>
+<script>
+  document.addEventListener("turbo:load", function() {
+    document.querySelectorAll('.no-turbo').forEach(link => {
+      link.setAttribute('data-turbo', 'false');
+    });
+  });
+</script>
+<script>
+  <%= yield :custom_js %>
+</script>

@@ -140,7 +140,7 @@ class CursuriayurvedasController < ApplicationController
   @produse_accesibile_an1 = Prod.where(curslegatura: 'an1', luna: lunile[2..(2 + max_taxa - 2)]).order(created_at: :asc)
   #ATENTIE ESTE BINE: USERUL ARE ACCES DOAR SA CUMPERE PRODUSE(VIDEO) DOAR PANA LA LUNA PE CARE A PLATIT INCLUSIV
 
-    #start1 aici tratez situatia cand sa aiba acces la link ZOOM
+    ##start1 aici tratez situatia cand sa aiba acces la link ZOOM
     index_luna_curenta = lunile.index(@luna_curenta)
 
 
@@ -206,7 +206,7 @@ class CursuriayurvedasController < ApplicationController
  ##########################stop acces produse video an 1
 
   end
-  def an2
+  def an2 #2023-24
     lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie"]
     inregistrari_valide = Listacanal2.where(platit: lunile)
   
@@ -275,7 +275,7 @@ class CursuriayurvedasController < ApplicationController
 
 
 
-    def an3
+    def an3 #2023-24
       lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie"]
       inregistrari_valide = Listacanal3.where(platit: lunile)
     
@@ -346,7 +346,130 @@ class CursuriayurvedasController < ApplicationController
 def an
   @prod = Prod.find_by(curslegatura: 'platageneralacurs', status: 'activ')
 end  
+#########start 2024-2025
 
+def cursayurveda2425
+  @myvideo1 = Video.find_by(link: 'xGpVO2uopdc')
+  @myvideo = @myvideo1.link if @myvideo1
+
+  @myvideo3 = Video.where(tip: 'an1').where('ordine > ?', 1000).order(ordine: :asc)
+  ##################################grupa 1
+  @prodgrupa1_taxainscriere_all = Prod.find_by(cod: "cod195")
+  puts("1. @prodgrupa1_taxainscriere_all arevaloarea: #{@prodgrupa1_taxainscriere_all}")
+  if current_user && current_user.grupa2425 == 1
+    @titlu_pagina = 'Curs de Ayurveda - Grupa 1'
+    luni = [nil, nil, "Octombrie", "Noiembrie", "Decembrie", "Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "Iulie"]
+    max_taxa = ComenziProd.where(user_id: current_user.id).maximum(:taxa2425)
+    puts("maxtaxa este: #{max_taxa}")
+    @luna_curenta = luna_in_romana(Time.now.strftime("%B")) #octombrie
+    @ultima_luna_platita = max_taxa.nil? ? nil : luni[max_taxa]
+
+  else
+    @titlu_pagina = 'Curs de Ayurveda'
+  end
+
+  if current_user && current_user.role == 1
+    max_taxa = 12
+  end
+
+  if current_user && current_user.grupa2425 == 1
+    comanda = ComenziProd.find_by(user_id: current_user.id, taxa2425: 1)
+    @textan1 = 1
+    @prodgrupa1_taxainscriere = comanda.nil? ? Prod.find_by(cod: "cod195") : nil
+  else
+    @prodgrupa1_taxainscriere = nil
+  end
+
+  if current_user && current_user.grupa2425 == 1
+    exista_taxa2425_cu_1 = ComenziProd.exists?(user_id: current_user.id, taxa2425: 1)
+    exista_taxa2425_diferit_de_1 = ComenziProd.where(user_id: current_user.id).where.not(taxa2425: 1).exists?
+
+    if exista_taxa2425_cu_1 && !exista_taxa2425_diferit_de_1
+      @prodgrupa1_taxaanuala = Prod.find_by(cod: "cod196")
+    end
+  end
+
+  if current_user && current_user.grupa2425 == 1
+    valori_taxa2425 = ComenziProd.where(user_id: current_user.id).pluck(:taxa2425).compact
+    
+    if valori_taxa2425.include?(12)
+      @prodgrupa1_taxalunara = nil
+    elsif valori_taxa2425.empty? || !valori_taxa2425.include?(1)
+      @prodgrupa1_taxalunara = nil
+    elsif valori_taxa2425.include?(11)
+      @prodgrupa1_taxalunara = nil
+    else
+      numar_valori = valori_taxa2425.count { |val| val > 1 && val < 12 }
+      cod_produs = "cod#{196 + numar_valori + 1}"
+      @prodgrupa1_taxalunara = Prod.find_by(cod: cod_produs)
+      if current_user.email == "nagy.edvin@yahoo.com" #custom
+        @prodgrupa1_taxalunara.pret = 35
+      end
+    end
+  end
+  ##################################end grupa1
+  ##########################start acces produse video an 1
+
+  if max_taxa
+    lunile = [nil, nil, "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "iulie"]
+    @produse_accesibile_an1 = Prod.where(curslegatura: 'an1', luna: lunile[2..(2 + max_taxa - 2)]).order(created_at: :asc)
+    ##start1 aici tratez situatia cand sa aiba acces la link ZOOM
+    index_luna_curenta = lunile.index(@luna_curenta)
+
+    if @ultima_luna_platita.nil?
+      @are_prioritate = false
+    else
+      index_ultima_luna_platita = lunile.index(@ultima_luna_platita.downcase)
+      puts("salut")
+      puts("index_luna_curenta: #{index_luna_curenta}")
+      puts("index_ultima_luna_platita: #{index_ultima_luna_platita}")
+      if @luna_curenta == "august" || @luna_curenta == "septembrie"
+        @are_prioritate = @ultima_luna_platita.downcase == "iulie"
+        puts "1"
+      elsif index_luna_curenta.nil?
+        @are_prioritate = false
+        puts "2"
+      elsif index_luna_curenta > index_ultima_luna_platita
+        @are_prioritate = false
+        puts "3"
+      else
+        @are_prioritate = true
+        puts "4"
+      end
+    end
+    puts("Luna curenta: #{@luna_curenta}")
+    puts("Are prioritate: #{@are_prioritate}")
+    if @are_prioritate
+      puts "Ultima luna platita are prioritate sau este aceeasi cu luna curenta."
+    else
+      puts "Luna curenta are prioritate fata de ultima luna platita."
+    end
+    ##stop1 aici tratez situatia cand sa aiba acces la link ZOOM
+
+    video_coduri = Video.where(tip: 'an1').pluck(:cod)
+    prod_ids = Prod.where(cod: video_coduri).pluck(:id)
+
+    if current_user.role == 1
+      @myvideo2 = Video.where(tip: 'an1').order(ordine: :asc)
+    else
+      @myvideo2 = Video.joins("INNER JOIN prods ON videos.cod = prods.cod")
+                       .joins("INNER JOIN comenzi_prods ON comenzi_prods.prod_id = prods.id")
+                       .where("comenzi_prods.user_id = ? AND prods.id IN (?) AND comenzi_prods.datasfarsit >= ?", current_user.id, prod_ids, Time.now)
+                       .where("videos.tip = 'an1'")
+                       .order(ordine: :asc)
+    end
+  else
+    @produse_accesibile_an1 = []
+  end
+  ##########################stop acces produse video an 1
+end
+
+
+
+
+
+
+############end 2024-2025
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cursuriayurveda
