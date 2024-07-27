@@ -242,7 +242,7 @@
 
 <%end%>
 
-    <% if current_user && (@has_access || @has_access1) && @myvideo13.count>0%>
+    <%if @a_cumparat_macar_un_cod%>
         <h2 style= "text-align: center;padding: 0 10px; font-size:28px;margin-top:35px;">Resurse</h2></br>
 
 
@@ -261,13 +261,8 @@
                 <tbody>
                 
                 <% previous_video_tip = nil %>
-                <% if current_user && @has_access%>
-                <% @myvideo13.each do |video| %>
-                    <%= render partial: 'video1', locals: { video: video, previous_video_tip: previous_video_tip } %>
-                    <% previous_video_tip = video.tip %>
-                <% end %>
-                <% end %>
-                <% if current_user && @has_access1%>
+               
+                <% if current_user && @a_cumparat_macar_un_cod%>
                 <% @myvideo13.each do |video| %>
                     <%= render partial: 'video1', locals: { video: video, previous_video_tip: previous_video_tip } %>
                     <% previous_video_tip = video.tip %>
