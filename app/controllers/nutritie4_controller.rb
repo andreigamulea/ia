@@ -100,7 +100,7 @@ class Nutritie4Controller < ApplicationController
         
       else
         puts("sunt in has acces NU")
-        @myvideo13 = Video.none
+        #@myvideo13 = Video.none
       end
     else
       ## Utilizator neautentificat
