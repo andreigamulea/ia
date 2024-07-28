@@ -29,9 +29,13 @@
     <% end %>
   </td>
   <% if defined?(previous_video_tip) %>
-  <td>
-  <%= link_to "Descarcă PDF", video.linkpdf, class: "btn btn-primary", download: '' %>
 
+  <td>
+  <% if video.linkpdf!=nil %>
+  <%= link_to "Descarcă PDF", video.linkpdf, class: "btn btn-primary", download: '' %>
+  <% else %>
+  -
+  <%end%>
 
   </td>
   <%end%>
