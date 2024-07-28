@@ -55,6 +55,51 @@ class HomeController < ApplicationController
     end    
   end  
 
+  def recuperare_cursuri
+    #daca vrei sa mai adaugi persoane pune in array de mai jos dar si in _header.htl.erb
+    #dar si in def set_user144  . doar in astea 3
+    an1 = ['emilia777emi@gmail.com','nutaguta@yahoo.com','innat@bk.ru','crisgavrilescu707@gmail.com',
+           'andriescu.claudia@yahoo.com','daniel.bulcu@gmail.com','marianacuceu@yahoo.com',
+           'gabriela.ontiu@gmail.com']
+    an2 = ['monicanechita@hotmail.com','iuliapescaru@yahoo.fr','ovidiu_popovici_vlad@yahoo.com',
+           'fertigilona@gmail.com','ce.hermkens@gmail.com','szabo.doina@yahoo.com',
+           'vladut68@yahoo.com','lumigriza@yahoo.com']
+    an3 = ['diana.panciu@gmail.com','kinga_pop@yahoo.com','elaapostol@yahoo.com','sorincsv@yahoo.com',
+           'george.bondor@yahoo.com','clnicolescu@yahoo.com','viomih@yahoo.com',
+           'sublima.somacentre@gmail.com','doinitakineto@yahoo.com','florynn85@yahoo.com',
+           'lidiaistodorescu@yahoo.com']
+    if Date.today > Date.new(Date.today.year, 8, 12)
+            an1 = []
+            an2 = []
+            an3 = []
+    end      
+
+           if current_user && (current_user.role == 1 || an1.include?(current_user.email) || an2.include?(current_user.email) || an3.include?(current_user.email))
+            @user_authorized = true
+          else
+            @user_authorized = false
+          end
+
+          video_links = ['yA6MmEwPYzE', 'gELHqrD5Q5w', 'OjOenYxTBWg', 'VGjWBU13uX4', '-o4XlFjivP8', 'P6J-XaYrfOc']
+
+          if current_user
+            if current_user.role == 1
+              @myvideo = Video.where(link: video_links).order(Arel.sql("position(link in '#{video_links.join(',')}')"))
+            elsif an1.include?(current_user.email)
+              @myvideo = Video.where(link: video_links[0, 2]).order(Arel.sql("position(link in '#{video_links[0, 2].join(',')}')"))
+            elsif an2.include?(current_user.email)
+              @myvideo = Video.where(link: video_links[2, 2]).order(Arel.sql("position(link in '#{video_links[2, 2].join(',')}')"))
+            elsif an3.include?(current_user.email)
+              @myvideo = Video.where(link: video_links[4, 2]).order(Arel.sql("position(link in '#{video_links[4, 2].join(',')}')"))
+            else
+              @myvideo = Video.none
+            end
+          else
+            @myvideo = Video.none
+          end
+        
+        
+  end      
 
   def newsletter #este o metoda de tip POST
     Rails.logger.debug "Params: #{params.inspect}"

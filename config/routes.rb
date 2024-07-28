@@ -192,7 +192,8 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get 'videos/:id/myvideo13', to: 'videos#myvideo13', as: 'myvideo13'
   get 'videos/:id/myvideo133', to: 'videos#myvideo133', as: 'myvideo133'
   get 'videos/:id/myvideo14', to: 'videos#myvideo14', as: 'myvideo14'
- 
+ get 'videos/:id/myvideo144', to: 'videos#myvideo144', as: 'myvideo144'
+
   get 'videos/tayv2', to: 'videos#tayv2', as: 'tayv2'
   get 'tabara_de_ayurveda_toamna1', to: 'videos#tayt12', as: 'tayt12'
   get 'tabara_de_ayurveda_toamna2', to: 'videos#tayt122', as: 'tayt122'
@@ -329,7 +330,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
     end
   end
   
-
+  get 'home/recuperare_cursuri', to: 'home#recuperare_cursuri'
   get 'home/index1', to: 'home#index1'
   get 'home/index'
   get 'vajikarana', to: 'home#vajikarana'

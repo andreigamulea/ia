@@ -159,10 +159,21 @@
                     <ul class="submenu">
                         
                         <li><%= link_to 'Cont', edit_user_registration_path, class: 'nav-item no-turbo' %></li>
+                        <% if current_user && (current_user.role == 1 || ['emilia777emi@gmail.com','nutaguta@yahoo.com','innat@bk.ru','crisgavrilescu707@gmail.com',
+                        'andriescu.claudia@yahoo.com','daniel.bulcu@gmail.com','marianacuceu@yahoo.com',
+                        'gabriela.ontiu@gmail.com','monicanechita@hotmail.com','iuliapescaru@yahoo.fr','ovidiu_popovici_vlad@yahoo.com',
+           'fertigilona@gmail.com','ce.hermkens@gmail.com','szabo.doina@yahoo.com',
+           'vladut68@yahoo.com','lumigriza@yahoo.com','diana.panciu@gmail.com','kinga_pop@yahoo.com','elaapostol@yahoo.com','sorincsv@yahoo.com',
+           'george.bondor@yahoo.com','clnicolescu@yahoo.com','viomih@yahoo.com',
+           'sublima.somacentre@gmail.com','doinitakineto@yahoo.com','florynn85@yahoo.com',
+           'lidiaistodorescu@yahoo.com'].include?(current_user.email)) %>
+                          <li><%= link_to 'Recuperare cursuri', home_recuperare_cursuri_path, class: 'nav-item no-turbo' %></li>
+                        <% end %>
+                        
                         <% if current_user %>
                         <li><%= link_to 'Facturile mele', facturas_path, class: 'nav-item no-turbo' %></li>
                         <% end %>
-
+                        
                         <% if current_user %>
                           <% if @newsauupdate == 1 %>
                           <li><%= link_to 'Date Facturare', new_date_facturare_path, class: 'nav-item no-turbo' %></li>
