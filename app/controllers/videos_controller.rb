@@ -23,7 +23,7 @@ class VideosController < ApplicationController
   before_action :set_user13, only: %i[myvideo13] #este pt vajikarana1
   before_action :set_user133, only: %i[myvideo133] #este pt vajikarana1 resurse
   before_action :set_user14, only: %i[myvideo14] #este pt tayv24 video principale
-
+  before_action :set_user144, only: %i[myvideo144] #este pt tayv24 video resurse
   before_action :require_admin, only: %i[index new edit update create]
   # GET /videos or /videos.json
   def index
@@ -268,6 +268,11 @@ end
     render 'myvideo1'
   end
   def myvideo14 #pt tayv24
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo144 #pt tayv24 resurse
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
@@ -1016,6 +1021,45 @@ def set_user14
   end
 
   true
+end
+
+def set_user144
+  puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+
+  an1 = ['emilia777emi@gmail.com','nutaguta@yahoo.com','innat@bk.ru','crisgavrilescu707@gmail.com',
+           'andriescu.claudia@yahoo.com','daniel.bulcu@gmail.com','marianacuceu@yahoo.com',
+           'gabriela.ontiu@gmail.com']
+    an2 = ['monicanechita@hotmail.com','iuliapescaru@yahoo.fr','ovidiu_popovici_vlad@yahoo.com',
+           'fertigilona@gmail.com','ce.hermkens@gmail.com','szabo.doina@yahoo.com',
+           'vladut68@yahoo.com','lumigriza@yahoo.com']
+    an3 = ['diana.panciu@gmail.com','kinga_pop@yahoo.com','elaapostol@yahoo.com','sorincsv@yahoo.com',
+           'george.bondor@yahoo.com','clnicolescu@yahoo.com','viomih@yahoo.com',
+           'sublima.somacentre@gmail.com','doinitakineto@yahoo.com','florynn85@yahoo.com',
+           'lidiaistodorescu@yahoo.com']
+
+           if Date.today > Date.new(Date.today.year, 8, 12)
+            an1 = []
+            an2 = []
+            an3 = []
+          end       
+
+  if current_user.role == 1
+    return true
+  elsif current_user.role == 0
+    if an1.include?(current_user.email) || an2.include?(current_user.email) || an3.include?(current_user.email)
+      return true
+    else
+      flash[:alert] = "Nu aveți permisiunea de a accesa acest curs."
+      redirect_to root_path
+      return false
+    end
+  end
 end
 
     def require_admin

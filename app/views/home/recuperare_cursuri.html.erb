@@ -1,0 +1,24 @@
+<h1 style="text-align: center;">Recuperare cursuri</h1></br>
+
+<div id="videos">
+  <table class="table">
+    <thead>
+    <tr>
+        
+        <th>Nume</th>
+        <th>Descriere</th>       
+        <th>Actiune</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+    <% @myvideo.each do |video| %>
+        <tr><td><%= video.nume %></td>
+        <td><%= video.descriere %></td>
+        <td><%= link_to "Vezi video", myvideo144_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
+      </tr><% end %>
+    </tbody>
+  </table>
+</div>
+
+
