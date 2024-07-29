@@ -55,6 +55,9 @@ class HomeController < ApplicationController
     end    
   end  
 
+  def sesiune_vara
+  end  
+
   def recuperare_cursuri
     #daca vrei sa mai adaugi persoane pune in array de mai jos dar si in _header.htl.erb
     #dar si in def set_user144  . doar in astea 3
