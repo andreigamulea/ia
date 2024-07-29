@@ -330,6 +330,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
     end
   end
   
+  get 'sesiune_vara', to: 'home#sesiune_vara'
   get 'home/recuperare_cursuri', to: 'home#recuperare_cursuri'
   get 'home/index1', to: 'home#index1'
   get 'home/index'

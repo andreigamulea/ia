@@ -3,16 +3,52 @@
   <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
 <% end %>
 
-<% content_for :title, "Curs de Ayurveda | Ayush Cell Romania" %>
-<% content_for :description, "Descoperiți Ayurveda: echilibrarea dosha-urilor, alimentație, terapii naturale și sesiuni live. Curs adaptat pentru oricine, cu suport complet." %>
-<% content_for :keywords, "Ayurveda curs online, învățături tradiționale Ayurveda, tipologii constituționale umane, armonizare constituțională Ayurveda, alimentație naturală Ayurveda, plante medicinale Ayurveda, cromoterapie, meloterapie, digitopunctură, automasaj Ayurvedic, reîntinerire naturală, tonus erotic-amoros, purificare corporală, efecte plante medicinale, utilizare plante aromatice, cursuri Ayurveda pentru toți, sesiuni live Ayurveda, suport de curs Ayurveda, acces înregistrări curs Ayurveda, înscriere curs Ayurveda, participare curs Ayurveda, metode naturale de vindecare, adaptare viață modernă, echilibrul dosha, sănătate holistică, cunoaștere tradițională aplicată" %>
+<style>
+#nutritie1 .cm h2 {
+    font-size:22px;
+}
+#nutritie1 .register{
+    border: 1px solid #4b0082;
+    background-color:#4b0082;
+}
+#nutritie1 .cm h3{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:0;
+}
+#nutritie1 .register{
+    margin:0;
+    margin-top:20px;
+}
+#nutritie1 .table td {
+    text-align:center;
+}
+@media screen and (max-width: 720px) {
+    #nutritie1 .register{
+        margin:0 auto;
+        margin-top:20px;
+    }
+    .cm{
+        text-align:center;
+    }
+}
 
-<% content_for :canonical do %>
-  <link rel="canonical" href="https://www.ayushcell.ro/cursayurveda2425">
+</style>
+<% content_for :title, "Ayush Cell Romania: Curs Ayurveda 2024-2025" %>
+<% content_for :meta_tags do %>
+  <meta name="description" content="Descoperiți importanța adaptării (satmya) alimentației la tipologia constituțională ayurvedică proprie (dosha) și impactul acesteia asupra sănătății.">
+  <meta name="keywords" content="ayurveda, nutritie ayurvedica, dosha, vata, pitta, kapha, dosha-prakriti, greutatea ideala, formule greutate ideala">
+  <link rel="canonical" href="https://www.ayushcell.ro/nutritie4">
 <% end %>
 
+<div class="container" id="nutritie1">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: white; ">
+    <h1 class="first-tittle">Ayush Cell Romania: Curs Ayurveda 2024-2025</h1>
+    <h2 class="main-title" >Curs Ayurveda 2024-2025</h2>
 <div class="cont">
-  <h1 class="name" style="font-size:1.8em;"><%= @titlu_pagina %></h1>
+  <h1 class="name" style="font-size:1.8em;">Curs Ayurveda 2024-2025</h1>
 
   <% if !(current_user && (current_user.role == 1 || (current_user.grupa2425 == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2425).to_i >= 2))) %>
   <div class="row1">
@@ -59,7 +95,7 @@
   </div>
   <% end %>
 
-  <h2 class="name"><%= @myvideo1.nume %></h2>
+  <h2 class="name">Prezentare introductiva - Curs de Ayurveda 2024 - 2025</h2>
   <p style="text-align:center;"><%= @myvideo1.descriere %></p>
   <!-- for non autoplay video //-->
   <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
