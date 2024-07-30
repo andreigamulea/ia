@@ -79,7 +79,7 @@
                 </ul>
                 <p><strong>Interval orar:</strong> 18:00 - 20:00</p>
                 <h3>Înscriere:</h3>
-                <p>Pentru a vă înscrie, vă rugăm să achiziționați accesul la seminarii. Pentru detalii suplimentare, vă invităm să ne contactați direct pe pagina <a href="https://ayushcell.ro/contact" target="_blank">ayushcell.ro/contact</a>.</p>
+                <p>Pentru a vă înscrie, vă rugăm să achiziționați accesul la seminarii. Pentru detalii suplimentare, vă invităm să ne contactați direct pe pagina <a href="https://ayushcell.ro/contact" target="_blank">ayushcell.ro/contact</a>. Sesiunile se vor desfășura pe platforma Zoom. Linkul de acces Zoom va fi afișat in pagină după efectuarea plății.</p>
                 <h3>Acces digital:</h3>
                 <p>Vizionarea înregistrărilor poate fi realizată în această pagină timp de 60 de zile de la achiziționarea acestei opțiuni.</p>
                 <p>Vă așteptăm cu drag!</p>
@@ -108,11 +108,11 @@
                   <td><%= prod.pret.to_i %> lei</td>
                   <% if current_user %>
                        <td style="text-align:center;">
-                         <%= link_to 'Acceseaza cursul', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
+                         <%= link_to 'Acceseaza', datefacturare_path(s: prod.id), class: 'btn btn-primary' %>
                        </td>
                      <% else %>
                        <td style="text-align:center;">
-                         <%= link_to 'Acceseaza cursul', new_user_session_with_return_path('sesiune_vara'), class: 'btn btn-primary' %>
+                         <%= link_to 'Acceseaza', new_user_session_with_return_path('sesiune_vara'), class: 'btn btn-primary' %>
                        </td>
                      <% end %>
                   
