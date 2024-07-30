@@ -68,7 +68,7 @@ class HomeController < ApplicationController
         @expired_prods = []
         all_purchased = ['cod211']
         @a_cumparat_macar_un_cod = true
-        @prods = Prod.none
+        @prods = Prod.where(cod: 'cod211')
         @prods_cumparate = Prod.where(cod: all_purchased)
       else
         # Obține codurile produselor cumpărate și datele de început și sfârșit
