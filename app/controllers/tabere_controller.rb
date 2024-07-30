@@ -53,12 +53,12 @@ class TabereController < ApplicationController
             @prods = Prod.where(cod: 'cod178')
             puts("are doar cod174 sau cod175 platit")
           else
-            @prods = Prod.where(cod: ['cod174', 'cod175', 'cod176', 'cod177']).order(:id)
+            @prods = Prod.where(cod: ['cod176', 'cod177']).order(:id)
           end
         
         
         else
-          @prods = Prod.where(cod: ['cod174', 'cod175', 'cod176', 'cod177']).order(:id)
+          @prods = Prod.where(cod: ['cod176', 'cod177']).order(:id)
         end
   
         @has_access ||= valid_prods.include?('cod176') || valid_prods.include?('cod177') || valid_prods.include?('cod178')
@@ -98,7 +98,7 @@ class TabereController < ApplicationController
     else
       ## Utilizator neautentificat
       puts("User nelogat")
-      @prods = Prod.where(curslegatura: 'tayv24', status: 'activ').where(cod: ['cod174', 'cod175', 'cod176', 'cod177']).order(:id)
+      @prods = Prod.where(curslegatura: 'tayv24', status: 'activ').where(cod: ['cod176', 'cod177']).order(:id)
       @has_access = false
       @prods_cumparate = Prod.none
       @videos_correspondente = Video.none

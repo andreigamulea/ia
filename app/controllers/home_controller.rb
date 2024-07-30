@@ -56,7 +56,105 @@ class HomeController < ApplicationController
   end  
 
   def sesiune_vara
-  end  
+    data_prag = Date.new(2024, 8, 1)
+  
+    if current_user
+      puts("User logat: #{current_user.id}")
+  
+      if current_user.role == 1
+        # Utilizator cu role 1 are acces direct la video-uri
+        @has_access = true
+        @valid_prods = ['cod211']
+        @expired_prods = []
+        all_purchased = ['cod211']
+        @a_cumparat_macar_un_cod = true
+        @prods = Prod.none
+        @prods_cumparate = Prod.where(cod: all_purchased)
+      else
+        # Obține codurile produselor cumpărate și datele de început și sfârșit
+        purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                     .joins(:prod)
+                                     .where(prods: { curslegatura: 'sesiune_vara', status: 'activ' })
+                                     .pluck('prods.cod', 'datainceput', 'datasfarsit')
+  
+        purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                       .joins(:prod)
+                                       .where(prods: { curslegatura: 'sesiune_vara', status: 'activ' })
+                                       .pluck('prods.cod', 'datainceput', 'datasfarsit')
+  
+        purchased_prods ||= []
+        purchased_prods1 ||= []
+  
+        all_purchased_prods = purchased_prods + purchased_prods1
+  
+        puts("Produse cumpărate cu date: #{all_purchased_prods}")
+  
+        @valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 60.days >= Date.today }.map(&:first)
+        @expired_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 60.days < Date.today }.map(&:first)
+  
+        puts("Produse valabile: #{@valid_prods}")
+  
+        all_purchased = all_purchased_prods.map(&:first).uniq
+        @a_cumparat_macar_un_cod = all_purchased.any?
+  
+        if @a_cumparat_macar_un_cod
+          @prods = Prod.none
+          @has_access = true
+        else
+          @prods = Prod.where(cod: 'cod211')
+        end
+  
+        @prods_cumparate = Prod.where(cod: all_purchased)
+      end
+  
+      puts("Produse afișate: #{@prods.pluck(:cod) if @prods}")
+      puts("Are acces? : #{@has_access}")
+      puts("Produse cumpărate: #{@prods_cumparate.pluck(:cod) if @prods_cumparate}")
+  
+      @myvideo13 = if @a_cumparat_macar_un_cod
+                     if current_user.limba == 'EN'
+                       Video.where(tip: 'sesiune_vara').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
+                     else
+                       Video.none
+                     end
+                   else
+                     Video.none
+                   end
+  
+      if @has_access
+        @platit = true
+        puts("sunt in has acces")
+        if current_user.limba == 'EN'
+          puts("sunt in limba en")
+          @myvideo = Video.where(tip: 'sesiune_vara').where('(ordine >= ? AND ordine <= ?)', 1000, 2000).order(ordine: :asc)
+        else
+          puts("NU sunt in limba en")
+          @myvideo = Video.where(tip: 'sesiune_vara').where('ordine <= ?', 1000).order(ordine: :asc)
+        end
+        puts("Numarul: #{@myvideo.count}")
+      else
+        puts("sunt in has acces NU")
+        @myvideo13 = Video.none
+      end
+    else
+      ## Utilizator neautentificat
+      puts("User nelogat")
+      @prods = Prod.where(curslegatura: 'sesiune_vara', status: 'activ').where(cod: 'cod211').order(:id)
+      @has_access = false
+      @prods_cumparate = Prod.none
+      @videos_correspondente = Video.none
+      @myvideo13 = Video.none
+      @a_cumparat_macar_un_cod = false
+    end
+  
+    if data_prag
+      puts("Data prag + 60 zile= : #{data_prag + 60.days}")
+    end
+      
+  end
+  
+  
+   
 
   def recuperare_cursuri
     #daca vrei sa mai adaugi persoane pune in array de mai jos dar si in _header.htl.erb
