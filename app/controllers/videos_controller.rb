@@ -23,7 +23,7 @@ class VideosController < ApplicationController
   before_action :set_user13, only: %i[myvideo13] #este pt vajikarana1
   before_action :set_user133, only: %i[myvideo133] #este pt vajikarana1 resurse
   before_action :set_user14, only: %i[myvideo14] #este pt tayv24 video principale
-  before_action :set_user144, only: %i[myvideo144] #este pt tayv24 video resurse
+  before_action :set_user144, only: %i[myvideo144] #este pt recuperare 2 cursuri an1,2,3 pt cei care au fost la tayv24
   before_action :set_user15, only: %i[myvideo15] #este pt sesiune_vara video principale
   before_action :require_admin, only: %i[index new edit update create]
   # GET /videos or /videos.json

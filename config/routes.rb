@@ -275,7 +275,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get '/plata_vajikarana_modul1/export', to: 'paginisites#export_to_xlsx_plata_vajikarana_modul1', as: 'export_to_xlsx_plata_vajikarana_modul1'
   get '/plata_tayv2/export', to: 'paginisites#export_to_xlsx_plata_tayv2', as: 'export_plata_tayv2'
   get '/plata_tayt12/export', to: 'paginisites#export_to_xlsx_plata_tayt12', as: 'export_plata_tayt12'
-
+  get '/export_to_xlsx_plata_sesiunevara/export', to: 'paginisites#export_to_xlsx_plata_sesiunevara', as: 'export_to_xlsx_plata_sesiunevara'
   get '/plata_generala_curs/export', to: 'paginisites#export_to_xlsx_plata_generala_curs', as: 'export_plata_generala_curs'
 
   
