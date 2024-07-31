@@ -235,4 +235,8 @@ class Nutritie4Controller < ApplicationController
     logger.error "Error generating Excel: #{e.message}"
     redirect_to root_path, alert: "There was an error generating the report. Please try again later."
   end
+
+
+
+  
 end
