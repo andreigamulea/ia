@@ -24,6 +24,7 @@ class VideosController < ApplicationController
   before_action :set_user133, only: %i[myvideo133] #este pt vajikarana1 resurse
   before_action :set_user14, only: %i[myvideo14] #este pt tayv24 video principale
   before_action :set_user144, only: %i[myvideo144] #este pt tayv24 video resurse
+  before_action :set_user15, only: %i[myvideo15] #este pt sesiune_vara video principale
   before_action :require_admin, only: %i[index new edit update create]
   # GET /videos or /videos.json
   def index
@@ -273,6 +274,11 @@ end
     render 'myvideo1'
   end
   def myvideo144 #pt tayv24 resurse
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo15 #pt sesiune vara
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
@@ -1061,6 +1067,53 @@ def set_user144
     end
   end
 end
+
+def set_user15
+  puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+
+  if current_user.role == 1
+    return true
+  elsif current_user.role == 0
+    purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+    .joins(:prod)
+    .where(prods: { curslegatura: 'sesiune_vara', status: 'activ' })
+    .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+    purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+          .joins(:prod)
+          .where(prods: { curslegatura: 'sesiune_vara', status: 'activ' })
+          .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+    purchased_prods ||= []
+    purchased_prods1 ||= []
+
+    all_purchased_prods = purchased_prods + purchased_prods1
+
+    puts("Produse cumpărate cu date: #{all_purchased_prods}")
+
+    @valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 60.days >= Date.today }.map(&:first)
+    @expired_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 60.days < Date.today }.map(&:first)
+
+    puts("Produse valabile: #{@valid_prods}")
+
+    @has_access = @valid_prods.any?
+    puts("verificare daca are produse valabile: #{@has_access}")
+    
+    if @has_access
+      return true
+    else
+      redirect_to root_path
+      return false
+    end  
+  end
+end
+
+
 
     def require_admin
       unless current_user && current_user.role == 1

@@ -127,7 +127,33 @@
         <h3 style="color: rgb(7 6 187);font-size:18px;">Link participare ZOOM</h3>
         <p style="margin-top: -5px;"><a href="https://us02web.zoom.us/j/82301072867?pwd=uXaNNqhZQ6rO9BvAgsbJTQ2EGb2sX9.1">https://us02web.zoom.us/j/82301072867?pwd=uXaNNqhZQ6rO9BvAgsbJTQ2EGb2sX9.1</a></p>
         <p style="margin-top: -20px;">Meeting ID: 853 4505 9664</p>
-        <p style="margin-top: -20px;">Passcode: 438696</p>
+        <p style="margin-top: -20px;">Passcode: 438696</p> </br></br>
+
+        <h2 style= "text-align: center;padding: 0 10px; font-size:28px;">Acces prezentari video sesiuni interactive August 2024</h2></br>
+
+
+
+<div id="videos">
+  <table class="table">
+    <thead>
+    <tr>
+        <th>Nr</th>
+        <th>Nume</th>
+        <th>Descriere</th>       
+        <th>Actiune</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+    <% @myvideo.each do |video| %>
+        <%= render partial: 'video1', locals: { video: video } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+
     </section>
 <% end %>  
 
