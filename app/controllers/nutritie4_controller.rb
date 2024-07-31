@@ -40,25 +40,17 @@ class Nutritie4Controller < ApplicationController
   
         all_purchased = all_purchased_prods.map(&:first).uniq
         @a_cumparat_macar_un_cod = all_purchased.any?
-  
-        if @a_cumparat_macar_un_cod
-          if all_purchased.include?('cod85') && all_purchased.include?('cod88')
+        @has_access = valid_prods.include?('cod86') || valid_prods.include?('cod88') || valid_prods.include?('cod89')
+
+        if @has_access          
             @prods = Prod.none
-            @has_access = true
-          elsif all_purchased.include?('cod86')
-            @has_access = true
-            @prods = Prod.none
-          elsif all_purchased.include?('cod85')
-            @prods = Prod.where(cod: 'cod88')
-            puts("are doar cod85 platit")
-          else
-            @prods = Prod.where(cod: ['cod85', 'cod86']).order(:id)
-          end
+            
         else
-          @prods = Prod.where(cod: ['cod85', 'cod86']).order(:id)
-        end
+            @prods = Prod.where(cod: ['cod88']).order(:id)
+          end
+       
   
-        @has_access ||= valid_prods.include?('cod86') || valid_prods.include?('cod88')
+       
         @prods_cumparate = Prod.where(cod: all_purchased)
       end
   
