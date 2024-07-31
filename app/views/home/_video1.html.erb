@@ -26,6 +26,15 @@
 </td>
 <% end %>
 
+<% if video.tip == 'sesiune_vara'%>
+<td>
+  <% if (video.ordine > 0 && video.ordine < 1000)%> 
+  <%= video.ordine %>
+ 
+  <% end %>
+</td>
+<% end %>
+
 
 <% if video.tip == 'nutritie1'%>
 <td>
@@ -37,6 +46,11 @@
 <% end %>
   <td><%= video.nume %></td>
   <td><%= video.descriere %></td>
+  <% if video.tip == 'sesiune_vara' && video.ordine<1000%>
+  <td>   
+    <%= link_to "Vezi video", myvideo15_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+  </td>
+  <%end%>
   <% if video.tip == 'nutritie1' && video.ordine<1000%>
   <td>   
     <%= link_to "Vezi video", myvideo9_path(id: video.id, link: video.link), class: "btn btn-primary" %>
