@@ -33,51 +33,60 @@ class Nutritie4Controller < ApplicationController
   
         puts("Produse cumpărate cu date: #{all_purchased_prods}")
   
-        valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 90.days >= Date.today }.map(&:first)
-        expired_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 90.days < Date.today }.map(&:first)
+        valid_prods = all_purchased_prods.select do |_, datainceput, _|
+          if datainceput && datainceput < data_prag
+            data_prag + 90.days >= Date.today
+          else
+            datainceput && datainceput + 90.days >= Date.today
+          end
+        end.map(&:first)
+  
+        expired_prods = all_purchased_prods.select do |_, datainceput, _|
+          if datainceput && datainceput < data_prag
+            data_prag + 90.days < Date.today
+          else
+            datainceput && datainceput + 90.days < Date.today
+          end
+        end.map(&:first)
   
         puts("Produse valabile: #{valid_prods}")
   
         all_purchased = all_purchased_prods.map(&:first).uniq
         @a_cumparat_macar_un_cod = all_purchased.any?
         @has_access = valid_prods.include?('cod86') || valid_prods.include?('cod88') || valid_prods.include?('cod89')
-
-        if @has_access          
-            @prods = Prod.none
-            
-        else
-            @prods = Prod.where(cod: ['cod88']).order(:id)
-          end
-       
   
-       
+        # Setare @prods pe baza valorilor lui @a_cumparat_macar_un_cod și @has_access
+        if !@a_cumparat_macar_un_cod
+          @prods = Prod.where(cod: ['cod86']).order(:id)
+        elsif @a_cumparat_macar_un_cod && !@has_access
+          @prods = Prod.where(cod: ['cod88']).order(:id)
+        elsif @has_access
+          @prods = Prod.none
+        end
+  
         @prods_cumparate = Prod.where(cod: all_purchased)
       end
   
       puts("Produse afișate: #{@prods.pluck(:cod) if @prods}")
       puts("Are acces? : #{@has_access}")
       puts("Produse cumpărate: #{@prods_cumparate.pluck(:cod) if @prods_cumparate}")
-
-
-      @myvideo122 = if @a_cumparat_macar_un_cod #1001-2000 sunt pt video si material pdf
-        
-          Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
-       
+  
+      @myvideo122 = if @a_cumparat_macar_un_cod # 1001-2000 sunt pt video si material pdf
+        Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
       else
         Video.none
       end
-
   
-      @myvideo13 = if @a_cumparat_macar_un_cod #2001-3000 sunt pt video si material pdf
-                     if current_user.limba == 'EN'
-                       Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
-                     else
-                      Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
-                     end
-                   else
-                     Video.none
-                   end
-      
+      @myvideo13 = if @a_cumparat_macar_un_cod # 2001-3000 sunt pt video si material pdf
+        if current_user.limba == 'EN'
+          Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
+        else
+          Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
+        end
+      else
+        Video.none
+      end
+  
       if @has_access
         @platit = true
         puts("sunt in has acces")
@@ -89,15 +98,13 @@ class Nutritie4Controller < ApplicationController
           @myvideo = Video.where(tip: 'nutritie4').where('ordine <= ?', 1000).order(ordine: :asc)
         end
         puts("Numarul: #{@myvideo.count}")
-        
       else
         puts("sunt in has acces NU")
-        #@myvideo13 = Video.none
       end
     else
       ## Utilizator neautentificat
       puts("User nelogat")
-      @prods = Prod.where(curslegatura: 'nutritie4', status: 'activ').where(cod: ['cod85', 'cod86']).order(:id)
+      @prods = Prod.where(curslegatura: 'nutritie4', status: 'activ').where(cod: ['cod86']).order(:id)
       @has_access = false
       @prods_cumparate = Prod.none
       @videos_correspondente = Video.none
@@ -109,6 +116,8 @@ class Nutritie4Controller < ApplicationController
       puts("Data prag + 90 zile= : #{data_prag + 90.days}")
     end
   end
+  
+  
   
 #####
 
