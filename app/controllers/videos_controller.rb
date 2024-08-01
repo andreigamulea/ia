@@ -856,7 +856,13 @@ end
         puts("Produse cumpărate cu date: #{all_purchased_prods}")
     
         # Filtrare produse valabile
-        valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput + 90.days >= Date.today }.map(&:first)
+        valid_prods = all_purchased_prods.select do |_, datainceput, _|
+          if datainceput && datainceput < data_prag
+            data_prag + 90.days >= Date.today
+          else
+            datainceput && datainceput + 90.days >= Date.today
+          end
+        end.map(&:first)
     
         puts("Produse valabile: #{valid_prods}")
     
@@ -877,6 +883,7 @@ end
     
       true
     end
+    
     
     def set_user122 # este pt aspecte organizatorice nutritie4
       unless user_signed_in?
