@@ -58,7 +58,7 @@ class TvsController < ApplicationController
 
   end
   def canal2
-    lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie"]
+    lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie","august"]
   
     # Utilizatorii cu role == 1 au acces automat
     unless current_user.role == 1
@@ -142,7 +142,7 @@ class TvsController < ApplicationController
   
   
   def canal3
-    lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie"]
+    lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie","august"]
   
     # Utilizatorii cu role == 1 au acces automat
     unless current_user.role == 1
