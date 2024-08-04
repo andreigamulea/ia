@@ -229,14 +229,17 @@
 
   <% if current_user && (current_user.role == 1 || (current_user.grupa2425 == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2425).to_i >= 2)) %>
   <% if @are_prioritate || current_user.role == 1 %>
-  <h2 style="padding: 0; text-align: center;">Datele de logare pe platforma ZOOM:</h2>
+  
+  <!--<h2 style="padding: 0; text-align: center;">Datele de logare pe platforma ZOOM:</h2>
   <p style="text-align: left;margin-top: 10px;">Link acces ZOOM: <a style="word-wrap: break-word; overflow-wrap: break-word;" href="https://us02web.zoom.us/j/85022539934?pwd=QURRRFZMZXppVHJJZzJRZFU0OGxJZz09" target="_blank">https://us02web.zoom.us/j/85022539934?pwd=QURRRFZMZXppVHJJZzJRZFU0OGxJZz09</a></p>
   <p style="text-align: left;">Meeting ID: 850 2253 9934</p>
-  <p style="text-align: left;margin-top: -20px;">Passcode: 167175</p>
+  <p style="text-align: left;margin-top: -20px;">Passcode: 167175</p> -->
+
+
   <% end %>
 
   <% if current_user %>
-  <h2 style="text-align: center;padding: 0 10px;">Aspecte organizatorice</h2></br>
+  <!--<h2 style="text-align: center;padding: 0 10px;">Aspecte organizatorice</h2></br>
   <div id="videos">
     <table class="table">
       <thead>
@@ -253,7 +256,7 @@
         <% end %>
       </tbody>
     </table>
-  </div>
+  </div>-->
   <% end %>
 <% if current_user &&  @produse_accesibile_an1.any?%>
   <h2 style="padding: 0; text-align: center;">Accesare cursuri Ayurveda</h2>
@@ -305,7 +308,7 @@
   </div>
   <% end %>
   <% end %>
-</div>
+</div></div></div>
 
 <script>
   document.addEventListener("turbo:load", function() {
