@@ -76,7 +76,7 @@
     <span class="bullet">Acest curs este accesibil tuturor celor interesați indiferent de pregătirea profesională.</span></p>
 
     <p><strong>Cât durează cursul?</strong><br>
-    <span class="bullet">Cursul de ayurveda este structurat pe module anuale, care acoperă treptat diverse ramuri ale ayurvedei. Astfel, participanții pot studia ayurveda pe parcursul mai multor ani, în funcție de cât de profund doresc să aprofundeze această cunoaștere tradițională.</span></p>
+    <span class="bullet">Cursul de Ayurveda este structurat pe module anuale, care acoperă treptat diverse ramuri ale Ayurvedei. Astfel, participanții pot studia Ayurveda pe parcursul mai multor ani, în funcție de cât de profund doresc să aprofundeze această cunoaștere tradițională.</span></p>
 
     <p><strong>Se oferă suport de curs?</strong><br>
     <span class="bullet">În completarea sesiunilor live, participanții primesc în mod gratuit suportul de curs scris asociat.</span></p>
@@ -255,7 +255,7 @@
     </table>
   </div>
   <% end %>
-
+<% if current_user &&  @produse_accesibile_an1.any?%>
   <h2 style="padding: 0; text-align: center;">Accesare cursuri Ayurveda</h2>
   <div class="tbland">
     <div class="tbr">
@@ -281,7 +281,7 @@
       </table>
     </div>
   </div>
-
+<% end %>
   <% if @myvideo2.any? %>
   <h2 style="padding: 0; text-align: center;">Înregistrări video Cursuri grupa 1 </h2>
   <div id="videos">

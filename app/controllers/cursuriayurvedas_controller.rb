@@ -412,7 +412,7 @@ def cursayurveda2425
 
   if max_taxa
     lunile = [nil, nil, "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "iulie"]
-    @produse_accesibile_an1 = Prod.where(curslegatura: 'an1', luna: lunile[2..(2 + max_taxa - 2)]).order(created_at: :asc)
+    @produse_accesibile_an1 = Prod.where(curslegatura: 'cay2425', luna: lunile[2..(2 + max_taxa - 2)]).order(created_at: :asc)
     ##start1 aici tratez situatia cand sa aiba acces la link ZOOM
     index_luna_curenta = lunile.index(@luna_curenta)
 
@@ -446,16 +446,16 @@ def cursayurveda2425
     end
     ##stop1 aici tratez situatia cand sa aiba acces la link ZOOM
 
-    video_coduri = Video.where(tip: 'an1').pluck(:cod)
+    video_coduri = Video.where(tip: 'cay2425').pluck(:cod)
     prod_ids = Prod.where(cod: video_coduri).pluck(:id)
 
     if current_user.role == 1
-      @myvideo2 = Video.where(tip: 'an1').order(ordine: :asc)
+      @myvideo2 = Video.where(tip: 'cay2425').order(ordine: :asc)
     else
       @myvideo2 = Video.joins("INNER JOIN prods ON videos.cod = prods.cod")
                        .joins("INNER JOIN comenzi_prods ON comenzi_prods.prod_id = prods.id")
                        .where("comenzi_prods.user_id = ? AND prods.id IN (?) AND comenzi_prods.datasfarsit >= ?", current_user.id, prod_ids, Time.now)
-                       .where("videos.tip = 'an1'")
+                       .where("videos.tip = 'cay2425'")
                        .order(ordine: :asc)
     end
   else
