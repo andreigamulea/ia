@@ -4,27 +4,27 @@
 <% end %>
 
 <style>
-#nutritie1 .cm h2 {
+#ayurveda2425 .cm h2 {
     font-size:22px;
 }
-#nutritie1 .register{
+#ayurveda2425 .register{
     border: 1px solid #4b0082;
     background-color:#4b0082;
 }
-#nutritie1 .cm h3{
+#ayurveda2425 .cm h3{
     font-size:18px;
     font-weight:800;
     margin-bottom:0;
 }
-#nutritie1 .register{
+#ayurveda2425 .register{
     margin:0;
     margin-top:20px;
 }
-#nutritie1 .table td {
+#ayurveda2425 .table td {
     text-align:center;
 }
 @media screen and (max-width: 720px) {
-    #nutritie1 .register{
+    #ayurveda2425 .register{
         margin:0 auto;
         margin-top:20px;
     }
@@ -34,21 +34,23 @@
 }
 
 </style>
-<% content_for :title, "Ayush Cell Romania: Curs Ayurveda 2024-2025" %>
+<% content_for :title, "Ayush Cell Romania: Curs Ayurveda 2024 - 2025" %>
 <% content_for :meta_tags do %>
-  <meta name="description" content="Descoperiți importanța adaptării (satmya) alimentației la tipologia constituțională ayurvedică proprie (dosha) și impactul acesteia asupra sănătății.">
-  <meta name="keywords" content="ayurveda, nutritie ayurvedica, dosha, vata, pitta, kapha, dosha-prakriti, greutatea ideala, formule greutate ideala">
-  <link rel="canonical" href="https://www.ayushcell.ro/nutritie4">
+<meta name="description" content="Curs Ayurveda 2024-2025, sesiunea octombrie 2024 - iulie 2025. Aprofundare sistematică a cunoștințelor ayurvedice, module anuale, lecții live, înregistrări.">
+<meta name="keywords" content="curs Ayurveda, 2024-2025, ayurveda, curs online, învățături tradiționale, alimentație naturală, plante medicinale, cromoterapie, meloterapie, digitopunctură, automasaj, reîntinerire, revitalizare, purificare, tonus erotic-amoros">
+
+
+  <link rel="canonical" href="https://www.ayushcell.ro/cursayurveda2425">
 <% end %>
 
-<div class="container" id="nutritie1">
+<div class="container" id="ayurveda2425">
 <%= render 'layouts/sideleft' %>
 
 <div class="cr" style="background-color: white; ">
-    <h1 class="first-tittle">Ayush Cell Romania: Curs Ayurveda 2024-2025</h1>
-    <h2 class="main-title" >Curs Ayurveda 2024-2025</h2>
+    <h1 class="first-tittle">Ayush Cell Romania: Curs Ayurveda 2024 - 2025</h1>
+    <h2 class="main-title" >Curs Ayurveda 2024 - 2025</h2>
 <div class="cont">
-  <h1 class="name" style="font-size:1.8em;">Curs Ayurveda 2024-2025</h1>
+  <h1 class="name" style="font-size:1.8em;">Curs de Ayurveda, sesiunea octombrie 2024 - iulie 2025</h1>
 
   <% if !(current_user && (current_user.role == 1 || (current_user.grupa2425 == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2425).to_i >= 2))) %>
   <div class="row1">
@@ -62,18 +64,19 @@
       <p>- Prezentarea unor modalităţi practice naturale de armonizare constituţională, specifice sistemului AYURVEDA: alimentaţie naturală, folosirea înţeleaptă a plantelor medicinale şi aromatice, cromoterapie, meloterapie, digitopunctură, modalităţi simple de automasaj, etc.</p>
       <p>- Expunerea unor modalităţi tradiţionale de reîntinerire, de revitalizare şi de redobândire a tonusului erotic-amoros, precum şi de purificare a trupului, toate acestea realizate prin folosirea unor mijloace naturale, bazate în principal pe folosirea plantelor cu proprietăţi vindecătoare ori afrodiziace.</p>
       <p>- Descrierea multiplelor efecte binefăcătoare ale plantelor medicinale şi aromatice atât românești cât și indiene, împreună cu prezentarea unor modalităţi practice inedite şi foarte eficiente de utilizare a acestora.</p>
+      <a href="#register" class="register">Inscrie-te la curs</a>
     </div>
   </div>
   <div class="r2">
     <h2 class="name" style="font-size:1.6em;">Înscriere și participare</h2>
     <p><strong>Cum și când se desfășoară cursul?</strong><br>
-    <span class="bullet">Cursul se desfășoară on-line, LIVE, o dată pe săptămână, în fiecare vineri de la ora 18:00. </span></p>
+    <span class="bullet">Cursul se desfășoară on-line, LIVE, o dată pe săptămână, în fiecare miercuri de la ora 18:30. </span></p>
 
     <p><strong>Pot participa doar medicii sau și alte persoane interesate de acest domeniu al cunoașterii?</strong><br>
     <span class="bullet">Acest curs este accesibil tuturor celor interesați indiferent de pregătirea profesională.</span></p>
 
     <p><strong>Cât durează cursul?</strong><br>
-    <span class="bullet">Cursul de ayurveda este structurat pe module anuale în care sunt studiate gradat numeroase ramuri ale ayurvedei. Astfel putem studia ayurveda chiar mai mulți ani, în funcție de cât de mult dorim să aprofundăm această cunoaștere tradițională.</span></p>
+    <span class="bullet">Cursul de ayurveda este structurat pe module anuale, care acoperă treptat diverse ramuri ale ayurvedei. Astfel, participanții pot studia ayurveda pe parcursul mai multor ani, în funcție de cât de profund doresc să aprofundeze această cunoaștere tradițională.</span></p>
 
     <p><strong>Se oferă suport de curs?</strong><br>
     <span class="bullet">În completarea sesiunilor live, participanții primesc în mod gratuit suportul de curs scris asociat.</span></p>
@@ -85,13 +88,13 @@
       <li>Achitarea o singura data a sumei de 60 lei, necesară pentru realizarea înscrierii.</li>
       <li>Achitarea participării pentru anul de curs octombrie 2024 – iulie 2025 in valoare de 1800 lei. Plata poate fi realizată integral la înscriere sau poate fi distribuită în tranșe lunare de câte 180 lei. Optând pentru plata completă inițială, se beneficiază de o reducere corespunzătoare cu valoarea unei luni de participare, reducându-se astfel suma totală de plată de la 1800 lei la 1620 lei pentru acest an de curs.</li>
     </ol>
-    <span class="bullet" style="margin-top: -15px;">Link-ul de ZOOM necesar participării LIVE va fi transmis prin email, în fiecare zi de vineri doar persoanelor care sunt la zi cu plata cursului.</span>
-    <p><strong>Acces la vizionarea înregistrărilor</strong><br>
-    <span class="bullet">Participanții care se înscriu după data de 1 octombrie și astfel nu au participat la lecțiile LIVE desfășurate până la momentul înscrierii lor sau cei care nu pot fi prezenți la o lecție LIVE, au la dispoziție opțiunea de a viziona înregistrările acestor sesiuni direct pe site achitând suma de 22 lei/lecție.</span><br>
-    <span class="bullet">Pentru a avea acces la înregistrări, este necesară achitarea tuturor sumelor restante pentru lunile anterioare (integral pentru tot anul sau 180 lei lunar), începând cu luna Octombrie și până în luna curentă. Dacă plățile nu sunt la zi, participanții nu vor avea posibilitatea de a achita revizionarea pe site pentru cursurile anterioare sau de a participa la lecțiile live din luna curentă.</span>
-    </p>
+    <span class="bullet" style="margin-top: -15px;">Link-ul de ZOOM necesar participării LIVE va fi transmis prin email, în fiecare zi de miercuri doar persoanelor care sunt la zi cu plata cursului.</span>
+ <p><strong>Acces la vizionarea înregistrărilor</strong><br></p>
+<span class="bullet">Participanții care se înscriu după data de 1 octombrie și, prin urmare, nu au participat la lecțiile LIVE desfășurate până la momentul înscrierii lor, sau cei care nu pot fi prezenți la o lecție LIVE, au la dispoziție opțiunea de a viziona înregistrările acestor sesiuni direct pe site, achitând suplimentar suma de 22 lei/lecție.</span>
+<span class="bullet">Pentru a avea acces la vizionarea înregistrărilor, este necesară achitarea tuturor sumelor restante pentru lunile anterioare (integral pentru tot anul sau 180 lei lunar), începând cu luna octombrie și până în luna curentă. Dacă plățile nu sunt la zi, participanții nu vor avea posibilitatea de a reviziona cursurile anterioare pe site sau de a participa la lecțiile live din luna curentă.</span>
 
-    <a href="#register" class="register">Inscrie-te la curs</a>
+
+    <div style="margin-top:30px; text-align:center; margin-bottom:20px;"><a href="#register" class="register">Inscrie-te la curs</a></div>
   </div>
   <% end %>
 
@@ -109,13 +112,13 @@
   </br>
 
   <% if !current_user || current_user.grupa2425 == nil %>  
-  <h2 class="name" id="register">Inscrieri curs Ayurveda grupa 1 octombrie 2024 - iulie 2025</h2>
+  <h2 class="name" id="register">Inscrieri curs Ayurveda grupa 1: octombrie 2024 - iulie 2025</h2>
   <p style="margin-top:20px;"><strong>Costul participării la cursul de Ayurveda pentru sesiunea octombrie 2024 – iulie 2025 este de 1800 lei.</strong><br><br>
   <span>Înscrierea presupune parcurgerea următorilor doi pași:</span></p>
   
   <ol>
     <li>Achitarea o singura data a sumei de 60 lei, necesară pentru realizarea înscrierii.</li>
-    <li>Achitarea participării pentru anul de curs octombrie 2024 – iulie 2025 in valoare de 1800 lei. Plata poate fi realizată integral la înscriere sau poate fi distribuită în tranșe lunare de câte 180 lei. Optând pentru plata completă inițială, se beneficiază de o reducere corespunzătoare cu valoarea unei luni de participare, reducându-se astfel suma totală de plată de la 1800 lei la 1620 lei pentru acest an de curs.</li>
+    <li>Achitarea participării pentru anul de curs octombrie 2024 – iulie 2025 în valoare de 1800 lei. Plata poate fi realizată integral la înscriere sau poate fi distribuită în tranșe lunare de câte 180 lei. Optând pentru plata completă inițială, se beneficiază de o reducere corespunzătoare cu valoarea unei luni de participare, reducându-se astfel suma totală de plată de la 1800 lei la 1620 lei pentru acest an de curs.</li>
   </ol>
   <div class="tbland">
     <div class="tbr">
@@ -135,9 +138,9 @@
             <td><%= @prodgrupa1_taxainscriere_all.detalii %></td> 
             <td><%= @prodgrupa1_taxainscriere_all.pret.to_i %> lei</td>
             <% if current_user %>
-            <td><%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxainscriere_all.id), class: 'btn no-turbo' %></td>
+            <td><%= link_to 'Inscriere', datefacturare_path(s: @prodgrupa1_taxainscriere_all.id), class: 'btn no-turbo' %></td>
             <% else %>
-            <td><%= link_to 'Comanda', new_user_session_path(return_to: 'cay2425'), class: 'btn btn-primary no-turbo' %></td>   
+            <td><%= link_to 'Inscriere', new_user_session_path(return_to: 'cay2425'), class: 'btn btn-primary no-turbo' %></td>   
             <% end %>
           </tr>  
           <% end %>  
