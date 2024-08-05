@@ -1,21 +1,27 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.3'
+#ruby '3.2.3'
+ruby '3.3.4'
+
 
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.4", ">= 7.0.4.3"
+#gem "rails", "~> 7.0.4", ">= 7.0.4.3"
+#gem "rails", "~> 7.1"
+gem "rails", "~> 7.1.3.4"
 
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
+#gem "pg", "~> 1.1"
+gem 'pg', '~> 1.5', '>= 1.5.7'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
+#gem "puma", "~> 5.0"
+gem 'puma', '~> 6.4', '>= 6.4.2'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
@@ -46,7 +52,9 @@ gem "bootsnap", require: false
 
 # Use Sass to process CSS
 gem "sassc-rails"
-
+gem 'csv', '~> 3.3'
+#gem 'polyamorous', '~> 2.3', '>= 2.3.2'
+#gem 'polyamorous', github: 'activerecord-hackery/polyamorous'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -80,7 +88,8 @@ gem 'bootstrap'
 gem 'roo', '~> 2.10'
 
 gem 'kaminari', '~> 1.2', '>= 1.2.2'
-gem 'ransack', '~> 2.4'
+#gem 'ransack', '~> 4.2'
+gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'rubyXL', '~> 3.4', '>= 3.4.25'
 gem 'ahoy_matey', '~> 4.2', '>= 4.2.1'
 gem 'chartkick', '~> 5.0', '>= 5.0.2'
@@ -88,7 +97,8 @@ gem 'groupdate', '~> 6.2', '>= 6.2.1'
 gem 'unidecode', '~> 1.0'
 gem 'stripe', '~> 8.5'
 gem 'stripe_event', '~> 2.7'
-gem 'wicked_pdf', '~> 2.6', '>= 2.6.3'
+#gem 'wicked_pdf', '~> 2.6', '>= 2.6.3'
+gem 'wicked_pdf', '~> 2.8'
 gem 'wkhtmltopdf-binary', '~> 0.12.6.6'
 gem 'pdfkit', '~> 0.8.7.3'  #asta il folosesc pt ca wicked_pdf nu merge pe render.com de fapt nu are 
                             # wkhtmltopdf-binary  incorporat ca pdfkit
