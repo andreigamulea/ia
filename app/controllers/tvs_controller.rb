@@ -58,6 +58,12 @@ class TvsController < ApplicationController
 
   end
   def canal2
+    unless user_signed_in?
+      puts("autentificareee")
+      flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+      redirect_to new_user_session_path
+      return false
+    end
     lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie","august"]
   
     # Utilizatorii cu role == 1 au acces automat
@@ -142,6 +148,12 @@ class TvsController < ApplicationController
   
   
   def canal3
+    unless user_signed_in?
+      puts("autentificareee")
+      flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+      redirect_to new_user_session_path
+      return false
+    end
     lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie","august"]
   
     # Utilizatorii cu role == 1 au acces automat
