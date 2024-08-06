@@ -110,23 +110,6 @@
 <%= javascript_include_tag "tooltip", "data-turbo-track": "reload" %>
 
 <script>
-function addPaginationClickHandlers() {
-  const pagini = document.querySelectorAll('.pagination a');
-  const paginaCurenta = document.querySelector('#pagina-curenta');
-  console.log(pagini)
-  pagini.forEach(pagina => {
-    pagina.addEventListener('click', () => {
-      const numarPagina = pagina.innerText.trim();
-      paginaCurenta.innerText = numarPagina;
-    });
-  });
-}
-
-addPaginationClickHandlers();
-</script>
-
-
-<script>
 document.addEventListener("turbo:load", function() {
     document.getElementById('reset-and-submit').addEventListener('click', function() {
       // Resetează formularul
@@ -145,3 +128,22 @@ document.addEventListener("turbo:load", function() {
     });
   });
 </script>
+
+
+<script>
+function addPaginationClickHandlers() {
+  const pagini = document.querySelectorAll('.pagination a');
+  const paginaCurenta = document.querySelector('#pagina-curenta');
+  console.log(pagini)
+  pagini.forEach(pagina => {
+    pagina.addEventListener('click', () => {
+      const numarPagina = pagina.innerText.trim();
+      paginaCurenta.innerText = numarPagina;
+    });
+  });
+}
+
+addPaginationClickHandlers();
+</script>
+
+
