@@ -48,14 +48,14 @@
 
 <div class="cr" style="background-color: white; ">
     <h1 class="first-tittle">Ayush Cell Romania: Curs Ayurveda 2024 - 2025</h1>
-    <h2 class="main-title" >Curs Ayurveda 2024 - 2025</h2>
+    <h2 class="main-title" >Grupa 01 - Curs Ayurveda</h2>
 <div class="cont">
-  <h1 class="name" style="font-size:1.8em;">Curs de Ayurveda, sesiunea octombrie 2024 - iulie 2025</h1>
+  <h1 class="name" style="font-size:1.8em;">Cursuri de Ayurveda, sesiunea octombrie 2024 - iulie 2025</h1>
 
   <% if !(current_user && (current_user.role == 1 || (current_user.grupa2425 == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2425).to_i >= 2))) %>
   <div class="row1">
     <div class="r1c1">
-      <img src="<%= image_url('iarba-sarpelui-1.jpg') %>" alt="Curs de Ayurveda">
+      <img src="<%= image_url('liliac.webp') %>" alt="Curs de Ayurveda">
     </div>
     <div class="r1c2">
       <h2>Subiecte abordate</h2>
@@ -76,7 +76,7 @@
     <span class="bullet">Acest curs este accesibil tuturor celor interesați indiferent de pregătirea profesională.</span></p>
 
     <p><strong>Cât durează cursul?</strong><br>
-    <span class="bullet">Cursul de Ayurveda este structurat pe module anuale, care acoperă treptat diverse ramuri ale Ayurvedei. Astfel, participanții pot studia Ayurveda pe parcursul mai multor ani, în funcție de cât de profund doresc să aprofundeze această cunoaștere tradițională.</span></p>
+    <span class="bullet">Cursul de Ayurveda este structurat în module anuale, care acoperă treptat diverse ramuri ale Ayurvedei. Astfel, participanții pot studia Ayurveda pe parcursul mai multor ani, în funcție de cât de mult doresc să aprofundeze această cunoaștere tradițională.</span></p>
 
     <p><strong>Se oferă suport de curs?</strong><br>
     <span class="bullet">În completarea sesiunilor live, participanții primesc în mod gratuit suportul de curs scris asociat.</span></p>
@@ -99,7 +99,7 @@
   <% end %>
 
   <h2 class="name">Prezentare introductiva - Curs de Ayurveda 2024 - 2025</h2>
-  <p style="text-align:center;"><%= @myvideo1.descriere %></p>
+  <p style="text-align:center;">Vă invităm să vizionați înregistrarea introductivă de mai jos pentru a vă familiariza cu subiectele care vor fi abordate în cadrul acestor cursuri. Evenimentul, desfășurat online pe 29.09.2023, oferă o imagine de ansamblu asupra conținutului cursurilor. Aceasta este, de asemenea, o ocazie excelentă de a cunoaște lectorii de Ayurveda implicați în organizarea și predarea cursului.</p>
   <!-- for non autoplay video //-->
   <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
