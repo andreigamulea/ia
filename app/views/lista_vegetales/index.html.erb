@@ -3,7 +3,7 @@
 
 <h1 class="alimente-nutritionale">Lista servicii consultare selectiva online</h1></br>
 <div id="pas">
-  <%= search_form_for @q do |f|%>
+  <%= search_form_for @q, url: url_for(controller: 'lista_vegetales', action: 'index'), method: :get, html: { id: 'search-form' } do |f| %>
     <div style="width:100%;" class="form-group">
       <div class="input-group">
         
@@ -71,3 +71,22 @@
 <%end%>
 </section>
 
+<script>
+document.addEventListener("turbo:load", function() {
+    document.getElementById('reset-and-submit').addEventListener('click', function() {
+      // Resetează formularul
+      var form = document.getElementById('search-form');
+      form.reset();
+
+      // Redirecționează la aceeași pagină fără parametri
+      var url = new URL(window.location);
+      url.search = "";  // Șterge toți parametrii
+      window.location = url.toString();
+    });
+
+    // Adaugă `data-turbo="false"` la butoanele cu clasa `no-turbo`
+    document.querySelectorAll('.no-turbo').forEach(function(element) {
+      element.setAttribute('data-turbo', 'false');
+    });
+  });
+</script>
