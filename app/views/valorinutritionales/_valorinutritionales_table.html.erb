@@ -1,7 +1,7 @@
 <section class="tabel-container .rotate-landscape">
 
 <div id="pas">
-  <%= search_form_for @q do |f|%>
+  <%= search_form_for @q, url: url_for(controller: 'valorinutritionales', action: 'index'), method: :get, html: { id: 'search-form' } do |f| %>
     <div style="width:100%;" class="form-group">
       <div class="input-group">
         
@@ -9,9 +9,9 @@
       
         
         <div class="input-group-append">
-          <%= f.submit 'Cauta', class: "btn btn-primary" %>
-          <button id="reset-and-submit" type="button" class="btn btn-secondary">Cautare noua</button>
-        </div>
+        <%= f.submit 'Cauta', class: "btn btn-primary no-turbo" %>
+        <button id="reset-and-submit" type="button" class="btn btn-secondary no-turbo">Cautare noua</button>
+      </div>
       </div>
         <div class="radio">
           <%= radio_button_tag :search_type, "cont", params[:search_type] == 'cont' || params[:search_type].nil?, class: "form-check-input" %>
@@ -126,3 +126,22 @@ addPaginationClickHandlers();
 </script>
 
 
+<script>
+document.addEventListener("turbo:load", function() {
+    document.getElementById('reset-and-submit').addEventListener('click', function() {
+      // Resetează formularul
+      var form = document.getElementById('search-form');
+      form.reset();
+
+      // Redirecționează la aceeași pagină fără parametri
+      var url = new URL(window.location);
+      url.search = "";  // Șterge toți parametrii
+      window.location = url.toString();
+    });
+
+    // Adaugă `data-turbo="false"` la butoanele cu clasa `no-turbo`
+    document.querySelectorAll('.no-turbo').forEach(function(element) {
+      element.setAttribute('data-turbo', 'false');
+    });
+  });
+</script>
