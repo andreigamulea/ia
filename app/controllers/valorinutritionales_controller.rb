@@ -56,14 +56,14 @@ class ValorinutritionalesController < ApplicationController
   def index #app Valori Nutritionale
     @page_title = "Valori Nutritionale"
     
+    @search_term = params[:search_term] # add this line
+
     if params[:search_type] == "eq"
       @valorinutritionales = Valorinutritionale.where('aliment ~* ?', "\\y#{params[:search_term]}\\y").page(params[:page]).per(10)
       @q = @valorinutritionales.ransack(params[:q])
-      @search_term = params[:search_term] # add this line
     else
       @q = Valorinutritionale.ransack(aliment_cont: params[:search_term])
       @valorinutritionales = @q.result.distinct.order(:id).page(params[:page]).per(10)
-      @search_term = params[:search_term] # add this line
     end
     @total_records = @valorinutritionales.total_count
     @nrpag=@valorinutritionales.total_count

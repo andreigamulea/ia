@@ -10,8 +10,8 @@
         <%= f.text_field :specie_or_sinonime_cont, value: @search_term, placeholder: "Cautare Vegetale", class: "form-control", name: "search_term" %>
         
         <div class="input-group-append">
-          <%= f.submit 'Cauta', class: "btn btn-primary" %>
-          <button id="reset-and-submit" type="button" class="btn btn-secondary">Cautare noua</button>
+          <%= f.submit 'Cauta', class: "btn btn-primary no-turbo" %>
+          <button id="reset-and-submit" type="button" class="btn btn-secondary no-turbo">Cautare noua</button>
         </div>
       </div>
       <div class="radio">
