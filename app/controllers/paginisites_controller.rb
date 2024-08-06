@@ -62,13 +62,17 @@ class PaginisitesController < ApplicationController
   end
   def userilogati
     search_term = params[:search]
+    
+    # Perform the search using Ransack with a condition on user's email or name
     @q = UserPaginisite.includes(:user, :paginisite).where(paginisites: { nume: 'Login' }).ransack(
-      user_email_cont: search_term, 
-      user_name_cont: search_term, 
+      user_email_or_user_name_cont: search_term, 
       m: 'or'
     )
+  
+    # Get the result, order it by creation date and paginate it
     @user_paginisite = @q.result.order('user_paginisites.created_at DESC').page(params[:page]).per(15)
   end
+  
   
   
   def useriunici_logati
