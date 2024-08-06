@@ -22,7 +22,14 @@ class User < ApplicationRecord
    # user.save!
    # user
  # end
-  
+ def self.ransackable_attributes(auth_object = nil)
+  ["active", "cnp", "cpa", "created_at", "current_sign_in_at", "current_sign_in_ip", "email", "gdpr", "google_refresh_token", "google_token", "grupa", "grupa2425", "id", "id_value", "last_sign_in_at", "last_sign_in_ip", "limba", "name", "nutritieabsolvit", "provider", "remember_created_at", "reset_password_sent_at", "reset_password_token", "role", "sign_in_count", "stripe_customer_id", "telefon", "telefon2", "telefon3", "uid", "updated_at"]
+end
+
+# Metoda ransackable_associations pentru a permite căutarea prin asociații
+def self.ransackable_associations(auth_object = nil)
+  ["accescurs2324s", "accescurs2425", "comandas", "comenzi_prods", "contractes", "cursuri", "cursuri_history", "detaliifacturare", "facturaproformas", "facturas", "listacursuri", "modulecursuris", "paginisite", "prods", "tipconstitutionals", "user_ips", "user_modulecursuris", "user_tipconstitutionals", "user_videos", "userpaginisite", "userprods", "videos"]
+end
   def self.from_omniauth(auth)
     # Verifica daca exista un utilizator cu aceeasi adresa de email
     existing_user = find_by(email: auth.info.email)
