@@ -51,12 +51,17 @@
 
 
 <div class="cont">
-  <h1 class="name" style="font-size:1.8em;">Curs de Ayurveda Grupa 02 - 2024-2025</h1>
-  <% if !(current_user && (current_user.role == 1 || (current_user.grupa == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i >= 2))) %>
+
+  <% if current_user %>
+  <h1 class="name" style="font-size:1.8em;">Curs de Ayurveda Grupa 02 - 2024-2025</h1
+  <%else%>
+  <h1 class="name" style="font-size:1.8em;">Curs de Ayurveda Grupa 02 - 2024-2025</h1
+  <p>Accesul la conținutul acestei pagini este disponibil exclusiv pentru cursanții înscriși în anul 2 al cursului de Ayurveda. Vă rugăm să vă autentificați în contul dumneavoastră pentru a continua.</p>
+<p><a href="https://ayushcell.ro/users/sign_in/menu">Autentificare în cont</a></p>
+
+  <%end%>
+</div>
   
-  
- 
-<%end%>
 
 
 
