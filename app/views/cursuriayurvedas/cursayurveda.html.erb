@@ -32,7 +32,8 @@
 }
 </style>
 
-
+<div class="container" id="nutritie1">
+<%= render 'layouts/sideleft' %>
 
 <!-- Partea de sus a fișierului app/views/home/about.html.erb -->
 <% content_for :custom_js do %>
@@ -305,7 +306,7 @@
 <h2 style="padding: 0; text-align: center;">Accesare cursuri Ayurveda</h2>
 
 <div class="selector">
-<label for="course-selector-1" style="padding:5px;">Platește cursul: </label>
+<label for="course-selector-1" style="padding:5px;">Alege cursul: </label>
 <select id="course-selector-1" style="padding:5px;">
     <% @produse_accesibile_an1.each_with_index do |produs, index| %>
         <option value="<%= index %>"><%= produs.nume %>  </option>
@@ -313,7 +314,7 @@
 </select>
 </div>
 
-<table class="table ayurveda-table">
+<table class="table ayurveda-table ">
 <thead>
     <tr>
         <th>Nume</th>
@@ -338,7 +339,7 @@
 
 
 
-<% if @myvideo2.any? %>
+<% if @myvideo2.any?%>
   <h2 style="padding: 0; text-align: center;">Înregistrări video Cursuri grupa 1</h2>
 
   <!-- Selector pentru video-uri -->
@@ -352,7 +353,7 @@
   </div>
 
   <div id="videos">
-    <table class="table">
+    <table class="table ayurveda-table">
       <thead>
         <tr>
           <th>Nr</th>
@@ -366,7 +367,7 @@
           <% if video.ordine < 1000 %>
             <tr class="new-row">
               <td>
-                <% if video.tip == 'an1' %>
+                <% if video.tip == 'an1' && video.ordine < 1000%>
                   <%= video.ordine > 1000 ? video.ordine - 1000 : video.ordine %>
                 <% elsif video.tip == 'an2' || video.tip == 'an3' %>
                   <%= video.ordine %>
@@ -387,7 +388,7 @@
 
 
 <%end%>
-</div>
+</div></div>
 <script>
   document.addEventListener("turbo:load", function() {
     document.querySelectorAll('.no-turbo').forEach(link => {
@@ -416,7 +417,7 @@ document.addEventListener("turbo:load", function() {
         function showSelectedRow() {
             const selectedIndex = parseInt(selector.value, 10);
             rows.forEach((row, index) => {
-                row.style.display = index === selectedIndex + 1 ? 'table-row' : 'none';
+                row.style.display = index === selectedIndex ? 'table-row' : 'none';
             });
         }
 

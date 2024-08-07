@@ -183,13 +183,15 @@ class CursuriayurvedasController < ApplicationController
 
       # Obții videourile pentru care user-ul curent a plătit
       if current_user.role == 1
-        @myvideo2 = Video.where(tip: 'an1').order(ordine: :asc)
+        @myvideo2 = Video.where(tip: 'an1').where("ordine < 1000").order(ordine: :asc)
+
       else
         @myvideo2 = Video.joins("INNER JOIN prods ON videos.cod = prods.cod")
-        .joins("INNER JOIN comenzi_prods ON comenzi_prods.prod_id = prods.id")
-        .where("comenzi_prods.user_id = ? AND prods.id IN (?) AND comenzi_prods.datasfarsit >= ?", current_user.id, prod_ids, Time.now)
-        .where("videos.tip = 'an1'")
-        .order(ordine: :asc)
+  .joins("INNER JOIN comenzi_prods ON comenzi_prods.prod_id = prods.id")
+  .where("comenzi_prods.user_id = ? AND prods.id IN (?) AND comenzi_prods.datasfarsit >= ?", current_user.id, prod_ids, Time.now)
+  .where("videos.tip = 'an1' AND videos.ordine < 1000")
+  .order(ordine: :asc)
+
 
 
 
