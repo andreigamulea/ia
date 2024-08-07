@@ -31,9 +31,11 @@
                     <li class="nav-item">
                        <%= link_to 'Sesiuni interactive practice', sesiune_vara_path, class: 'no-turbo' %>
                     </li>
+                    <% if current_user && (current_user.role == 1 || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) %>
                     <li class="nav-item">
                        <%= link_to 'Curs de Ayurveda grupa 01 2023 - 2024', cursayurveda_path, class: 'no-turbo' %>
                     </li>
+                    <% end %>
                     <li class="nav-item">
                        <%= link_to 'Curs Vajikarana', vajikarana_modul1_path, class: 'no-turbo' %>
                     </li>
