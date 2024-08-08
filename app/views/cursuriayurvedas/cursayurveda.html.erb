@@ -6,7 +6,7 @@
 .table th, .table td {
     padding: 10px;
     border: 1px solid #ddd;
-    text-align: left;
+    text-align: center;
 }
 .table th {
     background-color: #800080;
@@ -275,7 +275,7 @@
               </td>
               <td><%= video.nume %></td>
               <td><%= video.descriere %></td>
-              <td>
+              <td style="text-align:center;">
                 <%= link_to "Vezi video", myvideo3_path(id: video.id, link: video.link), class: "btn btn-primary" %>
               </td>
             </tr>
