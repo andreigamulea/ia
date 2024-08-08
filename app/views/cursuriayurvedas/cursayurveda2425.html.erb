@@ -137,8 +137,10 @@
             <td><%= @prodgrupa1_taxainscriere_all.nume %></td>                        
             <td><%= @prodgrupa1_taxainscriere_all.detalii %></td> 
             <td><%= @prodgrupa1_taxainscriere_all.pret.to_i %> lei</td>
-            <% if current_user %>
-            <td><%= link_to 'Inscriere', datefacturare_path(s: @prodgrupa1_taxainscriere_all.id), class: 'btn no-turbo' %></td>
+            <% if current_user && (current_user.role == 1 || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) %>            
+              <td>valabil pentru an1 2024-2025</td>
+            <%elsif current_user%> 
+              <td><%= link_to 'Inscriere', datefacturare_path(s: @prodgrupa1_taxainscriere_all.id), class: 'btn no-turbo' %></td>
             <% else %>
             <td><%= link_to 'Inscriere', new_user_session_path(return_to: 'cay2425'), class: 'btn btn-primary no-turbo' %></td>   
             <% end %>

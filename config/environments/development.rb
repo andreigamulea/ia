@@ -13,7 +13,7 @@ Rails.application.configure do
 
   # Show full error reports.
   config.consider_all_requests_local = true
-  Rails.application.config.hosts << "b68e-86-120-188-209.ngrok-free.app"
+  Rails.application.config.hosts << "779b-86-122-24-110.ngrok-free.app"
 
   # Enable server timing
   config.server_timing = true
