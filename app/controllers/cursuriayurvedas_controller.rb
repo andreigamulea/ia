@@ -70,8 +70,9 @@ class CursuriayurvedasController < ApplicationController
         return false
      end  
     @myvideo3 = Video.where(tip: 'an1').where('ordine > ?', 1000).order(ordine: :asc)
-    
+    puts("Ultima_luna_platita1")
     if current_user&.grupa == 1
+      puts("Ultima_luna_platita2")
       @prodgrupa1_taxainscriere_all = Prod.find_by(cod: "cod14")
       @titlu_pagina = 'Curs de Ayurveda - Grupa 1'
       
@@ -79,7 +80,9 @@ class CursuriayurvedasController < ApplicationController
       max_taxa = ComenziProd.where(user_id: current_user.id).maximum(:taxa2324)
       @luna_curenta = luna_in_romana(Time.now.strftime("%B"))
       @ultima_luna_platita = max_taxa.nil? ? nil : luni[max_taxa]
-      
+      puts("Ultima_luna_platita=#{@ultima_luna_platita}")
+      @maxtaxa=max_taxa
+      puts("Maxtaxa este: #{@maxtaxa}")
       comanda = ComenziProd.find_by(user_id: current_user.id, taxa2324: 1)
       @prodgrupa1_taxainscriere = comanda.nil? ? Prod.find_by(cod: "cod14") : nil
   
@@ -103,7 +106,7 @@ class CursuriayurvedasController < ApplicationController
     if current_user&.role == 1
       max_taxa = 12
     end
-  
+   
     if max_taxa
       lunile = [nil, nil, "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "iulie"]
       @produse_accesibile_an1 = Prod.where(curslegatura: 'an1', luna: lunile[2..(2 + max_taxa - 2)]).order(created_at: :asc)
@@ -139,6 +142,46 @@ class CursuriayurvedasController < ApplicationController
     else
       @produse_accesibile_an1 = []
     end
+###########################################incep sa folosesc datele de la an1 2324 la an2 2425
+    if max_taxa>10 
+      @promovat_in_an2 = true
+      puts("a promovat")
+    else
+      @promovat_in_an2 = false
+      puts("NU a promovat")
+    end    
+    if @promovat_in_an2
+      puts("A promovat")
+      # Definirea lunilor și valoarea maximă a taxei
+      @luni2425 = [nil, "Septembrie", "Octombrie", "Noiembrie", "Decembrie", "Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "Iulie"]
+      @max_taxa2425 = ComenziProd.where(user_id: current_user.id).where.not(prod_id: 198).maximum(:taxa2425)
+
+      # Definirea array-ului cu coduri
+      coduri_array = ['cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204', 'cod205', 'cod206']
+
+      # Găsirea ultimei luni plătite și selectarea produselor
+      if @max_taxa2425.nil?
+        puts("este nil")
+        @ultima_lunaPlatita2425 = "Iulie 2024"
+        @prod2425 = Prod.where(cod: ['cod207', 'cod196'])
+        
+      else
+        @ultima_lunaPlatita2425 = @luni2425[@max_taxa2425]
+        # Asigură-te că indexul este valid
+        cod_index = @max_taxa2425 - 1
+        if cod_index >= 0 && cod_index < coduri_array.size
+          @prod2425 = [Prod.find_by(cod: coduri_array[cod_index])]
+        else
+          @prod2425 = []
+        end
+      end
+
+
+    
+    
+    end  
+
+
   end
   
   def an2 #2023-24
@@ -287,6 +330,9 @@ def cursayurveda2425
   @myvideo1 = Video.find_by(link: 'xGpVO2uopdc')
   @myvideo = @myvideo1.link if @myvideo1
 
+  if current_user && (current_user.role == 1 || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5)
+    puts("daaaaaaaaaaaaaaaaab")
+  end  
   @myvideo3 = Video.where(tip: 'an1').where('ordine > ?', 1000).order(ordine: :asc)
   ##################################grupa 1
   @prodgrupa1_taxainscriere_all = Prod.find_by(cod: "cod195")

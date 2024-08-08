@@ -104,9 +104,12 @@
 
 
 
-<%if @ultima_luna_platita!= nil%>
+<%if @ultima_luna_platita!= nil  && @max_taxa2425==nil%>
 
 <h2 style="text-align: center;font-size: 1.2rem;">Ultima luna pentru care a fost achitata participarea pentru anul de curs 2023 - 2024 : <%=@ultima_luna_platita%></h2>
+<%else%>
+<h2 style="text-align: center;font-size: 1.2rem;">Ultima luna pentru care a fost achitata participarea pentru anul de curs 2024 - 2025 : <%=@ultima_lunaPlatita2425%></h2>
+
 <%end%>
 <% if @prodgrupa1_taxaanuala!=nil || @prodgrupa1_taxalunara!=nil %>
 <div class="tbland">
@@ -149,6 +152,40 @@
 </div>
 
 <%end%>
+
+
+
+<%if @prod2425.count>0%>
+<div class="tbland">
+  <div class="tbr">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th style="width: auto;">Curs de Ayurveda</th>
+                <th style="width: auto;">Detalii</th>
+                <th style="width: auto;">Pret</th>
+                <th style="width: auto;">Actiune</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @prod2425.each do |produs| %>
+            <tr>
+                <td><%= produs.nume %></td>
+                <td><%= produs.detalii %></td>
+                <td><%= produs.pret.to_i %></td>
+                <td>
+                    <%= link_to 'Comanda', datefacturare_path(s: produs.id), class: 'btn no-turbo' %>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+  </div>
+</div>
+
+<%end%>
+
+
 
 <% if current_user && (current_user.role == 1 || (current_user.grupa == 1 && ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i >= 2)) %>
 <%if @are_prioritate || current_user.role == 1%>
