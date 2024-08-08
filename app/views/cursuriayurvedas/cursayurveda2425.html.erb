@@ -4,6 +4,30 @@
 <% end %>
 
 <style>
+
+
+.tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Poziția deasupra butonului */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+td:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
 #ayurveda2425 .cm h2 {
     font-size:22px;
 }
@@ -138,7 +162,13 @@
             <td><%= @prodgrupa1_taxainscriere_all.detalii %></td> 
             <td><%= @prodgrupa1_taxainscriere_all.pret.to_i %> lei</td>
             <% if current_user && (current_user.role == 1 || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) %>            
-              <td>valabil pentru an1 2024-2025</td>
+             <td style="position: relative;">
+  <%= link_to 'Inscriere', "#", class: 'btn btn-primary no-turbo', style: "pointer-events: none; opacity: 0.6; cursor: not-allowed;", id: "disabled-button" %>
+  <span class="tooltip-text">Plățile sunt accesibile pe pagina grupei 02 de ayurveda.</span>
+</td>
+
+
+
             <%elsif current_user%> 
               <td><%= link_to 'Inscriere', datefacturare_path(s: @prodgrupa1_taxainscriere_all.id), class: 'btn no-turbo' %></td>
             <% else %>
@@ -329,3 +359,4 @@
 <script>
   <%= yield :custom_js %>
 </script>
+
