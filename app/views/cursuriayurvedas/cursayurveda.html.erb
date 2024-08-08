@@ -49,23 +49,19 @@
 <% end %>
 
 
-
+<div class="cr" style="background-color: white; ">
 <div class="cont">
 
   <% if current_user %>
-  <h1 class="name" style="font-size:1.8em;">Curs de Ayurveda Grupa 02 - 2024-2025</h1
+  <h1 class="name" style="font-size:1.8em;">Curs de Ayurveda Grupa 02 - 2024-2025</h1>
+  <p>Costul participării la cursul de Ayurveda pentru sesiunea octombrie 2024 – iulie 2025 este de 1980 lei, corespunzător lunilor septembrie 2024 – iulie 2025. Plata poate fi realizată integral la început sau poate fi distribuită în tranșe lunare de câte 180 lei. </p>
+  <p>Optând pentru plata completă inițială, se beneficiază de o reducere corespunzătoare valorii unei luni de participare, reducându-se astfel suma totală de plată de la 1980 lei la 1800 lei pentru acest an de curs.</p>
   <%else%>
-  <h1 class="name" style="font-size:1.8em;">Curs de Ayurveda Grupa 02 - 2024-2025</h1
+  <h1 class="name" style="font-size:1.8em;">Curs de Ayurveda Grupa 02 - 2024 - 2025</h1>
   <p>Accesul la conținutul acestei pagini este disponibil exclusiv pentru cursanții înscriși în anul 2 al cursului de Ayurveda. Vă rugăm să vă autentificați în contul dumneavoastră pentru a continua.</p>
 <p><a href="https://ayushcell.ro/users/sign_in/menu">Autentificare în cont</a></p>
 
   <%end%>
-</div>
-  
-
-
-
-
 
 
   <% if @prodgrupa1_taxainscriere  %>  
@@ -106,9 +102,9 @@
 
 <%if @ultima_luna_platita!= nil  && @max_taxa2425==nil%>
 
-<h2 style="text-align: center;font-size: 1.2rem;">Ultima luna pentru care a fost achitata participarea pentru anul de curs 2023 - 2024 : <%=@ultima_luna_platita%></h2>
+<h2 style="text-align: center;font-size: 1.2rem!important;">Ultima luna pentru care a fost achitata participarea pentru anul de curs 2023 - 2024 : <%=@ultima_luna_platita%></h2>
 <%else%>
-<h2 style="text-align: center;font-size: 1.2rem;">Ultima luna pentru care a fost achitata participarea pentru anul de curs 2024 - 2025 : <%=@ultima_lunaPlatita2425%></h2>
+<h2 style="text-align: center;font-size: 1.2rem!important;">Ultima luna pentru care a fost achitata participarea pentru anul de curs 2024 - 2025 : <%=@ultima_lunaPlatita2425%></h2>
 
 <%end%>
 <% if @prodgrupa1_taxaanuala!=nil || @prodgrupa1_taxalunara!=nil %>
@@ -121,7 +117,7 @@
                 <th style="width: auto;">Curs de Ayurveda</th>
                 <th style="width: auto;">Detalii</th>
                 
-                <th style="width: auto;">Pret</th>
+                <th style="width: auto; min-width:70px;">Pret</th>
                 <th style="width: auto;">Actiune</th>
             </tr>
         </thead>
@@ -131,7 +127,7 @@
                 <td><%= @prodgrupa1_taxaanuala.nume %> </td>                        
                 <td><%= @prodgrupa1_taxaanuala.detalii %></td> 
                 
-                <td><%= @prodgrupa1_taxaanuala.pret.to_i %> lei</td>
+                <td ><%= @prodgrupa1_taxaanuala.pret.to_i %> lei</td>
 
                 <td> <%= link_to 'Comanda', datefacturare_path(s: @prodgrupa1_taxaanuala.id), class: 'btn no-turbo' %> </td>      
             </tr>  
@@ -163,7 +159,7 @@
             <tr>
                 <th style="width: auto;">Curs de Ayurveda</th>
                 <th style="width: auto;">Detalii</th>
-                <th style="width: auto;">Pret</th>
+                <th style="width: auto; min-width:70px;">Pret</th>
                 <th style="width: auto;">Actiune</th>
             </tr>
         </thead>
@@ -228,7 +224,7 @@
         <tr class="ayurveda-row">
             <td><%= produs.nume %></td>
             <td><%= produs.detalii %></td>
-            <td><%= produs.pret %> lei</td>
+            <td style="width: auto; min-width:70px;"><%= produs.pret %> lei</td>
             <td><%= link_to 'Comanda', datefacturare_path(s: produs.id), class: 'btn no-turbo' %></td>
         </tr>
     <% end %>
@@ -288,7 +284,7 @@
 
 
 <%end%>
-</div></div>
+</div></div></div>
 <script>
   document.addEventListener("turbo:load", function() {
     document.querySelectorAll('.no-turbo').forEach(link => {
