@@ -338,6 +338,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get 'rasayana', to: 'home#rasayana' 
   get 'newsletter', to: 'home#newsletter'
   
+  get 'copyright', to: 'home#copyright'
   get 'documente', to: 'home#documente'
   get 'user77', to: 'home#user77'
   get 'evaluare_tipologie_ayurvedica', to: 'home#evaluare_tipologie_ayurvedica'
