@@ -35,6 +35,8 @@ class HomeController < ApplicationController
   end
   def cazuriparticulare
   end  
+  def copyright
+  end  
   def documente
     @prod = Prod.where(curslegatura: 'documente', status: 'activ')
   end  
