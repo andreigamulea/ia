@@ -27,7 +27,26 @@ class HomeController < ApplicationController
       end  
     end  
   end
-  
+  def sesiune_vara_raport
+    # Găsește toate evenimentele care conțin "action": "myvideo15"
+    events = Ahoy::Event.where("properties @> ?", { action: "myvideo15" }.to_json)
+
+    # Grupați evenimentele după `user_id` și numărați accesările
+    user_access = events.group(:user_id).count
+
+    # Obțineți numele utilizatorilor și numărul de accesări
+    @user_reports = user_access.map do |user_id, numar_accesari|
+      user = User.find_by(id: user_id)
+      {
+        user_id: user_id,
+        nume: user&.name, # presupunând că coloana se numește `name`
+        numar_accesari: numar_accesari
+      }
+    end
+
+    # Numărul total de utilizatori care au accesat "myvideo15"
+    @numar_utilizatori = @user_reports.count
+  end
  
   def resetareparola    
   end
