@@ -46,6 +46,17 @@ class HomeController < ApplicationController
 
     # Numărul total de utilizatori care au accesat "myvideo15"
     @numar_utilizatori = @user_reports.count
+
+    # Găsește userii care au cumpărat produsul cu codul "cod211"
+    cod211_orders = ComenziProd.joins(:prod)
+                               .where(prods: { cod: 'cod211' }, validat: 'Finalizata')
+                               .pluck(:user_id)
+
+    @users_with_cod211 = User.where(id: cod211_orders).pluck(:id, :name)
+
+    # Găsește userii care au cumpărat cod211, dar nu au accesat myvideo15
+    accessed_user_ids = @user_reports.map { |report| report[:user_id] }
+    @users_purchased_but_not_accessed = User.where(id: cod211_orders - accessed_user_ids).pluck(:id, :name)
   end
  
   def resetareparola    
