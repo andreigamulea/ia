@@ -1,3 +1,5 @@
+require 'httparty'
+
 class TraditiaAyurvedicaController < ApplicationController
   def amnaya
     @has_access = current_user&.role == 1     
@@ -167,6 +169,33 @@ class TraditiaAyurvedicaController < ApplicationController
       @prods_cumparate = Prod.none
       @videos_correspondente= Video.none
     end
+    #######################
+    begin
+      # Obține cursul RON/USD de la un API extern
+      ron_usd_response = HTTParty.get('https://api.exchangerate-api.com/v4/latest/RON')
+      
+      if ron_usd_response.success?
+        ron_usd_rate = ron_usd_response.parsed_response['rates']['USD'].to_f
+        
+        # Inversează cursul pentru a obține USD/RON
+        @usd_ron_price = (1 / ron_usd_rate).round(2)
+        
+        # Afișează cursul în view-ul tău sau folosește-l mai departe
+        puts("Cursul USD/RON este: #{@usd_ron_price}")
+        
+      else
+        flash[:error] = "Nu s-a putut obține cursul RON/USD."
+        redirect_to root_path and return
+      end
+
+    rescue HTTParty::Error => e
+      flash[:error] = "Eroare la obținerea prețurilor: #{e.message}"
+      redirect_to root_path and return
+    end
+    ######################
+
+
+
   end
   def jamadagni
     @has_access = current_user&.role == 1
@@ -338,5 +367,18 @@ class TraditiaAyurvedicaController < ApplicationController
       @videos_correspondente= Video.none
     end
   end
-
+private
+def get_book_ticker(symbol)
+  response = HTTParty.get('https://api.binance.com/api/v3/ticker/bookTicker', query: { symbol: symbol })
+  if response.success?
+    bid_price = response.parsed_response['bidPrice'].to_f
+    ask_price = response.parsed_response['askPrice'].to_f
+    {
+      bid_price: bid_price,
+      ask_price: ask_price
+    }
+  else
+    nil
+  end
+end
 end
