@@ -226,7 +226,7 @@
         <tr class="ayurveda-row">
             <td><%= produs.nume %></td>
             <td><%= produs.detalii %></td>
-            <td style="width: auto; min-width:70px;"><%= produs.pret %> lei</td>
+            <td style="width: auto; min-width:70px;"><%= produs.pret.round(0) %> lei</td>
             <td><%= link_to 'Comanda', datefacturare_path(s: produs.id), class: 'btn no-turbo' %></td>
         </tr>
     <% end %>
