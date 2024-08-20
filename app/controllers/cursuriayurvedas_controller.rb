@@ -142,7 +142,7 @@ class CursuriayurvedasController < ApplicationController
     else
       @produse_accesibile_an1 = []
     end
-###########################################incep sa folosesc datele de la an1 2324 la an2 2425
+############################################incep sa folosesc datele de la an1 2324 la an2 2425
     if max_taxa>10 
       @promovat_in_an2 = true
       puts("a promovat")
