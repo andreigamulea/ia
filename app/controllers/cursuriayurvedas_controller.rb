@@ -163,7 +163,7 @@ class CursuriayurvedasController < ApplicationController
       if @max_taxa2425.nil?
         puts("este nil")
         @ultima_lunaPlatita2425 = "Iulie 2024"
-        @prod2425 = Prod.where(cod: ['cod207', 'cod196'])
+        @prod2425 = Prod.where(cod: ['cod207', 'cod213'])
         
       else
         @ultima_lunaPlatita2425 = @luni2425[@max_taxa2425]
