@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
     before_action :set_stripe_key
     puts("22222222")
     def handle_routing_error
-      redirect_to root_url, alert: "No route matches for this request."
+      redirect_to cursayurveda2425_path, alert: "No route matches for this request."
     end
   
     def luna_in_romana(luna_engleza)
