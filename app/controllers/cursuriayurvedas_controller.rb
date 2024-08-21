@@ -59,6 +59,11 @@ class CursuriayurvedasController < ApplicationController
   end
 
   def cursayurveda
+    unless user_signed_in?
+      flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+      redirect_to new_user_session_path
+      return false
+    end
     
      if current_user && (current_user.role == 1 || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) 
        
@@ -143,6 +148,8 @@ class CursuriayurvedasController < ApplicationController
       @produse_accesibile_an1 = []
     end
 ############################################incep sa folosesc datele de la an1 2324 la an2 2425
+
+
     if max_taxa>10 
       @promovat_in_an2 = true
       puts("a promovat")
