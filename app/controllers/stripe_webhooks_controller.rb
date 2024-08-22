@@ -426,7 +426,7 @@ end
       'cod30', 'cod31', 'cod32', 'cod33', 'cod34', 'cod35', 'cod36', 'cod37',
       'cod38', 'cod39', 'cod40', 'cod41', 'cod42', 'cod43', 'cod44', 'cod45', 'cod48', 'cod76', 'cod85', 'cod86', 'cod88',
       'cod105', 'cod108', 'cod110', 'cod111', 'cod126', 'cod174', 'cod175',
-      'cod195', 'cod196', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204','cod205','cod206','cod207'
+      'cod195', 'cod196', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204','cod205','cod206','cod207','cod213'
     ].include?(produs.cod)
       produsul = produs.nume + ' (' + Date.current.strftime("%d-%m-%Y") + ' - ' + (Date.current + dt.days).strftime("%d-%m-%Y") + ' )'
     
