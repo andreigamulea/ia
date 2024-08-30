@@ -281,6 +281,8 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   
   get '/plata_an1/export', to: 'paginisites#export_to_xlsx_plata_an1', as: 'export_plata_an1'
   get '/plata_an1/summary_export', to: 'paginisites#export_to_xlsx_summary', as: 'export_to_xlsx_summary'
+  get '/plata_an1/summary_export_2024_2025', to: 'paginisites#export_to_xlsx_summary_2024_2025', as: 'export_to_xlsx_summary_2024_2025'
+
 
   get '/paginisites/:id/statistici_utilizator', to: 'paginisites#statistici_utilizator', as: 'statistici_utilizator_paginisite'
   resources :statistics, only: [:index]
