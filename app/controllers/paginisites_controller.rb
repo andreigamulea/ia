@@ -1187,6 +1187,168 @@ end
 
 
 
+
+##an1 2024-2025
+def export_to_xlsx_summary_2024_2025
+  puts "da1 - începe metoda"
+  begin
+    puts "da2 - înainte de setarea lunilor și codurilor"
+    
+    lunile = ['Octombrie 2024', 'Noiembrie 2024', 'Decembrie 2024', 'Ianuarie 2025', 'Februarie 2025', 'Martie 2025', 'Aprilie 2025', 'Mai 2025', 'Iunie 2025', 'Iulie 2025']
+    coduri = (195..206).to_a.map { |num| "cod#{num}" }
+    produse = Prod.where(cod: coduri)
+    mapare_coduri_id = produse.map { |prod| [prod.cod, prod.id] }.to_h
+
+    puts "Produse găsite: #{produse.inspect}"
+    puts "Mapare coduri - ID: #{mapare_coduri_id.inspect}"
+
+    user_ids = ComenziProd.where(prod_id: mapare_coduri_id.values, validat: "Finalizata").distinct.pluck(:user_id)
+    users = User.where(id: user_ids)
+
+    puts "User IDs: #{user_ids.inspect}"
+
+    user_payments = {}
+
+    users.each do |user|
+      puts "Procesăm utilizatorul: #{user.email}"
+
+      # Obține comenzile pentru utilizator
+      comenzi_for_user = ComenziProd.where(user_id: user.id, prod_id: mapare_coduri_id.values, validat: "Finalizata")
+      puts "Comenzi produse pentru utilizator: #{comenzi_for_user.inspect}"
+
+      if comenzi_for_user.empty?
+        puts "ATENȚIE: `comenzi_for_user` este gol pentru utilizatorul #{user.email}!"
+        next
+      end
+
+      comenzi_for_user.each do |comanda|
+        cod = Prod.find(comanda.prod_id).cod
+        pret = Prod.find(comanda.prod_id).pret
+      
+        # Logica personalizată pentru preț
+        if user.email == "nagy.edvin@yahoo.com" && cod != "cod195" # exemplu de logică personalizată
+          pret = 35
+        end
+      
+        case cod
+        when 'cod195'
+          user_payments[user.email] ||= { 'Inscriere' => 0, 'An cu reducere' => 0 }
+          user_payments[user.email]['Inscriere'] += pret
+        when 'cod196'
+          user_payments[user.email] ||= { 'Inscriere' => 0, 'An cu reducere' => 0 }
+          user_payments[user.email]['An cu reducere'] += pret
+          # Completează toate lunile până la iunie inclusiv
+          lunile[0..8].each { |luna| user_payments[user.email][luna] = 180 }
+          user_payments[user.email]['Iulie 2025'] = 'Gratuit'
+        else
+          # Calculează corect indexul pentru codurile care nu sunt 'cod195' sau 'cod196'
+          if cod.slice(3..).to_i >= 197
+            index_luna = cod.slice(3..).to_i - 197
+            luna_corespondenta = lunile[index_luna]
+            user_payments[user.email][luna_corespondenta] = pret if luna_corespondenta
+          end
+        end
+      end
+      
+      
+
+      puts "Sfârșitul buclei `comenzi_for_user.each` pentru utilizatorul #{user.email}"
+    end
+
+    puts "da3 - sfârșitul procesării user_payments"
+
+    # Cod pentru generarea fișierului Excel
+    begin
+      headers = ['e-mail USER', 'Nume USER', 'Telefon USER', 'email din FACTURA', 'Nume din FACTURA',
+                 'Telefon din FACTURA', 'inscriere', 'an cu reducere', 'octombrie 2024', 'noiembrie 2024',
+                 'decembrie 2024', 'ianuarie 2025', 'februarie 2025', 'martie 2025', 'aprilie 2025',
+                 'mai 2025', 'iunie 2025', 'iulie 2025']
+
+      workbook = RubyXL::Workbook.new
+      worksheet = workbook[0]
+      headers.each_with_index do |header, col_index|
+        worksheet.add_cell(0, col_index, header)
+      end
+
+      user_payments.each_with_index do |(email, payments), row|
+        user = User.find_by(email: email)
+        factura = Factura.find_by(user_id: user.id)
+
+        if factura.nil?
+          nume = "-"
+          prenume = "-"
+          telefon = user.telefon
+          email_factura = "-"
+        else
+          if factura.comanda_id.present?
+            adresa_comenzi = AdresaComenzi.find_by(comanda_id: factura.comanda_id)
+            if adresa_comenzi.nil?
+              detalii_factura = Detaliifacturare.find_by(user_id: factura.user_id)
+              if detalii_factura
+                nume = detalii_factura.nume
+                prenume = detalii_factura.prenume
+                telefon = detalii_factura.telefon
+                email_factura = factura.user.email
+              end
+            else
+              nume = adresa_comenzi.nume
+              prenume = adresa_comenzi.prenume
+              telefon = adresa_comenzi.telefon
+              email_factura = adresa_comenzi.email
+            end
+          end
+        end
+
+        worksheet.add_cell(row + 1, 0, user.email)
+        worksheet.add_cell(row + 1, 1, user.name)
+        worksheet.add_cell(row + 1, 2, telefon || "N/A")
+        worksheet.add_cell(row + 1, 3, email_factura || "N/A")
+        worksheet.add_cell(row + 1, 4, "#{prenume} #{nume}" || "N/A")
+        worksheet.add_cell(row + 1, 5, telefon || "N/A")
+
+        # Populate product values
+        values = Array.new(12, 0)
+
+        payments.each do |payment, amount|
+          if lunile.include?(payment)
+            index = lunile.index(payment) + 2
+            values[index] = amount
+          else
+            case payment
+            when 'Inscriere'
+              values[0] = amount
+            when 'An cu reducere'
+              values[1] = amount
+            end
+          end
+        end
+
+        values.each_with_index do |value, index|
+          worksheet.add_cell(row + 1, 6 + index, value == 0 ? nil : value)
+        end
+      end
+
+      file_path = Rails.root.join('tmp', "comenzi_prod_2024_2025_#{Time.now.to_i}.xlsx")
+      workbook.write(file_path)
+      send_file(file_path)
+    rescue => e
+      puts "Eroare la scrierea în worksheet: #{e.message}"
+    end
+
+  ensure
+    puts "da7 - blocul ensure"
+    # Cleanup the temporary file
+    # File.delete(file_path) if File.exist?(file_path)
+  end
+rescue => e
+  puts "da8 - eroare: #{e.message}"
+  logger.error "Error generating Excel: #{e.message}"
+  redirect_to root_path, alert: "There was an error generating the report. Please try again later."
+end
+
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_paginisite
