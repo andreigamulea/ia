@@ -183,7 +183,8 @@ class CursuriayurvedasController < ApplicationController
         end
       end
 
-
+    else
+      @prod2425 = []
     
     
     end  
