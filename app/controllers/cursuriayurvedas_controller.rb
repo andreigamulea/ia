@@ -150,6 +150,8 @@ class CursuriayurvedasController < ApplicationController
 ############################################incep sa folosesc datele de la an1 2324 la an2 2425
 
 
+
+
     if max_taxa>10 
       @promovat_in_an2 = true
       puts("a promovat")
@@ -171,13 +173,31 @@ class CursuriayurvedasController < ApplicationController
         puts("este nil")
         @ultima_lunaPlatita2425 = "Iulie 2024"
         @prod2425 = Prod.where(cod: ['cod207', 'cod213'])
-        
+        @prod2425.each do |prod|
+          if current_user.email == "nagy.edvin@yahoo.com" && prod.cod == 'cod207'
+            prod.pret = 35
+          end
+        end
+
+        puts("Edwin Naghy are pretul1: #{@prod2425.first.pret}")
       else
         @ultima_lunaPlatita2425 = @luni2425[@max_taxa2425]
         # Asigură-te că indexul este valid
         cod_index = @max_taxa2425 - 1
         if cod_index >= 0 && cod_index < coduri_array.size
           @prod2425 = [Prod.find_by(cod: coduri_array[cod_index])]
+
+          coduri_specifice = ['cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204', 'cod205', 'cod206']
+
+          @prod2425.each do |prod|
+            if current_user.email == "nagy.edvin@yahoo.com" && coduri_specifice.include?(prod.cod)
+              prod.pret = 35
+            end
+          end
+
+
+          puts("Edwin Naghy are pretul2: #{@prod2425.first.pret}")
+
         else
           @prod2425 = []
         end
@@ -383,6 +403,7 @@ def cursayurveda2425
     
     if valori_taxa2425.include?(12)
       @prodgrupa1_taxalunara = nil
+      
     elsif valori_taxa2425.empty? || !valori_taxa2425.include?(1)
       @prodgrupa1_taxalunara = nil
     elsif valori_taxa2425.include?(11)

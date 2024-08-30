@@ -412,7 +412,7 @@ end
     # Calculați valoarea fără TVA
     pret_unitar_fara_tva = produs.pret / (1 + TVA / 100.0)
     if metadata[:email]=='nagy.edvin@yahoo.com' && ['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
-      'cod22', 'cod23', 'cod24', 'cod25'].include?(produs.cod)
+      'cod22', 'cod23', 'cod24', 'cod25', 'cod207','cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204', 'cod205', 'cod206'].include?(produs.cod)
 
       
       pret_unitar_fara_tva = 29.41 #custom
