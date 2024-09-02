@@ -123,7 +123,8 @@ MAP_COD_TAXA_2425 = {
       # Acum puteți accesa adresa de email a clientului
       customer_email = payment_method.billing_details.email
       if metadata[:email]=='nagy.edvin@yahoo.com' && ['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
-        'cod22', 'cod23', 'cod24', 'cod25'].include?(produs.cod)
+        'cod22', 'cod23', 'cod24', 'cod25', 'cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203',
+         'cod204', 'cod205', 'cod206'].include?(produs.cod)
         produs.pret=35
       end  
 
