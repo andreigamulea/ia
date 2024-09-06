@@ -23,3 +23,7 @@ services:
       - key: RAILS_MASTER_KEY
         value: 677f2ef25e3f9fbbff559835f64a83f8
     region: frankfurt
+
+envVars:
+  - key: NODE_VERSION
+    value: 16.x  # Sau 14.x, sau o versiune care funcționează cu aplicația ta
