@@ -376,7 +376,7 @@ class FacturaproformasController < ApplicationController
             obs: "fara"
           )
   
-          # Găsește datele de facturare
+          ## Găsește datele de facturare
           df = DateFacturare.find_by(email: an_entry.email)
   
           # Setează valorile implicite dacă datele de facturare nu sunt găsite
