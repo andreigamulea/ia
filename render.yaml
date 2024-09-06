@@ -26,4 +26,4 @@ services:
 
 envVars:
   - key: NODE_VERSION
-    value: 16.x  # Sau 14.x, sau o versiune care funcționează cu aplicația ta
+    value: 16.x  
