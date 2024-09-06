@@ -3,8 +3,5 @@
     "chart.js": "^4.3.0",
     "chartkick": "^5.0.1",
     "js-cookie": "^3.0.5"
-  },
-  "engines": {
-    "node": "16.x"  // sau 14.x sau 18.x, dacă preferi
   }
 }
