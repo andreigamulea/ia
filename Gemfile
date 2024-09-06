@@ -117,3 +117,4 @@ gem 'mini_magick', '~> 4.12'
 gem 'newrelic_rpm', '~> 9.7'
 gem 'uglifier', '~> 4.2'
 #gem 'therubyracer', '~> 0.12.3'
+gem 'mini_racer', platforms: :ruby
