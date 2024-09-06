@@ -199,6 +199,8 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
+    libv8-node (18.19.0.0)
+    libv8-node (18.19.0.0-x86_64-linux)
     logger (1.6.0)
     loofah (2.22.0)
       crass (~> 1.0.2)
@@ -212,6 +214,8 @@ GEM
     matrix (0.4.2)
     mini_magick (4.13.2)
     mini_mime (1.1.5)
+    mini_racer (0.16.0)
+      libv8-node (~> 18.19.0.0)
     minitest (5.24.1)
     msgpack (1.7.2)
     multi_json (1.15.0)
@@ -439,6 +443,7 @@ DEPENDENCIES
   jbuilder
   kaminari (~> 1.2, >= 1.2.2)
   mini_magick (~> 4.12)
+  mini_racer
   newrelic_rpm (~> 9.7)
   nokogiri (~> 1.15, >= 1.15.3)
   omniauth-google-oauth2 (~> 1.1, >= 1.1.1)
