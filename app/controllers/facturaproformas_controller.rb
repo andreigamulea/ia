@@ -272,7 +272,11 @@ class FacturaproformasController < ApplicationController
   end
   ###############
   def generare_facturi
-    @prod = Prod.where(cod: ['cod36', 'cod37'])
+    cods = ['cod214', 'cod215', 'cod216', 'cod217', 'cod218', 'cod219', 'cod220', 'cod221', 'cod222', 'cod223', 'cod224']
+
+    @prod = Prod.where(cod: cods)
+                .order(Arel.sql("CASE cod " + cods.map.with_index { |cod, index| "WHEN '#{cod}' THEN #{index}" }.join(' ') + " END"))
+    
   end  
   # POST /facturaproformas/creareproforma
   #DESCRIERE metoda de mai jos: Daca userul nu are cont si este in tabela An32324 NU i se va face 
@@ -290,11 +294,30 @@ class FacturaproformasController < ApplicationController
       @prod = Prod.find(produs_id)
   
       # Setăm datele în funcție de codul produsului
-      case @prod.cod
-      when 'cod36'
-        datacomenzii = Date.new(2024, 5, 31)
-      when 'cod37'
-        datacomenzii = Date.new(2024, 6, 30)
+      case @prod.cod     
+      # Adding a one-month gap after 'cod37', so cod214 starts from August
+      when 'cod214'
+        datacomenzii = Date.new(2024, 8, 31)
+      when 'cod215'
+        datacomenzii = Date.new(2024, 9, 30)
+      when 'cod216'
+        datacomenzii = Date.new(2024, 10, 31)
+      when 'cod217'
+        datacomenzii = Date.new(2024, 11, 30)
+      when 'cod218'
+        datacomenzii = Date.new(2024, 12, 31)
+      when 'cod219'
+        datacomenzii = Date.new(2025, 1, 31)
+      when 'cod220'
+        datacomenzii = Date.new(2025, 2, 28)
+      when 'cod221'
+        datacomenzii = Date.new(2025, 3, 31)
+      when 'cod222'
+        datacomenzii = Date.new(2025, 4, 30)
+      when 'cod223'
+        datacomenzii = Date.new(2025, 5, 31)
+      when 'cod224'
+        datacomenzii = Date.new(2025, 6, 30)
       else
         raise "Codul produsului nu este recunoscut"
       end
@@ -361,7 +384,7 @@ class FacturaproformasController < ApplicationController
           localitate = "Bucuresti"
   
           if df
-            nume = df.nume+' '+df.prenume
+            nume = df.nume.capitalize + ' ' + df.prenume.capitalize
             localitate = df.localitate
             nume_companie = df.numecompanie
             cui = df.cui
