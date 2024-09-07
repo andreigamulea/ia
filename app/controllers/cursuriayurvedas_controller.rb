@@ -277,6 +277,16 @@ class CursuriayurvedasController < ApplicationController
 
 
         @prod = Prod.find_by(curslegatura: 'platageneralacurs', status: 'activ')
+
+
+################################################  an3 2024-2025
+        @prods_an3_2425 = Prod.where(curslegatura: "an3_2425").order(:linkstripe)
+        @video_an3_2425 = Video.where(tip: 'an3_2425')
+        .where('ordine > ? AND ordine < ?', 0, 1000)
+        .order(ordine: :asc)
+################################################  an3 2024-2025
+
+
     end  
 
 
@@ -346,8 +356,19 @@ class CursuriayurvedasController < ApplicationController
   
   
           @prod = Prod.find_by(curslegatura: 'platageneralacurs', status: 'activ')
-      end  
 
+
+################################################  an4 2024-2025
+@prods_an4_2425 = Prod.where(curslegatura: "an4_2425").order(:linkstripe)
+
+@video_an4_2425 = Video.where(tip: 'an4_2425')
+.where('ordine > ? AND ordine < ?', 0, 1000)
+.order(ordine: :asc)
+################################################  an4 2024-2025
+
+
+      end  
+      
 
 def an
   @prod = Prod.find_by(curslegatura: 'platageneralacurs', status: 'activ')
