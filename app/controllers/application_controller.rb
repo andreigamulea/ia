@@ -139,7 +139,7 @@ class ApplicationController < ActionController::Base
         elsif return_to == "sesiune_vara"         
           sesiune_vara_path
         elsif return_to == "taxainscriere" 
-          cursayurveda_path
+          cursayurveda2425_path
         elsif return_to == "cay2425"
           cursayurveda2425_path  
         elsif return_to == "traditia_ayurvedica" 
