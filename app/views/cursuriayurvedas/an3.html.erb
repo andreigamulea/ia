@@ -51,7 +51,43 @@
 
 
 
-    <br><br><br><br><br>
+    <br><br>
+    <%if current_user && current_user.role==1%>
+
+    <h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Grupa 4 </h2></br>
+  
+  
+  
+    <div id="videos">
+      <table class="table">
+        <thead>
+        <tr>
+            <th>Nr</th>
+            <th>Nume</th>
+            <th>Descriere</th>       
+            <th>Actiune</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+        <% @video_an4_2425.each do |video| %>
+          <tr>
+          <td><%= video.ordine %></td>
+          <td><%= video.nume %></td>
+          <td><%= video.descriere %></td>           
+          <td><%= link_to "Vezi video", myvideo3_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
+          </tr>
+    
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    
+    
+    <% end %>
+
+<br><br><br><br><br>
+
     <h2 class="main-title">Grupa 03 - anul de studiu 2023 - 2024</h2>
 
     <h2 class="cr-title" style="margin-top: 10px;">Ayush Cell Romania</h2>
