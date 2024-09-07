@@ -51,7 +51,7 @@
 
 <br><br>
 
-<%if current_user && current_user.role==1%>
+<% if current_user && (current_user.role == 1 || @video_an3_2425.count > 0) %>
 <h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Grupa 3 </h2></br>
   
   
@@ -72,7 +72,7 @@
       <td><%= video.ordine %></td>
       <td><%= video.nume %></td>
       <td><%= video.descriere %></td>           
-      <td><%= link_to "Vezi video", myvideo3_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
+      <td><%= link_to "Vezi video", myvideo17_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
       </tr>
 
     <% end %>

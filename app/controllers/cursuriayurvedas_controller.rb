@@ -208,6 +208,58 @@ class CursuriayurvedasController < ApplicationController
     
     
     end  
+################################################  an2 2024-2025 pt Video-uri
+puts "Starting to retrieve videos for an2_2425"
+
+@prods_an2_2425 = Prod.where(curslegatura: "an2_2425").order(:linkstripe)
+puts "Prods retrieved for an2_2425: #{@prods_an2_2425.pluck(:cod)}"
+
+if current_user.role == 1
+  # Dacă utilizatorul este admin (role == 1), vede toate videourile
+  @video_an2_2425 = Video.where(tip: 'an2_2425')
+                         .where('ordine > ? AND ordine < ?', 0, 1000)
+                         .order(ordine: :asc)
+  puts "Admin user: All videos for an2_2425: #{@video_an2_2425.pluck(:cod)}"
+else
+  # Retrieve purchased products for the user, including validity dates
+  purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                               .joins(:prod)
+                               .where(prods: { curslegatura: 'an2_2425' })
+                               .pluck('prods.cod', 'datainceput', 'datasfarsit')
+  puts "Purchased products from ComenziProd: #{purchased_prods}"
+
+  purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                 .joins(:prod)
+                                 .where(prods: { curslegatura: 'an2_2425' })
+                                 .pluck('prods.cod', 'datainceput', 'datasfarsit')
+  puts "Purchased products from ComenziProd1: #{purchased_prods1}"
+
+  # If no products are purchased, initialize empty array
+  purchased_prods ||= []
+  purchased_prods1 ||= []
+
+  # Combine both sets of purchased products
+  all_purchased_prods = purchased_prods + purchased_prods1
+  puts "All purchased products combined: #{all_purchased_prods}"
+
+  # Select only the valid products (where datasfarsit >= Date.today)
+  valid_prods = all_purchased_prods.select { |prod| prod[2] >= Date.today }
+  puts "Valid products: #{valid_prods}"
+
+  # Extract the codes of the valid products
+  valid_prods_codes = valid_prods.map { |prod| prod[0] }
+  puts "Valid product codes: #{valid_prods_codes}"
+
+  # Now filter the videos by the codes of the valid products
+  @video_an2_2425 = Video.where(tip: 'an2_2425')
+                         .where(cod: valid_prods_codes)
+                         .where('ordine > ? AND ordine < ?', 0, 1000)
+                         .order(ordine: :asc)
+  puts "Filtered videos for an2_2425: #{@video_an2_2425.pluck(:cod)}"
+end
+
+################################################  an2 2024-2025
+
 
 
   end
@@ -280,11 +332,57 @@ class CursuriayurvedasController < ApplicationController
 
 
 ################################################  an3 2024-2025
-        @prods_an3_2425 = Prod.where(curslegatura: "an3_2425").order(:linkstripe)
-        @video_an3_2425 = Video.where(tip: 'an3_2425')
-        .where('ordine > ? AND ordine < ?', 0, 1000)
-        .order(ordine: :asc)
+puts "Starting to retrieve videos for an3_2425"
+
+@prods_an3_2425 = Prod.where(curslegatura: "an3_2425").order(:linkstripe)
+puts "Prods retrieved for an3_2425: #{@prods_an3_2425.pluck(:cod)}"
+
+if current_user.role == 1
+  # Dacă utilizatorul este admin (role == 1), vede toate videourile
+  @video_an3_2425 = Video.where(tip: 'an3_2425')
+                         .where('ordine > ? AND ordine < ?', 0, 1000)
+                         .order(ordine: :asc)
+  puts "Admin user: All videos for an3_2425: #{@video_an3_2425.pluck(:cod)}"
+else
+  # Retrieve purchased products for the user, including validity dates
+  purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                               .joins(:prod)
+                               .where(prods: { curslegatura: 'an3_2425' })
+                               .pluck('prods.cod', 'datainceput', 'datasfarsit')
+  puts "Purchased products from ComenziProd: #{purchased_prods}"
+
+  purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                 .joins(:prod)
+                                 .where(prods: { curslegatura: 'an3_2425' })
+                                 .pluck('prods.cod', 'datainceput', 'datasfarsit')
+  puts "Purchased products from ComenziProd1: #{purchased_prods1}"
+
+  # If no products are purchased, initialize empty array
+  purchased_prods ||= []
+  purchased_prods1 ||= []
+
+  # Combine both sets of purchased products
+  all_purchased_prods = purchased_prods + purchased_prods1
+  puts "All purchased products combined: #{all_purchased_prods}"
+
+  # Select only the valid products (where datasfarsit >= Date.today)
+  valid_prods = all_purchased_prods.select { |prod| prod[2] >= Date.today }
+  puts "Valid products: #{valid_prods}"
+
+  # Extract the codes of the valid products
+  valid_prods_codes = valid_prods.map { |prod| prod[0] }
+  puts "Valid product codes: #{valid_prods_codes}"
+
+  # Now filter the videos by the codes of the valid products
+  @video_an3_2425 = Video.where(tip: 'an3_2425')
+                         .where(cod: valid_prods_codes)
+                         .where('ordine > ? AND ordine < ?', 0, 1000)
+                         .order(ordine: :asc)
+  puts "Filtered videos for an3_2425: #{@video_an3_2425.pluck(:cod)}"
+end
+
 ################################################  an3 2024-2025
+
 
 
     end  
@@ -358,16 +456,61 @@ class CursuriayurvedasController < ApplicationController
           @prod = Prod.find_by(curslegatura: 'platageneralacurs', status: 'activ')
 
 
-################################################  an4 2024-2025
+      ################################################  an4 2024-2025
+puts "Starting to retrieve videos for an4_2425"
+
 @prods_an4_2425 = Prod.where(curslegatura: "an4_2425").order(:linkstripe)
+puts "Prods retrieved for an4_2425: #{@prods_an4_2425.pluck(:cod)}"
 
-@video_an4_2425 = Video.where(tip: 'an4_2425')
-.where('ordine > ? AND ordine < ?', 0, 1000)
-.order(ordine: :asc)
+if current_user.role == 1
+  # Dacă utilizatorul este admin (role == 1), vede toate videourile
+  @video_an4_2425 = Video.where(tip: 'an4_2425')
+                         .where('ordine > ? AND ordine < ?', 0, 1000)
+                         .order(ordine: :asc)
+  puts "Admin user: All videos for an4_2425: #{@video_an4_2425.pluck(:cod)}"
+else
+  # Retrieve purchased products for the user, including validity dates
+  purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                               .joins(:prod)
+                               .where(prods: { curslegatura: 'an4_2425' })
+                               .pluck('prods.cod', 'datainceput', 'datasfarsit')
+  puts "Purchased products from ComenziProd: #{purchased_prods}"
+
+  purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                 .joins(:prod)
+                                 .where(prods: { curslegatura: 'an4_2425' })
+                                 .pluck('prods.cod', 'datainceput', 'datasfarsit')
+  puts "Purchased products from ComenziProd1: #{purchased_prods1}"
+
+  # If no products are purchased, initialize empty array
+  purchased_prods ||= []
+  purchased_prods1 ||= []
+
+  # Combine both sets of purchased products
+  all_purchased_prods = purchased_prods + purchased_prods1
+  puts "All purchased products combined: #{all_purchased_prods}"
+
+  # Select only the valid products (where datasfarsit >= Date.today)
+  valid_prods = all_purchased_prods.select { |prod| prod[2] >= Date.today }
+  puts "Valid products: #{valid_prods}"
+
+  # Extract the codes of the valid products
+  valid_prods_codes = valid_prods.map { |prod| prod[0] }
+  puts "Valid product codes: #{valid_prods_codes}"
+
+  # Now filter the videos by the codes of the valid products
+  @video_an4_2425 = Video.where(tip: 'an4_2425')
+                         .where(cod: valid_prods_codes)
+                         .where('ordine > ? AND ordine < ?', 0, 1000)
+                         .order(ordine: :asc)
+  puts "Filtered videos for an4_2425: #{@video_an4_2425.pluck(:cod)}"
+end
+
 ################################################  an4 2024-2025
 
 
-      end  
+
+  end  
       
 
 def an

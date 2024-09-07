@@ -25,7 +25,10 @@ class VideosController < ApplicationController
   before_action :set_user14, only: %i[myvideo14] #este pt tayv24 video principale
   before_action :set_user144, only: %i[myvideo144] #este pt recuperare 2 cursuri an1,2,3 pt cei care au fost la tayv24
   before_action :set_user15, only: %i[myvideo15] #este pt sesiune_vara video principale
-  before_action :require_admin, only: %i[index new edit update create]
+  before_action :set_user16, only: %i[myvideo16] #este pt an2 2024-2025
+  before_action :set_user17, only: %i[myvideo17] #este pt an3 2024-2025
+  before_action :set_user18, only: %i[myvideo18] #este pt an4 2024-2025
+  before_action :require_admin, only: %i[index new edit update create]  
   # GET /videos or /videos.json
   def index
     @videos = Video.all
@@ -279,6 +282,21 @@ end
     render 'myvideo1'
   end
   def myvideo15 #pt sesiune vara
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo16 #pt an2 24-25
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo17 #pt an2 24-25
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo18 #pt an2 24-25
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
@@ -1117,6 +1135,220 @@ def set_user15
       redirect_to root_path
       return false
     end  
+  end
+end
+
+
+
+def set_user16
+  puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  
+  # Verificare dacă utilizatorul este autentificat
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+
+  # Verificare rolul utilizatorului
+  if current_user.role == 1
+    # Admin, are acces
+    return true
+  elsif current_user.role == 0
+    # Utilizator normal, trebuie să verificăm dacă a cumpărat produse valide
+    purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                 .joins(:prod)
+                                 .where(prods: { curslegatura: 'an2_2425', status: 'activ' })
+                                 .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+    purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                   .joins(:prod)
+                                   .where(prods: { curslegatura: 'an2_2425', status: 'activ' })
+                                   .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+    # Inițializare listă produse, dacă nu există
+    purchased_prods ||= []
+    purchased_prods1 ||= []
+
+    # Combinare produse cumpărate
+    all_purchased_prods = purchased_prods + purchased_prods1
+    puts("Produse cumpărate cu date: #{all_purchased_prods}")
+
+    # Produsele valabile (în ultimele 60 de zile)
+    @valid_prods = all_purchased_prods.select { |_, datainceput, datasfarsit| 
+      datasfarsit && datasfarsit >= Date.today 
+    }.map(&:first)
+
+    # Produsele expirate (nu au acces)
+    @expired_prods = all_purchased_prods.select { |_, _, datasfarsit| 
+      datasfarsit && datasfarsit < Date.today 
+    }.map(&:first)
+
+    puts("Produse valabile: #{@valid_prods}")
+    puts("Produse expirate: #{@expired_prods}")
+
+    # Verificare dacă utilizatorul are produse valide
+    @has_access = @valid_prods.any?
+    puts("verificare daca are produse valabile: #{@has_access}")
+    
+    if @has_access
+      puts("am accessssssss")
+      # Utilizatorul are acces
+      return true
+    else
+      puts(" NU am accessssssss")
+      # Utilizatorul nu are produse valabile, redirect la pagina principală
+      flash[:alert] = "Nu aveți acces la acest curs. Produsele cumpărate au expirat."
+      redirect_to root_path
+      return false
+    end  
+  else
+    # În caz că utilizatorul are alt rol (dacă există alte cazuri speciale)
+    flash[:alert] = "Acces interzis."
+    redirect_to root_path
+    return false
+  end
+end
+
+
+def set_user17
+  puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  
+  # Verificare dacă utilizatorul este autentificat
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+
+  # Verificare rolul utilizatorului
+  if current_user.role == 1
+    # Admin, are acces
+    return true
+  elsif current_user.role == 0
+    # Utilizator normal, trebuie să verificăm dacă a cumpărat produse valide
+    purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                 .joins(:prod)
+                                 .where(prods: { curslegatura: 'an3_2425', status: 'activ' })
+                                 .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+    purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                   .joins(:prod)
+                                   .where(prods: { curslegatura: 'an3_2425', status: 'activ' })
+                                   .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+    # Inițializare listă produse, dacă nu există
+    purchased_prods ||= []
+    purchased_prods1 ||= []
+
+    # Combinare produse cumpărate
+    all_purchased_prods = purchased_prods + purchased_prods1
+    puts("Produse cumpărate cu date: #{all_purchased_prods}")
+
+    # Produsele valabile (în ultimele 60 de zile)
+    @valid_prods = all_purchased_prods.select { |_, datainceput, datasfarsit| 
+      datasfarsit && datasfarsit >= Date.today 
+    }.map(&:first)
+
+    # Produsele expirate (nu au acces)
+    @expired_prods = all_purchased_prods.select { |_, _, datasfarsit| 
+      datasfarsit && datasfarsit < Date.today 
+    }.map(&:first)
+
+    puts("Produse valabile: #{@valid_prods}")
+    puts("Produse expirate: #{@expired_prods}")
+
+    # Verificare dacă utilizatorul are produse valide
+    @has_access = @valid_prods.any?
+    puts("verificare daca are produse valabile: #{@has_access}")
+    
+    if @has_access
+      puts("am accessssssss")
+      # Utilizatorul are acces
+      return true
+    else
+      puts(" NU am accessssssss")
+      # Utilizatorul nu are produse valabile, redirect la pagina principală
+      flash[:alert] = "Nu aveți acces la acest curs. Produsele cumpărate au expirat."
+      redirect_to root_path
+      return false
+    end  
+  else
+    # În caz că utilizatorul are alt rol (dacă există alte cazuri speciale)
+    flash[:alert] = "Acces interzis."
+    redirect_to root_path
+    return false
+  end
+end
+
+
+def set_user18
+  puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  
+  # Verificare dacă utilizatorul este autentificat
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+
+  # Verificare rolul utilizatorului
+  if current_user.role == 1
+    # Admin, are acces
+    return true
+  elsif current_user.role == 0
+    # Utilizator normal, trebuie să verificăm dacă a cumpărat produse valide
+    purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                 .joins(:prod)
+                                 .where(prods: { curslegatura: 'an4_2425', status: 'activ' })
+                                 .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+    purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                   .joins(:prod)
+                                   .where(prods: { curslegatura: 'an4_2425', status: 'activ' })
+                                   .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+    # Inițializare listă produse, dacă nu există
+    purchased_prods ||= []
+    purchased_prods1 ||= []
+
+    # Combinare produse cumpărate
+    all_purchased_prods = purchased_prods + purchased_prods1
+    puts("Produse cumpărate cu date: #{all_purchased_prods}")
+
+    # Produsele valabile (în ultimele 60 de zile)
+    @valid_prods = all_purchased_prods.select { |_, datainceput, datasfarsit| 
+      datasfarsit && datasfarsit >= Date.today 
+    }.map(&:first)
+
+    # Produsele expirate (nu au acces)
+    @expired_prods = all_purchased_prods.select { |_, _, datasfarsit| 
+      datasfarsit && datasfarsit < Date.today 
+    }.map(&:first)
+
+    puts("Produse valabile: #{@valid_prods}")
+    puts("Produse expirate: #{@expired_prods}")
+
+    # Verificare dacă utilizatorul are produse valide
+    @has_access = @valid_prods.any?
+    puts("verificare daca are produse valabile: #{@has_access}")
+    
+    if @has_access
+      puts("am accessssssss")
+      # Utilizatorul are acces
+      return true
+    else
+      puts(" NU am accessssssss")
+      # Utilizatorul nu are produse valabile, redirect la pagina principală
+      flash[:alert] = "Nu aveți acces la acest curs. Produsele cumpărate au expirat."
+      redirect_to root_path
+      return false
+    end  
+  else
+    # În caz că utilizatorul are alt rol (dacă există alte cazuri speciale)
+    flash[:alert] = "Acces interzis."
+    redirect_to root_path
+    return false
   end
 end
 
