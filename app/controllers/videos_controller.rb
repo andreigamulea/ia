@@ -15,7 +15,7 @@ class VideosController < ApplicationController
   before_action :set_user44, only: %i[myvideo44] #este pt tayt12 p2 
   before_action :set_user444, only: %i[myvideo444] #este pt tayt12 video introductive la liber pt cei care au achitat doar tabara
   #before_action :set_user4, only: %i[myvideo5] #este pt tayt122 folosesc tot set_user4 pt ca e aceeasi plata si la tayt12 si la tayt122
-  before_action :set_user11, only: %i[myvideo11] #pt jivaka si cognitronica si performanta_cognitiva saunaka si hiranyaksha
+  before_action :set_user11, only: %i[myvideo11] #pt nimi jivaka si cognitronica si performanta_cognitiva saunaka si hiranyaksha
   #ATENTIE POT FOLOSI set_user11, only: %i[myvideo11]  PT ORICE VIDEO INDIVIDUAL CARE ARE PRET- gen: video asociat cu produs cu pret=12lei
   
   before_action :set_user12, only: %i[myvideo12] ##pt nutritie4 
