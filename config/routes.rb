@@ -161,11 +161,11 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
 
 
 
-  get '/cursayurveda', to: 'cursuriayurvedas#cursayurveda'
+  get '/an2', to: 'cursuriayurvedas#cursayurveda'
   get '/cursayurveda2425', to: 'cursuriayurvedas#cursayurveda2425'
   
-  get '/an2', to: 'cursuriayurvedas#an2'
-  get '/an3', to: 'cursuriayurvedas#an3'
+  get '/an3', to: 'cursuriayurvedas#an2'
+  get '/an4', to: 'cursuriayurvedas#an3'
   get '/an', to: 'cursuriayurvedas#an'
 
   resources :cursuriayurvedas

@@ -33,7 +33,7 @@
                     </li>
                     <% if current_user && (current_user.role == 1 || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) %>
                     <li class="nav-item">
-                       <%= link_to 'Curs de Ayurveda Grupa 02 - 2024-2025', cursayurveda_path, class: 'no-turbo' %>
+                       <%= link_to 'Curs de Ayurveda Grupa 02 - 2024-2025', an2_path, class: 'no-turbo' %>
                     </li>
                     <% end %>
                     <li class="nav-item">
@@ -185,11 +185,11 @@
                         <% end %>
                         <% if current_user && (Listacanal2.exists?(email: current_user.email) || current_user.role==1) %>
 
-                        <li><%= link_to 'An 2', an2_path, class: 'no-turbo' %></li>
+                        <li><%= link_to 'An 3 2024-2025', an3_path, class: 'no-turbo' %></li>
                         <% end %>
                         <% if current_user && (Listacanal3.exists?(email: current_user.email) || current_user.role==1) %>
 
-                        <li><%= link_to 'An 3', an3_path, class: 'no-turbo' %></li>
+                        <li><%= link_to 'An 4 2024-2025', an4_path, class: 'no-turbo' %></li>
                         <% end %>
                         <% if current_user && (current_user.role == 1 || current_user.email.in?(['karunasland@hotmail.com', 'george.bondor@yahoo.com'])) %>
                             <li><%= link_to 'Contributie Curs Ayurveda', an_path, class: 'no-turbo' %></li>
