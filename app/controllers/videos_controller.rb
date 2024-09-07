@@ -466,7 +466,7 @@ end
       
       # Dacă nu se potrivește niciuna dintre condițiile de mai sus
       flash[:alert] = "Nu aveți acces la acest videoclip."
-      redirect_to cursayurveda_path
+      redirect_to cursayurveda2425_path
     end
     
 
