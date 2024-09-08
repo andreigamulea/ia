@@ -1,4 +1,35 @@
 class CursuriayurvedasController < ApplicationController
+  # Mapează codurile la numele lunilor
+  CODURI_SPECIFICE_LUNI = {
+    'cod207' => 'septembrie',
+    'cod197' => 'octombrie',
+    'cod198' => 'noiembrie',
+    'cod199' => 'decembrie',
+    'cod200' => 'ianuarie',
+    'cod201' => 'februarie',
+    'cod202' => 'martie',
+    'cod203' => 'aprilie',
+    'cod204' => 'mai',
+    'cod205' => 'iunie',
+    'cod206' => 'iulie'
+  }
+
+  # Mapare a codurilor în funcție de @max_taxa2425
+  CODURI_PE_TAXA = {
+    1 => ['cod207'],                    # septembrie
+    2 => ['cod207', 'cod197'],           # septembrie, octombrie
+    3 => ['cod207', 'cod197', 'cod198'], # septembrie, octombrie, noiembrie
+    4 => ['cod207', 'cod197', 'cod198', 'cod199'], # și așa mai departe...
+    5 => ['cod207', 'cod197', 'cod198', 'cod199', 'cod200'],
+    6 => ['cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201'],
+    7 => ['cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202'],
+    8 => ['cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203'],
+    9 => ['cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204'],
+    10 => ['cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204', 'cod205'],
+    11 => ['cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204', 'cod205', 'cod206'],
+    12 => ['cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204', 'cod205', 'cod206']
+  }
+
   before_action :set_cursuriayurveda, only: %i[ show edit update destroy ]
 
   # GET /cursuriayurvedas or /cursuriayurvedas.json
@@ -182,6 +213,7 @@ class CursuriayurvedasController < ApplicationController
         puts("Edwin Naghy are pretul1: #{@prod2425.first.pret}")
       else
         @ultima_lunaPlatita2425 = @luni2425[@max_taxa2425]
+        
         # Asigură-te că indexul este valid
         cod_index = @max_taxa2425 - 1
         if cod_index >= 0 && cod_index < coduri_array.size
@@ -208,11 +240,36 @@ class CursuriayurvedasController < ApplicationController
     
     
     end  
-################################################  an2 2024-2025 pt Video-uri
+   ################################################  an2 2024-2025 pt Video-uri
 puts "Starting to retrieve videos for an2_2425"
+if current_user.role == 1
+  @max_taxa2425 = 12
+end
 
-@prods_an2_2425 = Prod.where(curslegatura: "an2_2425").order(:linkstripe)
-puts "Prods retrieved for an2_2425: #{@prods_an2_2425.pluck(:cod)}"
+
+puts "maxxxx= #{@max_taxa2425}"
+if @max_taxa2425.nil?
+  coduri_cumparate = []  # Dacă nu este setat @max_taxa2425
+else
+  coduri_cumparate = CODURI_PE_TAXA[@max_taxa2425] || []  # Obține codurile pentru taxa curentă
+end
+
+# Obține lunile permise pe baza codurilor cumpărate
+luni_permise = coduri_cumparate.map { |cod| CODURI_SPECIFICE_LUNI[cod] }.compact
+puts "Coduri cumpărate: #{coduri_cumparate}"
+puts "Luni permise: #{luni_permise}"
+
+# Asigură-te că avem luni permise înainte de interogare
+if luni_permise.empty?
+  puts "Nu s-au găsit luni permise pentru codurile cumpărate"
+  @prods_an2_2425 = Prod.none
+else
+  # Găsește produsele care corespund lunilor permise
+  @prods_an2_2425 = Prod.where(curslegatura: "an2_2425").where(luna: luni_permise).order(:linkstripe)
+end
+
+puts "Produse găsite: #{@prods_an2_2425.pluck(:cod)}"
+
 
 if current_user.role == 1
   # Dacă utilizatorul este admin (role == 1), vede toate videourile
