@@ -477,11 +477,13 @@ end
         )
       end
     end
-    if factura.nume_companie.present? || factura.cui.present?
+    if (factura.nume_companie.present? || factura.cui.present?) && Rails.env.production?
       send_payment_success_email(factura)
     end
+    
     user = User.find_by(id: metadata[:user_id])
-    if user && factura.persisted?   
+
+    if user && factura.persisted? && Rails.env.production?   
       puts("daaaaaaaaaaaa") 
       puts("User id este: #{user.id}")  
       PaymentMailer.billing_details_email(user, factura).deliver_now
@@ -489,6 +491,7 @@ end
     else
       puts("nuuuuuuuuuuu")  
     end
+
   end
   def send_payment_success_email(factura)
     PaymentMailer.payment_success_email(factura).deliver_now
