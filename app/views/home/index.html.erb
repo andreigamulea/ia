@@ -22,6 +22,16 @@
          <%= link_to 'Vezi mai mult..', cursayurveda2425_path, class: 'btn-fp-link' %>
          </div>
       </div>
+
+
+      <div class="col" style=" align-items: center; text-align: center;">
+      <a href="/traditia_ayurvedica/amnaya"><img src="<%= image_path('traditia-ayurvedica.jpg') %>" alt="Traditia Ayurvedică - Amnaya Tantraka" style='text-align:center; width: 100%; max-width: 350px;'></a>
+         <h2>Traditia Ayurvedică - Amnaya Tantraka</h2>
+         <div class="desc" style="max-width:720px;">Termenul sanscrit Amnaya are sensul de tradiţie spirituală sacră. Semnificaţia acestui termen este valabilă pentru orice fel de cunoaştere superioară, esenţială, care are o origine dumnezeiască şi care este oferită fiinţelor umane prin intermediul revelaţiilor unor mari spirite şi a unor fiinţe excepţionale ce au fost inspirate în mod direct de Dumnezeu.</div>
+         <div class="btn-fp">
+         <%= link_to 'Vizionează seminarii..', amnaya_path, class: 'btn-fp-link' %>
+         </div>
+      </div>
     </section>
 
     <h2 class="main-title" > 🌞 Actualitate</h2>
@@ -75,10 +85,22 @@
 
  
 
- <h2 class="cr-title" > 📜 Tradiția Ayurvedică</h2>
+ <h2 class="cr-title" id="traditia-ayurvedica">📜 Tradiția Ayurvedică</h2>
+
+
 
 
  <div class="line">
+
+
+ <div class="col" style="align-items:center;text-align:center;">
+ <h2>Înțeleptul Ayurvedic Nimi-Rishi</h2>
+ <a href="<%= nimi_path %>">
+   <img src="<%= image_path('regele_nimi.webp') %>" alt="Nimi-Rishi" style='max-width:300px;'>
+ </a>
+ <div class="desc">Regele Nimi, un personaj legendar și unul dintre marii înțelepți ayurvedici din tradiția indiană antică, este recunoscut pentru contribuțiile sale semnificative la consolidarea și aplicarea practică a principiilor Ayurveda. El s-a distins nu doar prin implicarea sa în medicina holistică, ci și prin practica profundă a sistemului yoga, îmbinând cu înțelepciune cunoașterea vindecării cu disciplina spirituală..</div>
+ <div class="btn-fp"><%= link_to 'Află mai mult..', nimi_path, class: 'btn-fp-link' %> </div>
+</div>
 
 <div class="col" style="align-items:center;text-align:center;">
     <h2>Înțeleptul Ayurvedic Maudgalya-Rishi</h2>
@@ -89,14 +111,6 @@
     <div class="btn-fp"><%= link_to 'Află mai mult..', maudgalya_path, class: 'btn-fp-link' %> </div>
   </div>
 
-  <div class="col" style="align-items:center;text-align:center;">
-    <h2>Înțeleptul Ayurvedic Saunaka-Rishi</h2>
-    <a href="<%= saunaka_path %>">
-      <img src="<%= image_path('Saunaka.webp') %>" alt="Saunaka-Rishi" style='max-width:300px;'>
-    </a>
-    <div class="desc">Afirmațiile care au fost consemnate ca aparținându-i înțeleptului Saunaka ne permit să descoperim o perspectivă cu totul aparte asupra felului în care alcătuirea ființei umane și dinamica acesteia era privită și înțeleasă în trecut de către marii înțelepți ayurvedici (rishi)..</div>
-    <div class="btn-fp"><%= link_to 'Află mai mult..', saunaka_path, class: 'btn-fp-link' %> </div>
-  </div>
 
   
 </div>
