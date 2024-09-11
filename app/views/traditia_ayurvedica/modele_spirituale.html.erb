@@ -1,36 +1,78 @@
 <style>
+/* Stiluri pentru secțiunea #traditia */
 #traditia .cm h2 {
-    font-size:22px;
+    font-size: 22px;
 }
-#traditia .register{
-    border: 1px solid #4b0082;
-    background-color:#4b0082;
+
+
+
+#traditia .cm h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 5px;
 }
-#traditia .cm h3{
-    font-size:18px;
-    font-weight:800;
-    margin-bottom:5px;
+
+/* Stiluri pentru imagini */
+.left-img {
+    float: left;
+    margin: 10px 15px 10px 0;
+    width: 400px;
+    max-width: 50%;
 }
-#traditia .register{
-    margin:0;
-    margin-top:20px;
-    margin-left:10px;
+
+.right-img {
+    float: right;
+    margin: 10px 0 10px 15px;
+    width: 400px;
+    max-width: 50%;
 }
-#traditia .table td {
-    text-align:center;
+
+.center-img {
+    display: block;
+    margin: 20px auto;
+    width: 400px;
+    max-width: 50%;
 }
+
+.clear {
+    clear: both;
+}
+
+
+
+/* Reguli pentru dispozitive mobile */
 @media screen and (max-width: 720px) {
-    #traditia .register{
-        margin:0 auto;
-        margin-top:20px;
-        margin-left: auto;
+    .left-img, .right-img, .center-img {
+        float: none; /* Elimină flotarea pentru imagini pe mobil */
+        width: 100%; /* Lățimea va ocupa 100% pe mobil */
+        padding: 10px 0; /* Ajustează marginile */
+        margin: 0 auto;
+        display: block;
     }
-    .cm{
-        text-align:center;
+
+    p {
+        width: 100%; /* Textul va ocupa întreaga lățime pe mobil */
+    }
+
+    #traditia .cm h2 {
+        font-size: 18px; /* Font redus pentru h2 pe mobil */
+    }
+
+    #traditia .cm h3 {
+        font-size: 16px; /* Font redus pentru h3 pe mobil */
     }
 }
 
+/* Reguli pentru textul centrat pe mobil */
+@media screen and (max-width: 720px) {
+    .content p, .content h2, .content h3 {
+        text-align: center !important;
+    }
+}
 </style>
+
+
+
 <% content_for :title, "Traditia Ayurvedică - Amnaya Tantraka | Ayush Cell Romania" %>
 <% content_for :description, "Aflați mai multe despre Amnaya Tantraka și tradiția Ayurvedică. Descoperiți cunoașterea continuță in textele tradiționale cum sunt Charaka sau Sushruta Samhita precum și modul in care practicile de meditație vă pot conecta la nivele superioare de conștiință." %>
 <% content_for :keywords, "Amnaya Tantraka, Ayurveda, Charaka-Samhita, Sushruta-Samhita, Ashtanga-Hridaya, Kashyapa-Samhita, Sharangadhara-Samhita, tradiție ayurvedică, Divya-pratna, Rishi-pratna, meditație, înțelepciuni ayurvedice, Brahma, Trimurti, Indra, Dhanvantari, Sarasvati, Agni, sănătate holistică" %>
@@ -43,107 +85,41 @@
 <%= render 'layouts/sideleft' %>
 
 <div class="cr" style="background-color: white; ">
-    <h1 class="first-tittle">Ayush Cell Romania: Traditia Ayurvedică - Amnaya Tantraka</h1>
-    <h2 class="main-title" >Traditia Ayurvedică - Amnaya Tantraka</h2>
-
-<section>
+    <h1 class="first-tittle">Modele spirituale în tradiția ayurvedică - Amnaya Tantraka</h1>
+    <h2 class="main-title" style="text-align:center;" >Modele spirituale în tradiția ayurvedică Amnaya Tantraka: <br>Exemple demne de urmat pentru omul modern</h2>
 
 
-<div class="row1 center" style="max-width:920px; margin:0 auto;">
-    <div class="r1c1" style="height: 350px;">
-      
-      <img src="<%= image_url('traditia-ayurvedica.jpg') %>" alt="Traditia Ayurvedică - Amnaya Tantraka">
-    </div>
-    <div class="r1c2">
-    <p>Termenul sanscrit Amnaya are sensul de tradiţie spirituală sacră. Semnificaţia acestui termen este valabilă pentru orice fel de cunoaştere superioară, esenţială, care are o origine dumnezeiască şi care este oferită fiinţelor umane prin intermediul revelaţiilor unor mari spirite şi a unor fiinţe excepţionale ce au fost inspirate în mod direct de Dumnezeu. </p>
-    <p>O astfel de tradiţie sacră (Amnaya) este cea care se perpetuează prin menţinerea nealterată a unor stări spirituale model de inspiraţie dumnezeiască şi prin reflectarea călăuzirii interioare dumnezeieşti, fără întrerupere şi în mod constant de-a lungul timpului. </p>
-    
-    <%= link_to 'Vizionează acum', '#traditia-ayurvedica', class: 'register' %>
 
-    
-     
- </div>
-  </div>
+
+
 <section class="cm">  
-<br>
-<h2 style="font-size:22px;">Traditia spirituala Ayurvedică</h2>
-<br>
-
-<h3> Ce este Amnaya Tantraka</h3>
-<p>Fiecare dintre lucrările tradiţionale celebre de Ayurveda, Charaka-Samhita, Sushruta-Samhita, Ashtanga-Hridaya, Kashyapa-Samhita sau Sharangadhara-Samhita includ referinţe mai mult sau mai puţin detaliate, în care sunt descrise aspecte relevante, ce sunt specifice tradiţiei ayurvedice. Există în fiecare dintre aceste scrieri ayurvedice tradiţionale consemnarea unor evenimente reprezentative pentru tradiţia ayurvedică (Ayurveda-Amnaya), fie întâlniri ale înţelepţilor ayurvedici (rishi), fie afirmaţii celebre ale unor mari zei din tradiţia ayurvedică, aşa cum este Marele Zeu Indra.</p>
-
-<p>Tradiţia ayurvedică prezintă două direcţii reprezentative. Prima direcţie o reprezintă tradiţia fiinţelor celeste, a fiinţelor zeieşti sau, altfel spus, tradiţia divină (Divya-pratna), în care se face referire la fiinţe superioare, supraumane excepţionale, aşa cum este Brahma, Marele Zeu al trinităţii hinduse Trimurti, care reprezintă aspectul lui Dumnezeu (Brahman) de Creator al Universului, Daksha, cei doi Ashvini, Marele Zeu Indra, Marele Zeu Dhanvantari, Zeiţa Sarasvati sau Marele Zeu Agni. Cea de-a doua direcţie este tradiţia înţelepţilor ayurvedici (Rishi-pratna), din care fac parte toţi marii înţelepţi ayurvedici care au contribuit, fiecare în felul său specific, la perpetuarea şi la punerea în valoare a acestei Ştiinţe milenare a Vieţii (Ayurveda), aşa cum sunt înţelepţii Atreya, Bharadvaja, Kashyapa, Sushruta, Nagarjuna, Marichi, Charaka, Agnivesha, Jatukarna, Harita, Kumara-Sira, Badisha, Jivaka, Bhela, Vagbhata, Ksharapani, Chayavana, Parashara sau Chakrapani.</p>
-
-<p>Sfera de conştiinţă a fiecărui înţelept ayurvedic poate fi apelată prin meditaţie profundă, realizată într-o manieră evocatoare superioară, prin raportare la aspectele specifice. Realizarea unor astfel de meditaţii identificatoare cu sfera de conştiinţă a unui mare zeu sau a unui mare înţelept ayurvedic poate revela unele aspecte esenţiale care se constituie ca şi chei subtile ale unor forme superioare de afinitate rezonatorie cu sfera de conştiinţă superioară a acelei fiinţe.</p>
-<p>Dinamizarea adecvată a unei stări superioare de atenţie selectivă, menţinută apoi o anumită perioadă de timp asupra aspectelor reprezentative ale sferei de conştiinţă a unei astfel de fiinţe excepţionale permite structurarea în conştiinţa practicantului unei astfel de forme de meditaţie a unor aspecte reper, care vor constitui apoi veritabile chei rezonatorii de intrare şi de menţinere în stare spirituală de comuniune telepatică cu sfera de conştiinţă a respectivei fiinţe superioare. </p>
-
-<h2 id="traditia-ayurvedica" style="font-size: 22px; padding-top:30px; padding-bottom:10px; text-align:center;">Acces prezentări video</h2>
 
 
+<div class="content">
+    <h2>Semnificația sintagmei Amnaya-Tantraka</h2>
+    <p>Amnaya este un cuvânt sanscrit care înseamnă tradiție sacră, adică tradiție atemporală neschimbătoare transmisă în continuitate din generație în generație prin repetiție sau prin ceea ce este memorat.</p>
+    <p>Semnificaţia acestui termen este valabilă în special pentru cunoaşterea superioară esenţială care are o origine dumnezeiască şi care este oferită fiinţelor umane prin intermediul revelaţiilor unor mari spirite şi a unor fiinţe excepţionale ce au fost inspirate în mod direct de Dumnezeu, așa cum au fost înțelepții Atreya, Bharadvaja, Kashyapa, Nagarjuna, Narada, Chayavana.</p>
+    <p>Tradiţia sacră (Amnaya) se perpetuează (Tantraka) prin intermediul unor ființe exemplare, capabile să menţină vii trăirile spirituale model de sorginte dumnezeiască, fără întrerupere de-a lungul timpului.</p>
 
-<section class="line" style="padding-top:10px; padding-bottom:10px;">
+    <h2>Rolul înțelepților ayurvedici rishi în modelarea superioară a conștiinței</h2>
+    <img src="<%= image_url('Jamadagni.webp') %>" alt="Traditia Ayurvedică - Amnaya Tantraka" class="left-img">
+    <p>Se face adesea referire la marii înțelepți ai tradiției ayurvedice (rishi) Agnivesha, Kumara-Sira, Harita, Jatukarna, Marichi, Kapila, a căror notorietate este în felul său comparabilă cu cea a celebritățile din domeniul cunoașterii științifice moderne ale ultimelor două secole, precum este Albert Einstein, Isaac Newton și multe alte figuri geniale a căror contribuție este deja fixată în memoria colectivă a educației contemporane.</p>
+    <p>Totuși, modelele marilor spirite ayurvedice (rishi) sunt extrem de puțin cunoscute de marea majoritate a oamenilor, dată fiind și existența lor în trecutul îndepărtat al acestei planete. Cei care s-au preocupat de scoaterea la lumină a contribuției înțelepților ayurvedici (rishi) la cunoașterea despre viață au sesizat că există o diferență de fond între celebritățile care au contribuit la corpusul ayurvedic și marii oameni de știință moderni. Această diferență rezidă în faptul că, pe lângă contribuțiile lor în domeniul științei vieții, înțelepții ayurvedici (rishi) sunt totodată modele umane exemplare din toate punctele de vedere.</p>
+    <p>În limba sanscrită, un model este desemnat de cuvântul compus "pratimana", la care prefixul "prati" înseamnă „către” sau „despre”, iar "mana" înseamnă în limba sanscrită „măsură”. Termenul compus pratimana se referă la „ce anume ne îndreaptă către o măsură, către o justă măsură”, iar justa măsură este, în definitiv, sinonimă cu armonia, echilibrul, adică un ideal de urmat.</p>
+    <p>Conceptul de model este foarte important în tradiția ayurvedică pentru că el ne arată faptul că forțele lăuntrice, psihice, de gândire ale unei ființe umane se pot orienta pe baza unui astfel de model într-o direcție care oferă o justă măsură și care ne creează un fel de plan, un proiect de modelare. Așadar, pe baza unei raportări la o ființă model care este un exemplu în toate privințele vieții și contribuției sale, așa cum este cazul marilor înțelepți ayurvedici, ființa umană are practic o orientare către o măsură justă pe care ființa respectivă a dobândit-o asupra vieții.</p>
+    <p>Aceasta pune în lumină o diferență esențială între înțelepții tradiționali și mulți dintre oamenii de știință moderni, cărora le lipsește adesea dimensiunea sacră în viață și influența lor armonizatoare, echilibrantă asupra celorlalți oameni.</p>
+    <p>Înțelepți din tradiția ayurvedică precum înțeleptul Charaka, Sushruta, Jivaka, Maudgalya, Sharaloma, Saunaka, prin tot ceea ce au spus și prin întreaga lor existență, sunt modele complete, pe când marile personalități științifice, deși admirate pentru realizările lor intelectuale, nu au reușit întotdeauna să inspire în mod similar în aspectele vieții lor personale cotidiene, care adesea au fost chiar o cauză de suferință și de regret. Poate de aceea, în limba engleză termenul pentru model demn de urmat este „role model”, adică în traducere „un model bazat doar pe o direcție a vieții sale sau bazat pe un rol al ființei alese ca model”. Însă sinonimele disponibile în limbajul occidental pentru termenul model de urmat: idol, far călăuzitor, ghid și chiar maestru, permit lărgirea viziunii în ceea ce privește semnificația profundă a ceea ce reprezintă un model uman viu demn de urmat.</p>
 
+    <img src="<%= image_url('jivaka.jpg') %>" alt="Traditia Ayurvedică - Amnaya Tantraka" class="right-img"><h2>Nevoia omului modern de modele autentice, demne de urmat</h2>
+    <p>Trăim într-o epocă în care nevoia de modele autentice de la cele mai fragede etape ale copilăriei este imensă. Mijloacele de comunicare accesibile aproape oricui sunt foarte ofertante atât pentru cei care emit sau transmit informații pe cale scrisă sau audio-video, cât și pentru cei dornici să le recepteze. Paradoxal, în acest noian de informații, societatea se confruntă cu un deficit semnificativ în ceea ce privește reperele de modelare educativă de calitate. Omul modern se află în mijlocul unui angrenaj informațional și de activitate din ce în ce mai complex și este adesea depășit de provocările vieții.</p>
+    <p>De aceea, prezența unui model de urmat se dovedește esențială pentru a naviga cu succes prin această lume sofisticată și care pare foarte haotică. A învăța este unul dintre primele necesități ale ființei umane, este chiar hrana care formează mintea și spiritul în paralel cu hrana alimentară care hrănește trupul. Învățarea se face prin mimetism și imitație într-o mare proporție și în primă fază, însă odată cu formarea și maturizarea conștiinței, se poate realiza un proces de alegere a modelelor de urmat care să fie vizate conștient și explicit.</p>
+    <p>Există numeroase exemple de tineri care, în pofida unui start promițător în viață, marcat de resurse materiale abundente, ajung să eșueze lamentabil, devenind victime ale propriei lor existențe. Aceste cazuri triste, care se înmulțesc alarmant, subliniază importanța și nevoia acută de modele demne de urmat. În această lume interconectată, în care accesul la informație este la doar un clic distanță, modelele de comportament sunt adesea distorsionate și înlocuite de „anti-modele”, expunând tinerii la riscuri semnificative, cum ar fi drogurile și alte comportamente autodistructive.</p>
+    <p>Din păcate, în această epocă digitală în care posibilitățile de a alege sunt practic nelimitate, tinerii se pot regăsi fără un ghid real, transformându-se în epave umane, pierduți în haosul informațional care nu reușește să ofere suportul moral sau exemplul de care ar avea atâta nevoie. Acest fenomen subliniază criza profundă a lipsei de modele autentice, o criză care transcende simpla absență fizică, reflectând o lacună în structura morală și spirituală a societății actuale.</p>
 
-<div class="col" style="align-items:center;text-align:center; width:100%;">
-<h2>Înțeleptul Ayurvedic Nimi-Rishi</h2>
-<a href="<%= nimi_path %>"><img src="<%= image_path('regele_nimi.webp') %>" alt="Înțeleptul Ayurvedic Nimi-Rishi" style="max-width:300px;"></a>
-
-<div class="desc">Regele Nimi, un personaj legendar și unul dintre marii înțelepți ayurvedici din tradiția indiană antică, este recunoscut pentru contribuțiile sale semnificative la consolidarea și aplicarea practică a principiilor Ayurveda. El s-a distins nu doar prin implicarea sa în medicina holistică, ci și prin practica profundă a sistemului yoga, îmbinând cu înțelepciune cunoașterea vindecării cu disciplina spirituală..</div>
-<div class="btn-fp">          
-
-  <%= link_to 'Află mai mult..',nimi_path, class: 'btn-fp-link' %>
-
-</div>
-</div>
-
-<div class="col" style="align-items:center;text-align:center; width:100%;">
-<h2>Înțeleptul Ayurvedic Maudgalya-Rishi</h2>
-<a href="<%= maudgalya_path %>"><img src="<%= image_path('Maudgalya.webp') %>" alt="Înțeleptul Ayurvedic Maudgalya-Rishi" style="max-width:300px;"></a>
-
-<div class="desc">Înțeleptul ayurvedic Maudgalya a promovat o viziune holistică asupra ființei umane și asupra sănătății, subliniind conexiunile dintre trup, minte și spirit. Această perspectivă a influențat profund practica Ayurveda și abordările terapeutice, evidențiind astfel interconexiunile complexe ale naturii umane..</div>
-<div class="btn-fp">          
-
-  <%= link_to 'Află mai mult..', maudgalya_path, class: 'btn-fp-link' %>
-
-</div>
-</div>
-
-
-
-
-
-
-</section>
-
-
-
-<section class="line" style="padding-top:10px; padding-bottom:10px;">
-
-<div class="col" style="align-items:center;text-align:center; width:100%;">
-<h2>Înțeleptul Ayurvedic Saunaka-Rishi</h2>
-<a href="<%= saunaka_path %>"><img src="<%= image_path('Saunaka.webp') %>" alt="Înțeleptul Ayurvedic Saunaka-Rishi" style="max-width:300px;"></a>
-
-<div class="desc">Afirmațiile care au fost consemnate ca aparținându-i înțeleptului Saunaka ne permit să descoperim o perspectivă cu totul aparte asupra felului în care alcătuirea ființei umane și dinamica acesteia era privită și înțeleasă în trecut de către marii înțelepți ayurvedici (rishi)..</div>
-<div class="btn-fp">          
-
-  <%= link_to 'Află mai mult..', saunaka_path, class: 'btn-fp-link' %>
-
-</div>
-</div>
-
-
-
-<div class="col" style="align-items:center;text-align:center; width:100%;">
-<h2>Înțeleptul Ayurvedic Sharaloma-Rishi</h2>
-<a href="<%= sharaloma_path %>"><img src="<%= image_path('sharaloma.webp') %>" alt="Înțeleptul Ayurvedic Sharaloma-Rishi" style="max-width:300px;"></a>
-
-<div class="desc">Numele Sharaloma este un termen compus ce pornește de la cuvantul "shara", ce este un termen derivat de la cuvântul shirsha (cap) și "loma" care înseamnă păr (părul de pe cap). Simbolismul acestui nume denotă un anumit obicei străvechi care presupunea ca marii asceți să-și lase părul foarte lung, indicând prin aceasta o capacitate mult amplificată de a capta în ființă, pe această cale, anumite energii subtile din macrocosmos..</div>
-<div class="btn-fp">          
-
-  <%= link_to 'Află mai mult..', sharaloma_path, class: 'btn-fp-link' %>
-
-
-</div>
+    <h2>Înțelepții ayurvedici, modele de urmat peste timp</h2>
+    <img src="<%= image_url('Saunaka.webp') %>" alt="Traditia Ayurvedică - Amnaya Tantraka" class="left-img"><p>Ca un ajutor peste timp, prin viața, prin cunoașterea profundă și comportamentul în armonie cu principiile esențiale ale vieții, înțelepții ayurvedici (rishi) pot nu doar să inspire, dar să modeleze vieți într-un mod profund benefic. Acești înțelepți, la fel ca și modelul Mahatma Gandhi, au exemplificat cum coerența între cuvânt și faptă poate oferi o fundație solidă pentru dezvoltarea spirituală personală și colectivă. Prin exemplul lor, ei reușesc să instaureze o armonie care favorizează dezvoltarea integrală a ființei umane, reflectând o conștiință de sine și o responsabilitate ce transcend erudiția pur academică, influențând în mod direct calitatea vieții individuale și a unor grupuri mari de oameni.</p>
+    <p>Ca o concluzie, înțelepciunea ayurvedică se distinge nu doar ca o știință a vindecării, ci este un suport vital pentru întreaga existență, oferind nu numai soluții la problemele fizice, ci și un model de viață care promovează o sănătate holistică, un echilibru între minte, corp și spirit. Existența modelelor vii precum înțelepții ayurvedici Asita, Vagbhata, Charaka, Chakrapani, Bhela este un mare dar de la Dumnezeu pentru toți acei oameni dornici de perfecțiune care pot avea astfel un far călăuzit, o pildă, un om vrednic de urmat, un mentor, un ghid, un model dumnezeiesc care să fie dovada întrupată a unor învățături care nu sunt literă moartă. Deși înțelepții ayurvedici, rishi, nu sunt ființe contemporane nouă, aceasta nu este deloc o piedică în a ne raporta la exemplul lor luminos, așa cum raportarea la marele model Isus Hristos nu a împiedicat un creștin plin de aspirație să se raporteze peste mii de ani la ființa sa grandioasă.</p>
+    <p>Tradiţia neîntreruptă de mii de ani a sistemului Ayurveda a fost susţinută de-a lungul timpului prin nenumărate experimentări practice ale principiilor şi metodelor sale de către unele ființe exemplare care au transmis mai departe cunoașterea lor. Ayurveda poate avea un rol extrem de important pentru ocrotirea sănătăţii omului modern şi pentru armonizarea vieţii de zi cu zi a oricărei fiinţe umane atât prin modelul de gândire holistic, cât și prin modelele înțelepților ayurvedici, rishi.</p>
 </div>
 
 
@@ -151,134 +127,6 @@
 </section>
 
 
-<section class="line" style="padding-top:10px; padding-bottom:10px;">
-
-<div class="col" style="align-items:center;text-align:center; width:100%;">
-<h2>Înțeleptul Ayurvedic Hiranyaksha-Rishi</h2>
-<a href="<%= hiranyaksha_path %>"><img src="<%= image_path('Hiranyaksha.webp') %>" alt="Înțeleptul Ayurvedic Hiranyaksha-Rishi" style="max-width:300px;"></a>
-
-<div class="desc">Cuvântul "hiranyaksha" este folosit în ezoterismul străvechi pentru a desemna o căutare a spiritului uman care poartă conștiința dincolo de granițele tangibile ale existenței materiale întrupate și îndeamnă ființele umane să descopere lumina (aurul strălucitor, hiranya) și bogăția (artha) care sunt prezente, cel puțin într-o stare latentă, în inima spirituală a fiecărei ființe umane..</div>
-<div class="btn-fp">          
-
-  <%= link_to 'Află mai mult..', hiranyaksha_path, class: 'btn-fp-link' %>
-
-
-</div>
-</div>
-<div class="col" style="align-items:center;text-align:center; width:100%;">
-<h2>Înțeleptul Ayurvedic Jamadagni-Rishi</h2>
-<a href="<%= jamadagni_path %>"><img src="<%= image_path('Jamadagni.webp') %>" alt="Înțeleptul Ayurvedic Jamadagni-Rishi" style="max-width:300px;"></a>
-
-<div class="desc">Jamadagni este numele unui mare înțelept antic din mitologia hindusă, considerat în mod unanim ca fiind un celebru practicant al modalităților spirituale tradiționale, un înțelept de o mare profunzime (rishi) și totodată o ființă umană înzestrată cu o exemplară stare de sfințenie..</div>
-<div class="btn-fp">          
-
-  <%= link_to 'Află mai mult..', jamadagni_path, class: 'btn-fp-link' %>
-
-
-</div>
-</div>
-
-</section>
-
-
-
-
-
-<section class="line" style="padding-top:10px; padding-bottom:10px;">
-<div class="col"  style="align-items:center;text-align:center;">
-<h2>Înțeleptul Ayurvedic Asita-Rishi</h2>
-
-<a href="<%= asita_path %>"><img src="<%= image_path('Asita-Rishi.jpg') %>" alt="Asita-Rishi" style='max-width:300px;'></a>
-
-
-<div class="desc">Înțeleptul Asita este descris ca fiind un călugăr în vârstă. Mențiunile scrise, care consemnează opinii ale tradiției populare locale, arată că acesta era un expert în numeroase domenii ale cunoașterii acelor timpuri, un mare erudit și un celebru ascet. Având o disciplină spirituală și de viață considerată exemplară, Asita era văzut ca un model de practicant spiritual și un exemplar yoghin...</div>
-<div class="btn-fp">
-
-   <%= link_to 'Află mai mult..', asita_path, class: 'btn-fp-link' %>
-   
-
-</div>
-</div>
-
-<div class="col"  style="align-items:center;text-align:center;">
-         <h2>Înțeleptul Ayurvedic Jivaka-Rishi</h2>
-         
-         <a href="<%= jivaka_path %>"><img src="<%= image_path('jivaka.jpg') %>" alt="Jivaka-Rishi" style='max-width:300px;'></a>
-         
-       
-         <div class="desc">Înţeleptul Jivaka, este o figură emblematică în tradiţia ayurvedică. Numele său, derivat din limba sanscrită, semnifică „ceea ce trăiește” sau „o ființă vie”, sugerând o conexiune profundă cu forțele vitale ale naturii..</div>
-         <div class="btn-fp">
-         
-            <%= link_to 'Află mai mult..', jivaka_path, class: 'btn-fp-link' %>
-            
-         
-         </div>
-      </div>
-
-
-
-    </section>
-    
-
-
-
-
-
-
-    <section class="line" style="padding-top:10px; padding-bottom:10px;">
-    <div class="col" style="align-items:center;text-align:center;">
-    <h2>Perspectiva cognitronicii asupra gandirii neconvenționale</h2>
-    <a href="<%= cognitronica_path %>"><img src="<%= image_path('cognitronica.jpg') %>" alt="Perspectiva cognitronicii asupra gandirii neconvenționale" style="max-width:300px;"></a>
-
-    <div class="desc">Știința cognitronicii sau știința ezoterică a existenței și manifestării fluxurilor cognitronice (Prabodha-Vijnana) a fost inițiată de către marele înțelept și yoghin Bharadvaja. Cognitronica oferă ființelor umane pregătite accesul la o cunoaștere superioară de natură supramentală..</div>
-    <div class="btn-fp">          
-    
-      <%= link_to 'Află mai mult..', cognitronica_path, class: 'btn-fp-link' %>
-    
-  
-  
-    </div>
- </div>
-
-    <div class="col"  style="align-items:center;text-align:center;">
-       <h2>Optimizarea performanțelor cognitive prin practici de pratyahara care pot potența funcțiile inhibitorii cerebrale</h2>
-       <a href="<%= optimizarea_performantelor_cognitive_path %>"><img src="<%= image_path('optimizarea_performanțelor_cognitive 2.jpg') %>" alt="Optimizarea performantelor cognitive" style='max-width:300px;'></a>
-     
-       <div class="desc">Atunci când parcurgem într-un mod comparativ felul în care este descrisă practica pratyahara (retragerea simțurilor) în tratatele străvechi orientale și felul în care neuroștiința contemporană explică controlul asupra funcțiilor sistemului nervos, descoperim o coincidență remarcabilă. Aceasta subliniază capacitățile noastre inerente de autoreglare a conștiinței, evidențiind o punte între înțelepciunea tradițională și descoperirile științifice moderne..</div>
-       <div class="btn-fp">
-       
-          <%= link_to 'Află mai mult..', optimizarea_performantelor_cognitive_path, class: 'btn-fp-link' %>
-          
-       
-       </div>
-    </div>
-
-
-  </section>
-
-<br>
-<h2>Înscriere și participare</h2>
-<br>
-
-
-<h3><strong>Modalitatea de accesare</strong></h3>
-<p>Prezentarile sunt disponibile exclusiv prin înregistrări, oferind astfel participanților libertatea de a accesa conținutul la orice oră și fără restricții de timp, asigurând flexibilitatea necesară în gestionarea programului personal.</p>
-<h3><strong>Cum pot viziona?</strong></h3>
-<p>Pentru a accesa prezentarile, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul la vizionarea inregistrarilor se va face direct in pagina de site.</p>
-<h3><strong>Costul participării</strong></h3>
-<p>Vizionarea fiecarei inregistrari are un cost accesibil de doar 12 lei.</p>
-<h3><strong>Durata accesului</strong></h3>
-<p>Accesul la vizionarea înregistrării se realizează pentru o perioadă de 60 de zile de la data efectuarii platii.</p>
-
-</section>
-
-
-<section>
-
-
-   
- 
-</section>
 
 </div>
 </div>
