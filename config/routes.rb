@@ -93,6 +93,8 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get 'traditia_ayurvedica/maudgalya', to: 'traditia_ayurvedica#maudgalya', as: 'maudgalya'
   get 'traditia_ayurvedica/cognitronica', to: 'traditia_ayurvedica#cognitronica', as: 'cognitronica'
   get 'traditia_ayurvedica/nimi', to: 'traditia_ayurvedica#nimi' , as: 'nimi'
+  get 'traditia_ayurvedica/modele_spirituale', to: 'traditia_ayurvedica#modele_spirituale'
+
 
   #get 'traditia_ayurvedica/performanta_cognitiva', to: 'traditia_ayurvedica#performanta_cognitiva', as: 'performanta_cognitiva'
   # Definirea rutei cu un nume personalizat pentru helper-ul de cale
