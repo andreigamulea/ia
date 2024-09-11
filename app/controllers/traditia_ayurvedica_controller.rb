@@ -400,6 +400,8 @@ class TraditiaAyurvedicaController < ApplicationController
       @videos_correspondente= Video.none
     end
   end  
+  def modele_spirituale
+  end  
 private
 def get_book_ticker(symbol)
   response = HTTParty.get('https://api.binance.com/api/v3/ticker/bookTicker', query: { symbol: symbol })
