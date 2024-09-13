@@ -122,11 +122,15 @@ MAP_COD_TAXA_2425 = {
           
       # Acum puteți accesa adresa de email a clientului
       customer_email = payment_method.billing_details.email
-      if metadata[:email]=='nagy.edvin@yahoo.com' && ['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
+      emailuri_90 = ["ce.hermkens@gmail.com"]
+      if metadata[:email] == 'nagy.edvin@yahoo.com' && ['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
         'cod22', 'cod23', 'cod24', 'cod25', 'cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203',
-         'cod204', 'cod205', 'cod206'].include?(produs.cod)
-        produs.pret=35
-      end  
+        'cod204', 'cod205', 'cod206'].include?(produs.cod)
+      produs.pret = 35
+      elsif emailuri_90.include?(metadata[:email]) && ['cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203',
+          'cod204', 'cod205', 'cod206'].include?(produs.cod)
+        produs.pret = 90
+      end
 
 
       comanda.update(
@@ -412,13 +416,20 @@ end
   
     # Calculați valoarea fără TVA
     pret_unitar_fara_tva = produs.pret / (1 + TVA / 100.0)
-    if metadata[:email]=='nagy.edvin@yahoo.com' && ['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
-      'cod22', 'cod23', 'cod24', 'cod25', 'cod207','cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204', 'cod205', 'cod206'].include?(produs.cod)
+    emailuri_90 = ["ce.hermkens@gmail.com"]
 
+    if metadata[:email] == 'nagy.edvin@yahoo.com' && ['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21',
+        'cod22', 'cod23', 'cod24', 'cod25', 'cod207','cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203',
+        'cod204', 'cod205', 'cod206'].include?(produs.cod)
       
-      pret_unitar_fara_tva = 29.41 #custom
+      pret_unitar_fara_tva = 29.41 # custom pentru nagy.edvin
       produs.pret = 35
-    end  
+    elsif emailuri_90.include?(metadata[:email]) && ['cod207','cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203',
+        'cod204', 'cod205', 'cod206'].include?(produs.cod)
+      
+      pret_unitar_fara_tva = 75.63 # custom pentru emailurile din array
+      produs.pret = 90
+    end
     end
     dt = produs.valabilitatezile
     if ![

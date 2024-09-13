@@ -240,13 +240,17 @@ end
     puts("Obs: #{@obs}")
     puts("sunt in payeeeeeeeeeeeeeeeeeeeeee")
     @prod = Prod.find(params[:id]) 
-    
-    if current_user.email=="nagy.edvin@yahoo.com" && @prod.cod.in?(['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 
-      'cod25', 'cod207','cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204', 'cod205', 'cod206'])
-      @prod.pret=35 #situatie particulara
-      @pret_total=35
-      @pret_bucata=35
-    end  
+    emailuri_90 = ["ce.hermkens@gmail.com"]
+    if current_user.email == "nagy.edvin@yahoo.com" && @prod.cod.in?(['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 
+      'cod25', 'cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204', 'cod205', 'cod206'])
+    @prod.pret = 35 # situatie particulara pentru nagy.edvin
+    @pret_total = 35
+    @pret_bucata = 35
+  elsif emailuri_90.include?(current_user.email) && @prod.cod.in?(['cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204', 'cod205', 'cod206'])
+    @prod.pret = 90 # situatie particulara pentru emailurile din array
+    @pret_total = 90
+    @pret_bucata = 90
+  end
     @detaliifacturare = current_user.detaliifacturare
     # Asigura-te că utilizatorul are un client Stripe
     if current_user.stripe_customer_id.nil?
