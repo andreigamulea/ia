@@ -95,8 +95,8 @@ class CursuriayurvedasController < ApplicationController
       redirect_to new_user_session_path
       return false
     end
-    
-     if current_user && (current_user.role == 1 || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) 
+     allowed_emails = ["ce.hermkens@gmail.com"]
+     if current_user && (current_user.role == 1 || allowed_emails.include?(current_user.email) || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) 
        
     elsif !current_user
       flash[:alert] = "Nu aveti acces la aceasta grupa de curs."
@@ -183,7 +183,7 @@ class CursuriayurvedasController < ApplicationController
 
 
 
-    if max_taxa>10 
+if (max_taxa && max_taxa > 10) || allowed_emails.include?(current_user.email)
       @promovat_in_an2 = true
       puts("a promovat")
     else
@@ -207,7 +207,10 @@ class CursuriayurvedasController < ApplicationController
         @prod2425.each do |prod|
           if current_user.email == "nagy.edvin@yahoo.com" && prod.cod == 'cod207'
             prod.pret = 35
+          elsif current_user.email == "ce.hermkens@gmail.com" && prod.cod == 'cod207'
+            prod.pret = 90
           end
+          
         end
 
         puts("Edwin Naghy are pretul1: #{@prod2425.first.pret}")
@@ -224,6 +227,8 @@ class CursuriayurvedasController < ApplicationController
           @prod2425.each do |prod|
             if current_user.email == "nagy.edvin@yahoo.com" && coduri_specifice.include?(prod.cod)
               prod.pret = 35
+            elsif current_user.email == "ce.hermkens@gmail.com" && coduri_specifice.include?(prod.cod)
+              prod.pret = 90
             end
           end
 
@@ -633,9 +638,12 @@ def cursayurveda2425
       numar_valori = valori_taxa2425.count { |val| val > 1 && val < 12 }
       cod_produs = "cod#{196 + numar_valori + 1}"
       @prodgrupa1_taxalunara = Prod.find_by(cod: cod_produs)
-      if current_user.email == "nagy.edvin@yahoo.com" #custom
+      if current_user.email == "nagy.edvin@yahoo.com"
         @prodgrupa1_taxalunara.pret = 35
+      elsif current_user.email == "ce.hermkens@gmail.com"
+        @prodgrupa1_taxalunara.pret = 90
       end
+      
     end
   end
   ##################################end grupa1
