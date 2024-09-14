@@ -300,6 +300,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get 'admin/edit/:id', to: 'admin#edit', as: 'edit_admin'
   get 'admin/new', to: 'admin#new', as: 'new_admin'
   
+  
  # în routes.rb
  
   get 'detaliifacturare', to: 'detaliifacturares#datefacturare', as: 'datefacturare'  

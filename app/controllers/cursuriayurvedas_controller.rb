@@ -208,7 +208,9 @@ if (max_taxa && max_taxa > 10) || allowed_emails.include?(current_user.email)
           if current_user.email == "nagy.edvin@yahoo.com" && prod.cod == 'cod207'
             prod.pret = 35
           elsif current_user.email == "ce.hermkens@gmail.com" && prod.cod == 'cod207'
-            prod.pret = 90
+            prod.pret = 90 #in ComenziProd la taxa2425 se pune ultima luna platita dar ATENTIE 
+            #este ultima luna platita la an 2 iar userul este si la an3
+            #daca implementam si an3 trebuie tinut cont de asta
           end
           
         end

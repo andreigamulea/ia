@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_25_163428) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_13_193225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -875,6 +875,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_25_163428) do
     t.string "cpa"
     t.string "cnp"
     t.integer "grupa2425"
+    t.jsonb "taxa", default: {}, null: false
+    t.jsonb "gr", default: {}, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["grupa"], name: "index_users_on_grupa"
     t.index ["limba"], name: "index_users_on_limba"

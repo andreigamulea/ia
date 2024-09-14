@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   before_validation :downcase_email
   before_validation :set_default_role
+  before_validation :set_default_taxa
  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable,
@@ -93,6 +94,76 @@ end
  def signed_in_on_this_device?(session_token)
     self.current_sign_in_token == session_token
   end
+
+
+  def self.update_taxa_for_users
+    User.find_each do |user|
+      # Găsim valorile maxime pentru taxa2324 și taxa2425
+      max_taxa2324 = user.comenzi_prods.maximum(:taxa2324)
+      max_taxa2425 = user.comenzi_prods.maximum(:taxa2425)
+  
+      # Inițializăm un nou hash pentru taxa
+      new_taxa = {}
+  
+      # Verificăm valorile din 'gr' pentru a decide cum să formăm hash-ul 'taxa'
+      if user.gr.present?
+        if user.gr['an2324'].is_a?(Array) && user.gr['an2324'].include?(1) && (user.gr['an2425'].nil? || user.gr['an2425'].empty?)
+          # Dacă în 'gr' este doar 'an2324' => [1], setăm doar an2324 în taxa
+          new_taxa['an2324'] = { 'an1' => max_taxa2324 } if max_taxa2324.present?
+        elsif user.gr['an2324'].is_a?(Array) && user.gr['an2324'].include?(1) && user.gr['an2425'].is_a?(Array) && user.gr['an2425'].include?(2)
+          # Dacă în 'gr' avem 'an2324' => [1] și 'an2425' => [2], setăm ambele
+          new_taxa['an2324'] = { 'an1' => max_taxa2324 } if max_taxa2324.present?
+          new_taxa['an2425'] = { 'an2' => max_taxa2425 } if max_taxa2425.present?
+        elsif user.gr['an2425'].is_a?(Array) && user.gr['an2425'].include?(1) && (user.gr['an2324'].nil? || user.gr['an2324'].empty?)
+          # Dacă în 'gr' este doar 'an2425' => [1], setăm doar an2425 în taxa
+          new_taxa['an2425'] = { 'an1' => max_taxa2425 } if max_taxa2425.present?
+        end
+      end
+  
+      # Salvăm hash-ul 'taxa' doar dacă a fost populat
+      user.update(taxa: new_taxa) if new_taxa.present?
+    end
+  end
+  
+
+
+  def self.update_gr_for_users
+    User.find_each do |user|
+      # Găsim valorile maxime pentru taxa2324 și taxa2425
+      max_taxa2324 = user.comenzi_prods.maximum(:taxa2324)
+      max_taxa2425 = user.comenzi_prods.maximum(:taxa2425)
+  
+      # Inițializăm hash-ul 'gr' gol
+      new_gr = {}
+  
+      # Stabilim valoarea pentru an2324
+      if max_taxa2324.present? && max_taxa2324 > 10
+        # Dacă taxa2324 > 10, setăm an2324 la [1]
+        new_gr['an2324'] = [1]
+      elsif max_taxa2324.present? && max_taxa2324 > 0
+        # Dacă taxa2324 este între 1 și 10, setăm an2324 la [1]
+        new_gr['an2324'] = [1]
+      end
+  
+      # Stabilim valoarea pentru an2425
+      if max_taxa2425.present? && max_taxa2425 > 0
+        # Dacă taxa2425 > 0, setăm an2425 la [1] sau [2], în funcție de condiții
+        new_gr['an2425'] = if max_taxa2324.present? && max_taxa2324 > 10
+                             [2] # Setăm an2425 la [2] dacă taxa2324 > 10
+                           else
+                             [1] # Altfel, setăm an2425 la [1]
+                           end
+      end
+  
+      # Salvăm hash-ul în tabela 'gr' dacă este populat
+      user.update(gr: new_gr) if new_gr.present?
+    end
+  end
+  
+  
+  
+  
+
   private
  
 
@@ -122,6 +193,8 @@ end
   def set_default_role
     self.role ||= 0
   end
- 
+  def set_default_taxa
+    self.taxa ||= {}
+  end
   
 end
