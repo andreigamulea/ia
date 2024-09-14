@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  
   before_validation :downcase_email
   before_validation :set_default_role
   before_validation :set_default_taxa
