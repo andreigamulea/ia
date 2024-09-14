@@ -220,7 +220,7 @@ input[type="submit"]:hover {
 
   <div class="form-group">
     <%= form.label :grupa_curs_ayurveda, "Grupa curs ayurveda (ex. 2, 3, etc)" %>
-    <%= form.select :grupa2324, options_for_select([3, 30], @date_facturare.grupa2324), {}, { class: 'form-control' } %>
+    <%= form.select :grupa2425, options_for_select([4, 31], @date_facturare.grupa2324), {}, { class: 'form-control' } %>
   </div>
 
   <% if current_user&.role == 1 %>
