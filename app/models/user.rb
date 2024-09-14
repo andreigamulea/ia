@@ -187,7 +187,7 @@ end
       update(stripe_customer_id: customer.id)
     rescue => e
       Rails.logger.error "Stripe customer creation failed for user #{id}: #{e.message}"
-      # Aici poți adăuga cod adițional pentru a gestiona eroarea, dacă este necesar
+      #Aici poți adăuga cod adițional pentru a gestiona eroarea, dacă este necesar
     end
   end
   
