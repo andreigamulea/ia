@@ -170,7 +170,7 @@ end
       params.require(:date_facturare).permit(
         :user_id, :firma_id, :email, :prenume, :nume, :numecompanie, :cui, :tara, 
         :codpostal, :strada, :numar, :altedate, :telefon, :adresaemail, :localitate, 
-        :judet, :grupa2324, :cpa, :cod, :cnp
+        :judet, :grupa2324, :cpa, :cod, :cnp, :grupa2425
       )
     end
     
