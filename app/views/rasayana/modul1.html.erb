@@ -1,0 +1,142 @@
+
+<style>
+#nutritie1 .cm h2 {
+    font-size:22px;
+}
+#nutritie1 .register{
+    border: 1px solid #4b0082;
+    background-color:#4b0082;
+}
+#nutritie1 .cm h3{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:0;
+}
+#nutritie1 .register{
+    margin:0;
+    margin-top:20px;
+}
+#nutritie1 .table td {
+    text-align:center;
+}
+@media screen and (max-width: 720px) {
+    #nutritie1 .register{
+        margin:0 auto;
+        margin-top:20px;
+    }
+    .cm{
+        text-align:center;
+    }
+}
+
+</style>
+<% content_for :title, "Rasayana | Ayush Cell Romania" %>
+<% content_for :meta_tags do %>
+  <meta name="description" content="Descoperiți importanța adaptării (satmya) alimentației la tipologia constituțională ayurvedică proprie (dosha) și impactul acesteia asupra sănătății.">
+  <meta name="keywords" content="ayurveda, nutritie ayurvedica, dosha, vata, pitta, kapha, dosha-prakriti, greutatea ideala, formule greutate ideala">
+  <link rel="canonical" href="https://www.ayushcell.ro/nutritie2">
+<% end %>
+
+<div class="container" id="nutritie1">
+<%= render 'layouts/sideleft' %>
+
+<div class="cr" style="background-color: white; ">
+    <h1 class="first-tittle">Ayush Cell Romania: Rasayana – Ştiinţa regenerării şi a redinamizarii eficiente a potenţialului longeviv</h1>
+    <h2 class="main-title" >Rasayana – Ştiinţa regenerării şi a redinamizarii potenţialului longeviv</h2>
+
+<section>
+
+
+<div class="row1 center" style="max-width:920px; margin:0 auto;">
+    <div class="r1c1" style="height: 350px;">
+      
+      <img src="<%= image_url('nutritie4.jpg') %>" alt="Program Nutriție Ayurvedică">
+    </div>
+    <div class="r1c2">
+    <p>Practicile de tip Rasayana, apreciate pentru beneficiile lor asupra sănătății, vitalității, memoriei și longevității, implică un parcurs gradat, necesitând pregătire și dedicare, cu scopul final de a atinge o stare plenară de regenerare și echilibru.</p>
+    <% if !current_user %>      
+    <div class="r1c2">
+        <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie2'), class: 'register' %>
+    </div>
+    <%elsif current_user && !@has_access%>
+    <%= link_to 'Înscrie-te acum', '#VideoNutritie', class: 'register' %>
+
+     <%end%> 
+     
+ </div>
+  </div>
+<section class="cm">  
+<br>
+<h2 style="font-size:22px;">Din subiectele abordate in cadrul acestui curs:</h2>
+<br>
+
+   <p>🌟 Termenul sanscrit rasayana este compus din cuvântul sanscrit ayana, care înseamnă „drum”, „cale”, „direcţie”, „curgere” sau „orientare” și cuvântul „rasa”, care înseamnă „esenţă”, „aspect de bază”, „aspect fundamental” sau „element cheie”. La modul general vorbind, termenul sanscrit rasayana poate fi tradus prin „modalitate eficientă de transformare lăuntrică adecvată” sau „a urmări şi a realiza ceea ce este esenţial în viaţă”.</p>
+    <p>🌱 În Ayurveda, ramura Rasayana-Jnana nu se rezumă numai la aplicarea unor proceduri şi metode reîntineritoare, ci şi la însuşirea efectivă a unui punct de vedere superior, esenţial, asupra vieţii (ayus) şi asupra existenţei umane. De aceea Rasayana este o vastă ştiinţă a metodelor de realizare a reîntineririi şi a longevităţii fiinţei umane, în scopul de a evolua spiritual cât mai mult în respectiva încarnare (viaţă). Rasayana oferă o gamă largă de rețete pe bază de alimente, plante, minerale și alte ingrediente vegetale cu proprietăţi revigorante şi regenerante asupra stării constituenţilor trupeşti (dhatu) precum şi tehnici secrete complexe (ce implică atât unele elemente fizice exterioare, precum şi anumite procedee spirituale) de reîntinerire şi prelungire a vieţii.</p>
+    <p>🍃 Dintre efectele benefice ale practicilor de Rasayana care sunt menționate în tratatele de Ayurveda enumerăm: prelungirea speranței de viață, dobândirea sau menținerea unei stări de vitalitate debordantă, încetinirea procesului de îmbătrânire, păstrarea funcțiilor și a simțurilor organismului într-o stare excelentă de sănătate, îmbunătățirea memoriei și a forței fizice, homeostazia proceselor metabolice, creșterea potențialului creator amoros-sexual, efecte imunomodulatoare, creșterea duratei de viață și a calității vieții.</p>
+    <p>🧘 Practica Rasayana implică trecerea prin anumite etape pregătitoare și parcurgerea anumitor etape din ce în ce mai avansate pentru a dobândi starea deplină de regenerare.</p>
+
+
+    <% if !user_signed_in? || (current_user && !@has_access) %>
+
+
+
+
+<% if !current_user %>      
+    <div class="r1c2" style="align-items: center; width:100%;">
+        <%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('nutritie2'), class: 'register' %>
+    </div>
+    <%elsif current_user && !@has_access%>
+    <div class="r1c2" style="align-items: center; width:100%;">
+    <%= link_to 'Vizionează înregistrările', '#VideoNutritie', class: 'register' %>
+    </div>
+<%end%> 
+
+
+
+
+
+<br>
+<h2>Înscriere și participare</h2>
+<br>
+
+<h3><strong>Cine poate participa?</strong></h3>
+<p>Programul este accesibil oricui este interesat de o alimentație sănătoasă, fără a fi necesară o pregătire profesională specifică. Deși cunoașterea preliminară a unor notiuni din Ayurveda poate constitui un avantaj, modulul acoperă toate conceptele esențiale pentru a vă asigura succesul în parcurgerea lecțiilor și pentru a facilita o înțelegere profundă a materiei.</p>
+<h3><strong>Modalitatea de desfășurare a cursului</strong></h3>
+<p>Cursul este disponibil exclusiv prin înregistrări, oferind astfel participanților nou înscrisi libertatea de a accesa conținutul acestui modul, la orice oră și fără restricții de timp, asigurând flexibilitatea necesară în gestionarea programului personal.</p>
+<h3><strong>Procesul de înscriere</strong></h3>
+<p>Pentru a vă înscrie la acest modul, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul la vizionarea inregistrarilor se va face direct in pagina de site.</p>
+<h3><strong>Costul participării</strong></h3>
+<p>Participarea la acest modul de nutriție reprezintă o investiție valoroasă în direcția educației pentru sănătate și pentru dezvoltarea personală și profesională, având un cost accesibil de 780 lei.</p>
+<h3><strong>Durata accesului la curs</strong></h3>
+<p>Participanții vor avea acces la vizionarea înregistrărilor cursului pentru o perioadă de 90 de zile de la data înscrierii.</p>
+
+</section>
+
+
+<section>
+<% if !user_signed_in? %>
+
+<%end%>
+<%end%>
+<% if current_user && @has_access %>
+<p style="font-size:16px;">Programul de pregătire în nutriția ayurvedică practică aplicată este conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</h1>
+<%else%>
+
+<%end%>
+   
+ 
+</section>
+
+ 
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>

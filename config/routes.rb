@@ -1,4 +1,6 @@
 Rails.application.routes.draw do 
+  get 'rasayana/modul1', to: 'rasayana#modul1', as: 'rasayana_modul1'
+
   resources :localitatis do
     collection do
       post 'import_judete'
@@ -345,7 +347,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get 'home/index1', to: 'home#index1'
   get 'home/index'
   get 'vajikarana', to: 'home#vajikarana'
-  get 'rasayana', to: 'home#rasayana' 
+  
   get 'newsletter', to: 'home#newsletter'
   
   get 'sesiune_vara_raport', to: 'home#sesiune_vara_raport'
