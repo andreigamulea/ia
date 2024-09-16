@@ -293,10 +293,111 @@ class TvsController < ApplicationController
   end
   
 
+def rasayana1
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+  # Select the 5 products based on curslegatura and cod fields
+  products = Prod.where(curslegatura: 'rasayana1', cod: ['cod234', 'cod235', 'cod236', 'cod237', 'cod238'])
+    
+  # User not logged in case
+  if current_user.nil?
+    # Display only the first and last products (p1 and p5)
+    @prods = products.where(cod: ['cod234', 'cod238'])
+    @nr_luni_achitate = 0 # No purchases, no months paid
+  else
+    # User is logged in, check purchases in ComenziProd
+    purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                 .joins(:prod)
+                                 .where(prods: { curslegatura: 'rasayana1', status: 'activ' })
+                                 .pluck('prods.cod')
 
+    # Determine which products to show based on what has been purchased
+    if purchased_prods.include?('cod238') # p5
+      @prods = [] # None if p5 is purchased
+      @nr_luni_achitate = 4
+    elsif purchased_prods.include?('cod234') && purchased_prods.include?('cod235') && purchased_prods.include?('cod236') && purchased_prods.include?('cod237')
+      @prods = [] # None if all p1, p2, p3, p4 are purchased
+      @nr_luni_achitate = 4
+    elsif purchased_prods.include?('cod234') && purchased_prods.include?('cod235') && purchased_prods.include?('cod236')
+      @prods = products.where(cod: 'cod237') # p4 only
+      @nr_luni_achitate = 3
+    elsif purchased_prods.include?('cod234') && purchased_prods.include?('cod235')
+      @prods = products.where(cod: 'cod236') # p3 only
+      @nr_luni_achitate = 2
+    elsif purchased_prods.include?('cod234')
+      @prods = products.where(cod: 'cod235') # p2 only
+      @nr_luni_achitate = 1
+    else
+      # If no purchases from the 5 products, show p1 and p5
+      @prods = products.where(cod: ['cod234', 'cod238'])
+      @nr_luni_achitate = 0
+    end
+  end
+  ###############################
+  if @nr_luni_achitate <= 0 && current_user.role != 1
+    flash[:alert] = "Verificati va rugam platile facute!"
+    redirect_to new_user_session_path
+    return false
+  end
+  
+  
+  ###############################
 
+  now_bucharest = Time.current.in_time_zone('Europe/Bucharest')
+  @now_bucharest = now_bucharest
+  data_curenta = @now_bucharest.to_date
+  # Colectează toate 'orainceput' pentru înregistrările din data curentă
+  #@orare_inceput_azi = Tv.where(datainceput: data_curenta).pluck(:orainceput, :orasfarsit)
+  @orare_inceput_sfarsit_azi = Tv.where(datainceput: data_curenta, canal: 101).pluck(:orainceput, :orasfarsit).flat_map { |orainceput, orasfarsit| [orainceput, orasfarsit] }.uniq
 
+ 
+  # Convertim fiecare ora de inceput in format HH:MM pentru a facilita comparatia in JavaScript
+  @orare_inceput_sfarsit_azi = @orare_inceput_sfarsit_azi.map { |ora| ora.strftime('%H:%M') }
+  
 
+  @myvideo1 = Tv.where(canal: 101)
+            .where("datainceput <= ? AND datasfarsit >= ?", now_bucharest.to_date, now_bucharest.to_date)
+            .to_a
+            .detect do |tv|
+              # Ajustăm orainceput la data curentă
+              ora_inceput_ajustata = tv.orainceput.change(year: now_bucharest.year, month: now_bucharest.month, day: now_bucharest.day, zone: 'Europe/Bucharest')
+              
+              # Dacă datasfarsit este aceeași zi cu datainceput, ajustăm orasfarsit la aceeași zi
+              if tv.datasfarsit == tv.datainceput
+                ora_sfarsit_ajustata = tv.orasfarsit.change(year: now_bucharest.year, month: now_bucharest.month, day: now_bucharest.day, zone: 'Europe/Bucharest')
+              else
+                # Dacă datasfarsit este diferită, ajustăm orasfarsit la datasfarsit
+                ora_sfarsit_ajustata = tv.orasfarsit.change(year: tv.datasfarsit.year, month: tv.datasfarsit.month, day: tv.datasfarsit.day, zone: 'Europe/Bucharest')
+              end
+
+              # Comparam acum cu orele ajustate
+              result = now_bucharest >= ora_inceput_ajustata && now_bucharest <= ora_sfarsit_ajustata
+              puts "Comparând: Acum - #{now_bucharest}, Început ajustat - #{ora_inceput_ajustata}, Sfârșit ajustat - #{ora_sfarsit_ajustata}. Rezultat: #{result}"
+              
+              result
+            end
+
+    puts "Video selectat: #{@myvideo1 ? @myvideo1.id : 'Niciunul'}"
+    # Setează variabilele în funcție de rezultatul interogării
+    if @myvideo1
+      @myvideo = @myvideo1.link
+      @exista_video = true
+      @denumire = @myvideo1.denumire      
+      @data_inceput = @myvideo1.datainceput.strftime("%d.%m.%Y") if @myvideo1&.datainceput
+      @data_sfarsit = @myvideo1.datasfarsit.strftime("%d.%m.%Y") if @myvideo1&.datasfarsit
+      @ora_inceput = @myvideo1.orainceput if @myvideo1&.orainceput
+      @valabilitate_ora_inceput = @myvideo1.orainceput.strftime("%H:%M") if @myvideo1.orainceput  
+      @valabilitate_ora_sfarsit = @myvideo1.orasfarsit.strftime("%H:%M") if @myvideo1.orasfarsit   
+      
+    else
+      @myvideo1 = nil
+      @exista_video = false
+    end
+
+end
 
 
 
