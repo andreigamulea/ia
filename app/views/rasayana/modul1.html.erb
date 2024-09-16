@@ -180,9 +180,9 @@
 
 
 Numarul lunilor achitate: <%=@nr_luni_achitate%><br>
-
-<%= link_to 'Vezi Video', tvs_rasayana1_path %><br>
-
+<%if current_user && (current_user.role==1 || @nr_luni_achitate>0)%>
+    <%= link_to 'Vezi Video', tvs_rasayana1_path %><br>
+<% end %>
 </section>
 
 </div>
