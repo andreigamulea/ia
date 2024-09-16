@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
         end
     end
     def redirect_to_root
-      puts("4444")
+      puts("4444patru")
       @skip_tracking = true
       redirect_to root_path
     end

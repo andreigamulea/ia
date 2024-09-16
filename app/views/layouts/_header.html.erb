@@ -37,6 +37,11 @@
                        <%= link_to 'Curs de Ayurveda Grupa 02 - 2024-2025', an2_path, class: 'no-turbo' %>
                     </li>
                     <% end %>
+                    <% if current_user && current_user.role == 1 %>
+                    <li class="nav-item">
+                      <%= link_to 'Ayush Cell Tv Rasayana Modul 1', '/tvs/rasayana1', class: 'no-turbo' %>
+                    </li>
+                    <% end %>
                     <li class="nav-item">
                        <%= link_to 'Curs Vajikarana', vajikarana_modul1_path, class: 'no-turbo' %>
                     </li>
