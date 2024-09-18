@@ -76,6 +76,8 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get '/show_fisa_postului_voluntar/:id', to: 'contractes#show_fisa_postului_voluntar', as: 'show_fisa_postului_voluntar'
 
   get 'home/test', to: 'home#test'
+  get 'show_ip', to: 'home#show_ip'
+
 
   post '/newsletter', to: 'home#newsletter'
   get 'home/lista_newsletter', to: 'home#lista_newsletter', as: 'lista_newsletter'

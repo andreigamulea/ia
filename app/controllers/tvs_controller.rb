@@ -58,27 +58,6 @@ class TvsController < ApplicationController
 
   end
   def canal2
-
-    s3_bucket = 'ayushcell-videos'
-    s3_key = 'test/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.mp4'
-    subtitle_key = 'test/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.vtt'
-
-    # Creează un presigner pentru a genera URL-ul semnat temporar
-    presigner = Aws::S3::Presigner.new(client: S3_CLIENT)
-
-    # Generează URL-ul semnat temporar pentru video
-    @video_url = presigner.presigned_url(:get_object, 
-                                          bucket: s3_bucket, 
-                                          key: s3_key, 
-                                          expires_in: 28800, 
-                                          response_content_disposition: 'inline')
-
-    # Generează URL-ul semnat temporar pentru subtitrări
-    @subtitle_url = presigner.presigned_url(:get_object, 
-                                             bucket: s3_bucket, 
-                                             key: subtitle_key, 
-                                             expires_in: 28800, 
-                                             response_content_disposition: 'inline')
     unless user_signed_in?
       puts("autentificareee")
       flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."

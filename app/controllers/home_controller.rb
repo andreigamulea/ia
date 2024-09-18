@@ -12,6 +12,9 @@ class HomeController < ApplicationController
   end 
   def politica_gdpr
   end 
+  def show_ip
+    render plain: request.remote_ip
+  end
   def test
     s3_bucket = 'ayushcell-videos'
     s3_key = 'test/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.mp4'
