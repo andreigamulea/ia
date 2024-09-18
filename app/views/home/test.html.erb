@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
-  <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
-</head>
-<body>
-
+<link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet" />
+<script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 <h1>Test Video Player</h1>
 
-<video id="my-video" class="video-js" controls preload="auto" width="640" height="360" data-setup="{}" controlsList="nodownload">
+<video id="my-video" class="video-js" controls preload="auto" width="640" height="360" data-setup="{}">
   <source src="<%= @video_url %>" type="video/mp4">
   <track src="<%= @subtitle_url %>" kind="subtitles" srclang="en" label="English" default>
   Your browser does not support the video tag.
@@ -16,17 +10,4 @@
 
 <script>
   var player = videojs('my-video');
-
-  player.ready(function() {
-    // Ascunde butonul de descărcare
-    var downloadButton = this.getChild('ControlBar').getChild('DownloadButton');
-    if (downloadButton) {
-      downloadButton.hide();
-    }
-  });
-
-  document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
-
-</body>
-</html>
