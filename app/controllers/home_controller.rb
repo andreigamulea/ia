@@ -12,6 +12,16 @@ class HomeController < ApplicationController
   end 
   def politica_gdpr
   end 
+  def test
+    s3_bucket = 'ayushcell-videos'
+    s3_key = 'video ayushcell/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.mp4'
+
+    # Creează un presigner pentru a genera URL-ul semnat temporar
+    presigner = Aws::S3::Presigner.new(client: S3_CLIENT)
+
+    # Generează URL-ul semnat temporar, valabil timp de 1 oră (3600 de secunde)
+    @video_url = presigner.presigned_url(:get_object, bucket: s3_bucket, key: s3_key, expires_in: 28800)
+  end
   def panouadmin
     @newsauupdate = 0 #acest cod este pt preluarea datelor de facturare pt an3 atat. 
     email_exists_in_listacanal3 = Listacanal3.exists?(email: current_user&.email)
