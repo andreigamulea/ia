@@ -51,7 +51,7 @@
 <div class="row1 center" style="max-width:920px; margin:0 auto;">
     <div class="r1c1" style="height: 350px;">
       
-      <img src="<%= image_url('nutritie4.jpg') %>" alt="Curs de Rasayana modul 1">
+      <img src="<%= image_url('RasayanaM01.webp') %>" alt="Curs de Rasayana modul 1">
     </div>
     <div class="r1c2">
     <p>Practicile de tip Rasayana, apreciate pentru beneficiile lor asupra sănătății, vitalității, memoriei și longevității, implică un parcurs gradat, necesitând pregătire și dedicare, cu scopul final de a atinge o stare plenară de regenerare și echilibru.</p>
@@ -179,9 +179,8 @@
 
 </div>
 
-<%if current_user && current_user.role==1 %>
+
 Numarul lunilor achitate: <%=@nr_luni_achitate%><br>
-<% end %>
 <%if current_user && (current_user.role==1 || @nr_luni_achitate>0)%>
     <%= link_to 'Vezi Video', tvs_rasayana1_path %><br>
 <% end %>
