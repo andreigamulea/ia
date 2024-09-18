@@ -105,9 +105,10 @@
 <p>Cursul este deschis tuturor celor interesați de Ayurveda, indiferent de nivelul de cunoștințe. Structura acestuia acoperă conceptele fundamentale și oferă o pregătire detaliată. Cunoștințele preliminare în Ayurveda pot fi un avantaj, dar nu sunt obligatorii. Modulul are ca scop o înțelegere clară a materiei, facilitând aplicarea practică a elementelor procedurale prezentate.</p> 
 <h3><strong>Modalitatea de desfășurare a cursului</strong></h3> 
 <p>Modulul 1 se desfășoară pe parcursul a patru luni, cuprinzând 16 lecții, câte una în fiecare săptămână, pe baza de înregistrări. În acest timp, participanții vor parcurge un conținut complex și bine detaliat. Fiecare lecție durează în medie aproximativ 5 ore, fiind menită să deschidă noi orizonturi de cunoaștere și să aducă o înțelegere profundă a subiectelor abordate. Pe lângă materialele prezentate în cadrul fiecărei lecții, participanții vor avea ocazia să participe la seminarii interactive, care vor aprofunda subiectele discutate și vor oferi posibilitatea de a pune întrebări și de a explora în detaliu conceptele prezentate. Astfel, fiecare săptămână devine o oportunitate de învățare, reflecție și dialog activ.</p> 
-<p>Prezentarea introductivă: Duminică, 29 septembrie, la ora 21:00, va avea loc prima întâlnire organizatorică, pe platforma ZOOM, unde se va prezenta structura cursului precum și o avampremieră a ceea ce urmează să fie aprofundat. Participarea la această sesiune este gratuită, iar linkul necesar pentru acces va fi afișat pe pagina de înscriere.</p> <p>Prima zi de curs: Lecțiile propriu-zise vor începe marți, 1 octombrie 2024, și vor fi organizate săptămânal, pentru a permite un proces de învățare ritmic și progresiv. Cele 16 cursuri ale acestui modul se vor desfășura săptămânal pe parcursul a 4 luni: octombrie noiembrie și decembrie 2024, precum și ianuarie 2025.</p> 
-<p>Vizionarea cursurilor: Fiecare lecție, înregistrată, va putea fi vizionată de trei ori pe săptămână, în zilele de marți, joi și duminică, între orele 16:00 și 24:00, direct in pagina de site. Fiecare dintre aceste înregistrări poate fi accesată de mai multe ori, în cele 3 zile diferite, pentru a permite înțelegerea, reluarea și aprofundarea informațiilor prezentate în timpul fiecărei lecții.</p> 
-<p>Seminar săptămânal: În fiecare duminică, începând cu ora 20:00, va avea loc un seminar live, unde participanții vor putea discuta liber cu lectorul de Ayurveda, să pună întrebări și să obțină clarificări asupra lecțiilor din săptămâna respectivă.</p> 
+<p>Prezentarea introductivă: Duminică, 29 septembrie, la ora 21:00, va avea loc prima întâlnire organizatorică, pe platforma ZOOM, unde se va prezenta structura cursului precum și o avampremieră a ceea ce urmează să fie studiat și aprofundat. Participarea la această sesiune este gratuită, iar linkul necesar pentru acces va fi afișat pe pagina de înscriere.</p> 
+<p>Prima zi de curs: Lecțiile propriu-zise vor începe miercuri, 2 octombrie 2024, și vor fi organizate săptămânal, pentru a permite un proces de învățare ritmic și progresiv. Cele 16 cursuri ale acestui modul se vor desfășura săptămânal pe parcursul a 4 luni: octombrie noiembrie și decembrie 2024, precum și ianuarie 2025.</p> 
+<p>Vizionarea cursurilor: Fiecare lecție, înregistrată, va putea fi vizionată de trei ori pe săptămână, în zilele de miercuri, vineri și duminică, între orele 16:00 și 24:00, direct in pagina de site. Fiecare dintre aceste înregistrări poate fi accesată de mai multe ori, în cele 3 zile diferite, pentru a permite înțelegerea, reluarea și aprofundarea informațiilor prezentate în timpul fiecărei lecții.</p> 
+<p>Seminar săptămânal: În fiecare duminică, începând cu ora 21:00, va avea loc un seminar live, în cadrul căruia participanții vor putea discuta liber cu lectorul de Ayurveda, având posibilitatea să adreseze întrebări și să obțină clarificări referitoare la subiectele lecțiilor din săptămâna respectivă.</p> 
 <h3><strong>Procesul de înscriere</strong></h3> 
 <p>Pentru a vă înscrie la acest modul, vă invităm să efectuați plata aferentă. După finalizarea plății, accesul la vizionarea înregistrărilor se va face direct în pagina de site.</p> 
 <h3><strong>Costul participării</strong></h3> 
@@ -178,8 +179,9 @@
 
 </div>
 
-
+<%if current_user && current_user.role==1 %>
 Numarul lunilor achitate: <%=@nr_luni_achitate%><br>
+<% end %>
 <%if current_user && (current_user.role==1 || @nr_luni_achitate>0)%>
     <%= link_to 'Vezi Video', tvs_rasayana1_path %><br>
 <% end %>
