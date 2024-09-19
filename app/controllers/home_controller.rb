@@ -16,27 +16,36 @@ class HomeController < ApplicationController
     render plain: request.remote_ip
   end
   def test
+    @nonce = SecureRandom.base64(16)
+    
+    
+    #bun
+    #response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vjs.zencdn.net; style-src 'self' 'unsafe-inline' https://vjs.zencdn.net; media-src *; img-src 'self' https://s3.eu-central-2.wasabisys.com; connect-src 'self';" 
+    #end bun 
+    #response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' https://releases.flowplayer.org 'nonce-#{@nonce}'; style-src 'self' https://releases.flowplayer.org 'nonce-#{@nonce}'; font-src 'self'; media-src 'self' https://s3.eu-central-2.wasabisys.com https://ayushcell-videos.s3.eu-central-2.wasabisys.com; img-src 'self' https://s3.eu-central-2.wasabisys.com; connect-src 'self';"
+
     s3_bucket = 'ayushcell-videos'
     s3_key = 'test/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.mp4'
     subtitle_key = 'test/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.vtt'
-
+  
     # Creează un presigner pentru a genera URL-ul semnat temporar
     presigner = Aws::S3::Presigner.new(client: S3_CLIENT)
-
+  
     # Generează URL-ul semnat temporar pentru video
     @video_url = presigner.presigned_url(:get_object, 
                                           bucket: s3_bucket, 
                                           key: s3_key, 
-                                          expires_in: 28800, 
+                                          expires_in: 28000, 
                                           response_content_disposition: 'inline')
-
+  
     # Generează URL-ul semnat temporar pentru subtitrări
     @subtitle_url = presigner.presigned_url(:get_object, 
                                              bucket: s3_bucket, 
                                              key: subtitle_key, 
-                                             expires_in: 28800, 
+                                             expires_in: 28000, 
                                              response_content_disposition: 'inline')
   end
+  
   def panouadmin
     @newsauupdate = 0 #acest cod este pt preluarea datelor de facturare pt an3 atat. 
     email_exists_in_listacanal3 = Listacanal3.exists?(email: current_user&.email)

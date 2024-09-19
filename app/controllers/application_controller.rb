@@ -10,6 +10,19 @@ class ApplicationController < ActionController::Base
     skip_before_action :check_user_active, only: [:after_sign_in_path_for]
     before_action :check_sign_in_token
     before_action :set_stripe_key
+    before_action :set_security_headers
+
+    def set_security_headers
+      response.headers['X-Frame-Options'] = 'DENY'
+      response.headers['X-XSS-Protection'] = '1; mode=block'
+      response.headers['X-Content-Type-Options'] = 'nosniff'
+      response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+      response.headers['Permissions-Policy'] = 'geolocation=(), camera=(), microphone=()'
+    end
+
+
+
+
     puts("22222222")
     def handle_routing_error
       redirect_to cursayurveda2425_path, alert: "No route matches for this request."
