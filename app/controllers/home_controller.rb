@@ -73,7 +73,15 @@ class HomeController < ApplicationController
 
    # Trimite cererea
   request = Net::HTTP::Get.new(uri.request_uri)
-  response = http.request(request)
+  begin
+    response = http.request(request)
+  rescue OpenSSL::SSL::SSLError => e
+    Rails.logger.error "Eroare SSL detectată: #{e.message}"
+    Bugsnag.notify(e)  # Sau poți folosi acest tip de logare în Bugsnag pentru detalii suplimentare
+    raise e  # Re-aruncă eroarea pentru a o gestiona în altă parte
+  end
+
+  response
   
 
    # Initializează hash-ul pentru rezultate
