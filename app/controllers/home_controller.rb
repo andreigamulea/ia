@@ -64,7 +64,7 @@ class HomeController < ApplicationController
   end
   
    if Rails.env.production?
-     http.verify_mode = OpenSSL::SSL::VERIFY_PEER  # Verificare SSL în producție
+     http.verify_mode = OpenSSL::SSL::VERIFY_NONE  # Verificare SSL în producție
      
      http.ca_file = Rails.root.join('cacert.pem').to_s
    else
@@ -118,6 +118,18 @@ class HomeController < ApplicationController
  # Obține datele pentru fiecare URL și stochează-le în variabile de instanță separate
  @data_url1 = fetch_url_data(url1)
  @data_url2 = fetch_url_data(url2)
+
+
+ url = 'https://api.embedprivatevideo.com/embed.php?v=6'
+  response = fetch_url_data(url)
+  
+  if response[:response_code] == '200'
+    puts "Cerere API reușită: Codul de răspuns 2000"
+  elsif response[:response_code] == '403'
+    puts "Eroare 403: Acces interzis la API"
+  else
+    puts "Cod de răspuns API: #{response[:response_code]}"
+  end
   
     @nonce = SecureRandom.base64(16)
     
