@@ -18,7 +18,32 @@ class HomeController < ApplicationController
   def show_ip
     render plain: request.remote_ip
   end
-
+  def test_ssl_connection
+    url = 'https://www.google.com'  # Sau altă adresă HTTPS sigură
+    uri = URI(url)
+  
+    # Configurează cererea HTTP
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+    http.ca_file = Rails.root.join('cacert.pem').to_s  # Calea relativă către cacert.pem
+  
+    # Trimite cererea
+    request = Net::HTTP::Get.new(uri.request_uri)
+    response = http.request(request)
+  
+    # Asigură-te că corpul răspunsului este codificat în UTF-8
+    response_body_utf8 = response.body.force_encoding('UTF-8')
+  
+    # Afișează codul de răspuns și corpul răspunsului
+    puts "Codul de răspuns: #{response.code}"
+    puts "Corpul răspunsului: #{response_body_utf8}"
+  
+    # Render cu text în UTF-8
+    render plain: "Cerere HTTPS funcționată cu succes! Codul de răspuns: #{response.code}"
+  end
+  
+  
   def test
   # Definim cele două URL-uri
  # Definim cele două URL-uri
@@ -34,13 +59,16 @@ class HomeController < ApplicationController
    http.use_ssl = true
    if Rails.env.production?
      http.verify_mode = OpenSSL::SSL::VERIFY_PEER  # Verificare SSL în producție
+     
+     http.ca_file = Rails.root.join('cacert.pem').to_s
    else
      http.verify_mode = OpenSSL::SSL::VERIFY_NONE  # Dezactivează verificarea SSL pentru testare/local
    end
 
    # Trimite cererea
-   request = Net::HTTP::Get.new(uri.request_uri)
-   response = http.request(request)
+  request = Net::HTTP::Get.new(uri.request_uri)
+  response = http.request(request)
+  
 
    # Initializează hash-ul pentru rezultate
    result = {
