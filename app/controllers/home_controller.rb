@@ -18,58 +18,72 @@ class HomeController < ApplicationController
   def show_ip
     render plain: request.remote_ip
   end
+
   def test
-    # URL-ul API-ului
-    url = 'https://api.embedprivatevideo.com/embed.php?v=6&videos=7gb-odOHPRo&client=embedprivatevideo.com&etag=&_=1726783673625'
-    uri = URI(url)
-  
-    # Configurează cererea HTTP
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    if Rails.env.production?
-      http.verify_mode = OpenSSL::SSL::VERIFY_PEER  # Verificare SSL în producție
-    else
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE  # Dezactivează verificarea SSL pentru testare/local
-    end
-  
-    # Trimite cererea
-    request = Net::HTTP::Get.new(uri.request_uri)
-    response = http.request(request)
-  
-    # Stochează codul de răspuns și corpul răspunsului în variabile de instanță pentru view
-    @response_code = response.code
-    @response_body = response.body
-  
-    # Verifică codul de status HTTP
-    if response.code.to_i == 500
-      puts "Eroare: Serverul a returnat 500 (Internal Server Error)"
-      @error_message = "Eroare: Serverul a returnat 500 (Internal Server Error)"
-    elsif response.code.to_i != 200
-      puts "Eroare: Serverul a returnat codul HTTP #{response.code}"
-      @error_message = "Eroare: Serverul a returnat codul HTTP #{@response_code}"
-    end
-  
-    # Afișează răspunsul în consolă pentru a vedea ce returnează serverul
-    puts "Răspunsul de la server: #{@response_body.inspect}"
-  
-    # Verifică dacă răspunsul nu este gol și este valid JSON
-    if @response_body.nil? || @response_body.strip.empty?
-      puts "Răspunsul este gol!"
-      @error_message = "Răspunsul este gol!"
-    else
-      # Parsează răspunsul JSON doar dacă este valid
-      begin
-        parsed_response = JSON.parse(@response_body)
-        @key, @value = parsed_response.first
-  
-        # Afișează valorile în consolă
-        puts("Cheia este: #{@key}, Valoarea este: #{@value}")
-  
-      rescue JSON::ParserError => e
-        puts "Eroare la parsarea JSON: #{e.message}"
-        @error_message = "Eroare la parsarea JSON: #{e.message}"
-      end
-    end
+  # Definim cele două URL-uri
+ # Definim cele două URL-uri
+ url1 = 'https://api.embedprivatevideo.com/embed.php?v=6'
+ url2 = 'https://api.embedprivatevideo.com/embed.php?v=6&videos=7gb-odOHPRo&client=embedprivatevideo.com&etag=&_=1726783673625'
+
+ # Funcție care face cererea HTTP și returnează un hash cu rezultatele
+ def fetch_url_data(url)
+   uri = URI(url)
+
+   # Configurează cererea HTTP
+   http = Net::HTTP.new(uri.host, uri.port)
+   http.use_ssl = true
+   if Rails.env.production?
+     http.verify_mode = OpenSSL::SSL::VERIFY_PEER  # Verificare SSL în producție
+   else
+     http.verify_mode = OpenSSL::SSL::VERIFY_NONE  # Dezactivează verificarea SSL pentru testare/local
+   end
+
+   # Trimite cererea
+   request = Net::HTTP::Get.new(uri.request_uri)
+   response = http.request(request)
+
+   # Initializează hash-ul pentru rezultate
+   result = {
+     response_code: response.code,
+     response_body: response.body,
+     error_message: nil,
+     key: nil,
+     value: nil
+   }
+
+   # Verifică codul de status HTTP
+   if response.code.to_i == 500
+     puts "Eroare: Serverul a returnat 500 (Internal Server Error)"
+     result[:error_message] = "Eroare: Serverul a returnat 500 (Internal Server Error)"
+   elsif response.code.to_i != 200
+     puts "Eroare: Serverul a returnat codul HTTP #{response.code}"
+     result[:error_message] = "Eroare: Serverul a returnat codul HTTP #{response.code}"
+   end
+
+   # Verifică dacă răspunsul nu este gol și este valid JSON
+   if result[:response_body].nil? || result[:response_body].strip.empty?
+     puts "Răspunsul este gol!"
+     result[:error_message] = "Răspunsul este gol!"
+   else
+     # Parsează răspunsul JSON doar dacă este valid
+     begin
+       parsed_response = JSON.parse(result[:response_body])
+       result[:key], result[:value] = parsed_response.first
+
+       # Afișează valorile în consolă
+       puts("Cheia este: #{result[:key]}, Valoarea este: #{result[:value]}")
+     rescue JSON::ParserError => e
+       puts "Eroare la parsarea JSON: #{e.message}"
+       result[:error_message] = "Eroare la parsarea JSON: #{e.message}"
+     end
+   end
+
+   result
+ end
+
+ # Obține datele pentru fiecare URL și stochează-le în variabile de instanță separate
+ @data_url1 = fetch_url_data(url1)
+ @data_url2 = fetch_url_data(url2)
   
     @nonce = SecureRandom.base64(16)
     
