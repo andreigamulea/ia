@@ -64,7 +64,7 @@ class HomeController < ApplicationController
   end
   
    if Rails.env.production?
-     http.verify_mode = OpenSSL::SSL::VERIFY_NONE  # Verificare SSL în producție
+     http.verify_mode = OpenSSL::SSL::VERIFY_PEER  # Verificare SSL în producție
      
      http.ca_file = Rails.root.join('cacert.pem').to_s
    else
