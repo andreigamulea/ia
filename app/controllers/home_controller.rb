@@ -57,6 +57,12 @@ class HomeController < ApplicationController
    # Configurează cererea HTTP
    http = Net::HTTP.new(uri.host, uri.port)
    http.use_ssl = true
+   if File.exist?(Rails.root.join('cacert.pem'))
+    puts "Fișierul cacert.pem a fost găsit."
+  else
+    puts "Fișierul cacert.pem nu a fost găsit."
+  end
+  
    if Rails.env.production?
      http.verify_mode = OpenSSL::SSL::VERIFY_PEER  # Verificare SSL în producție
      
