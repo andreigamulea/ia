@@ -93,63 +93,64 @@ class HomeController < ApplicationController
   
     
   
-    def test
-      # Accesează credențialele Wasabi din Rails credentials
-      aws_access_key_id = Rails.application.credentials.dig(:wasabi, :access_key_id)
-      aws_secret_access_key = Rails.application.credentials.dig(:wasabi, :secret_access_key)
+  def test
+    # Accesează credențialele Wasabi din Rails credentials
+    aws_access_key_id = Rails.application.credentials.dig(:wasabi, :access_key_id)
+    aws_secret_access_key = Rails.application.credentials.dig(:wasabi, :secret_access_key)
   
-      if aws_access_key_id.nil? || aws_secret_access_key.nil?
-        render plain: "Credențialele Wasabi nu sunt setate corect în credentials.yml.enc."
-        return
-      end
-  
-      # Configurare Wasabi S3 cu credențialele din Rails credentials
-      Aws.config.update({
-        region: 'eu-central-2',
-        credentials: Aws::Credentials.new(aws_access_key_id, aws_secret_access_key),
-        endpoint: 'https://s3.eu-central-2.wasabisys.com'
-      })
-  
-      s3_bucket = 'ayushcell-videos'
-      s3_key = 'test/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.mp4'
-      subtitle_key = 'test/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.vtt'
-  
-      begin
-        # Obține clientul S3
-        s3_resource = Aws::S3::Resource.new
-  
-        # Verifică dacă obiectul video și subtitrările există în bucket
-        video_object = s3_resource.bucket(s3_bucket).object(s3_key)
-        subtitle_object = s3_resource.bucket(s3_bucket).object(subtitle_key)
-  
-        if video_object.exists? && subtitle_object.exists?
-          @message = "Conexiunea la Wasabi a fost realizată cu succes și fișierele video și subtitrări există!"
-          @video_url = video_object.public_url
-          @subtitle_url = subtitle_object.public_url
-        elsif video_object.exists?
-          @message = "Conexiunea la Wasabi a fost realizată cu succes, dar fișierul de subtitrări nu există."
-          @video_url = video_object.public_url
-        elsif subtitle_object.exists?
-          @message = "Conexiunea la Wasabi a fost realizată cu succes, dar fișierul video nu există."
-          @subtitle_url = subtitle_object.public_url
-        else
-          @message = "Conexiunea la Wasabi a fost realizată, dar nici fișierul video, nici subtitrările nu există."
-        end
-  
-        # Debugging - verifică răspunsurile HTTP
-        video_response = Net::HTTP.get_response(URI.parse(@video_url))
-        subtitle_response = Net::HTTP.get_response(URI.parse(@subtitle_url)) if @subtitle_url.present?
-  
-        @video_response_debug = "Răspuns video: #{video_response.code} - #{video_response.message}" if video_response
-        @subtitle_response_debug = "Răspuns subtitrări: #{subtitle_response.code} - #{subtitle_response.message}" if subtitle_response
-  
-      rescue Aws::S3::Errors::ServiceError => e
-        # Afișează eroarea în caz de problemă la accesarea bucket-ului
-        @message = "A apărut o eroare la accesarea Wasabi: #{e.message}"
-      end
-  
-      render template: 'home/test'
+    if aws_access_key_id.nil? || aws_secret_access_key.nil?
+      render plain: "Credențialele Wasabi nu sunt setate corect în credentials.yml.enc."
+      return
     end
+  
+    # Configurare Wasabi S3 cu credențialele din Rails credentials
+    Aws.config.update({
+      region: 'eu-central-2',
+      credentials: Aws::Credentials.new(aws_access_key_id, aws_secret_access_key),
+      endpoint: 'https://s3.eu-central-2.wasabisys.com'
+    })
+  
+    s3_bucket = 'ayushcell'  # Noul bucket
+    s3_key = '1-Minute Nature Background Sound.mp4'  # Fișierul video
+    subtitle_key = 'test/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.vtt'  # Subtitrări (dacă există)
+  
+    begin
+      # Obține clientul S3
+      s3_resource = Aws::S3::Resource.new
+  
+      # Verifică dacă obiectul video și subtitrările există în bucket
+      video_object = s3_resource.bucket(s3_bucket).object(s3_key)
+      subtitle_object = s3_resource.bucket(s3_bucket).object(subtitle_key)
+  
+      if video_object.exists? && subtitle_object.exists?
+        @message = "Conexiunea la Wasabi a fost realizată cu succes și fișierele video și subtitrări există!"
+        @video_url = video_object.public_url
+        @subtitle_url = subtitle_object.public_url
+      elsif video_object.exists?
+        @message = "Conexiunea la Wasabi a fost realizată cu succes, dar fișierul de subtitrări nu există."
+        @video_url = video_object.public_url
+      elsif subtitle_object.exists?
+        @message = "Conexiunea la Wasabi a fost realizată cu succes, dar fișierul video nu există."
+        @subtitle_url = subtitle_object.public_url
+      else
+        @message = "Conexiunea la Wasabi a fost realizată, dar nici fișierul video, nici subtitrările nu există."
+      end
+  
+      # Debugging - verifică răspunsurile HTTP
+      video_response = Net::HTTP.get_response(URI.parse(@video_url))
+      subtitle_response = Net::HTTP.get_response(URI.parse(@subtitle_url)) if @subtitle_url.present?
+  
+      @video_response_debug = "Răspuns video: #{video_response.code} - #{video_response.message}" if video_response
+      @subtitle_response_debug = "Răspuns subtitrări: #{subtitle_response.code} - #{subtitle_response.message}" if subtitle_response
+  
+    rescue Aws::S3::Errors::ServiceError => e
+      # Afișează eroarea în caz de problemă la accesarea bucket-ului
+      @message = "A apărut o eroare la accesarea Wasabi: #{e.message}"
+    end
+  
+    render template: 'home/test'
+  end
+  
   
   
     
