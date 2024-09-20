@@ -1,5 +1,7 @@
 require 'net/http'
 require 'json'
+require 'aws-sdk-s3'
+  require 'open-uri'
 #require 'openssl'
 class HomeController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:newsletter]
@@ -44,130 +46,114 @@ class HomeController < ApplicationController
   end
   
   
-  def test
-  # Definim cele două URL-uri
- # Definim cele două URL-uri
- url1 = 'https://api.embedprivatevideo.com/embed.php?v=6'
- url2 = 'https://api.embedprivatevideo.com/embed.php?v=6&videos=7gb-odOHPRo&client=embedprivatevideo.com&etag=&_=1726783673625'
-
- # Funcție care face cererea HTTP și returnează un hash cu rezultatele
- def fetch_url_data(url)
-   uri = URI(url)
-
-   # Configurează cererea HTTP
-   http = Net::HTTP.new(uri.host, uri.port)
-   http.use_ssl = true
-   if File.exist?(Rails.root.join('cacert.pem'))
-    puts "Fișierul cacert.pem a fost găsit."
-  else
-    puts "Fișierul cacert.pem nu a fost găsit."
-  end
   
-   if Rails.env.production?
-     http.verify_mode = OpenSSL::SSL::VERIFY_PEER  # Verificare SSL în producție
-     
-     http.ca_file = Rails.root.join('cacert.pem').to_s
-   else
-     http.verify_mode = OpenSSL::SSL::VERIFY_NONE  # Dezactivează verificarea SSL pentru testare/local
-   end
-
-   # Trimite cererea
-  request = Net::HTTP::Get.new(uri.request_uri)
-  begin
-    response = http.request(request)
-  rescue OpenSSL::SSL::SSLError => e
-    Rails.logger.error "Eroare SSL detectată: #{e.message}"
-    Bugsnag.notify(e)  # Sau poți folosi acest tip de logare în Bugsnag pentru detalii suplimentare
-    raise e  # Re-aruncă eroarea pentru a o gestiona în altă parte
-  end
-
-  response
   
+  def test_wasabi_access
+    # Accesează credențialele Wasabi din Rails credentials
+    aws_access_key_id = Rails.application.credentials.dig(:wasabi, :access_key_id)
+    aws_secret_access_key = Rails.application.credentials.dig(:wasabi, :secret_access_key)
 
-   # Initializează hash-ul pentru rezultate
-   result = {
-     response_code: response.code,
-     response_body: response.body,
-     error_message: nil,
-     key: nil,
-     value: nil
-   }
+    if aws_access_key_id.nil? || aws_secret_access_key.nil?
+      render plain: "Credențialele Wasabi nu sunt setate corect în credentials.yml.enc."
+      return
+    end
 
-   # Verifică codul de status HTTP
-   if response.code.to_i == 500
-     puts "Eroare: Serverul a returnat 500 (Internal Server Error)"
-     result[:error_message] = "Eroare: Serverul a returnat 500 (Internal Server Error)"
-   elsif response.code.to_i != 200
-     puts "Eroare: Serverul a returnat codul HTTP #{response.code}"
-     result[:error_message] = "Eroare: Serverul a returnat codul HTTP #{response.code}"
-   end
-
-   # Verifică dacă răspunsul nu este gol și este valid JSON
-   if result[:response_body].nil? || result[:response_body].strip.empty?
-     puts "Răspunsul este gol!"
-     result[:error_message] = "Răspunsul este gol!"
-   else
-     # Parsează răspunsul JSON doar dacă este valid
-     begin
-       parsed_response = JSON.parse(result[:response_body])
-       result[:key], result[:value] = parsed_response.first
-
-       # Afișează valorile în consolă
-       puts("Cheia este: #{result[:key]}, Valoarea este: #{result[:value]}")
-     rescue JSON::ParserError => e
-       puts "Eroare la parsarea JSON: #{e.message}"
-       result[:error_message] = "Eroare la parsarea JSON: #{e.message}"
-     end
-   end
-
-   result
- end
-
- # Obține datele pentru fiecare URL și stochează-le în variabile de instanță separate
- @data_url1 = fetch_url_data(url1)
- @data_url2 = fetch_url_data(url2)
-
-
- url = 'https://api.embedprivatevideo.com/embed.php?v=6'
-  response = fetch_url_data(url)
-  
-  if response[:response_code] == '200'
-    puts "Cerere API reușită: Codul de răspuns 2000"
-  elsif response[:response_code] == '403'
-    puts "Eroare 403: Acces interzis la API"
-  else
-    puts "Cod de răspuns API: #{response[:response_code]}"
-  end
-  
-    @nonce = SecureRandom.base64(16)
-    
-    
-    #bun
-    #response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vjs.zencdn.net; style-src 'self' 'unsafe-inline' https://vjs.zencdn.net; media-src *; img-src 'self' https://s3.eu-central-2.wasabisys.com; connect-src 'self';" 
-    #end bun 
-    #response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' https://releases.flowplayer.org 'nonce-#{@nonce}'; style-src 'self' https://releases.flowplayer.org 'nonce-#{@nonce}'; font-src 'self'; media-src 'self' https://s3.eu-central-2.wasabisys.com https://ayushcell-videos.s3.eu-central-2.wasabisys.com; img-src 'self' https://s3.eu-central-2.wasabisys.com; connect-src 'self';"
+    # Configurare Wasabi S3 cu credențialele din Rails credentials
+    Aws.config.update({
+      region: 'eu-central-2',
+      credentials: Aws::Credentials.new(aws_access_key_id, aws_secret_access_key),
+      endpoint: 'https://s3.eu-central-2.wasabisys.com'
+    })
 
     s3_bucket = 'ayushcell-videos'
     s3_key = 'test/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.mp4'
-    subtitle_key = 'test/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.vtt'
-  
-    # Creează un presigner pentru a genera URL-ul semnat temporar
-    presigner = Aws::S3::Presigner.new(client: S3_CLIENT)
-  
-    # Generează URL-ul semnat temporar pentru video
-    @video_url = presigner.presigned_url(:get_object, 
-                                          bucket: s3_bucket, 
-                                          key: s3_key, 
-                                          expires_in: 28000, 
-                                          response_content_disposition: 'inline')
-  
-    # Generează URL-ul semnat temporar pentru subtitrări
-    @subtitle_url = presigner.presigned_url(:get_object, 
-                                             bucket: s3_bucket, 
-                                             key: subtitle_key, 
-                                             expires_in: 28000, 
-                                             response_content_disposition: 'inline')
+
+    begin
+      # Obține clientul S3
+      s3_resource = Aws::S3::Resource.new
+
+      # Verifică dacă obiectul video există în bucket
+      video_object = s3_resource.bucket(s3_bucket).object(s3_key)
+
+      if video_object.exists?
+        render plain: "Conexiunea la Wasabi a fost realizată cu succes și fișierul există!"
+      else
+        render plain: "Fișierul video nu există în Wasabi."
+      end
+    rescue Aws::S3::Errors::ServiceError => e
+      render plain: "A apărut o eroare la accesarea Wasabi: #{e.message}"
+    end
   end
+  
+  
+  
+  
+  
+  
+  
+    
+  
+    def test
+      # Accesează credențialele Wasabi din Rails credentials
+      aws_access_key_id = Rails.application.credentials.dig(:wasabi, :access_key_id)
+      aws_secret_access_key = Rails.application.credentials.dig(:wasabi, :secret_access_key)
+  
+      if aws_access_key_id.nil? || aws_secret_access_key.nil?
+        render plain: "Credențialele Wasabi nu sunt setate corect în credentials.yml.enc."
+        return
+      end
+  
+      # Configurare Wasabi S3 cu credențialele din Rails credentials
+      Aws.config.update({
+        region: 'eu-central-2',
+        credentials: Aws::Credentials.new(aws_access_key_id, aws_secret_access_key),
+        endpoint: 'https://s3.eu-central-2.wasabisys.com'
+      })
+  
+      s3_bucket = 'ayushcell-videos'
+      s3_key = 'test/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.mp4'
+      subtitle_key = 'test/Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.vtt'
+  
+      begin
+        # Obține clientul S3
+        s3_resource = Aws::S3::Resource.new
+  
+        # Verifică dacă obiectul video și subtitrările există în bucket
+        video_object = s3_resource.bucket(s3_bucket).object(s3_key)
+        subtitle_object = s3_resource.bucket(s3_bucket).object(subtitle_key)
+  
+        if video_object.exists? && subtitle_object.exists?
+          @message = "Conexiunea la Wasabi a fost realizată cu succes și fișierele video și subtitrări există!"
+          @video_url = video_object.public_url
+          @subtitle_url = subtitle_object.public_url
+        elsif video_object.exists?
+          @message = "Conexiunea la Wasabi a fost realizată cu succes, dar fișierul de subtitrări nu există."
+          @video_url = video_object.public_url
+        elsif subtitle_object.exists?
+          @message = "Conexiunea la Wasabi a fost realizată cu succes, dar fișierul video nu există."
+          @subtitle_url = subtitle_object.public_url
+        else
+          @message = "Conexiunea la Wasabi a fost realizată, dar nici fișierul video, nici subtitrările nu există."
+        end
+  
+        # Debugging - verifică răspunsurile HTTP
+        video_response = Net::HTTP.get_response(URI.parse(@video_url))
+        subtitle_response = Net::HTTP.get_response(URI.parse(@subtitle_url)) if @subtitle_url.present?
+  
+        @video_response_debug = "Răspuns video: #{video_response.code} - #{video_response.message}" if video_response
+        @subtitle_response_debug = "Răspuns subtitrări: #{subtitle_response.code} - #{subtitle_response.message}" if subtitle_response
+  
+      rescue Aws::S3::Errors::ServiceError => e
+        # Afișează eroarea în caz de problemă la accesarea bucket-ului
+        @message = "A apărut o eroare la accesarea Wasabi: #{e.message}"
+      end
+  
+      render template: 'home/test'
+    end
+  
+  
+    
+    
   
   def panouadmin
     @newsauupdate = 0 #acest cod este pt preluarea datelor de facturare pt an3 atat. 
@@ -688,7 +674,12 @@ end
   def newsletter_params
     params.require(:newsletter).permit(:nume, :email, :validat)
   end
-  
+  def test_file_access(url)
+    require 'net/http'
+    uri = URI.parse(url)
+    response = Net::HTTP.get_response(uri)
+    [response.is_a?(Net::HTTPSuccess), response] # Returnează atât rezultatul testului, cât și răspunsul complet
+  end
   
   
 end
