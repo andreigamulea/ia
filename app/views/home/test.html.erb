@@ -39,7 +39,7 @@
   <!-- Playerul Video.js pentru MP4 -->
   <% if @video_url.present? %>
     <video id="my-video" class="video-js" controls preload="auto" width="640" height="360" data-setup="{}" oncontextmenu="return false;" controlsList="nodownload">
-      <source src="<%= @video_url %>" type="video/mp4">
+      <source id="videoSource" src="<%= @video_url %>" type="video/mp4">
       <% if @subtitle_url.present? %>
         <track src="<%= @subtitle_url %>" kind="subtitles" srclang="en" label="English" default>
       <% end %>
@@ -55,6 +55,25 @@
     player.ready(function() {
       console.log('Player is ready');
     });
+
+    // Interval de reînnoire (8 minute/20s)
+    const renewInterval = 1 * 20 * 1000;
+
+    function renewPresignedUrl() {
+      fetch('/get_new_presigned_url')
+        .then(response => response.json())
+        .then(data => {
+          if (data.video_url) {
+            var videoSource = document.getElementById('videoSource');
+            videoSource.src = data.video_url;
+            player.load();  // Reînnoiește playerul cu noul URL
+          }
+        })
+        .catch(error => console.error('Eroare la reînnoirea URL-ului presemnat:', error));
+    }
+
+    // Setează un interval pentru a reînnoi URL-ul la fiecare 8 minute
+    setInterval(renewPresignedUrl, renewInterval);
   </script>
 
 </body>
