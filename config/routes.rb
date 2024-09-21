@@ -1,6 +1,6 @@
 Rails.application.routes.draw do 
   get 'rasayana/modul1', to: 'rasayana#modul1', as: 'rasayana_modul1'
-
+  post 'home/make_unlisted', to: 'home#make_unlisted'
   resources :localitatis do
     collection do
       post 'import_judete'

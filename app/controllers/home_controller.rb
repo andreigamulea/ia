@@ -152,6 +152,49 @@ class HomeController < ApplicationController
   end
   
   
+  def make_unlisted
+    # Scopurile necesare pentru YouTube API
+    scopes = ['https://www.googleapis.com/auth/youtube.force-ssl']
+  
+    # Obține token-ul de acces de la utilizatorul autentificat
+    token = current_user.google_token
+  
+    # Asigură-te că token-ul este valid
+    if token.nil?
+      render json: { error: 'Token-ul de autentificare este invalid sau expirat.' }, status: :unauthorized
+      return
+    end
+  
+    # Configurează clientul YouTube folosind token-ul de acces al utilizatorului
+    youtube_service = Google::Apis::YoutubeV3::YouTubeService.new
+    youtube_service.authorization = token
+  
+    # ID-ul videoclipului pe care dorești să-l faci nelistat
+    video_id = 'JdCDbM4gTwM'
+  
+    begin
+      # Obține detaliile videoclipului
+      video = youtube_service.list_videos('status', id: video_id).items.first
+  
+      if video
+        # Schimbă confidențialitatea videoclipului la 'unlisted'
+        video.status.privacy_status = 'unlisted'
+  
+        # Actualizează videoclipul cu noua setare
+        youtube_service.update_video('status', video)
+  
+        # Returnează un mesaj de succes
+        render json: { message: "Videoclipul cu ID #{video_id} a fost schimbat la 'unlisted'." }, status: :ok
+      else
+        render json: { error: "Videoclipul cu ID #{video_id} nu a fost găsit." }, status: :not_found
+      end
+  
+    rescue Google::Apis::ClientError => e
+      # Prinde orice eroare și afișează un mesaj
+      render json: { error: "A apărut o eroare: #{e.message}" }, status: :unprocessable_entity
+    end
+  end
+  
   
     
     
