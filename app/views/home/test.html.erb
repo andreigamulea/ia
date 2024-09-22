@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">  
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,23 +18,51 @@
 
   <h1>Test Video Player (HLS)</h1>
 
+  <!-- Afișează mesajul general -->
   <p><%= @message %></p>
 
+  <!-- Debugging fișier encryption.key -->
+  <h3>Debugging fișier encryption.key</h3>
+  <p><%= @encryption_key_debug %></p>
+
+  <!-- Debugging fragmente .ts -->
+  <h3>Debugging fragmente .ts</h3>
+  <% if @ts_files_debug.present? %>
+    <% @ts_files_debug.each do |file_name, url| %>
+      <p><strong>Fragment <%= file_name %>:</strong> <%= url %></p>
+    <% end %>
+  <% else %>
+    <p>Nicio informație despre fragmente .ts.</p>
+  <% end %>
+
+  <!-- Debugging playlist Base64 -->
+  <h3>Debugging playlist Base64</h3>
+  <p><%= @playlist_with_presigned_urls %></p>
+
   <!-- Playerul Video.js pentru HLS -->
-  <% if @video_url_hls.present? %>
+  <% if @playlist_with_presigned_urls.present? %>
     <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360" data-setup="{}" oncontextmenu="return false;" controlsList="nodownload">
-      <source id="videoSource" src="<%= @video_url_hls %>" type="application/x-mpegURL">
+      <source id="videoSource" src="data:application/x-mpegURL;base64,<%= @playlist_with_presigned_urls %>" type="application/x-mpegURL">
       Your browser does not support the video tag.
     </video>
   <% else %>
     <p>Video-ul nu este disponibil.</p>
   <% end %>
 
+  <!-- Inițializarea Video.js -->
   <script>
-    const videoPlayer = videojs('my-video');
-    videoPlayer.on('loadedmetadata', function() {
-      console.log('HLS video loaded successfully.');
-    });
+  // Inițializează playerul Video.js
+  const videoPlayer = videojs('my-video');
+
+  // Afișează mesaj în consolă la încărcarea video-ului
+  videoPlayer.on('loadedmetadata', function() {
+    console.log('HLS video loaded successfully.');
+  });
+
+  // Debugging pentru erori de redare video
+  videoPlayer.on('error', function() {
+    console.log('Error in video playback: ', videoPlayer.error());
+  });
   </script>
 
 </body>

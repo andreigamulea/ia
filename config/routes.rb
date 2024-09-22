@@ -81,7 +81,7 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get 'test_ssl_connection', to: 'home#test_ssl_connection'
   get 'get_new_presigned_url', to: 'home#get_new_presigned_url'
   get 'get_presigned_url', to: 'home#get_presigned_url'
-
+  get 'generate_presigned_key_url', to: 'home#generate_presigned_key_url'
 
   get 'home/test', to: 'home#test'
   get 'show_ip', to: 'home#show_ip'
