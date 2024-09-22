@@ -28,7 +28,8 @@ module Ia
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://localhost:3000', 'https://www.ayushcell.ro'  # Domenii permise
+        #origins 'http://localhost:3000', 'https://www.ayushcell.ro'  # Domenii permise
+        origins 'https://ayushcell.ro', 'https://www.ayushcell.ro'
         resource '*',
           headers: :any,
           methods: [:get, :post, :put, :patch, :delete, :options, :head],
