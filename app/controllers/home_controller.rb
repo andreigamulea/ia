@@ -94,106 +94,129 @@ class HomeController < ApplicationController
   
     
   
-  
   def test
     # Accesează credențialele Wasabi din Rails credentials
     aws_access_key_id = Rails.application.credentials.dig(:wasabi, :access_key_id)
     aws_secret_access_key = Rails.application.credentials.dig(:wasabi, :secret_access_key)
-
+  
     if aws_access_key_id.nil? || aws_secret_access_key.nil?
       render plain: "Credențialele Wasabi nu sunt setate corect în credentials.yml.enc."
       return
     end
-
+  
     # Configurare Wasabi S3 cu credențialele din Rails credentials
     Aws.config.update({
       region: 'eu-central-2',
       credentials: Aws::Credentials.new(aws_access_key_id, aws_secret_access_key),
       endpoint: 'https://s3.eu-central-2.wasabisys.com'
     })
-
-    s3_bucket = 'ayushcell'  # Numele bucket-ului Wasabi
-    s3_key_hls = '1-Minute Nature Background Sound/output.m3u8'  # Calea către playlistul HLS
-
+  
+    s3_bucket = 'ayushcell'
+    s3_key_hls = '1-Minute Nature Background Sound/output.m3u8'
+    s3_key_encryption = 'encryption.key'
+  
     begin
-      # Obține clientul S3
       s3_resource = Aws::S3::Resource.new
-
-      # Verifică dacă playlistul HLS există în bucket
       video_object_hls = s3_resource.bucket(s3_bucket).object(s3_key_hls)
-
-      if video_object_hls.exists?
-        @message = "Playlistul HLS a fost găsit cu succes!"
-        # URL presemnat pentru playlist (valabil 300 secunde)
-        @video_url_hls = video_object_hls.presigned_url(:get, expires_in: 300)
+      encryption_key_object = s3_resource.bucket(s3_bucket).object(s3_key_encryption)
+  
+      if video_object_hls.exists? && encryption_key_object.exists?
+        @message = "Playlistul HLS și fișierul encryption.key au fost găsite cu succes!"
+  
+        # Citește conținutul playlistului HLS
+        playlist_content = video_object_hls.get.body.read
+  
+        # Verifică dacă fișierul encryption.key este prezent
+        @encryption_key_debug = "Fișierul encryption.key există în Wasabi!"
+  
+        # Debugging pentru fragmentele .ts
+        @ts_files_debug = {}
+        playlist_with_presigned_urls = playlist_content.gsub(/output\d{3}\.ts/) do |fragment_name|
+          fragment_object = s3_resource.bucket(s3_bucket).object("1-Minute Nature Background Sound/#{fragment_name}")
+          
+          # Generează URL presemnat pentru fiecare fragment
+          if fragment_object.exists?
+            presigned_url = fragment_object.presigned_url(:get, expires_in: 180)  # valabil 3 ore
+            @ts_files_debug[fragment_name] = presigned_url
+            presigned_url
+          else
+            @ts_files_debug[fragment_name] = "Fragmentul nu există!"
+            "Fragmentul nu există!"
+          end
+        end
+  
+        # Codifică playlistul cu URL-uri presemnate în Base64 pentru player
+        @playlist_with_presigned_urls = Base64.encode64(playlist_with_presigned_urls)
       else
-        @message = "Playlistul HLS nu există în Wasabi."
+        @message = "Playlistul HLS sau fișierul encryption.key nu există în Wasabi."
+        @encryption_key_debug = "Fișierul encryption.key nu există în Wasabi!" if !encryption_key_object.exists?
       end
-
+  
     rescue Aws::S3::Errors::ServiceError => e
       @message = "Eroare la accesarea Wasabi: #{e.message}"
     end
-
+  
     render template: 'home/test'
   end
   
   
   
+  
+  
+  
+  
   def get_presigned_url
-    fragment_name = params[:fragment]
-
-    # Accesează credențialele Wasabi din Rails credentials
-    aws_access_key_id = Rails.application.credentials.dig(:wasabi, :access_key_id)
-    aws_secret_access_key = Rails.application.credentials.dig(:wasabi, :secret_access_key)
-
-    # Configurare Wasabi S3 cu credențialele din Rails credentials
-    Aws.config.update({
+    fragment_number = params[:fragment_number] # Parametrul primit din cererea clientului
+    fragment_name = "output#{fragment_number.to_s.rjust(3, '0')}.ts" # Numele fragmentului (de exemplu: output001.ts)
+  
+    # Configurația pentru Wasabi
+    s3 = Aws::S3::Resource.new(
+      access_key_id: Rails.application.credentials.wasabi[:access_key_id],
+      secret_access_key: Rails.application.credentials.wasabi[:secret_access_key],
       region: 'eu-central-2',
-      credentials: Aws::Credentials.new(aws_access_key_id, aws_secret_access_key),
       endpoint: 'https://s3.eu-central-2.wasabisys.com'
-    })
-
-    s3_bucket = 'ayushcell'
-
+    )
+  
+    bucket = s3.bucket('ayushcell') # Numele bucket-ului Wasabi
+    fragment_object = bucket.object("1-Minute Nature Background Sound/#{fragment_name}")
+  
+    # Generarea URL-ului presemnat pentru fragment, valabil 10 secunde
+    presigned_url = fragment_object.presigned_url(:get, expires_in: 10)
+  
+    # Returnarea URL-ului presemnat în format JSON
+    render json: { url: presigned_url }
+  end
+  
+  
+  def generate_presigned_key_url
+    s3 = Aws::S3::Resource.new(
+      region: 'eu-central-2',
+      access_key_id: Rails.application.credentials.dig(:wasabi, :access_key_id),
+      secret_access_key: Rails.application.credentials.dig(:wasabi, :secret_access_key),
+      endpoint: 'https://s3.eu-central-2.wasabisys.com'
+    )
+  
+    bucket = s3.bucket('ayushcell')  # Sau numele corect al bucket-ului tău
+    key_object = bucket.object('encryption.key')
+  
     begin
-      # Creează un obiect pentru fragmentul .ts
-      fragment_object = Aws::S3::Resource.new.bucket(s3_bucket).object("1-Minute Nature Background Sound/#{fragment_name}")
-
-      # Generează URL-ul presemnat valabil 60 secunde pentru fragmentul solicitat
-      presigned_url = fragment_object.presigned_url(:get, expires_in: 60)
-
-      # Redirecționează utilizatorul către URL-ul presemnat
-      redirect_to presigned_url
+      # Generăm URL-ul presemnat pentru fișierul encryption.key
+      presigned_url = key_object.presigned_url(:get, expires_in: 10800) # 3 ore
+  
+      # Debugging în consola serverului
+      Rails.logger.info "Presigned URL generated: #{presigned_url}"
+  
+      # Returnează URL-ul presemnat în JSON
+      render json: { url: presigned_url }
     rescue Aws::S3::Errors::ServiceError => e
-      render plain: "Eroare la accesarea Wasabi: #{e.message}", status: :internal_server_error
+      Rails.logger.error "Error generating presigned URL: #{e.message}"
+      render json: { error: "Error generating presigned URL: #{e.message}" }, status: :internal_server_error
     end
   end
   
   
   
   
-  
-  
-  def get_new_presigned_url
-    aws_access_key_id = Rails.application.credentials.dig(:wasabi, :access_key_id)
-    aws_secret_access_key = Rails.application.credentials.dig(:wasabi, :secret_access_key)
-  
-    Aws.config.update({
-      region: 'eu-central-2',
-      credentials: Aws::Credentials.new(aws_access_key_id, aws_secret_access_key),
-      endpoint: 'https://s3.eu-central-2.wasabisys.com'
-    })
-  
-    s3_bucket = 'ayushcell'
-    s3_key = 'Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.mp4'
-  
-    s3_resource = Aws::S3::Resource.new
-    video_object = s3_resource.bucket(s3_bucket).object(s3_key)
-  
-    presigned_url = video_object.presigned_url(:get, expires_in: 60)  # URL valabil 60 secunde
-  
-    render json: { video_url: presigned_url }
-  end
   
   
   
