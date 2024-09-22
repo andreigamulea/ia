@@ -85,7 +85,8 @@ class HomeController < ApplicationController
     end
   end
   
-  
+  #s3_key = 'Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.mp4'
+  #subtitle_key = 'Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.vtt'
   
   
   
@@ -93,69 +94,86 @@ class HomeController < ApplicationController
   
     
   
+  
   def test
     # Accesează credențialele Wasabi din Rails credentials
     aws_access_key_id = Rails.application.credentials.dig(:wasabi, :access_key_id)
     aws_secret_access_key = Rails.application.credentials.dig(:wasabi, :secret_access_key)
-  
+
     if aws_access_key_id.nil? || aws_secret_access_key.nil?
       render plain: "Credențialele Wasabi nu sunt setate corect în credentials.yml.enc."
       return
     end
-  
+
     # Configurare Wasabi S3 cu credențialele din Rails credentials
     Aws.config.update({
       region: 'eu-central-2',
       credentials: Aws::Credentials.new(aws_access_key_id, aws_secret_access_key),
       endpoint: 'https://s3.eu-central-2.wasabisys.com'
     })
-  
-    s3_bucket = 'ayushcell'  # Numele bucket-ului
-    s3_key = '1-Minute Nature Background Sound.mp4'  # Calea și fișierul video
-    subtitle_key = '1-Minute Nature Background Sound.vtt'  # Calea și fișierul subtitrărilor
-  
+
+    s3_bucket = 'ayushcell'  # Numele bucket-ului Wasabi
+    s3_key_hls = '1-Minute Nature Background Sound/output.m3u8'  # Calea către playlistul HLS
+
     begin
       # Obține clientul S3
       s3_resource = Aws::S3::Resource.new
-  
-      # Verifică dacă obiectul video și subtitrările există în bucket
-      video_object = s3_resource.bucket(s3_bucket).object(s3_key)
-      subtitle_object = s3_resource.bucket(s3_bucket).object(subtitle_key)
-  
-      if video_object.exists? && subtitle_object.exists?
-        @message = "Conexiunea la Wasabi a fost realizată cu succes și fișierele video și subtitrări există!"
-        @video_url = video_object.presigned_url(:get, expires_in: 20)  # URL presemnat valabil 10 minute
-        @subtitle_url = subtitle_object.presigned_url(:get, expires_in: 20) if subtitle_object.exists?
-      elsif video_object.exists?
-        @message = "Conexiunea la Wasabi a fost realizată cu succes, dar fișierul de subtitrări nu există."
-        @video_url = video_object.presigned_url(:get, expires_in: 20)
-      elsif subtitle_object.exists?
-        @message = "Conexiunea la Wasabi a fost realizată cu succes, dar fișierul video nu există."
-        @subtitle_url = subtitle_object.presigned_url(:get, expires_in: 20)
+
+      # Verifică dacă playlistul HLS există în bucket
+      video_object_hls = s3_resource.bucket(s3_bucket).object(s3_key_hls)
+
+      if video_object_hls.exists?
+        @message = "Playlistul HLS a fost găsit cu succes!"
+        # URL presemnat pentru playlist (valabil 300 secunde)
+        @video_url_hls = video_object_hls.presigned_url(:get, expires_in: 300)
       else
-        @message = "Conexiunea la Wasabi a fost realizată, dar nici fișierul video, nici subtitrările nu există."
+        @message = "Playlistul HLS nu există în Wasabi."
       end
-  
-      # Debugging - verifică răspunsurile HTTP doar dacă URL-urile sunt prezente
-      if @video_url.present?
-        video_response = Net::HTTP.get_response(URI.parse(@video_url))
-        @video_response_debug = "Răspuns video: #{video_response.code} - #{video_response.message}" if video_response
-      end
-  
-      if @subtitle_url.present?
-        subtitle_response = Net::HTTP.get_response(URI.parse(@subtitle_url))
-        @subtitle_response_debug = "Răspuns subtitrări: #{subtitle_response.code} - #{subtitle_response.message}" if subtitle_response
-      end
-  
+
     rescue Aws::S3::Errors::ServiceError => e
-      # Afișează eroarea în caz de problemă la accesarea bucket-ului
-      @message = "A apărut o eroare la accesarea Wasabi: #{e.message}"
+      @message = "Eroare la accesarea Wasabi: #{e.message}"
     end
-  
+
     render template: 'home/test'
   end
   
-  # Metodă pentru a genera un nou URL presemnat la cerere (Ajax request)
+  
+  
+  def get_presigned_url
+    fragment_name = params[:fragment]
+
+    # Accesează credențialele Wasabi din Rails credentials
+    aws_access_key_id = Rails.application.credentials.dig(:wasabi, :access_key_id)
+    aws_secret_access_key = Rails.application.credentials.dig(:wasabi, :secret_access_key)
+
+    # Configurare Wasabi S3 cu credențialele din Rails credentials
+    Aws.config.update({
+      region: 'eu-central-2',
+      credentials: Aws::Credentials.new(aws_access_key_id, aws_secret_access_key),
+      endpoint: 'https://s3.eu-central-2.wasabisys.com'
+    })
+
+    s3_bucket = 'ayushcell'
+
+    begin
+      # Creează un obiect pentru fragmentul .ts
+      fragment_object = Aws::S3::Resource.new.bucket(s3_bucket).object("1-Minute Nature Background Sound/#{fragment_name}")
+
+      # Generează URL-ul presemnat valabil 60 secunde pentru fragmentul solicitat
+      presigned_url = fragment_object.presigned_url(:get, expires_in: 60)
+
+      # Redirecționează utilizatorul către URL-ul presemnat
+      redirect_to presigned_url
+    rescue Aws::S3::Errors::ServiceError => e
+      render plain: "Eroare la accesarea Wasabi: #{e.message}", status: :internal_server_error
+    end
+  end
+  
+  
+  
+  
+  
+  
   def get_new_presigned_url
     aws_access_key_id = Rails.application.credentials.dig(:wasabi, :access_key_id)
     aws_secret_access_key = Rails.application.credentials.dig(:wasabi, :secret_access_key)
@@ -167,12 +185,12 @@ class HomeController < ApplicationController
     })
   
     s3_bucket = 'ayushcell'
-    s3_key = '1-Minute Nature Background Sound.mp4'
+    s3_key = 'Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River.mp4'
   
     s3_resource = Aws::S3::Resource.new
     video_object = s3_resource.bucket(s3_bucket).object(s3_key)
   
-    presigned_url = video_object.presigned_url(:get, expires_in: 20)  # URL valabil 10 minute
+    presigned_url = video_object.presigned_url(:get, expires_in: 60)  # URL valabil 60 secunde
   
     render json: { video_url: presigned_url }
   end
