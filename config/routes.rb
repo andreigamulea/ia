@@ -1,6 +1,7 @@
 Rails.application.routes.draw do 
   get 'rasayana/modul1', to: 'rasayana#modul1', as: 'rasayana_modul1'
   post 'home/make_unlisted', to: 'home#make_unlisted'
+  
   resources :localitatis do
     collection do
       post 'import_judete'
@@ -78,6 +79,9 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
 
 
   get 'test_ssl_connection', to: 'home#test_ssl_connection'
+  get 'get_new_presigned_url', to: 'home#get_new_presigned_url'
+  get 'get_presigned_url', to: 'home#get_presigned_url'
+
 
   get 'home/test', to: 'home#test'
   get 'show_ip', to: 'home#show_ip'
