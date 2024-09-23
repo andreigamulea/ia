@@ -112,7 +112,7 @@ class HomeController < ApplicationController
     })
   
     s3_bucket = 'ayushcell'
-    s3_key_hls = '1-Minute Nature Background Sound/output.m3u8'
+    s3_key_hls = 'Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River/output.m3u8'
     s3_key_encryption = 'encryption.key'
   
     begin
@@ -132,7 +132,7 @@ class HomeController < ApplicationController
         # Debugging pentru fragmentele .ts
         @ts_files_debug = {}
         playlist_with_presigned_urls = playlist_content.gsub(/output\d{3}\.ts/) do |fragment_name|
-          fragment_object = s3_resource.bucket(s3_bucket).object("1-Minute Nature Background Sound/#{fragment_name}")
+          fragment_object = s3_resource.bucket(s3_bucket).object("Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River/#{fragment_name}")
           
           # Generează URL presemnat pentru fiecare fragment
           if fragment_object.exists?
@@ -162,32 +162,7 @@ class HomeController < ApplicationController
   
   
   
-  
-  
-  
-  def get_presigned_url
-    fragment_number = params[:fragment_number] # Parametrul primit din cererea clientului
-    fragment_name = "output#{fragment_number.to_s.rjust(3, '0')}.ts" # Numele fragmentului (de exemplu: output001.ts)
-  
-    # Configurația pentru Wasabi
-    s3 = Aws::S3::Resource.new(
-      access_key_id: Rails.application.credentials.wasabi[:access_key_id],
-      secret_access_key: Rails.application.credentials.wasabi[:secret_access_key],
-      region: 'eu-central-2',
-      endpoint: 'https://s3.eu-central-2.wasabisys.com'
-    )
-  
-    bucket = s3.bucket('ayushcell') # Numele bucket-ului Wasabi
-    fragment_object = bucket.object("1-Minute Nature Background Sound/#{fragment_name}")
-  
-    # Generarea URL-ului presemnat pentru fragment, valabil 10 secunde
-    presigned_url = fragment_object.presigned_url(:get, expires_in: 10)
-  
-    # Returnarea URL-ului presemnat în format JSON
-    render json: { url: presigned_url }
-  end
-  
-  
+  # Generate presigned URL for encryption key
   def generate_presigned_key_url
     s3 = Aws::S3::Resource.new(
       region: 'eu-central-2',
@@ -213,7 +188,6 @@ class HomeController < ApplicationController
       render json: { error: "Error generating presigned URL: #{e.message}" }, status: :internal_server_error
     end
   end
-  
   
   
   
