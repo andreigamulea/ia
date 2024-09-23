@@ -126,17 +126,17 @@ class HomeController < ApplicationController
         # Citește conținutul playlistului HLS
         playlist_content = video_object_hls.get.body.read
   
-        # Verifică dacă fișierul encryption.key este prezent
+        # Debugging pentru fișierul encryption.key
         @encryption_key_debug = "Fișierul encryption.key există în Wasabi!"
   
-        # Debugging pentru fragmentele .ts
+        # Debugging pentru fragmente .ts
         @ts_files_debug = {}
         playlist_with_presigned_urls = playlist_content.gsub(/output\d{3}\.ts/) do |fragment_name|
           fragment_object = s3_resource.bucket(s3_bucket).object("Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River/#{fragment_name}")
-          
-          # Generează URL presemnat pentru fiecare fragment
+  
+          # Generează URL presemnat pentru fiecare fragment cu o valabilitate mai mare (de exemplu, 1 oră)
           if fragment_object.exists?
-            presigned_url = fragment_object.presigned_url(:get, expires_in: 180)  # valabil 3 ore
+            presigned_url = fragment_object.presigned_url(:get, expires_in: 360000)  # valabil 1 oră
             @ts_files_debug[fragment_name] = presigned_url
             presigned_url
           else
@@ -158,6 +158,7 @@ class HomeController < ApplicationController
   
     render template: 'home/test'
   end
+  
   
   
   
