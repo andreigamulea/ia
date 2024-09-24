@@ -68,6 +68,7 @@
  </div>
   </div>
 <section class="cm">  
+
 <br>
 <h2 style="font-size:22px;">Din subiectele abordate in cadrul acestui curs:</h2>
 <br>
@@ -116,8 +117,10 @@
 <p>Participarea la acest modul de specializare reprezintă o investiție valoroasă pentru cei interesați de aprofundarea cunoștințelor în Ayurveda. Costul pentru întregul modul este de 780 lei, o sumă accesibilă, raportată la complexitatea și valoarea informațiilor oferite pe parcursul celor patru luni de studiu intensiv.</p> 
 <p>Pentru a facilita accesul, există opțiunea de a achita această sumă în patru rate lunare de câte 195 de lei, începând din luna octombrie, urmată de noiembrie, decembrie 2024 și ianuarie 2025. Este necesar ca plățile să fie realizate în ordine cronologică, ceea ce înseamnă că, de exemplu, luna decembrie nu poate fi achitată fără plata lunii noiembrie.</p> 
 <p>Cei care optează pentru achitarea integrală la începutul cursului au oportunitatea de a beneficia de un preț mai mic, plătind în total suma de 720 lei pentru întregul modul. Această opțiune aduce nu doar un avantaj financiar, ci și confortul de a elimina preocupările legate de plățile lunare, oferind astfel posibilitatea de a ne concentra pe deplin asupra parcursului de învățare.</p> 
-<h3><strong>Durata accesului la curs</strong></h3> 
-<p>Participanții care au ales accesul complet vor avea acces la vizionarea înregistrărilor cursului pentru o perioadă de 90 de zile de la data finalizării acestui modul.</p>
+<h3><strong>Extinderea perioadei de vizionare</strong></h3> 
+<p>Pentru a oferi mai multă flexibilitate în gestionarea programului personal, punem la dispoziție opțiunea de a viziona înregistrările cursurilor direct pe site, oricând, la orice oră. Această opțiune permite accesul la materialele video fără restricții, atât pe durata cursului, cât și pentru o perioadă extinsă de 90 de zile după finalizarea modulului, oferind spațiu suficient pentru a înțelege și revizui în profunzime materialele studiate.</p>
+<p><strong>Costul și condițiile</strong>: Opțiunea presupune un cost suplimentar de 250 lei și oferă acces exclusiv la înregistrările pentru care s-a efectuat plata. De exemplu, dacă s-a achitat doar suma corespunzatoare pentru luna octombrie, accesul va fi limitat la acele înregistrări, fără a include lunile neplătite, precum noiembrie, decembrie sau ianuarie.</p>
+<p><strong>Accesibilitatea opțiunii</strong> Opțiunea devine accesibilă după achitarea primei luni de curs sau după plata integrală a modulului, în funcție de preferințele participantului. Aceasta oferă flexibilitatea de a reveni asupra materialelor în funcție de plățile efectuate.</p>
 
 </section>
 
@@ -180,6 +183,7 @@
 
 
 Numarul lunilor achitate: <%=@nr_luni_achitate%><br>
+has_acces_video=<%=@has_acces_video%><br>
 <%if current_user && (current_user.role==1 || @nr_luni_achitate>0)%>
     <%= link_to 'Vezi Video', tvs_rasayana1_path %><br>
 <% end %>
