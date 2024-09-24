@@ -181,9 +181,10 @@
 
 </div>
 
-
+<%if current_user && current_user.role==1
 Numarul lunilor achitate: <%=@nr_luni_achitate%><br>
 has_acces_video=<%=@has_acces_video%><br>
+<% end %>
 <%if current_user && (current_user.role==1 || @nr_luni_achitate>0)%>
     <%= link_to 'Vezi Video', tvs_rasayana1_path %><br>
 <% end %>
