@@ -133,10 +133,10 @@ class HomeController < ApplicationController
         @ts_files_debug = {}
         playlist_with_presigned_urls = playlist_content.gsub(/output\d{3}\.ts/) do |fragment_name|
           fragment_object = s3_resource.bucket(s3_bucket).object("Forest_Waterfall_Nature_Sounds_1_Hour_Relaxing_Birds_Chirping_River/#{fragment_name}")
-  
-          # Generează URL presemnat pentru fiecare fragment cu o valabilitate mai mare (de exemplu, 1 oră)
+        
+          # Generează URL presemnat pentru fiecare fragment cu o valabilitate de 7 zile
           if fragment_object.exists?
-            presigned_url = fragment_object.presigned_url(:get, expires_in: 360000)  # valabil 1 oră
+            presigned_url = fragment_object.presigned_url(:get, expires_in: 604800)  # valabil 7 zile
             @ts_files_debug[fragment_name] = presigned_url
             presigned_url
           else
@@ -144,6 +144,7 @@ class HomeController < ApplicationController
             "Fragmentul nu există!"
           end
         end
+        
   
         # Codifică playlistul cu URL-uri presemnate în Base64 pentru player
         @playlist_with_presigned_urls = Base64.encode64(playlist_with_presigned_urls)
@@ -177,7 +178,7 @@ class HomeController < ApplicationController
   
     begin
       # Generăm URL-ul presemnat pentru fișierul encryption.key
-      presigned_url = key_object.presigned_url(:get, expires_in: 10800) # 3 ore
+      presigned_url = key_object.presigned_url(:get, expires_in: 604800) # 7 zile
   
       # Debugging în consola serverului
       Rails.logger.info "Presigned URL generated: #{presigned_url}"
