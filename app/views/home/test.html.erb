@@ -11,12 +11,22 @@
   <!-- Include Video.js script -->
   <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
 
-  <!-- HLS.js fallback for browsers without HLS support -->
+  <!-- Include HLS.js for Video.js -->
   <script src="https://cdn.jsdelivr.net/npm/videojs-contrib-hls@5.14.1/dist/videojs-contrib-hls.min.js"></script>
 </head>
 <body>
 
   <h1>Test Video Player (HLS)</h1>
+
+  <!-- Playerul Video.js pentru HLS -->
+  <% if @playlist_with_presigned_urls.present? %>
+    <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360" data-setup="{}" oncontextmenu="return false;" controlsList="nodownload">
+      <source id="videoSource" src="data:application/x-mpegURL;base64,<%= @playlist_with_presigned_urls %>" type="application/x-mpegURL">
+      Your browser does not support the video tag.
+    </video>
+  <% else %>
+    <p>Video-ul nu este disponibil.</p>
+  <% end %>
 
   <!-- Afișează mesajul general -->
   <p><%= @message %></p>
@@ -25,15 +35,7 @@
   <h3>Debugging fișier encryption.key</h3>
   <p><%= @encryption_key_debug %></p>
 
-  <% if @playlist_with_presigned_urls.present? %>
-  <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360" data-setup="{}" oncontextmenu="return false;" controlsList="nodownload">
-    <source id="videoSource" src="data:application/x-mpegURL;base64,<%= @playlist_with_presigned_urls %>" type="application/x-mpegURL">
-    Your browser does not support the video tag.
-  </video>
-<% else %>
-  <p>Playlistul HLS nu a fost generat corect sau nu există. Verifică URL-urile presemnate și expirarea lor.</p>
-<% end %>
-
+  <!-- Debugging fragmente .ts -->
   <h3>Debugging fragmente .ts</h3>
   <% if @ts_files_debug.present? %>
     <% @ts_files_debug.each do |file_name, url| %>
@@ -47,15 +49,7 @@
   <h3>Debugging playlist Base64</h3>
   <p><%= @playlist_with_presigned_urls %></p>
 
-  <!-- Playerul Video.js pentru HLS -->
-  <% if @playlist_with_presigned_urls.present? %>
-    <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360" data-setup="{}" oncontextmenu="return false;" controlsList="nodownload">
-      <source id="videoSource" src="data:application/x-mpegURL;base64,<%= @playlist_with_presigned_urls %>" type="application/x-mpegURL">
-      Your browser does not support the video tag.
-    </video>
-  <% else %>
-    <p>Video-ul nu este disponibil.</p>
-  <% end %>
+  
 
   <!-- Inițializarea Video.js -->
   <script>
@@ -72,13 +66,6 @@
     console.log('Error in video playback: ', videoPlayer.error());
   });
   </script>
-  <script>
-  if (videojs.getTech('Html5').isSupported()) {
-    console.log('Browserul suportă HLS nativ.');
-  } else {
-    console.log('Browserul nu suportă HLS nativ, folosim HLS.js fallback.');
-  }
-</script>
 
 </body>
 </html>
