@@ -146,6 +146,9 @@ class FacturaproformasController < ApplicationController
     @df = DateFacturare.find_by(user_id: @factura.user_id)
     @user = User.find_by(id: @factura.user_id)
     @cpa = @user&.cpa || '-'
+    @obs = @factura&.obs
+
+
     
     if @df.nil?
       @df = DateFacturare.new
@@ -299,7 +302,7 @@ class FacturaproformasController < ApplicationController
       when 'cod214'
         datacomenzii = Date.new(2024, 8, 31)
       when 'cod215'
-        datacomenzii = Date.new(2024, 9, 30)
+        datacomenzii = Date.new(2024, 9, 25)
       when 'cod216'
         datacomenzii = Date.new(2024, 10, 31)
       when 'cod217'
@@ -474,7 +477,7 @@ class FacturaproformasController < ApplicationController
 
     ## Only allow a list of trusted parameters through.
     def facturaproforma_params
-      params.require(:facturaproforma).permit(:comanda_id, :user_id, :prod_id, :numar_factura, :numar_comanda, :data_emiterii, :prenume, :nume, :nume_companie, :cui, :tara, :localitate, :judet, :strada, :numar_adresa, :cod_postal, :altedate, :telefon, :produs, :cantitate, :pret_unitar, :valoare_tva, :valoare_totala, :cod_firma, :status, :serie_factura, :plata_prin, :data_platii)
+      params.require(:facturaproforma).permit(:comanda_id, :user_id, :prod_id, :numar_factura, :numar_comanda, :data_emiterii, :prenume, :nume, :nume_companie, :cui, :tara, :localitate, :judet, :strada, :numar_adresa, :cod_postal, :altedate, :telefon, :produs, :cantitate, :pret_unitar, :valoare_tva, :valoare_totala, :cod_firma, :status, :serie_factura, :plata_prin, :data_platii, :obs)
     end
     def set_user_admin
       if !current_user
