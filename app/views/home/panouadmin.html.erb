@@ -284,7 +284,12 @@ ATENTIE! Din sepembrie cand o sa adaugam produsele pt platile pe lunile 2024-202
     ci sa actualizeze facturile proforme  </br>
     <%= link_to 'Preluare - Nume si CPA in User', preluare_nume_cpa_xlsxtopg_path, method: :get %><br>
     <%= link_to 'Actualizare CPA in DateFacturare', actualizare_cpa_date_facturare_xlsxtopg_path, method: :get %></br>
-  <%= link_to 'Vezi toate facturile proforma', facturaproformas_path %></br>
+    ( <%= link_to 'Vezi toate facturile proforma', facturaproformas_path %>
+     aici pot edita facturile proforme de la Ayus Grup  ) (ATENTIE : nu face o factura noua pana nu pui in stripe_webhooks_controller.rb codul produsului pt a evita
+     sa faci factura pe Ayushcell cand se face plata!!!!! si produsul trebuie sa fie doar cu dedicatie pt Ayush Grup (daca il pui acolo la stripe_webhooks_controller.rb acelui
+      produs nu i se va emite factura!!!!) aici: if !["cod36", "cod37",...)
+     (se pot face si noi facturi -este necesar sa fie o comanda asociata pe care sa o fac inainte. Atentie: daca fac o comanda noua manual trebuie apoi sa modific in
+     ComenziProd din Finalizata in Initiata pt ca factura nu este platita.- cu rails c)</br>
   </div>
 
   <% end %>
