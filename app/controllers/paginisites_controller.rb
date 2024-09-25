@@ -1203,9 +1203,19 @@ def export_to_xlsx_summary_2024_2025
     puts "Mapare coduri - ID: #{mapare_coduri_id.inspect}"
 
     user_ids = ComenziProd.where(prod_id: mapare_coduri_id.values, validat: "Finalizata").distinct.pluck(:user_id)
-    users = User.where(id: user_ids)
 
+  # Obține user_ids care au plătit `cod195`
+  user_ids_cu_cod195 = ComenziProd.where(prod_id: mapare_coduri_id['cod195'], validat: "Finalizata").distinct.pluck(:user_id)
+
+  # Filtrează doar utilizatorii care au plătit și `cod195`
+  user_ids_final = user_ids & user_ids_cu_cod195
+
+  # Încărcăm utilizatorii finali care au plătit și `cod195`
+  users = User.where(id: user_ids_final)
+  puts "Aceștia sunt userii care au plătit cod195: #{users.inspect}"
+    puts("Acestia sunt userii: #{users}")
     puts "User IDs: #{user_ids.inspect}"
+    puts "Users găsiți: #{users.inspect}"
 
     user_payments = {}
 
@@ -1224,38 +1234,47 @@ def export_to_xlsx_summary_2024_2025
       comenzi_for_user.each do |comanda|
         cod = Prod.find(comanda.prod_id).cod
         pret = Prod.find(comanda.prod_id).pret
-      
+
+        puts "Produs procesat: cod=#{cod}, pret=#{pret}"
+
         # Logica personalizată pentru preț
-        if user.email == "nagy.edvin@yahoo.com" && cod != "cod195" # exemplu de logică personalizată
+        if user.email == "nagy.edvin@yahoo.com" && cod != "cod195"
           pret = 35
+          puts "Preț personalizat pentru #{user.email}: #{pret}"
         end
-      
+
+        user_payments[user.email] ||= { 'Inscriere' => 0, 'An cu reducere' => 0 }
+        puts "Structura inițializată pentru #{user.email}: #{user_payments[user.email].inspect}"
+
         case cod
         when 'cod195'
-          user_payments[user.email] ||= { 'Inscriere' => 0, 'An cu reducere' => 0 }
           user_payments[user.email]['Inscriere'] += pret
         when 'cod196'
-          user_payments[user.email] ||= { 'Inscriere' => 0, 'An cu reducere' => 0 }
           user_payments[user.email]['An cu reducere'] += pret
-          # Completează toate lunile până la iunie inclusiv
           lunile[0..8].each { |luna| user_payments[user.email][luna] = 180 }
           user_payments[user.email]['Iulie 2025'] = 'Gratuit'
         else
-          # Calculează corect indexul pentru codurile care nu sunt 'cod195' sau 'cod196'
           if cod.slice(3..).to_i >= 197
             index_luna = cod.slice(3..).to_i - 197
             luna_corespondenta = lunile[index_luna]
-            user_payments[user.email][luna_corespondenta] = pret if luna_corespondenta
+            puts "Procesăm cod #{cod} pentru luna corespondentă: #{luna_corespondenta}"
+
+            if luna_corespondenta
+              user_payments[user.email][luna_corespondenta] ||= 0
+              user_payments[user.email][luna_corespondenta] += pret
+              puts "Plată adăugată pentru #{user.email}: #{luna_corespondenta} = #{user_payments[user.email][luna_corespondenta]}"
+            else
+              puts "ATENȚIE: Nu există lună corespondentă pentru codul #{cod}!"
+            end
           end
         end
       end
-      
-      
 
       puts "Sfârșitul buclei `comenzi_for_user.each` pentru utilizatorul #{user.email}"
+      puts "Plăți curente pentru #{user.email}: #{user_payments[user.email].inspect}"
     end
 
-    puts "da3 - sfârșitul procesării user_payments"
+    puts "da3 - sfârșitul procesării user_payments: #{user_payments.inspect}"
 
     # Cod pentru generarea fișierului Excel
     begin
@@ -1335,7 +1354,6 @@ def export_to_xlsx_summary_2024_2025
       puts "Eroare la scrierea în worksheet: #{e.message}"
     end
 
-  ensure
     puts "da7 - blocul ensure"
     # Cleanup the temporary file
     # File.delete(file_path) if File.exist?(file_path)
