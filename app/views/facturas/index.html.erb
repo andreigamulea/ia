@@ -154,8 +154,9 @@
         <%if factura.status=='Proforma'%>
         <td style="text-align: center; height: 50px; vertical-align:middle;">
               <%= link_to 'Factura PDF', facturaproforma_path(factura, format: :pdf), class: "btn btn-primary btn-sm" %>
+              <%if factura.valoare_totala>0 && factura.obs!="stornata"%>
               <%= button_to 'Plătește acum', create_stripe_session_facturaproforma_path(factura), method: :post, class: 'btn btn-primary', data: { turbo: false } %>
-              
+              <%end%>
         </td>
 
         <%else%>

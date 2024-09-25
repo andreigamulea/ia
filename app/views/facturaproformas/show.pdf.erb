@@ -169,11 +169,13 @@
     </table>
    
   </div>
+
   <div style="clear: both;"></div> <!-- Necesar pentru a evita problemele de înălțime cauzate de elementele "plutitoare" -->
 </div>
-
-
-
+<%if @obs!=nil && @obs!="stornata"%>
+<br><br><br><br>
+<%=@obs%>
+<%end%>
 <% if @factura.status && @factura.status == 'anulata' %>
 <img src="<%= asset_url 'anulare_factura.png' %>" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
 
