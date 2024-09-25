@@ -302,7 +302,7 @@ class FacturaproformasController < ApplicationController
       when 'cod214'
         datacomenzii = Date.new(2024, 8, 31)
       when 'cod215'
-        datacomenzii = Date.new(2024, 9, 25)
+        datacomenzii = Date.new(2024, 9, 30)
       when 'cod216'
         datacomenzii = Date.new(2024, 10, 31)
       when 'cod217'

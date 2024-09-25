@@ -577,9 +577,25 @@ end
   end  
       
 
-def an
-  @prod = Prod.find_by(curslegatura: 'platageneralacurs', status: 'activ')
-end  
+  def an
+    # Definim array-ul cu emailuri permise
+    emailuri_permise = ["v_ionela@yahoo.com"]
+  
+    # Verificăm dacă utilizatorul curent este conectat și are rolul 1
+    if current_user && (current_user.role == 1)
+      @prod = Prod.find_by(curslegatura: 'platageneralacurs90', status: 'activ')
+  
+    # Verificăm dacă emailul utilizatorului curent se află în lista de emailuri permise
+    elsif current_user && emailuri_permise.include?(current_user.email)
+      @prod = Prod.find_by(curslegatura: 'platageneralacurs90', status: 'activ')
+  
+    # În caz contrar, găsim produsul cu statusul 'inactiv'
+    else
+      @prod = Prod.find_by(curslegatura: 'platageneralacurs', status: 'activ')
+    end
+  
+    
+  end
 #########start 2024-2025
 
 def cursayurveda2425
