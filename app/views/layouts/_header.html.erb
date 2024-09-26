@@ -5,22 +5,21 @@
                 
                 <img src="<%= image_path('ayus_logo.webp') %>" alt="Ayus Cell Romania" class="logo" />
             </a>
-                </a>
+              
         </div>
         <nav class="navcontainer">
             <div class="menu-toggler" onclick="toggleMobileMenu()">
                 
             
-            <img src="<%= image_path('mbico1.png') %>" width="60px" height="60px" id="menuTogglerIconInactive" style="display: block;" alt="MenuTooglerUp" />
+            <img src="<%= image_path('mbico1.png') %>" width="60" height="60" id="menuTogglerIconInactive" style="display: block;" alt="MenuTooglerUp" />
 
-            <img src="<%= image_path('mbico2.png') %>" width="60px" height="60px" id="menuTogglerIconActive" style="display: none;" alt="MenuTooglerDown" />
+            <img src="<%= image_path('mbico2.png') %>" width="60" height="60" id="menuTogglerIconActive" style="display: none;" alt="MenuTooglerDown" />
             
             </div>
             <ul class="nav-menu" id="navMenu">
-                <li><%= link_to 'Acasa', root_path, class: 'no-turbo' %></li>
-     
-                
+                <li><%= link_to 'Acasa', root_path, class: 'no-turbo' %>
                 </li>
+                                  
                 <li class="nav-item has-submenu">
                 <a class="nav-link" href="#">Cursuri</a>
                 <ul class="submenu">
