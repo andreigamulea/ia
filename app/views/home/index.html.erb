@@ -1,228 +1,148 @@
-
 <% content_for :title, "Cursuri de Ayurveda I Aplicații Plante I Vizionări Tabere și Seminarii" %>
-<meta name="google-site-verification" content="9HgEdMpDb1JoRSZd2a_J0nQIONCxI_fr2_pnGUfisl8" />
-<% content_for :description, "Ayush Cell Romania: Cursuri de Ayurveda, Nutriție, Aplicații Plante Medicinale și Resurse Vegetale" %>
-<% content_for :keywords, "cursuri de ayurveda, cursuri de nutritie, plante medicinale, alimentație sănătoasă, calculator nutrițional, dieta, tabere de ayurveda," %>
-<% content_for :canonical do %>
-  <link rel="canonical" href="https://www.ayushcell.ro">
-<% end %>
-<div class="container" id="first-page">
-<%= render 'layouts/sideleft' %>
-
-<main class="cr" style="background-color: aliceblue;">
+<meta name="google-site-verification" content="9HgEdMpDb1JoRSZd2a_J0nQIONCxI_fr2_pnGUfisl8" /><% content_for :description, "Ayush Cell Romania: Cursuri de Ayurveda, Nutriție, Aplicații Plante Medicinale și Resurse Vegetale" %><% content_for :keywords, "cursuri de ayurveda, cursuri de nutritie, plante medicinale, alimentație sănătoasă, calculator nutrițional, dieta, tabere de ayurveda," %><% content_for :canonical do %>
+<link rel="canonical" href="https://www.ayushcell.ro"><% end %> <div class="container" id="first-page"><%= render 'layouts/sideleft' %> <main class="cr" style="background-color: aliceblue;">
     <h1 class="first-tittle">Ayush Cell Romania: Cursuri, Aplicații, Tabere, Vizionări</h1>
-
-   <h2 class="cr-title"> 📚 Înscrieri deschise pentru cursurile de Ayurveda</h2>   
-   <section class="line">
+    <h2 class="cr-title"> 📚 Înscrieri deschise pentru cursurile de Ayurveda</h2>
+    <section class="line">
       <div class="col" style=" align-items: center; text-align: center;">
-      <a href="<%= cursayurveda2425_path %>"><img src="<%= image_path('cursuri.webp') %>" alt="Curs de Ayurveda" style='text-align:center; width: 100%; max-width: 350px;'></a>
-         <h2>Curs de Ayurveda - sesiunea octombrie 2024 - iulie 2025</h2>
-         <div class="desc" style="max-width:720px;">Participă la cursurile de Ayurveda organizate de Ayush Cell Romania & AMN-Romania. Aceste cursuri sunt accesibile tuturor celor interesați, indiferent de pregătirea profesională. Înscrierile pentru noua grupă sunt acum deschise.</div>
-         <div class="btn-fp">
-         <%= link_to 'Vezi mai mult..', cursayurveda2425_path, class: 'btn-fp-link' %>
-         </div>
+        <a href="<%= cursayurveda2425_path %>">
+          <img src="<%= image_path('cursuri.webp') %>" alt="Curs de Ayurveda" style='text-align:center; width: 100%; max-width: 350px;'>
+        </a>
+        <h2>Curs de Ayurveda - sesiunea octombrie 2024 - iulie 2025</h2>
+        <div class="desc" style="max-width:720px;">Participă la cursurile de Ayurveda organizate de Ayush Cell Romania & AMN-Romania. Aceste cursuri sunt accesibile tuturor celor interesați, indiferent de pregătirea profesională. Înscrierile pentru noua grupă sunt acum deschise.</div>
+        <div class="btn-fp"><%= link_to 'Vezi mai mult..', cursayurveda2425_path, class: 'btn-fp-link' %> </div>
       </div>
-
-
       <div class="col" style=" align-items: center; text-align: center;">
-      <a href="/traditia_ayurvedica/amnaya"><img src="<%= image_path('traditia-ayurvedica.webp') %>" alt="Traditia Ayurvedică - Amnaya Tantraka" style='text-align:center; width: 100%; max-width: 350px;'></a>
-         <h2>Traditia Ayurvedică - Amnaya Tantraka</h2>
-         <div class="desc" style="max-width:720px;">Termenul sanscrit Amnaya are sensul de tradiţie spirituală sacră. Semnificaţia acestui termen este valabilă pentru orice fel de cunoaştere superioară, esenţială, care are o origine dumnezeiască şi care este oferită fiinţelor umane prin intermediul revelaţiilor unor mari spirite şi a unor fiinţe excepţionale ce au fost inspirate în mod direct de Dumnezeu.</div>
-         <div class="btn-fp">
-         <%= link_to 'Vizionează seminarii..', amnaya_path, class: 'btn-fp-link' %>
-         </div>
+        <a href="/rasayana/modul1">
+          <img src="<%= image_path('RasayanaM01.webp') %>" alt="Curs de Rasayana Modulul 1" style='text-align:center; width: 100%; max-width: 350px;'>
+        </a>
+        <h2>Curs de Rasayana Modulul 1</h2>
+        <div class="desc" style="max-width:720px;">Practicile de tip Rasayana, apreciate pentru beneficiile lor asupra sănătății, vitalității, memoriei și longevității, implică un parcurs gradat, necesitând pregătire și dedicare, cu scopul final de a atinge o stare plenară de regenerare și echilibru.</div>
+        <div class="btn-fp"><%= link_to 'Participă la curs..', rasayana_modul1_path, class: 'btn-fp-link' %> </div>
       </div>
     </section>
-
-    <h2 class="main-title" > 🌞 Actualitate</h2>
-
+    <section class="line">
+    <div class="col" style=" align-items: center; text-align: center;">
+      <a href="/traditia_ayurvedica/amnaya">
+        <img src="<%= image_path('traditia-ayurvedica.webp') %>" alt="Traditia Ayurvedică - Amnaya Tantraka" style='text-align:center; width: 100%; max-width: 350px;'>
+      </a>
+      <h2>Traditia Ayurvedică - Amnaya Tantraka</h2>
+      <div class="desc" style="max-width:720px;">Termenul sanscrit Amnaya are sensul de tradiţie spirituală sacră. Semnificaţia acestui termen este valabilă pentru orice fel de cunoaştere superioară, esenţială, care are o origine dumnezeiască şi care este oferită fiinţelor umane prin intermediul revelaţiilor unor mari spirite şi a unor fiinţe excepţionale ce au fost inspirate în mod direct de Dumnezeu.</div>
+      <div class="btn-fp"><%= link_to 'Vizionează seminarii..', amnaya_path, class: 'btn-fp-link' %> </div>
+    </div>
+  </section>
+    <h2 class="main-title"> 🌞 Actualitate</h2>
     <div class="line">
-    <div class="col"  style="align-items:center;text-align:center;">
-       <h2>Revizionari tabara de Ayurveda - etapa de Vară 2024</h2>
-       <a href="<%= tayv24_path %>"><img src="<%= image_path('Tabara de ayurveda etapa de vara 2024.webp') %>" alt="Tabara de Ayurveda" style='max-width:300px;'></a>
-     
-       <div class="desc">Tabăra de Ayurveda oferă o oportunitate unică pentru cei dornici să exploreze în profunzime diverse domenii ale științei milenare Ayurveda. Timp de câteva zile, participanții studiază și practică împreună, pe baza unui program comun de activități.</br>Acest program este conceput pentru a oferi fiecărui participant direcții valoroase de cunoaștere asupra unor aspecte esențiale ale vastei științe tradiționale milenare Ayurveda.</div>
-       <div class="btn-fp">
-       
-          <%= link_to 'Află mai mult', tayv24_path, class: 'btn-fp-link' %>
-          
-       
-       </div>
-    </div>
-    <div class="col" style="align-items:center;text-align:center;">
-       <h2>Vajikarana - Cunoașterea ayurvedică a ingredientelor naturale şi a procedeelor practice cu efecte afrodiziace</h2>
-       <a href="<%= vajikarana_modul1_path %>"><img src="<%= image_path('Vajikarana3.webp') %>" alt="Cunoașterea ayurvedică a ingredientelor naturale şi a procedeelor practice cu efecte afrodizia" style="max-width:350px;"></a>
-       <div class="desc">Ştiinţa specializată a substanţelor naturale afrodiziace (Vajikarana) reprezintă una dintre cele 8 ramuri principale (anga) ale sistemului tradițional indian de cunoaștere asupra vieții, Ayurveda. </br></br>Vajikarana oferă fiinţei umane posibilitatea de a dispune de metode practice naturale prin care să pună în valoare într-un mod superior a potenţialului erotic-amoros al fiinţei..</div>
-       <div class="btn-fp">          
-       
-        
-         <%= link_to 'Revizionează acum', vajikarana_modul1_path, class: 'btn-fp-link' %>
-       
-     
-     
-       </div>
-    </div>
- </div>
-
-
-
-    <div class="line">
-    <div class="col"  style="align-items:center;text-align:center; width:100%;">
-       <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 4</h2>
-       <a href="<%= nutritie4_path %>"><img src="<%= image_path('Nutritie4.webp') %>" alt="Nutritie Ayurvedica" style='max-width:300px;'></a>
-     
-       <div class="desc" style="max-width:920px;">Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată..</div>
-       <div class="btn-fp">
-       
-          <%= link_to 'Află mai mult..', nutritie4_path, class: 'btn-fp-link' %>
-          
-       
-       </div>
-    </div>
-    
- </div>
-   
-
- 
-
- <h2 class="cr-title" id="traditia-ayurvedica">📜 Tradiția Ayurvedică</h2>
-
-
-
-
- <div class="line">
-
-
- <div class="col" style="align-items:center;text-align:center;">
- <h2>Înțeleptul Ayurvedic Nimi-Rishi</h2>
- <a href="<%= nimi_path %>">
-   <img src="<%= image_path('regele_nimi.webp') %>" alt="Nimi-Rishi" style='max-width:300px;'>
- </a>
- <div class="desc">Regele Nimi, un personaj legendar și unul dintre marii înțelepți ayurvedici din tradiția indiană antică, este recunoscut pentru contribuțiile sale semnificative la consolidarea și aplicarea practică a principiilor Ayurveda. El s-a distins nu doar prin implicarea sa în medicina holistică, ci și prin practica profundă a sistemului yoga, îmbinând cu înțelepciune cunoașterea vindecării cu disciplina spirituală..</div>
- <div class="btn-fp"><%= link_to 'Află mai mult..', nimi_path, class: 'btn-fp-link' %> </div>
-</div>
-
-<div class="col" style="align-items:center;text-align:center;">
-    <h2>Înțeleptul Ayurvedic Maudgalya-Rishi</h2>
-    <a href="<%= maudgalya_path %>">
-      <img src="<%= image_path('Maudgalya.webp') %>" alt="Înțeleptul Ayurvedic Maudgalya-Rishi" style="max-width:300px;">
-    </a>
-    <div class="desc">Înțeleptul ayurvedic Maudgalya a promovat o viziune holistică asupra ființei umane și asupra sănătății, subliniind conexiunile dintre trup, minte și spirit. Această perspectivă a influențat profund practica Ayurveda și abordările terapeutice, evidențiind astfel interconexiunile complexe ale naturii umane..</div>
-    <div class="btn-fp"><%= link_to 'Află mai mult..', maudgalya_path, class: 'btn-fp-link' %> </div>
-  </div>
-
-
-  
-</div>
- 
-
-
-
-
-   <h2 class="cr-title"> 🎈 Aplicații Ayush Cell Romania</h2>
-   <section class="line">
-      <div class="col"  style="align-items:center;text-align:center;">
-         <h2>Aplicație Valori Nutriționale</h2>
-         <a href="<%= aplicatie_path %>"><img src="<%= image_path('nutritie-ayushcell.webp') %>" alt="Valori nutritionale" style='max-width:250px;'></a>
-       
-         <div class="desc">Descoperă conținutul nutritiv al alimentelor și calculează numărul de calorii, proteine, lipide, carbohidrați și fibre la fiecare masă! Alege în fiecare zi o alimentație sănătoasă și echilibrată.</div>
-         <div class="btn-fp">
-         
-         
-            <%= link_to 'Aplicație Nutriție', aplicatie_path, class: 'alink' %>
-         
-         </div>
+      <div class="col" style="align-items:center;text-align:center;">
+        <h2>Revizionari tabara de Ayurveda - etapa de Vară 2024</h2>
+        <a href="<%= tayv24_path %>">
+          <img src="<%= image_path('Tabara de ayurveda etapa de vara 2024.webp') %>" alt="Tabara de Ayurveda" style='max-width:300px;'>
+        </a>
+        <div class="desc">Tabăra de Ayurveda oferă o oportunitate unică pentru cei dornici să exploreze în profunzime diverse domenii ale științei milenare Ayurveda. Timp de câteva zile, participanții studiază și practică împreună, pe baza unui program comun de activități. </br>Acest program este conceput pentru a oferi fiecărui participant direcții valoroase de cunoaștere asupra unor aspecte esențiale ale vastei științe tradiționale milenare Ayurveda. </div>
+        <div class="btn-fp"><%= link_to 'Află mai mult', tayv24_path, class: 'btn-fp-link' %> </div>
       </div>
       <div class="col" style="align-items:center;text-align:center;">
-         <h2>Lista actualizată a ingredientelor vegetale ce pot fi utilizate în suplimentele alimentare</h2>
-         <img src="<%= image_path('listavegetale.webp') %>" alt="Curs de Ayurveda" style="max-width:300px;">
-         <div class="desc">Aplicația se constituie drept referință principală pentru profesioniștii din domeniul sănătății și producătorii de suplimente alimentare, oferind informațiile necesare despre ingredientele vegetale acceptate pentru utilizare în România.</div>
-         <div class="btn-fp">
-         <% if current_user %>
-         <% if current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) } %>
-           <%= link_to 'Accesează aplicația', lista_vegetales_path, class: 'btn-fp-link' %>
-         <% else %>
-           <%= link_to 'Accesează aplicația', servicii_path, class: 'btn-fp-link' %>
-         <% end %>
-       <% else %>
-         <%= link_to 'Accesează aplicația', new_user_session_with_return_path('lg'), class: 'btn-fp-link' %>
-       <% end %>
-       
-         </div>
+        <h2>Vajikarana - Cunoașterea ayurvedică a ingredientelor naturale şi a procedeelor practice cu efecte afrodiziace</h2>
+        <a href="<%= vajikarana_modul1_path %>">
+          <img src="<%= image_path('Vajikarana3.webp') %>" alt="Cunoașterea ayurvedică a ingredientelor naturale şi a procedeelor practice cu efecte afrodizia" style="max-width:350px;">
+        </a>
+        <div class="desc">Ştiinţa specializată a substanţelor naturale afrodiziace (Vajikarana) reprezintă una dintre cele 8 ramuri principale (anga) ale sistemului tradițional indian de cunoaștere asupra vieții, Ayurveda. </br>
+          </br>Vajikarana oferă fiinţei umane posibilitatea de a dispune de metode practice naturale prin care să pună în valoare într-un mod superior a potenţialului erotic-amoros al fiinţei.. </div>
+        <div class="btn-fp"><%= link_to 'Revizionează acum', vajikarana_modul1_path, class: 'btn-fp-link' %> </div>
+      </div>
+    </div>
+    <div class="line">
+      <div class="col" style="align-items:center;text-align:center; width:100%;">
+        <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 4</h2>
+        <a href="<%= nutritie4_path %>">
+          <img src="<%= image_path('Nutritie4.webp') %>" alt="Nutritie Ayurvedica" style='max-width:300px;'>
+        </a>
+        <div class="desc" style="max-width:920px;">Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată..</div>
+        <div class="btn-fp"><%= link_to 'Află mai mult..', nutritie4_path, class: 'btn-fp-link' %> </div>
+      </div>
+    </div>
+    <h2 class="cr-title" id="traditia-ayurvedica">📜 Tradiția Ayurvedică</h2>
+    <div class="line">
+      <div class="col" style="align-items:center;text-align:center;">
+        <h2>Înțeleptul Ayurvedic Nimi-Rishi</h2>
+        <a href="<%= nimi_path %>">
+          <img src="<%= image_path('regele_nimi.webp') %>" alt="Nimi-Rishi" style='max-width:300px;'>
+        </a>
+        <div class="desc">Regele Nimi, un personaj legendar și unul dintre marii înțelepți ayurvedici din tradiția indiană antică, este recunoscut pentru contribuțiile sale semnificative la consolidarea și aplicarea practică a principiilor Ayurveda. El s-a distins nu doar prin implicarea sa în medicina holistică, ci și prin practica profundă a sistemului yoga, îmbinând cu înțelepciune cunoașterea vindecării cu disciplina spirituală..</div>
+        <div class="btn-fp"><%= link_to 'Află mai mult..', nimi_path, class: 'btn-fp-link' %> </div>
+      </div>
+      <div class="col" style="align-items:center;text-align:center;">
+        <h2>Înțeleptul Ayurvedic Maudgalya-Rishi</h2>
+        <a href="<%= maudgalya_path %>">
+          <img src="<%= image_path('Maudgalya.webp') %>" alt="Înțeleptul Ayurvedic Maudgalya-Rishi" style="max-width:300px;">
+        </a>
+        <div class="desc">Înțeleptul ayurvedic Maudgalya a promovat o viziune holistică asupra ființei umane și asupra sănătății, subliniind conexiunile dintre trup, minte și spirit. Această perspectivă a influențat profund practica Ayurveda și abordările terapeutice, evidențiind astfel interconexiunile complexe ale naturii umane..</div>
+        <div class="btn-fp"><%= link_to 'Află mai mult..', maudgalya_path, class: 'btn-fp-link' %> </div>
+      </div>
+    </div>
+    <h2 class="cr-title"> 🎈 Aplicații Ayush Cell Romania</h2>
+    <section class="line">
+      <div class="col" style="align-items:center;text-align:center;">
+        <h2>Aplicație Valori Nutriționale</h2>
+        <a href="<%= aplicatie_path %>">
+          <img src="<%= image_path('nutritie-ayushcell.webp') %>" alt="Valori nutritionale" style='max-width:250px;'>
+        </a>
+        <div class="desc">Descoperă conținutul nutritiv al alimentelor și calculează numărul de calorii, proteine, lipide, carbohidrați și fibre la fiecare masă! Alege în fiecare zi o alimentație sănătoasă și echilibrată.</div>
+        <div class="btn-fp"><%= link_to 'Aplicație Nutriție', aplicatie_path, class: 'alink' %> </div>
+      </div>
+      <div class="col" style="align-items:center;text-align:center;">
+        <h2>Lista actualizată a ingredientelor vegetale ce pot fi utilizate în suplimentele alimentare</h2>
+        <img src="<%= image_path('listavegetale.webp') %>" alt="Curs de Ayurveda" style="max-width:300px;">
+        <div class="desc">Aplicația se constituie drept referință principală pentru profesioniștii din domeniul sănătății și producătorii de suplimente alimentare, oferind informațiile necesare despre ingredientele vegetale acceptate pentru utilizare în România.</div>
+        <div class="btn-fp"><% if current_user %><% if current_user.role == 1 || current_user.cursuri.any? { |curs| curs.listacursuri.nume == "Lista vegetale" && (curs.datasfarsit.nil? || Date.current <= curs.datasfarsit) } %><%= link_to 'Accesează aplicația', lista_vegetales_path, class: 'btn-fp-link' %><% else %><%= link_to 'Accesează aplicația', servicii_path, class: 'btn-fp-link' %><% end %><% else %><%= link_to 'Accesează aplicația', new_user_session_with_return_path('lg'), class: 'btn-fp-link' %><% end %> </div>
       </div>
     </section>
-    
-
-
-   <h2 class="cr-title"> ⛺ Tabere Ayush Cell Romania & AMN-Romania</h2>
-   <section class="line" style="flex-direction: row-reverse;">
-   
+    <h2 class="cr-title"> ⛺ Tabere Ayush Cell Romania & AMN-Romania</h2>
+    <section class="line" style="flex-direction: row-reverse;">
       <div class="col" style=" align-items: center; text-align: center;">
-         <h2>Tabăra Ayurveda 2023 Etapa de Toamnă</h2>
-         <a href="<%= tayt12_path %>"><img src="<%= image_path('tayt12.webp') %>" alt="Tabara de Ayurveda etapa de toamna 2023" style= "max-width:450px;margin-bottom:20px;margin-top:10px;width: 100%;"></a>
-         <div class="desc" style="max-width:720px;">Partea 1 - Prezentarea celor 10 calități cu rol formator - Nirmanya-Guna, Partea 2 - Prezentarea celor 20 calități generale - Vimshati-Guna..</div>
-         <div class="btn-fp">
-         <%= link_to 'Vezi înregistrările', tayt12_path, class: 'btn-fp-link' %>
-
-         </div>
+        <h2>Tabăra Ayurveda 2023 Etapa de Toamnă</h2>
+        <a href="<%= tayt12_path %>">
+          <img src="<%= image_path('tayt12.webp') %>" alt="Tabara de Ayurveda etapa de toamna 2023" style="max-width:450px;margin-bottom:20px;margin-top:10px;width: 100%;">
+        </a>
+        <div class="desc" style="max-width:720px;">Partea 1 - Prezentarea celor 10 calități cu rol formator - Nirmanya-Guna, Partea 2 - Prezentarea celor 20 calități generale - Vimshati-Guna..</div>
+        <div class="btn-fp"><%= link_to 'Vezi înregistrările', tayt12_path, class: 'btn-fp-link' %> </div>
       </div>
-</section>
-<section class="line">
-    <div class="col">
-         <h2>Tabăra Ayurveda 2023 Etapa de Toamnă prima parte</h2>
-         <div class="desc">Tema taberei:  Nirmanya-Guna - prezentarea celor 10 calități cu rol formator. Termenul sanscrit guna este utilizat în cadrul sistemului Ayurveda şi cu sensul de calitate generală formatoare (nirmanya-guna). Calităţile generale formatoare (nirmanya-guna) măsoară specificitatea alcătuirii din punct de vedere subtil a unei anumite structuri, prin evidenţierea raporturilor existente între forţele şi energiile subtile care constituie factorii formatori ai acelei structuri sau a acelei forme. Tocmai de aceea, calităţile generale formatoare (nirmanya-guna) sunt considerate în Ayurveda ca fiind factori esenţiai de diferenţiere structurală, în întreaga manifestare.</div>
-         <div class="btn-fp">
-         <%= link_to 'Revizionează', tayt12_path, class: 'btn-fp-link' %>
-         </div>
-      </div>
- 
-      
-   </section>
-   
-    
-    <h2 class="cr-title"> 🍃 Program de pregătire Nutritie Ayurvedică</h2>
-    
-    <section class="line">
-    <div class="col" style="flex-direction: row; align-items: center;">
-    <div class="col-left">
-    <a href="<%= nutritie3_path %>"><img src="<%= image_path('aplicatii.webp') %>" alt="Nutritie ayurvedica" style='text-align:center; width: 100%; scale:0.85; border-radius:50%; max-width: 250px;'></a>
-    </div>
-    <div class="col-right">
-            <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 3</h2>
-            <div class="desc">Programul de pregătire în nutriția ayurvedică practică aplicată include prezentări ale noțiunilor și conceptelor tradiționale din Ayurveda referitoare la nutriție, teste de evaluare nutrițională ayurvedică, personalizarea opțiunilor nutriționale la necesitățile participanților, evaluarea direcțiilor de optimizare nutrițională în conformitate cu principiile sistemului milenar de cunoaștere asupra vieții – Ayurveda.</div>
-            <div class="btn-fp">
-            
-            <%= link_to 'Vizionează acum', nutritie3_path, class: 'btn-fp-link' %>
-         
-            </div>
-    </div>
-    </div>
     </section>
-
-
-
     <section class="line">
-    
-    <div class="col" style="flex-direction: row; align-items: center;">
-    <div class="col-left">
-    <a href="<%= nutritie2_path %>"><img src="<%= image_path('Nutritie4.webp') %>" alt="Nutritie ayurvedica" style='max-width:250px;'></a>
-    </div>
-    <div class="col-right">
-        <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 2</h2>
-        <div class="desc">Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</div>
-        <div class="btn-fp">
-
-        
-        <%= link_to 'Vizionează acum', nutritie2_path, class: 'btn-fp-link' %>
-     
-
-
-            
+      <div class="col">
+        <h2>Tabăra Ayurveda 2023 Etapa de Toamnă prima parte</h2>
+        <div class="desc">Tema taberei: Nirmanya-Guna - prezentarea celor 10 calități cu rol formator. Termenul sanscrit guna este utilizat în cadrul sistemului Ayurveda şi cu sensul de calitate generală formatoare (nirmanya-guna). Calităţile generale formatoare (nirmanya-guna) măsoară specificitatea alcătuirii din punct de vedere subtil a unei anumite structuri, prin evidenţierea raporturilor existente între forţele şi energiile subtile care constituie factorii formatori ai acelei structuri sau a acelei forme. Tocmai de aceea, calităţile generale formatoare (nirmanya-guna) sunt considerate în Ayurveda ca fiind factori esenţiai de diferenţiere structurală, în întreaga manifestare.</div>
+        <div class="btn-fp"><%= link_to 'Revizionează', tayt12_path, class: 'btn-fp-link' %> </div>
+      </div>
+    </section>
+    <h2 class="cr-title"> 🍃 Program de pregătire Nutritie Ayurvedică</h2>
+    <section class="line">
+      <div class="col" style="flex-direction: row; align-items: center;">
+        <div class="col-left">
+          <a href="<%= nutritie3_path %>">
+            <img src="<%= image_path('aplicatii.webp') %>" alt="Nutritie ayurvedica" style='text-align:center; width: 100%; scale:0.85; border-radius:50%; max-width: 250px;'>
+          </a>
         </div>
-    </div>
-    </div>
-
-   </section>
-
-</main>
+        <div class="col-right">
+          <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 3</h2>
+          <div class="desc">Programul de pregătire în nutriția ayurvedică practică aplicată include prezentări ale noțiunilor și conceptelor tradiționale din Ayurveda referitoare la nutriție, teste de evaluare nutrițională ayurvedică, personalizarea opțiunilor nutriționale la necesitățile participanților, evaluarea direcțiilor de optimizare nutrițională în conformitate cu principiile sistemului milenar de cunoaștere asupra vieții – Ayurveda.</div>
+          <div class="btn-fp"><%= link_to 'Vizionează acum', nutritie3_path, class: 'btn-fp-link' %> </div>
+        </div>
+      </div>
+    </section>
+    <section class="line">
+      <div class="col" style="flex-direction: row; align-items: center;">
+        <div class="col-left">
+          <a href="<%= nutritie2_path %>">
+            <img src="<%= image_path('Nutritie4.webp') %>" alt="Nutritie ayurvedica" style='max-width:250px;'>
+          </a>
+        </div>
+        <div class="col-right">
+          <h2>Program de pregătire Nutritie Ayurvedică aplicată modul 2</h2>
+          <div class="desc">Programul de pregătire în nutriția ayurvedică practică aplicată a fost conceput pentru a avea o aplicabilitate imediată prin obiectivarea parametrilor nutriționali personali și prin conștientizarea obiceiurilor alimentare personale ale participanților, cu scopul de a oferi oportunități în direcția unei certe îmbunătățiri a stilului de viață prin nutriția ayurvedică aplicată.</div>
+          <div class="btn-fp"><%= link_to 'Vizionează acum', nutritie2_path, class: 'btn-fp-link' %> </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </div>
