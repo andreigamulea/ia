@@ -296,10 +296,12 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get '/plata_nutritie3/export', to: 'paginisites#export_to_xlsx_plata_nutritie3', as: 'export_plata_nutritie3'
   get '/plata_amnaya/export', to: 'paginisites#export_to_xlsx_plata_amnaya', as: 'export_plata_amnaya'
   get '/plata_vajikarana_modul1/export', to: 'paginisites#export_to_xlsx_plata_vajikarana_modul1', as: 'export_to_xlsx_plata_vajikarana_modul1'
+  
   get '/plata_tayv2/export', to: 'paginisites#export_to_xlsx_plata_tayv2', as: 'export_plata_tayv2'
   get '/plata_tayt12/export', to: 'paginisites#export_to_xlsx_plata_tayt12', as: 'export_plata_tayt12'
   get '/export_to_xlsx_plata_sesiunevara/export', to: 'paginisites#export_to_xlsx_plata_sesiunevara', as: 'export_to_xlsx_plata_sesiunevara'
   get '/plata_generala_curs/export', to: 'paginisites#export_to_xlsx_plata_generala_curs', as: 'export_plata_generala_curs'
+  get 'export_plata_rasayana_modul1', to: 'paginisites#export_to_xlsx_plata_rasayana_modul1'
 
   
   get '/plata_an1/export', to: 'paginisites#export_to_xlsx_plata_an1', as: 'export_plata_an1'
@@ -308,6 +310,10 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
 
 
   get '/paginisites/:id/statistici_utilizator', to: 'paginisites#statistici_utilizator', as: 'statistici_utilizator_paginisite'
+  get 'export_plata_an2_2425', to: 'paginisites#export_to_xlsx_plata_an2_2425' #an 2 2425 dupa data
+
+  
+  
   resources :statistics, only: [:index]
   
   get 'authentication/login'
