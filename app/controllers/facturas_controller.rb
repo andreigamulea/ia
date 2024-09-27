@@ -8,7 +8,11 @@ class FacturasController < ApplicationController
 
   # GET /facturas or /facturas.json
   def index
-    
+    unless user_signed_in?
+      flash[:alert] = "Trebuie să vă autentificați pentru acces."
+      redirect_to new_user_session_path
+      return false
+    end
     if !current_user
       redirect_to new_user_session_path   
 
