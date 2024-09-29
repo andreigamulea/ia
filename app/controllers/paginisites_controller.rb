@@ -1376,7 +1376,8 @@ def export_to_xlsx_plata_an2_2425
     user_array_particulari = ['ce.hermkens@gmail.com'] # Poți adăuga aici cazuri particulare de eligibilitate
 
     # Produsele pentru anul universitar 2024-2025
-    produse_an2 = Prod.where(cod: ['cod196', 'cod207'] + (197..206).map { |n| "cod#{n}" })
+    produse_an2 = Prod.where(cod: ['cod196', 'cod207', 'cod213'] + (197..206).map { |n| "cod#{n}" })
+
     mapare_valori_an2 = produse_an2.each_with_object({}) { |prod, hash| hash[prod.id] = prod.pret }
 
     # Selectăm comenzile pentru produsele din anul universitar 2024-2025

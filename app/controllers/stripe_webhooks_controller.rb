@@ -244,7 +244,7 @@ if produs.cod == "cod195"
   end
 end
 
-if produs.cod == "cod196"
+if ["cod196", "cod213"].include?(produs.cod)
   unless cp.update(taxa2425: 12)
     Descriereerori.create(descriere: "Eroare in stripe_webhooks: taxa2425 pt taxa inscriere nu a fost pusa #{produs.cod} pt #{current_user.name}")
   else
