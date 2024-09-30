@@ -495,14 +495,26 @@ end
     
     user = User.find_by(id: metadata[:user_id])
 
-    if user && factura.persisted? && Rails.env.production?   
-      puts("daaaaaaaaaaaa") 
-      puts("User id este: #{user.id}")  
-      PaymentMailer.billing_details_email(user, factura).deliver_now
-   
+    if user && factura.persisted? && Rails.env.production?
+      begin
+        puts("daaaaaaaaaaaa")
+        puts("User id este: #{user.id}")
+        
+        # Încearcă trimiterea emailului
+        PaymentMailer.billing_details_email(user, factura).deliver_now
+        
+      rescue StandardError => e
+        # Prinde orice eroare care apare în timpul trimiterii emailului și o raportează, fără a opri execuția
+        puts "A apărut o eroare la trimiterea emailului: #{e.message}"
+        Bugsnag.notify(e)  # Opțional, pentru a notifica Bugsnag despre eroare
+      end
+    
+      # Continuarea logicii chiar și dacă emailul nu s-a trimis cu succes
+      puts("Email trimis sau eroare capturată")
     else
       puts("nuuuuuuuuuuu")  
     end
+    
 
   end
   def send_payment_success_email(factura)
