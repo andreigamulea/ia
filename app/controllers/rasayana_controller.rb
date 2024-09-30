@@ -1,7 +1,7 @@
 class RasayanaController < ApplicationController
   def modul1
-    #@myvideo1 = Video.find_by(link: 'suMeHXOiYtk') #prezentare rasayan
-    @myvideo1 = Video.find_by(link: 'xGpVO2uopdc') #prezentare gr 1
+    @myvideo1 = Video.find_by(link: 'suMeHXOiYtk') #prezentare rasayana
+    #@myvideo1 = Video.find_by(link: 'xGpVO2uopdc') #prezentare gr 1
     @myvideo = @myvideo1.link if @myvideo1
     
     @nr_luni_achitate = 0 # Valoare implicită
