@@ -72,15 +72,14 @@
         <p>Modulul 1 se desfășoară pe parcursul a patru luni, cuprinzând 16 lecții, câte una în fiecare săptămână, pe baza de înregistrări. În acest timp, participanții vor parcurge un conținut complex și bine detaliat. Fiecare lecție durează în medie aproximativ 5 ore, fiind menită să deschidă noi orizonturi de cunoaștere și să aducă o înțelegere profundă a subiectelor abordate. Pe lângă materialele prezentate în cadrul fiecărei lecții, participanții vor avea ocazia să participe la seminarii interactive, care vor aprofunda subiectele discutate și vor oferi posibilitatea de a pune întrebări și de a explora în detaliu conceptele prezentate. Astfel, fiecare săptămână devine o oportunitate de învățare, reflecție și dialog activ.</p>
         <h2 class="name" style="font-size:22px;">Prezentare introductivă – Curs de Rasayana, Modulul 1</h2>
   <p style="text-align:center;">Vă invităm să vizionați înregistrarea introductivă de mai jos pentru a vă familiariza cu subiectele ce vor fi abordate în cadrul acestui curs. Evenimentul, desfășurat online pe 29 septembrie 2024, oferă răspunsuri la o serie de întrebări referitoare la conținutul cursului. De asemenea, acesta reprezintă o ocazie excelentă de a face cunoștință cu lectorul de Ayurveda implicat în organizarea și predarea cursului.</p>
-  <!-- for non autoplay video //-->
-  <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+
+  <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>); background-size: 100%;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
-      <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
-      <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
-      <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
-      <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+        <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+        <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+        <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+        <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
     </div>
-  </div>
   </br>
           
         <p>
