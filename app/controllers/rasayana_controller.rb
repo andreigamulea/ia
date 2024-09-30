@@ -1,7 +1,9 @@
 class RasayanaController < ApplicationController
   def modul1
-    @myvideo1 = Video.find_by(link: 'suMeHXOiYtk')
+    #@myvideo1 = Video.find_by(link: 'suMeHXOiYtk') #prezentare rasayan
+    @myvideo1 = Video.find_by(link: 'xGpVO2uopdc') #prezentare gr 1
     @myvideo = @myvideo1.link if @myvideo1
+    
     @nr_luni_achitate = 0 # Valoare implicită
     @has_acces_video = 0 # Implicit, fără acces video
     data_prag = Date.new(2025, 4, 30)
