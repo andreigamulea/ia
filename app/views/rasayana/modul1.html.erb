@@ -76,15 +76,18 @@
         <h2 class="name" style="font-size:22px;">Prezentare introductivă – Curs de Rasayana, Modulul 1</h2>
   <p style="text-align:center;">Vă invităm să vizionați înregistrarea introductivă de mai jos pentru a vă familiariza cu subiectele ce vor fi abordate în cadrul acestui curs. Evenimentul, desfășurat online pe 29 septembrie 2024, oferă răspunsuri la o serie de întrebări referitoare la conținutul cursului. De asemenea, acesta reprezintă o ocazie excelentă de a face cunoștință cu lectorul de Ayurveda implicat în organizarea și predarea cursului.</p>
 
-  <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= 
-  asset_path 'player.png' %>); background-size: 100%;">
+  <p style="text-align:center;">Vă invităm să vizionați înregistrarea introductivă de mai jos pentru a vă familiariza cu subiectele care vor fi abordate în cadrul acestor cursuri. Evenimentul, desfășurat online pe 29.09.2023, oferă o imagine de ansamblu asupra conținutului cursurilor. Aceasta este, de asemenea, o ocazie excelentă de a cunoaște lectorii de Ayurveda implicați în organizarea și predarea cursului.</p>
+  <!-- for non autoplay video //-->
+  <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
-        <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
-        <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
-        <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
-        <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+      <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+      <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+      <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+      <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
     </div>
-  </br></br>
+  </div>
+  </br>
+  
           
         <p>
           <strong>Prima zi de curs:</strong> Lecțiile propriu-zise vor începe miercuri, 2 octombrie 2024, și vor fi organizate săptămânal, pentru a permite un proces de învățare ritmic și progresiv. Cele 16 cursuri ale acestui modul se vor desfășura săptămânal pe parcursul a 4 luni: octombrie, noiembrie și decembrie 2024, precum și ianuarie 2025.
@@ -113,7 +116,7 @@
         <p>
           <strong>Accesibilitatea opțiunii</strong> Opțiunea devine accesibilă după achitarea primei luni de curs sau după plata integrală a modulului, în funcție de preferințele participantului. Aceasta oferă flexibilitatea de a reveni asupra materialelor în funcție de plățile efectuate.
         </p>
-      </section><%end%><br><br> <section>
+      </section><%end%> <section>
         <div id="prasayana" class="table-responsive">
           <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
@@ -137,18 +140,3 @@
       </section>
   </div>
 </div>
-</script>
-
-<div data-controller="epytv">
-    <!-- Elementul DOM aici va fi controlat de epytv_controller.js -->
-</div>
-<script>
-  document.addEventListener("turbo:load", function() {
-    document.querySelectorAll('.no-turbo').forEach(link => {
-      link.setAttribute('data-turbo', 'false');
-    });
-  });
-</script>
-<script>
-<%= yield :custom_js %>
-</script>
