@@ -1,3 +1,6 @@
+<% content_for :custom_js do %>
+  <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
+  <% end %>
 <style>
   #rasayana1 .cm h2 {
     font-size: 22px;
@@ -73,7 +76,15 @@
         <h2 class="name" style="font-size:22px;">Prezentare introductivă – Curs de Rasayana, Modulul 1</h2>
   <p style="text-align:center;">Vă invităm să vizionați înregistrarea introductivă de mai jos pentru a vă familiariza cu subiectele ce vor fi abordate în cadrul acestui curs. Evenimentul, desfășurat online pe 29 septembrie 2024, oferă răspunsuri la o serie de întrebări referitoare la conținutul cursului. De asemenea, acesta reprezintă o ocazie excelentă de a face cunoștință cu lectorul de Ayurveda implicat în organizarea și predarea cursului.</p>
 
-  
+  <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= 
+  asset_path 'player.png' %>); background-size: 100%;">
+    <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
+        <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+        <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+        <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+        <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+    </div>
+  </br></br>
           
         <p>
           <strong>Prima zi de curs:</strong> Lecțiile propriu-zise vor începe miercuri, 2 octombrie 2024, și vor fi organizate săptămânal, pentru a permite un proces de învățare ritmic și progresiv. Cele 16 cursuri ale acestui modul se vor desfășura săptămânal pe parcursul a 4 luni: octombrie, noiembrie și decembrie 2024, precum și ianuarie 2025.
@@ -123,18 +134,6 @@
       </section>
       <section style="text-align:center;"><%if current_user && current_user.role==1%> Numarul lunilor achitate: <%=@nr_luni_achitate%> <br> has_acces_video=<%=@has_acces_video%> <br><% end %><%if current_user && (current_user.role==1 || @nr_luni_achitate>0)%> <h3 style="font-size:22px; margin-bottom:30px; margin-top:30px;">Accesează pagina pentru vizionare cursuri:</h3><%= link_to 'Vezi Video', tvs_rasayana1_path, class: 'register', style: 'background-color:#4b0082;' %> <br>
         <br><% end %>
-
-
-<div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= 
-  asset_path 'player.png' %>); background-size: 100%;">
-    <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
-        <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
-        <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
-        <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
-        <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
-    </div>
-  </br></br>
-
       </section>
   </div>
 </div>
