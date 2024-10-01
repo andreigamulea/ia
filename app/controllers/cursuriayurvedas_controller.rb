@@ -719,6 +719,18 @@ def cursayurveda2425
     @produse_accesibile_an1 = []
   end
   ##########################stop acces produse video an 1
+
+
+  if user_signed_in?
+    required_prods_sets = [['cod195', 'cod197'], ['cod195', 'cod196']] #cod196=1620 lei  cod195=60lei
+    purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata').joins(:prod).where(prods: { curslegatura: 'cay2425', status: 'activ' }).pluck('prods.cod')
+    @has_acces_zoom = (current_user.role == 1) || required_prods_sets.any? { |set| (set - purchased_prods).empty? }
+  else
+    @has_acces_zoom = false
+  end
+  
+  
+  puts("@has_acces_zoom este: #{@has_acces_zoom}")
 end
 
 
