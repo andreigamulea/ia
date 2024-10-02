@@ -63,6 +63,11 @@ class RasayanaController < ApplicationController
       end
     end
     puts("@nr_luni_achitate=#{@nr_luni_achitate}")
+
+
+
+
+    @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1').where('ordine <= ?', 1000).order(ordine: :asc)
   end
   
   
