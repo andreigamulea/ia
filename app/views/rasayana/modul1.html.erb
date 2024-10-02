@@ -134,8 +134,48 @@
               </tr><% end %><% end %> </tbody>
           </table>
         </div>
+
+      
+
+        <%if current_user && (current_user.role==1 || @has_acces_video>0)%>
+        <h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Rasayana </h2></br>
+  
+  
+  
+        <div id="videos">
+          <table class="table">
+            <thead>
+            <tr>
+                <th>Nr</th>
+                <th>Nume</th>
+                <th>Descriere</th>       
+                <th>Actiune</th>
+                
+            </tr>
+            </thead>
+            <tbody>
+            <% @myvideo_rasayana_m1.each do |video| %>
+              <tr>
+              <td><%= video.ordine %></td>
+              <td><%= video.nume %></td>
+              <td><%= video.descriere %></td>           
+              <td><%= link_to "Vezi video", myvideo19_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
+              </tr>
+        
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+<% end %>
+
       </section>
-      <section style="text-align:center;"><%if current_user && current_user.role==1%> Numarul lunilor achitate: <%=@nr_luni_achitate%> <br> has_acces_video=<%=@has_acces_video%> <br><% end %><%if current_user && (current_user.role==1 || @nr_luni_achitate>0)%> <h3 style="font-size:22px; margin-bottom:30px; margin-top:30px;">Accesează pagina pentru vizionare cursuri:</h3><%= link_to 'Vezi Video', tvs_rasayana1_path, class: 'register', style: 'background-color:#4b0082;' %> <br>
+      <section style="text-align:center;">
+      <%if current_user && current_user.role==1%>
+       Numarul lunilor achitate: <%=@nr_luni_achitate%> <br>
+        has_acces_video=<%=@has_acces_video%> <br>
+        <% end %>
+        <%if current_user && (current_user.role==1 || @nr_luni_achitate>0)%> 
+        <h3 style="font-size:22px; margin-bottom:30px; margin-top:30px;">Accesează pagina pentru vizionare cursuri:</h3><%= link_to 'Vezi Video', tvs_rasayana1_path, class: 'register', style: 'background-color:#4b0082;' %> <br>
         <br><% end %>
       </section>
   </div>

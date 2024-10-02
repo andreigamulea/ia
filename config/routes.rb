@@ -217,6 +217,7 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get 'videos/:id/myvideo16', to: 'videos#myvideo16', as: 'myvideo16'
   get 'videos/:id/myvideo17', to: 'videos#myvideo17', as: 'myvideo17'
   get 'videos/:id/myvideo18', to: 'videos#myvideo18', as: 'myvideo18'
+  get 'videos/:id/myvideo19', to: 'videos#myvideo19', as: 'myvideo19'
   get 'videos/tayv2', to: 'videos#tayv2', as: 'tayv2'
   get 'tabara_de_ayurveda_toamna1', to: 'videos#tayt12', as: 'tayt12'
   get 'tabara_de_ayurveda_toamna2', to: 'videos#tayt122', as: 'tayt122'
