@@ -300,7 +300,7 @@ def rasayana1
     return false
   end
   # Select the 5 products based on curslegatura and cod fields
-  products = Prod.where(curslegatura: 'rasayana1', cod: ['cod234', 'cod235', 'cod236', 'cod237', 'cod238'])
+  products = Prod.where(curslegatura: 'rasayana1', cod: ['cod234', 'cod235', 'cod236', 'cod237', 'cod238','cod243'])
     
   # User not logged in case
   if current_user.nil?
@@ -330,6 +330,9 @@ def rasayana1
     elsif purchased_prods.include?('cod234')
       @prods = products.where(cod: 'cod235') # p2 only
       @nr_luni_achitate = 1
+    elsif purchased_prods.include?('cod243')
+      @prods = products.where(cod: 'cod243') # p2 only
+      @nr_luni_achitate = 4
     else
       # If no purchases from the 5 products, show p1 and p5
       @prods = products.where(cod: ['cod234', 'cod238'])

@@ -26,6 +26,7 @@ class RasayanaController < ApplicationController
   
       # Verificăm dacă a fost cumpărat cod243 (valoare directă pentru @nr_luni_achitate și @has_acces_video)
       if purchased_prods.include?('cod243')
+        puts("a achitat tot")
         @nr_luni_achitate = 4
         @has_acces_video = 4
         @prods = [] # Nu afișăm alte produse dacă cod243 este cumpărat
@@ -61,6 +62,7 @@ class RasayanaController < ApplicationController
         @prods = @prods.where.not(cod: 'cod242') if @prods.present?
       end
     end
+    puts("@nr_luni_achitate=#{@nr_luni_achitate}")
   end
   
   
