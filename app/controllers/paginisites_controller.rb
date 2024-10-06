@@ -1547,6 +1547,134 @@ end
 
 
 
+def export_to_xlsx_plata_an1_2024_2025
+  begin
+    # Selectează produsele corespunzătoare anului 2024-2025
+    produse = Prod.where(curslegatura: ["cay2425"]) # Ajustare pentru anul 2024-2025
+
+    # Mapare de valori produse (ID produs -> preț)
+    mapare_valori = produse.each_with_object({}) { |prod, hash| hash[prod.id] = prod.pret }
+
+    # Obținerea ID-ului pentru produsul `cod195`
+    cod195_prod = Prod.find_by(cod: "cod195")
+    return if cod195_prod.nil? # În caz că nu există produsul `cod195`, nu continuăm
+
+    # Filtrare comenzile care includ `cod195`
+    user_ids_with_cod195 = ComenziProd.where(prod_id: cod195_prod.id, validat: "Finalizata").pluck(:user_id).uniq
+
+    # Filtrare comenzi doar pentru utilizatorii care au plătit `cod195`
+    if params[:order_by] == 'email_unique'
+      unique_emails = User.joins(:comenzi_prods)
+                          .where(comenzi_prods: { prod_id: mapare_valori.keys, validat: "Finalizata", user_id: user_ids_with_cod195 })
+                          .group('users.email')
+                          .having('count(users.email) = 1')
+                          .pluck('users.email')
+  
+      @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
+                                 .where(prod_id: mapare_valori.keys, validat: "Finalizata", user_id: user_ids_with_cod195)
+                                 .where(users: { email: unique_emails })
+                                 .order("users.email", :comanda_id)
+    elsif params[:order_by] == 'email'
+      @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
+                                 .where(prod_id: mapare_valori.keys, validat: "Finalizata", user_id: user_ids_with_cod195)
+                                 .order("users.email", :comanda_id)
+    else
+      @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
+                                 .where(prod_id: mapare_valori.keys, validat: "Finalizata", user_id: user_ids_with_cod195)
+                                 .order("created_at ASC")
+    end
+
+    # Obținerea ID-urilor de useri și detalii facturare
+    user_ids = @comenzi_prod.map(&:user_id).uniq
+    detaliifacturare_hash = Detaliifacturare.where(user_id: user_ids).index_by(&:user_id)
+
+    # Creare workbook Excel
+    workbook = RubyXL::Workbook.new
+    worksheet = workbook[0]
+
+    # Definirea capului de tabel
+    headers = ['Email', 'Nume User', 'Telefon', 'Nume din factură', 'Telefon din factură', 'Data Platii', 'Valoare', 'Comandă ID', 'Nume livrare', 'Telefon livrare', 'Adresă de livrare', 'Plată prin', 'Nume Produs', 'Validat']
+    headers.each_with_index { |header, index| worksheet.add_cell(0, index, header) }
+
+    # Popularea rândurilor din Excel cu datele din @comenzi_prod
+    @comenzi_prod.each_with_index do |comanda, index|
+      worksheet.add_cell(index + 1, 0, comanda.user.email)
+      worksheet.add_cell(index + 1, 1, comanda.user.name)
+      worksheet.add_cell(index + 1, 2, comanda.user.telefon)
+      
+      # Preluare informații factură
+      factura = Factura.find_by(comanda_id: comanda.comanda_id)
+      nume_factura = "#{factura.nume} #{factura.prenume}" if factura
+      worksheet.add_cell(index + 1, 3, nume_factura)
+
+      # Telefon din factură
+      telefon_factura = comanda.comanda&.telefon
+      worksheet.add_cell(index + 1, 4, telefon_factura)
+  
+      worksheet.add_cell(index + 1, 5, comanda.datainceput.strftime('%d-%m-%Y')) if comanda.datainceput
+
+      # Valoarea plății și verificare custom pentru un anumit email
+      valoare = mapare_valori[comanda.prod_id] || 0
+      if comanda.user.email == "nagy.edvin@yahoo.com" && comanda.prod.cod != "cod195" # Actualizare cod pentru 2024-2025
+        worksheet.add_cell(index + 1, 6, 35)
+      else  
+        worksheet.add_cell(index + 1, 6, valoare)
+      end
+
+      worksheet.add_cell(index + 1, 7, comanda.comanda_id)
+
+      # Preluare informații de livrare
+      adresa = comanda.comanda&.adresa_comenzi
+      detaliifacturare = detaliifacturare_hash[comanda.user.id]
+      nume_livrare = if adresa
+                        "#{adresa.nume} #{adresa.prenume}"
+                      elsif detaliifacturare
+                        "#{detaliifacturare.nume} #{detaliifacturare.prenume}"
+                      end
+      worksheet.add_cell(index + 1, 8, nume_livrare)
+    
+      telefon_livrare = adresa&.telefon || detaliifacturare&.telefon
+      worksheet.add_cell(index + 1, 9, telefon_livrare)
+
+      # Generare adresă livrare completă
+      if adresa
+        prefix = adresa.adresacoincide ? "adresa de livrare este adresa de facturare: " : "adresa de livrare diferita de adresa de facturare: "
+        parts = [prefix, adresa.tara, adresa.judet, adresa.localitate, "cod postal: #{adresa.codpostal}", adresa.strada, adresa.numar, adresa.altedate, adresa.numecompanie, adresa.cui].compact.reject(&:empty?)
+        adresa_livrare = parts.join(', ')
+      elsif detaliifacturare
+        parts = [detaliifacturare.tara, detaliifacturare.judet, detaliifacturare.localitate, "cod postal: #{detaliifacturare.codpostal}", detaliifacturare.strada, detaliifacturare.numar, detaliifacturare.altedate, detaliifacturare.numecompanie, detaliifacturare.cui].compact.reject(&:empty?)
+        adresa_livrare = parts.join(', ')
+      else
+        adresa_livrare = nil
+      end
+
+      worksheet.add_cell(index + 1, 10, adresa_livrare)
+      worksheet.add_cell(index + 1, 11, comanda.comanda.plataprin)
+      
+      # Cod produs corect pentru anul 2024-2025
+      worksheet.add_cell(index + 1, 12, comanda.prod.cod)
+      worksheet.add_cell(index + 1, 13, comanda.validat)
+    end
+    
+    # Salvare și trimitere fișier
+    file_path = Rails.root.join('tmp', "comenzi_prod_2024_2025_#{Time.now.to_i}.xlsx")
+    workbook.write(file_path)
+    send_file(file_path)
+  ensure
+    # Cleanup the temporary file if necessary
+    # File.delete(file_path) if File.exist?(file_path)
+  end
+rescue => e
+  logger.error "Error generating Excel: #{e.message}"
+  redirect_to root_path, alert: "There was an error generating the report. Please try again later."
+end
+
+
+
+
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_paginisite

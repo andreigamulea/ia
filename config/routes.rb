@@ -310,6 +310,9 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get '/plata_an1/summary_export_2024_2025', to: 'paginisites#export_to_xlsx_summary_2024_2025', as: 'export_to_xlsx_summary_2024_2025'
 
 
+  get '/plata_an1_2024_2025/export', to: 'paginisites#export_to_xlsx_plata_an1_2024_2025', as: 'export_plata_an1_2024_2025'
+
+
   get '/paginisites/:id/statistici_utilizator', to: 'paginisites#statistici_utilizator', as: 'statistici_utilizator_paginisite'
   get 'export_plata_an2_2425', to: 'paginisites#export_to_xlsx_plata_an2_2425' #an 2 2425 dupa data
 
