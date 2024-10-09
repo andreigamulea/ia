@@ -95,7 +95,7 @@ class CursuriayurvedasController < ApplicationController
       redirect_to new_user_session_path
       return false
     end
-     allowed_emails = ["ce.hermkens@gmail.com"]
+     allowed_emails = ["ce.hermkens@gmail.com","maria_mocica@yahoo.com"]
      if current_user && (current_user.role == 1 || allowed_emails.include?(current_user.email) || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) 
        
     elsif !current_user
