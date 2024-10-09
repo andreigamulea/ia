@@ -1373,7 +1373,7 @@ def export_to_xlsx_plata_an2_2425
     utilizatori_eligibili_ids = ComenziProd.where(prod_id: produse_eligibile.ids, validat: "Finalizata").pluck(:user_id).uniq
 
     # Array cu utilizatori pentru cazuri particulare (inițial gol)
-    user_array_particulari = ['ce.hermkens@gmail.com'] # Poți adăuga aici cazuri particulare de eligibilitate
+    user_array_particulari = ['ce.hermkens@gmail.com','maria_mocica@yahoo.com'] # Poți adăuga aici cazuri particulare de eligibilitate
 
     # Produsele pentru anul universitar 2024-2025
     produse_an2 = Prod.where(cod: ['cod196', 'cod207', 'cod213'] + (197..206).map { |n| "cod#{n}" })
@@ -1555,6 +1555,22 @@ def export_to_xlsx_plata_an1_2024_2025
     # Mapare de valori produse (ID produs -> preț)
     mapare_valori = produse.each_with_object({}) { |prod, hash| hash[prod.id] = prod.pret }
 
+    # Mapare personalizată pentru codurile produselor
+    prod_cod_mapping = {
+      "cod195" => "plata taxa inscriere",
+      "cod196" => "plata anuala integrala 1620 lei",
+      "cod197" => "plata luna octombrie",
+      "cod198" => "plata luna noiembrie",
+      "cod199" => "plata luna decembrie",
+      "cod200" => "plata luna ianuarie",
+      "cod201" => "plata luna februarie",
+      "cod202" => "plata luna martie",
+      "cod203" => "plata luna aprilie",
+      "cod204" => "plata luna mai",
+      "cod205" => "plata luna iunie",
+      "cod206" => "plata luna iulie"
+    }
+
     # Obținerea ID-ului pentru produsul `cod195`
     cod195_prod = Prod.find_by(cod: "cod195")
     return if cod195_prod.nil? # În caz că nu există produsul `cod195`, nu continuăm
@@ -1651,8 +1667,8 @@ def export_to_xlsx_plata_an1_2024_2025
       worksheet.add_cell(index + 1, 10, adresa_livrare)
       worksheet.add_cell(index + 1, 11, comanda.comanda.plataprin)
       
-      # Cod produs corect pentru anul 2024-2025
-      worksheet.add_cell(index + 1, 12, comanda.prod.cod)
+      # Atribuirea valorii pentru coloana `Nume Produs` conform mapării
+      worksheet.add_cell(index + 1, 12, prod_cod_mapping[comanda.prod.cod] || comanda.prod.cod)
       worksheet.add_cell(index + 1, 13, comanda.validat)
     end
     
@@ -1668,6 +1684,7 @@ rescue => e
   logger.error "Error generating Excel: #{e.message}"
   redirect_to root_path, alert: "There was an error generating the report. Please try again later."
 end
+
 
 
 
