@@ -57,7 +57,8 @@ class HomeController < ApplicationController
 
     # Calea către fișierul video pe serverul Debian
     video_path = '/mnt/AyushCell/Ormus.mp4'
-    @video_url = 'https://ayush.go.ro/Ormus.mp4'
+    #@video_url = 'https://ayush.go.ro/Ormus.mp4'
+    @video_url = 'https://ayush.go.ro/mnt/AyushCell/Ormus.mp4
 
     # Conectare la server prin SSH
     Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
