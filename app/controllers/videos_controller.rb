@@ -1039,8 +1039,8 @@ def set_user14
     puts("Produse cumpărate cu date: #{all_purchased_prods}")
 
     # Filtrare produse valabile
-    valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput + 90.days >= Date.today }.map(&:first)
-
+    #valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput + 90.days >= Date.today }.map(&:first)
+    valid_prods = purchased_prods.select { |_, _, datasfarsit| datasfarsit && datasfarsit >= Date.today }.map(&:first)
     puts("Produse valabile: #{valid_prods}")
 
     has_access = valid_prods.include?('cod176') || valid_prods.include?('cod177') || valid_prods.include?('cod178')

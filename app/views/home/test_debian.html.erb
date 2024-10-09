@@ -4,9 +4,9 @@
 <p><%= @message %></p>
 
 <!-- Playerul Video.js pentru fișierul MP4 -->
-<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360">
-    <source src="https://ayush.go.ro/video_proxy/Ormus.mp4" type="video/mp4">
-    Browser-ul tău nu suportă elementul video.
+<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360" data-setup="{}" oncontextmenu="return false;" controlsList="nodownload">
+  <source src="<%= @video_url %>" type="video/mp4">
+  Your browser does not support the video tag.
 </video>
 
 <!-- Include stilurile Video.js -->
