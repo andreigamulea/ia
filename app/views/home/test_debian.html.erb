@@ -15,22 +15,34 @@
 <!-- Inițializează player-ul Video.js și dezactivează contextul -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Detectează dacă utilizatorul folosește un dispozitiv mobil
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
     var player = videojs('my-video', {
       controls: true,
       fluid: true,
+      autoplay: isMobile ? false : true, // Pe mobil, autoplay poate fi dezactivat
       userActions: {
         hotkeys: true,
-        contextMenu: false // Dezactivează click dreapta pe video
+        contextMenu: false // Dezactivează click dreapta pe video (desktop)
       }
     });
 
-    // Previne deschiderea meniului context prin click dreapta
+    // Dacă este un dispozitiv mobil, ajustează setările
+    if (isMobile) {
+      player.on('touchstart', function(event) {
+        event.preventDefault(); // Previne comportamentele implicite
+        player.play(); // Redă video-ul când utilizatorul atinge ecranul
+      });
+    }
+
+    // Previne deschiderea meniului context pe desktop
     var videoElement = document.getElementById('my-video');
     videoElement.addEventListener('contextmenu', function(event) {
       event.preventDefault();
       return false;
     });
 
-    console.log("Playerul Video.js a fost inițializat cu succes și opțiunile de descărcare sunt dezactivate.");
+    console.log("Playerul Video.js a fost inițializat cu succes pentru " + (isMobile ? "mobil" : "desktop") + " și opțiunile de descărcare sunt dezactivate.");
   });
 </script>
