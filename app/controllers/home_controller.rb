@@ -2,6 +2,8 @@ require 'net/http'
 require 'json'
 require 'aws-sdk-s3'
   require 'open-uri'
+  require 'net/ssh'
+require 'net/sftp'
 #require 'openssl'
 class HomeController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:newsletter]
@@ -45,7 +47,36 @@ class HomeController < ApplicationController
     render plain: "Cerere HTTPS funcționată cu succes! Codul de răspuns: #{response.code}"
   end
   
-  
+  #password = 'bhairava' # În producție folosește variabile de mediu pentru stocarea parolei.
+  def test_debian
+    # Detalii conexiune SSH
+    ssh_host = 'ayush.go.ro'
+    ssh_port = 22
+    username = 'ayushayush'
+    password = 'bhairava' # În producție folosește variabile de mediu pentru stocarea parolei.
+
+    # Calea către fișierul video pe serverul Debian
+    video_path = '/mnt/AyushCell/Ormus.mp4'
+    @video_url = 'https://ayush.go.ro/Ormus.mp4'
+
+    # Conectare la server prin SSH
+    Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
+      # Conectare prin SFTP
+      ssh.sftp.connect do |sftp|
+        # Verifică dacă fișierul există
+        if sftp.file.open(video_path)
+          @message = "Fișierul #{video_path} există pe serverul Debian."
+        else
+          @message = "Fișierul #{video_path} nu a fost găsit pe serverul Debian."
+        end
+      end
+    end
+
+  rescue Net::SSH::AuthenticationFailed
+    @message = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
+  rescue StandardError => e
+    @message = "Eroare la conectarea la serverul Debian: #{e.message}"
+  end
   
   
   def test_wasabi_access

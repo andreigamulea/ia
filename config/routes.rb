@@ -76,6 +76,7 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get '/show_contract_voluntar/:id', to: 'contractes#show_contract_voluntar', as: 'show_contract_voluntar'
   get '/show_fisa_postului_voluntar/:id', to: 'contractes#show_fisa_postului_voluntar', as: 'show_fisa_postului_voluntar'
   get 'test_wasabi_access', to: 'home#test_wasabi_access'
+  get 'home/test_debian', to: 'home#test_debian'
 
 
   get 'test_ssl_connection', to: 'home#test_ssl_connection'

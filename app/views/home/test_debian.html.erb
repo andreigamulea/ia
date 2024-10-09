@@ -1,0 +1,36 @@
+<!-- app/views/home/test_debian.html.erb -->
+<h1>Testare Conexiune Debian</h1>
+<p><%= @message %></p>
+
+<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360"
+  data-setup='{"fluid": true}' oncontextmenu="return false;">
+  <source src="<%= @video_url %>" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<!-- Include stilurile și scriptul Video.js -->
+<link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+<script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
+
+<!-- Inițializează player-ul Video.js și dezactivează contextul -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var player = videojs('my-video', {
+      controls: true,
+      fluid: true,
+      userActions: {
+        hotkeys: true,
+        contextMenu: false // Dezactivează click dreapta pe video
+      }
+    });
+
+    // Previne deschiderea meniului context prin click dreapta
+    var videoElement = document.getElementById('my-video');
+    videoElement.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+      return false;
+    });
+
+    console.log("Playerul Video.js a fost inițializat cu succes și opțiunile de descărcare sunt dezactivate.");
+  });
+</script>
