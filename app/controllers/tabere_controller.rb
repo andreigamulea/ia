@@ -1,31 +1,31 @@
 class TabereController < ApplicationController
   def tayv24
     data_prag = Date.new(2024, 7, 16)
-    #@myvideo0 = Video.find_by(link: 'tDYGbQMGTNE') 
     @myvideo01 = "tDYGbQMGTNE"
+    
     if current_user
       puts("User logat: #{current_user.id}")
   
       if current_user.role == 1
         # Utilizator cu role 1 are acces direct la video-uri
         @has_access = true
-        valid_prods = ['cod176','cod177']
+        valid_prods = ['cod176', 'cod177']
         expired_prods = []
-        all_purchased = ['cod176','cod177']
+        all_purchased = ['cod176', 'cod177']
         @a_cumparat_macar_un_cod = true
         @prods = Prod.none
         @prods_cumparate = Prod.where(cod: all_purchased)
       else
-        # Obține codurile produselor cumpărate și datele de început și sfârșit
+        # Obține codurile produselor cumpărate și datele de început și sfârșit (datasfarsit înlocuit cu '2024-11-25')
         purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
                                      .joins(:prod)
                                      .where(prods: { curslegatura: 'tayv24', status: 'activ' })
-                                     .pluck('prods.cod', 'datainceput', 'datasfarsit')
+                                     .pluck('prods.cod', 'datainceput', Arel.sql("'2024-11-25'"))
   
         purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
                                        .joins(:prod)
                                        .where(prods: { curslegatura: 'tayv24', status: 'activ' })
-                                       .pluck('prods.cod', 'datainceput', 'datasfarsit')
+                                       .pluck('prods.cod', 'datainceput', Arel.sql("'2024-11-25'"))
   
         purchased_prods ||= []
         purchased_prods1 ||= []
@@ -34,8 +34,10 @@ class TabereController < ApplicationController
   
         puts("Produse cumpărate cu date: #{all_purchased_prods}")
   
-        valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 90.days >= Date.today }.map(&:first)
-        expired_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 90.days < Date.today }.map(&:first)
+        # Filtrare produse valabile și expirate folosind data explicită '2024-11-25'
+        # `datasfarsit` este acum înlocuit cu `Date.new(2024, 11, 25)` în loc de `datainceput + 90.days`
+        valid_prods = all_purchased_prods.select { |_, _, datasfarsit| Date.new(2024, 11, 25) >= Date.today }.map(&:first)
+        expired_prods = all_purchased_prods.select { |_, _, datasfarsit| Date.new(2024, 11, 25) < Date.today }.map(&:first)
   
         puts("Produse valabile: #{valid_prods}")
   
@@ -55,8 +57,6 @@ class TabereController < ApplicationController
           else
             @prods = Prod.where(cod: ['cod176', 'cod177']).order(:id)
           end
-        
-        
         else
           @prods = Prod.where(cod: ['cod176', 'cod177']).order(:id)
         end
@@ -90,7 +90,7 @@ class TabereController < ApplicationController
           @myvideo = Video.where(tip: 'tayv24').where('ordine <= ?', 1000).order(ordine: :asc)
         end
         puts("Numarul: #{@myvideo.count}")
-        
+  
       else
         puts("sunt in has acces NU")
         @myvideo13 = Video.none
@@ -109,10 +109,11 @@ class TabereController < ApplicationController
     if data_prag
       puts("Data prag + 90 zile= : #{data_prag + 90.days}")
     end
-    if current_user && current_user.email== "kalianasundara@protonmail.com"
+    if current_user && current_user.email == "kalianasundara@protonmail.com"
       @prods = Prod.where(curslegatura: 'tayv24', status: 'activ').where(cod: ['cod174', 'cod175', 'cod176', 'cod177']).order(:id)
     end  
-end
+  end
+  
 
 
 def export_to_xlsx_plata_tayv24
