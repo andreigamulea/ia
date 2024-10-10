@@ -68,6 +68,11 @@ class RasayanaController < ApplicationController
 
 
     @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1').where('ordine <= ?', 1000).order(ordine: :asc)
+    @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1')
+                                      .where('ordine > ? AND ordine < ?', 1000, 2000)
+                                      .order(ordine: :asc)
+
+
   end
   
   

@@ -166,7 +166,39 @@
             </tbody>
           </table>
         </div>
-<% end %>
+
+        <h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Rasayana - seminarii</h2></br>
+        <div id="videos">
+        <table class="table">
+          <thead>
+          <tr>
+              <th>Nr</th>
+              <th>Nume</th>
+              <th>Descriere</th>       
+              <th>Actiune</th>
+              
+          </tr>
+          </thead>
+          <tbody>
+          <% @myvideo_rasayana_m1_seminarii.each do |video| %>
+            <tr>
+            <td><%= video.ordine %></td>
+            <td><%= video.nume %></td>
+            <td><%= video.descriere %></td>           
+            <td><%= link_to "Vezi video", myvideo19_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
+            </tr>
+      
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+
+<% end %><br><br>
+
+
+
+
+
 
       </section>
       <section style="text-align:center;">
