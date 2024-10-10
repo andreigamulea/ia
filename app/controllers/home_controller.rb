@@ -54,17 +54,16 @@ class HomeController < ApplicationController
     ssh_port = 22
     username = 'ayushayush'
     password = 'bhairava' # În producție folosește variabile de mediu pentru stocarea parolei.
-
-    # Calea către fișierul video pe serverul Debian
-    video_path = '/mnt/AyushCell/Ormus.mp4'
-    @video_url = 'https://ayush.go.ro/Ormus.mp4'
-    #@video_url = 'https://ayush.go.ro/mnt/AyushCell/Ormus.mp4'
-
+  
+    # Calea către fișierul video pe serverul Debian (poți schimba calea la nevoie)
+    video_path = '/mnt/AyushCell/natura1.m3u8'
+    @video_url = 'https://ayush.go.ro/natura1.m3u8'
+  
     # Conectare la server prin SSH
     Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
       # Conectare prin SFTP
       ssh.sftp.connect do |sftp|
-        # Verifică dacă fișierul există
+        # Verifică dacă fișierul HLS există
         if sftp.file.open(video_path)
           @message = "Fișierul #{video_path} există pe serverul Debian."
         else
@@ -72,12 +71,13 @@ class HomeController < ApplicationController
         end
       end
     end
-
+  
   rescue Net::SSH::AuthenticationFailed
     @message = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
   rescue StandardError => e
     @message = "Eroare la conectarea la serverul Debian: #{e.message}"
   end
+  
   
   
   def test_wasabi_access

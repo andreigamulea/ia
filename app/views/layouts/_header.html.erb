@@ -30,7 +30,7 @@
                     <li class="nav-item">
                        <%= link_to 'Sesiuni interactive practice', sesiune_vara_path, class: 'no-turbo' %>
                     </li>
-                    <% allowed_emails = ["ce.hermkens@gmail.com","maria_mocica@yahoo.com"] %>
+                    <% allowed_emails = ["ce.hermkens@gmail.com","maria_mocica@yahoo.com","v_ionela@yahoo.com"] %>
                     <% if current_user && (current_user.role == 1 || allowed_emails.include?(current_user.email) || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) %>
                     <li class="nav-item">
                        <%= link_to 'Curs de Ayurveda Grupa 02 - 2024-2025', an2_path, class: 'no-turbo' %>

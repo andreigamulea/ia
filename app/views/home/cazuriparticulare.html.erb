@@ -48,6 +48,17 @@ cu userul care trebuie: irb(main):010:0> df.update(user_id: 557) </p>
 c.update(stateplata2: "Asteptare")   c.update(stateplata1: "Asteptare") Enjoy!</p>
 
 
-<h2>10. Anulare factura</h2>
+<h2>11. Anulare factura</h2>
 <p>Se face din aplicatie: merg la factura o editez punand la status: anulata   Enjoy!</p>
+
+<h2>12. User care vrea acces la mai multi ani</h2>
+<p>v_ionela@yahoo.com  vrea la an 1 si an 2</p>
+<p>Pt an2: merg la cursuriayurvedas_controller.rb/def cursayurveda/allowed_emails si ii pun acolo emailul
+ apoi cand plateste cate o luna modific la if-ul unde apare emailul ei valoarea lui @max_taxa2425=1 sau 2
+ Iar pt a plati ii adaug emailul aici: def an  pt a vedea la Cont. Si in an.html.erb trebuie sa o pun.  Apoi am mers in cursayurveda.html.erb
+  si i-am blocat accesul sa mai poata plati si acolo pt a nu avea plati duble. Iar la _header am pus-o 
+in allowed emails pt a vedea in meniu Gr 2. Si tot in _header am pus-o la 'Contributie Curs Ayurveda'</p>
+    <p>Pt an 1 am blocat in view in cursayurveda2425.html.erb accesul sa plateasca si acolo. Apoi am pus la
+     def cursayurveda2425 max_taxa = nil si o sa schimb</p>
+
 

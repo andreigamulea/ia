@@ -998,104 +998,7 @@ end
     redirect_to root_path, alert: "There was an error generating the report. Please try again later."
   end
 
-  def export_to_xlsx_plata_generala_curs
-    begin
-      prod_ids = Prod.where(curslegatura: "platageneralacurs").pluck(:id)
-      mapare_valori = prod_ids.each_with_object({}) { |id, hash| hash[id] = Prod.find(id).pret }
-
-      @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
-                                 .where(prod_id: mapare_valori.keys, validat: "Finalizata")
-                                 .order("users.email", :comanda_id)
   
-      user_ids = @comenzi_prod.map(&:user_id).uniq
-      detaliifacturare_hash = Detaliifacturare.where(user_id: user_ids).index_by(&:user_id)
-      
-  
-      workbook = RubyXL::Workbook.new
-      worksheet = workbook[0]
-  
-      #headers = ['Email', 'Nume User', 'Telefon', 'Nume din Factura', 'Telefon din factura', 'Data Platii', 'Valoare', 'Comanda ID', 'Adresă de livrare', 'Plată prin', 'Nume Produs', 'Validat']
-     
-
-      headers = ['Email', 'Nume User', 'Telefon', 'Nume din factură', 'Telefon din factură', 'Data Platii', 'Valoare', 'Cantitate', 'Total', 'Comandă ID', 'Nume livrare', 'Telefon livrare', 'Adresă de livrare', 'Plată prin', 'Nume Produs', 'Validat', 'Observații']
-
-
-      headers.each_with_index { |header, index| worksheet.add_cell(0, index, header) }
-  
-      @comenzi_prod.each_with_index do |comanda, index|
-        worksheet.add_cell(index + 1, 0, comanda.user.email)
-        worksheet.add_cell(index + 1, 1, comanda.user.name)
-        worksheet.add_cell(index + 1, 2, comanda.user.telefon)
-        # Preiau numele din factura
-        factura = Factura.find_by(comanda_id: comanda.comanda_id)
-        nume_factura = "#{factura.nume} #{factura.prenume}" if factura
-        worksheet.add_cell(index + 1, 3, nume_factura)
-
-        # Telefon din factura
-        telefon_factura = comanda.comanda&.telefon
-        worksheet.add_cell(index + 1, 4, telefon_factura)
-  
-        worksheet.add_cell(index + 1, 5, comanda.datainceput.strftime('%d-%m-%Y')) if comanda.datainceput
-  
-        valoare = mapare_valori[comanda.prod_id] || 0
-        worksheet.add_cell(index + 1, 6, valoare)
-        cantitate = comanda.cantitate || "N/A" # Assuming 'cantitate' field exists
-        worksheet.add_cell(index + 1, 7, cantitate)
-        total = comanda.pret_total || "N/A" # Assuming 'pret_total' field exists
-        worksheet.add_cell(index + 1, 8, total)
-  
-        worksheet.add_cell(index + 1, 9, comanda.comanda_id)
-  
-         # Nume din Livrare
-         adresa = comanda.comanda&.adresa_comenzi
-         detaliifacturare = detaliifacturare_hash[comanda.user.id]
-         nume_livrare = if adresa
-                           "#{adresa.nume} #{adresa.prenume}"
-                         elsif detaliifacturare
-                           "#{detaliifacturare.nume} #{detaliifacturare.prenume}"
-                         end
-         worksheet.add_cell(index + 1, 10, nume_livrare)
-       
-         # Telefon din livrare
-         telefon_livrare = adresa&.telefon || detaliifacturare&.telefon
-         worksheet.add_cell(index + 1, 11, telefon_livrare)
-         
-         # Adresă de livrare
-         if adresa
-           prefix = adresa.adresacoincide ? "adresa de livrare este adresa de facturare: " : "adresa de livrare diferita de adresa de facturare: "
-           
-           parts = [prefix, adresa.tara, adresa.judet, adresa.localitate, "cod postal: #{adresa.codpostal}", adresa.strada, adresa.numar, adresa.altedate, adresa.numecompanie, adresa.cui].compact.reject(&:empty?)
-           adresa_livrare = parts.join(', ')
-           
-         elsif detaliifacturare
-           parts = [detaliifacturare.tara, detaliifacturare.judet, detaliifacturare.localitate, "cod postal: #{detaliifacturare.codpostal}", detaliifacturare.strada, detaliifacturare.numar, detaliifacturare.altedate, detaliifacturare.numecompanie, detaliifacturare.cui].compact.reject(&:empty?)
-           adresa_livrare = parts.join(', ')
-           
-         else
-           adresa_livrare = nil
-         end
-         worksheet.add_cell(index + 1, 12, adresa_livrare)
-   
-         worksheet.add_cell(index + 1, 13, comanda.comanda.plataprin) if comanda.comanda
-   
-         worksheet.add_cell(index + 1, 14, comanda.prod.nume)
-         
-         worksheet.add_cell(index + 1, 15, comanda.validat)
-         obs = comanda.obs || "N/A"  # Fallback to "N/A" if obs is NULL
-         worksheet.add_cell(index + 1, 16, obs)
-       end
-   
-       file_path = Rails.root.join('tmp', "comenzi_prod_#{Time.now.to_i}.xlsx")
-       workbook.write(file_path)
-       send_file(file_path)
-     ensure
-       # Cleanup the temporary file
-       # File.delete(file_path) if File.exist?(file_path)
-     end
-   rescue => e
-     logger.error "Error generating Excel: #{e.message}"
-     redirect_to root_path, alert: "There was an error generating the report. Please try again later."
-   end
 
 
 
@@ -1685,6 +1588,101 @@ rescue => e
   redirect_to root_path, alert: "There was an error generating the report. Please try again later."
 end
 
+
+
+def export_to_xlsx_plata_generala_curs1
+  begin
+    # Selectează comenzile care conțin produsele corespunzătoare codurilor specificate
+    produse_ids = Prod.where(cod: ["cod245", "cod246", "cod126"]).pluck(:id)
+
+    # Selectare toate comenzile pentru codurile specificate
+    @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
+                               .where(prod_id: produse_ids, validat: "Finalizata")
+                               .order("users.email", :comanda_id)
+
+    # Obținerea ID-urilor de useri și detalii facturare
+    user_ids = @comenzi_prod.map(&:user_id).uniq
+    detaliifacturare_hash = Detaliifacturare.where(user_id: user_ids).index_by(&:user_id)
+
+    # Creare workbook Excel
+    workbook = RubyXL::Workbook.new
+    worksheet = workbook[0]
+
+    # Definirea capului de tabel
+    headers = ['Email', 'Nume User', 'Telefon', 'Nume din factură', 'Telefon din factură', 'Data Platii', 'Valoare', 'Observații', 'Comandă ID', 'Nume livrare', 'Telefon livrare', 'Adresă de livrare', 'Plată prin', 'Nume Produs', 'Validat']
+    headers.each_with_index { |header, index| worksheet.add_cell(0, index, header) }
+
+    # Popularea rândurilor din Excel cu datele din @comenzi_prod
+    @comenzi_prod.each_with_index do |comanda, index|
+      worksheet.add_cell(index + 1, 0, comanda.user.email)
+      worksheet.add_cell(index + 1, 1, comanda.user.name)
+      worksheet.add_cell(index + 1, 2, comanda.user.telefon)
+      
+      # Preluare informații factură
+      factura = Factura.find_by(comanda_id: comanda.comanda_id)
+      nume_factura = "#{factura.nume} #{factura.prenume}" if factura
+      worksheet.add_cell(index + 1, 3, nume_factura)
+
+      # Telefon din factură
+      telefon_factura = comanda.comanda&.telefon
+      worksheet.add_cell(index + 1, 4, telefon_factura)
+  
+      worksheet.add_cell(index + 1, 5, comanda.datainceput.strftime('%d-%m-%Y')) if comanda.datainceput
+
+      # Valoarea plății (din campul `pret_total`)
+      valoare = comanda.pret_total || 0
+      worksheet.add_cell(index + 1, 6, valoare)
+
+      # Observații (din campul `obs`)
+      worksheet.add_cell(index + 1, 7, comanda.obs)
+
+      worksheet.add_cell(index + 1, 8, comanda.comanda_id)
+
+      # Preluare informații de livrare
+      adresa = comanda.comanda&.adresa_comenzi
+      detaliifacturare = detaliifacturare_hash[comanda.user.id]
+      nume_livrare = if adresa
+                        "#{adresa.nume} #{adresa.prenume}"
+                      elsif detaliifacturare
+                        "#{detaliifacturare.nume} #{detaliifacturare.prenume}"
+                      end
+      worksheet.add_cell(index + 1, 9, nume_livrare)
+    
+      telefon_livrare = adresa&.telefon || detaliifacturare&.telefon
+      worksheet.add_cell(index + 1, 10, telefon_livrare)
+
+      # Generare adresă livrare completă
+      if adresa
+        prefix = adresa.adresacoincide ? "adresa de livrare este adresa de facturare: " : "adresa de livrare diferita de adresa de facturare: "
+        parts = [prefix, adresa.tara, adresa.judet, adresa.localitate, "cod postal: #{adresa.codpostal}", adresa.strada, adresa.numar, adresa.altedate, adresa.numecompanie, adresa.cui].compact.reject(&:empty?)
+        adresa_livrare = parts.join(', ')
+      elsif detaliifacturare
+        parts = [detaliifacturare.tara, detaliifacturare.judet, detaliifacturare.localitate, "cod postal: #{detaliifacturare.codpostal}", detaliifacturare.strada, detaliifacturare.numar, detaliifacturare.altedate, detaliifacturare.numecompanie, detaliifacturare.cui].compact.reject(&:empty?)
+        adresa_livrare = parts.join(', ')
+      else
+        adresa_livrare = nil
+      end
+
+      worksheet.add_cell(index + 1, 11, adresa_livrare)
+      worksheet.add_cell(index + 1, 12, comanda.comanda.plataprin)
+      
+      # Atribuirea valorii pentru coloana `Nume Produs`
+      worksheet.add_cell(index + 1, 13, comanda.prod.cod)
+      worksheet.add_cell(index + 1, 14, comanda.validat)
+    end
+    
+    # Salvare și trimitere fișier
+    file_path = Rails.root.join('tmp', "comenzi_prod_#{Time.now.strftime('%Y%m%d%H%M%S')}.xlsx")
+    workbook.write(file_path)
+    send_file(file_path)
+  ensure
+    # Cleanup the temporary file if necessary
+    # File.delete(file_path) if File.exist?(file_path)
+  end
+rescue => e
+  logger.error "Error generating Excel: #{e.message}"
+  redirect_to root_path, alert: "There was an error generating the report. Please try again later."
+end
 
 
 

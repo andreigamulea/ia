@@ -1,11 +1,10 @@
-<!-- app/views/home/test_debian.html.erb -->
-<h1>Test Video Player (MP4)</h1>
+<h1>Test Video Player (HLS)</h1>
 
 <p><%= @message %></p>
 
-<!-- Playerul Video.js pentru fișierul MP4 -->
+<!-- Playerul Video.js pentru fișierul HLS -->
 <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360" data-setup="{}" oncontextmenu="return false;" controlsList="nodownload">
-  <source src="<%= @video_url %>" type="video/mp4">
+  <source src="<%= @video_url %>" type="application/x-mpegURL">
   Your browser does not support the video tag.
 </video>
 
@@ -13,6 +12,8 @@
 <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 <!-- Include scriptul Video.js -->
 <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
+<!-- Include pluginul HLS pentru Video.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
 
 <!-- Inițializează player-ul Video.js -->
 <script>
