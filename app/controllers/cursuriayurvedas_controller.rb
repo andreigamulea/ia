@@ -757,7 +757,10 @@ def cursayurveda2425
   active_product_codes = purchased_prods_video.select do |_, _, datasfarsit|
     datasfarsit.nil? || datasfarsit.to_date >= Date.today
   end.map(&:first)
-
+  if current_user.role == 1
+    # Admin: tratează ca și cum toate produsele ar fi cumpărate, deci construim `active_product_codes` pentru toate produsele
+    active_product_codes = Prod.where(curslegatura: 'an1_2425', status: 'activ').pluck(:cod)
+  end
   # Selectarea videourilor corespunzătoare produselor cumpărate active și ordonarea lor după `ordine`
   @myvideo_cumparate = Video.where(cod: active_product_codes).order(:ordine)
 
