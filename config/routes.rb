@@ -219,6 +219,7 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get 'videos/:id/myvideo17', to: 'videos#myvideo17', as: 'myvideo17'
   get 'videos/:id/myvideo18', to: 'videos#myvideo18', as: 'myvideo18'
   get 'videos/:id/myvideo19', to: 'videos#myvideo19', as: 'myvideo19'
+  get 'videos/:id/myvideo20', to: 'videos#myvideo20', as: 'myvideo20'
   get 'videos/tayv2', to: 'videos#tayv2', as: 'tayv2'
   get 'tabara_de_ayurveda_toamna1', to: 'videos#tayt12', as: 'tayt12'
   get 'tabara_de_ayurveda_toamna2', to: 'videos#tayt122', as: 'tayt122'
@@ -302,7 +303,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get '/plata_tayv2/export', to: 'paginisites#export_to_xlsx_plata_tayv2', as: 'export_plata_tayv2'
   get '/plata_tayt12/export', to: 'paginisites#export_to_xlsx_plata_tayt12', as: 'export_plata_tayt12'
   get '/export_to_xlsx_plata_sesiunevara/export', to: 'paginisites#export_to_xlsx_plata_sesiunevara', as: 'export_to_xlsx_plata_sesiunevara'
-  get '/plata_generala_curs/export', to: 'paginisites#export_to_xlsx_plata_generala_curs', as: 'export_plata_generala_curs'
+  
   get 'export_plata_rasayana_modul1', to: 'paginisites#export_to_xlsx_plata_rasayana_modul1'
 
   
@@ -316,7 +317,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
 
   get '/paginisites/:id/statistici_utilizator', to: 'paginisites#statistici_utilizator', as: 'statistici_utilizator_paginisite'
   get 'export_plata_an2_2425', to: 'paginisites#export_to_xlsx_plata_an2_2425' #an 2 2425 dupa data
-
+  get 'export_to_xlsx_plata_generala_curs1', to: 'paginisites#export_to_xlsx_plata_generala_curs1'
   
   
   resources :statistics, only: [:index]

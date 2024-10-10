@@ -95,7 +95,7 @@ class CursuriayurvedasController < ApplicationController
       redirect_to new_user_session_path
       return false
     end
-     allowed_emails = ["ce.hermkens@gmail.com","maria_mocica@yahoo.com"]
+     allowed_emails = ["ce.hermkens@gmail.com","maria_mocica@yahoo.com","v_ionela@yahoo.com"]
      if current_user && (current_user.role == 1 || allowed_emails.include?(current_user.email) || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) 
        
     elsif !current_user
@@ -195,6 +195,12 @@ if (max_taxa && max_taxa > 10) || allowed_emails.include?(current_user.email)
       # Definirea lunilor și valoarea maximă a taxei
       @luni2425 = [nil, "Septembrie", "Octombrie", "Noiembrie", "Decembrie", "Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "Iulie"]
       @max_taxa2425 = ComenziProd.where(user_id: current_user.id).where.not(prod_id: 198).maximum(:taxa2425)
+      if current_user.email=="v_ionela@yahoo.com"
+        @max_taxa2425=nil  #aici pun ce luna a platit sau cate luni a platit: 1 sau 2 etc 
+
+      end  
+      puts("@max_taxa2425 este: #{@max_taxa2425}")
+
 
       # Definirea array-ului cu coduri
       coduri_array = ['cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204', 'cod205', 'cod206']
@@ -606,9 +612,12 @@ def cursayurveda2425
     puts("daaaaaaaaaaaaaaaaab")
   end  
   @myvideo3 = Video.where(tip: 'an1').where('ordine > ?', 1000).order(ordine: :asc)
-  ##################################grupa 1
+
+  # Definire produse specifice
   @prodgrupa1_taxainscriere_all = Prod.find_by(cod: "cod195")
   puts("1. @prodgrupa1_taxainscriere_all arevaloarea: #{@prodgrupa1_taxainscriere_all}")
+
+  # Verificare grupă utilizator
   if current_user && current_user.grupa2425 == 1
     @titlu_pagina = 'Curs de Ayurveda - Grupa 1'
     luni = [nil, nil, "Octombrie", "Noiembrie", "Decembrie", "Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "Iulie"]
@@ -625,6 +634,11 @@ def cursayurveda2425
     max_taxa = 12
   end
 
+  if current_user && current_user.email == 'v_ionela@yahoo.com'
+    max_taxa = nil
+  end  
+
+  # Verificare plată și alocare produse taxă grupă 1
   if current_user && current_user.grupa2425 == 1
     comanda = ComenziProd.find_by(user_id: current_user.id, taxa2425: 1)
     @textan1 = 1
@@ -661,47 +675,30 @@ def cursayurveda2425
       elsif current_user.email == "ce.hermkens@gmail.com"
         @prodgrupa1_taxalunara.pret = 90
       end
-      
     end
   end
-  ##################################end grupa1
-  ##########################start acces produse video an 1
 
+  # Acces produse video pentru anul 1
   if max_taxa
     lunile = [nil, nil, "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "iulie"]
     @produse_accesibile_an1 = Prod.where(curslegatura: 'cay2425', luna: lunile[2..(2 + max_taxa - 2)]).order(created_at: :asc)
-    ##start1 aici tratez situatia cand sa aiba acces la link ZOOM
+
     index_luna_curenta = lunile.index(@luna_curenta)
 
     if @ultima_luna_platita.nil?
       @are_prioritate = false
     else
       index_ultima_luna_platita = lunile.index(@ultima_luna_platita.downcase)
-      puts("salut")
-      puts("index_luna_curenta: #{index_luna_curenta}")
-      puts("index_ultima_luna_platita: #{index_ultima_luna_platita}")
       if @luna_curenta == "august" || @luna_curenta == "septembrie"
         @are_prioritate = @ultima_luna_platita.downcase == "iulie"
-        puts "1"
       elsif index_luna_curenta.nil?
         @are_prioritate = false
-        puts "2"
       elsif index_luna_curenta > index_ultima_luna_platita
         @are_prioritate = false
-        puts "3"
       else
         @are_prioritate = true
-        puts "4"
       end
     end
-    puts("Luna curenta: #{@luna_curenta}")
-    puts("Are prioritate: #{@are_prioritate}")
-    if @are_prioritate
-      puts "Ultima luna platita are prioritate sau este aceeasi cu luna curenta."
-    else
-      puts "Luna curenta are prioritate fata de ultima luna platita."
-    end
-    ##stop1 aici tratez situatia cand sa aiba acces la link ZOOM
 
     video_coduri = Video.where(tip: 'cay2425').pluck(:cod)
     prod_ids = Prod.where(cod: video_coduri).pluck(:id)
@@ -718,20 +715,58 @@ def cursayurveda2425
   else
     @produse_accesibile_an1 = []
   end
-  ##########################stop acces produse video an 1
-
 
   if user_signed_in?
-    required_prods_sets = [['cod195', 'cod197'], ['cod195', 'cod196']] #cod196=1620 lei  cod195=60lei
+    required_prods_sets = [['cod195', 'cod197'], ['cod195', 'cod196']] # cod196=1620 lei  cod195=60lei
     purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata').joins(:prod).where(prods: { curslegatura: 'cay2425', status: 'activ' }).pluck('prods.cod')
     @has_acces_zoom = (current_user.role == 1) || required_prods_sets.any? { |set| (set - purchased_prods).empty? }
   else
     @has_acces_zoom = false
   end
-  
-  
-  puts("@has_acces_zoom este: #{@has_acces_zoom}")
+
+  # Coduri produse deja plătite care nu sunt expirate
+  coduri_produse_platite_active = ComenziProd
+                                    .where(user_id: current_user.id, validat: 'Finalizata')
+                                    .joins(:prod)
+                                    .where(prods: { curslegatura: 'an1_2425' })
+                                    .where("comenzi_prods.datasfarsit IS NULL OR comenzi_prods.datasfarsit >= ?", Date.today)
+                                    .pluck('prods.cod')
+
+  # Selectare produse care nu sunt deja plătite (sau sunt plătite dar expirate)
+  if max_taxa.nil? || max_taxa == 1
+    @an1_2425 = nil
+  else
+    lunile_accesibile = ["octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie"]
+
+    # Selectăm produsele care nu au fost plătite sau sunt plătite dar expirate
+    @an1_2425 = Prod.where(curslegatura: 'an1_2425', luna: lunile_accesibile[0, max_taxa - 1])
+                    .where.not(cod: coduri_produse_platite_active)
+                    .order(:linkstripe)
+                    .to_a
+  end
+
+  # Determinarea videourilor cumpărate care nu sunt expirate sau expiră astăzi
+  purchased_prods_video = ComenziProd
+                            .where(user_id: current_user.id, validat: 'Finalizata')
+                            .joins(:prod)
+                            .where(prods: { curslegatura: 'an1_2425', status: 'activ' })
+                            .where("comenzi_prods.datasfarsit IS NULL OR comenzi_prods.datasfarsit >= ?", Date.today)
+                            .pluck('prods.cod', 'comenzi_prods.datainceput', 'comenzi_prods.datasfarsit')
+
+  # Selectăm doar codurile produselor active (care nu sunt expirate) sau care expiră astăzi
+  active_product_codes = purchased_prods_video.select do |_, _, datasfarsit|
+    datasfarsit.nil? || datasfarsit.to_date >= Date.today
+  end.map(&:first)
+
+  # Selectarea videourilor corespunzătoare produselor cumpărate active și ordonarea lor după `ordine`
+  @myvideo_cumparate = Video.where(cod: active_product_codes).order(:ordine)
+
+  puts("Variabila @an1_2425 este: #{@an1_2425}")
+  puts("Videouri cumpărate: #{@myvideo_cumparate}")
 end
+
+
+
 
 
 
