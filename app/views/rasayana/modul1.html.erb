@@ -182,7 +182,7 @@
           <tbody>
           <% @myvideo_rasayana_m1_seminarii.each do |video| %>
             <tr>
-            <td><%= video.ordine %></td>
+            <td><%= video.ordine-1000 %></td>
             <td><%= video.nume %></td>
             <td><%= video.descriere %></td>           
             <td><%= link_to "Vezi video", myvideo19_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
