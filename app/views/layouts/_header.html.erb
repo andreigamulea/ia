@@ -190,7 +190,7 @@
 
                         <li><%= link_to 'An 4 2024-2025', an4_path, class: 'no-turbo' %></li>
                         <% end %>
-                        <% if current_user && (current_user.role == 1 || current_user.email.in?(['karunasland@hotmail.com', 'george.bondor@yahoo.com'])) %>
+                        <% if current_user && (current_user.role == 1 || current_user.email.in?(['karunasland@hotmail.com', 'george.bondor@yahoo.com','v_ionela@yahoo.com'])) %>
                             <li><%= link_to 'Contributie Curs Ayurveda', an_path, class: 'no-turbo' %></li>
                         <% end %>
                         <li><%= link_to 'Delogare', destroy_user_session_path, class: 'nav-item no-turbo', id: 'logout_link',  data: { turbo_action: 'replace', turbo_method: 'delete' } %></li>
