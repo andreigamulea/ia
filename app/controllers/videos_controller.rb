@@ -1154,9 +1154,9 @@ end
 
 
 
-def set_user16
+def set_user16 #merge bine ia in considerare si datasfarsit
   puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-  
+
   # Verificare dacă utilizatorul este autentificat
   unless user_signed_in?
     flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
@@ -1166,7 +1166,7 @@ def set_user16
 
   # Verificare rolul utilizatorului
   if current_user.role == 1
-    # Admin, are acces
+    # Admin, are acces la toate videoclipurile
     return true
   elsif current_user.role == 0
     # Utilizator normal, trebuie să verificăm dacă a cumpărat produse valide
@@ -1188,34 +1188,45 @@ def set_user16
     all_purchased_prods = purchased_prods + purchased_prods1
     puts("Produse cumpărate cu date: #{all_purchased_prods}")
 
-    # Produsele valabile (în ultimele 60 de zile)
-    @valid_prods = all_purchased_prods.select { |_, datainceput, datasfarsit| 
-      datasfarsit && datasfarsit >= Date.today 
+    # Produsele valabile (datasfarsit >= azi)
+    @valid_prods = all_purchased_prods.select { |_, _, datasfarsit| 
+      datasfarsit.present? && datasfarsit >= Date.today 
     }.map(&:first)
 
-    # Produsele expirate (nu au acces)
+    # Produsele expirate (datasfarsit < azi)
     @expired_prods = all_purchased_prods.select { |_, _, datasfarsit| 
-      datasfarsit && datasfarsit < Date.today 
+      datasfarsit.present? && datasfarsit < Date.today 
     }.map(&:first)
 
     puts("Produse valabile: #{@valid_prods}")
     puts("Produse expirate: #{@expired_prods}")
 
-    # Verificare dacă utilizatorul are produse valide
+    # Verificare dacă utilizatorul are produse valide (neexpirate)
     @has_access = @valid_prods.any?
-    puts("verificare daca are produse valabile: #{@has_access}")
-    
-    if @has_access
-      puts("am accessssssss")
-      # Utilizatorul are acces
-      return true
-    else
-      puts(" NU am accessssssss")
-      # Utilizatorul nu are produse valabile, redirect la pagina principală
-      flash[:alert] = "Nu aveți acces la acest curs. Produsele cumpărate au expirat."
+    puts("Verificare dacă are produse valabile: #{@has_access}")
+
+    # Dacă utilizatorul nu are produse valabile, redirecționează la pagina principală
+    unless @has_access
+      flash[:alert] = "Nu aveți acces la acest curs. Toate produsele cumpărate au expirat."
       redirect_to root_path
       return false
-    end  
+    end
+
+    # Verificare suplimentară: identifică codul produsului accesat folosind id-ul video-ului sau link-ul
+    video = Video.find_by(id: params[:id]) # Caută video-ul folosind ID-ul din params
+    produs_cod_accesat = video&.cod # Găsește codul produsului asociat cu video-ul, presupunând că video-ul are un atribut `cod`
+
+    puts("Produs accesat (codul): #{produs_cod_accesat}")
+
+    # Verificare dacă produsul accesat este în lista produselor expirate
+    if @expired_prods.include?(produs_cod_accesat) && !@valid_prods.include?(produs_cod_accesat)
+      flash[:alert] = "Produsul pe care încercați să îl accesați este expirat. Redirecționare către pagina principală."
+      redirect_to root_path
+      return false
+    end
+
+    # Dacă produsul accesat nu este expirat sau este valabil, permite accesul
+    return true
   else
     # În caz că utilizatorul are alt rol (dacă există alte cazuri speciale)
     flash[:alert] = "Acces interzis."
@@ -1225,7 +1236,8 @@ def set_user16
 end
 
 
-def set_user17
+
+def set_user17 #merge bine ia in considerare si datasfarsit
   puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   
   # Verificare dacă utilizatorul este autentificat
@@ -1296,7 +1308,7 @@ def set_user17
 end
 
 
-def set_user18
+def set_user18 #merge bine ia in considerare si datasfarsit
   puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
   
   # Verificare dacă utilizatorul este autentificat
@@ -1391,12 +1403,12 @@ def set_user19
 
     # Dacă nu are acces, afișăm mesaj și redirecționăm
     flash[:alert] = "Nu aveți acces la acest curs."
-    redirect_to root_path # Înlocuiește cu calea ta pentru redirect
+    redirect_to root_path 
     return false
   end
 end
 
-def set_user20
+def set_user20 #merge bine ia in considerare si datasfarsit
   puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
   # Verificare parametri disponibili pentru debugging
