@@ -23,7 +23,7 @@
                                        
                     <td><%= prod.detalii %></td> 
                     
-                    <td style="text-align:center;"><%= prod.pret.to_i %> lei</td>
+                    <td style="text-align:center;"><%= prod.pret.to_f %> lei</td>
           
                     <td style="text-align:center;"> 
                         <% if (prod.cod == "cod40" || prod.cod == "cod42" || prod.cod == "cod44") && Time.now.to_date >= Date.new(2023,10,19) %>
