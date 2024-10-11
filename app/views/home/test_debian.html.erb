@@ -1,6 +1,7 @@
 <h1>Testare Conexiune Debian</h1>
 <p><%= @message %></p>
 <p><%= @message_m3u8 %></p>
+<p><%= @message_crypted %></p>
 
 <!-- Player-ul Video.js pentru Ormus.mp4 -->
 <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="320" height="180"
@@ -16,6 +17,13 @@
   Your browser does not support the video tag.
 </video>
 
+<!-- Player-ul Video.js pentru Ormus_crypted.mp4 -->
+<video id="my-crypted-video" class="video-js vjs-default-skin" controls preload="auto" width="320" height="180"
+  data-setup='{"fluid": true}'>
+  <source src="<%= @video_url_crypted %>" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 <!-- Include stilurile și scriptul Video.js -->
 <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
@@ -23,12 +31,12 @@
 <!-- Include Video.js HLS support pentru a reda .m3u8 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
 
-
-<!-- Inițializează player-ul Video.js pentru ambele fișiere -->
+<!-- Inițializează player-ul Video.js pentru toate fișierele -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var playerMp4 = videojs('my-video');
     var playerHls = videojs('my-hls-video');
-    console.log("Playerul Video.js a fost inițializat cu succes pentru fișierul Ormus.mp4 și natura1.m3u8.");
+    var playerCrypted = videojs('my-crypted-video');
+    console.log("Playerul Video.js a fost inițializat cu succes pentru fișierele video.");
   });
 </script>

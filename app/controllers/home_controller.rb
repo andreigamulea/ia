@@ -58,13 +58,17 @@ class HomeController < ApplicationController
     # Calea către fișierele video pe serverul Debian
     video_path_mp4 = '/mnt/AyushCell/Ormus.mp4'
     video_path_m3u8 = '/mnt/AyushCell/natura1.m3u8'
+    video_path_crypted = '/mnt/AyushCell/Ormus_crypted.mp4'
+    
     @video_url_mp4 = 'https://ayush.go.ro/Ormus.mp4'
     @video_url_m3u8 = 'https://ayush.go.ro/natura1.m3u8'
-  
+    @video_url_crypted = 'https://ayush.go.ro/Ormus_crypted.mp4'
+    
     # Mesaje de stare
     @message = ""
     @message_m3u8 = ""
-  
+    @message_crypted = ""
+    
     begin
       # Conectare la server prin SSH
       Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
@@ -83,17 +87,25 @@ class HomeController < ApplicationController
           else
             @message_m3u8 = "Fișierul #{video_path_m3u8} nu a fost găsit pe serverul Debian."
           end
+  
+          # Verifică dacă fișierul Ormus_crypted.mp4 există
+          if sftp.file.open(video_path_crypted)
+            @message_crypted = "Fișierul #{video_path_crypted} există pe serverul Debian."
+          else
+            @message_crypted = "Fișierul #{video_path_crypted} nu a fost găsit pe serverul Debian."
+          end
         end
       end
-  
+    
     rescue Net::SSH::AuthenticationFailed
       @message = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
-      @message_m3u8 = @message # Setează același mesaj și pentru m3u8
+      @message_m3u8 = @message_crypted = @message
     rescue StandardError => e
       @message = "Eroare la conectarea la serverul Debian: #{e.message}"
-      @message_m3u8 = @message # Setează același mesaj și pentru m3u8
+      @message_m3u8 = @message_crypted = @message
     end
   end
+  
   
   
   
