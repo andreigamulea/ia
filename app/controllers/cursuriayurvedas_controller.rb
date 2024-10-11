@@ -724,14 +724,18 @@ def cursayurveda2425
     @has_acces_zoom = false
   end
 
-  # Coduri produse deja plătite care nu sunt expirate
-  coduri_produse_platite_active = ComenziProd
-                                    .where(user_id: current_user.id, validat: 'Finalizata')
-                                    .joins(:prod)
-                                    .where(prods: { curslegatura: 'an1_2425' })
-                                    .where("comenzi_prods.datasfarsit IS NULL OR comenzi_prods.datasfarsit >= ?", Date.today)
-                                    .pluck('prods.cod')
-
+  if current_user
+    # Coduri produse deja plătite care nu sunt expirate
+    coduri_produse_platite_active = ComenziProd
+                                      .where(user_id: current_user.id, validat: 'Finalizata')
+                                      .joins(:prod)
+                                      .where(prods: { curslegatura: 'an1_2425' })
+                                      .where("comenzi_prods.datasfarsit IS NULL OR comenzi_prods.datasfarsit >= ?", Date.today)
+                                      .pluck('prods.cod')
+  else
+    coduri_produse_platite_active = []
+  end
+  
   # Selectare produse care nu sunt deja plătite (sau sunt plătite dar expirate)
   if max_taxa.nil? || max_taxa == 1
     @an1_2425 = nil
@@ -745,19 +749,23 @@ def cursayurveda2425
                     .to_a
   end
 
-  # Determinarea videourilor cumpărate care nu sunt expirate sau expiră astăzi
-  purchased_prods_video = ComenziProd
-                            .where(user_id: current_user.id, validat: 'Finalizata')
-                            .joins(:prod)
-                            .where(prods: { curslegatura: 'an1_2425', status: 'activ' })
-                            .where("comenzi_prods.datasfarsit IS NULL OR comenzi_prods.datasfarsit >= ?", Date.today)
-                            .pluck('prods.cod', 'comenzi_prods.datainceput', 'comenzi_prods.datasfarsit')
-
+  if current_user
+    # Determinarea videourilor cumpărate care nu sunt expirate sau expiră astăzi
+    purchased_prods_video = ComenziProd
+                              .where(user_id: current_user.id, validat: 'Finalizata')
+                              .joins(:prod)
+                              .where(prods: { curslegatura: 'an1_2425', status: 'activ' })
+                              .where("comenzi_prods.datasfarsit IS NULL OR comenzi_prods.datasfarsit >= ?", Date.today)
+                              .pluck('prods.cod', 'comenzi_prods.datainceput', 'comenzi_prods.datasfarsit')
+  else
+    purchased_prods_video = []
+  end
+  
   # Selectăm doar codurile produselor active (care nu sunt expirate) sau care expiră astăzi
   active_product_codes = purchased_prods_video.select do |_, _, datasfarsit|
     datasfarsit.nil? || datasfarsit.to_date >= Date.today
   end.map(&:first)
-  if current_user.role == 1
+  if current_user && current_user.role == 1
     # Admin: tratează ca și cum toate produsele ar fi cumpărate, deci construim `active_product_codes` pentru toate produsele
     active_product_codes = Prod.where(curslegatura: 'an1_2425', status: 'activ').pluck(:cod)
   end
