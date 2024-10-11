@@ -1,53 +1,22 @@
-<h1>Test Video Player (HLS)</h1>
-
+<!-- app/views/home/test_debian.html.erb -->
+<h1>Testare Conexiune Debian</h1>
 <p><%= @message %></p>
 
-<!-- Playerul Video.js pentru fișierul HLS -->
-<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360" data-setup="{}" oncontextmenu="return false;" controlsList="nodownload">
-  <source src="<%= @video_url %>" type="application/x-mpegURL">
+<!-- Player-ul Video.js folosind URL-ul direct către fișierul video -->
+<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360"
+  data-setup='{"fluid": true}'>
+  <source src="<%= @video_url %>" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
-<!-- Include stilurile Video.js -->
+<!-- Include stilurile și scriptul Video.js -->
 <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-<!-- Include scriptul Video.js -->
 <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
-<!-- Include pluginul HLS pentru Video.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
 
 <!-- Inițializează player-ul Video.js -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Detectează dacă utilizatorul folosește un dispozitiv mobil
-    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    var player = videojs('my-video', {
-      controls: true,
-      fluid: true,
-      autoplay: isMobile ? false : true, // Autoplay pe desktop, dar nu și pe mobil
-      muted: isMobile, // Necesită "muted" pentru autoplay pe mobil
-      playsinline: true, // Redare în interiorul paginii pe mobil
-      userActions: {
-        hotkeys: true,
-        contextMenu: false // Dezactivează click dreapta pe video (desktop)
-      }
-    });
-
-    // Pe mobil, asigură-te că redarea pornește la primul click/tap
-    if (isMobile) {
-      player.on('touchstart', function(event) {
-        player.muted(false); // Activează sunetul când utilizatorul interacționează
-        player.play();
-      });
-    }
-
-    // Previne deschiderea meniului context pe desktop
-    var videoElement = document.getElementById('my-video');
-    videoElement.addEventListener('contextmenu', function(event) {
-      event.preventDefault();
-      return false;
-    });
-
-    console.log("Playerul Video.js a fost inițializat cu succes pentru " + (isMobile ? "mobil" : "desktop") + ".");
+    var player = videojs('my-video');
+    console.log("Playerul Video.js a fost inițializat cu succes și redă fișierul de la <%= @video_url %>.");
   });
 </script>
