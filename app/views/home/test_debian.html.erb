@@ -3,26 +3,23 @@
 <p><%= @message_m3u8 %></p>
 <p><%= @message_crypted %></p>
 
-<!-- Player-ul Video.js pentru Ormus.mp4 -->
-<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="320" height="180"
-  data-setup='{"fluid": true}'>
-  <source src="<%= @video_url_mp4 %>" type="video/mp4">
-  Your browser does not support the video tag.
+
+<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" crossorigin="anonymous">
+    <source src="https://ayush.go.ro/Ormus_crypted.m3u8" type="application/vnd.apple.mpegurl">
 </video>
 
-<!-- Player-ul Video.js pentru natura1.m3u8 -->
-<video id="my-hls-video" class="video-js vjs-default-skin" controls preload="auto" width="320" height="180"
-  data-setup='{"fluid": true}'>
-  <source src="<%= @video_url_m3u8 %>" type="application/x-mpegURL">
-  Your browser does not support the video tag.
-</video>
-
-<!-- Player-ul Video.js pentru Ormus_crypted.mp4 -->
-<video id="my-crypted-video" class="video-js vjs-default-skin" controls preload="auto" width="320" height="180"
-  data-setup='{"fluid": true}'>
-  <source src="<%= @video_url_crypted %>" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/videojs-contrib-hls@5.14.1/dist/videojs-contrib-hls.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var player = videojs('my-video');
+    player.src({
+      src: 'https://ayush.go.ro/Ormus_crypted.m3u8',
+      type: 'application/vnd.apple.mpegurl'
+    });
+    console.log("Playerul video a fost inițializat.");
+  });
+</script>
 
 <!-- Include stilurile și scriptul Video.js -->
 <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
