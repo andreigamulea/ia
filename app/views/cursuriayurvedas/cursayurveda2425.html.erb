@@ -142,7 +142,7 @@ td:hover .tooltip-text {
   </div>
   </br>
 
-  <% if !current_user || current_user.grupa2425 == nil %>  
+  <% if !current_user || (current_user.grupa2425 == nil  &&  current_user.email!='v_ionela@yahoo.com')%>  
   <h2 class="name" id="register">Inscrieri curs Ayurveda grupa 1: octombrie 2024 - iulie 2025</h2>
   <p style="margin-top:20px;"><strong>Costul participării la cursul de Ayurveda pentru sesiunea octombrie 2024 – iulie 2025 este de 1800 lei.</strong><br><br>
   <span>Înscrierea presupune parcurgerea următorilor doi pași:</span></p>
@@ -151,7 +151,7 @@ td:hover .tooltip-text {
     <li>Achitarea o singura data a sumei de 60 lei, necesară pentru realizarea înscrierii.</li>
     <li>Achitarea participării pentru anul de curs octombrie 2024 – iulie 2025 în valoare de 1800 lei. Plata poate fi realizată integral la înscriere sau poate fi distribuită în tranșe lunare de câte 180 lei. Optând pentru plata completă inițială, se beneficiază de o reducere corespunzătoare cu valoarea unei luni de participare, reducându-se astfel suma totală de plată de la 1800 lei la 1620 lei pentru acest an de curs.</li>
   </ol>
-  <%if current_user &&  current_user.email!='v_ionela@yahoo.com'%>
+  
   <div class="tbland">
     <div class="tbr">
       <table class="table table-striped table-hover">
@@ -188,7 +188,7 @@ td:hover .tooltip-text {
       </table>
     </div>
   </div>
-  <% end %><% end %>
+  <% end %>
 
 
 
