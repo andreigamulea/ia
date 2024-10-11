@@ -49,62 +49,63 @@ class HomeController < ApplicationController
   
   #password = 'bhairava' # În producție folosește variabile de mediu pentru stocarea parolei.
   def test_debian
-    # Detalii conexiune SSH
-    ssh_host = 'ayush.go.ro'
-    ssh_port = 22
-    username = 'ayushayush'
-    password = 'bhairava' # În producție folosește variabile de mediu pentru stocarea parolei.
+  # Detalii conexiune SSH
+  ssh_host = 'ayush.go.ro'
+  ssh_port = 22
+  username = 'ayushayush'
+  password = 'bhairava' # În producție folosește variabile de mediu pentru stocarea parolei.
+
+  # Calea către fișierele video pe serverul Debian
+  video_path_mp4 = '/mnt/AyushCell/Ormus.mp4'
+  video_path_m3u8 = '/mnt/AyushCell/natura1.m3u8'
+  video_path_crypted = '/mnt/AyushCell/Ormus_crypted.mp4'
   
-    # Calea către fișierele video pe serverul Debian
-    video_path_mp4 = '/mnt/AyushCell/Ormus.mp4'
-    video_path_m3u8 = '/mnt/AyushCell/natura1.m3u8'
-    video_path_crypted = '/mnt/AyushCell/Ormus_crypted.mp4'
-    
-    @video_url_mp4 = 'https://ayush.go.ro/Ormus.mp4'
-    @video_url_m3u8 = 'https://ayush.go.ro/natura1.m3u8'
-    @video_url_crypted = 'https://ayush.go.ro/Ormus_crypted.mp4'
-    
-    # Mesaje de stare
-    @message = ""
-    @message_m3u8 = ""
-    @message_crypted = ""
-    
-    begin
-      # Conectare la server prin SSH
-      Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
-        # Conectare prin SFTP
-        ssh.sftp.connect do |sftp|
-          # Verifică dacă fișierul Ormus.mp4 există
-          if sftp.file.open(video_path_mp4)
-            @message = "Fișierul #{video_path_mp4} există pe serverul Debian."
-          else
-            @message = "Fișierul #{video_path_mp4} nu a fost găsit pe serverul Debian."
-          end
+  @video_url_mp4 = 'https://ayush.go.ro/Ormus.mp4'
+  @video_url_m3u8 = 'https://ayush.go.ro/natura1.m3u8'
+  @video_url_crypted = 'https://ayush.go.ro/Ormus_crypted.mp4'
   
-          # Verifică dacă fișierul natura1.m3u8 există
-          if sftp.file.open(video_path_m3u8)
-            @message_m3u8 = "Fișierul #{video_path_m3u8} există pe serverul Debian."
-          else
-            @message_m3u8 = "Fișierul #{video_path_m3u8} nu a fost găsit pe serverul Debian."
-          end
+  # Mesaje de stare
+  @message = ""
+  @message_m3u8 = ""
+  @message_crypted = ""
   
-          # Verifică dacă fișierul Ormus_crypted.mp4 există
-          if sftp.file.open(video_path_crypted)
-            @message_crypted = "Fișierul #{video_path_crypted} există pe serverul Debian."
-          else
-            @message_crypted = "Fișierul #{video_path_crypted} nu a fost găsit pe serverul Debian."
-          end
+  begin
+    # Conectare la server prin SSH
+    Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
+      # Conectare prin SFTP
+      ssh.sftp.connect do |sftp|
+        # Verifică dacă fișierul Ormus.mp4 există
+        if sftp.file.open(video_path_mp4)
+          @message = "Fișierul #{video_path_mp4} există pe serverul Debian."
+        else
+          @message = "Fișierul #{video_path_mp4} nu a fost găsit pe serverul Debian."
+        end
+
+        # Verifică dacă fișierul natura1.m3u8 există
+        if sftp.file.open(video_path_m3u8)
+          @message_m3u8 = "Fișierul #{video_path_m3u8} există pe serverul Debian."
+        else
+          @message_m3u8 = "Fișierul #{video_path_m3u8} nu a fost găsit pe serverul Debian."
+        end
+
+        # Verifică dacă fișierul Ormus_crypted.mp4 există
+        if sftp.file.open(video_path_crypted)
+          @message_crypted = "Fișierul #{video_path_crypted} există pe serverul Debian."
+        else
+          @message_crypted = "Fișierul #{video_path_crypted} nu a fost găsit pe serverul Debian."
         end
       end
-    
-    rescue Net::SSH::AuthenticationFailed
-      @message = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
-      @message_m3u8 = @message_crypted = @message
-    rescue StandardError => e
-      @message = "Eroare la conectarea la serverul Debian: #{e.message}"
-      @message_m3u8 = @message_crypted = @message
     end
+  
+  rescue Net::SSH::AuthenticationFailed
+    @message = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
+    @message_m3u8 = @message_crypted = @message
+  rescue StandardError => e
+    @message = "Eroare la conectarea la serverul Debian: #{e.message}"
+    @message_m3u8 = @message_crypted = @message
   end
+end
+
   
   
   
