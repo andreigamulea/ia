@@ -1,11 +1,18 @@
-<!-- app/views/home/test_debian.html.erb -->
 <h1>Testare Conexiune Debian</h1>
 <p><%= @message %></p>
+<p><%= @message_m3u8 %></p>
 
-<!-- Player-ul Video.js folosind URL-ul direct către fișierul video -->
-<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360"
+<!-- Player-ul Video.js pentru Ormus.mp4 -->
+<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="320" height="180"
   data-setup='{"fluid": true}'>
-  <source src="<%= @video_url %>" type="video/mp4">
+  <source src="<%= @video_url_mp4 %>" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<!-- Player-ul Video.js pentru natura1.m3u8 -->
+<video id="my-hls-video" class="video-js vjs-default-skin" controls preload="auto" width="320" height="180"
+  data-setup='{"fluid": true}'>
+  <source src="<%= @video_url_m3u8 %>" type="application/x-mpegURL">
   Your browser does not support the video tag.
 </video>
 
@@ -13,10 +20,15 @@
 <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
 
-<!-- Inițializează player-ul Video.js -->
+<!-- Include Video.js HLS support pentru a reda .m3u8 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
+
+
+<!-- Inițializează player-ul Video.js pentru ambele fișiere -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    var player = videojs('my-video');
-    console.log("Playerul Video.js a fost inițializat cu succes și redă fișierul de la <%= @video_url %>.");
+    var playerMp4 = videojs('my-video');
+    var playerHls = videojs('my-hls-video');
+    console.log("Playerul Video.js a fost inițializat cu succes pentru fișierul Ormus.mp4 și natura1.m3u8.");
   });
 </script>
