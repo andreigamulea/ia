@@ -3,37 +3,31 @@
 <p><%= @message_m3u8 %></p>
 <p><%= @message_crypted %></p>
 
-
+<!-- Player Video.js -->
 <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" crossorigin="anonymous">
     <source src="https://ayush.go.ro/Ormus_crypted.m3u8" type="application/vnd.apple.mpegurl">
 </video>
 
+<!-- Include stilurile și scripturile Video.js -->
+<link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/videojs-contrib-hls@5.14.1/dist/videojs-contrib-hls.min.js"></script>
+
+<!-- Preload pentru fișierul JS cu crossorigin -->
+<link rel="preload" href="http://localhost:3000/assets/headermobil-dd347210b01a4238465b5dde940fa69a4c229285633e4c4ac25b5261401e5b18.js" as="script" crossorigin="anonymous">
+
+<!-- Inițializează player-ul Video.js pentru fișierul HLS -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    var player = videojs('my-video');
+    var player = videojs('my-video', {
+      controls: true,
+      preload: 'auto'
+    });
+
     player.src({
       src: 'https://ayush.go.ro/Ormus_crypted.m3u8',
       type: 'application/vnd.apple.mpegurl'
     });
-    console.log("Playerul video a fost inițializat.");
-  });
-</script>
 
-<!-- Include stilurile și scriptul Video.js -->
-<link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-<script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
-
-<!-- Include Video.js HLS support pentru a reda .m3u8 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.js"></script>
-
-<!-- Inițializează player-ul Video.js pentru toate fișierele -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var playerMp4 = videojs('my-video');
-    var playerHls = videojs('my-hls-video');
-    var playerCrypted = videojs('my-crypted-video');
-    console.log("Playerul Video.js a fost inițializat cu succes pentru fișierele video.");
+    console.log("Playerul video a fost inițializat cu Video.js și VHS.");
   });
 </script>
