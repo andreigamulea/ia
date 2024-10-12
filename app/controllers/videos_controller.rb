@@ -30,6 +30,8 @@ class VideosController < ApplicationController
   before_action :set_user18, only: %i[myvideo18] #este pt an4 2024-2025
   before_action :set_user19, only: %i[myvideo19] #este pt rasayana modul 1
   before_action :set_user20, only: %i[myvideo20] #este pt an1 2024-2025
+  before_action :set_user21, only: %i[myvideo21] #este pt revizionari an 3 24-25
+  before_action :set_user22, only: %i[myvideo22] #este pt revizionari an 4 24-25
   before_action :require_admin, only: %i[index new edit update create]  
   # GET /videos or /videos.json
   def index
@@ -309,6 +311,16 @@ end
     render 'myvideo1'
   end
   def myvideo20 #pt an1 24-25
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo21 #pt an1 24-25
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo22 #pt an1 24-25
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
@@ -1492,7 +1504,105 @@ def set_user20 #merge bine ia in considerare si datasfarsit
   end
 end
 
+def set_user21 #canal2
+  # Verifică dacă utilizatorul este autentificat
+  unless user_signed_in?
+    puts("autentificareee")
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
 
+  lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august"]
+
+  # Verifică dacă utilizatorul are rolul 1 (rol special cu acces automat)
+  unless current_user.role == 1
+    # Găsește înregistrarea utilizatorului în tabelul Listacanal2 pe baza email-ului său
+    inregistrare_user = Listacanal2.find_by(email: current_user.email)
+
+    # Dacă nu există înregistrare și utilizatorul nu are rolul 1, redirecționează către root_path
+    if inregistrare_user.nil?
+      redirect_to root_path and return
+    end
+
+    # Verifică dacă utilizatorul nu a plătit (valoarea 'platit' este "nimic")
+    if inregistrare_user.platit == "nimic"
+      redirect_to root_path and return
+    end
+
+    # Obține luna curentă în format românesc și indexul acesteia
+    luna_curenta_romana = luna_in_romana(Time.current.in_time_zone('Europe/Bucharest').strftime("%B"))
+    index_luna_curenta = lunile.index(luna_curenta_romana)
+    index_luna_platit = lunile.index(inregistrare_user.platit)
+
+    # Calculăm indexul lunii anterioare
+    index_luna_anterioara = (index_luna_curenta - 1) % lunile.length
+
+    # Afișăm informații pentru debugging
+    puts("luna_curenta_romana: #{luna_curenta_romana}")
+    puts("index_luna_curenta: #{index_luna_curenta}")
+    puts("index_luna_platit: #{index_luna_platit}")
+    puts("index_luna_anterioara: #{index_luna_anterioara}")
+
+    # Verificăm dacă luna 'platit' este anterioară lunii curente și lunii anterioare
+    if index_luna_platit.nil? || index_luna_curenta.nil? || (index_luna_platit < index_luna_curenta && index_luna_platit < index_luna_anterioara)
+      redirect_to root_path and return
+    end
+  end
+
+  # Returnează true dacă toate verificările au trecut și utilizatorul are acces
+  true
+end
+
+def set_user22 #canal3
+  # Verifică dacă utilizatorul este autentificat
+  unless user_signed_in?
+    puts("autentificareee")
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+
+  lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august"]
+
+  # Verifică dacă utilizatorul are rolul 1 (acces automat)
+  unless current_user.role == 1
+    # Găsește înregistrarea utilizatorului în tabelul Listacanal3 pe baza email-ului său
+    inregistrare_user = Listacanal3.find_by(email: current_user.email)
+
+    # Dacă nu există înregistrare și utilizatorul nu are rolul 1, redirecționează la root_path
+    if inregistrare_user.nil?
+      redirect_to root_path and return
+    end
+
+    # Verifică dacă utilizatorul nu a plătit (platit == "nimic")
+    if inregistrare_user.platit == "nimic"
+      redirect_to root_path and return
+    end
+
+    # Obține luna curentă în format românesc și indexul acesteia
+    luna_curenta_romana = luna_in_romana(Time.current.in_time_zone('Europe/Bucharest').strftime("%B"))
+    index_luna_curenta = lunile.index(luna_curenta_romana)
+    index_luna_platit = lunile.index(inregistrare_user.platit)
+
+    # Calculăm indexul lunii anterioare
+    index_luna_anterioara = (index_luna_curenta - 1) % lunile.length
+
+    # Afișează informații pentru debugging
+    puts("luna_curenta_romana: #{luna_curenta_romana}")
+    puts("index_luna_curenta: #{index_luna_curenta}")
+    puts("index_luna_platit: #{index_luna_platit}")
+    puts("index_luna_anterioara: #{index_luna_anterioara}")
+
+    # Verifică dacă luna 'platit' este anterioară lunii curente și lunii anterioare
+    if index_luna_platit.nil? || index_luna_curenta.nil? || (index_luna_platit < index_luna_curenta && index_luna_platit < index_luna_anterioara)
+      redirect_to root_path and return
+    end
+  end
+
+  # Returnează true dacă toate verificările au trecut și utilizatorul are acces
+  true
+end
 
 
 

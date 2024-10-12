@@ -64,36 +64,25 @@ class TvsController < ApplicationController
       redirect_to new_user_session_path
       return false
     end
-    lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie","august"]
+    lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august"]
   
     # Utilizatorii cu role == 1 au acces automat
     unless current_user.role == 1
       inregistrare_user = Listacanal2.find_by(email: current_user.email)
   
-      # Dacă nu există înregistrare pentru user și nu are rolul 1, redirecționează
       if inregistrare_user.nil?
         redirect_to root_path and return
       end
   
-      # Verifică dacă valoarea lui 'platit' este "nimic" pentru utilizatorii care nu sunt rolul 1
       if inregistrare_user.platit == "nimic"
         redirect_to root_path and return
       end
   
-      # Găsește indexul lunii 'platit' din înregistrarea userului și determină luna curentă în română
       luna_curenta_romana = luna_in_romana(Time.current.in_time_zone('Europe/Bucharest').strftime("%B"))
       index_luna_curenta = lunile.index(luna_curenta_romana)
       index_luna_platit = lunile.index(inregistrare_user.platit)
-      
-      # Calculăm indexul lunii anterioare
       index_luna_anterioara = (index_luna_curenta - 1) % lunile.length
-      
-      puts("luna_curenta_romana: #{luna_curenta_romana}")
-      puts("index_luna_curenta: #{index_luna_curenta}")
-      puts("index_luna_platit: #{index_luna_platit}")
-      puts("index_luna_anterioara: #{index_luna_anterioara}")
   
-      # Dacă luna 'platit' este mai mică decât luna curentă și luna anterioară, redirect către root_path
       if index_luna_platit.nil? || index_luna_curenta.nil? || (index_luna_platit < index_luna_curenta && index_luna_platit < index_luna_anterioara)
         redirect_to root_path and return
       end
@@ -104,33 +93,45 @@ class TvsController < ApplicationController
     data_curenta = @now_bucharest.to_date
     @orare_inceput_sfarsit_azi = Tv.where(datainceput: data_curenta, canal: 2).pluck(:orainceput, :orasfarsit).flat_map { |orainceput, orasfarsit| [orainceput, orasfarsit] }.uniq
   
-    # Convertim fiecare ora de inceput in format HH:MM pentru a facilita comparatia in JavaScript
     @orare_inceput_sfarsit_azi = @orare_inceput_sfarsit_azi.map { |ora| ora.strftime('%H:%M') }
   
     @myvideo1 = Tv.where(canal: 2)
                   .where("datainceput <= ? AND datasfarsit >= ?", now_bucharest.to_date, now_bucharest.to_date)
                   .to_a
                   .detect do |tv|
-                    # Ajustăm orainceput la data curentă
                     ora_inceput_ajustata = tv.orainceput.change(year: now_bucharest.year, month: now_bucharest.month, day: now_bucharest.day, zone: 'Europe/Bucharest')
-  
-                    # Dacă datasfarsit este aceeași zi cu datainceput, ajustăm orasfarsit la aceeași zi
+                    
                     if tv.datasfarsit == tv.datainceput
                       ora_sfarsit_ajustata = tv.orasfarsit.change(year: now_bucharest.year, month: now_bucharest.month, day: now_bucharest.day, zone: 'Europe/Bucharest')
                     else
-                      # Dacă datasfarsit este diferită, ajustăm orasfarsit la datasfarsit
                       ora_sfarsit_ajustata = tv.orasfarsit.change(year: tv.datasfarsit.year, month: tv.datasfarsit.month, day: tv.datasfarsit.day, zone: 'Europe/Bucharest')
                     end
   
-                    # Comparam acum cu orele ajustate
-                    result = now_bucharest >= ora_inceput_ajustata && now_bucharest <= ora_sfarsit_ajustata
-                    puts "Comparând: Acum - #{now_bucharest}, Început ajustat - #{ora_inceput_ajustata}, Sfârșit ajustat - #{ora_sfarsit_ajustata}. Rezultat: #{result}"
-  
-                    result
+                    now_bucharest >= ora_inceput_ajustata && now_bucharest <= ora_sfarsit_ajustata
                   end
   
     puts "Video selectat: #{@myvideo1 ? @myvideo1.id : 'Niciunul'}"
-    # Setează variabilele în funcție de rezultatul interogării
+  
+    # Dacă @myvideo1 există, căutăm videouri cu același cod în tabela Video
+    if @myvideo1
+      # Găsim videoclipul în tabela Video care are același link ca @myvideo1
+      video_gasit = Video.find_by(link: @myvideo1.link)
+  
+      if video_gasit
+        # Căutăm toate videourile cu același cod
+        @myvideos = Video.where(cod: video_gasit.cod)
+        @nr_video_gasite = @myvideos.count
+        puts("Numarul de videouri gasite cu acelasi cod este de : #{@nr_video_gasite}")
+      else
+        @nr_video_gasite = 0
+        puts("Nu a fost găsit niciun video cu același link în tabela Video.")
+      end
+    else
+      @nr_video_gasite = 0
+      puts("Nu a fost selectat niciun video pentru verificarea codului.")
+    end
+  
+    # Restul codului
     if @myvideo1
       @myvideo = @myvideo1.link
       @exista_video = true
@@ -147,6 +148,7 @@ class TvsController < ApplicationController
   end
   
   
+  
   def canal3
     unless user_signed_in?
       puts("autentificareee")
@@ -154,36 +156,25 @@ class TvsController < ApplicationController
       redirect_to new_user_session_path
       return false
     end
-    lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie","august"]
+    lunile = ["septembrie", "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august"]
   
     # Utilizatorii cu role == 1 au acces automat
     unless current_user.role == 1
       inregistrare_user = Listacanal3.find_by(email: current_user.email)
   
-      # Dacă nu există înregistrare pentru user și nu are rolul 1, redirecționează
       if inregistrare_user.nil?
         redirect_to root_path and return
       end
   
-      # Verifică dacă valoarea lui 'platit' este "nimic" pentru utilizatorii care nu sunt rolul 1
       if inregistrare_user.platit == "nimic"
         redirect_to root_path and return
       end
   
-      # Găsește indexul lunii 'platit' din înregistrarea userului și determină luna curentă în română
       luna_curenta_romana = luna_in_romana(Time.current.in_time_zone('Europe/Bucharest').strftime("%B"))
       index_luna_curenta = lunile.index(luna_curenta_romana)
       index_luna_platit = lunile.index(inregistrare_user.platit)
-      
-      # Calculăm indexul lunii anterioare
       index_luna_anterioara = (index_luna_curenta - 1) % lunile.length
-      
-      puts("luna_curenta_romana: #{luna_curenta_romana}")
-      puts("index_luna_curenta: #{index_luna_curenta}")
-      puts("index_luna_platit: #{index_luna_platit}")
-      puts("index_luna_anterioara: #{index_luna_anterioara}")
   
-      # Dacă luna 'platit' este mai mică decât luna curentă și luna anterioară, redirect către root_path
       if index_luna_platit.nil? || index_luna_curenta.nil? || (index_luna_platit < index_luna_curenta && index_luna_platit < index_luna_anterioara)
         redirect_to root_path and return
       end
@@ -194,33 +185,45 @@ class TvsController < ApplicationController
     data_curenta = @now_bucharest.to_date
     @orare_inceput_sfarsit_azi = Tv.where(datainceput: data_curenta, canal: 3).pluck(:orainceput, :orasfarsit).flat_map { |orainceput, orasfarsit| [orainceput, orasfarsit] }.uniq
   
-    # Convertim fiecare ora de inceput in format HH:MM pentru a facilita comparatia in JavaScript
     @orare_inceput_sfarsit_azi = @orare_inceput_sfarsit_azi.map { |ora| ora.strftime('%H:%M') }
   
     @myvideo1 = Tv.where(canal: 3)
                   .where("datainceput <= ? AND datasfarsit >= ?", now_bucharest.to_date, now_bucharest.to_date)
                   .to_a
                   .detect do |tv|
-                    # Ajustăm orainceput la data curentă
                     ora_inceput_ajustata = tv.orainceput.change(year: now_bucharest.year, month: now_bucharest.month, day: now_bucharest.day, zone: 'Europe/Bucharest')
-  
-                    # Dacă datasfarsit este aceeași zi cu datainceput, ajustăm orasfarsit la aceeași zi
+                    
                     if tv.datasfarsit == tv.datainceput
                       ora_sfarsit_ajustata = tv.orasfarsit.change(year: now_bucharest.year, month: now_bucharest.month, day: now_bucharest.day, zone: 'Europe/Bucharest')
                     else
-                      # Dacă datasfarsit este diferită, ajustăm orasfarsit la datasfarsit
                       ora_sfarsit_ajustata = tv.orasfarsit.change(year: tv.datasfarsit.year, month: tv.datasfarsit.month, day: tv.datasfarsit.day, zone: 'Europe/Bucharest')
                     end
   
-                    # Comparam acum cu orele ajustate
-                    result = now_bucharest >= ora_inceput_ajustata && now_bucharest <= ora_sfarsit_ajustata
-                    puts "Comparând: Acum - #{now_bucharest}, Început ajustat - #{ora_inceput_ajustata}, Sfârșit ajustat - #{ora_sfarsit_ajustata}. Rezultat: #{result}"
-  
-                    result
+                    now_bucharest >= ora_inceput_ajustata && now_bucharest <= ora_sfarsit_ajustata
                   end
   
     puts "Video selectat: #{@myvideo1 ? @myvideo1.id : 'Niciunul'}"
-    ## Setează variabilele în funcție de rezultatul interogării
+  
+    # Dacă @myvideo1 există, căutăm videouri cu același cod în tabela Video
+    if @myvideo1
+      # Găsim videoclipul în tabela Video care are același link ca @myvideo1
+      video_gasit = Video.find_by(link: @myvideo1.link)
+  
+      if video_gasit
+        # Căutăm toate videourile cu același cod
+        @myvideos = Video.where(cod: video_gasit.cod)
+        @nr_video_gasite = @myvideos.count
+        puts("Numarul de videouri gasite cu acelasi cod este de : #{@nr_video_gasite}")
+      else
+        @nr_video_gasite = 0
+        puts("Nu a fost găsit niciun video cu același link în tabela Video.")
+      end
+    else
+      @nr_video_gasite = 0
+      puts("Nu a fost selectat niciun video pentru verificarea codului.")
+    end
+  
+    # Restul codului
     if @myvideo1
       @myvideo = @myvideo1.link
       @exista_video = true
@@ -232,6 +235,7 @@ class TvsController < ApplicationController
       @exista_video = false
     end
   end
+  
   
 
 

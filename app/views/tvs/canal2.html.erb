@@ -26,39 +26,57 @@
 <% end %>
 
 <div class="container" id="revizionari1">
-<%= render 'layouts/sideleft' %>
+  <%= render 'layouts/sideleft' %>
 
-<div class="cr" style="background-color: white; ">
+  <div class="cr" style="background-color: white; ">
     <h1 class="first-tittle">Canal 2  I  Ayush Cell Romania</h1>
     <h2 class="main-title" >Canal 2 - Vizionari cursuri Ayurveda</h2>
 
+    <% if @exista_video %>
+      <% if @nr_video_gasite == 1 %>
+        <h2><%= @denumire %></h2>
+        <h4>Aceasta inregistrare se poate reviziona de la <%= @data_inceput %> ora <%= @valabilitate_ora_inceput %> pana la <%= @data_sfarsit %> ora <%= @valabilitate_ora_sfarsit %></h4>
 
+        <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>); background-size: 100%;">
+          <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
+            <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+            <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+            <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+            <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+          </div>
+        </div></br>
+      <% else %>
+        <h2 style="text-align: center;padding: 0 10px;">Înregistrări video</h2></br>
 
-    
-
-    
-
-<% if @exista_video %>
-
-<h2><%=@denumire%></h2>
-<h4>Aceasta inregistrare se poate reviziona de la <%=@data_inceput%> ora <%=@valabilitate_ora_inceput%> pana la <%=@data_sfarsit%> ora <%=@valabilitate_ora_sfarsit%></h4>
-
-
-<div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>); background-size: 100%;">
-    <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
-        <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
-        <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
-        <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
-        <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
-    </div>
-</div></br>
-<% else %>
-
-<h3>In acest moment nu există nici o revizionare.</h3>
-
-<% end %>
+        <div id="videos">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nr</th>
+                <th>Nume</th>
+                <th>Descriere</th>
+                <th>Acțiune</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @myvideos.each do |video| %>
+                <tr>
+                  <td><%= video.ordine %></td>
+                  <td><%= video.nume %></td>
+                  <td><%= video.descriere %></td>
+                  <td><%= link_to "Vezi video", myvideo21_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    <% else %>
+      <h3>În acest moment nu există nici o revizionare.</h3>
+    <% end %>
+  </div>
 </div>
-</div>
+
 
 <script>
 console.log('Script simplu! canal2');
