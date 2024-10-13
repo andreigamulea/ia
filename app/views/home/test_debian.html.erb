@@ -3,28 +3,30 @@
 <p><%= @message_m3u8 %></p>
 <p><%= @message_crypted %></p>
 
+<!-- Afișare cheie de criptare (doar pentru testare) -->
+<p>Cheia de criptare: <%= @encryption_key %></p>
+
 <!-- Player Video.js -->
 <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" crossorigin="anonymous">
-    <source src="https://ayush.go.ro/Ormus_crypted.m3u8" type="application/vnd.apple.mpegurl">
+  <source src="https://ayush.go.ro/output.m3u8" type="application/vnd.apple.mpegurl">
 </video>
 
 <!-- Include stilurile și scripturile Video.js -->
 <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
 
-<!-- Preload pentru fișierul JS cu crossorigin -->
-<link rel="preload" href="http://localhost:3000/assets/headermobil-dd347210b01a4238465b5dde940fa69a4c229285633e4c4ac25b5261401e5b18.js" as="script" crossorigin="anonymous">
-
 <!-- Inițializează player-ul Video.js pentru fișierul HLS -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var player = videojs('my-video', {
       controls: true,
-      preload: 'auto'
+      preload: 'auto',
+      techOrder: ['html5'] // Asigură-te că folosește HTML5 pentru HLS
     });
 
+    // Setează sursa HLS (manifestul)
     player.src({
-      src: 'https://ayush.go.ro/Ormus_crypted.m3u8',
+      src: 'https://ayush.go.ro/output.m3u8',
       type: 'application/vnd.apple.mpegurl'
     });
 
