@@ -95,12 +95,15 @@ class HomeController < ApplicationController
   
 
   def get_encryption_key
-    # Accesează cheia din Rails credentials
     encryption_key = Rails.application.credentials[:encryption_key]
-
-    # Trimite cheia de criptare
-    render plain: encryption_key
+  
+    if encryption_key.present?
+      render plain: encryption_key
+    else
+      render plain: "Cheia de criptare nu a fost găsită.", status: :not_found
+    end
   end
+  
   
   
   

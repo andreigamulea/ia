@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post 'home/make_unlisted', to: 'home#make_unlisted'
   get 'get_encryption_key', to: 'home#get_encryption_key'
   
+  
   resources :localitatis do
     collection do
       post 'import_judete'
