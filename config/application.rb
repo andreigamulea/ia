@@ -28,14 +28,16 @@ module Ia
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins 'http://localhost:3000', 'https://ayushcell.ro'  # Permite cereri din localhost și din domeniul ayushcell.ro
-        resource '/get_encryption_key',  # Endpoint-ul care oferă cheia
+        origins 'https://ayushcell.ro', 'http://localhost:3000'
+        resource '/get_encryption_key',
           headers: :any,
           methods: [:get],
           expose: ['Access-Control-Allow-Origin'],
           credentials: true
       end
     end
+    
+    
 
   end
 end

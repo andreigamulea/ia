@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'get_encryption_key', to: 'home#get_encryption_key'
   
   
+  
   resources :localitatis do
     collection do
       post 'import_judete'
