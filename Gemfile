@@ -119,7 +119,7 @@ gem 'uglifier', '~> 4.2'
 #gem 'therubyracer', '~> 0.12.3'
 gem 'mini_racer', platforms: :ruby
 gem 'aws-sdk-s3', '~> 1.162'
-#gem 'rack-cors', '~> 2.0', '>= 2.0.2'
+gem 'rack-cors', '~> 2.0', '>= 2.0.2'
 gem 'net-ssh', '~> 7.3'
 gem 'net-sftp', '~> 4.0'
 gem 'videojs_rails', '~> 4.12', '>= 4.12.15'

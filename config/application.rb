@@ -25,5 +25,17 @@ module Ia
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins 'http://localhost:3000', 'https://ayushcell.ro'  # Permite cereri din localhost și din domeniul ayushcell.ro
+        resource '/get_encryption_key',  # Endpoint-ul care oferă cheia
+          headers: :any,
+          methods: [:get],
+          expose: ['Access-Control-Allow-Origin'],
+          credentials: true
+      end
+    end
+
   end
 end
