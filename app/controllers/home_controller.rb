@@ -51,6 +51,7 @@ class HomeController < ApplicationController
   def test_debian
     # Accesează cheia de criptare din Rails credentials
     encryption_key = Rails.application.credentials[:encryption_key]
+    @encryption_key = Rails.application.credentials[:encryption_key]
   
     if encryption_key.nil?
       render plain: "Cheia de criptare nu este setată corect în credentials.yml.enc."
