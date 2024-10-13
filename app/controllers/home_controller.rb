@@ -49,64 +49,58 @@ class HomeController < ApplicationController
   
   #password = 'bhairava' # În producție folosește variabile de mediu pentru stocarea parolei.
   def test_debian
-  # Detalii conexiune SSH
-  ssh_host = 'ayush.go.ro'
-  ssh_port = 22
-  username = 'ayushayush'
-  password = 'bhairava' # În producție folosește variabile de mediu pentru stocarea parolei.
-
-  # Calea către fișierele video pe serverul Debian
-  video_path_mp4 = '/mnt/AyushCell/Ormus.mp4'
-  video_path_m3u8 = '/mnt/AyushCell/natura1.m3u8'
-  video_path_crypted = '/mnt/AyushCell/Ormus_crypted.mp4'
+    # Accesează cheia de criptare din Rails credentials
+    encryption_key = Rails.application.credentials[:encryption_key]
   
-  @video_url_mp4 = 'https://ayush.go.ro/Ormus.mp4'
-  @video_url_m3u8 = 'https://ayush.go.ro/natura1.m3u8'
-  @video_url_crypted = 'https://ayush.go.ro/Ormus_crypted.mp4'
-  
-  # Mesaje de stare
-  @message = ""
-  @message_m3u8 = ""
-  @message_crypted = ""
-  
-  begin
-    # Conectare la server prin SSH
-    Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
-      # Conectare prin SFTP
-      ssh.sftp.connect do |sftp|
-        # Verifică dacă fișierul Ormus.mp4 există
-        if sftp.file.open(video_path_mp4)
-          @message = "Fișierul #{video_path_mp4} există pe serverul Debian."
-        else
-          @message = "Fișierul #{video_path_mp4} nu a fost găsit pe serverul Debian."
-        end
-
-        # Verifică dacă fișierul natura1.m3u8 există
-        if sftp.file.open(video_path_m3u8)
-          @message_m3u8 = "Fișierul #{video_path_m3u8} există pe serverul Debian."
-        else
-          @message_m3u8 = "Fișierul #{video_path_m3u8} nu a fost găsit pe serverul Debian."
-        end
-
-        # Verifică dacă fișierul Ormus_crypted.mp4 există
-        if sftp.file.open(video_path_crypted)
-          @message_crypted = "Fișierul #{video_path_crypted} există pe serverul Debian."
-        else
-          @message_crypted = "Fișierul #{video_path_crypted} nu a fost găsit pe serverul Debian."
-        end
-      end
+    if encryption_key.nil?
+      render plain: "Cheia de criptare nu este setată corect în credentials.yml.enc."
+      return
     end
   
-  rescue Net::SSH::AuthenticationFailed
-    @message = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
-    @message_m3u8 = @message_crypted = @message
-  rescue StandardError => e
-    @message = "Eroare la conectarea la serverul Debian: #{e.message}"
-    @message_m3u8 = @message_crypted = @message
-  end
-end
-
+    # Detalii conexiune SSH
+    ssh_host = 'ayush.go.ro'
+    ssh_port = 22
+    username = 'ayushayush'
+    password = 'bhairava'
   
+    # Calea către fișierul M3U8 pe serverul Debian
+    video_path_m3u8 = '/mnt/AyushCell/output.m3u8'
+  
+    @video_url_m3u8 = 'https://ayush.go.ro/output.m3u8'
+  
+    # Mesaj de stare pentru M3U8
+    @message_m3u8 = ""
+  
+    begin
+      # Conectare la server prin SSH
+      Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
+        # Conectare prin SFTP
+        ssh.sftp.connect do |sftp|
+          # Verifică dacă fișierul output.m3u8 există
+          if sftp.file.open(video_path_m3u8)
+            @message_m3u8 = "Fișierul M3U8 există și poate fi redat."
+          else
+            @message_m3u8 = "Fișierul M3U8 nu a fost găsit pe serverul Debian."
+          end
+        end
+      end
+  
+    rescue Net::SSH::AuthenticationFailed
+      @message_m3u8 = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
+    rescue StandardError => e
+      @message_m3u8 = "Eroare la conectarea la serverul Debian: #{e.message}. Backtrace: #{e.backtrace.join("\n")}"
+    end
+  end
+  
+  
+
+  def get_encryption_key
+    # Accesează cheia din Rails credentials
+    encryption_key = Rails.application.credentials[:encryption_key]
+
+    # Trimite cheia de criptare
+    render plain: encryption_key
+  end
   
   
   
