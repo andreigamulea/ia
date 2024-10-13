@@ -95,11 +95,20 @@ class HomeController < ApplicationController
   
 
   def get_encryption_key
+    # Log pentru a verifica dacă metoda este apelată
+    Rails.logger.info "Metoda get_encryption_key a fost apelată."
+
+    # Verifică ce valoare returnează credentials
     encryption_key = Rails.application.credentials[:encryption_key]
-  
+    Rails.logger.info "Cheia de criptare extrasă este: #{encryption_key}"
+
     if encryption_key.present?
+      # Log dacă cheia există
+      Rails.logger.info "Cheia de criptare este prezentă."
       render plain: encryption_key
     else
+      # Log dacă cheia nu există
+      Rails.logger.error "Cheia de criptare nu a fost găsită."
       render plain: "Cheia de criptare nu a fost găsită.", status: :not_found
     end
   end
