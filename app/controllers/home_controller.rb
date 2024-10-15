@@ -98,6 +98,9 @@ class HomeController < ApplicationController
   def get_encryption_key
     # Log pentru a verifica dacă metoda este apelată
     Rails.logger.info "Metoda get_encryption_key a fost apelată."
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
 
     # Verifică ce valoare returnează credentials
     encryption_key = Rails.application.credentials[:encryption_key]
