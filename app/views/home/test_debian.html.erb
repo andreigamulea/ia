@@ -1,31 +1,56 @@
 <h1>Testare Conexiune Debian</h1>
 <p><%= @message %></p>
+<p><%= @message_m3u8 %></p>
+<p><%= @message_crypted %></p>
+
+<!-- Afișare cheie de criptare (doar pentru testare) -->
+<p>Cheia de criptare: <%= @encryption_key %></p>
 
 <!-- Player Video.js -->
 <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" crossorigin="anonymous">
-  <source src="<%= @video_url_mp4 %>" type="video/mp4">
+  <source src="https://ayush.go.ro/output.m3u8" type="application/vnd.apple.mpegurl">
 </video>
 
 <!-- Include stilurile și scripturile Video.js -->
 <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
 
-<!-- Inițializează player-ul Video.js pentru fișierul MP4 -->
+<!-- Inițializează player-ul Video.js pentru fișierul HLS -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var player = videojs('my-video', {
       controls: true,
       preload: 'auto',
-      techOrder: ['html5'] // Asigură-te că folosește HTML5 pentru MP4
+      techOrder: ['html5'] // Asigură-te că folosește HTML5 pentru HLS
+    });
+
+    // Setează sursa HLS (manifestul)
+    player.src({
+      src: 'https://ayush.go.ro/output.m3u8',
+      type: 'application/vnd.apple.mpegurl'
     });
 
     // Debugging: Afișează un mesaj când playerul este inițializat
-    console.log("Playerul video a fost inițializat cu Video.js și MP4.");
+    console.log("Playerul video a fost inițializat cu Video.js și VHS.");
 
     // Debugging: Afișează erori dacă există
     player.on('error', function() {
       var error = player.error();
       console.error('Eroare apărută în player:', error.code, error.message);
+    });
+
+    // Debugging: Afișează când fiecare segment de fișier .ts este încărcat
+    player.on('loadedmetadata', function() {
+      console.log("Fișierul M3U8 a fost încărcat cu succes.");
+    });
+
+    player.on('loadeddata', function() {
+      console.log("Segmentul curent de fișier .ts a fost încărcat.");
+    });
+
+    // Debugging: Monitorizează starea bufferului
+    player.on('waiting', function() {
+      console.log("Așteptând pentru încărcarea următorului segment .ts.");
     });
 
     player.on('canplay', function() {
