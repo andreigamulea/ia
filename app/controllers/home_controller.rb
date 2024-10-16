@@ -58,22 +58,36 @@ def test_debian
   username = 'ayushayush'
   password = 'bhairava'
 
-  @video_url_mp4 = 'https://ayush.go.ro/Ormus.mp4'
-  @message = "Fișierul video MP4 este disponibil pentru redare."
+  # Calea către fișierul encryption.key pe serverul Debian
+  key_file_path = '/mnt/AyushCell/encryption.key'
+
+  @video_url_m3u8 = 'https://ayush.go.ro/output.m3u8'
+
+  # Mesaj de stare pentru M3U8
+  @message_m3u8 = ""
+  @encryption_key = ""
 
   begin
     # Conectare la server prin SSH
     Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
-      # Mesaj de stare dacă conexiunea SSH este reușită
-      @message += " Conexiunea la serverul Debian a fost stabilită cu succes."
+      # Conectare prin SFTP
+      ssh.sftp.connect do |sftp|
+        # Verifică dacă fișierul encryption.key există și citește-l
+        if sftp.file.open(key_file_path) { |f| f.read }
+          @encryption_key = sftp.file.open(key_file_path).read.strip
+          @message_m3u8 = "Cheia de criptare a fost accesată cu succes."
+        else
+          @message_m3u8 = "Fișierul encryption.key nu a fost găsit pe serverul Debian."
+        end
+      end
     end
+puts("Enc key= #{@encryption_key}")
   rescue Net::SSH::AuthenticationFailed
-    @message = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
+    @message_m3u8 = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
   rescue StandardError => e
-    @message = "Eroare la conectarea la serverul Debian: #{e.message}. Backtrace: #{e.backtrace.join("\n")}"
+    @message_m3u8 = "Eroare la conectarea la serverul Debian: #{e.message}. Backtrace: #{e.backtrace.join("\n")}"
   end
 end
-
 
   
   
