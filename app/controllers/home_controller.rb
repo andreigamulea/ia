@@ -52,7 +52,7 @@ class HomeController < ApplicationController
 require 'net/sftp'
 
 def test_debian
-  # Detalii conexiune SSH
+  ## Detalii conexiune SSH
   ssh_host = 'ayush.go.ro'
   ssh_port = 22
   username = 'ayushayush'
