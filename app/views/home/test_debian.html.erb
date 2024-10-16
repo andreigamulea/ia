@@ -8,53 +8,73 @@
 
 <!-- Player Video.js -->
 <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" crossorigin="anonymous">
-  <source src="https://ayush.go.ro/output.m3u8" type="application/vnd.apple.mpegurl">
+    <source src="https://ayush.go.ro/output.m3u8" type="application/vnd.apple.mpegurl">
 </video>
 
 <!-- Include stilurile și scripturile Video.js -->
+<script src="https://cdn.jsdelivr.net/npm/videojs-http-streaming@latest/dist/videojs-http-streaming.min.js"></script>
 <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
 
 <!-- Inițializează player-ul Video.js pentru fișierul HLS -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     var player = videojs('my-video', {
-      controls: true,
-      preload: 'auto',
-      techOrder: ['html5'] // Asigură-te că folosește HTML5 pentru HLS
+        controls: true,
+        preload: 'auto',
+        techOrder: ['html5'],
+        html5: {
+            vhs: {
+                withCredentials: false  // Asigură-te că cererile nu au credențiale
+            }
+        }
     });
 
-    // Setează sursa HLS (manifestul)
-    player.src({
-      src: 'https://ayush.go.ro/output.m3u8',
-      type: 'application/vnd.apple.mpegurl'
+    // Setează sursa fluxului video după inițializarea playerului
+    player.ready(function() {
+        player.src({
+            src: 'https://ayush.go.ro/output.m3u8',
+            type: 'application/vnd.apple.mpegurl'
+        });
+        console.log("Sursa video a fost setată.");
     });
 
-    // Debugging: Afișează un mesaj când playerul este inițializat
-    console.log("Playerul video a fost inițializat cu Video.js și VHS.");
-
-    // Debugging: Afișează erori dacă există
+    // Debugging: Afișează mesaje în consolă pentru diagnosticare
     player.on('error', function() {
-      var error = player.error();
-      console.error('Eroare apărută în player:', error.code, error.message);
+        var error = player.error();
+        console.error('Eroare apărută în player:', error.code, error.message);
     });
 
-    // Debugging: Afișează când fiecare segment de fișier .ts este încărcat
     player.on('loadedmetadata', function() {
-      console.log("Fișierul M3U8 a fost încărcat cu succes.");
+        console.log("Fișierul M3U8 a fost încărcat cu succes.");
     });
 
     player.on('loadeddata', function() {
-      console.log("Segmentul curent de fișier .ts a fost încărcat.");
+        console.log("Segmentul curent de fișier .ts a fost încărcat.");
     });
 
-    // Debugging: Monitorizează starea bufferului
     player.on('waiting', function() {
-      console.log("Așteptând pentru încărcarea următorului segment .ts.");
+        console.log("Așteptând următorul segment .ts.");
     });
 
     player.on('canplay', function() {
-      console.log("Playerul este gata să redea video.");
+        console.log("Playerul este gata să redea video.");
     });
-  });
+
+    player.on('playing', function() {
+        console.log("Video-ul este redat.");
+    });
+
+    player.on('stalled', function() {
+        console.log("Playerul așteaptă date suplimentare și a rămas blocat.");
+    });
+
+    player.on('pause', function() {
+        console.log("Video-ul a fost întrerupt.");
+    });
+
+    player.on('ended', function() {
+        console.log("Video-ul s-a terminat.");
+    });
+});
 </script>
