@@ -48,50 +48,33 @@ class HomeController < ApplicationController
   end
   
   #password = 'bhairava' # În producție folosește variabile de mediu pentru stocarea parolei.
-  def test_debian
-    # Accesează cheia de criptare din Rails credentials
-    encryption_key = Rails.application.credentials[:encryption_key]
-    @encryption_key = Rails.application.credentials[:encryption_key]
-  
-    if encryption_key.nil?
-      render plain: "Cheia de criptare nu este setată corect în credentials.yml.enc."
-      return
+  require 'net/ssh'
+require 'net/sftp'
+
+def test_debian
+  # Detalii conexiune SSH
+  ssh_host = 'ayush.go.ro'
+  ssh_port = 22
+  username = 'ayushayush'
+  password = 'bhairava'
+
+  @video_url_mp4 = 'https://ayush.go.ro/Ormus.mp4'
+  @message = "Fișierul video MP4 este disponibil pentru redare."
+
+  begin
+    # Conectare la server prin SSH
+    Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
+      # Mesaj de stare dacă conexiunea SSH este reușită
+      @message += " Conexiunea la serverul Debian a fost stabilită cu succes."
     end
-  
-    # Detalii conexiune SSH
-    ssh_host = 'ayush.go.ro'
-    ssh_port = 22
-    username = 'ayushayush'
-    password = 'bhairava'
-  
-    # Calea către fișierul M3U8 pe serverul Debian
-    video_path_m3u8 = '/mnt/AyushCell/output.m3u8'
-  
-    @video_url_m3u8 = 'https://ayush.go.ro/output.m3u8'
-  
-    # Mesaj de stare pentru M3U8
-    @message_m3u8 = ""
-  
-    begin
-      # Conectare la server prin SSH
-      Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
-        # Conectare prin SFTP
-        ssh.sftp.connect do |sftp|
-          # Verifică dacă fișierul output.m3u8 există
-          if sftp.file.open(video_path_m3u8)
-            @message_m3u8 = "Fișierul M3U8 există și poate fi redat."
-          else
-            @message_m3u8 = "Fișierul M3U8 nu a fost găsit pe serverul Debian."
-          end
-        end
-      end
-  
-    rescue Net::SSH::AuthenticationFailed
-      @message_m3u8 = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
-    rescue StandardError => e
-      @message_m3u8 = "Eroare la conectarea la serverul Debian: #{e.message}. Backtrace: #{e.backtrace.join("\n")}"
-    end
+  rescue Net::SSH::AuthenticationFailed
+    @message = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
+  rescue StandardError => e
+    @message = "Eroare la conectarea la serverul Debian: #{e.message}. Backtrace: #{e.backtrace.join("\n")}"
   end
+end
+
+
   
   
 
