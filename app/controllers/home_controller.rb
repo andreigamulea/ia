@@ -98,8 +98,9 @@ def get_encryption_key
   response.headers["Pragma"] = "no-cache"
   response.headers["Expires"] = "0"
 
-  encryption_key = Rails.application.credentials[:encryption_key]
-  Rails.logger.info "Cheia de criptare extrasă este: #{encryption_key}"
+  #encryption_key = Rails.application.credentials[:encryption_key]
+  encryption_key = "123uuu1         "
+  
 
   if encryption_key.present?
     Rails.logger.info "Cheia de criptare este prezentă."
