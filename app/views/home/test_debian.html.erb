@@ -79,36 +79,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Funcția pentru detectarea extensiilor de browser
-    function detectExtensions() {
-        // Exemple de extensii cunoscute (poți adăuga și altele)
-        const knownExtensions = ['chrome-extension', 'ekhbcipncbkfpkaianbjbcbmfehjflpf'];
-
-        for (let ext of knownExtensions) {
-            if (window.location.origin.includes(ext) || window.location.protocol.startsWith('chrome-extension:')) {
-                console.warn('Acces neautorizat detectat din extensie.');
-                alert('Extensiile de browser nu sunt permise pe această pagină.');
-                window.location.href = '/acces-restrictionat';
-                break;
+    // Funcția pentru detectarea cererilor de tip blob sau a extensiilor de browser
+    function detectAndBlockRequests() {
+        // Blochează cererile care folosesc blob-uri
+        const origOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function(method, url) {
+            if (url.startsWith('blob:') || url.includes('chrome-extension:') || url.includes('moz-extension:')) {
+                console.warn('Cerere de tip blob sau extensie detectată. Blochez accesul.');
+                return; // Oprește cererea
             }
+            origOpen.apply(this, arguments);
+        };
+
+        // Verifică și alte cereri suspecte din console.log
+        if (window.location.href.includes('chrome-extension') || window.location.href.includes('blob:')) {
+            console.warn('Acces nepermis detectat.');
+            alert('Accesul cu extensii de browser este interzis pe această pagină.');
+            window.location.href = '/acces-restrictionat';
         }
     }
 
-    // Funcția pentru detectarea extensiilor prin navigator.plugins
-    function checkNavigatorPlugins() {
-        if (navigator.plugins.length > 0) {
-            navigator.plugins.forEach((plugin) => {
-                if (plugin.name.includes("Downloader") || plugin.name.includes("Video")) {
-                    alert('S-a detectat o extensie de browser nepermisă. Accesul este blocat.');
-                    window.location.href = '/acces-restrictionat';
-                }
-            });
-        }
-    }
-
-    // Apelează funcțiile de detectare
-    detectExtensions();
-    checkNavigatorPlugins();
+    // Apelează funcția pentru a detecta cereri și extensii
+    detectAndBlockRequests();
 });
+
 
 </script>
