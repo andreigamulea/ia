@@ -79,33 +79,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const allowedOrigins = ['https://ayushcell.ro']; // Origini permise
+    // Funcția pentru detectarea extensiilor de browser
+    function detectExtensions() {
+        // Exemple de extensii cunoscute (poți adăuga și altele)
+        const knownExtensions = ['chrome-extension', 'ekhbcipncbkfpkaianbjbcbmfehjflpf'];
 
-    // Detectează cereri de tip blob și extensii de browser
-    if (window.location.protocol === 'blob:' || window.location.origin.startsWith('chrome-extension:')) {
-        console.warn('Acces restricționat. Extensiile de browser nu sunt permise.');
-        window.location.href = '/acces-restrictionat'; // Redirecționează către o pagină de eroare sau de avertizare
+        for (let ext of knownExtensions) {
+            if (window.location.origin.includes(ext) || window.location.protocol.startsWith('chrome-extension:')) {
+                console.warn('Acces neautorizat detectat din extensie.');
+                alert('Extensiile de browser nu sunt permise pe această pagină.');
+                window.location.href = '/acces-restrictionat';
+                break;
+            }
+        }
     }
 
-    // Monitorizează cererile de tip Fetch și XHR
-    const originalFetch = window.fetch;
-    window.fetch = function(...args) {
-        const url = new URL(args[0]);
-        if (!allowedOrigins.includes(url.origin) && (url.protocol === 'blob:' || url.origin.startsWith('chrome-extension:'))) {
-            console.warn('Cerere de tip blob sau de la extensie blocată.');
-            return Promise.reject(new Error('Acces restricționat.'));
+    // Funcția pentru detectarea extensiilor prin navigator.plugins
+    function checkNavigatorPlugins() {
+        if (navigator.plugins.length > 0) {
+            navigator.plugins.forEach((plugin) => {
+                if (plugin.name.includes("Downloader") || plugin.name.includes("Video")) {
+                    alert('S-a detectat o extensie de browser nepermisă. Accesul este blocat.');
+                    window.location.href = '/acces-restrictionat';
+                }
+            });
         }
-        return originalFetch.apply(this, args);
-    };
+    }
 
-    const originalXhrOpen = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function(method, url) {
-        if (url.startsWith('blob:') || url.startsWith('chrome-extension:')) {
-            console.warn('Acces restricționat pentru cererile de tip blob.');
-            this.abort();
-            return;
-        }
-        originalXhrOpen.apply(this, arguments);
-    };
+    // Apelează funcțiile de detectare
+    detectExtensions();
+    checkNavigatorPlugins();
 });
+
 </script>
