@@ -1,107 +1,70 @@
 <h1>Testare Conexiune Debian</h1>
 
-
 <!-- Afișare cheie de criptare (doar pentru testare) -->
 <p>Cheia de criptare: <%= @encryption_key %></p>
 
 <!-- Player Video.js -->
-<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" crossorigin="anonymous">
-    <source src="https://ayush.go.ro/output.m3u8" type="application/vnd.apple.mpegurl">
-</video>
+<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" crossorigin="anonymous"></video>
 
 <!-- Include stilurile și scripturile Video.js -->
 <script src="https://cdn.jsdelivr.net/npm/videojs-http-streaming@latest/dist/videojs-http-streaming.min.js"></script>
 <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
 
-<!-- Inițializează player-ul Video.js pentru fișierul HLS -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Initializează playerul Video.js fără sursă la început
     var player = videojs('my-video', {
         controls: true,
         preload: 'auto',
-        techOrder: ['html5'],
-        html5: {
-            vhs: {
-                withCredentials: false  // Asigură-te că cererile nu au credențiale
-            }
-        }
+        techOrder: ['html5']
     });
 
-    // Setează sursa fluxului video după inițializarea playerului
-    player.ready(function() {
+    // Configurare MediaSource Extensions
+    if ('MediaSource' in window) {
+        var mediaSource = new MediaSource();
         player.src({
-            src: 'https://ayush.go.ro/output.m3u8',
-            type: 'application/vnd.apple.mpegurl'
+            src: URL.createObjectURL(mediaSource),
+            type: 'video/mp4'
         });
-        console.log("Sursa video a fost setată.");
-    });
 
-    // Debugging: Afișează mesaje în consolă pentru diagnosticare
-    player.on('error', function() {
-        var error = player.error();
-        console.error('Eroare apărută în player:', error.code, error.message);
-    });
+        mediaSource.addEventListener('sourceopen', function() {
+            var sourceBuffer = mediaSource.addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
 
-    player.on('loadedmetadata', function() {
-        console.log("Fișierul M3U8 a fost încărcat cu succes.");
-    });
+            // Fetch and append video segments
+            fetch('https://ayush.go.ro/natura1.mp4')  // Fișierul video pe care vrei să-l încarci
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    sourceBuffer.appendBuffer(data);  // Adaugă segmentul în bufferul de redare
+                    sourceBuffer.addEventListener('updateend', function() {
+                        console.log('Segment video încărcat în buffer');
+                    });
+                })
+                .catch(error => console.error('Eroare la încărcarea fișierului video:', error));
+        });
 
-    player.on('loadeddata', function() {
-        console.log("Segmentul curent de fișier .ts a fost încărcat.");
-    });
+        player.on('error', function() {
+            var error = player.error();
+            console.error('Eroare apărută în player:', error.code, error.message);
+        });
 
-    player.on('waiting', function() {
-        console.log("Așteptând următorul segment .ts.");
-    });
+        player.on('loadedmetadata', function() {
+            console.log("Fișierul video a fost încărcat cu succes.");
+        });
 
-    player.on('canplay', function() {
-        console.log("Playerul este gata să redea video.");
-    });
+        player.on('playing', function() {
+            console.log("Video-ul este redat.");
+        });
 
-    player.on('playing', function() {
-        console.log("Video-ul este redat.");
-    });
+        player.on('pause', function() {
+            console.log("Video-ul a fost întrerupt.");
+        });
 
-    player.on('stalled', function() {
-        console.log("Playerul așteaptă date suplimentare și a rămas blocat.");
-    });
-
-    player.on('pause', function() {
-        console.log("Video-ul a fost întrerupt.");
-    });
-
-    player.on('ended', function() {
-        console.log("Video-ul s-a terminat.");
-    });
-});
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Funcția pentru detectarea cererilor de tip blob sau a extensiilor de browser
-    function detectAndBlockRequests() {
-        // Blochează cererile care folosesc blob-uri
-        const origOpen = XMLHttpRequest.prototype.open;
-        XMLHttpRequest.prototype.open = function(method, url) {
-            if (url.startsWith('blob:') || url.includes('chrome-extension:') || url.includes('moz-extension:')) {
-                console.warn('Cerere de tip blob sau extensie detectată. Blochez accesul.');
-                return; // Oprește cererea
-            }
-            origOpen.apply(this, arguments);
-        };
-
-        // Verifică și alte cereri suspecte din console.log
-        if (window.location.href.includes('chrome-extension') || window.location.href.includes('blob:')) {
-            console.warn('Acces nepermis detectat.');
-            alert('Accesul cu extensii de browser este interzis pe această pagină.');
-            window.location.href = '/acces-restrictionat';
-        }
+        player.on('ended', function() {
+            console.log("Video-ul s-a terminat.");
+        });
+    } else {
+        console.error('MediaSource nu este suportat în acest browser.');
     }
-
-    // Apelează funcția pentru a detecta cereri și extensii
-    detectAndBlockRequests();
 });
-
-
 </script>
