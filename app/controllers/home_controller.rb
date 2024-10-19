@@ -4,7 +4,6 @@ require 'aws-sdk-s3'
   require 'open-uri'
   require 'net/ssh'
 require 'net/sftp'
-require 'base64'
 #require 'openssl'
 class HomeController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:newsletter]
@@ -51,27 +50,26 @@ class HomeController < ApplicationController
   #password = 'bhairava' # În producție folosește variabile de mediu pentru stocarea parolei.
   require 'net/ssh'
 require 'net/sftp'
-require 'base64'
+
 def test_debian
-  # Detalii conexiune SSH
-  ssh_host = 'ayush.go.ro'
-  ssh_port = 22
-  username = 'ayushayush'
-  password = 'bhairava'
+  # URL-ul video-ului este acum pe domeniul public (ascuns în spatele proxy-ului)
+  @video_url = 'https://ayushcell.ro/videos/natura1.mp4'
 
-  # Calea către fișierul encryption.key pe serverul Debian
-  key_file_path = '/mnt/AyushCell/encryption.key'
-
-  @video_url = 'https://ayush.go.ro/natura1.mp4'
+  # Restul codului rămâne același
   @message_m3u8 = ""
   @encryption_key = ""
 
   begin
-    # Conectare la server prin SSH
+    # Conectare la serverul Debian pentru a obține cheia de criptare
+    # (nu este afectat de proxy)
+    ssh_host = 'ayush.go.ro'
+    ssh_port = 22
+    username = 'ayushayush'
+    password = 'bhairava'
+    key_file_path = '/mnt/AyushCell/encryption.key'
+
     Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
-      # Conectare prin SFTP
       ssh.sftp.connect do |sftp|
-        # Verifică dacă fișierul encryption.key există și citește-l
         if sftp.file.open(key_file_path) { |f| f.read }
           @encryption_key = sftp.file.open(key_file_path).read.strip
           @message_m3u8 = "Cheia de criptare a fost accesată cu succes."
@@ -80,26 +78,14 @@ def test_debian
         end
       end
     end
-    puts("Enc key= #{@encryption_key}")
   rescue Net::SSH::AuthenticationFailed
     @message_m3u8 = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
   rescue StandardError => e
     @message_m3u8 = "Eroare la conectarea la serverul Debian: #{e.message}. Backtrace: #{e.backtrace.join("\n")}"
   end
-
-  # Obfuscarea URL-ului
-  @obfuscated_video_url = obfuscate_url(@video_url)
 end
 
-def serve_video
-  encoded_url = params[:encoded_url]
-  video_url = deobfuscate_url(encoded_url)
-
-  # Redirecționează către URL-ul de fișier real
-  redirect_to video_url
-end
-
-
+  
   
 
 def get_encryption_key
@@ -856,15 +842,5 @@ end
     [response.is_a?(Net::HTTPSuccess), response] # Returnează atât rezultatul testului, cât și răspunsul complet
   end
   
-
-# Obfuscare URL (criptează)
-def obfuscate_url(video_path)
-  Base64.urlsafe_encode64(video_path)
-end
-
-# Deobfuscare URL (decriptează)
-def deobfuscate_url(encoded_path)
-  Base64.urlsafe_decode64(encoded_path)
-end
   
 end
