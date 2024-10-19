@@ -11,3 +11,34 @@
 <!-- Include stilurile și scripturile Video.js -->
 <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
 <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var player = videojs('my-video', {
+        controls: true,
+        preload: 'auto',
+        techOrder: ['html5']
+    });
+
+    player.on('error', function() {
+        var error = player.error();
+        console.error('Eroare apărută în player:', error.code, error.message);
+    });
+
+    player.on('loadedmetadata', function() {
+        console.log("Fișierul video a fost încărcat cu succes.");
+    });
+
+    player.on('playing', function() {
+        console.log("Video-ul este redat.");
+    });
+
+    player.on('pause', function() {
+        console.log("Video-ul a fost întrerupt.");
+    });
+
+    player.on('ended', function() {
+        console.log("Video-ul s-a terminat.");
+    });
+});
+</script>
