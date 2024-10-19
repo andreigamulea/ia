@@ -52,24 +52,27 @@ class HomeController < ApplicationController
 require 'net/sftp'
 
 def test_debian
-  # URL-ul video-ului este acum pe domeniul public (ascuns în spatele proxy-ului)
-  @video_url = 'https://ayushcell.ro/videos/natura1.mp4'
+  ## Detalii conexiune SSH
+  ssh_host = 'ayush.go.ro'
+  ssh_port = 22
+  username = 'ayushayush'
+  password = 'bhairava'
 
-  # Restul codului rămâne același
+  # Calea către fișierul encryption.key pe serverul Debian
+  key_file_path = '/mnt/AyushCell/encryption.key'
+
+  @video_url_m3u8 = 'https://ayush.go.ro/output.m3u8'
+  @video_url = 'https://ayush.go.ro/output.m3u8'
+  # Mesaj de stare pentru M3U8
   @message_m3u8 = ""
   @encryption_key = ""
 
   begin
-    # Conectare la serverul Debian pentru a obține cheia de criptare
-    # (nu este afectat de proxy)
-    ssh_host = 'ayush.go.ro'
-    ssh_port = 22
-    username = 'ayushayush'
-    password = 'bhairava'
-    key_file_path = '/mnt/AyushCell/encryption.key'
-
+    # Conectare la server prin SSH
     Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
+      # Conectare prin SFTP
       ssh.sftp.connect do |sftp|
+        # Verifică dacă fișierul encryption.key există și citește-l
         if sftp.file.open(key_file_path) { |f| f.read }
           @encryption_key = sftp.file.open(key_file_path).read.strip
           @message_m3u8 = "Cheia de criptare a fost accesată cu succes."
@@ -78,6 +81,7 @@ def test_debian
         end
       end
     end
+puts("Enc key= #{@encryption_key}")
   rescue Net::SSH::AuthenticationFailed
     @message_m3u8 = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
   rescue StandardError => e
