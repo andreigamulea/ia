@@ -36,8 +36,10 @@
 }
 
 .video-js {
-  width: 100%; /* Ajustează lățimea la ecran */
-  height: auto; /* Lasă înălțimea să fie proporțională */
+  width: 100% !important; /* Ajustare forțată pentru mobil */
+  height: auto !important; /* Asigură proporționalitatea */
+  max-width: 100%; /* Limitează dimensiunea maximă */
+  min-width: 100%; /* Limitează dimensiunea minimă pentru a umple ecranul */
 }
 
 </style>
@@ -59,7 +61,7 @@
       <h1 class="name" style="font-size:1.8em;">Cursuri de Ayurveda</h1>
 
       <div id="video" style="margin:0 auto; text-align:center;min-width: 640px; min-height:320px;">
-        <video id="curs" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360">
+        <video id="curs" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360" playsinline>
           <source src="<%= @video_url %>" type="video/mp4">
           <track kind="subtitles" src="subtitles_en.vtt" srclang="en" label="English" default>
           <track kind="subtitles" src="subtitles_fr.vtt" srclang="fr" label="French">
@@ -81,7 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
         controls: true,
         preload: 'auto',
         techOrder: ['html5'],
-        fluid: true // Asigură-te că video-ul este responsive
+        fluid: true, // Asigură-te că video-ul este responsive
+        responsive: true, // Responsivitate pe mobil
+        aspectRatio: '16:9' // Setează raportul video
     });
 
     var canvas = document.getElementById('container-error-35789');
@@ -123,16 +127,3 @@ document.addEventListener("turbo:load", function() {
 
 <%= yield :custom_js %>
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
