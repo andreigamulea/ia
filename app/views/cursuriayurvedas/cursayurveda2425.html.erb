@@ -169,7 +169,7 @@ td:hover .tooltip-text {
             <td><%= @prodgrupa1_taxainscriere_all.nume %></td>                        
             <td><%= @prodgrupa1_taxainscriere_all.detalii %></td> 
             <td><%= @prodgrupa1_taxainscriere_all.pret.to_i %> lei</td>
-            <% allowed_an1_emails = ['mileamihaela1975@gmail.com'] %>
+            <% allowed_an1_emails = ['mileamihaela1975@gmail.com','nagy.edvin@yahoo.com'] %>
 
             <% if current_user && !allowed_an1_emails.include?(current_user.email) && (current_user.role == 1 || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) %>            
              <td style="position: relative;">
