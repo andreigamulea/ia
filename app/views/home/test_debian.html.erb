@@ -4,7 +4,6 @@
 <% end %>
 
 <style>
-
 /* Centrare buton play */
 .vjs-big-play-button {
   top: 50%;
@@ -28,87 +27,101 @@
   background-size: cover;
 }
 
+/* Responsivitate video */
+#video {
+  margin: 0 auto;
+  text-align: center;
+  max-width: 100%; /* Ajustează la dimensiunea ecranului */
+  height: auto;
+}
+
+.video-js {
+  width: 100%; /* Ajustează lățimea la ecran */
+  height: auto; /* Lasă înălțimea să fie proporțională */
+}
 
 </style>
+
 <% content_for :title, "Ayush Cell Romania: Curs Ayurveda 2024 - 2025" %>
 <% content_for :meta_tags do %>
 <meta name="description" content="Curs Ayurveda 2024-2025, sesiunea octombrie 2024 - iulie 2025. Aprofundare sistematică a cunoștințelor ayurvedice, module anuale, lecții live, înregistrări.">
 <meta name="keywords" content="curs Ayurveda, 2024-2025, ayurveda, curs online, învățături tradiționale, alimentație naturală, plante medicinale, cromoterapie, meloterapie, digitopunctură, automasaj, reîntinerire, revitalizare, purificare, tonus erotic-amoros">
-
-
-  <link rel="canonical" href="https://www.ayushcell.ro/cursayurveda2425">
+<link rel="canonical" href="https://www.ayushcell.ro/cursayurveda2425">
 <% end %>
 
 <div class="container" id="ayurveda2425">
-<%= render 'layouts/sideleft' %>
+  <%= render 'layouts/sideleft' %>
 
-<div class="cr" style="background-color: white; ">
-    <h1 class="first-tittle">Ayush Cell Romania: Vizionarare curs</h1>
-    <h2 class="main-title" >Cursuri Ayush Cell</h2>
-<div class="cont">
-  <h1 class="name" style="font-size:1.8em;">Cursuri de Ayurveda</h1>
+  <div class="cr" style="background-color: white;">
+    <h1 class="first-tittle">Ayush Cell Romania: Vizionare curs</h1>
+    <h2 class="main-title">Cursuri Ayush Cell</h2>
+    <div class="cont">
+      <h1 class="name" style="font-size:1.8em;">Cursuri de Ayurveda</h1>
 
-<div id="video" style="margin:0 auto; text-align:center;min-width: 640px; min-height:320px;">
-<video id="curs" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360">
-  <source src="<%= @video_url %>" type="video/mp4">
-    <track kind="subtitles" src="subtitles_en.vtt" srclang="en" label="English" default>
-  <track kind="subtitles" src="subtitles_fr.vtt" srclang="fr" label="French">
-  <track kind="subtitles" src="subtitles_es.vtt" srclang="es" label="Spanish">
-</video>
+      <div id="video" style="margin:0 auto; text-align:center;min-width: 640px; min-height:320px;">
+        <video id="curs" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360">
+          <source src="<%= @video_url %>" type="video/mp4">
+          <track kind="subtitles" src="subtitles_en.vtt" srclang="en" label="English" default>
+          <track kind="subtitles" src="subtitles_fr.vtt" srclang="fr" label="French">
+          <track kind="subtitles" src="subtitles_es.vtt" srclang="es" label="Spanish">
+        </video>
+      </div>
+
+      <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
+      <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+
+      <canvas id="container-error-35789" class="hidden-element tempCanvas" width="0" height="0" style="position: relative; top: -9999px; left: -9999px; pointer-events: none; z-index: -1;"></canvas>
+    </div>
+  </div>
 </div>
-
-<script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
-<link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-
-<canvas id="container-error-35789" class="hidden-element tempCanvas" width="0" height="0" style="position: relative; top: -9999px; left: -9999px; pointer-events: none; z-index: -1;"></canvas>
-
-
-</div></div></div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var player = videojs('curs', {
         controls: true,
         preload: 'auto',
-        techOrder: ['html5']
+        techOrder: ['html5'],
+        fluid: true // Asigură-te că video-ul este responsive
     });
+
     var canvas = document.getElementById('container-error-35789');
     var ctx = canvas.getContext('2d');
     var watermark = " ";
+
     function drawWatermark() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.font = '12px Arial';
         ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
         ctx.fillText(watermark, 0, 0);
     }
+
     function updateCanvas() {
         drawWatermark();
         if (!player.paused() && !player.ended()) {
             requestAnimationFrame(updateCanvas);
         }
     }
+
     player.on('play', function() {
         updateCanvas();
     });
+
     player.on('pause', function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
+
     player.on('ended', function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
 });
-  document.addEventListener("turbo:load", function() {
-    document.querySelectorAll('.no-turbo').forEach(link => {
-      link.setAttribute('data-turbo', 'false');
-    });
-  });
 
-  document.addEventListener("turbo:load", function() {
+document.addEventListener("turbo:load", function() {
     document.querySelectorAll('.no-turbo').forEach(link => {
-      link.setAttribute('data-turbo', 'false');
+        link.setAttribute('data-turbo', 'false');
     });
-  });
-  <%= yield :custom_js %>
+});
+
+<%= yield :custom_js %>
 </script>
 
 
