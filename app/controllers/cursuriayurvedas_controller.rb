@@ -672,7 +672,7 @@ def cursayurveda2425
       @prodgrupa1_taxalunara = Prod.find_by(cod: cod_produs)
       if current_user.email == "nagy.edvin@yahoo.com"
         @prodgrupa1_taxalunara.pret = 35
-      elsif current_user.email == "ce.hermkens@gmail.com"
+      elsif current_user.email == "ce.hermkens@gmail.com" || current_user.email == "mileamihaela1975@gmail.com"
         @prodgrupa1_taxalunara.pret = 90
       end
     end

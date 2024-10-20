@@ -240,7 +240,7 @@ end
     puts("Obs: #{@obs}")
     puts("sunt in payeeeeeeeeeeeeeeeeeeeeee")
     @prod = Prod.find(params[:id]) 
-    emailuri_90 = ["ce.hermkens@gmail.com"]
+    emailuri_90 = ["ce.hermkens@gmail.com","mileamihaela1975@gmail.com"]
     if current_user.email == "nagy.edvin@yahoo.com" && @prod.cod.in?(['cod16', 'cod17', 'cod18', 'cod19', 'cod20', 'cod21', 'cod22', 'cod23', 'cod24', 
       'cod25', 'cod207', 'cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203', 'cod204', 'cod205', 'cod206'])
     @prod.pret = 35 # situatie particulara pentru nagy.edvin
