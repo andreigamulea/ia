@@ -62,7 +62,7 @@
 
       <div id="video" style="margin:0 auto; text-align:center;min-width: 640px; min-height:320px;">
         <video id="curs" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360" playsinline>
-          <source src="<%= @video_url %>" type="video/mp4">
+          <source src="<%= @video_url_m3u8 %>" type="application/x-mpegURL">
           <track kind="subtitles" src="subtitles_en.vtt" srclang="en" label="English" default>
           <track kind="subtitles" src="subtitles_fr.vtt" srclang="fr" label="French">
           <track kind="subtitles" src="subtitles_es.vtt" srclang="es" label="Spanish">
