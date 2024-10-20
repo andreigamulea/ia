@@ -1,85 +1,41 @@
 <!-- Partea de sus a fișierului app/views/home/about.html.erb -->
 <% content_for :custom_js do %>
     <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
+    <% end %>
+<section class="c1" style= "padding: 0 10px;"></br>
+<h1 style= "text-align: center;padding: 0 10px;"><%=@myvideo1.nume%></h1></br>
+<!-- for non autoplay video //-->
+<div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+    <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
+        <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+        <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+        <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+        <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+    </div>
+</div></br></br></br>
+
+<% valid_links = [] %>
+<% if valid_links.include?(@myvideo) %>
+<h2 style="font-size:22px; text-align:center; max-width:920px;"></h2>
+    <div class="responsive-iframe-container" style="margin-top:0px; margin: 0 auto;">
+        <iframe
+            src="https://www.youtube.com/embed/<%= @myvideo %>"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+        </iframe>
+    </div>
+
 <% end %>
 
-<section class="c1" style="padding: 0 10px;">
-  </br>
-  <h1 style="text-align: center;padding: 0 10px;"><%= @myvideo1.nume %></h1>
-  </br>
-  
-  <!-- Video Player -->
-  <div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%; position: relative;">
-    <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
-      <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
-      <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
-      <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
-      <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
-    </div>
-    <!-- Canvas pentru filigran -->
-    
-    <canvas id="my-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
-
-    </div>
-  
-  </br></br></br>
-
-  <% valid_links = [] %>
-  <% if valid_links.include?(@myvideo) %>
-    <h2 style="font-size:22px; text-align:center; max-width:920px;"></h2>
-    <div class="responsive-iframe-container" style="margin-top:0px; margin: 0 auto;">
-      <iframe
-        src="https://www.youtube.com/embed/<%= @myvideo %>"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen>
-      </iframe>
-    </div>
-  <% end %>
-
 </section>
-
-<!-- Script pentru filigran -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var player = videojs('<%= @myvideo %>', {
-        controls: true,
-        preload: 'auto',
-        techOrder: ['html5']
+  document.addEventListener("turbo:load", function() {
+    document.querySelectorAll('.no-turbo').forEach(link => {
+      link.setAttribute('data-turbo', 'false');
     });
-
-    var canvas = document.getElementById('my-canvas');
-    var ctx = canvas.getContext('2d');
-    var watermark = "Iulian Lates - ilates@yahoo.com";  // Poți schimba textul dinamic aici
-
-    function drawWatermark() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = '16px Arial';
-        ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
-        ctx.fillText(watermark, 10, 30);  // Filigran în stânga sus
-    }
-
-    function updateCanvas() {
-        drawWatermark();
-        if (!player.paused() && !player.ended()) {
-            requestAnimationFrame(updateCanvas);
-        }
-    }
-
-    player.on('play', function() {
-        updateCanvas();
-    });
-
-    player.on('pause', function() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-
-    player.on('ended', function() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-});
+  });
 </script>
-
 <script>
-  <%= yield :custom_js %>
+<%= yield :custom_js %>
 </script>
