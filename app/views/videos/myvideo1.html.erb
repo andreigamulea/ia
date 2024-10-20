@@ -9,17 +9,16 @@
   </br>
   
   <!-- Video Player -->
-  <div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+  <div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%; position: relative;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
       <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
       <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
       <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
       <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
     </div>
+    <!-- Canvas pentru filigran -->
+    <canvas id="my-canvas" width="640" height="360" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
   </div>
-  
-  <!-- Canvas aparent scăpat din greșeală -->
-  <canvas id="container" width="0" height="0" style="position: relative; top: 0; left: 0; pointer-events: none;"></canvas>
   
   </br></br></br>
 
@@ -38,12 +37,45 @@
 
 </section>
 
+<!-- Script pentru filigran -->
 <script>
-  document.addEventListener("turbo:load", function() {
-    document.querySelectorAll('.no-turbo').forEach(link => {
-      link.setAttribute('data-turbo', 'false');
+document.addEventListener('DOMContentLoaded', function() {
+    var player = videojs('<%= @myvideo %>', {
+        controls: true,
+        preload: 'auto',
+        techOrder: ['html5']
     });
-  });
+
+    var canvas = document.getElementById('my-canvas');
+    var ctx = canvas.getContext('2d');
+    var watermark = "Iulian Lates - ilates@yahoo.com";  // Poți schimba textul dinamic aici
+
+    function drawWatermark() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = '16px Arial';
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+        ctx.fillText(watermark, 10, 30);  // Filigran în stânga sus
+    }
+
+    function updateCanvas() {
+        drawWatermark();
+        if (!player.paused() && !player.ended()) {
+            requestAnimationFrame(updateCanvas);
+        }
+    }
+
+    player.on('play', function() {
+        updateCanvas();
+    });
+
+    player.on('pause', function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    player.on('ended', function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+});
 </script>
 
 <script>
