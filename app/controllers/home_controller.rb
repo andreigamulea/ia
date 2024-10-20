@@ -62,6 +62,7 @@ def test_debian
   key_file_path = '/mnt/AyushCell/encryption.key'
 
   @video_url_m3u8 = 'https://ayush.go.ro/ormus_output.m3u8'
+  #@video_url_m3u8 = Video.find_by(id: 347).link_debian
   @video_url = 'https://ayush.go.ro/natura1.mp4'
   # Mesaj de stare pentru M3U8
   @message_m3u8 = ""
