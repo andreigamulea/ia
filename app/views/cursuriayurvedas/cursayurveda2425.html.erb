@@ -169,7 +169,9 @@ td:hover .tooltip-text {
             <td><%= @prodgrupa1_taxainscriere_all.nume %></td>                        
             <td><%= @prodgrupa1_taxainscriere_all.detalii %></td> 
             <td><%= @prodgrupa1_taxainscriere_all.pret.to_i %> lei</td>
-            <% if current_user && (current_user.role == 1 || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) %>            
+            <% allowed_an1_emails = ['mileamihaela1975@gmail.com'] %>
+
+            <% if current_user && !allowed_an1_emails.include?(current_user.email) && (current_user.role == 1 || ComenziProd.where(user_id: current_user.id).maximum(:taxa2324).to_i > 5) %>            
              <td style="position: relative;">
   <%= link_to 'Inscriere', "#", class: 'btn btn-primary no-turbo', style: "pointer-events: none; opacity: 0.6; cursor: not-allowed;", id: "disabled-button" %>
   <span class="tooltip-text">Plățile sunt accesibile pe pagina grupei 02 de ayurveda.</span>
