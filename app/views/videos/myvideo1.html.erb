@@ -27,14 +27,34 @@
     </div>
 
 <% end %>
-
+<canvas id="container-error-35789" class="hidden-element tempCanvas" width="0" height="0" style="position: relative; top: -9999px; left: -9999px; pointer-events: none; z-index: -1;"></canvas>
 </section>
 <script>
   document.addEventListener("turbo:load", function() {
     document.querySelectorAll('.no-turbo').forEach(link => {
       link.setAttribute('data-turbo', 'false');
     });
+
+    var canvas = document.getElementById('container');
+    var ctx = canvas.getContext('2d');
+    var watermark = " ";
+
+    function drawWatermark() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = '12px Arial';
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+        ctx.fillText(watermark, 0, 0);
+    }
+
+    function updateCanvas() {
+        drawWatermark();
+        if (!player.paused() && !player.ended()) {
+            requestAnimationFrame(updateCanvas);
+        }
+    }
   });
+
+
 </script>
 <script>
 <%= yield :custom_js %>

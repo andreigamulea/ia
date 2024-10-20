@@ -4,9 +4,12 @@
 <p>Cheia de criptare: <%= @encryption_key %></p>
 
 <!-- Player Video.js -->
-<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" crossorigin="anonymous">
+<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" crossorigin="anonymous" width="640" height="360">
   <source src="<%= @video_url %>" type="video/mp4">
 </video>
+
+<!-- Canvas pentru afișarea filigranului -->
+<canvas id="my-canvas" width="640" height="360" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
 
 <!-- Include stilurile și scripturile Video.js -->
 <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
@@ -20,25 +23,35 @@ document.addEventListener('DOMContentLoaded', function() {
         techOrder: ['html5']
     });
 
-    player.on('error', function() {
-        var error = player.error();
-        console.error('Eroare apărută în player:', error.code, error.message);
-    });
+    var canvas = document.getElementById('my-canvas');
+    var ctx = canvas.getContext('2d');
+    var watermark = " ";  // Schimbă cu numele dinamic al utilizatorului
 
-    player.on('loadedmetadata', function() {
-        console.log("Fișierul video a fost încărcat cu succes.");
-    });
+    function drawWatermark() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = '12px Arial';
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+        ctx.fillText(watermark, 0, 0);
+    }
 
-    player.on('playing', function() {
-        console.log("Video-ul este redat.");
+    function updateCanvas() {
+        drawWatermark();
+        if (!player.paused() && !player.ended()) {
+            requestAnimationFrame(updateCanvas);
+        }
+    }
+
+    player.on('play', function() {
+        updateCanvas();
     });
 
     player.on('pause', function() {
-        console.log("Video-ul a fost întrerupt.");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
 
     player.on('ended', function() {
-        console.log("Video-ul s-a terminat.");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
 });
 </script>
+
