@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   end
   get 'tabere/export_to_xlsx', to: 'tabere#export_to_xlsx_plata_tayv24', as: 'export_tayv24_xlsx'
   get 'tabere/tayv24', to: 'tabere#tayv24', as: 'tayv24'
+  get 'tabere/tayt24', to: 'tabere#tayt24', as: 'tayt24'
   get 'facturas/raport_accesare_facturi', to: 'facturas#raport_accesare_facturi', as: 'raport_accesare_facturi'
   resources :facturaproformas do
     collection do
