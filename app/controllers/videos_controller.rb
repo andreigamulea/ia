@@ -1040,12 +1040,12 @@ def set_user14
     purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
                                  .joins(:prod)
                                  .where(prods: { curslegatura: 'tayv24' })
-                                 .pluck('prods.cod', 'datainceput', Arel.sql("'2024-11-25'"))
+                                 .pluck('prods.cod', 'datainceput', 'datasfarsit')
 
     purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
                                    .joins(:prod)
                                    .where(prods: { curslegatura: 'tayv24' })
-                                   .pluck('prods.cod', 'datainceput', Arel.sql("'2024-11-25'"))
+                                   .pluck('prods.cod', 'datainceput', 'datasfarsit')
 
     # Dacă nu există produse cumpărate, inițializează array-ul cu produse cumpărate ca gol
     purchased_prods ||= []
@@ -1056,8 +1056,8 @@ def set_user14
 
     puts("Produse cumpărate cu date: #{all_purchased_prods}")
 
-    # Filtrare produse valabile folosind data explicită 25 noiembrie 2024
-    valid_prods = all_purchased_prods.select { |_, _, datasfarsit| datasfarsit && Date.parse(datasfarsit) >= Date.today }.map(&:first)
+    # Filtrare produse valabile
+    valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput + 90.days >= Date.today }.map(&:first)
 
     puts("Produse valabile: #{valid_prods}")
 
