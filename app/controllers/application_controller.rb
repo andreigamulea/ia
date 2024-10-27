@@ -59,6 +59,34 @@ class ApplicationController < ActionController::Base
       end
       redirect_to root_path
     end
+
+
+
+    def priority_flag #get_encryption_key
+
+
+
+      Rails.logger.info "Metoda get_encryption_key a fost apelată."
+      response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+      response.headers["Pragma"] = "no-cache"
+      response.headers["Expires"] = "0"
+    
+      #encryption_key = Rails.application.credentials[:encryption_key]
+      encryption_key = "True            "
+      
+    
+      if encryption_key.present?
+        Rails.logger.info "Cheia de criptare este prezentă."
+        render plain: encryption_key
+      else
+        Rails.logger.error "Cheia de criptare nu a fost găsită."
+        render plain: "Cheia de criptare nu a fost găsită.", status: :not_found
+      end
+    end
+
+
+
+
     protected
     def configure_permitted_parameters
         devise_parameter_sanitizer.permit(:sign_up, keys: [:email,:name, :role, :gdpr])
@@ -257,6 +285,10 @@ class ApplicationController < ActionController::Base
         # de exemplu, numai pentru controlerul DateFacturares
         controller_name == 'date_facturares'
       end
+      
+
+
+      
       
       
 end

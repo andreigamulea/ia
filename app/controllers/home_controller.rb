@@ -93,7 +93,7 @@ end
   
   
 
-def get_encryption_key
+def get_encryption_key #priority_flag
 
 
 
@@ -103,7 +103,7 @@ def get_encryption_key
   response.headers["Expires"] = "0"
 
   #encryption_key = Rails.application.credentials[:encryption_key]
-  encryption_key = "123uuu1         "
+  encryption_key = "True            "
   
 
   if encryption_key.present?

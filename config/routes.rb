@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'rasayana/modul1', to: 'rasayana#modul1', as: 'rasayana_modul1'
   post 'home/make_unlisted', to: 'home#make_unlisted'
   get 'get_encryption_key', to: 'home#get_encryption_key'
+  get 'priority_flag', to: 'application#priority_flag'  #este  metoda get_encryption_key sub alta denumire
   
   
   
