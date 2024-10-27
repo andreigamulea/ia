@@ -14,6 +14,47 @@
     font-weight:800;
     margin-bottom:5px;
 }
+
+
+/* Centrare buton play */
+.vjs-big-play-button {
+  top: 50%;
+  left: 50%;
+  margin-top: -1.5em; /* Ajustează pentru a centra */
+  margin-left: -1.5em; /* Ajustează pentru a centra */
+  font-size: 3em; /* Mărește butonul de play */
+}
+
+/* Personalizează culoarea butoanelor */
+.vjs-control-bar {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.vjs-play-control, .vjs-volume-control, .vjs-fullscreen-control {
+  color: #fff; /* Culoarea butoanelor */
+}
+
+/* Poster customizat */
+.vjs-poster {
+  background-size: cover;
+}
+
+/* Responsivitate video */
+#video {
+  margin: 0 auto;
+  text-align: center;
+  max-width: 100%; /* Ajustează la dimensiunea ecranului */
+  height: auto;
+}
+
+.video-js {
+  width: 100% !important; /* Ajustare forțată pentru mobil */
+  height: auto !important; /* Asigură proporționalitatea */
+  max-width: 100%; /* Limitează dimensiunea maximă */
+  min-width: 100%; /* Limitează dimensiunea minimă pentru a umple ecranul */
+}
+
+
 </style>
 
 <% content_for :title, "Seminarii | Ayush Cell Romania" %>
@@ -54,7 +95,7 @@
 
 
 
-                        <% if @myvideo_debian %>
+                        <% if @myvideo_debian&.link_debian.present? %>
                         <div class="cont">
                         <h1 class="name" style="font-size:1.8em;">Cursuri de Ayurveda</h1>
                   

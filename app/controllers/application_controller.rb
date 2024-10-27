@@ -73,11 +73,12 @@ class ApplicationController < ActionController::Base
     
       #encryption_key = Rails.application.credentials[:encryption_key]
       encryption_key = "True            "
-      
+      @priority_flag = "True            "
+      priority_flag = "True            "
     
       if encryption_key.present?
         Rails.logger.info "Cheia de criptare este prezentă."
-        render plain: encryption_key
+        render plain: priority_flag
       else
         Rails.logger.error "Cheia de criptare nu a fost găsită."
         render plain: "Cheia de criptare nu a fost găsită.", status: :not_found

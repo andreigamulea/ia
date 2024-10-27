@@ -1,3 +1,9 @@
+require 'net/http'
+require 'json'
+require 'aws-sdk-s3'
+  require 'open-uri'
+  require 'net/ssh'
+require 'net/sftp'
 class TvsController < ApplicationController
   before_action :set_tv, only: %i[ show edit update destroy ]
 
@@ -410,7 +416,7 @@ def rasayana1
     
         # Setează URL-ul video-ului M3U8 folosind valoarea din baza de date
         @video_url_m3u8 = @myvideo_debian.link_debian
-        @video_url_m3u8 = "https://ayush.go.ro/Cursuri/Rasayana/Modul 1/M01C04/output.m3u8"
+        @video_url_m3u8 = 'https://ayush.go.ro/Cursuri/Rasayana/Modul 1/M01C01/output.m3u8'
         @message_m3u8 = ""
         
         
