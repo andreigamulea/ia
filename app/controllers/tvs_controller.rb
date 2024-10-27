@@ -401,18 +401,22 @@ def rasayana1
       @valabilitate_ora_sfarsit = @myvideo1.orasfarsit.strftime("%H:%M") if @myvideo1.orasfarsit 
       
       @myvideo_debian = Video.find_by(link: @myvideo)
-      if @myvideo_debian.link_debian!=nil
+      if @myvideo_debian&.link_debian.present?
         ## Detalii conexiune SSH
-          ssh_host = 'ayush.go.ro'
-          ssh_port = 22
-          username = 'ayushayush'
-          password = 'bhairava'
-          ## #EXT-X-KEY:METHOD=AES-128,URI="https://ayushcell.ro/get_priority_flag",IV=0x0123456789abcdef0123456789abcdef
-          #@video_url_m3u8 = 'https://ayush.go.ro/ormus_output.m3u8'  #mnt/AyushCell/ormus...
-          #@video_url_m3u8 = 'https://ayush.go.ro/Cursuri/Rasayana/Modul 1/M01C04/output.m3u8'  #mnt/AyushCell/ormus...
-          @video_url_m3u8 =  @myvideo_debian.link_debian
-          
-      end  
+        ssh_host = 'ayush.go.ro'
+        ssh_port = 22
+        username = 'ayushayush'
+        password = 'bhairava'
+    
+        # Setează URL-ul video-ului M3U8 folosind valoarea din baza de date
+        @video_url_m3u8 = @myvideo_debian.link_debian
+        @video_url_m3u8 = "https://ayush.go.ro/Cursuri/Rasayana/Modul 1/M01C04/output.m3u8"
+        @message_m3u8 = ""
+        
+        
+      else
+        @message_m3u8 = "Link-ul pentru video nu a fost găsit în baza de date."
+      end
 
 
     else
