@@ -93,7 +93,7 @@ end
   
   
 
-def get_encryption_key #priority_flag
+def get_encryption_key
 
 
 

@@ -203,9 +203,9 @@ document.addEventListener('DOMContentLoaded', function() {
         controls: true,
         preload: 'auto',
         techOrder: ['html5'],
-        fluid: true, // Asigură-te că video-ul este responsive
-        responsive: true, // Responsivitate pe mobil
-        aspectRatio: '16:9' // Setează raportul video
+        fluid: true, // Responsivitate pe mobil
+        responsive: true,
+        aspectRatio: '16:9'
     });
 
     var canvas = document.getElementById('container-error-35789');
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.font = '12px Arial';
         ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
-        ctx.fillText(watermark, 0, 0);
+        ctx.fillText(watermark, 10, 20);
     }
 
     function updateCanvas() {
@@ -244,7 +244,6 @@ document.addEventListener("turbo:load", function() {
         link.setAttribute('data-turbo', 'false');
     });
 });
-
 
 </script>
 
