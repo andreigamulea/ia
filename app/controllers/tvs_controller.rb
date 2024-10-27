@@ -1,9 +1,3 @@
-require 'net/http'
-require 'json'
-require 'aws-sdk-s3'
-  require 'open-uri'
-  require 'net/ssh'
-require 'net/sftp'
 class TvsController < ApplicationController
   before_action :set_tv, only: %i[ show edit update destroy ]
 
@@ -302,8 +296,7 @@ class TvsController < ApplicationController
 
   end
   
-require 'net/ssh'
-require 'net/sftp'
+
 def rasayana1
   unless user_signed_in?
     flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
@@ -397,34 +390,15 @@ def rasayana1
     puts "Video selectat: #{@myvideo1 ? @myvideo1.id : 'Niciunul'}"
     # Setează variabilele în funcție de rezultatul interogării
     if @myvideo1
-       @myvideo = @myvideo1.link
+      @myvideo = @myvideo1.link
       @exista_video = true
       @denumire = @myvideo1.denumire      
       @data_inceput = @myvideo1.datainceput.strftime("%d.%m.%Y") if @myvideo1&.datainceput
       @data_sfarsit = @myvideo1.datasfarsit.strftime("%d.%m.%Y") if @myvideo1&.datasfarsit
       @ora_inceput = @myvideo1.orainceput if @myvideo1&.orainceput
       @valabilitate_ora_inceput = @myvideo1.orainceput.strftime("%H:%M") if @myvideo1.orainceput  
-      @valabilitate_ora_sfarsit = @myvideo1.orasfarsit.strftime("%H:%M") if @myvideo1.orasfarsit 
+      @valabilitate_ora_sfarsit = @myvideo1.orasfarsit.strftime("%H:%M") if @myvideo1.orasfarsit   
       
-      @myvideo_debian = Video.find_by(link: @myvideo)
-      if @myvideo_debian&.link_debian.present?
-        ## Detalii conexiune SSH
-        ssh_host = 'ayush.go.ro'
-        ssh_port = 22
-        username = 'ayushayush'
-        password = 'bhairava'
-    
-        # Setează URL-ul video-ului M3U8 folosind valoarea din baza de date
-        @video_url_m3u8 = @myvideo_debian.link_debian
-        @video_url_m3u8 = 'https://ayush.go.ro/Cursuri/Rasayana/Modul 1/M01C01/output.m3u8'
-        @message_m3u8 = ""
-        
-        
-      else
-        @message_m3u8 = "Link-ul pentru video nu a fost găsit în baza de date."
-      end
-
-
     else
       @myvideo1 = nil
       @exista_video = false

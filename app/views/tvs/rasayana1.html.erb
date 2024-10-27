@@ -14,47 +14,6 @@
     font-weight:800;
     margin-bottom:5px;
 }
-
-
-/* Centrare buton play */
-.vjs-big-play-button {
-  top: 50%;
-  left: 50%;
-  margin-top: -1.5em; /* Ajustează pentru a centra */
-  margin-left: -1.5em; /* Ajustează pentru a centra */
-  font-size: 3em; /* Mărește butonul de play */
-}
-
-/* Personalizează culoarea butoanelor */
-.vjs-control-bar {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.vjs-play-control, .vjs-volume-control, .vjs-fullscreen-control {
-  color: #fff; /* Culoarea butoanelor */
-}
-
-/* Poster customizat */
-.vjs-poster {
-  background-size: cover;
-}
-
-/* Responsivitate video */
-#video {
-  margin: 0 auto;
-  text-align: center;
-  max-width: 100%; /* Ajustează la dimensiunea ecranului */
-  height: auto;
-}
-
-.video-js {
-  width: 100% !important; /* Ajustare forțată pentru mobil */
-  height: auto !important; /* Asigură proporționalitatea */
-  max-width: 100%; /* Limitează dimensiunea maximă */
-  min-width: 100%; /* Limitează dimensiunea minimă pentru a umple ecranul */
-}
-
-
 </style>
 
 <% content_for :title, "Seminarii | Ayush Cell Romania" %>
@@ -95,39 +54,16 @@
 
 
 
-                        <% if @myvideo_debian&.link_debian.present? %>
-                        <div class="cont">
-                        <h1 class="name" style="font-size:1.8em;">Cursuri de Ayurveda</h1>
-                  
-                        <div id="video" style="margin:0 auto; text-align:center;min-width: 640px; min-height:320px;">
-                          <video id="curs" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360" playsinline>
-                            <source src="<%= @video_url_m3u8 %>" type="application/x-mpegURL">
-                            <track kind="subtitles" src="subtitles_en.vtt" srclang="en" label="English" default>
-                            <track kind="subtitles" src="subtitles_fr.vtt" srclang="fr" label="French">
-                            <track kind="subtitles" src="subtitles_es.vtt" srclang="es" label="Spanish">
-                          </video>
-                        </div>
-                  
-                        <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
-                        <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
-                  
-                        <canvas id="container-error-35789" class="hidden-element tempCanvas" width="0" height="0" style="position: relative; top: -9999px; left: -9999px; pointer-events: none; z-index: -1;"></canvas>
-                      </div>
-                      <% end %>  
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
+                        
+    <div class="responsive-iframe-container" style="margin-top:0px; margin: 0 auto;">
+        <iframe
+            src="https://www.youtube.com/embed/WGpS8qF4z0E"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+        </iframe>
+    </div>
                 <% else %>
                     <h3>Va rugam sa va logati pentru acces la prezentarea video</h3>
                 <% end %>
@@ -193,68 +129,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 </script>
-
-
-
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var player = videojs('curs', {
-        controls: true,
-        preload: 'auto',
-        techOrder: ['html5'],
-        fluid: true, // Responsivitate pe mobil
-        responsive: true,
-        aspectRatio: '16:9'
-    });
-
-    var canvas = document.getElementById('container-error-35789');
-    var ctx = canvas.getContext('2d');
-    var watermark = " ";
-
-    function drawWatermark() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = '12px Arial';
-        ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
-        ctx.fillText(watermark, 10, 20);
-    }
-
-    function updateCanvas() {
-        drawWatermark();
-        if (!player.paused() && !player.ended()) {
-            requestAnimationFrame(updateCanvas);
-        }
-    }
-
-    player.on('play', function() {
-        updateCanvas();
-    });
-
-    player.on('pause', function() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-
-    player.on('ended', function() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-});
-
-document.addEventListener("turbo:load", function() {
-    document.querySelectorAll('.no-turbo').forEach(link => {
-        link.setAttribute('data-turbo', 'false');
-    });
-});
-
-</script>
-
-
-
-
-
-
-
-
-
 <script>
 <%= yield :custom_js %>
 </script>

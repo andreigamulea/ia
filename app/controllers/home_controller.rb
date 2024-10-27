@@ -103,7 +103,7 @@ def get_encryption_key
   response.headers["Expires"] = "0"
 
   #encryption_key = Rails.application.credentials[:encryption_key]
-  encryption_key = "True            "
+  encryption_key = "123uuu1         "
   
 
   if encryption_key.present?
