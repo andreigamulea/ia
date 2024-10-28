@@ -1,16 +1,16 @@
 <!-- Partea de sus a fișierului app/views/home/about.html.erb -->
 <% content_for :custom_js do %>
     <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
-    <% end %>
+<% end %>
 
 <style>
 /* Centrare buton play */
 .vjs-big-play-button {
   top: 50%;
   left: 50%;
-  margin-top: -1.5em; /* Ajustează pentru a centra */
-  margin-left: -1.5em; /* Ajustează pentru a centra */
-  font-size: 3em; /* Mărește butonul de play */
+  margin-top: -1.5em;
+  margin-left: -1.5em;
+  font-size: 3em;
 }
 
 /* Personalizează culoarea butoanelor */
@@ -19,7 +19,7 @@
 }
 
 .vjs-play-control, .vjs-volume-control, .vjs-fullscreen-control {
-  color: #fff; /* Culoarea butoanelor */
+  color: #fff;
 }
 
 /* Poster customizat */
@@ -31,22 +31,21 @@
 #video {
   margin: 0 auto;
   text-align: center;
-  max-width: 100%; /* Ajustează la dimensiunea ecranului */
+  max-width: 100%;
   height: auto;
 }
 
 .video-js {
-  width: 100% !important; /* Ajustare forțată pentru mobil */
-  height: auto !important; /* Asigură proporționalitatea */
-  max-width: 100%; /* Limitează dimensiunea maximă */
-  min-width: 100%; /* Limitează dimensiunea minimă pentru a umple ecranul */
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100%;
+  min-width: 100%;
 }
 
 </style>
 
-
-<section class="c1" style= "padding: 0 10px;"></br>
-<h1 style= "text-align: center;padding: 0 10px;"><%=@myvideo1.nume%></h1></br>
+<section class="c1" style="padding: 0 10px;"></br>
+<h1 style="text-align: center; padding: 0 10px;"><%= @myvideo1.nume %></h1></br>
 <!-- for non autoplay video //-->
 <div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
@@ -60,95 +59,36 @@
 
 
 
+<% if @myvideo1.link_debian.present? %>
 
-<h2 class="main-title">Cursuri Ayush Cell</h2>
-    <div class="cont">
-      <h1 class="name" style="font-size:1.8em;">Cursuri de Ayurveda</h1>
+<div class="cont">
+  <h1 class="name" style="font-size:1.8em;">Player alternativ</h1>
 
-      <div id="video" style="margin:0 auto; text-align:center;min-width: 640px; min-height:320px;">
-        <video id="curs" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360" playsinline>
-          <source src="<%= @myvideo1.link_debian %>" type="application/x-mpegURL">
-          <track kind="subtitles" src="subtitles_en.vtt" srclang="en" label="English" default>
-          <track kind="subtitles" src="subtitles_fr.vtt" srclang="fr" label="French">
-          <track kind="subtitles" src="subtitles_es.vtt" srclang="es" label="Spanish">
-        </video>
-      </div>
+  <div id="video" style="margin:0 auto; text-align:center; min-width: 640px; min-height:320px;">
+    <video id="curs" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360" playsinline>
+      <source src="<%= @myvideo1.link_debian %>" type="application/x-mpegURL">
+      <track kind="subtitles" src="subtitles_en.vtt" srclang="en" label="English" default>
+      <track kind="subtitles" src="subtitles_fr.vtt" srclang="fr" label="French">
+      <track kind="subtitles" src="subtitles_es.vtt" srclang="es" label="Spanish">
+    </video>
+  </div>
 
-      <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
-      <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+  <script src="https://vjs.zencdn.net/7.20.3/video.js"></script>
+  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
 
-      <canvas id="container-error-35789" class="hidden-element tempCanvas" width="0" height="0" style="position: relative; top: -9999px; left: -9999px; pointer-events: none; z-index: -1;"></canvas>
-    </div>
+  <canvas id="container-error-35789" class="hidden-element tempCanvas" width="0" height="0" style="position: relative; top: -9999px; left: -9999px; pointer-events: none; z-index: -1;"></canvas>
+</div>
 
-
-
-
-
-
-
-
-
-
-
+<% end %>
 
 
 
 
 </section>
+
 <script>
-  document.addEventListener("turbo:load", function() {
-    document.querySelectorAll('.no-turbo').forEach(link => {
-      link.setAttribute('data-turbo', 'false');
-    });
-  });
-</script>
-<script>
-
-document.addEventListener("turbo:load", function() {
-    // Inițializează playerul Video.js pentru al doilea video
-    var player = videojs('curs', {
-        controls: true,
-        preload: 'auto',
-        techOrder: ['html5'],
-        fluid: true, // Responsivitate pe mobil
-        responsive: true,
-        aspectRatio: '16:9' // Setează raportul video
-    });
-
-    var canvas = document.getElementById('container-error-35789');
-    var ctx = canvas.getContext('2d');
-    var watermark = " ";
-
-    function drawWatermark() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = '12px Arial';
-        ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
-        ctx.fillText(watermark, 0, 0);
-    }
-
-    function updateCanvas() {
-        drawWatermark();
-        if (!player.paused() && !player.ended()) {
-            requestAnimationFrame(updateCanvas);
-        }
-    }
-
-    player.on('play', function() {
-        updateCanvas();
-    });
-
-    player.on('pause', function() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-
-    player.on('ended', function() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-});
-
-// Dacă există scripturi care trebuie să ruleze la încărcarea inițială a paginii
-document.addEventListener('DOMContentLoaded', function() {
-    var player = videojs('curs', {
+function initializePlayer(playerId, canvasId) {
+    var player = videojs(playerId, {
         controls: true,
         preload: 'auto',
         techOrder: ['html5'],
@@ -157,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
         aspectRatio: '16:9'
     });
 
-    var canvas = document.getElementById('container-error-35789');
+    var canvas = document.getElementById(canvasId);
     var ctx = canvas.getContext('2d');
     var watermark = " ";
 
@@ -186,6 +126,26 @@ document.addEventListener('DOMContentLoaded', function() {
     player.on('ended', function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
+}
+
+// Observator pentru detectarea schimbărilor în DOM
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.type === 'childList' && document.getElementById('curs')) {
+            initializePlayer('curs', 'container-error-35789');
+            observer.disconnect(); // Oprește observatorul după inițializare
+        }
+    });
+});
+
+// Configurarea observatorului pe întregul document
+observer.observe(document, { childList: true, subtree: true });
+
+// Alternativ, inițializează playerul când DOM-ul este complet încărcat
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('curs')) {
+        initializePlayer('curs', 'container-error-35789');
+    }
 });
 
 <%= yield :custom_js %>
