@@ -60,7 +60,7 @@
         <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
     </div>
 </div></br></br>
-
+<% if @myvideo1.link_debian.present? %>
   <h1 class="name" style="font-size:1.8em;">Player video alternativ</h1>
 
   <div id="video" style="margin:0 auto; text-align:center; width: -webkit-fill-available; max-width: 640px; padding-bottom:10px;">
@@ -77,6 +77,7 @@
 
   <canvas id="container-error-35789" class="hidden-element tempCanvas" width="0" height="0" style="position: relative; top: -9999px; left: -9999px; pointer-events: none; z-index: -1;"></canvas>
 </div>
+<% end %>
 </section>
 
 <script>
