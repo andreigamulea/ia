@@ -45,7 +45,12 @@
 </style>
 
 <section class="c1" style="padding: 0 10px;"></br>
-<h1 style="text-align: center; padding: 0 10px;"><%= @myvideo1.nume %></h1></br>
+
+
+
+<div class="cont">
+
+<h1 style="text-align: center; padding: 0 10px; font-size:1.8em;"><%= @myvideo1.nume %></h1></br>
 <!-- for non autoplay video //-->
 <div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
@@ -54,17 +59,11 @@
         <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
         <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
     </div>
-</div></br></br></br>
+</div></br></br>
 
+  <h1 class="name" style="font-size:1.8em;">Player video alternativ</h1>
 
-
-
-<% if @myvideo1.link_debian.present? %>
-
-<div class="cont">
-  <h1 class="name" style="font-size:1.8em;">Player alternativ</h1>
-
-  <div id="video" style="margin:0 auto; text-align:center; min-width: 640px; min-height:320px;">
+  <div id="video" style="margin:0 auto; text-align:center; width: -webkit-fill-available; max-width: 640px; padding-bottom:10px;">
     <video id="curs" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360" playsinline>
       <source src="<%= @myvideo1.link_debian %>" type="application/x-mpegURL">
       <track kind="subtitles" src="subtitles_en.vtt" srclang="en" label="English" default>
@@ -78,12 +77,6 @@
 
   <canvas id="container-error-35789" class="hidden-element tempCanvas" width="0" height="0" style="position: relative; top: -9999px; left: -9999px; pointer-events: none; z-index: -1;"></canvas>
 </div>
-
-<% end %>
-
-
-
-
 </section>
 
 <script>
@@ -128,24 +121,13 @@ function initializePlayer(playerId, canvasId) {
     });
 }
 
-// Observator pentru detectarea schimbărilor în DOM
-const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        if (mutation.type === 'childList' && document.getElementById('curs')) {
-            initializePlayer('curs', 'container-error-35789');
-            observer.disconnect(); // Oprește observatorul după inițializare
-        }
-    });
+// Inițializează playerul atât când DOM-ul este complet încărcat, cât și când Turbo reîncarcă pagina
+document.addEventListener('DOMContentLoaded', function() {
+    initializePlayer('curs', 'container-error-35789');
 });
 
-// Configurarea observatorului pe întregul document
-observer.observe(document, { childList: true, subtree: true });
-
-// Alternativ, inițializează playerul când DOM-ul este complet încărcat
-document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('curs')) {
-        initializePlayer('curs', 'container-error-35789');
-    }
+document.addEventListener('turbo:load', function() {
+    initializePlayer('curs', 'container-error-35789');
 });
 
 <%= yield :custom_js %>
