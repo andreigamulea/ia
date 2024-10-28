@@ -104,13 +104,14 @@
 </script>
 <script>
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("turbo:load", function() {
+    // Inițializează playerul Video.js pentru al doilea video
     var player = videojs('curs', {
         controls: true,
         preload: 'auto',
         techOrder: ['html5'],
-        fluid: true, // Asigură-te că video-ul este responsive
-        responsive: true, // Responsivitate pe mobil
+        fluid: true, // Responsivitate pe mobil
+        responsive: true,
         aspectRatio: '16:9' // Setează raportul video
     });
 
@@ -145,10 +146,47 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-document.addEventListener("turbo:load", function() {
-    document.querySelectorAll('.no-turbo').forEach(link => {
-        link.setAttribute('data-turbo', 'false');
+// Dacă există scripturi care trebuie să ruleze la încărcarea inițială a paginii
+document.addEventListener('DOMContentLoaded', function() {
+    var player = videojs('curs', {
+        controls: true,
+        preload: 'auto',
+        techOrder: ['html5'],
+        fluid: true,
+        responsive: true,
+        aspectRatio: '16:9'
+    });
+
+    var canvas = document.getElementById('container-error-35789');
+    var ctx = canvas.getContext('2d');
+    var watermark = " ";
+
+    function drawWatermark() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = '12px Arial';
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+        ctx.fillText(watermark, 0, 0);
+    }
+
+    function updateCanvas() {
+        drawWatermark();
+        if (!player.paused() && !player.ended()) {
+            requestAnimationFrame(updateCanvas);
+        }
+    }
+
+    player.on('play', function() {
+        updateCanvas();
+    });
+
+    player.on('pause', function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    player.on('ended', function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
 });
+
 <%= yield :custom_js %>
 </script>
