@@ -29,13 +29,14 @@ module Ia
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins 'https://ayushcell.ro', 'http://localhost:3000'
-        resource '/get_encryption_key',
+        resource '/priority_flag',
           headers: :any,
           methods: [:get],
           expose: ['Access-Control-Allow-Origin'],
           credentials: true
       end
     end
+    
     
     
 
