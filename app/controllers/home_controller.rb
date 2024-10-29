@@ -61,9 +61,9 @@ def test_debian
   # Calea către fișierul encryption.key pe serverul Debian
   key_file_path = '/mnt/AyushCell/encryption.key'
 
-  #@video_url_m3u8 = 'https://ayush.go.ro/ormus_output.m3u8'
+  @video_url_m3u8 = 'https://ayush.go.ro/Ormus/output.m3u8'
   #@video_url_m3u8 = 'https://ayush.go.ro/Cursuri/Rasayana/Modul 1/M01C01/output.m3u8'
-  @video_url_m3u8 = Video.last.link_debian
+  #@video_url_m3u8 = Video.last.link_debian
 
 
   #@video_url_m3u8 = Video.find_by(id: 347).link_debian
