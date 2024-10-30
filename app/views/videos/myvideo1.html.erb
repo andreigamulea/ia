@@ -14,7 +14,7 @@
 <h1 style="text-align: center; padding: 0 10px; font-size:1.8em;"><%= @myvideo1.nume %></h1></br>
 
 <!-- Player principal -->
-<div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+<div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>); background-size: 100%;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
         <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
         <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
@@ -122,10 +122,12 @@ if (videoJsScript) {
 
 // Reîncărcare player secundar la fiecare reîncărcare prin Turbo
 document.addEventListener('turbo:load', function() {
-    initializeSecondaryPlayer();
+    const secondaryPlayerElement = document.getElementById('secondaryPlayer');
+    if (secondaryPlayerElement && typeof videojs !== 'undefined') {
+        videojs(secondaryPlayerElement.id).dispose();  // Închide playerul existent
+        initializeSecondaryPlayer();  // Reinitializează playerul secundar
+    }
 });
 
 <%= yield :custom_js %>
 </script>
-
-
