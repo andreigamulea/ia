@@ -47,54 +47,61 @@
 <script>
 // Script pentru playerul principal
 document.addEventListener('DOMContentLoaded', function() {
-    initializeMainPlayer('curs', 'container-error-35789');
+    if (document.getElementById('epyv-container[<%= @myvideo %>]')) {
+        initializeMainPlayer('curs', 'container-error-35789');
+    }
 });
 
+// Funcția pentru inițializarea playerului principal
 function initializeMainPlayer(playerId, canvasId) {
-    var player = videojs(playerId, {
-        controls: true,
-        preload: 'auto',
-        techOrder: ['html5'],
-        fluid: true,
-        responsive: true,
-        aspectRatio: '16:9'
-    });
+    if (typeof videojs !== 'undefined') {
+        var player = videojs(playerId, {
+            controls: true,
+            preload: 'auto',
+            techOrder: ['html5'],
+            fluid: true,
+            responsive: true,
+            aspectRatio: '16:9'
+        });
 
-    var canvas = document.getElementById(canvasId);
-    var ctx = canvas.getContext('2d');
-    var watermark = " ";
+        var canvas = document.getElementById(canvasId);
+        if (canvas) {
+            var ctx = canvas.getContext('2d');
+            var watermark = " ";
 
-    function drawWatermark() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = '12px Arial';
-        ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
-        ctx.fillText(watermark, 0, 0);
-    }
+            function drawWatermark() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.font = '12px Arial';
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+                ctx.fillText(watermark, 0, 0);
+            }
 
-    function updateCanvas() {
-        drawWatermark();
-        if (!player.paused() && !player.ended()) {
-            requestAnimationFrame(updateCanvas);
+            function updateCanvas() {
+                drawWatermark();
+                if (!player.paused() && !player.ended()) {
+                    requestAnimationFrame(updateCanvas);
+                }
+            }
+
+            player.on('play', function() {
+                updateCanvas();
+            });
+
+            player.on('pause', function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+
+            player.on('ended', function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
         }
     }
-
-    player.on('play', function() {
-        updateCanvas();
-    });
-
-    player.on('pause', function() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-
-    player.on('ended', function() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
 }
 
-// Script pentru playerul secundar
+// Funcția pentru inițializarea playerului secundar
 function initializeSecondaryPlayer() {
-    if (!videojs.getPlayer('secondaryPlayer')) {
-        const player = videojs('secondaryPlayer', {
+    if (typeof videojs !== 'undefined' && document.getElementById('secondaryPlayer')) {
+        videojs('secondaryPlayer', {
             controls: true,
             preload: 'auto',
             techOrder: ['html5'],
@@ -106,9 +113,12 @@ function initializeSecondaryPlayer() {
 }
 
 // Așteaptă încărcarea completă a scriptului video.js pentru al doilea player
-document.getElementById('videojs-script').addEventListener('load', function() {
-    initializeSecondaryPlayer();
-});
+const videoJsScript = document.getElementById('videojs-script');
+if (videoJsScript) {
+    videoJsScript.addEventListener('load', function() {
+        initializeSecondaryPlayer();
+    });
+}
 
 // Reîncărcare player secundar la fiecare reîncărcare prin Turbo
 document.addEventListener('turbo:load', function() {
@@ -117,3 +127,5 @@ document.addEventListener('turbo:load', function() {
 
 <%= yield :custom_js %>
 </script>
+
+
