@@ -1,10 +1,19 @@
 <!-- Partea de sus a fișierului app/views/home/about.html.erb -->
 <% content_for :custom_js do %>
     <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
-    <% end %>
-<section class="c1" style= "padding: 0 10px;"></br>
-<h1 style= "text-align: center;padding: 0 10px;"><%=@myvideo1.nume%></h1></br>
-<!-- for non autoplay video //-->
+<% end %>
+
+<style>
+/* Stilurile CSS rămân neschimbate */
+...
+</style>
+
+<section class="c1" style="padding: 0 10px;"></br>
+
+<div class="cont">
+<h1 style="text-align: center; padding: 0 10px; font-size:1.8em;"><%= @myvideo1.nume %></h1></br>
+
+<!-- Player principal -->
 <div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
         <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
@@ -12,15 +21,99 @@
         <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
         <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
     </div>
-</div></br></br></br>
+</div></br></br>
+
+<% if @myvideo1.link_debian.present? %>
+  <h1 class="name" style="font-size:1.8em;">Player video alternativ</h1>
+
+  <!-- Player video alternativ (al doilea player) -->
+  <div id="video" style="margin:0 auto; text-align:center; width: -webkit-fill-available; max-width: 640px; padding-bottom:10px;">
+    <video id="secondaryPlayer" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360" playsinline>
+      <source src="<%= @myvideo1.link_debian %>" type="application/x-mpegURL">
+      <track kind="subtitles" src="subtitles_en.vtt" srclang="en" label="English" default>
+      <track kind="subtitles" src="subtitles_fr.vtt" srclang="fr" label="French">
+      <track kind="subtitles" src="subtitles_es.vtt" srclang="es" label="Spanish">
+    </video>
+  </div>
+
+  <script src="https://vjs.zencdn.net/7.20.3/video.js" id="videojs-script" defer></script>
+  <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+
+  <canvas id="container-error-35789" class="hidden-element tempCanvas" width="0" height="0" style="position: relative; top: -9999px; left: -9999px; pointer-events: none; z-index: -1;"></canvas>
+</div>
+<% end %>
 </section>
+
 <script>
-  document.addEventListener("turbo:load", function() {
-    document.querySelectorAll('.no-turbo').forEach(link => {
-      link.setAttribute('data-turbo', 'false');
+// Script pentru playerul principal
+document.addEventListener('DOMContentLoaded', function() {
+    initializeMainPlayer('curs', 'container-error-35789');
+});
+
+function initializeMainPlayer(playerId, canvasId) {
+    var player = videojs(playerId, {
+        controls: true,
+        preload: 'auto',
+        techOrder: ['html5'],
+        fluid: true,
+        responsive: true,
+        aspectRatio: '16:9'
     });
-  });
-</script>
-<script>
+
+    var canvas = document.getElementById(canvasId);
+    var ctx = canvas.getContext('2d');
+    var watermark = " ";
+
+    function drawWatermark() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = '12px Arial';
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+        ctx.fillText(watermark, 0, 0);
+    }
+
+    function updateCanvas() {
+        drawWatermark();
+        if (!player.paused() && !player.ended()) {
+            requestAnimationFrame(updateCanvas);
+        }
+    }
+
+    player.on('play', function() {
+        updateCanvas();
+    });
+
+    player.on('pause', function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    player.on('ended', function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+}
+
+// Script pentru playerul secundar
+function initializeSecondaryPlayer() {
+    if (!videojs.getPlayer('secondaryPlayer')) {
+        const player = videojs('secondaryPlayer', {
+            controls: true,
+            preload: 'auto',
+            techOrder: ['html5'],
+            fluid: true,
+            responsive: true,
+            aspectRatio: '16:9'
+        });
+    }
+}
+
+// Așteaptă încărcarea completă a scriptului video.js pentru al doilea player
+document.getElementById('videojs-script').addEventListener('load', function() {
+    initializeSecondaryPlayer();
+});
+
+// Reîncărcare player secundar la fiecare reîncărcare prin Turbo
+document.addEventListener('turbo:load', function() {
+    initializeSecondaryPlayer();
+});
+
 <%= yield :custom_js %>
 </script>
