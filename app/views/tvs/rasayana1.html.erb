@@ -1,18 +1,16 @@
 <!-- Partea de sus a fișierului app/views/home/about.html.erb -->
 <% content_for :custom_js do %>
-    <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
-    <% end %>
-
-
+  <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
+<% end %>
 
 <style>
 #seminarii .cr h2 {
-    font-size:22px;
+    font-size: 22px;
 }
-#seminarii .cr h3{
-    font-size:18px;
-    font-weight:800;
-    margin-bottom:5px;
+#seminarii .cr h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 5px;
 }
 </style>
 
@@ -25,90 +23,133 @@
 <% end %>
 
 <div class="container" id="seminarii">
-<%= render 'layouts/sideleft' %>
+  <%= render 'layouts/sideleft' %>
 
-<div class="cr" style="background-color: white; ">
-    <h1 class="first-tittle">Rasayana  I  Ayush Cell Romania</h1>
-    <h2 class="main-title" >Rasayana - Modulul 1 </h2>
+  <div class="cr" style="background-color: white;">
+    <h1 class="first-tittle">Rasayana I Ayush Cell Romania</h1>
+    <h2 class="main-title">Rasayana - Modulul 1</h2>
 
+    <p>Curs Rasayana</p>
 
-<p>Curs Rasayana</p>
-    
+    <% if @exista_video %>
+      <% if current_user %>
+        <h2><%= @denumire %></h2>
+        <h4>Aceasta inregistrare se poate reviziona de la <%= @data_inceput %> ora <%= @valabilitate_ora_inceput %> pana la <%= @data_sfarsit %> ora <%= @valabilitate_ora_sfarsit %></h4>
 
-    
-    
-            <% if @exista_video %>
-                <% if current_user %>
-                        <h2><%=@denumire%></h2>
-                        <h4>Aceasta inregistrare se poate reviziona de la <%=@data_inceput%> ora <%=@valabilitate_ora_inceput%> pana la <%=@data_sfarsit%> ora <%=@valabilitate_ora_sfarsit%></h4>
+        <!-- Player principal -->
+        <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>); background-size: 100%;">
+          <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
+            <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+            <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+            <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+            <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+          </div>
+        </div></br>
 
+        <!-- Player video alternativ (al doilea player) -->
+        <% if @myvideo2.link_debian.present? %>
+          <div id="video" style="margin: 0 auto; text-align: center; width: -webkit-fill-available; max-width: 640px; padding-bottom: 10px;">
+            <video id="secondaryPlayer" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360" playsinline>
+              <source src="<%= @myvideo2.link_debian %>" type="application/x-mpegURL">
+              <track kind="subtitles" src="subtitles_en.vtt" srclang="en" label="English" default>
+              <track kind="subtitles" src="subtitles_fr.vtt" srclang="fr" label="French">
+              <track kind="subtitles" src="subtitles_es.vtt" srclang="es" label="Spanish">
+            </video>
+          </div>
 
-                        <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>); background-size: 100%;">
-                            <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
-                                <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
-                                <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
-                                <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
-                                <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
-                            </div>
-                        </div></br>
+          <script src="https://vjs.zencdn.net/7.20.3/video.js" id="videojs-script" defer></script>
+          <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+        <% end %>
+      <% else %>
+        <h3>Va rugam sa va logati pentru acces la prezentarea video</h3>
+      <% end %>
+    <% else %>
+      <h3>In acest moment nu este programata nicio vizionare.</h3>
+    <% end %>
 
-
-
-
-                        
-    
-                <% else %>
-                    <h3>Va rugam sa va logati pentru acces la prezentarea video</h3>
-                <% end %>
-            <% else %>
-
-            <h3>In acest moment nu este programata nicio vizionare.</h3>
-            
-
-            <% end %>
-    
-            <%= link_to 'Accesează pagina de prezentare a cursului de Rasayana', rasayana_modul1_path, class: 'nav-item' %></br>
-</div>
+    <%= link_to 'Accesează pagina de prezentare a cursului de Rasayana', rasayana_modul1_path, class: 'nav-item' %></br>
+  </div>
 </div>
 
 <script>
-console.log('Script simplu! canal2');
-</script>
-
-
-
-<script>
-
-
-
-console.log("Pagina a fost încărcată/reîncărcată canal2.");
-
+// Inițializează playerul principal
 document.addEventListener('DOMContentLoaded', function() {
-  console.log("Pagina încărcată cu Dom! canal2");
-  });
-    
-    document.addEventListener("turbo:load", function() {
-      console.log("Pagina încărcată cu Turbo canal2");
-    var orareInceputAzi = <%= raw @orare_inceput_sfarsit_azi.to_json %>;
-    
-    console.log("Orare de inceput:", orareInceputAzi);
-
-    function verificaSiReincarcaPagina() {
-      var oraCurenta = new Date().toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Bucharest' });
-      console.log("Ora curenta:", oraCurenta); // Vezi ce ora exactă se generează
-
-      if (orareInceputAzi.includes(oraCurenta)) {
-        console.log("Se face refresh!");
-        window.location.reload();
-      } else {
-        console.log("Nu se face refresh, ora curentă nu este în array.");
-      }
+    if (document.getElementById('epyv-container[<%= @myvideo %>]')) {
+        initializeMainPlayer('curs', 'container-error-35789');
     }
+});
 
-    setInterval(verificaSiReincarcaPagina, 60000);
-    
-    
-   
+// Funcția pentru inițializarea playerului principal
+function initializeMainPlayer(playerId, canvasId) {
+    if (typeof videojs !== 'undefined') {
+        var player = videojs(playerId, {
+            controls: true,
+            preload: 'auto',
+            techOrder: ['html5'],
+            fluid: true,
+            responsive: true,
+            aspectRatio: '16:9'
+        });
+
+        var canvas = document.getElementById(canvasId);
+        if (canvas) {
+            var ctx = canvas.getContext('2d');
+            var watermark = " ";
+
+            function drawWatermark() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.font = '12px Arial';
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+                ctx.fillText(watermark, 0, 0);
+            }
+
+            function updateCanvas() {
+                drawWatermark();
+                if (!player.paused() && !player.ended()) {
+                    requestAnimationFrame(updateCanvas);
+                }
+            }
+
+            player.on('play', function() {
+                updateCanvas();
+            });
+
+            player.on('pause', function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+
+            player.on('ended', function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            });
+        }
+    }
+}
+
+// Inițializează playerul secundar
+function initializeSecondaryPlayer() {
+    if (typeof videojs !== 'undefined' && document.getElementById('secondaryPlayer')) {
+        videojs('secondaryPlayer', {
+            controls: true,
+            preload: 'auto',
+            techOrder: ['html5'],
+            fluid: true,
+            responsive: true,
+            aspectRatio: '16:9'
+        });
+    }
+}
+
+// Așteaptă încărcarea completă a scriptului video.js pentru al doilea player
+const videoJsScript = document.getElementById('videojs-script');
+if (videoJsScript) {
+    videoJsScript.addEventListener('load', function() {
+        initializeSecondaryPlayer();
+    });
+}
+
+// Reîncărcare player secundar la fiecare reîncărcare prin Turbo
+document.addEventListener('turbo:load', function() {
+    initializeSecondaryPlayer();
 });
 </script>
 

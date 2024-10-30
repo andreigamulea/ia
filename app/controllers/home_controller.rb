@@ -56,7 +56,7 @@ def test_debian
   ssh_host = 'ayush.go.ro'
   ssh_port = 22
   username = 'ayushayush'
-  password = 'bhairava'
+  password = 'Bhairava10.10'
 
   # Calea către fișierul encryption.key pe serverul Debian
   key_file_path = '/mnt/AyushCell/encryption.key'

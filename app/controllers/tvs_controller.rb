@@ -398,7 +398,8 @@ def rasayana1
       @ora_inceput = @myvideo1.orainceput if @myvideo1&.orainceput
       @valabilitate_ora_inceput = @myvideo1.orainceput.strftime("%H:%M") if @myvideo1.orainceput  
       @valabilitate_ora_sfarsit = @myvideo1.orasfarsit.strftime("%H:%M") if @myvideo1.orasfarsit   
-      
+      @myvideo2 = Video.find_by(link: @myvideo1.link)
+
     else
       @myvideo1 = nil
       @exista_video = false
