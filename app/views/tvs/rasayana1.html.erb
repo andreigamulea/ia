@@ -45,7 +45,9 @@
             <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
           </div>
         </div></br>
+        
         <h1 class="name" style="font-size:1.8em;">Player video alternativ</h1>
+
         <!-- Player video alternativ (al doilea player) -->
         <% if @myvideo2.link_debian.present? %>
           <div id="video" style="margin: 0 auto; text-align: center; width: -webkit-fill-available; max-width: 640px; padding-bottom: 10px;">
@@ -72,7 +74,7 @@
 </div>
 
 <script>
-// Inițializează playerul principal
+// Script pentru playerul principal
 document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('epyv-container[<%= @myvideo %>]')) {
         initializeMainPlayer('curs', 'container-error-35789');
@@ -125,7 +127,7 @@ function initializeMainPlayer(playerId, canvasId) {
     }
 }
 
-// Inițializează playerul secundar
+// Funcția pentru inițializarea playerului secundar
 function initializeSecondaryPlayer() {
     if (typeof videojs !== 'undefined' && document.getElementById('secondaryPlayer')) {
         videojs('secondaryPlayer', {
