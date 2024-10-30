@@ -45,14 +45,20 @@
 </section>
 
 <script>
-// Script pentru playerul principal
-document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('epyv-container[<%= @myvideo %>]')) {
-        initializeMainPlayer('curs', 'container-error-35789');
+// Funcția de resetare a variabilelor și elementelor
+function resetJavaScriptState() {
+    // Șterge toate elementele videojs
+    if (typeof videojs !== 'undefined') {
+        document.querySelectorAll('.video-js').forEach((videoElement) => {
+            videojs(videoElement).dispose();
+        });
     }
-});
 
-// Funcția pentru inițializarea playerului principal
+    // Șterge alte elemente sau variabile globale
+    delete window.videoJsScript;
+}
+
+// Script pentru playerul principal
 function initializeMainPlayer(playerId, canvasId) {
     if (typeof videojs !== 'undefined') {
         var player = videojs(playerId, {
@@ -113,20 +119,29 @@ function initializeSecondaryPlayer() {
 }
 
 // Așteaptă încărcarea completă a scriptului video.js pentru al doilea player
-const videoJsScript = document.getElementById('videojs-script');
-if (videoJsScript) {
-    videoJsScript.addEventListener('load', function() {
-        initializeSecondaryPlayer();
-    });
+if (!window.videoJsScript) {
+    window.videoJsScript = document.getElementById('videojs-script');
+    if (window.videoJsScript) {
+        window.videoJsScript.addEventListener('load', function() {
+            initializeSecondaryPlayer();
+        });
+    }
 }
 
-// Reîncărcare player secundar la fiecare reîncărcare prin Turbo
+// Reîncărcare playere și resetare stări la fiecare încărcare prin Turbo
 document.addEventListener('turbo:load', function() {
-    const secondaryPlayerElement = document.getElementById('secondaryPlayer');
-    if (secondaryPlayerElement && typeof videojs !== 'undefined') {
-        videojs(secondaryPlayerElement.id).dispose();  // Închide playerul existent
-        initializeSecondaryPlayer();  // Reinitializează playerul secundar
-    }
+    // Curăță starea existentă
+    resetJavaScriptState();
+
+    // Reinitializează playerele video
+    initializeMainPlayer('curs', 'container-error-35789');
+    initializeSecondaryPlayer();
+});
+
+// Apelare funcție de inițializare pentru prima încărcare a paginii
+document.addEventListener('DOMContentLoaded', function() {
+    initializeMainPlayer('curs', 'container-error-35789');
+    initializeSecondaryPlayer();
 });
 
 <%= yield :custom_js %>
