@@ -5,7 +5,17 @@
 
 <style>
 /* Stilurile CSS rămân neschimbate */
-...
+/* Adaugă stiluri pentru a asigura afișarea corectă a playerului secundar */
+#video {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.video-js {
+    width: 100% !important;
+    height: auto !important;
+}
 </style>
 
 <section class="c1" style="padding: 0 10px;"></br>
@@ -14,7 +24,7 @@
 <h1 style="text-align: center; padding: 0 10px; font-size:1.8em;"><%= @myvideo1.nume %></h1></br>
 
 <!-- Player principal -->
-<div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+<div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>); background-size: 100%;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
         <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
         <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
@@ -101,7 +111,7 @@ function initializeMainPlayer(playerId, canvasId) {
 // Funcția pentru inițializarea playerului secundar
 function initializeSecondaryPlayer() {
     if (typeof videojs !== 'undefined' && document.getElementById('secondaryPlayer')) {
-        videojs('secondaryPlayer', {
+        var player = videojs('secondaryPlayer', {
             controls: true,
             preload: 'auto',
             techOrder: ['html5'],
@@ -109,8 +119,18 @@ function initializeSecondaryPlayer() {
             responsive: true,
             aspectRatio: '16:9'
         });
+
+        // Forțează redimensionarea după ce playerul este gata
+        player.on('ready', function() {
+            player.trigger('resize');
+        });
     }
 }
+
+// Apelează funcția de inițializare la încărcarea DOM
+document.addEventListener('DOMContentLoaded', function() {
+    initializeSecondaryPlayer();
+});
 
 // Așteaptă încărcarea completă a scriptului video.js pentru al doilea player
 const videoJsScript = document.getElementById('videojs-script');
@@ -127,5 +147,3 @@ document.addEventListener('turbo:load', function() {
 
 <%= yield :custom_js %>
 </script>
-
-
