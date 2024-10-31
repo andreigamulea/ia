@@ -14,7 +14,7 @@
 <h1 style="text-align: center; padding: 0 10px; font-size:1.8em;"><%= @myvideo1.nume %></h1></br>
 
 <!-- Player principal -->
-<div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>); background-size: 100%;">
+<div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
         <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
         <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
@@ -45,20 +45,14 @@
 </section>
 
 <script>
-// Funcția de resetare a variabilelor și elementelor
-function resetJavaScriptState() {
-    // Șterge toate elementele videojs
-    if (typeof videojs !== 'undefined') {
-        document.querySelectorAll('.video-js').forEach((videoElement) => {
-            videojs(videoElement).dispose();
-        });
-    }
-
-    // Șterge alte elemente sau variabile globale
-    delete window.videoJsScript;
-}
-
 // Script pentru playerul principal
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('epyv-container[<%= @myvideo %>]')) {
+        initializeMainPlayer('curs', 'container-error-35789');
+    }
+});
+
+// Funcția pentru inițializarea playerului principal
 function initializeMainPlayer(playerId, canvasId) {
     if (typeof videojs !== 'undefined') {
         var player = videojs(playerId, {
@@ -119,30 +113,19 @@ function initializeSecondaryPlayer() {
 }
 
 // Așteaptă încărcarea completă a scriptului video.js pentru al doilea player
-if (!window.videoJsScript) {
-    window.videoJsScript = document.getElementById('videojs-script');
-    if (window.videoJsScript) {
-        window.videoJsScript.addEventListener('load', function() {
-            initializeSecondaryPlayer();
-        });
-    }
+const videoJsScript = document.getElementById('videojs-script');
+if (videoJsScript) {
+    videoJsScript.addEventListener('load', function() {
+        initializeSecondaryPlayer();
+    });
 }
 
-// Reîncărcare playere și resetare stări la fiecare încărcare prin Turbo
+// Reîncărcare player secundar la fiecare reîncărcare prin Turbo
 document.addEventListener('turbo:load', function() {
-    // Curăță starea existentă
-    resetJavaScriptState();
-
-    // Reinitializează playerele video
-    initializeMainPlayer('curs', 'container-error-35789');
-    initializeSecondaryPlayer();
-});
-
-// Apelare funcție de inițializare pentru prima încărcare a paginii
-document.addEventListener('DOMContentLoaded', function() {
-    initializeMainPlayer('curs', 'container-error-35789');
     initializeSecondaryPlayer();
 });
 
 <%= yield :custom_js %>
 </script>
+
+
