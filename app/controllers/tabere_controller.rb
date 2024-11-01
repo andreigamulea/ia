@@ -115,7 +115,7 @@ class TabereController < ApplicationController
 end
   
   def tayt24
-    data_prag = Date.new(2024, 11, 7)
+    data_prag = Date.new(2024, 11, 19)
     @myvideo01 = "tDYGbQMGTNE"
   
     if current_user
