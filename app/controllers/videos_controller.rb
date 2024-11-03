@@ -1390,7 +1390,7 @@ def set_user18 #merge bine ia in considerare si datasfarsit
   end
 end
 def set_user19
-  # Verificare dacă utilizatorul este autentificat
+  ## Verificare dacă utilizatorul este autentificat
   unless user_signed_in?
     flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
     redirect_to new_user_session_path
