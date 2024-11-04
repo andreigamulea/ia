@@ -62,22 +62,24 @@ class ApplicationController < ActionController::Base
 
 
 
-    def priority_flag
-      Rails.logger.info "Metoda priority_flag a fost apelată."
-      response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-      response.headers["Pragma"] = "no-cache"
-      response.headers["Expires"] = "0"
-    
-      encryption_key = "True            "
-      
-      if encryption_key.present?
-        Rails.logger.info "Cheia de criptare este prezentă."
-        render plain: encryption_key
-      else
-        Rails.logger.error "Cheia de criptare nu a fost găsită."
-        render plain: "Cheia de criptare nu a fost găsită.", status: :not_found
-      end
-    end
+def priority_flag
+  Rails.logger.info "Metoda priority_flag a fost apelată."
+  response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+  response.headers["Pragma"] = "no-cache"
+  response.headers["Expires"] = "0"
+
+  encryption_key = "True            "
+
+  if encryption_key.present?
+    Rails.logger.info "Cheia de criptare este prezentă."
+    return encryption_key # Returnează cheia în loc să o redai direct
+  else
+    Rails.logger.error "Cheia de criptare nu a fost găsită."
+    render plain: "Cheia de criptare nu a fost găsită.", status: :not_found
+    nil
+  end
+end
+
     
 
 
