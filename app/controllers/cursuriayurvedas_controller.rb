@@ -196,7 +196,7 @@ if (max_taxa && max_taxa > 10) || allowed_emails.include?(current_user.email)
       @luni2425 = [nil, "Septembrie", "Octombrie", "Noiembrie", "Decembrie", "Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "Iulie"]
       @max_taxa2425 = ComenziProd.where(user_id: current_user.id).where.not(prod_id: 198).maximum(:taxa2425)
       if current_user.email=="v_ionela@yahoo.com"
-        @max_taxa2425=nil  #aici pun ce luna a platit sau cate luni a platit: 1 sau 2 etc 
+        @max_taxa2425=2  #aici pun ce luna a platit sau cate luni a platit: 1 sau 2 etc 
 
       end  
       puts("@max_taxa2425 este: #{@max_taxa2425}")
@@ -635,7 +635,7 @@ def cursayurveda2425
   end
 
   if current_user && current_user.email == 'v_ionela@yahoo.com'
-    max_taxa = nil
+    max_taxa = 2
   end  
 
   # Verificare plată și alocare produse taxă grupă 1

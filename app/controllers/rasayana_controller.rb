@@ -1,45 +1,47 @@
 class RasayanaController < ApplicationController
   def modul1
     @myvideo1 = Video.find_by(link: 'suMeHXOiYtk') #prezentare rasayana
-    #@myvideo1 = Video.find_by(link: 'xGpVO2uopdc') #prezentare gr 1
-    
     @myvideo = @myvideo1.link if @myvideo1
-    
+
     @nr_luni_achitate = 0 # Valoare implicită
     @has_acces_video = 0 # Implicit, fără acces video
     data_prag = Date.new(2025, 4, 30)
     current_date = Date.today
   
-    # Selectăm cele 7 produse pe baza campurilor curslegatura și cod
     products = Prod.where(curslegatura: 'rasayana1', cod: ['cod234', 'cod235', 'cod236', 'cod237', 'cod238', 'cod242', 'cod243'])
   
-    # Cazul în care utilizatorul nu este logat
     if current_user.nil?
-      # Afișăm produsele cod234, cod238 și cod243
       @prods = products.where(cod: ['cod234', 'cod238', 'cod243'])
     else
-      # Utilizatorul este logat, verificăm achizițiile în ComenziProd
       purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
                                    .joins(:prod)
                                    .where(prods: { curslegatura: 'rasayana1', status: 'activ' })
                                    .pluck('prods.cod')
   
-      # Verificăm dacă a fost cumpărat cod243 (valoare directă pentru @nr_luni_achitate și @has_acces_video)
       if purchased_prods.include?('cod243')
-        puts("a achitat tot")
+        # Cod243 oferă acces complet (echivalent cu achiziția codurilor 242 și 238)
         @nr_luni_achitate = 4
         @has_acces_video = 4
-        @prods = [] # Nu afișăm alte produse dacă cod243 este cumpărat
+        @prods = [] # Nu afișăm alte produse
+        @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1')
+                                    .where('ordine >= ? AND ordine <= ?', 0, 1000)
+                                    .order(ordine: :asc)
+        @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1')
+                                              .where('ordine > ? AND ordine < ?', 1000, 2000)
+                                              .order(ordine: :asc)
       elsif purchased_prods.include?('cod238')
-        # Cod238 este cumpărat, echivalent cu achiziția celor 4 luni
+        # Cod238 echivalează cu achiziția tuturor lunilor
         @nr_luni_achitate = 4
-        @has_acces_video = 0 # Fără acces video deoarece cod242 nu este cumpărat
-        @prods = products.where(cod: 'cod242') # Afișăm doar cod242 pentru acces video
+        @has_acces_video = 4
+        @prods = [] # Nu afișăm alte produse dacă cod238 este cumpărat
+        @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1')
+                                    .where('ordine >= ? AND ordine <= ?', 0, 1000)
+                                    .order(ordine: :asc)
+        @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1')
+                                              .where('ordine > ? AND ordine < ?', 1000, 2000)
+                                              .order(ordine: :asc)
       else
-        # Verificăm pentru codurile 234, 235, 236, 237
         @nr_luni_achitate = purchased_prods.count { |cod| ['cod234', 'cod235', 'cod236', 'cod237'].include?(cod) }
-  
-        # Dacă a fost cumpărat doar cod234, afișăm și cod235 și cod242 (pentru acces video)
         if @nr_luni_achitate == 1
           @prods = products.where(cod: ['cod235', 'cod242'])
         elsif @nr_luni_achitate == 2
@@ -47,35 +49,39 @@ class RasayanaController < ApplicationController
         elsif @nr_luni_achitate == 3
           @prods = products.where(cod: ['cod237', 'cod242'])
         elsif @nr_luni_achitate == 4
-          @prods = [] # Toate produsele au fost cumpărate
+          @prods = []
         else
-          @prods = products.where(cod: ['cod234', 'cod238', 'cod243']) # Dacă nu au fost cumpărate produse, afișăm 234, 238 și 243
+          @prods = products.where(cod: ['cod234', 'cod238', 'cod243'])
         end
       end
   
-      # Verificăm dacă a fost cumpărat cod242
       if purchased_prods.include?('cod242')
-        # Setăm @has_acces_video în funcție de numărul de luni achitate
         @has_acces_video = @nr_luni_achitate
-  
-        # După ce cod242 este cumpărat, nu mai afișăm cod242
         @prods = @prods.where.not(cod: 'cod242') if @prods.present?
       end
-    end
-    puts("@nr_luni_achitate=#{@nr_luni_achitate}")
 
+      # Setare @myvideo_rasayana_m1 și @myvideo_rasayana_m1_seminarii în funcție de codurile achiziționate
+      if purchased_prods.include?('cod242') && !purchased_prods.include?('cod238') && !purchased_prods.include?('cod243')
+        if purchased_prods.include?('cod234')
+          luni_incluse = ['octombrie']
+          luni_incluse << 'noiembrie' if purchased_prods.include?('cod235')
+          luni_incluse << 'decembrie' if purchased_prods.include?('cod236')
+          luni_incluse << 'ianuarie' if purchased_prods.include?('cod237')
 
-
-
-    @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1').where('ordine <= ?', 1000).order(ordine: :asc)
-    @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1')
-                                      .where('ordine > ? AND ordine < ?', 1000, 2000)
+          # Setăm variabilele pentru lunile incluse și intervalele de ordine
+          @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1', luna: luni_incluse)
+                                      .where('ordine >= ? AND ordine <= ?', 0, 1000)
                                       .order(ordine: :asc)
+          @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1', luna: luni_incluse)
+                                                .where('ordine > ? AND ordine < ?', 1000, 2000)
+                                                .order(ordine: :asc)
+        else
+          @myvideo_rasayana_m1 = nil
+          @myvideo_rasayana_m1_seminarii = nil
+        end
+      end
+    end
 
-
+    puts("@nr_luni_achitate=#{@nr_luni_achitate}")
   end
-  
-  
-  
-
 end
