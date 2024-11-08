@@ -225,7 +225,7 @@ if (max_taxa && max_taxa > 10) || allowed_emails.include?(current_user.email)
       else
         @ultima_lunaPlatita2425 = @luni2425[@max_taxa2425]
         
-        # Asigură-te că indexul este valid
+        ## Asigură-te că indexul este valid
         cod_index = @max_taxa2425 - 1
         if cod_index >= 0 && cod_index < coduri_array.size
           @prod2425 = [Prod.find_by(cod: coduri_array[cod_index])]
@@ -278,7 +278,7 @@ if luni_permise.empty?
   @prods_an2_2425 = Prod.none
 else
   # Găsește produsele care corespund lunilor permise
-  @prods_an2_2425 = Prod.where(curslegatura: "an2_2425").where(luna: luni_permise).order(:linkstripe)
+  @prods_an2_2425 = Prod.where(curslegatura: "an2_2425").where(luna: luni_permise).order(:created_at)
 end
 
 puts "Produse găsite: #{@prods_an2_2425.pluck(:cod)}"
