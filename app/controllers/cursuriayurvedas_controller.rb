@@ -355,7 +355,7 @@ end
   
     # Selectează doar produsele până la luna plătită
     if current_user.role==1
-      @prods = Prod.where(curslegatura: "an2").order(:linkstripe)
+      @prods = Prod.where(curslegatura: "an2").order(:created_at)
     else  
      # Prelucrarea inițială pentru a determina produsele valide
       produse_valide_ids = Prod.where(curslegatura: "an2")
@@ -364,7 +364,7 @@ end
       .map(&:id)
 
       # Utilizarea ID-urilor produselor valide pentru a face o interogare ordonată
-      @prods = Prod.where(id: produse_valide_ids).order(:linkstripe)
+      @prods = Prod.where(id: produse_valide_ids).order(:created_at)
 
   
     end  
@@ -404,7 +404,7 @@ end
 ################################################  an3 2024-2025
 puts "Starting to retrieve videos for an3_2425"
 
-@prods_an3_2425 = Prod.where(curslegatura: "an3_2425").order(:linkstripe)
+@prods_an3_2425 = Prod.where(curslegatura: "an3_2425").order(:created_at)
 puts "Prods retrieved for an3_2425: #{@prods_an3_2425.pluck(:cod)}"
 
 if current_user.role == 1
@@ -480,7 +480,7 @@ end
     
       # Selectează doar produsele până la luna plătită
       if current_user.role==1
-        @prods = Prod.where(curslegatura: "an3").order(:linkstripe)
+        @prods = Prod.where(curslegatura: "an3").order(:created_at)
       else  
        # Prelucrarea inițială pentru a determina produsele valide
         produse_valide_ids = Prod.where(curslegatura: "an3")
@@ -489,7 +489,7 @@ end
         .map(&:id)
   
         # Utilizarea ID-urilor produselor valide pentru a face o interogare ordonată
-        @prods = Prod.where(id: produse_valide_ids).order(:linkstripe)
+        @prods = Prod.where(id: produse_valide_ids).order(:created_at)
   
     
       end  
@@ -529,7 +529,7 @@ end
       ################################################  an4 2024-2025
 puts "Starting to retrieve videos for an4_2425"
 
-@prods_an4_2425 = Prod.where(curslegatura: "an4_2425").order(:linkstripe)
+@prods_an4_2425 = Prod.where(curslegatura: "an4_2425").order(:created_at)
 puts "Prods retrieved for an4_2425: #{@prods_an4_2425.pluck(:cod)}"
 
 if current_user.role == 1
@@ -745,7 +745,7 @@ def cursayurveda2425
     # Selectăm produsele care nu au fost plătite sau sunt plătite dar expirate
     @an1_2425 = Prod.where(curslegatura: 'an1_2425', luna: lunile_accesibile[0, max_taxa - 1])
                     .where.not(cod: coduri_produse_platite_active)
-                    .order(:linkstripe)
+                    .order(:created_at)
                     .to_a
   end
 
