@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     end
   end
   get 'tabere/export_to_xlsx', to: 'tabere#export_to_xlsx_plata_tayv24', as: 'export_tayv24_xlsx'
+  get 'tabere/export_to_xlsx_plata_tayt24', to: 'tabere#export_to_xlsx_plata_tayt24'
   get 'tabere/tayv24', to: 'tabere#tayv24', as: 'tayv24'
   get 'tabere/tayt24', to: 'tabere#tayt24', as: 'tayt24'
   get 'facturas/raport_accesare_facturi', to: 'facturas#raport_accesare_facturi', as: 'raport_accesare_facturi'
@@ -324,7 +325,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
 
 
   get '/paginisites/:id/statistici_utilizator', to: 'paginisites#statistici_utilizator', as: 'statistici_utilizator_paginisite'
-  get 'export_plata_an2_2425', to: 'paginisites#export_to_xlsx_plata_an2_2425' #an 2 2425 dupa data
+  get 'export_plata_an2_2425', to: 'paginisites#export_to_xlsx_plata_an2_2425' #an 2 2425 dupa comanda_id
   get 'export_to_xlsx_plata_generala_curs1', to: 'paginisites#export_to_xlsx_plata_generala_curs1'
   
   

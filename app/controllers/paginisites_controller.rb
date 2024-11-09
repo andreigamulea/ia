@@ -993,7 +993,7 @@ end
       #File.delete(file_path) if File.exist?(file_path)
     end
   rescue => e
-    # Handle any exception and possibly notify the user or log the error
+    ## Handle any exception and possibly notify the user or log the error
     logger.error "Error generating Excel: #{e.message}"
     redirect_to root_path, alert: "There was an error generating the report. Please try again later."
   end
@@ -1286,7 +1286,7 @@ def export_to_xlsx_plata_an2_2425
     # Selectăm comenzile pentru produsele din anul universitar 2024-2025
     @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
                                .where(prod_id: mapare_valori_an2.keys, validat: "Finalizata")
-                               .where(user_id: utilizatori_eligibili_ids + User.where(email: user_array_particulari).pluck(:id))
+                               .where(user_id: utilizatori_eligibili_ids + User.where(email: user_array_particulari).pluck(:id)).order(:comanda_id)
 
     # Eliminăm duplicatele (în caz că un utilizator e atât în array, cât și a cumpărat codurile eligibile)
     @comenzi_prod = @comenzi_prod.uniq

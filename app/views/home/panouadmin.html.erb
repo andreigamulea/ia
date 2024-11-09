@@ -168,10 +168,12 @@ h1.display-4{
 
   <div class="jumbotron">
     <h1 class="display-4">Rapoarte de date</h1>
+    <%= link_to "Xlsx plata An 2 (2024-2025) dupa comanda_id", export_plata_an2_2425_path(order_by: 'created_at'), class: "btn btn-secondary" %><br><br>
+    <%= link_to 'Exportă raport Tayt24', '/tabere/export_to_xlsx_plata_tayt24', class: 'btn btn-secondary' %></br></br>
     <%= link_to "Export fisier xlsx plata An 1 2024-2025 dupa data", export_plata_an1_2024_2025_path(order_by: 'created_at'), class: "btn btn-secondary" %></br></br>
 
     <%= link_to 'Exportă raport an1 2024-2025', export_to_xlsx_summary_2024_2025_path, class: 'btn btn-secondary' %></br></br>
-    <%= link_to "Xlsx plata An 2 (2024-2025) dupa data", export_plata_an2_2425_path(order_by: 'created_at'), class: "btn btn-secondary" %><br><br>
+    
     <%= link_to 'Exportă Excel pentru Plăți Generale', export_to_xlsx_plata_generala_curs1_path, class: 'btn btn-secondary' %><br><br>
 
     <%= link_to "Xlsx plata Rasayana Modul 1", export_plata_rasayana_modul1_path, class: "btn btn-secondary" %><br><br>
