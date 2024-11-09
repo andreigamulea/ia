@@ -169,20 +169,34 @@ end
   
         if @a_cumparat_macar_un_cod
           if (all_purchased.include?('cod264') || all_purchased.include?('cod265')) && all_purchased.include?('cod268')
+            puts "Condiția 1: Are cod264 sau cod265 și cod268"
             @prods = Prod.none
             @has_access = true
           elsif all_purchased.include?('cod266') || all_purchased.include?('cod267')
+            puts "Condiția 2: Are cod266 sau cod267"
             @has_access = true
             @prods = Prod.none
-          elsif all_purchased.include?('cod264') || all_purchased.include?('cod265')
-            @prods = Prod.where(cod: 'cod268')
-            puts("are doar cod264 sau cod265 platit")
+          elsif (all_purchased.include?('cod264') || all_purchased.include?('cod265')) && !all_purchased.include?('cod268')
+            puts "Condiția 3: Are doar cod264 sau cod265, fără cod268"
+            @prods = Prod.where(cod: 'cod268').order(:id)
+            @has_access = false  # Setați @has_access la false explicit aici
           else
+            puts "Condiția 4: Nu îndeplinește nicio condiție specială, afișează toate codurile"
             @prods = Prod.where(cod: ['cod264', 'cod265', 'cod266', 'cod267']).order(:id)
           end
         else
+          puts "Condiția 5: Nu a cumpărat nimic"
           @prods = Prod.where(cod: ['cod264', 'cod265', 'cod266', 'cod267']).order(:id)
         end
+        
+        puts "Produse afișate: #{@prods.pluck(:cod)}"
+        puts "Are acces? : #{@has_access}"
+        
+        
+        
+        
+        
+        
   
         @has_access ||= valid_prods.include?('cod266') || valid_prods.include?('cod267') || valid_prods.include?('cod268')
         @prods_cumparate = Prod.where(cod: all_purchased)
