@@ -585,7 +585,7 @@ end
 
   def an
     # Definim array-ul cu emailuri permise
-    emailuri_permise = ["v_ionela@yahoo.com"]
+    emailuri_permise = ["v_ionela@yahoo.com","amordeshakti@yahoo.es"]
   
     # Verificăm dacă utilizatorul curent este conectat și are rolul 1
     if current_user && (current_user.role == 1)
