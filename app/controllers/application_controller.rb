@@ -65,37 +65,15 @@ class ApplicationController < ActionController::Base
 
 SECRET_KEY = "secretkey1"  # Cheia setată direct în cod
 
-# Generăm un token cu o valabilitate mai mare (de exemplu, 30 de minute)
-def generate_persistent_token
-  payload = { exp: 30.minutes.from_now.to_i }
-  JWT.encode(payload, SECRET_KEY, 'HS256')
-end
-
 def priority_flag
+  # Setează header-urile CORS pentru accesul din alte surse
   response.set_header('Access-Control-Allow-Origin', '*')
   response.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
   response.set_header('Access-Control-Allow-Headers', 'Authorization, Content-Type')
 
-  token = params[:token]
-
-  unless token
-    # Generează un token cu valabilitate extinsă
-    persistent_token = generate_persistent_token
-    render plain: "Link de acces: https://ayushcell.ro/priority_flag?token=#{persistent_token}", status: :unauthorized
-    return
-  end
-
-  # Verifică token-ul utilizând SECRET_KEY
-  begin
-    JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
-    # Dacă token-ul este valid, returnează cheia "True"
-    encryption_key = "True            "
-    render plain: encryption_key
-  rescue JWT::ExpiredSignature
-    render plain: "Token expirat", status: :unauthorized
-  rescue JWT::DecodeError
-    render plain: "Token invalid", status: :unauthorized
-  end
+  # Returnează direct cheia de criptare fără verificarea token-ului
+  encryption_key = "True            "
+  render plain: encryption_key
 end
 
 
