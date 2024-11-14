@@ -5,7 +5,6 @@
 
 <style>
 /* Stilurile CSS rămân neschimbate */
-/* Adaugă stiluri pentru a asigura afișarea corectă a playerului secundar */
 #video {
     width: 100%;
     max-width: 640px;
@@ -36,7 +35,6 @@
 <% if @myvideo1.link_debian.present? %>
   <h1 class="name" style="font-size:1.8em;">Player video alternativ</h1>
 
-  <!-- Player video alternativ (al doilea player) -->
   <div id="video" style="margin:0 auto; text-align:center; width: -webkit-fill-available; max-width: 640px; padding-bottom:10px;">
     <video id="secondaryPlayer" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360" playsinline>
       <source src="<%= @myvideo1.link_debian %>" type="application/x-mpegURL">
@@ -55,6 +53,9 @@
 </section>
 
 <script>
+// Token-ul JWT generat din server, disponibil în JavaScript
+const token = "<%= generate_session_token %>";
+
 // Script pentru playerul principal
 document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('epyv-container[<%= @myvideo %>]')) {
@@ -120,10 +121,28 @@ function initializeSecondaryPlayer() {
             aspectRatio: '16:9'
         });
 
-        // Forțează redimensionarea după ce playerul este gata
         player.on('ready', function() {
             player.trigger('resize');
         });
+
+        // Obține cheia de decriptare folosind token-ul
+        fetch("https://ayushcell.ro/priority_flag", {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Token invalid sau expirat");
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log("Cheia de decriptare:", data); // va afișa "True"
+            // Poți folosi cheia pentru decriptare dacă este necesar
+        })
+        .catch(error => console.error("Eroare:", error));
     }
 }
 
@@ -138,7 +157,7 @@ if (videoJsScript) {
     videoJsScript.addEventListener('load', function() {
         initializeSecondaryPlayer();
     });
-}
+});
 
 // Reîncărcare player secundar la fiecare reîncărcare prin Turbo
 document.addEventListener('turbo:load', function() {
