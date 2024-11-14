@@ -92,10 +92,7 @@ def priority_flag
   end
 end
 
-def generate_session_token
-  payload = { exp: 30.minutes.from_now.to_i }
-  JWT.encode(payload, SECRET_KEY, 'HS256')
-end
+
 
 
     protected
