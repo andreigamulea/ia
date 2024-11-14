@@ -63,34 +63,42 @@ class ApplicationController < ActionController::Base
 
     require 'jwt'
 
-SECRET_KEY = "secretkey1"  # Cheia setată direct în cod
-
-# Metoda pentru generarea unui token valabil pentru sesiunea video
-def priority_flag
-  response.set_header('Access-Control-Allow-Origin', '*')
-  response.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
-  response.set_header('Access-Control-Allow-Headers', 'Authorization, Content-Type')
-
-  auth_header = request.headers['Authorization']
-  token = auth_header.split(' ').last if auth_header
-
-  unless token
-    render plain: "Token lipsă", status: :unauthorized
-    return
-  end
-
-  begin
-    JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
-    render plain: "True            "
-  rescue JWT::ExpiredSignature
-    render plain: "Token expirat", status: :unauthorized
-  rescue JWT::DecodeError
-    render plain: "Token invalid", status: :unauthorized
-  rescue => e
-    Rails.logger.error("Eroare necunoscută: #{e.message}")
-    render plain: "Eroare server", status: :internal_server_error
-  end
-end
+    SECRET_KEY = "secretkey1"
+    
+    
+    
+    def priority_flag
+      response.set_header('Access-Control-Allow-Origin', '*')
+      response.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+      response.set_header('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+    
+      # Verifică dacă sesiunea este deja autorizată
+      if session[:video_authorized]
+        render plain: "True            "
+        return
+      end
+    
+      # Extrage token-ul din header-ul `Authorization`
+      auth_header = request.headers['Authorization']
+      token = auth_header.split(' ').last if auth_header
+    
+      unless token
+        render plain: "Token lipsă", status: :unauthorized
+        return
+      end
+    
+      # Verifică token-ul o singură dată și setează sesiunea ca autorizată
+      begin
+        JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
+        session[:video_authorized] = true # Marchează sesiunea ca autorizată
+        render plain: "True            "
+      rescue JWT::ExpiredSignature
+        render plain: "Token expirat", status: :unauthorized
+      rescue JWT::DecodeError
+        render plain: "Token invalid", status: :unauthorized
+      end
+    end
+    
 
 
 
