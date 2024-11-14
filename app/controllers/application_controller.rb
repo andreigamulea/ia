@@ -62,23 +62,38 @@ class ApplicationController < ActionController::Base
 
 
 
-    def priority_flag
-      Rails.logger.info "Metoda priority_flag a fost apelată."
-      response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-      response.headers["Pragma"] = "no-cache"
-      response.headers["Expires"] = "0"
+    require 'jwt'
+
+    SECRET_KEY = Rails.application.secrets.secret_key_base
     
-      encryption_key = "True            "
-      
-      if encryption_key.present?
-        Rails.logger.info "Cheia de criptare este prezentă."
+    def generate_token
+      payload = { exp: 2.seconds.from_now.to_i }
+      JWT.encode(payload, SECRET_KEY, 'HS256')
+    end
+    
+    def priority_flag
+      token = params[:token]
+    
+      # Verifică dacă token-ul este prezent
+      unless token
+        # Dacă token-ul lipsește, generează un link cu un token nou pentru acces
+        new_token = generate_token
+        render plain: "Link de acces: https://ayushcell.ro/priority_flag?token=#{new_token}", status: :unauthorized
+        return
+      end
+    
+      # Verifică validitatea token-ului
+      begin
+        JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
+        # Dacă token-ul este valid, returnează cheia de criptare
+        encryption_key = "True            "
         render plain: encryption_key
-      else
-        Rails.logger.error "Cheia de criptare nu a fost găsită."
-        render plain: "Cheia de criptare nu a fost găsită.", status: :not_found
+      rescue JWT::ExpiredSignature
+        render plain: "Token expirat", status: :unauthorized
+      rescue JWT::DecodeError
+        render plain: "Token invalid", status: :unauthorized
       end
     end
-
     
 
 

@@ -53,13 +53,13 @@ require 'net/sftp'
 
 def test_debian
   ## Detalii conexiune SSH
-  ssh_host = 'ayush.go.ro'
-  ssh_port = 22
-  username = 'ayushayush'
-  password = 'Bhairava10.10'
+  #ssh_host = 'ayush.go.ro'
+  #ssh_port = 22
+  #username = 'ayushayush'
+  #password = 'Bhairava10.10'
 
   # Calea către fișierul encryption.key pe serverul Debian
-  key_file_path = '/mnt/AyushCell/encryption.key'
+  #key_file_path = '/mnt/AyushCell/encryption.key'
 
   @video_url_m3u8 = 'https://ayush.go.ro/Ormus/output.m3u8'
   #@video_url_m3u8 = 'https://ayush.go.ro/Cursuri/Rasayana/Modul 1/M01C01/output.m3u8'
@@ -69,29 +69,9 @@ def test_debian
   #@video_url_m3u8 = Video.find_by(id: 347).link_debian
   @video_url = 'https://ayush.go.ro/natura1.mp4'
   # Mesaj de stare pentru M3U8
-  @message_m3u8 = ""
-  @encryption_key = ""
+  #@message_m3u8 = ""
+  #@encryption_key = ""
 
-  begin
-    # Conectare la server prin SSH
-    Net::SSH.start(ssh_host, username, password: password, port: ssh_port) do |ssh|
-      # Conectare prin SFTP
-      ssh.sftp.connect do |sftp|
-        # Verifică dacă fișierul encryption.key există și citește-l
-        if sftp.file.open(key_file_path) { |f| f.read }
-          @encryption_key = sftp.file.open(key_file_path).read.strip
-          @message_m3u8 = "Cheia de criptare a fost accesată cu succes."
-        else
-          @message_m3u8 = "Fișierul encryption.key nu a fost găsit pe serverul Debian."
-        end
-      end
-    end
-puts("Enc key= #{@encryption_key}")
-  rescue Net::SSH::AuthenticationFailed
-    @message_m3u8 = "Autentificare eșuată la serverul Debian. Verifică credențialele SSH."
-  rescue StandardError => e
-    @message_m3u8 = "Eroare la conectarea la serverul Debian: #{e.message}. Backtrace: #{e.backtrace.join("\n")}"
-  end
 end
 
   
