@@ -72,26 +72,22 @@ class ApplicationController < ActionController::Base
       response.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
       response.set_header('Access-Control-Allow-Headers', 'Authorization, Content-Type')
     
-      # Verifică dacă sesiunea este deja autorizată
-      if session[:video_authorized]
-        render plain: "True            "
-        return
-      end
-    
       # Extrage token-ul din header-ul `Authorization`
       auth_header = request.headers['Authorization']
       token = auth_header.split(' ').last if auth_header
     
+      # Verifică dacă token-ul este prezent și valid
       unless token
         render plain: "Token lipsă", status: :unauthorized
         return
       end
     
-      # Verifică token-ul o singură dată și setează sesiunea ca autorizată
       begin
+        # Decodează și validează token-ul
         JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
-        session[:video_authorized] = true # Marchează sesiunea ca autorizată
-        render plain: "True            "
+        # Dacă token-ul este valid, returnează cheia de criptare
+        encryption_key = "True            "
+        render plain: encryption_key
       rescue JWT::ExpiredSignature
         render plain: "Token expirat", status: :unauthorized
       rescue JWT::DecodeError
