@@ -65,15 +65,38 @@ class ApplicationController < ActionController::Base
 
 SECRET_KEY = "secretkey1"  # Cheia setată direct în cod
 
+# Metoda pentru generarea unui token valabil pe toată durata sesiunii video
+def generate_session_token
+  payload = { exp: 30.minutes.from_now.to_i }
+  JWT.encode(payload, SECRET_KEY, 'HS256')
+end
+
 def priority_flag
-  # Setează header-urile CORS pentru accesul din alte surse
   response.set_header('Access-Control-Allow-Origin', '*')
   response.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
   response.set_header('Access-Control-Allow-Headers', 'Authorization, Content-Type')
 
-  # Returnează direct cheia de criptare fără verificarea token-ului
-  encryption_key = "True            "
-  render plain: encryption_key
+  # Extrage token-ul din header-ul `Authorization`
+  auth_header = request.headers['Authorization']
+  token = auth_header.split(' ').last if auth_header
+
+  # Verifică dacă token-ul este prezent și valid
+  unless token
+    render plain: "Token lipsă", status: :unauthorized
+    return
+  end
+
+  begin
+    # Decodează și validează token-ul
+    JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
+    # Dacă token-ul este valid, returnează cheia de criptare
+    encryption_key = "True            "
+    render plain: encryption_key
+  rescue JWT::ExpiredSignature
+    render plain: "Token expirat", status: :unauthorized
+  rescue JWT::DecodeError
+    render plain: "Token invalid", status: :unauthorized
+  end
 end
 
 
