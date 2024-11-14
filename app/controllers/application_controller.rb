@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
     SECRET_KEY = Rails.application.secrets.secret_key_base
     
     def generate_token
-      payload = { exp: 2.seconds.from_now.to_i }
+      payload = { exp: 2.minutes.from_now.to_i }
       JWT.encode(payload, SECRET_KEY, 'HS256')
     end
     
