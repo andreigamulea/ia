@@ -35,6 +35,7 @@
 <% if @myvideo1.link_debian.present? %>
   <h1 class="name" style="font-size:1.8em;">Player video alternativ</h1>
 
+  <!-- Player video alternativ (al doilea player) -->
   <div id="video" style="margin:0 auto; text-align:center; width: -webkit-fill-available; max-width: 640px; padding-bottom:10px;">
     <video id="secondaryPlayer" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" crossorigin="anonymous" width="640" height="360" playsinline>
       <source src="<%= @myvideo1.link_debian %>" type="application/x-mpegURL">
@@ -133,6 +134,7 @@ function initializeSecondaryPlayer() {
             }
         })
         .then(response => {
+            console.log("Răspuns la cerere:", response);
             if (!response.ok) {
                 throw new Error("Token invalid sau expirat");
             }
@@ -140,9 +142,8 @@ function initializeSecondaryPlayer() {
         })
         .then(data => {
             console.log("Cheia de decriptare:", data); // va afișa "True"
-            // Poți folosi cheia pentru decriptare dacă este necesar
         })
-        .catch(error => console.error("Eroare:", error));
+        .catch(error => console.error("Eroare în fetch:", error));
     }
 }
 
@@ -157,7 +158,7 @@ if (videoJsScript) {
     videoJsScript.addEventListener('load', function() {
         initializeSecondaryPlayer();
     });
-});
+}
 
 // Reîncărcare player secundar la fiecare reîncărcare prin Turbo
 document.addEventListener('turbo:load', function() {
