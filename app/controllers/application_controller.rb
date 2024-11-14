@@ -61,10 +61,9 @@ class ApplicationController < ActionController::Base
     end
 
 
-
     require 'jwt'
 
-    SECRET_KEY = Rails.application.secrets.secret_key_base
+    SECRET_KEY = "secretkey1"  # Cheia setată direct în cod
     
     def generate_token
       payload = { exp: 2.minutes.from_now.to_i }
@@ -74,15 +73,14 @@ class ApplicationController < ActionController::Base
     def priority_flag
       token = params[:token]
     
-      # Verifică dacă token-ul este prezent
       unless token
-        # Dacă token-ul lipsește, generează un link cu un token nou pentru acces
+        # Generează un token nou dacă lipsește
         new_token = generate_token
         render plain: "Link de acces: https://ayushcell.ro/priority_flag?token=#{new_token}", status: :unauthorized
         return
       end
     
-      # Verifică validitatea token-ului
+      # Verifică token-ul folosind SECRET_KEY
       begin
         JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
         # Dacă token-ul este valid, returnează cheia de criptare
@@ -94,6 +92,7 @@ class ApplicationController < ActionController::Base
         render plain: "Token invalid", status: :unauthorized
       end
     end
+    
     
 
 
