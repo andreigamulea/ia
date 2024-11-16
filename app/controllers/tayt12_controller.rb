@@ -11,7 +11,11 @@ class Tayt12Controller < ApplicationController
     end
     
     # Logica acțiunii pentru utilizatorii autentificați.
-    @prod_tayt12 = Prod.where(cod: "cod63")
+    if current_user && current_user.email== 'elena.riba7@yahoo.com'
+      @prod_tayt12 = Prod.where(cod: "cod48")
+    else
+      @prod_tayt12 = Prod.where(cod: "cod63")
+    end  
   end
   
 end

@@ -1,5 +1,5 @@
 <section class="tabel-container rotate-landscape">
-    <h1 class="alimente-nutritionale" id="CalculatorValoriNutritionale">Transport international</h1>
+    <h1 class="alimente-nutritionale" id="CalculatorValoriNutritionale"></h1>
    
 <div class="table-responsive">
 <table class="table table-striped table-bordered table-hover">
@@ -13,9 +13,9 @@
         </tr>      
     </thead>
         <tbody>
-        <% @prod_tayt12.select{ |prod| prod.curslegatura == 'tayt12' && prod.pret > 0 }.each do |prod| %>
+        <% @prod_tayt12.select{ |prod| (prod.curslegatura == 'tayt12' || prod.curslegatura == 'tayt24') && prod.pret > 0 }.each do |prod| %>
             
-            <% if prod.cod == "cod63"%>
+            <% if prod.cod == "cod63" || prod.cod == "cod48"%>
            
 
                 <tr>
