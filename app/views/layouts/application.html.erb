@@ -15,18 +15,31 @@
       gtag('config', 'G-BL087D432V');
     </script>
     <title><%= content_for?(:title) ? yield(:title) : "Centrul de informare Ayush Cell Romania" %></title>
-    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "cursuri online, aplicații, vizionari, cărți, publicații, seminarii, resurse pentru informare în Ayurveda, Nutriție, Plante medicinale și domeniile conexe" %>">
-    <meta name="keywords" content="<%= content_for?(:keywords) ? yield(:keywords) : "cursuri online, aplicații, vizionari, cărți, publicații, seminarii, resurse pentru informare în Ayurveda, Nutriție, Plante medicinale și domeniile conexe, dieta" %>">
-    <%= yield(:canonical) if content_for?(:canonical) %>
-    <%= yield :meta_tags if content_for?(:meta_tags) %>
+
+<% if content_for?(:description) %>
+  <meta name="description" content="<%= yield(:description) %>">
+<% else %>
+  <meta name="description" content="cursuri online, aplicații, vizionari, cărți, publicații, seminarii, resurse pentru informare în Ayurveda, Nutriție, Plante medicinale și domeniile conexe">
+<% end %>
+
+<% if content_for?(:keywords) %>
+  <meta name="keywords" content="<%= yield(:keywords) %>">
+<% else %>
+  <meta name="keywords" content="cursuri online, aplicații, vizionari, cărți, publicații, seminarii, resurse pentru informare în Ayurveda, Nutriție, Plante medicinale și domeniile conexe, dieta">
+<% end %>
+
+<%= yield(:meta_tags) if content_for?(:meta_tags) %>
+<%= yield(:canonical) if content_for?(:canonical) %>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+<%= csrf_meta_tags %>
+<%= csp_meta_tag %>
 
 
-    
-      
-     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+
+
+
         
     
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
