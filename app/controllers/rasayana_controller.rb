@@ -24,7 +24,7 @@ class RasayanaController < ApplicationController
       @has_acces_video = 4
       @nr_luni_achitate = 4
     else
-      products = Prod.where(curslegatura: 'rasayana1', cod: ['cod234', 'cod235', 'cod236', 'cod237', 'cod238', 'cod242', 'cod243'])
+      products = Prod.where(curslegatura: 'rasayana1', cod: ['cod234', 'cod235', 'cod236', 'cod237', 'cod238', 'cod242', 'cod243', 'cod241'])
   
       if current_user.nil?
         @prods = products.where(cod: ['cod234', 'cod238', 'cod243'])
@@ -45,16 +45,18 @@ class RasayanaController < ApplicationController
                                                 .where('ordine > ? AND ordine < ?', 1000, 2000)
                                                 .order(ordine: :asc).to_a
         elsif purchased_prods.include?('cod238')
+          puts("sunt aici1")
           @nr_luni_achitate = 4
           @has_acces_video = 4
-          @prods = []
-          @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1')
+          @prods = Prod.where(curslegatura: 'rasayana1', cod: ['cod242'])
+                    @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1')
                                       .where('ordine >= ? AND ordine <= ?', 0, 1000)
                                       .order(ordine: :asc).to_a
           @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1')
                                                 .where('ordine > ? AND ordine < ?', 1000, 2000)
                                                 .order(ordine: :asc).to_a
         else
+          
           @nr_luni_achitate = purchased_prods.count { |cod| ['cod234', 'cod235', 'cod236', 'cod237'].include?(cod) }
           if @nr_luni_achitate == 1
             @prods = products.where(cod: ['cod235', 'cod242'])
@@ -92,7 +94,7 @@ class RasayanaController < ApplicationController
         end
       end
     end
-
+    puts("Prods este: #{@prods}")
     puts("@nr_luni_achitate=#{@nr_luni_achitate}")
   end
 end
