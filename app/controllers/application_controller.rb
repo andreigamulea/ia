@@ -71,34 +71,20 @@ class ApplicationController < ActionController::Base
     end
     
     def priority_flag
-      response.set_header('Access-Control-Allow-Origin', '*')
-      response.set_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
-      response.set_header('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+      Rails.logger.info "Metoda priority_flag a fost apelată."
+      response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+      response.headers["Pragma"] = "no-cache"
+      response.headers["Expires"] = "0"
     
-      # Verifică dacă sesiunea este deja autorizată
-      if session[:video_authorized]
-        render plain: "True            "
-        return
-      end
+      encryption_key = "True            "
     
-      # Extrage token-ul din header-ul `Authorization`
-      auth_header = request.headers['Authorization']
-      token = auth_header.split(' ').last if auth_header
-    
-      unless token
-        render plain: "Token lipsă", status: :unauthorized
-        return
-      end
-    
-      # Verifică token-ul o singură dată și setează sesiunea ca autorizată
-      begin
-        JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
-        session[:video_authorized] = true # Marchează sesiunea ca autorizată
-        render plain: "True            "
-      rescue JWT::ExpiredSignature
-        render plain: "Token expirat", status: :unauthorized
-      rescue JWT::DecodeError
-        render plain: "Token invalid", status: :unauthorized
+      if encryption_key.present?
+        Rails.logger.info "Cheia de criptare este prezentă."
+        return encryption_key # Returnează cheia în loc să o redai direct
+      else
+        Rails.logger.error "Cheia de criptare nu a fost găsită."
+        render plain: "Cheia de criptare nu a fost găsită.", status: :not_found
+        nil
       end
     end
     

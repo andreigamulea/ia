@@ -5,6 +5,7 @@
 
 <style>
 /* Stilurile CSS rămân neschimbate */
+/* Adaugă stiluri pentru a asigura afișarea corectă a playerului secundar */
 #video {
     width: 100%;
     max-width: 640px;
@@ -54,9 +55,6 @@
 </section>
 
 <script>
-// Token-ul JWT generat din server, disponibil în JavaScript
-const token = "<%= generate_session_token %>";
-
 // Script pentru playerul principal
 document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('epyv-container[<%= @myvideo %>]')) {
@@ -122,28 +120,10 @@ function initializeSecondaryPlayer() {
             aspectRatio: '16:9'
         });
 
+        // Forțează redimensionarea după ce playerul este gata
         player.on('ready', function() {
             player.trigger('resize');
         });
-
-        // Obține cheia de decriptare folosind token-ul pentru autorizare
-        fetch("https://ayushcell.ro/priority_flag", {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            console.log("Răspuns la cerere:", response);
-            if (!response.ok) {
-                throw new Error("Token invalid sau expirat");
-            }
-            return response.text();
-        })
-        .then(data => {
-            console.log("Cheia de decriptare:", data); // va afișa "True"
-        })
-        .catch(error => console.error("Eroare în fetch:", error));
     }
 }
 
