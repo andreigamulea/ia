@@ -67,23 +67,35 @@ class ApplicationController < ActionController::Base
     
     def generate_session_token
       payload = { exp: 1.hour.from_now.to_i } # Token valabil pentru 1 oră
-      JWT.encode(payload, SECRET_KEY, 'HS256')
+      token = JWT.encode(payload, SECRET_KEY, 'HS256')
+      render plain: token, status: :ok # Trimite token-ul ca răspuns
     end
-    
+  
+    # Metoda priority_flag cu autentificare JWT
     def priority_flag
       Rails.logger.info "Metoda priority_flag a fost apelată."
       response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
       response.headers["Pragma"] = "no-cache"
       response.headers["Expires"] = "0"
-    
-      encryption_key = "True            "
-    
-      if encryption_key.present?
-        Rails.logger.info "Cheia de criptare este prezentă."
-        render plain: encryption_key, status: :ok # Trimite cheia în răspuns cu status 200
+  
+      # Verifică token-ul JWT din header-ul Authorization
+      auth_header = request.headers['Authorization']
+      if auth_header.present?
+        token = auth_header.split(' ').last # Extrage token-ul din header
+        begin
+          decoded_token = JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
+          Rails.logger.info "JWT valid: #{decoded_token}"
+  
+          # Dacă token-ul este valid, returnează cheia de criptare
+          encryption_key = "True            "
+          render plain: encryption_key, status: :ok
+        rescue JWT::ExpiredSignature
+          render plain: "Token-ul a expirat.", status: :unauthorized
+        rescue JWT::DecodeError
+          render plain: "Token invalid.", status: :unauthorized
+        end
       else
-        Rails.logger.error "Cheia de criptare nu a fost găsită."
-        render plain: "Cheia de criptare nu a fost găsită.", status: :not_found
+        render plain: "Autorizare lipsă.", status: :unauthorized
       end
     end
     
