@@ -80,11 +80,10 @@ class ApplicationController < ActionController::Base
     
       if encryption_key.present?
         Rails.logger.info "Cheia de criptare este prezentă."
-        return encryption_key # Returnează cheia în loc să o redai direct
+        render plain: encryption_key, status: :ok # Trimite cheia în răspuns cu status 200
       else
         Rails.logger.error "Cheia de criptare nu a fost găsită."
         render plain: "Cheia de criptare nu a fost găsită.", status: :not_found
-        nil
       end
     end
     
