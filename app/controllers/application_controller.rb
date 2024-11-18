@@ -67,18 +67,18 @@ class ApplicationController < ActionController::Base
     
     def generate_session_token
       payload = { exp: 1.hour.from_now.to_i } # Token valabil pentru 1 oră
-      token = JWT.encode(payload, SECRET_KEY, 'HS256')
-      render plain: token, status: :ok # Trimite token-ul ca răspuns
+      token = JWT.encode(payload, SECRET_KEY, 'HS256') # Generează token-ul
+      render plain: token, status: :ok # Returnează token-ul ca răspuns text simplu
     end
   
-    # Metoda priority_flag cu autentificare JWT
+    # Metoda priority_flag cu validare JWT
     def priority_flag
       Rails.logger.info "Metoda priority_flag a fost apelată."
       response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
       response.headers["Pragma"] = "no-cache"
       response.headers["Expires"] = "0"
   
-      # Verifică token-ul JWT din header-ul Authorization
+      # Verifică prezența și validitatea token-ului JWT
       auth_header = request.headers['Authorization']
       if auth_header.present?
         token = auth_header.split(' ').last # Extrage token-ul din header
@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
           decoded_token = JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
           Rails.logger.info "JWT valid: #{decoded_token}"
   
-          # Dacă token-ul este valid, returnează cheia de criptare
+          # Dacă token-ul este valid, trimite cheia de criptare
           encryption_key = "True            "
           render plain: encryption_key, status: :ok
         rescue JWT::ExpiredSignature
