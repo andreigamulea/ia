@@ -63,36 +63,32 @@ class ApplicationController < ActionController::Base
 
     require 'jwt'
 
-    SECRET_KEY = "secretkey1"
-    
-    def generate_session_token
-      payload = { exp: 1.hour.from_now.to_i } # Token valabil pentru 1 oră
-      token = JWT.encode(payload, SECRET_KEY, 'HS256') # Generează token-ul
-      render plain: token, status: :ok # Returnează token-ul ca răspuns text simplu
-    end
+SECRET_KEY = "secretkey1"
 
-    
-  
-    # Metoda priority_flag cu validare JWT
-    def priority_flag
-      Rails.logger.info "Metoda priority_flag a fost apelată."
-      auth_header = request.headers['Authorization']
-      token = auth_header.split(' ').last if auth_header.present?
-      Rails.logger.info "Token primit: #{token}"
-    
-      begin
-        decoded_token = JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
-        Rails.logger.info "JWT decodat: #{decoded_token}"
-        encryption_key = "True            "
-        render plain: encryption_key, status: :ok
-      rescue JWT::ExpiredSignature
-        Rails.logger.error "Token expirat."
-        render plain: "Token-ul a expirat.", status: :unauthorized
-      rescue JWT::DecodeError => e
-        Rails.logger.error "Eroare la decodificare: #{e.message}"
-        render plain: "Token invalid.", status: :unauthorized
-      end
-    end
+def generate_session_token
+  # Generează un token valabil pentru 1 oră
+  payload = { exp: 1.hour.from_now.to_i, iss: 'ayushcell' } # `iss` definește emitentul token-ului
+  token = JWT.encode(payload, SECRET_KEY, 'HS256')
+  render plain: token, status: :ok # Returnează token-ul ca text simplu
+end
+
+def priority_flag
+  Rails.logger.info "Metoda priority_flag a fost apelată."
+  response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+  response.headers["Pragma"] = "no-cache"
+  response.headers["Expires"] = "0"
+
+  encryption_key = "True            "
+
+  if encryption_key.present?
+    Rails.logger.info "Cheia de criptare este prezentă."
+    render plain: encryption_key, status: :ok # Trimite cheia în răspuns cu status 200
+  else
+    Rails.logger.error "Cheia de criptare nu a fost găsită."
+    render plain: "Cheia de criptare nu a fost găsită.", status: :not_found
+  end
+end
+
     
     
 
