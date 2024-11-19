@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     before_action :check_sign_in_token
     before_action :set_stripe_key
     before_action :set_security_headers
-
+    #skip_before_action :authenticate_user!, only: [:generate_session_token]
     def set_security_headers
       response.headers['X-Frame-Options'] = 'DENY'
       response.headers['X-XSS-Protection'] = '1; mode=block'
@@ -70,34 +70,30 @@ class ApplicationController < ActionController::Base
       token = JWT.encode(payload, SECRET_KEY, 'HS256') # Generează token-ul
       render plain: token, status: :ok # Returnează token-ul ca răspuns text simplu
     end
+
+    
   
     # Metoda priority_flag cu validare JWT
     def priority_flag
       Rails.logger.info "Metoda priority_flag a fost apelată."
-      response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-      response.headers["Pragma"] = "no-cache"
-      response.headers["Expires"] = "0"
-  
-      # Verifică prezența și validitatea token-ului JWT
       auth_header = request.headers['Authorization']
-      if auth_header.present?
-        token = auth_header.split(' ').last # Extrage token-ul din header
-        begin
-          decoded_token = JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
-          Rails.logger.info "JWT valid: #{decoded_token}"
-  
-          # Dacă token-ul este valid, trimite cheia de criptare
-          encryption_key = "True            "
-          render plain: encryption_key, status: :ok
-        rescue JWT::ExpiredSignature
-          render plain: "Token-ul a expirat.", status: :unauthorized
-        rescue JWT::DecodeError
-          render plain: "Token invalid.", status: :unauthorized
-        end
-      else
-        render plain: "Autorizare lipsă.", status: :unauthorized
+      token = auth_header.split(' ').last if auth_header.present?
+      Rails.logger.info "Token primit: #{token}"
+    
+      begin
+        decoded_token = JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })
+        Rails.logger.info "JWT decodat: #{decoded_token}"
+        encryption_key = "True            "
+        render plain: encryption_key, status: :ok
+      rescue JWT::ExpiredSignature
+        Rails.logger.error "Token expirat."
+        render plain: "Token-ul a expirat.", status: :unauthorized
+      rescue JWT::DecodeError => e
+        Rails.logger.error "Eroare la decodificare: #{e.message}"
+        render plain: "Token invalid.", status: :unauthorized
       end
     end
+    
     
 
 
