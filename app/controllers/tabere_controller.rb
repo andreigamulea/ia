@@ -206,28 +206,20 @@ end
       puts("Are acces? : #{@has_access}")
       puts("Produse cumpărate: #{@prods_cumparate.pluck(:cod) if @prods_cumparate}")
   
-      @myvideo13 = if @a_cumparat_macar_un_cod
-                     if current_user.limba == 'EN'
-                       Video.where(tip: 'tayt24').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
-                     else
-                       Video.none
-                     end
-                   else
-                     Video.none
-                   end
+     
   
       if @has_access
         puts("sunt in has acces")
         if current_user.limba == 'EN'
-          @myvideo = Video.where(tip: 'tayt24').where('(ordine >= ? AND ordine <= ?)', 1000, 2000).order(ordine: :asc)
+          @myvideo23 = Video.where(tip: 'tayt24').where('(ordine >= ? AND ordine <= ?)', 1000, 2000).order(ordine: :asc)
         else
-          @myvideo = Video.where(tip: 'tayt24').where('ordine <= ?', 1000).order(ordine: :asc)
+          @myvideo23 = Video.where(tip: 'tayt24').where('ordine <= ?', 1000).order(ordine: :asc)
         end
-        puts("Numarul: #{@myvideo.count}")
+        puts("Numarul: #{@myvideo23.count}")
       else
         puts("sunt in has acces NU")
-        @myvideo13 = Video.none
-        @myvideo = Video.none
+        @myvideo23 = Video.none
+        #@myvideo = Video.none
       end
     else
       # Utilizator neautentificat
@@ -236,7 +228,7 @@ end
       @has_access = false
       @prods_cumparate = Prod.none
       @videos_correspondente = Video.none
-      @myvideo13 = Video.none
+      @myvideo23 = Video.none
       @a_cumparat_macar_un_cod = false
     end
   

@@ -32,6 +32,7 @@ class VideosController < ApplicationController
   before_action :set_user20, only: %i[myvideo20] #este pt an1 2024-2025
   before_action :set_user21, only: %i[myvideo21] #este pt revizionari an 3 24-25
   before_action :set_user22, only: %i[myvideo22] #este pt revizionari an 4 24-25
+  before_action :set_user23, only: %i[myvideo23] #este pt tayt24
   before_action :require_admin, only: %i[index new edit update create]  
   # GET /videos or /videos.json
   def index
@@ -321,6 +322,11 @@ end
     render 'myvideo1'
   end
   def myvideo22 #pt an1 24-25
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo23 #pt tayt24
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
@@ -1601,6 +1607,63 @@ def set_user22 #canal3
   end
 
   # Returnează true dacă toate verificările au trecut și utilizatorul are acces
+  true
+end
+
+
+def set_user23
+  puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+
+  if current_user.role == 1
+    return true
+  elsif current_user.role == 0
+    data_prag = Date.new(2024, 11, 19)
+
+    # Obține codurile produselor cumpărate și datele de început și sfârșit
+    purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                 .joins(:prod)
+                                 .where(prods: { curslegatura: 'tayt24' })
+                                 .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+    purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                   .joins(:prod)
+                                   .where(prods: { curslegatura: 'tayt24' })
+                                   .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+    # Dacă nu există produse cumpărate, inițializează array-ul cu produse cumpărate ca gol
+    purchased_prods ||= []
+    purchased_prods1 ||= []
+
+    # Combină listele de produse
+    all_purchased_prods = purchased_prods + purchased_prods1
+
+    puts("Produse cumpărate cu date: #{all_purchased_prods}")
+
+    # Filtrare produse valabile
+    valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput + 90.days >= Date.today }.map(&:first)
+
+    puts("Produse valabile: #{valid_prods}")
+
+    has_access = valid_prods.include?('cod266') || valid_prods.include?('cod267') || valid_prods.include?('cod268')
+
+    puts("has_access este: #{has_access}")
+
+    unless has_access
+      flash[:alert] = "Nu aveți acces la acest curs."
+      redirect_to root_path # Schimbați cu calea dorită
+      return false
+    end
+  else
+    flash[:alert] = "Nu aveți permisiuni suficiente pentru a accesa acest curs."
+    redirect_to root_path # Schimbați cu calea dorită
+    return false
+  end
+
   true
 end
 

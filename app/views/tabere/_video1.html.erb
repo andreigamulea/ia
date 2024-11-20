@@ -23,6 +23,9 @@
       <%= link_to "Vezi video", myvideo44_path(id: video.id, link: video.link), class: "btn btn-primary" %>
     <%elsif video.tip== 'tayv24' && (video.ordine>3000 && video.ordine<4000)%>  
       <%= link_to "Vezi video", myvideo444_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+    <%elsif video.tip== 'tayt24' && (video.ordine>0 && video.ordine<1000)%>  
+      <%= link_to "Vezi video", myvideo23_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+
     <%else%>
       <%= link_to "Vezi video", myvideo14_path(id: video.id, link: video.link), class: "btn btn-primary" %>
     <%end%>
