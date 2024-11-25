@@ -668,7 +668,9 @@ def cursayurveda2425
       @prodgrupa1_taxalunara = nil
     else
       numar_valori = valori_taxa2425.count { |val| val > 1 && val < 12 }
+      
       cod_produs = "cod#{196 + numar_valori + 1}"
+      puts("numar_valori este: #{numar_valori}")
       @prodgrupa1_taxalunara = Prod.find_by(cod: cod_produs)
       if current_user.email == "nagy.edvin@yahoo.com"
         @prodgrupa1_taxalunara.pret = 35
@@ -678,13 +680,13 @@ def cursayurveda2425
     end
   end
 
-  # Acces produse video pentru anul 1
+  ## Acces produse video pentru anul 1
   if max_taxa
     lunile = [nil, nil, "octombrie", "noiembrie", "decembrie", "ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "iulie"]
     @produse_accesibile_an1 = Prod.where(curslegatura: 'cay2425', luna: lunile[2..(2 + max_taxa - 2)]).order(created_at: :asc)
 
     index_luna_curenta = lunile.index(@luna_curenta)
-
+    puts("Iata ultima luna platita: #{@ultima_luna_platita}")
     if @ultima_luna_platita.nil?
       @are_prioritate = false
     else

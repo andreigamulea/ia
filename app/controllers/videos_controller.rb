@@ -1095,27 +1095,27 @@ def set_user144
     return false
   end
 
-  an1 = ['emilia777emi@gmail.com','nutaguta@yahoo.com','innat@bk.ru','crisgavrilescu707@gmail.com',
-           'andriescu.claudia@yahoo.com','daniel.bulcu@gmail.com','marianacuceu@yahoo.com',
-           'gabriela.ontiu@gmail.com']
-    an2 = ['monicanechita@hotmail.com','iuliapescaru@yahoo.fr','ovidiu_popovici_vlad@yahoo.com',
-           'fertigilona@gmail.com','ce.hermkens@gmail.com','szabo.doina@yahoo.com',
-           'vladut68@yahoo.com','lumigriza@yahoo.com']
-    an3 = ['diana.panciu@gmail.com','kinga_pop@yahoo.com','elaapostol@yahoo.com','sorincsv@yahoo.com',
-           'george.bondor@yahoo.com','clnicolescu@yahoo.com','viomih@yahoo.com',
-           'sublima.somacentre@gmail.com','doinitakineto@yahoo.com','florynn85@yahoo.com',
-           'lidiaistodorescu@yahoo.com']
+  # Actualizarea array-urilor cu emailurile furnizate
+  an1 = ["aura.tiparu@gmail.com", "liveplaylovebetter@protonmail.com", "elena.riba7@yahoo.com", "v_ionela@yahoo.com"]
+  an2 = ["cristinastanescu995@gmail.com", "delia_orita@yahoo.co.uk", "emilia777emi@gmail.com", "marianacuceu@yahoo.com",
+         "crisgavrilescu707@gmail.com", "v_ionela@yahoo.com"]
+  an3 = ["ovidiu_popovici_vlad@yahoo.com", "ce.hermkens@gmail.com", "szabo.doina@yahoo.com", "crina_dora@yahoo.com"]
+  an4 = ["sorincsv@yahoo.com", "fhun8@hotmail.com", "roalexis71@gmail.com", "florynn85@yahoo.com", "arthadora2012@gmail.com",
+         "lidiaistodorescu@yahoo.com"]
 
-           if Date.today > Date.new(Date.today.year, 8, 12)
-            an1 = []
-            an2 = []
-            an3 = []
-          end       
+  # Golește array-urile după o anumită dată
+  if Date.today > Date.new(Date.today.year, 12, 2)
+    an1 = []
+    an2 = []
+    an3 = []
+    an4 = []
+  end       
 
+  # Verifică rolul și emailul utilizatorului
   if current_user.role == 1
     return true
   elsif current_user.role == 0
-    if an1.include?(current_user.email) || an2.include?(current_user.email) || an3.include?(current_user.email)
+    if an1.include?(current_user.email) || an2.include?(current_user.email) || an3.include?(current_user.email) || an4.include?(current_user.email)
       return true
     else
       flash[:alert] = "Nu aveți permisiunea de a accesa acest curs."
@@ -1124,6 +1124,7 @@ def set_user144
     end
   end
 end
+
 
 def set_user15
   puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
