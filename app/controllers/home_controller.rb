@@ -543,7 +543,7 @@ end
     else
       @myvideo = Video.none
     end
-    Rails.logger.debug("Videoclipuri pentru utilizator #{current_user.email}: #{@myvideo.inspect}")
+    
 
   end
   
