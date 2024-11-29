@@ -211,7 +211,7 @@ end
       if @has_access
         puts("sunt in has acces")
         if current_user.limba == 'EN'
-          @myvideo23 = Video.where(tip: 'tayt24').where('(ordine >= ? AND ordine <= ?)', 1000, 2000).order(ordine: :asc)
+          @myvideo23 = Video.where(tip: 'tayt24').where('(ordine >= ? AND ordine <= ?)', 0, 2000).order(ordine: :asc)
         else
           @myvideo23 = Video.where(tip: 'tayt24').where('ordine <= ?', 1000).order(ordine: :asc)
         end
