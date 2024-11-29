@@ -499,8 +499,8 @@ end
    
 
   def recuperare_cursuri
-    # daca vrei sa mai adaugi persoane pune in array de mai jos dar si in _header.htl.erb
-    # dar si in def set_user144 . doar in astea 3
+    # Dacă vrei să mai adaugi persoane, pune în array-urile de mai jos dar și în _header.html.erb
+    # și în def set_user144. Doar în aceste 3 locuri.
     an1 = ["aura.tiparu@gmail.com", "liveplaylovebetter@protonmail.com", "elena.riba7@yahoo.com", "v_ionela@yahoo.com"]
     an2 = ["cristinastanescu995@gmail.com", "delia_orita@yahoo.co.uk", "emilia777emi@gmail.com", "marianacuceu@yahoo.com",
            "crisgavrilescu707@gmail.com", "v_ionela@yahoo.com"]
@@ -508,6 +508,7 @@ end
     an4 = ["sorincsv@yahoo.com", "fhun8@hotmail.com", "roalexis71@gmail.com", "florynn85@yahoo.com", "arthadora2012@gmail.com",
            "lidiaistodorescu@yahoo.com"]
   
+    # Resetarea listelor după 2 decembrie
     if Date.today > Date.new(Date.today.year, 12, 2)
       an1 = []
       an2 = []
@@ -515,6 +516,7 @@ end
       an4 = []
     end
   
+    # Verificarea autorizării utilizatorului
     if current_user && (current_user.role == 1 || an1.include?(current_user.email) || an2.include?(current_user.email) || an3.include?(current_user.email) || an4.include?(current_user.email))
       @user_authorized = true
     else
@@ -523,29 +525,26 @@ end
   
     # Distribuirea video-urilor
     video_links = ['s11I0cT1hXc', '2-dFbow3sHA', 'pP4p_aNnD2I', 'xIkDJyIGirY', 's13h8Rq7BXE', 'Cwkcy4BLQ2M']
-
-    
   
     if current_user
       if current_user.role == 1
         @myvideo = Video.where(link: video_links).order(Arel.sql("position(link in '#{video_links.join(',')}')"))
-      elsif an1.include?(current_user.email)
-        @myvideo = Video.where(link: video_links[0, 2]).order(Arel.sql("position(link in '#{video_links[0, 2].join(',')}')"))
-      elsif an2.include?(current_user.email)
-        @myvideo = Video.where(link: video_links[2, 2]).order(Arel.sql("position(link in '#{video_links[2, 2].join(',')}')"))
-      elsif an3.include?(current_user.email)
-        @myvideo = Video.where(link: video_links[4, 1]).order(Arel.sql("position(link in '#{video_links[4, 1].join(',')}')"))
-      elsif an4.include?(current_user.email)
-        @myvideo = Video.where(link: video_links[5, 1]).order(Arel.sql("position(link in '#{video_links[5, 1].join(',')}')"))
       else
-        @myvideo = Video.none
+        # Selectăm videoclipurile din toate grupurile în care se află utilizatorul
+        user_videos = []
+        user_videos += video_links[0, 2] if an1.include?(current_user.email)
+        user_videos += video_links[2, 2] if an2.include?(current_user.email)
+        user_videos += video_links[4, 1] if an3.include?(current_user.email)
+        user_videos += video_links[5, 1] if an4.include?(current_user.email)
+  
+        # Eliminăm duplicatele și selectăm videoclipurile
+        @myvideo = Video.where(link: user_videos.uniq).order(Arel.sql("position(link in '#{user_videos.uniq.join(',')}')"))
       end
     else
       @myvideo = Video.none
     end
-    
-
   end
+  
   
 
   def newsletter #este o metoda de tip POST
