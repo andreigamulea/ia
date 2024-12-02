@@ -211,7 +211,7 @@ class FacturasController < ApplicationController
   end
   
   def download_all
-    # Crearea unui folder temporar pentru stocarea PDF-urilor
+    ## Crearea unui folder temporar pentru stocarea PDF-urilor
     temp_folder = Rails.root.join('tmp', 'pdfs')
     FileUtils.mkdir_p(temp_folder)
     
@@ -228,7 +228,8 @@ class FacturasController < ApplicationController
     #facturas = Factura.where(numar: 2328..2549)#iulie
     #facturas = Factura.where(numar: 2548..2605)#august
     #facturas = Factura.where(numar: 2604..2722)#septembrie
-    facturas = Factura.where(numar: 2721..2886)#octombrie
+    #facturas = Factura.where(numar: 2721..2886)#octombrie
+    facturas = Factura.where(numar: 2885..3079)#noiembrie
     # Generați PDF-uri pentru fiecare factură
     pdf_files = facturas.map do |factura|
       @factura = factura
