@@ -211,7 +211,7 @@ class FacturasController < ApplicationController
   end
   
   def download_all
-    ## Crearea unui folder temporar pentru stocarea PDF-urilor
+    # Crearea unui folder temporar pentru stocarea PDF-urilor
     temp_folder = Rails.root.join('tmp', 'pdfs')
     FileUtils.mkdir_p(temp_folder)
     
