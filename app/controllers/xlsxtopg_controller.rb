@@ -536,7 +536,7 @@ end
 def preluaredate9 #valorinutritionale update la campul observatii
   Valorinutritionale.update_all(observatii: 'Informatiile din aceasta aplicatie sunt cele oferite public de catre producator')
 end  
-def preluaredate10 #listavegetale
+def preluaredate10 ##listavegetale
   if Rails.env.production?
     xlsx = Roo::Spreadsheet.open('/opt/render/project/src/app/fisierele/listavegetale.xlsx')
   else 
