@@ -90,7 +90,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def lista_vegetale_params
-      params.require(:lista_vegetale).permit(:specie, :sinonime, :parteutilizata, :mentiunirestrictii, :numar, :dataa)
+      params.require(:lista_vegetale).permit(:specie, :sinonime, :parteutilizata, :mentiunirestrictii, :numar, :dataa, :stadiu)
     end
     def set_user
     # Verifica daca userul este logat

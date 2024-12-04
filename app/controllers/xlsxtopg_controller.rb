@@ -550,10 +550,10 @@ def preluaredate10 #listavegetale
     mentiunirestrictii = row[3]&.value
     numar = row[4]&.value  # Adaugăm această linie
     dataa = row[5]&.value  # Adaugăm această linie
-
+    stadiu = row[6]&.value
     # Doar dacă cel puțin o valoare nu este goală sau nulă, salvează înregistrarea
     if [specie, sinonime, parteutilizata, mentiunirestrictii, numar, dataa].any?(&:present?)
-      lista_vegetale = ListaVegetale.new(specie: specie, sinonime: sinonime, parteutilizata: parteutilizata, mentiunirestrictii: mentiunirestrictii, numar: numar, dataa: dataa)
+      lista_vegetale = ListaVegetale.new(specie: specie, sinonime: sinonime, parteutilizata: parteutilizata, mentiunirestrictii: mentiunirestrictii, numar: numar, dataa: dataa, stadiu: stadiu)
       lista_vegetale.save
     end
   end

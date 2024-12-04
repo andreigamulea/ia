@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_20_220143) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_03_232921) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -523,6 +523,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_20_220143) do
     t.datetime "updated_at", null: false
     t.integer "numar"
     t.date "dataa"
+    t.string "stadiu"
     t.index ["dataa"], name: "index_lista_vegetales_on_dataa"
     t.index ["mentiunirestrictii"], name: "index_lista_vegetales_on_mentiunirestrictii"
     t.index ["parteutilizata"], name: "index_lista_vegetales_on_parteutilizata"
