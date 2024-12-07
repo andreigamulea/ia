@@ -499,8 +499,7 @@ end
    
 
   def recuperare_cursuri
-    # Dacă vrei să mai adaugi persoane, pune în array-urile de mai jos dar și în _header.html.erb
-    # și în def set_user144. Doar în aceste 3 locuri.
+    # Listele de utilizatori
     an1 = ["aura.tiparu@gmail.com", "liveplaylovebetter@protonmail.com", "elena.riba7@yahoo.com", "v_ionela@yahoo.com"]
     an2 = ["cristinastanescu995@gmail.com", "delia_orita@yahoo.co.uk", "emilia777emi@gmail.com", "marianacuceu@yahoo.com",
            "crisgavrilescu707@gmail.com", "v_ionela@yahoo.com"]
@@ -508,42 +507,66 @@ end
     an4 = ["sorincsv@yahoo.com", "fhun8@hotmail.com", "roalexis71@gmail.com", "florynn85@yahoo.com", "arthadora2012@gmail.com",
            "lidiaistodorescu@yahoo.com"]
   
-    # Resetarea listelor după 2 decembrie
-    if Date.today > Date.new(Date.today.year, 12, 2)
-      an1 = []
-      an2 = []
-      an3 = []
-      an4 = []
-    end
+    # Normalizează emailurile din liste
+    an1.map!(&:strip).map!(&:downcase)
+    an2.map!(&:strip).map!(&:downcase)
+    an3.map!(&:strip).map!(&:downcase)
+    an4.map!(&:strip).map!(&:downcase)
   
-    # Verificarea autorizării utilizatorului
-    if current_user && (current_user.role == 1 || an1.include?(current_user.email) || an2.include?(current_user.email) || an3.include?(current_user.email) || an4.include?(current_user.email))
-      @user_authorized = true
-    else
-      @user_authorized = false
-    end
+    # Normalizează emailul utilizatorului
+    user_email = current_user.email.strip.downcase
   
-    # Distribuirea video-urilor
-    video_links = ['s11I0cT1hXc', '2-dFbow3sHA', 'pP4p_aNnD2I', 'xIkDJyIGirY', 's13h8Rq7BXE', 'Cwkcy4BLQ2M']
+    # Debugging pentru apartenență
+    puts "Email utilizator: #{user_email}"
+    puts "Este în an1? #{an1.include?(user_email)}"
+    puts "Este în an2? #{an2.include?(user_email)}"
+    puts "Este în an3? #{an3.include?(user_email)}"
+    puts "Este în an4? #{an4.include?(user_email)}"
+  
+    # Distribuirea videoclipurilor
+    video_links = {
+      an1: 'S4C0zZW8Vvw',
+      an2: 'ClYxngJ_Vm0',
+      an3: 'ubItratex9I',
+      an4: 'jHx5c6lOzVM'
+    }
   
     if current_user
-      if current_user.role == 1
-        @myvideo = Video.where(link: video_links).order(Arel.sql("position(link in '#{video_links.join(',')}')"))
-      else
-        # Selectăm videoclipurile din toate grupurile în care se află utilizatorul
-        user_videos = []
-        user_videos += video_links[0, 2] if an1.include?(current_user.email)
-        user_videos += video_links[2, 2] if an2.include?(current_user.email)
-        user_videos += video_links[4, 1] if an3.include?(current_user.email)
-        user_videos += video_links[5, 1] if an4.include?(current_user.email)
+      user_videos = []
   
-        # Eliminăm duplicatele și selectăm videoclipurile
-        @myvideo = Video.where(link: user_videos.uniq).order(Arel.sql("position(link in '#{user_videos.uniq.join(',')}')"))
+      # Asociere videoclipuri
+      user_videos << video_links[:an1] if an1.include?(user_email)
+      user_videos << video_links[:an2] if an2.include?(user_email)
+      user_videos << video_links[:an3] if an3.include?(user_email)
+      user_videos << video_links[:an4] if an4.include?(user_email)
+  
+      # Debugging pentru videoclipuri asociate
+      puts "Videoclipuri utilizator: #{user_videos.inspect}"
+  
+      # Eliminăm duplicatele
+      unique_videos = user_videos.uniq
+  
+      if unique_videos.any?
+        # Creăm expresia CASE pentru ordonare
+        order_sql = unique_videos.each_with_index.map { |v, i| "WHEN '#{v}' THEN #{i}" }.join(' ')
+        @myvideo = Video
+                     .where(link: unique_videos)
+                     .select("DISTINCT ON (link) *")
+                     .order(Arel.sql("link, CASE link #{order_sql} END, created_at DESC"))
+      else
+        @myvideo = Video.none
       end
     else
       @myvideo = Video.none
     end
   end
+  
+  
+  
+  
+  
+  
+  
   
   
 

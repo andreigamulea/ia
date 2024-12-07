@@ -1095,7 +1095,7 @@ def set_user144
     return false
   end
 
-  # Actualizarea array-urilor cu emailurile furnizate
+  # Listele de utilizatori
   an1 = ["aura.tiparu@gmail.com", "liveplaylovebetter@protonmail.com", "elena.riba7@yahoo.com", "v_ionela@yahoo.com"]
   an2 = ["cristinastanescu995@gmail.com", "delia_orita@yahoo.co.uk", "emilia777emi@gmail.com", "marianacuceu@yahoo.com",
          "crisgavrilescu707@gmail.com", "v_ionela@yahoo.com"]
@@ -1103,25 +1103,56 @@ def set_user144
   an4 = ["sorincsv@yahoo.com", "fhun8@hotmail.com", "roalexis71@gmail.com", "florynn85@yahoo.com", "arthadora2012@gmail.com",
          "lidiaistodorescu@yahoo.com"]
 
-  # Golește array-urile după o anumită dată
-  if Date.today > Date.new(Date.today.year, 12, 2)
+  # Videoclipuri asociate
+  video_links = {
+    an1: 'S4C0zZW8Vvw',
+    an2: 'ClYxngJ_Vm0',
+    an3: 'ubItratex9I',
+    an4: 'jHx5c6lOzVM'
+  }
+
+  # Golește array-urile după 15 decembrie 2024
+  if Date.today > Date.new(2024, 12, 15)
     an1 = []
     an2 = []
     an3 = []
     an4 = []
   end       
 
-  # Verifică rolul și emailul utilizatorului
+  # Normalizează emailurile utilizatorului și din liste
+  user_email = current_user.email.strip.downcase
+  an1.map!(&:strip).map!(&:downcase)
+  an2.map!(&:strip).map!(&:downcase)
+  an3.map!(&:strip).map!(&:downcase)
+  an4.map!(&:strip).map!(&:downcase)
+
+  # Verifică rolul și permisiunile utilizatorului
   if current_user.role == 1
+    # Adminul are acces complet
     return true
   elsif current_user.role == 0
-    if an1.include?(current_user.email) || an2.include?(current_user.email) || an3.include?(current_user.email) || an4.include?(current_user.email)
+    # Verifică dacă utilizatorul face parte din vreun grup
+    if an1.include?(user_email) || an2.include?(user_email) || an3.include?(user_email) || an4.include?(user_email)
+      # Debugging pentru email și grupuri
+      puts "Email utilizator: #{user_email}"
+      puts "Este în an1? #{an1.include?(user_email)}"
+      puts "Este în an2? #{an2.include?(user_email)}"
+      puts "Este în an3? #{an3.include?(user_email)}"
+      puts "Este în an4? #{an4.include?(user_email)}"
+
+      # Permite accesul dacă este într-un grup
       return true
     else
+      # Mesaj de eroare pentru utilizatorii neautorizați
       flash[:alert] = "Nu aveți permisiunea de a accesa acest curs."
       redirect_to root_path
       return false
     end
+  else
+    # Pentru orice alt caz, accesul este refuzat
+    flash[:alert] = "Nu aveți permisiunea de a accesa acest curs."
+    redirect_to root_path
+    return false
   end
 end
 
