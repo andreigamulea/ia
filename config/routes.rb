@@ -104,6 +104,7 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
 
 
   get 'vajikarana/modul1', to: 'vajikarana#modul1', as: 'vajikarana_modul1'
+  get 'vajikarana/modul2', to: 'vajikarana#modul2', as: 'vajikarana_modul2'
   #get 'vajikarana/download/:linkzip', to: 'vajikarana#download', as: 'vajikarana_download'
   get 'vajikarana/download/*linkzip', to: 'vajikarana#download', as: 'vajikarana_download', format: false
     
