@@ -186,7 +186,7 @@ end
           end
         else
           puts "Condiția 5: Nu a cumpărat nimic"
-          @prods = Prod.where(cod: ['cod264', 'cod265', 'cod266', 'cod267']).order(:id)
+          @prods = Prod.where(cod: ['cod266', 'cod267']).order(:id)
         end
         
         puts "Produse afișate: #{@prods.pluck(:cod)}"
@@ -224,7 +224,7 @@ end
     else
       # Utilizator neautentificat
       puts("User nelogat")
-      @prods = Prod.where(curslegatura: 'tayt24', status: 'activ').where(cod: ['cod264', 'cod265', 'cod266', 'cod267']).order(:id)
+      @prods = Prod.where(curslegatura: 'tayt24', status: 'activ').where(cod: ['cod266', 'cod267']).order(:id)
       @has_access = false
       @prods_cumparate = Prod.none
       @videos_correspondente = Video.none
