@@ -1099,7 +1099,7 @@ def set_user144
   an1 = ["aura.tiparu@gmail.com", "liveplaylovebetter@protonmail.com", "elena.riba7@yahoo.com", "v_ionela@yahoo.com"]
   an2 = ["cristinastanescu995@gmail.com", "delia_orita@yahoo.co.uk", "emilia777emi@gmail.com", "marianacuceu@yahoo.com",
          "crisgavrilescu707@gmail.com", "v_ionela@yahoo.com"]
-  an3 = ["ovidiu_popovici_vlad@yahoo.com", "ce.hermkens@gmail.com", "szabo.doina@yahoo.com", "crina_dora@yahoo.com"]
+  an3 = ["lumigriza@yahoo.com","ovidiu_popovici_vlad@yahoo.com", "ce.hermkens@gmail.com", "szabo.doina@yahoo.com", "crina_dora@yahoo.com"]
   an4 = ["sorincsv@yahoo.com", "fhun8@hotmail.com", "roalexis71@gmail.com", "florynn85@yahoo.com", "arthadora2012@gmail.com",
          "lidiaistodorescu@yahoo.com"]
 
