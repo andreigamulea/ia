@@ -65,7 +65,7 @@ class RasayanaController < ApplicationController
           elsif @nr_luni_achitate == 3
             @prods = products.where(cod: ['cod237', 'cod242'])
           elsif @nr_luni_achitate == 4
-            @prods = []
+            @prods = products.where(cod: ['cod242'])
           else
             @prods = products.where(cod: ['cod234', 'cod238', 'cod243'])
           end
