@@ -199,6 +199,7 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
 
   resources :cursuriayurvedas
   get 'nutritie1', to: 'nutritie1#index'
+  get 'nutritie', to: 'nutritie1#nutritie'
   get 'nutritie2', to: 'nutritie2#index'
   get 'nutritie3', to: 'nutritie3#index'
   get 'nutritie4', to: 'nutritie4#index'
