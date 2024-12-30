@@ -114,7 +114,7 @@ class Nutritie3Controller < ApplicationController
     elsif current_user && @has_access
       @prods = Prod.none
       @platit=true # variabila care permite accesul la video
-      puts("a platittttttt")
+      
             if current_user && current_user.limba=='EN'
               @myvideo2 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
             else  
