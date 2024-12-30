@@ -466,7 +466,35 @@ end
                                           .first
                                           .yield_self { |comanda_recenta| comanda_recenta && (Date.today <= comanda_recenta.datainceput + comanda_recenta.prod.valabilitatezile.days) }
         
-            unless has_access || has_recent_access
+            
+            
+            
+            ########################
+            @condition2=false
+            purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+            .joins(:prod)
+            .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+            .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+            purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+              .joins(:prod)
+              .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+              .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+            valid_prods = (purchased_prods + purchased_prods1).select do |prod|
+            prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
+            puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
+            prod_end_date && prod_end_date >= Date.today
+            end.map(&:first) # preluăm doar codurile produselor valide
+            unless valid_prods.empty?   
+            @has_access=true
+            @condition2=true
+            end  
+
+
+            #################################
+            
+         unless has_access || has_recent_access || @condition2
               flash[:alert] = "Nu aveți acces la acest curs."
               redirect_to nutritie3_path # Schimbați cu calea dorită
               return false
@@ -695,13 +723,39 @@ end
         return
       end
     
+
+      ########################
+      @condition2=false
+      purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+      .joins(:prod)
+      .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+      .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+        .joins(:prod)
+        .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+        .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      valid_prods = (purchased_prods + purchased_prods1).select do |prod|
+      prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
+      puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
+      prod_end_date && prod_end_date >= Date.today
+      end.map(&:first) # preluăm doar codurile produselor valide
+      unless valid_prods.empty?   
+      @has_access=true
+      @condition2=true
+      end  
+
+
+      #################################
+
       has_module_1 = UserModulecursuri.exists?(user_id: current_user.id, 
                                                modulecursuri_id: 3, 
                                                validat: "Finalizata")
     
    
     
-      unless has_module_1  || current_user.role == 1
+      unless has_module_1  || current_user.role == 1 || @condition2
         flash[:alert] = "Nu aveți acces la acest curs."
         redirect_to root_path # sau o altă cale relevantă
       end
@@ -729,7 +783,35 @@ end
       @condition1 = comanda && comanda.datasfarsit >= Date.today
       puts("sal2")
       Rails.logger.info "Condition1 este: #{@condition1}, User Role: #{current_user.role}"
-      unless @condition1 || current_user.role == 1
+
+
+      ########################
+      @condition2=false
+      purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+      .joins(:prod)
+      .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+      .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+        .joins(:prod)
+        .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+        .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      valid_prods = (purchased_prods + purchased_prods1).select do |prod|
+      prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
+      puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
+      prod_end_date && prod_end_date >= Date.today
+      end.map(&:first) # preluăm doar codurile produselor valide
+      unless valid_prods.empty?   
+      @has_access=true
+      @condition2=true
+      end  
+
+
+      #################################
+
+      
+      unless @condition1 || current_user.role == 1 || @condition2
       redirect_to root_path
       flash[:alert] = "Nu aveți acces la acest curs."
       end
@@ -745,6 +827,36 @@ end
         return
       end
     
+
+                  ########################
+                  @condition2=false
+                  purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                  .joins(:prod)
+                  .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+                  .pluck('prods.cod', 'datainceput', 'datasfarsit')
+      
+                  purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                    .joins(:prod)
+                    .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+                    .pluck('prods.cod', 'datainceput', 'datasfarsit')
+      
+                  valid_prods = (purchased_prods + purchased_prods1).select do |prod|
+                  prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
+                  puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
+                  prod_end_date && prod_end_date >= Date.today
+                  end.map(&:first) # preluăm doar codurile produselor valide
+                  unless valid_prods.empty?   
+                  @has_access=true
+                  @condition2=true
+                  end  
+      
+      
+                  #################################
+
+      if @condition2
+        return true
+      end
+
       if current_user.role == 1
         return true
       end
@@ -770,8 +882,40 @@ end
       has_module_2 = UserModulecursuri.exists?(user_id: current_user.id, 
                                                modulecursuri_id: 2, 
                                                validat: "Finalizata")
+
+      ###################################
+      ########################
+      @condition2=false
+      purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+      .joins(:prod)
+      .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+      .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+        .joins(:prod)
+        .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+        .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      valid_prods = (purchased_prods + purchased_prods1).select do |prod|
+      prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
+      puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
+      prod_end_date && prod_end_date >= Date.today
+      end.map(&:first) # preluăm doar codurile produselor valide
+      unless valid_prods.empty?   
+      @has_access=true
+      @condition2=true
+      end  
+
+
+#################################
+
+
+
+      ###################################
+
+
     
-      unless (has_module_1 && has_module_2) || current_user.role == 1
+      unless (has_module_1 && has_module_2) || current_user.role == 1 || @condition2==true
         flash[:alert] = "Nu aveți acces la acest curs."
         redirect_to root_path # sau o altă cale relevantă
       end
@@ -784,14 +928,37 @@ end
         return
       end
     
+     ###################################
      
+      @condition2=false
+      purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+      .joins(:prod)
+      .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+      .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+        .joins(:prod)
+        .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+        .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      valid_prods = (purchased_prods + purchased_prods1).select do |prod|
+      prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
+      puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
+      prod_end_date && prod_end_date >= Date.today
+      end.map(&:first) # preluăm doar codurile produselor valide
+      unless valid_prods.empty?   
+      @has_access=true
+      @condition2=true
+      end  
+
+      ###################################
 
       @condition1 = if current_user
         comanda = ComenziProd.where(user_id: current_user.id, validat: "Finalizata")
                             .where(prod_id: Prod.where(cod: ['cod73', 'cod75']).select(:id))
                             .order(datasfarsit: :desc)
                             .first
-        comanda && comanda.datasfarsit && comanda.datasfarsit >= Date.today
+        (comanda && comanda.datasfarsit && comanda.datasfarsit >= Date.today) || @condition2
       else
         false
       end
@@ -877,6 +1044,33 @@ end
         redirect_to new_user_session_path
         return false
       end
+
+      ########################
+      @condition2=false
+      purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+      .joins(:prod)
+      .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+      .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+        .joins(:prod)
+        .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+        .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      valid_prods = (purchased_prods + purchased_prods1).select do |prod|
+      prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
+      puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
+      prod_end_date && prod_end_date >= Date.today
+      end.map(&:first) # preluăm doar codurile produselor valide
+      unless valid_prods.empty?   
+      @has_access=true
+      @condition2=true
+      end  
+      if @condition2
+        return true
+      end
+      #################################
+
     
       if current_user.role == 1
         return true
@@ -940,6 +1134,31 @@ end
         return
       end
     
+      ########################
+      @condition2=false
+      purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+      .joins(:prod)
+      .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+      .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+        .joins(:prod)
+        .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+        .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      valid_prods = (purchased_prods + purchased_prods1).select do |prod|
+      prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
+      puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
+      prod_end_date && prod_end_date >= Date.today
+      end.map(&:first) # preluăm doar codurile produselor valide
+      unless valid_prods.empty?   
+      @has_access=true
+      @condition2=true
+      end  
+      if @condition2
+        return true
+      end
+      #################################
       if current_user.role == 1
         return true
       end

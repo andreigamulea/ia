@@ -222,7 +222,7 @@
 <%else%>
 <br><br><br>
 <%end%>
-    <% if current_user && @condition1%>
+    <% if current_user && (@condition1 || @condition2)%>
         <h2 class="alimente-nutritionale" style= "text-align: center; font-size:28px;">Resurse</h2>
 
 
@@ -241,7 +241,7 @@
                 <tbody>
                 
                 <% previous_video_tip = nil %>
-                <% if current_user && @condition1%>
+                <% if current_user && (@condition1 || @condition2)%>
                 <% @myvideo7.each do |video| %>
                     <%= render partial: 'video1', locals: { video: video, previous_video_tip: previous_video_tip } %>
                     <% previous_video_tip = video.tip %>

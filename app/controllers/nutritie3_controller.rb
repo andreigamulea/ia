@@ -81,6 +81,32 @@ class Nutritie3Controller < ApplicationController
     end
     
     
+    ########################
+    @condition2=false
+    purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+    .joins(:prod)
+    .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+    .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+    purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+      .joins(:prod)
+      .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+      .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+    valid_prods = (purchased_prods + purchased_prods1).select do |prod|
+    prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
+    puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
+    prod_end_date && prod_end_date >= Date.today
+    end.map(&:first) # preluăm doar codurile produselor valide
+    unless valid_prods.empty?   
+    @has_access=true
+    @condition2=true
+    end  
+
+
+    #################################
+
+
     
    
     if !current_user      
@@ -88,6 +114,7 @@ class Nutritie3Controller < ApplicationController
     elsif current_user && @has_access
       @prods = Prod.none
       @platit=true # variabila care permite accesul la video
+      puts("a platittttttt")
             if current_user && current_user.limba=='EN'
               @myvideo2 = Video.where(tip: 'nutritie3').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
             else  

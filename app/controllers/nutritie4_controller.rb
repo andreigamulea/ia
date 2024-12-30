@@ -54,6 +54,33 @@ class Nutritie4Controller < ApplicationController
         all_purchased = all_purchased_prods.map(&:first).uniq
         @a_cumparat_macar_un_cod = all_purchased.any?
         @has_access = valid_prods.include?('cod86') || valid_prods.include?('cod88') || valid_prods.include?('cod89')
+
+        ########################
+        @condition2=false
+        purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+        .joins(:prod)
+        .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+        .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+        purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+          .joins(:prod)
+          .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+          .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+        valid_prods = (purchased_prods + purchased_prods1).select do |prod|
+        prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
+        puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
+        prod_end_date && prod_end_date >= Date.today
+        end.map(&:first) # preluăm doar codurile produselor valide
+        unless valid_prods.empty?   
+        @has_access=true
+        @condition2=true
+        end  
+
+
+        #################################
+
+
   
         # Setare @prods pe baza valorilor lui @a_cumparat_macar_un_cod și @has_access
         if !@a_cumparat_macar_un_cod
@@ -70,14 +97,22 @@ class Nutritie4Controller < ApplicationController
       puts("Produse afișate: #{@prods.pluck(:cod) if @prods}")
       puts("Are acces? : #{@has_access}")
       puts("Produse cumpărate: #{@prods_cumparate.pluck(:cod) if @prods_cumparate}")
+
+
+
+
+
+
+
   
-      @myvideo122 = if @a_cumparat_macar_un_cod # 1001-2000 sunt pt video si material pdf
+      @myvideo122 = if @a_cumparat_macar_un_cod || @condition2 # 1001-2000 sunt pt video si material pdf
         Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
       else
         Video.none
       end
+      
   
-      @myvideo13 = if @a_cumparat_macar_un_cod # 2001-3000 sunt pt video si material pdf
+      @myvideo12 = if @a_cumparat_macar_un_cod || @condition2 # 2001-3000 sunt pt video si material pdf
         if current_user.limba == 'EN'
           Video.where(tip: 'nutritie4').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
         else
@@ -108,7 +143,7 @@ class Nutritie4Controller < ApplicationController
       @has_access = false
       @prods_cumparate = Prod.none
       @videos_correspondente = Video.none
-      @myvideo13 = Video.none
+      @myvideo12 = Video.none
       @a_cumparat_macar_un_cod = false
     end
   
