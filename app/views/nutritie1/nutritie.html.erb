@@ -82,17 +82,22 @@
       margin-bottom: 10px;
     }
   }
-</style><% content_for :title, "Pachet complet - Program de nutritie Ayurvedica | Ayush Cell Romania"  %><% content_for :description, "Descoperiți importanța adaptării (satmya) alimentației la tipologia constituțională ayurvedică proprie (dosha) și impactul acesteia asupra sănătății." %><% content_for :keywords, "ayurveda, nutritie ayurvedica, dosha, vata, pitta, kapha, dosha-prakriti, greutatea ideala, formule greutate ideala" %><% content_for :canonical do %>
-<link rel="canonical" href="https://www.ayushcell.ro/nutritie1"><% end %> <div class="container" id="nutritie1"><%= render 'layouts/sideleft' %> <div class="cr" style="background-color: white; ">
+</style>
+<% content_for :title, "Pachet complet - Program de nutritie Ayurvedica | Ayush Cell Romania"  %>
+<% content_for :description, "Descoperiți importanța adaptării (satmya) alimentației la tipologia constituțională ayurvedică proprie (dosha) și impactul acesteia asupra sănătății." %><% content_for :keywords, "ayurveda, nutritie ayurvedica, dosha, vata, pitta, kapha, dosha-prakriti, greutatea ideala, formule greutate ideala" %>
+<% content_for :canonical do %>
+<link rel="canonical" href="https://www.ayushcell.ro/nutritie1">
+<% end %> 
+<div class="container" id="nutritie1"><%= render 'layouts/sideleft' %> <div class="cr" style="background-color: white; ">
     <h1 class="first-tittle">Ayush Cell Romania: Program de pregătire Nutritie Ayurvedică Pachet Complet</h1>
-    <h2 class="main-title" style="color:red;">🎉 Ofertă Promoțională Specială - Reducere 50% la Nutriție Ayurvedică, Set complet: modulele 1-4 🎉</h2>
+    <h2 class="main-title" style="color:red;">🎉 Pachet Promoțional - Reducere 50% la Setul Nutriție Ayurvedică (Modulele 1-4)🎉</h2>
     <section>
       <div class="row1 center" style="max-width:920px; margin:0 auto;">
         <div class="r1c1" style="height: 350px;">
           <img src="<%= image_url('nutritie-ayushcell.jpg') %>" alt="Program Nutriție Ayurvedică">
         </div>
         <div class="r1c2">
-          <p>Achiziționarea celor 4 module ale Programului de Nutriție Ayurvedică reprezintă o oportunitate de a accesa un pachet educațional valoros, dedicat aprofundării principiilor ayurvedice aplicate în nutriție. Oferta promoțională include o reducere substanțială de 50% din prețul total, alături de posibilitatea de a beneficia de un interval extins pentru vizionarea materialelor, oferindu-ți flexibilitate și accesibilitate în cadrul procesului de învățare.</p><% if !current_user %> <div class="r1c2"><%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie1'), class: 'register' %> </div><%elsif current_user && !@has_access%><%= link_to 'Înscrie-te acum', '#VideoNutritie', class: 'register' %><%end%>
+          <p>Cu ocazia începutului de an, până pe 5 ianuarie, oferim posibilitatea de a accesa cele 4 module ale Programului de Nutriție Ayurvedică la jumătate de preț. </p><p>Acest pachet educațional reprezintă o oportunitate de a aprofunda principiile ayurvedice aplicate în nutriție, cu accent pe înțelegerea și aplicarea lor în viața de zi cu zi. </p><p> Mai mult, oferta include un interval extins pentru vizionarea materialelor, asigurând un ritm de învățare adaptat nevoilor personale.</p><% if !current_user %> <div class="r1c2"><%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie1'), class: 'register' %> </div><%elsif current_user && !@has_access%><%= link_to 'Înscrie-te acum', '#VideoNutritie', class: 'register' %><%end%>
         </div>
       </div>
       <section class="cm">
@@ -125,9 +130,9 @@
         </h3>
         <p>Pentru a vă înscrie la acest modul, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul la vizionarea inregistrarilor se va face direct in pagina de site.</p>
         <h3 style="color:red;">
-          <strong>Costul participării – ofertă promoțională valabilă între 2 și 6 ianuarie 2024</strong>
+          <strong>Costul participării – ofertă promoțională valabilă până la data de 5 ianuarie 2024</strong>
         </h3>
-        <p>Participarea la cele 4 module de nutriție reprezintă o oportunitate valoroasă pentru aprofundarea cunoștințelor în educația pentru sănătate și dezvoltarea personală și profesională. În perioada 2-6 ianuarie 2024, programul este disponibil la un preț promoțional, beneficiind de o reducere de 50%. <span style="color:red;font-weight:700;">Costul final redus este de doar 1560 lei.</span>
+        <p>Participarea la modulele de nutriție reprezintă o oportunitate valoroasă pentru aprofundarea cunoștințelor în educația pentru sănătate și dezvoltarea personală și profesională. <span style="color:red;font-weight:700;">În perioada 1-6 ianuarie 2024, programul este disponibil la un preț promoțional, beneficiind de o reducere de 50%. Costul final redus este de doar 1560 lei pentru toate cele 4 module.</span>
         </p>
         <h3>
           <strong>Durata accesului la curs</strong>
@@ -138,7 +143,7 @@
             <p class="testimonial-text">"Cu o experiență de 21 de ani în nutriție, îmi exprim profunda recunoștință față de acest curs remarcabil. Având ocazia să particip la formări în India și America, constat cu plăcere că acest curs de nutriție ayurvedică se distinge prin abordarea sa completă, care integrează cu eleganță principiile nutriției moderne cu cele ale științei ayurvedice. Deși inițial credeam că am acumulat suficiente cunoștințe, am descoperit că există întotdeauna spațiu pentru învățare nouă. Vă felicit pentru munca depusă și sunt nerăbdătoare să particip și la modulele 2 și 3 ale acestui program de pregătitire"</p>
             <p class="testimonial-signature">A.P. - wellness coach</p>
           </div>
-        </div><% if current_user && (@has_access || @has_access1)%> <br>
+        </div><% if current_user && @has_access%> <br>
         <h3>📚 Vizionare înregistrări și detalii suplimentare despre module</h3>
         <p>Programul de Nutriție Ayurvedică este structurat în 4 module, fiecare având o pagină dedicată, care include înregistrările, informații detaliate și materialele complete. Link-urile către module sunt disponibile mai jos:</p>
         <ul>
@@ -157,11 +162,7 @@
         </ul>
         <p>Vă invităm să vizitați paginile respective pentru detalii suplimentare despre conținutul fiecărui modul.</p><%end%>
       </section>
-
-
-
-
-
+      <% if !current_user || !@has_access%>
 <h3 class="alimente-nutritionale" id="VideoNutritie" style="font-size:28px;">Acces prezentari video Nutritie Modululele 1-4</h3>
 
     <div class="table-responsive">
@@ -196,13 +197,6 @@
                 </tbody>
               </table>
           </div>
-
-      
+    <% end %>
   </div>
-  
 </div>
-
-
-
-
-

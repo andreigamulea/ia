@@ -151,7 +151,9 @@ def nutritie
         if valid_prods.empty?
           all_prods = ['cod305']
           @prods = Prod.where(cod: all_prods)
+          @has_access=false
         else
+          @has_access=true
           @prods = Prod.none
         end  
         
@@ -161,6 +163,7 @@ def nutritie
       all_prods = ['cod305']
       @prods = Prod.where(cod: all_prods)
       puts("@prods=#{@prods.first.nume}")
+      @has_access=false
     end
   end
 
