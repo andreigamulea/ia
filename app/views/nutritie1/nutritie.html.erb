@@ -90,7 +90,7 @@
 <% end %> 
 <div class="container" id="nutritie1"><%= render 'layouts/sideleft' %> <div class="cr" style="background-color: white; ">
     <h1 class="first-tittle">Ayush Cell Romania: Program de pregătire Nutritie Ayurvedică Pachet Complet</h1>
-    <h2 class="main-title" style="color:red;">🎉 Pachet Promoțional - Reducere 50% la Setul Nutriție Ayurvedică (Modulele 1-4)🎉</h2>
+    <h2 class="main-title" style="color:red;">✨ Pachet Promoțional - Reducere 50% la Setul Nutriție Ayurvedică (Modulele 1-4) ✨</h2>
     <section>
       <div class="row1 center" style="max-width:920px; margin:0 auto;">
         <div class="r1c1" style="height: 350px;">
@@ -114,6 +114,14 @@
         <p>Explorarea relației dintre ciclurile naturale și alimentație. Adaptarea hranei în funcție de anotimpuri și ritmurile zilnice, pentru a crea o relație dinamică și complexă de armonie cu mediul înconjurător.</p>
         <h3>⚖️ Nutriția ayurvedică ca practică holistică</h3>
         <p>Integrarea principiilor nutriției ayurvedice într-un stil de viață echilibrat, axat pe adaptarea alimentației la ritmurile naturale și la nevoile personale, pentru susținerea sănătății și armoniei întregii ființe.</p><% if !user_signed_in? || (current_user && !@has_access) %> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările',  '#VideoNutritie', class: 'register' %> </div>
+        
+        <div class="center-container">
+          <div class="testimonial-container">
+            <h2 class="testimonial-title">Mărturii</h2>
+            <p class="testimonial-text">"Cu o experiență de 21 de ani în nutriție, îmi exprim profunda recunoștință față de acest curs remarcabil. Având ocazia să particip la formări în India și America, constat cu plăcere că acest curs de nutriție ayurvedică se distinge prin abordarea sa completă, care integrează cu eleganță principiile nutriției moderne cu cele ale științei ayurvedice. Deși inițial credeam că am acumulat suficiente cunoștințe, am descoperit că există întotdeauna spațiu pentru învățare nouă. Vă felicit pentru munca depusă și sunt nerăbdătoare să particip și la modulele 2 și 3 ale acestui program de pregătitire"</p>
+            <p class="testimonial-signature">A.P. - wellness coach</p>
+          </div>
+        </div>
         <br>
         <h2>Înscriere și participare</h2>
         <br>
@@ -137,13 +145,11 @@
         <h3>
           <strong>Durata accesului la curs</strong>
         </h3>
-        <p>Participanții vor avea acces la vizionarea înregistrărilor cursului pentru o perioadă de 365 de zile de la data înscrierii.</p><%end%> <div class="center-container">
-          <div class="testimonial-container">
-            <h2 class="testimonial-title">Mărturii</h2>
-            <p class="testimonial-text">"Cu o experiență de 21 de ani în nutriție, îmi exprim profunda recunoștință față de acest curs remarcabil. Având ocazia să particip la formări în India și America, constat cu plăcere că acest curs de nutriție ayurvedică se distinge prin abordarea sa completă, care integrează cu eleganță principiile nutriției moderne cu cele ale științei ayurvedice. Deși inițial credeam că am acumulat suficiente cunoștințe, am descoperit că există întotdeauna spațiu pentru învățare nouă. Vă felicit pentru munca depusă și sunt nerăbdătoare să particip și la modulele 2 și 3 ale acestui program de pregătitire"</p>
-            <p class="testimonial-signature">A.P. - wellness coach</p>
-          </div>
-        </div><% if current_user && @has_access%> <br>
+        <p>Participanții vor avea acces la vizionarea înregistrărilor cursului pentru o perioadă de 365 de zile de la data înscrierii.</p><%end%> 
+        
+
+        
+        <% if current_user && @has_access%> <br>
         <h3>📚 Vizionare înregistrări și detalii suplimentare despre module</h3>
         <p>Programul de Nutriție Ayurvedică este structurat în 4 module, fiecare având o pagină dedicată, care include înregistrările, informații detaliate și materialele complete. Link-urile către module sunt disponibile mai jos:</p>
         <ul>
