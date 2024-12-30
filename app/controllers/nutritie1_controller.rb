@@ -143,9 +143,17 @@ def nutritie
          
         valid_prods = (purchased_prods + purchased_prods1).select do |prod|
           prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
+          puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
           prod_end_date && prod_end_date >= Date.today
         end.map(&:first) # preluăm doar codurile produselor valide
+        
         puts("valid_prods=#{valid_prods}")
+        if valid_prods.empty?
+          all_prods = ['cod305']
+          @prods = Prod.where(cod: all_prods)
+        else
+          @prods = Prod.none
+        end  
         
       
       end
