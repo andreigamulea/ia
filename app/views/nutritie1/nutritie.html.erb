@@ -97,7 +97,7 @@
           <img src="<%= image_url('nutritie-ayushcell.jpg') %>" alt="Program Nutriție Ayurvedică">
         </div>
         <div class="r1c2">
-          <p>Cu ocazia începutului de an, până pe 5 ianuarie, oferim posibilitatea de a accesa cele 4 module ale Programului de Nutriție Ayurvedică la jumătate de preț. </p><p>Acest pachet educațional reprezintă o oportunitate de a aprofunda principiile ayurvedice aplicate în nutriție, cu accent pe înțelegerea și aplicarea lor în viața de zi cu zi. </p><p> Mai mult, oferta include un interval extins pentru vizionarea materialelor, asigurând un ritm de învățare adaptat nevoilor personale.</p><% if !current_user %> <div class="r1c2"><%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie'), class: 'register' %> </div><%elsif current_user && !@has_access%><%= link_to 'Înscrie-te acum', '#VideoNutritie', class: 'register' %><%end%>
+          <p>Cu ocazia începutului de an, până la data de 6 ianuarie inclusiv, oferim posibilitatea de a accesa cele 4 module ale Programului de Nutriție Ayurvedică la jumătate de preț. </p><p>Acest pachet educațional reprezintă o oportunitate de a aprofunda principiile ayurvedice aplicate în nutriție, cu accent pe înțelegerea și aplicarea lor în viața de zi cu zi. </p><p> Mai mult, oferta include un interval extins pentru vizionarea materialelor, asigurând un ritm de învățare adaptat nevoilor personale.</p><% if !current_user %> <div class="r1c2"><%= link_to 'Înscrie-te acum', new_user_session_with_return_path('nutritie'), class: 'register' %> </div><%elsif current_user && !@has_access%><%= link_to 'Înscrie-te acum', '#VideoNutritie', class: 'register' %><%end%>
         </div>
       </div>
       <section class="cm">
