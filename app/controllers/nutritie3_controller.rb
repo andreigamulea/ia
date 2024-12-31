@@ -82,6 +82,7 @@ class Nutritie3Controller < ApplicationController
     
     
     ########################
+    if current_user
     @condition2=false
     purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
     .joins(:prod)
@@ -102,7 +103,7 @@ class Nutritie3Controller < ApplicationController
     @has_access=true
     @condition2=true
     end  
-
+  end
 
     #################################
 

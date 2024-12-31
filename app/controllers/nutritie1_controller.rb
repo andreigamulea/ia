@@ -56,6 +56,7 @@ class Nutritie1Controller < ApplicationController
 
 
 ########################
+if current_user
 @condition2=false
 purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
 .joins(:prod)
@@ -76,7 +77,7 @@ unless valid_prods.empty?
 @has_access=true
 @condition2=true
 end  
-
+end
 
 #################################
 
