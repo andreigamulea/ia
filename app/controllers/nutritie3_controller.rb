@@ -83,26 +83,37 @@ class Nutritie3Controller < ApplicationController
     
     ########################
     if current_user
-    @condition2=false
-    purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
-    .joins(:prod)
-    .where(prods: { curslegatura: 'nutritie', status: 'activ' })
-    .pluck('prods.cod', 'datainceput', 'datasfarsit')
+      @condition2 = false
+      special_emails = ['cristina.nedescu@gmail.com']
 
-    purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
-      .joins(:prod)
-      .where(prods: { curslegatura: 'nutritie', status: 'activ' })
-      .pluck('prods.cod', 'datainceput', 'datasfarsit')
+      # Verificare dacă utilizatorul curent are un email special
+      if special_emails.include?(current_user.email)
+        @condition2 = true
+        @has_access = true
+      end
 
-    valid_prods = (purchased_prods + purchased_prods1).select do |prod|
-    prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
-    puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
-    prod_end_date && prod_end_date >= Date.today
-    end.map(&:first) # preluăm doar codurile produselor valide
-    unless valid_prods.empty?   
-    @has_access=true
-    @condition2=true
-    end  
+      # Logica pentru produsele achiziționate
+      purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+        .joins(:prod)
+        .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+        .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+        .joins(:prod)
+        .where(prods: { curslegatura: 'nutritie', status: 'activ' })
+        .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      valid_prods = (purchased_prods + purchased_prods1).select do |prod|
+        prod_end_date = prod[2] # presupunem că 'datasfarsit' este al treilea element din array
+        puts("prod_end_date=#{prod_end_date}") # Mutat în interiorul blocului
+        prod_end_date && prod_end_date >= Date.today
+      end.map(&:first) # preluăm doar codurile produselor valide
+
+      # Setare @has_access și @condition2 în funcție de produsele valide
+      unless valid_prods.empty?
+        @has_access = true
+        @condition2 = true
+      end
   end
 
     #################################
