@@ -57,9 +57,10 @@ class Nutritie4Controller < ApplicationController
 
         ########################
         @condition2 = false
-      special_emails_with_dates = {
-        'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4)
-      }
+        special_emails_with_dates = {
+          'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4),
+          'derynola@gmx.com' => Date.new(2026, 1, 4)
+        }
 
       # Data curentă
       data_today = Date.today
