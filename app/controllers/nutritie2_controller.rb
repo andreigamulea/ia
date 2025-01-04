@@ -34,13 +34,22 @@ class Nutritie2Controller < ApplicationController
     if current_user
       
       @condition2 = false
-      special_emails = ['cristina.nedescu@gmail.com']
+      special_emails_with_dates = {
+        'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4)
+      }
 
-      # Verificare dacă utilizatorul curent are un email special
-      if special_emails.include?(current_user.email)
+      # Data curentă
+      data_today = Date.today
+
+      # Verificare dacă utilizatorul curent are un email special și data este validă
+      if special_emails_with_dates.key?(current_user.email) && data_today <= special_emails_with_dates[current_user.email]
         @condition2 = true
         @has_access = true
+        
+      else
+        @condition2 = false
       end
+
 
       # Logica pentru produsele achiziționate
       purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
