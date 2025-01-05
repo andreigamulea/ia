@@ -231,12 +231,17 @@ class FacturaproformasController < ApplicationController
     end
   end
   def situatii_lunare
-    @months = [
-      'Ianuarie 2024', 'Februarie 2024', 'Martie 2024', 'Aprilie 2024', 'Mai 2024',
-      'Iunie 2024', 'Iulie 2024', 'August 2024', 'Septembrie 2024', 'Octombrie 2024',
-      'Noiembrie 2024', 'Decembrie 2024'
+    ani = [2024, 2025] # Lista anilor pe care vrei să-i incluzi
+    luni_romana = [
+      'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie',
+      'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'
     ]
+  
+    @months = ani.flat_map do |an|
+      luni_romana.map { |luna| "#{luna} #{an}" }
+    end
   end
+  
 
   def analiza_lunara
     set_month_and_year
@@ -524,23 +529,21 @@ class FacturaproformasController < ApplicationController
     end
     
     def set_month_and_year
-      month_mapping = {
-        'Ianuarie 2024' => 1,
-        'Februarie 2024' => 2,
-        'Martie 2024' => 3,
-        'Aprilie 2024' => 4,
-        'Mai 2024' => 5,
-        'Iunie 2024' => 6,
-        'Iulie 2024' => 7,
-        'August 2024' => 8,
-        'Septembrie 2024' => 9,
-        'Octombrie 2024' => 10,
-        'Noiembrie 2024' => 11,
-        'Decembrie 2024' => 12
-      }
       @selected_month = params[:month]
-      @month_number = month_mapping[@selected_month]
-      @anul = @selected_month.scan(/\d{4}/).first.to_i
+      if @selected_month.present?
+        month_mapping = {
+          'Ianuarie' => 1, 'Februarie' => 2, 'Martie' => 3, 'Aprilie' => 4,
+          'Mai' => 5, 'Iunie' => 6, 'Iulie' => 7, 'August' => 8,
+          'Septembrie' => 9, 'Octombrie' => 10, 'Noiembrie' => 11, 'Decembrie' => 12
+        }
+    
+        luna, an = @selected_month.split(' ')
+        @month_number = month_mapping[luna]
+        @anul = an.to_i
+      else
+        redirect_to root_path, alert: 'Selectați o lună validă.'
+      end
     end
+    
    
 end
