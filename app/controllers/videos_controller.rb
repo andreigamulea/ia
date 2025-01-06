@@ -473,7 +473,8 @@ end
             @condition2 = false
             special_emails_with_dates = {
               'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4),
-              'derynola@gmx.com' => Date.new(2026, 1, 4)
+              'derynola@gmx.com' => Date.new(2026, 1, 4),
+              'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6)
             }
       
             # Data curentă
@@ -747,7 +748,8 @@ end
 
       @condition2 = false
       special_emails_with_dates = {
-        'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4)
+        'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4),
+        'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6)
       }
 
       # Data curentă
@@ -824,7 +826,8 @@ end
 
       @condition2 = false
       special_emails_with_dates = {
-        'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4)
+        'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4),
+        'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6)
       }
 
       # Data curentă
@@ -885,7 +888,8 @@ end
                   @condition2 = false
                   special_emails_with_dates = {
                     'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4),
-                    'derynola@gmx.com' => Date.new(2026, 1, 4)
+                    'derynola@gmx.com' => Date.new(2026, 1, 4),
+                    'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6)
                   }
 
                   # Data curentă
@@ -981,8 +985,19 @@ end
       end  
 
 
-#################################
+##################################
+    special_emails_with_dates = {        
+        'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6)
+      }
 
+      # Data curentă
+      data_today = Date.today
+
+      # Verificare dacă utilizatorul curent are un email special și data este validă
+      if special_emails_with_dates.key?(current_user.email) && data_today <= special_emails_with_dates[current_user.email]
+        @condition2 = true
+        @has_access = true    
+      end
 
 
       ###################################
@@ -1024,7 +1039,19 @@ end
       @has_access=true
       @condition2=true
       end  
+      #################################
+      special_emails_with_dates = {        
+        'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6)
+      }
 
+      # Data curentă
+      data_today = Date.today
+
+      # Verificare dacă utilizatorul curent are un email special și data este validă
+      if special_emails_with_dates.key?(current_user.email) && data_today <= special_emails_with_dates[current_user.email]
+        @condition2 = true
+        @has_access = true    
+      end
       ###################################
 
       @condition1 = if current_user
@@ -1124,7 +1151,8 @@ end
       special_emails_with_dates = {
           'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4),
           'derynola@gmx.com' => Date.new(2026, 1, 4),
-          'tirolina9@yahoo.com' => Date.new(2025, 4, 5)
+          'tirolina9@yahoo.com' => Date.new(2025, 4, 5),
+          'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6)
         }
 
       # Data curentă
@@ -1232,7 +1260,8 @@ end
       special_emails_with_dates = {
           'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4),
           'derynola@gmx.com' => Date.new(2026, 1, 4),
-          'tirolina9@yahoo.com' => Date.new(2025, 4, 5)
+          'tirolina9@yahoo.com' => Date.new(2025, 4, 5),
+          'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6)
         }
 
       # Data curentă

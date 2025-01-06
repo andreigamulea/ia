@@ -77,6 +77,24 @@ unless valid_prods.empty?
 @has_access=true
 @condition2=true
 end  
+
+
+
+special_emails_with_dates = {        
+        'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6)
+      }
+
+      # Data curentă
+      data_today = Date.today
+
+      # Verificare dacă utilizatorul curent are un email special și data este validă
+      if special_emails_with_dates.key?(current_user.email) && data_today <= special_emails_with_dates[current_user.email]
+        @condition2 = true
+        @has_access = true    
+      end
+
+
+
 end
 
 #################################

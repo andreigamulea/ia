@@ -60,7 +60,8 @@ class Nutritie4Controller < ApplicationController
         special_emails_with_dates = {
           'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4),
           'derynola@gmx.com' => Date.new(2026, 1, 4),
-          'tirolina9@yahoo.com' => Date.new(2025, 4, 5)
+          'tirolina9@yahoo.com' => Date.new(2025, 4, 5),
+          'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6)
         }
 
       # Data curentă
