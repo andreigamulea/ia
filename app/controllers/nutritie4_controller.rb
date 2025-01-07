@@ -63,7 +63,8 @@ class Nutritie4Controller < ApplicationController
           'tirolina9@yahoo.com' => Date.new(2025, 4, 5),
           'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6),
           'lenavasvari@yahoo.com' => Date.new(2026, 1, 6),
-          'pnati27@yahoo.com' => Date.new(2025, 7, 6)
+          'pnati27@yahoo.com' => Date.new(2025, 7, 6),
+          'adrian.angelic.realm@gmail.com' => Date.new(2026, 1, 6)
         }
 
       # Data curentă

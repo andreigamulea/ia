@@ -81,7 +81,8 @@ end
 
 
 special_emails_with_dates = {        
-        'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6)
+        'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6),
+        'adrian.angelic.realm@gmail.com' => Date.new(2026, 1, 6)
       }
 
       # Data curentă

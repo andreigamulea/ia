@@ -333,7 +333,8 @@ class ValorinutritionalesController < ApplicationController
 
       ########################
       @condition2 = false
-      special_emails = ['cristina.nedescu@gmail.com','derynola@gmx.com','lucianpop1@yahoo.fr','lenavasvari@yahoo.com','pnati27@yahoo.com']
+      special_emails = ['cristina.nedescu@gmail.com','derynola@gmx.com',
+      'lucianpop1@yahoo.fr','lenavasvari@yahoo.com','pnati27@yahoo.com','adrian.angelic.realm@gmail.com']
 
       # Verificare dacă utilizatorul curent are un email special
       if special_emails.include?(current_user.email)
@@ -396,7 +397,8 @@ class ValorinutritionalesController < ApplicationController
 
       ########################
         @condition2 = false
-        special_emails = ['cristina.nedescu@gmail.com','derynola@gmx.com','lucianpop1@yahoo.fr','lenavasvari@yahoo.com','pnati27@yahoo.com']
+        special_emails = ['cristina.nedescu@gmail.com','derynola@gmx.com','lucianpop1@yahoo.fr',
+        'lenavasvari@yahoo.com','pnati27@yahoo.com','adrian.angelic.realm@gmail.com']
 
         # Verificare dacă utilizatorul curent are un email special
         if special_emails.include?(current_user.email)
