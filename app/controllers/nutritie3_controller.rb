@@ -88,7 +88,8 @@ class Nutritie3Controller < ApplicationController
         'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4),
         'derynola@gmx.com' => Date.new(2026, 1, 4),
         'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6),
-        'lenavasvari@yahoo.com' => Date.new(2026, 1, 6)
+        'lenavasvari@yahoo.com' => Date.new(2026, 1, 6),
+        'pnati27@yahoo.com' => Date.new(2025, 7, 6)
       }
 
 

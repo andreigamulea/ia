@@ -475,7 +475,8 @@ end
               'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4),
               'derynola@gmx.com' => Date.new(2026, 1, 4),
               'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6),
-              'lenavasvari@yahoo.com' => Date.new(2026, 1, 6)
+              'lenavasvari@yahoo.com' => Date.new(2026, 1, 6),
+              'pnati27@yahoo.com' => Date.new(2025, 7, 6)
             }
       
             # Data curentă
@@ -893,7 +894,8 @@ end
                     'cristina.nedescu@gmail.com' => Date.new(2026, 1, 4),
                     'derynola@gmx.com' => Date.new(2026, 1, 4),
                     'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6),
-                    'lenavasvari@yahoo.com' => Date.new(2026, 1, 6)
+                    'lenavasvari@yahoo.com' => Date.new(2026, 1, 6),
+                    'pnati27@yahoo.com' => Date.new(2025, 7, 6)
                   }
 
                   # Data curentă
@@ -1157,7 +1159,8 @@ end
           'derynola@gmx.com' => Date.new(2026, 1, 4),
           'tirolina9@yahoo.com' => Date.new(2025, 4, 5),
           'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6),
-          'lenavasvari@yahoo.com' => Date.new(2026, 1, 6)
+          'lenavasvari@yahoo.com' => Date.new(2026, 1, 6),
+          'pnati27@yahoo.com' => Date.new(2025, 7, 6)
         }
 
       # Data curentă
@@ -1194,6 +1197,7 @@ end
       unless valid_prods.empty?
         @has_access = true
         @condition2 = true
+        return true
       end
       #################################
 
@@ -1267,7 +1271,8 @@ end
           'derynola@gmx.com' => Date.new(2026, 1, 4),
           'tirolina9@yahoo.com' => Date.new(2025, 4, 5),
           'lucianpop1@yahoo.fr' => Date.new(2026, 1, 6),
-          'lenavasvari@yahoo.com' => Date.new(2026, 1, 6)
+          'lenavasvari@yahoo.com' => Date.new(2026, 1, 6),
+          'pnati27@yahoo.com' => Date.new(2025, 7, 6)
         }
 
       # Data curentă
@@ -1308,6 +1313,7 @@ end
       unless valid_prods.empty?
         @has_access = true
         @condition2 = true
+        return true
       end
       #################################
       if current_user.role == 1
