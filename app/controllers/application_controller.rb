@@ -220,6 +220,8 @@ end
           cognitronica_path
         elsif return_to == "vajikarana1"   
           vajikarana_modul1_path 
+        elsif return_to == "vajikarana2"   
+          vajikarana_modul2_path 
         elsif return_to == "rasayana1"   
           rasayana_modul1_path  
         elsif return_to == "optimizarea_performanțelor_cognitive" 
