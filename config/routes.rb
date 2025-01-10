@@ -1,4 +1,7 @@
 Rails.application.routes.draw do 
+  get 'cursuri_ayurveda/ayurveda_padartha', to: 'cursuri_ayurveda#ayurveda_padartha', as: 'ayurveda_padartha'
+
+
   get 'rasayana/modul1', to: 'rasayana#modul1', as: 'rasayana_modul1'
   post 'home/make_unlisted', to: 'home#make_unlisted'
   get 'get_encryption_key', to: 'home#get_encryption_key'
