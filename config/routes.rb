@@ -121,6 +121,7 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get 'traditia_ayurvedica/maudgalya', to: 'traditia_ayurvedica#maudgalya', as: 'maudgalya'
   get 'traditia_ayurvedica/cognitronica', to: 'traditia_ayurvedica#cognitronica', as: 'cognitronica'
   get 'traditia_ayurvedica/nimi', to: 'traditia_ayurvedica#nimi' , as: 'nimi'
+  get 'traditia_ayurvedica/shukracharya', to: 'traditia_ayurvedica#shukracharya' , as: 'shukracharya'
   get 'traditia_ayurvedica/modele_spirituale', to: 'traditia_ayurvedica#modele_spirituale'
 
 
