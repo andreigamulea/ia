@@ -63,10 +63,10 @@
     
     <% if !current_user %>      
     <div class="r1c2">
-        <%= link_to 'Vezi mai mult..', new_user_session_with_return_path('Shukracharya'), class: 'register' %>
+        <%= link_to 'Vezi mai mult..', new_user_session_with_return_path('shukracharya'), class: 'register' %>
     </div>
     <%elsif current_user%>
-    <%= link_to 'Vizionează acum', 'Shukracharya', class: 'register' %>
+    <%= link_to 'Vizionează acum', '#Shukracharya-rishi', class: 'register' %>
 
      <%end%> 
      
@@ -94,7 +94,7 @@
 
 <% if !current_user %>      
     <div class="r1c2" style="align-items: center; width:100%;">
-        <%= link_to 'Vizionează seminarul complet', new_user_session_with_return_path('Shukracharya'), class: 'register' %>
+        <%= link_to 'Vizionează seminarul complet', new_user_session_with_return_path('shukracharya'), class: 'register' %>
     </div>
     <%elsif current_user && !@has_access%>
     <div class="r1c2" style="align-items: center; width:100%;">
@@ -190,7 +190,7 @@
                          </td>
                        <% else %>
                          <td style="text-align:center;">
-                           <%= link_to 'Accesează', new_user_session_with_return_path('Shukracharya'), class: 'btn btn-primary' %>
+                           <%= link_to 'Accesează', new_user_session_with_return_path('shukracharya'), class: 'btn btn-primary' %>
                          </td>
                        <% end %>
                        
