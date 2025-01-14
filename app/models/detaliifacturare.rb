@@ -1,51 +1,51 @@
-
 class Detaliifacturare < ApplicationRecord
   belongs_to :user
   validates :user_id, uniqueness: true
   validates :user_id, presence: true
-  
-  
-  validates :prenume, :nume, :tara, :localitate, :strada, :numar, :telefon, presence: { message: 'este obligatoriu' }
+
+  validates :prenume, :nume, :strada, :numar, :telefon, presence: { message: 'este obligatoriu' }
 
   validate :adresaemail_be_present
   validate :codpostal_be_present
-  validate :judet_be_present
 
-  # Validări pentru adresa alternativă de livrare
-  validates :prenume1, :nume1, :tara1, :localitate1, :strada1, :numar1, :telefon1, presence: { message: '' }, if: :use_alternate_shipping?
-  
-  validate :codpostal1_be_present, if: :use_alternate_shipping?
-  validate :judet1_be_present, if: :use_alternate_shipping?
+  # Validare condiționată pentru județ și localitate
+  validate :judet_and_localitate_validation
+
+  validates :tara, presence: true, inclusion: { in: ->(_) { Tari.pluck(:nume) }, message: "nu este validă." }
 
   private
 
   def adresaemail_be_present
-    #errors.add(:base, 'Adresa de email') if adresaemail.blank?
     errors.add(:adresaemail, 'Adresa de email este obligatorie') if adresaemail.blank?
-
   end
 
   def codpostal_be_present
     errors.add(:base, 'Cod postal') if codpostal.blank?
   end
-  
 
-  def judet_be_present
-    errors.add(:base, 'Judet / Sector') if judet.blank?
-  end
+  # Validare condiționată pentru județ și localitate
+  def judet_and_localitate_validation
+    if tara.present? && tara.downcase == "romania"
+      # Pentru România, judet și localitate sunt obligatorii și trebuie să fie valide
+      if judet.blank?
+        errors.add(:judet, 'este obligatoriu pentru România.')
+      elsif !Judet.exists?(denjud: judet)
+        errors.add(:judet, 'nu este valid.')
+      end
 
-  # Metode pentru validarea adreselor alternative de livrare
-  
-
-  def codpostal1_be_present
-    errors.add(:base, 'Cod postal (livrare)') if codpostal1.blank?
+      if localitate.blank?
+        errors.add(:localitate, 'este obligatorie pentru România.')
+      elsif !Localitati.exists?(denumire: localitate, denj: judet)
+        errors.add(:localitate, 'nu aparține județului selectat.')
+      end
+    else
+      # Pentru alte țări, validăm doar ca valorile să fie prezente, nu și să fie în tabele
+      if judet.blank?
+        errors.add(:judet, 'este obligatoriu pentru țările din afara României.')
+      end
+      if localitate.blank?
+        errors.add(:localitate, 'este obligatorie pentru țările din afara României.')
+      end
+    end
   end
-
-  def judet1_be_present
-    errors.add(:base, 'Judet / Sector (livrare)') if judet1.blank?
-  end
-  def use_alternate_shipping?
-    self.use_alternate_shipping
-  end
-  
 end

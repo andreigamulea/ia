@@ -1,4 +1,13 @@
 Rails.application.routes.draw do 
+  get '/get_judets', to: 'detaliifacturares#get_judets'
+  get '/get_localitatis', to: 'detaliifacturares#get_localitatis'
+  get '/autocomplete_tara', to: 'detaliifacturares#autocomplete_tara'
+get '/autocomplete_judet', to: 'detaliifacturares#autocomplete_judet'
+get '/autocomplete_localitate', to: 'detaliifacturares#autocomplete_localitate'
+
+
+
+
   get 'cursuri_ayurveda/ayurveda_padartha', to: 'cursuri_ayurveda#ayurveda_padartha', as: 'ayurveda_padartha'
 
 

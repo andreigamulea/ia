@@ -1,4 +1,24 @@
+<style>
+.dropdown-menu {
+  border: 1px solid #ccc;
+  background-color: white;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  z-index: 1000;
+  width: 100%;
+}
 
+.dropdown-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+</style>
 <% if user_signed_in? %> 
 <div class="c1">
 
@@ -45,28 +65,41 @@
     </div>
 
     <div class="mb-3">
-        <%= f.label "Cui (optional)", class: "form-label" %>
+        <%= f.label "Cui/Cnp (optional)", class: "form-label" %>
         <%= f.text_field :cui, class: "form-control" %>
     </div>
 
   
 
-    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:tara].any? %>">
-        <%= f.label :tara, class: "form-label" %>
-        <%= f.text_field :tara, class: "form-control", value: f.object.tara.presence || "România" %>
-    </div>
-            
-    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:localitate].any? %>">
-      <%= f.label :localitate, class: "form-label" %>
-      <%= f.text_field :localitate, class: "form-control" %>
-    </div>
+    <div class="mb-3">
+  <%= f.label :tara, "Țara", class: "form-label" %>
+  <div class="position-relative">
+    <%= f.text_field :tara, class: "form-control", id: "tara_input", placeholder: "Selectează țara...", autocomplete: "off" %>
+    <div id="tara_dropdown" class="dropdown-menu w-100 shadow"></div>
+  </div>
+</div>
 
-    <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:judet].any? %>">
-    <%= f.label :judet, "Judet / Sector".titleize, class: "form-label" %>
-      <%= f.text_field :judet, class: "form-control" %>
-    </div>
+<div class="mb-3">
+  <%= f.label :judet, "Județ", class: "form-label" %>
+  <div class="position-relative">
+    <%= f.text_field :judet, class: "form-control", id: "judet_input", placeholder: "Selectează județul...", autocomplete: "off" %>
+    <div id="judet_dropdown" class="dropdown-menu w-100 shadow"></div>
+  </div>
+</div>
 
-    
+<div class="mb-3">
+  <%= f.label :localitate, "Localitate", class: "form-label" %>
+  <div class="position-relative">
+    <%= f.text_field :localitate, class: "form-control", id: "localitate_input", placeholder: "Selectează localitatea...", autocomplete: "off" %>
+    <div id="localitate_dropdown" class="dropdown-menu w-100 shadow"></div>
+  </div>
+</div>
+
+
+
+
+
+
   
 
   <div class="mb-3 <%= 'has-error' if @detaliifacturare.errors[:strada].any? %>">
@@ -244,6 +277,101 @@
     });
   });
 </script>
+<script>
+document.addEventListener("turbo:load", function () {
+  function setupAutocomplete(inputId, dropdownId, endpoint, filterId = null) {
+    const input = document.getElementById(inputId);
+    const dropdown = document.getElementById(dropdownId);
+    let validSuggestions = []; // Stocăm sugestiile valide
 
+    function updateDropdown(query, filterValue = null) {
+      dropdown.innerHTML = ''; // Resetăm lista
+      if (query.length > 1) {
+        let url = `${endpoint}?q=${encodeURIComponent(query)}`;
+        if (filterValue) {
+          url += `&filter=${encodeURIComponent(filterValue)}`;
+        }
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            validSuggestions = data; // Actualizăm lista sugestiilor valide
+            if (data.length > 0) {
+              dropdown.style.display = 'block';
+              data.forEach((item) => {
+                const option = document.createElement('a');
+                option.classList.add('dropdown-item');
+                option.textContent = item;
+                option.href = '#';
+                option.addEventListener('click', (e) => {
+                  e.preventDefault();
+                  input.value = item;
+                  dropdown.style.display = 'none';
+                });
+                dropdown.appendChild(option);
+              });
+            } else {
+              dropdown.style.display = 'none';
+            }
+          })
+          .catch((error) => console.error("Eroare la încărcarea sugestiilor:", error));
+      } else {
+        validSuggestions = []; // Resetăm sugestiile valide
+        dropdown.style.display = 'none';
+      }
+    }
+
+    input.addEventListener('input', () => {
+      const query = input.value.trim();
+      const filterValue = filterId ? document.getElementById(filterId)?.value.trim() : null;
+      updateDropdown(query, filterValue);
+    });
+
+    input.addEventListener('blur', () => {
+      // Resetăm câmpul dacă valoarea nu este validă doar pentru România
+      const tara = document.getElementById("tara_input")?.value.toLowerCase();
+      if (tara === "romania" && !validSuggestions.includes(input.value)) {
+        input.value = '';
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!dropdown.contains(event.target) && event.target !== input) {
+        dropdown.style.display = 'none';
+      }
+    });
+  }
+
+  // Configurează autocomplete pentru țară
+  setupAutocomplete("tara_input", "tara_dropdown", "/autocomplete_tara");
+
+  // Configurează autocomplete pentru județ
+  setupAutocomplete("judet_input", "judet_dropdown", "/autocomplete_judet");
+
+  // Configurează autocomplete pentru localități, cu filtrare pe județ
+  setupAutocomplete("localitate_input", "localitate_dropdown", "/autocomplete_localitate", "judet_input");
+
+  // Gestionăm activarea/dezactivarea funcționalității în funcție de țară
+  const taraInput = document.getElementById("tara_input");
+  const judetInput = document.getElementById("judet_input");
+  const localitateInput = document.getElementById("localitate_input");
+
+  taraInput.addEventListener("input", function () {
+    const tara = taraInput.value.trim().toLowerCase();
+    if (tara === "romania") {
+      // Activează autocomplete pentru județ și localitate
+      judetInput.disabled = false;
+      localitateInput.disabled = false;
+
+      // Resetăm valorile câmpurilor dacă anterior s-a completat pentru o țară străină
+      judetInput.value = "";
+      localitateInput.value = "";
+    } else {
+      // Permite completarea liberă pentru țările străine
+      judetInput.disabled = false;
+      localitateInput.disabled = false;
+    }
+  });
+});
+</script>
 
 
