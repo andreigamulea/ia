@@ -467,7 +467,7 @@ def autocomplete_tara
 
   def autocomplete_localitate
     query = params[:q].to_s.downcase.strip
-    filter = params[:filter].to_s.downcase.strip # Județul selectat
+    filter = params[:filter].to_s.downcase.strip ## Județul selectat
     if query.present? && filter.present?
       results = Localitati.where("LOWER(denumire) LIKE ? AND LOWER(denj) = ?", "%#{query}%", filter).pluck(:denumire)
       render json: results, status: :ok
