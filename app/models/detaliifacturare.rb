@@ -13,6 +13,7 @@ class Detaliifacturare < ApplicationRecord
 
   validates :tara, presence: true, inclusion: { in: ->(_) { Tari.pluck(:nume) }, message: "nu este validă." }
 
+  before_save :normalize_cnp
   private
 
   def adresaemail_be_present
@@ -48,4 +49,11 @@ class Detaliifacturare < ApplicationRecord
       end
     end
   end
+
+  def normalize_cnp
+    unless cnp.present? && cnp.match?(/\A\d{13}\z/)
+      self.cnp = "0000000000000"
+    end
+  end
+
 end

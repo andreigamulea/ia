@@ -65,11 +65,15 @@
     </div>
 
     <div class="mb-3">
-        <%= f.label "Cui/Cnp (optional)", class: "form-label" %>
+        <%= f.label "Cui (optional)", class: "form-label" %>
         <%= f.text_field :cui, class: "form-control" %>
     </div>
 
-  
+    <div class="mb-3">
+      <%= f.label "CNP (optional)", class: "form-label" %>
+      <%= f.text_field :cnp, class: "form-control", placeholder: "0000000000000" %>
+    </div>
+
 
     <div class="mb-3">
   <%= f.label :tara, "Țara", class: "form-label" %>

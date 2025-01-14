@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_03_232921) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_14_005030) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -399,6 +399,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_03_232921) do
     t.text "altedate1"
     t.string "telefon1"
     t.boolean "use_alternate_shipping", default: false
+    t.string "cnp"
   end
 
   create_table "facturaproformas", force: :cascade do |t|

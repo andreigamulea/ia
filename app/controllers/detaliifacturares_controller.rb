@@ -597,7 +597,7 @@ def detaliifacturare_params
     :prenume, :nume, :numecompanie, :cui, :tara, :judet, :localitate, 
     :codpostal, :strada, :numar, :altedate, :telefon, :adresaemail, :s,
     :prenume1, :nume1, :numecompanie1, :tara1, :codpostal1, :strada1, 
-    :numar1, :localitate1, :judet1, :altedate1, :telefon1, 
+    :numar1, :localitate1, :judet1, :altedate1, :telefon1, :cnp,
     :use_alternate_shipping # presupunând că ai adăugat acest câmp pentru a ține evidența căsuței bifate
   )
 end
