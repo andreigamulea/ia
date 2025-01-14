@@ -407,44 +407,7 @@ AdresaComenzi.create!(atribute_adresacomenzi)
       return
     end
 end
-def get_judets
-  tara = params[:tara] # Obține țara din parametrii URL
-  if tara == "Romania"
-    # Returnează toate județele din baza de date
-    judets = Judet.all.pluck(:denjud)
-    render json: judets, status: :ok
-  else
-    # Pentru alte țări, returnează o listă goală
-    render json: [], status: :ok
-  end
-end
-def get_localitatis
-  judet = params[:judet] # Obține județul selectat din parametrii URL
-  if judet.present?
-    # Selectează localitățile din județul specificat și le sortează alfabetic după `denumire`
-    localitati = Localitati.where(denj: judet).order(:denumire)
-    render json: localitati, status: :ok
-  else
-    render json: [], status: :ok
-  end
-end
-def tara
-  query = params[:q].to_s.downcase
-  results = Tari.where("LOWER(nume) LIKE ?", "%#{query}%").pluck(:nume)
-  render json: results
-end
 
-def judet
-  query = params[:q].to_s.downcase
-  results = Judet.where("LOWER(denjud) LIKE ?", "%#{query}%").pluck(:denjud)
-  render json: results
-end
-
-def localitate
-  query = params[:q].to_s.downcase
-  results = Localitati.where("LOWER(denumire) LIKE ?", "%#{query}%").pluck(:denumire)
-  render json: results
-end
 def autocomplete_tara
     query = params[:q].to_s.downcase.strip
     if query.present?
@@ -467,7 +430,7 @@ def autocomplete_tara
 
   def autocomplete_localitate
     query = params[:q].to_s.downcase.strip
-    filter = params[:filter].to_s.downcase.strip ## Județul selectat
+    filter = params[:filter].to_s.downcase.strip # Județul selectat
     if query.present? && filter.present?
       results = Localitati.where("LOWER(denumire) LIKE ? AND LOWER(denj) = ?", "%#{query}%", filter).pluck(:denumire)
       render json: results, status: :ok
