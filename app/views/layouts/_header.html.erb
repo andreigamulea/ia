@@ -43,7 +43,10 @@
                        <%= link_to 'Curs Rasayana', rasayana_modul1_path, class: 'no-turbo' %>
                     </li>
                     <li class="nav-item">
-                       <%= link_to 'Curs Vajikarana', vajikarana_modul1_path, class: 'no-turbo' %>
+                       <%= link_to 'Curs Vajikarana modul 1', vajikarana_modul1_path, class: 'no-turbo' %>
+                    </li>
+                    <li class="nav-item">
+                       <%= link_to 'Curs Vajikarana modul 2', vajikarana_modul2_path, class: 'no-turbo' %>
                     </li>
                     <% if current_user && (current_user.role == 1 || Listacanal1.exists?(email: current_user.email)) %>
                     <li class="nav-item">
