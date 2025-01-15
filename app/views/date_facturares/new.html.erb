@@ -135,110 +135,115 @@ input[type="submit"]:hover {
    </ul>
  </div>
 <% end %>
-<%= form_with(model: @date_facturare, local: true) do |form| %>
-  <%= form.hidden_field :user_id %>
-  <%= form.hidden_field :email %>
-  <%= form.hidden_field :cod %>
-  <%= form.hidden_field :firma_id %>
- 
+<% if user_signed_in? %>
+  <%= form_with(model: @date_facturare, local: true, data: { turbo: false }) do |f| %>
+    <%= f.hidden_field :user_id %>
+    <%= f.hidden_field :email %>
+    <%= f.hidden_field :cod %>
+    <%= f.hidden_field :firma_id %>
 
-  
+    <div class="form-group">
+      <%= f.label :Prenume %>
+      <%= f.text_field :prenume %>
+    </div>
 
+    <div class="form-group">
+      <%= f.label :Nume %>
+      <%= f.text_field :nume %>
+    </div>
 
-  <form>
-  <div class="form-group">
-    <%= form.label :Prenume %>
-    <%= form.text_field :prenume %>
-  </div>
+    <div class="form-group">
+      <%= f.label "CNP (optional)" %>
+      <%= f.text_field :cnp, placeholder: "0000000000000" %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :Nume %>
-    <%= form.text_field :nume %>
-  </div>
+    <% if current_user&.role == 1 %>
+      <div class="form-group">
+        <%= f.label :numecompanie, "Nume Companie" %>
+        <%= f.text_field :numecompanie %>
+      </div>
+      <div class="form-group">
+        <%= f.label :CUI %>
+        <%= f.text_field :cui %>
+      </div>
+    <% end %>
 
+    <!-- ȚARA + Autocomplete -->
+    <div class="form-group">
+      <%= f.label :Tara %>
+      <%= f.text_field :tara, id: "tara_input2", autocomplete: "off", placeholder: "Selectează țara..." %>
+      <!-- dropdown de sugestii -->
+      <div id="tara_dropdown2" class="dropdown-menu w-100 shadow" style="display:none;"></div>
+    </div>
 
-  <% if current_user&.role == 1 %>
-  <div class="form-group">
-    <%= form.label :numecompanie, "Nume Companie" %>
-    <%= form.text_field :numecompanie %>
-  </div>
+    <!-- JUDET + Autocomplete -->
+    <div class="form-group">
+      <%= f.label :judet, "Judet / Sector" %>
+      <%= f.text_field :judet, id: "judet_input2", autocomplete: "off", placeholder: "Selectează județul..." %>
+      <div id="judet_dropdown2" class="dropdown-menu w-100 shadow" style="display:none;"></div>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :CUI %>
-    <%= form.text_field :cui %>
-  </div>
+    <!-- LOCALITATE + Autocomplete -->
+    <div class="form-group">
+      <%= f.label :Localitate %>
+      <%= f.text_field :localitate, id: "localitate_input2", autocomplete: "off", placeholder: "Selectează localitatea..." %>
+      <div id="localitate_dropdown2" class="dropdown-menu w-100 shadow" style="display:none;"></div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :Strada %>
+      <%= f.text_field :strada %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :Numar %>
+      <%= f.text_field :numar %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :altedate, "Bloc, scara, etaj, apartament" %>
+      <%= f.text_area :altedate %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :codpostal, "Cod Postal" %>
+      <%= f.text_field :codpostal %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :Telefon %>
+      <%= f.text_field :telefon %>
+    </div>
+
+    <% if current_user&.role == 1 %>
+      <div class="form-group">
+        <%= f.label :adresaemail, "Adresa email" %>
+        <%= f.text_field :adresaemail %>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :grupa_curs_ayurveda, "Grupa curs ayurveda (ex. 2, 3, etc)" %>
+      <%= f.select :grupa2425, options_for_select([nil, 4, 31]), {}, { class: 'form-control' } %>
+    </div>
+
+    <% if current_user&.role == 1 %>
+      <div class="form-group">
+        <%= f.label :cpa, "CPA (cod practicant ayurveda)" %>
+        <%= f.text_field :cpa %>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.submit "Trimite" %>
+    </div>
   <% end %>
 
+<% else %>
+  <h2>Vă rugăm să vă logați pentru a accesa acest formular</h2>
+<% end %><% end %>
 
 
-  <div class="form-group">
-    <%= form.label :Tara %>
-    <%= form.text_field :tara %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :Localitate %>
-    <%= form.text_field :localitate %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :judet, "Judet / Sector" %>
-    <%= form.text_field :judet %>
-  </div>
-
-
-  <div class="form-group">
-    <%= form.label :Strada %>
-    <%= form.text_field :strada %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :Numar %>
-    <%= form.text_field :numar %>
-  </div>
-  
-  <div class="form-group">
-    <%= form.label :altedate, "Bloc, scara, etaj, apartament" %>
-    <%= form.text_area :altedate %>
-  </div>
-  
-  <div class="form-group">
-    <%= form.label :codpostal, "Cod Postal" %>
-    <%= form.text_field :codpostal %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :Telefon %>
-    <%= form.text_field :telefon %>
-  </div>
-  <% if current_user&.role == 1 %>
-  <div class="form-group">
-    <%= form.label :adresaemail, "Adresa email" %>
-    <%= form.text_field :adresaemail %>
-  </div>
-  <% end %>
-
-  <div class="form-group">
-  <%= form.label :grupa_curs_ayurveda, "Grupa curs ayurveda (ex. 2, 3, etc)" %>
-  <%= form.select :grupa2425, options_for_select([nil,4, 31]), {}, { class: 'form-control' } %>
-</div>
-
-  <% if current_user&.role == 1 %>
-  <div class="form-group">
-    <%= form.label :cpa, "CPA (cod practicant ayurveda)" %>
-    <%= form.text_field :cpa %>
-  </div>
-  <% end %>
-  <div class="form-group">
-    <%= form.submit "Trimite" %>
-  </div>
-
-</form>
-
-<% end %>
-<%else%>
-<h2 class="main-title" >Va rugam sa va logati pentru a avea acces la acest formular</h2>
-<% end %>
 
 <br>
 <!--
@@ -250,3 +255,108 @@ input[type="submit"]:hover {
 </section>
 
 </div></div>
+
+<script>
+document.addEventListener("turbo:load", function () {
+  function setupAutocomplete(inputId, dropdownId, endpoint, filterId = null) {
+    const input = document.getElementById(inputId);
+    const dropdown = document.getElementById(dropdownId);
+    let validSuggestions = []; // Stocăm sugestiile valide
+
+    function updateDropdown(query, filterValue = null) {
+      // Verificăm dacă țara este "romania"
+      const taraInput = document.getElementById("tara_input2");
+      const isRomania = taraInput && taraInput.value.trim().toLowerCase() === "romania";
+
+      // Dacă e judet/localitate și țara NU e România, nu afișăm dropdown:
+      if ((inputId === "judet_input2" || inputId === "localitate_input2") && !isRomania) {
+        dropdown.innerHTML = '';
+        dropdown.style.display = 'none';
+        return;
+      }
+
+      // Afișăm dropdown normal
+      dropdown.innerHTML = '';
+      if (query.length > 1) {
+        let url = `${endpoint}?q=${encodeURIComponent(query)}`;
+        if (filterValue) {
+          url += `&filter=${encodeURIComponent(filterValue)}`;
+        }
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            validSuggestions = data;
+            if (data.length > 0) {
+              dropdown.style.display = 'block';
+              data.forEach((item) => {
+                const option = document.createElement('a');
+                option.classList.add('dropdown-item');
+                option.textContent = item;
+                option.href = '#';
+                option.addEventListener('click', (e) => {
+                  e.preventDefault();
+                  input.value = item;
+                  dropdown.style.display = 'none';
+                });
+                dropdown.appendChild(option);
+              });
+            } else {
+              dropdown.style.display = 'none';
+            }
+          })
+          .catch((error) => console.error("Eroare la încărcarea sugestiilor:", error));
+      } else {
+        validSuggestions = [];
+        dropdown.style.display = 'none';
+      }
+    }
+
+    // Când utilizatorul tastează
+    input.addEventListener('input', () => {
+      const query = input.value.trim();
+      const filterValue = filterId ? document.getElementById(filterId)?.value.trim() : null;
+      updateDropdown(query, filterValue);
+    });
+
+    // La blur: pentru România, resetăm dacă nu a ales una dintre sugestii
+    input.addEventListener('blur', () => {
+      const tara = document.getElementById("tara_input2")?.value.toLowerCase();
+      if (tara === "romania" && !validSuggestions.includes(input.value)) {
+        input.value = '';
+      }
+    });
+
+    // Dacă se dă click în afara dropdown-ului
+    document.addEventListener('click', (event) => {
+      if (!dropdown.contains(event.target) && event.target !== input) {
+        dropdown.style.display = 'none';
+      }
+    });
+  }
+
+  // Activăm autocomplete
+  setupAutocomplete("tara_input2", "tara_dropdown2", "/autocomplete_tara2");
+  setupAutocomplete("judet_input2", "judet_dropdown2", "/autocomplete_judet2");
+  setupAutocomplete("localitate_input2", "localitate_dropdown2", "/autocomplete_localitate2", "judet_input2");
+
+  // Gestionăm active/inactive logic
+  const taraInput2 = document.getElementById("tara_input2");
+  const judetInput2 = document.getElementById("judet_input2");
+  const localitateInput2 = document.getElementById("localitate_input2");
+
+  taraInput2.addEventListener("input", function () {
+    const tara = taraInput2.value.trim().toLowerCase();
+    if (tara === "romania") {
+      // Activăm autocomplete
+      judetInput2.disabled = false;
+      localitateInput2.disabled = false;
+      judetInput2.value = "";
+      localitateInput2.value = "";
+    } else {
+      // Orice țară străină => câmpurile rămân text liber (fără dropdown, datorită condiției de mai sus)
+      judetInput2.disabled = false;
+      localitateInput2.disabled = false;
+    }
+  });
+});
+</script>

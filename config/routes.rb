@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   get '/autocomplete_tara', to: 'detaliifacturares#autocomplete_tara'
   get '/autocomplete_judet', to: 'detaliifacturares#autocomplete_judet'
   get '/autocomplete_localitate', to: 'detaliifacturares#autocomplete_localitate'
+  get '/autocomplete_tara2', to: 'date_facturares#autocomplete_tara'
+  get '/autocomplete_judet2', to: 'date_facturares#autocomplete_judet'
+  get '/autocomplete_localitate2', to: 'date_facturares#autocomplete_localitate'
 
 
 

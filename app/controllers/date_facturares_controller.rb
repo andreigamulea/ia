@@ -159,6 +159,41 @@ end
     # Send the file to the user
     send_file(file_path, filename: 'date_facturare.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
   end
+
+
+
+
+  def autocomplete_tara
+    query = params[:q].to_s.downcase.strip
+    if query.present?
+      results = Tari.where("LOWER(nume) LIKE ?", "%#{query}%").pluck(:nume)
+      render json: results, status: :ok
+    else
+      render json: [], status: :ok
+    end
+  end
+
+  def autocomplete_judet
+    query = params[:q].to_s.downcase.strip
+    if query.present?
+      results = Judet.where("LOWER(denjud) LIKE ?", "%#{query}%").pluck(:denjud)
+      render json: results, status: :ok
+    else
+      render json: [], status: :ok
+    end
+  end
+
+  def autocomplete_localitate
+    query = params[:q].to_s.downcase.strip
+    filter = params[:filter].to_s.downcase.strip  # județul selectat
+    if query.present? && filter.present?
+      results = Localitati.where("LOWER(denumire) LIKE ? AND LOWER(denj) = ?", "%#{query}%", filter).pluck(:denumire)
+      render json: results, status: :ok
+    else
+      render json: [], status: :ok
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_date_facturare
