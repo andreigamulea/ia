@@ -716,69 +716,25 @@ end
 
   
   def servicii
-    special_prod_id = 9
-    another_special_prod_id = 11
-
-    if current_user && current_user.role == 1
-      @prods = Prod.order(:id).to_a
-    else
-      @prods = Prod.where(status: 'activ').where.not(id: [special_prod_id, another_special_prod_id, 12]).order(:id).to_a
-
-    end
+    emailuri_promo = ["test@yahoo.com"]
   
-    if params[:payment] == "success"
-      flash[:notice] = "Plata a fost efectuată cu succes!"
-    end
-  
-    # Verifică dacă utilizatorul curent există în Userprod cu prod_id special_prod_id și adaugă produsul la lista de afișat
-    if current_user
-      if Userprod.exists?(user_id: current_user.id, prod_id: another_special_prod_id)
-        # Dacă utilizatorul are acces la produsul cu ID-ul 11
-        if !@prods.find { |prod| prod.id == another_special_prod_id }
-          another_special_prod = Prod.find(another_special_prod_id)
-          @prods << another_special_prod
-        end
-        
-        # Dă-le și acces la produsul cu ID-ul 12
-        if !@prods.find { |prod| prod.id == 12 }
-          prod_12 = Prod.find(12)
-          @prods << prod_12
-        end
+    if user_signed_in?
+      if emailuri_promo.include?(current_user.email)
+        @prods = Prod.where(cod: 'cod314').order(:id)
+      elsif current_user.role == 1
+        @prods = Prod.where(curslegatura: 'Lista vegetale', status: 'activ').order(:id)
+      else
+        @prods = Prod.where(curslegatura: 'Lista vegetale', status: 'activ')
+                     .where.not(cod: 'cod314')
+                     .order(:id)
       end
-    
-      # Logica pentru produsul special cu ID-ul 9 (ca mai înainte)
-      if Userprod.exists?(user_id: current_user.id, prod_id: special_prod_id) && !@prods.find { |prod| prod.id == special_prod_id }
-        special_prod = Prod.find(special_prod_id)
-        @prods << special_prod
-      end
-    end
-    #@prod_tayt12 = Prod.where(curslegatura: 'tayt12')
-    #@prod_tayt12 = Prod.where(curslegatura: 'tayt12').order(:cod)
-    @prod_tayt12 = Prod.where(curslegatura: 'tayt12', status: 'activ').order(:cod)
-
-
-    #startvariabilele pt nutritie3
-    @prod_id_cod11 = Prod.find_by(cod: 'cod11')&.id
-    @prod_id_cod13 = Prod.find_by(cod: 'cod13')&.id
-    
-   
-
-    if current_user
-      @user_has_prod_cod11 = ComenziProd.exists?(user_id: current_user.id, prod_id: @prod_id_cod11, validat: 'Finalizata')
-      @user_has_prod_cod13 = ComenziProd.exists?(user_id: current_user.id, prod_id: @prod_id_cod13, validat: 'Finalizata')    
-      @user_has_bought_cod11_or_cod13 = @user_has_prod_cod11 || @user_has_prod_cod13
     else
-      @user_has_prod_cod11 = false
-      @user_has_prod_cod13 = false
-      @user_has_bought_cod11_or_cod13 = false
+      @prods = Prod.where(curslegatura: 'Lista vegetale', status: 'activ')
+                   .where.not(cod: 'cod314')
+                   .order(:id)
     end
-    
-    
-    
-    #stoptvariabilele pt nutritie3
-
-    
-end
+  end
+  
 
   
   
