@@ -8,6 +8,11 @@ class DateFacturare < ApplicationRecord
 
   # Validare condiționată pentru județ și localitate
   validate :judet_and_localitate_validation
+  validates :tara, presence: true,
+  inclusion: { 
+    in: ->(_) { Tari.pluck(:nume) },
+    message: "nu este validă." 
+  }
 
   private
 
