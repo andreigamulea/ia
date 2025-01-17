@@ -165,7 +165,7 @@
               <tbody><% @prods.each do |prod| %><%if prod.cod!='cod108'%> <tr>
                   <td><%= prod.nume %> </td>
                   <td><%= prod.detalii %> </td>
-                  <td><%= prod.pret.to_i %> lei </td><% if current_user %> <td style="text-align:center;"><%= link_to 'Acceseaza cursul', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td><% else %> <td style="text-align:center;"><%= link_to 'Acceseaza cursul', new_user_session_with_return_path('rasayana'), class: 'btn btn-primary' %> </td><% end %>
+                  <td><%= prod.pret.to_i %> lei </td><% if current_user %> <td style="text-align:center;"><%= link_to 'Acceseaza cursul', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td><% else %> <td style="text-align:center;"><%= link_to 'Acceseaza cursul', new_user_session_with_return_path('ayurveda-padartha'), class: 'btn btn-primary' %> </td><% end %>
                 </tr><% end %><% end %> </tbody>
             </table>
           </div>
