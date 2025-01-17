@@ -24,78 +24,49 @@ class CursuriAyurvedaController < ApplicationController
         @has_acces_video = 4
         @nr_luni_achitate = 4
       else
-        products = Prod.where(curslegatura: 'rasayana1', cod: ['cod234', 'cod235', 'cod236', 'cod237', 'cod238', 'cod242', 'cod243', 'cod241'])
+        products = Prod.where(curslegatura: 'modul_ayurveda_padartha', cod: ['cod315', 'cod316', 'cod317'])
     
         if current_user.nil?
-          @prods = products.where(cod: ['cod234', 'cod238', 'cod243'])
+          @prods = products.where(cod: ['cod315',  'cod317'])
         else
           purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
                                        .joins(:prod)
-                                       .where(prods: { curslegatura: 'rasayana1', status: 'activ' })
+                                       .where(prods: { curslegatura: 'modul_ayurveda_padartha', status: 'activ' })
                                        .pluck('prods.cod')
     
-          if purchased_prods.include?('cod243')
-            @nr_luni_achitate = 4
-            @has_acces_video = 4
-            @prods = []
-            @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1')
-                                        .where('ordine >= ? AND ordine <= ?', 0, 1000)
-                                        .order(ordine: :asc).to_a
-            @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1')
-                                                  .where('ordine > ? AND ordine < ?', 1000, 2000)
-                                                  .order(ordine: :asc).to_a
-          elsif purchased_prods.include?('cod238')
-            puts("sunt aici1")
-            @nr_luni_achitate = 4
-            @has_acces_video = 4
-            @prods = Prod.where(curslegatura: 'rasayana1', cod: ['cod242'])
-                      @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1')
-                                        .where('ordine >= ? AND ordine <= ?', 0, 1000)
-                                        .order(ordine: :asc).to_a
-            @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1')
-                                                  .where('ordine > ? AND ordine < ?', 1000, 2000)
-                                                  .order(ordine: :asc).to_a
-          else
+          if purchased_prods.include?('cod317')
             
-            @nr_luni_achitate = purchased_prods.count { |cod| ['cod234', 'cod235', 'cod236', 'cod237'].include?(cod) }
-            if @nr_luni_achitate == 1
-              @prods = products.where(cod: ['cod235', 'cod242'])
-            elsif @nr_luni_achitate == 2
-              @prods = products.where(cod: ['cod236', 'cod242'])
-            elsif @nr_luni_achitate == 3
-              @prods = products.where(cod: ['cod237', 'cod242'])
-            elsif @nr_luni_achitate == 4
-              @prods = products.where(cod: ['cod242'])
-            else
-              @prods = products.where(cod: ['cod234', 'cod238', 'cod243'])
+            @prods = []
+            @myvideo_ayurveda_padartha = Video.where(tip: 'modul_ayurveda_padartha')
+                                        .where('ordine >= ? AND ordine <= ?', 0, 1000)
+                                        .order(ordine: :asc).to_a
+            @myvideo_ayurveda_padartha_seminarii = Video.where(tip: 'modul_ayurveda_padartha')
+                                                  .where('ordine > ? AND ordine < ?', 1000, 2000)
+                                                  .order(ordine: :asc).to_a
+          elsif purchased_prods.include?('cod316')
+            puts("sunt aici1")
+            @prods = Prod.where(curslegatura: 'modul_ayurveda_padartha', cod: ['cod316'])
+            @myvideo_ayurveda_padartha = Video.where(tip: 'modul_ayurveda_padartha')
+                                        .where('ordine >= ? AND ordine <= ?', 0, 1000)
+                                        .order(ordine: :asc).to_a
+            @myvideo_ayurveda_padartha_seminarii = Video.where(tip: 'modul_ayurveda_padartha')
+                                                  .where('ordine > ? AND ordine < ?', 1000, 2000)
+                                                  .order(ordine: :asc).to_a
+          elsif purchased_prods.include?('cod315')
+            @prods = products.where(cod: ['cod316'])
+            @myvideo_ayurveda_padartha = Video.none
+            @myvideo_ayurveda_padartha_seminarii = Video.none
+          else
+            @prods = products.where(cod: ['cod315', 'cod317'])
+            @myvideo_ayurveda_padartha = Video.none
+            @myvideo_ayurveda_padartha_seminarii = Video.none
             end
           end
     
-          if purchased_prods.include?('cod242')
-            @has_acces_video = @nr_luni_achitate
-            @prods = @prods.where.not(cod: 'cod242') if @prods.present?
-          end
-  
-          # Setare @myvideo_rasayana_m1 și @myvideo_rasayana_m1_seminarii în funcție de codurile achiziționate
-          if purchased_prods.include?('cod242') && !purchased_prods.include?('cod238') && !purchased_prods.include?('cod243')
-            if purchased_prods.include?('cod234')
-              luni_incluse = ['octombrie']
-              luni_incluse << 'noiembrie' if purchased_prods.include?('cod235')
-              luni_incluse << 'decembrie' if purchased_prods.include?('cod236')
-              luni_incluse << 'ianuarie' if purchased_prods.include?('cod237')
-  
-              @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1', luna: luni_incluse)
-                                          .where('ordine >= ? AND ordine <= ?', 0, 1000)
-                                          .order(ordine: :asc).to_a
-              @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1', luna: luni_incluse)
-                                                    .where('ordine > ? AND ordine < ?', 1000, 2000)
-                                                    .order(ordine: :asc).to_a
-            end
-          end
+         
         end
-      end
-      puts("Prods este: #{@prods}")
-      puts("@nr_luni_achitate=#{@nr_luni_achitate}")
+      
+      
     end    
     # Definește acțiunile dorite aici
   end

@@ -78,7 +78,8 @@
 <p>
     Participanții vor descoperi cum aplicarea cunoașterii tipului constituțional poate duce la îmbunătățirea semnificativă a stării de bine, reducerea dezechilibrelor și o adaptare mai armonioasă la provocările zilnice. Vei înțelege cum alegerile corecte în alimentație, activități și obiceiuri pot transforma modul în care te simți, oferind energie, claritate și echilibru psiho-emoțional pe termen lung.
 </p>
-
+<h3>Adeverință de participare<h3>
+<p>La finalul cursului, participanții pot solicita o adeverință de participare, care va confirma faptul că au parcurs acest modul dedicat explorării aspectelor esențiale și deosebit de complexe ale cunoașterii ayurvedice.</p>
 
 
 
@@ -117,14 +118,14 @@
     -->
             
           <p>
-            <strong>Prima zi de curs:</strong>Lecțiile propriu-zise vor începe miercuri, 5 martie 2025, și vor fi organizate săptămânal, pentru a permite un proces de învățare ritmic și progresiv. Cele 19 cursuri ale acestui modul se vor desfășura săptămânal pe parcursul a 5 luni: martie, aprilie, mai și iunie, iulie 2025.
+            <strong>Prima zi de curs: </strong>Lecțiile propriu-zise vor începe miercuri, 5 martie 2025, și vor fi organizate săptămânal, pentru a permite un proces de învățare ritmic și progresiv. Cele 19 cursuri ale acestui modul se vor desfășura săptămânal pe parcursul a 5 luni: martie, aprilie, mai, iunie și iulie 2025.
           </p>
           <p>
-              <strong>Vizionarea cursurilor:</strong> Fiecare lecție, înregistrată, va putea fi vizionată de trei ori pe săptămână, în zilele de miercuri, vineri și duminică, în intervalul orar 16:00 și 24:00, direct în pagina de site. Acest format ritmic săptămânal are un scop educativ bine definit, sprijinind procesul de învățare prin mai multe modalități precum:  
+              <strong>Vizionarea cursurilor: </strong>Fiecare lecție, înregistrată, va putea fi vizionată de trei ori pe săptămână, în zilele de miercuri, vineri și duminică, în intervalul orar 16:00 și 24:00, direct în pagina de site. Acest format ritmic săptămânal are un scop educativ bine definit, sprijinind procesul de învățare prin mai multe modalități precum:  
           </p>
           <ul>
           <ul>
-              <li><strong>Asimilare treptată:</strong> Lecțiile sunt structurate astfel încât informațiile să fie prezentate în cantități gestionabile, oferind timp suficient pentru înțelegerea fiecărui concept fără a genera supraîncărcare cognitivă.</li>
+              <li><strong>Asimilare treptată: </strong>Lecțiile sunt structurate astfel încât informațiile să fie prezentate în cantități gestionabile, oferind timp suficient pentru înțelegerea fiecărui concept fără a genera supraîncărcare cognitivă.</li>
               <li><strong>Consolidarea informației:</strong> Repetarea materialului și revenirea periodică asupra lecțiilor sprijină memorarea activă și aprofundarea conceptelor, facilitând o învățare de lungă durată.</li>
               <li><strong>Integrarea practică:</strong> Pauza dintre lecții creează un spațiu valoros pentru aplicarea principiilor în contexte reale, ajutând participanții să experimenteze direct beneficiile învățării.</li>
               <li><strong>Structurare progresivă:</strong> Planificarea săptămânală oferă un ritm constant și structurat al învățării, permițând participanților să urmărească clar etapele parcurse, să mențină o implicare activă și să-și evalueze periodic progresul în funcție de obiectivele stabilite.</li>
@@ -148,6 +149,7 @@
           </h3>
           <p>Pentru a oferi mai multă flexibilitate în gestionarea programului personal, punem la dispoziție opțiunea de a viziona înregistrările cursurilor direct pe site, oricând, la orice oră. Această opțiune permite accesul la materialele video fără restricții, atât pe durata cursului, cât și pentru o perioadă extinsă de 150 de zile după finalizarea cursului, oferind timp suficient pentru a înțelege și revizui în profunzime materialele studiate. Opțiunea presupune un cost suplimentar de 380 lei și oferă acces progresiv la înregistrările cursului, fiecare lecție devenind disponibilă săptămânal, pe măsură ce programul se desfășoară.</p>
 
+          <h2 style= "text-align: center;padding: 0 10px;">Acces Curs de Ayurveda: Modulul 1 – Ayurveda Padartha</h2><br>
 
         </section><%end%> <section>
           <div id="pAyurveda-padartha" class="table-responsive">
@@ -170,64 +172,7 @@
   
         
   
-          <%if current_user && (current_user.role==1 || @has_acces_video>0)%>
-          <h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Ayurveda-padartha </h2></br>
-    
-    
-    
-          <div id="videos">
-            <table class="table">
-              <thead>
-              <tr>
-                  <th>Nr</th>
-                  <th>Nume</th>
-                  <th>Descriere</th>       
-                  <th>Actiune</th>
-                  
-              </tr>
-              </thead>
-              <tbody>
-              <% @myvideo_rasayana_m1.each do |video| %>
-                <tr>
-                <td><%= video.ordine %></td>
-                <td><%= video.nume %></td>
-                <td><%= video.descriere %></td>           
-                <td><%= link_to "Vezi video", myvideo19_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
-                </tr>
-          
-              <% end %>
-              </tbody>
-            </table>
-          </div>
-  
-          <h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Ayurveda-padartha - seminarii</h2></br>
-          <div id="videos">
-          <table class="table">
-            <thead>
-            <tr>
-                <th>Nr</th>
-                <th>Nume</th>
-                <th>Descriere</th>       
-                <th>Actiune</th>
-                
-            </tr>
-            </thead>
-            <tbody>
-            <% @myvideo_rasayana_m1_seminarii.each do |video| %>
-              <tr>
-              <td><%= video.ordine-1000 %></td>
-              <td><%= video.nume %></td>
-              <td><%= video.descriere %></td>           
-              <td><%= link_to "Vezi video", myvideo19_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
-              </tr>
-        
-            <% end %>
-            </tbody>
-          </table>
-        </div>
-  
-  <% end %><br><br>
-  
+         
   
   
   
