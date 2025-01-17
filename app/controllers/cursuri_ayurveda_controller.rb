@@ -20,7 +20,7 @@ class CursuriAyurvedaController < ApplicationController
         @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1')
                                               .where('ordine > ? AND ordine < ?', 1000, 2000)
                                               .order(ordine: :asc).to_a
-        @prods = [] # Nu afișăm alte produse
+        @prods = [] ## Nu afișăm alte produse
         @has_acces_video = 4
         @nr_luni_achitate = 4
       else
