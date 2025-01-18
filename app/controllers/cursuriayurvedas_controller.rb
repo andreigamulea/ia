@@ -636,6 +636,8 @@ def cursayurveda2425
 
   if current_user && current_user.email == 'v_ionela@yahoo.com'
     max_taxa = 2
+  elsif   current_user && current_user.email == 'amordeshakti@yahoo.es'
+    max_taxa = 10
   end  
 
   # Verificare plată și alocare produse taxă grupă 1

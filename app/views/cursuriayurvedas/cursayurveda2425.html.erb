@@ -164,7 +164,7 @@ td:hover .tooltip-text {
           </tr>
         </thead>
         <tbody>
-          <% if @prodgrupa1_taxainscriere_all && @prodgrupa1_taxainscriere_all.curslegatura == 'cay2425' %>
+          <% if @prodgrupa1_taxainscriere_all && @prodgrupa1_taxainscriere_all.curslegatura == 'cay2425' && Date.today < Date.new(2025, 1, 17) %>
           <tr>
             <td><%= @prodgrupa1_taxainscriere_all.nume %></td>                        
             <td><%= @prodgrupa1_taxainscriere_all.detalii %></td> 
