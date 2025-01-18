@@ -1,5 +1,7 @@
 class CursuriAyurvedaController < ApplicationController
     def ayurveda_padartha
+      #ATENTIE!!!!!!!  nu este facuta valabilitatea. Trebuie vazut pana cand au valibilitate codurile cumparate
+      #dupa ce fac valabilitaea pot sterge acest mesaj
       @myvideo1 = Video.find_by(link: 'suMeHXOiYtk') #prezentare rasayana
       @myvideo = @myvideo1.link if @myvideo1
   
@@ -35,7 +37,8 @@ class CursuriAyurvedaController < ApplicationController
                                        .pluck('prods.cod')
     
           if purchased_prods.include?('cod317')
-            
+            @a_cumparat_macar_un_cod = true
+            @a_cumparat_digital = true
             @prods = []
             @myvideo_ayurveda_padartha = Video.where(tip: 'modul_ayurveda_padartha')
                                         .where('ordine >= ? AND ordine <= ?', 0, 1000)
@@ -45,7 +48,9 @@ class CursuriAyurvedaController < ApplicationController
                                                   .order(ordine: :asc).to_a
           elsif purchased_prods.include?('cod316')
             puts("sunt aici1")
-            @prods = Prod.where(curslegatura: 'modul_ayurveda_padartha', cod: ['cod316'])
+            @a_cumparat_macar_un_cod = true
+            @a_cumparat_digital = true
+            @prods = Prod.none
             @myvideo_ayurveda_padartha = Video.where(tip: 'modul_ayurveda_padartha')
                                         .where('ordine >= ? AND ordine <= ?', 0, 1000)
                                         .order(ordine: :asc).to_a
@@ -53,6 +58,8 @@ class CursuriAyurvedaController < ApplicationController
                                                   .where('ordine > ? AND ordine < ?', 1000, 2000)
                                                   .order(ordine: :asc).to_a
           elsif purchased_prods.include?('cod315')
+            @a_cumparat_macar_un_cod = true
+            @a_cumparat_digital = false
             @prods = products.where(cod: ['cod316'])
             @myvideo_ayurveda_padartha = Video.none
             @myvideo_ayurveda_padartha_seminarii = Video.none
