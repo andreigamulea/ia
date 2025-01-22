@@ -63,6 +63,7 @@ class FacturasController < ApplicationController
   def facturi_xml
     @facturas = Factura.order(created_at: :asc)
     @facturas_pe_firma = @facturas.select { |factura| factura.cui =~ /\d{2,}/ }
+    @facturas_persoana_fizica = @facturas - @facturas_pe_firma
   end
 
   def download_xml
@@ -345,7 +346,7 @@ end
     
     # Only allow a list of trusted parameters through.
     def factura_params
-      params.require(:factura).permit(:comanda_id, :user_id, :numar, :numar_comanda, :data_emiterii, :prenume, :nume, :nume_companie, :cui, :tara, :localitate, :judet, :cod_postal, :strada, :numar_adresa, :produs, :cantitate, :pret_unitar, :valoare_tva, :valoare_totala, :status)
+      params.require(:factura).permit(:comanda_id, :user_id, :numar, :numar_comanda, :data_emiterii, :prenume, :nume, :nume_companie, :cui, :tara, :localitate, :judet, :cod_postal, :strada, :numar_adresa, :produs, :cantitate, :pret_unitar, :valoare_tva, :valoare_totala, :status, :cnp, :abr_jud)
     end
     def set_user
       @user = current_user # presupunând că current_user este disponibil

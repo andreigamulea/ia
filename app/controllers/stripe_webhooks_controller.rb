@@ -347,6 +347,8 @@ end
       cui: metadata['cui'],
       numecompanie: metadata['numecompanie'],
       altedate: metadata['altedate'],
+      cnp: metadata[:cnp],
+      abr_jud: metadata[:abr_jud]
     }
   end
   def populeaza_cursuri(user_id, produs)
@@ -473,6 +475,8 @@ end
       numar_adresa: metadata[:numar],
       produs: produsul,
       status: "Achitata",
+      cnp: metadata[:cnp],
+      abr_jud: metadata[:abr_jud],
       cantitate: payment_intent["metadata"]["cantitate"],
       pret_unitar: ((payment_intent["metadata"]["pret_bucata"]).to_d / BigDecimal("1.19")).round(2),
       

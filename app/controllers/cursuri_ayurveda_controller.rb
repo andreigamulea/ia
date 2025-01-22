@@ -23,6 +23,8 @@ class CursuriAyurvedaController < ApplicationController
                                               .where('ordine > ? AND ordine < ?', 1000, 2000)
                                               .order(ordine: :asc).to_a
         @prods = [] ## Nu afișăm alte produse
+        products = Prod.where(curslegatura: 'modul_ayurveda_padartha', cod: ['cod315', 'cod316', 'cod317'])
+        @prods = products.where(cod: ['cod315',  'cod317'])
         @has_acces_video = 4
         @nr_luni_achitate = 4
       else

@@ -304,6 +304,7 @@ end
 atribute_adresacomenzi = { comanda_id: comanda.id }
 
 if @detaliifacturare.use_alternate_shipping
+  abr_jud_value = Judet.find_by(denjud: @detaliifacturare.judet)&.cod
   atribute_adresacomenzi.merge!(
     adresacoincide: false,
     prenume:       @detaliifacturare.prenume1,
@@ -318,9 +319,12 @@ if @detaliifacturare.use_alternate_shipping
     numar:         @detaliifacturare.numar1,
     altedate:      @detaliifacturare.altedate1.presence,
     telefon:       @detaliifacturare.telefon1,
-    email:         @detaliifacturare.adresaemail
+    email:         @detaliifacturare.adresaemail,
+    cnp:           @detaliifacturare.cnp.presence || '0000000000000',
+    abr_jud:       abr_jud_value.presence || 'N/A' 
   )
 else
+  abr_jud_value = Judet.find_by(denjud: @detaliifacturare.judet)&.cod
   atribute_adresacomenzi.merge!(
     adresacoincide: true,
     prenume:       @detaliifacturare.prenume,
@@ -335,7 +339,9 @@ else
     numar:         @detaliifacturare.numar,
     altedate:      @detaliifacturare.altedate.presence,
     telefon:       @detaliifacturare.telefon,
-    email:         @detaliifacturare.adresaemail
+    email:         @detaliifacturare.adresaemail,
+    cnp:           @detaliifacturare.cnp.presence || '0000000000000',
+    abr_jud:       abr_jud_value.presence || 'N/A' 
   )
 end
 
@@ -348,7 +354,7 @@ AdresaComenzi.create!(atribute_adresacomenzi)
 ###################stop populeaza adresacomenzi
 
     puts "@prod.valabilitatezile: #{@prod.valabilitatezile}"
-
+    abr_jud_value = Judet.find_by(denjud: @detaliifacturare.judet)&.cod
     # Creare metadata
     metadata = {
       user_id: current_user.id.to_s,
@@ -371,7 +377,9 @@ AdresaComenzi.create!(atribute_adresacomenzi)
       updated_at: @detaliifacturare.updated_at,
       cantitate: @cantitate,
       pret_bucata: @pret_bucata,
-      pret_total: @pret_total
+      pret_total: @pret_total,
+      cnp: @detaliifacturare.cnp,
+      abr_jud:       abr_jud_value.presence || 'N/A'
     }
   
     # Creează PaymentIntent
