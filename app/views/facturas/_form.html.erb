@@ -22,6 +22,15 @@
   </div>
 
   <div>
+    <%= form.label :abr_jud, style: "display: block" %>
+    <%= form.text_field :abr_jud %>
+  </div>
+  <div>
+    <%= form.label :judet, style: "display: block" %>
+    <%= form.text_field :judet %>
+  </div>
+
+  <div>
     <%= form.label :numar, style: "display: block" %>
     <%= form.number_field :numar %>
   </div>
@@ -66,10 +75,7 @@
     <%= form.text_field :localitate %>
   </div>
 
-  <div>
-    <%= form.label :judet, style: "display: block" %>
-    <%= form.text_field :judet %>
-  </div>
+  
 
   <div>
     <%= form.label :cod_postal, style: "display: block" %>
