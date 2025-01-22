@@ -382,7 +382,7 @@ AdresaComenzi.create!(atribute_adresacomenzi)
       abr_jud:       abr_jud_value.presence || 'N/A'
     }
   
-    # Creează PaymentIntent
+    ## Creează PaymentIntent
     begin
       @session = Stripe::Checkout::Session.create({
         payment_method_types: ['card'],
