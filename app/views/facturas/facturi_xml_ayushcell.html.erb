@@ -13,7 +13,7 @@
   <div style="margin-bottom: 15px;">
     <label for="an" style="display: block; font-weight: bold;">An:</label>
     <select id="an" class="form-control" style="width: 100%; padding: 5px;">
-      <% (2020..Date.today.year).to_a.reverse.each do |y| %>
+      <% (2023..Date.today.year).to_a.reverse.each do |y| %>
         <option value="<%= y %>" <%= 'selected' if y == Date.today.year %>><%= y %></option>
       <% end %>
     </select>
