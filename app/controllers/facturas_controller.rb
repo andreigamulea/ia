@@ -58,9 +58,37 @@ class FacturasController < ApplicationController
     ) AS subquery ON facturas.comanda_id = subquery.comanda_id")
   .order('subquery.factura_count DESC, facturas.comanda_id DESC')
   end  
-
+  
 
   def facturi_xml
+    unless user_signed_in?
+      flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+      redirect_to new_user_session_path
+      return false
+    end
+  
+    unless current_user.role == 1
+      flash[:alert] = "Nu aveți permisiunea de a accesa această pagină."
+      redirect_to root_path
+      return false
+    end
+    @facturas = Factura.order(created_at: :asc)
+    @facturas_pe_firma = @facturas.select { |factura| factura.cui =~ /\d{2,}/ }
+    @facturas_persoana_fizica = @facturas - @facturas_pe_firma
+  end
+
+  def facturi_xml_ayushcell
+    unless user_signed_in?
+      flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+      #redirect_to new_user_session_path
+      #return false
+    end
+  
+    unless current_user.role == 1
+      flash[:alert] = "Nu aveți permisiunea de a accesa această pagină."
+      #redirect_to root_path
+      #return false
+    end
     @facturas = Factura.order(created_at: :asc)
     @facturas_pe_firma = @facturas.select { |factura| factura.cui =~ /\d{2,}/ }
     @facturas_persoana_fizica = @facturas - @facturas_pe_firma
@@ -275,6 +303,58 @@ class FacturasController < ApplicationController
     #FileUtils.rm(zip_filename)
 end
 
+def download_all_xml
+  # Preluarea parametrilor din request
+  luna = params[:luna].to_i
+  an = params[:an].to_i
+  logger.info "Luna: #{luna}, An: #{an}"
+
+  # Crearea unui folder temporar pentru stocarea XML-urilor
+  temp_folder = Rails.root.join('tmp', 'xmls')
+  FileUtils.mkdir_p(temp_folder)
+
+  # Selectarea facturilor doar din luna și anul specificate
+  facturas = Factura.where('extract(month from data_emiterii) = ? AND extract(year from data_emiterii) = ?', luna, an)
+  logger.info "Facturi găsite: #{facturas.count}"
+
+  # Generarea XML-urilor pentru fiecare factură
+  xml_files = facturas.map do |factura|
+    logger.info "Generăm XML pentru factura #{factura.numar}"
+    xml_content = factura.cui =~ /\d{2,}/ ? generate_invoice_xml_company(factura) : generate_invoice_xml_individual(factura)
+
+    # Generarea numelui fișierului
+    file_path = temp_folder.join("Factura_#{factura.numar}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.xml")
+
+    # Scrierea conținutului XML în fișier
+    File.open(file_path, 'wb') do |file|
+      file << xml_content
+    end
+    file_path
+  end
+
+  # Crearea fișierului ZIP
+  zip_filename = Rails.root.join('tmp', 'facturas_xml.zip')
+
+  # Ștergeți fișierul ZIP preexistent dacă există
+  File.delete(zip_filename) if File.exist?(zip_filename)
+
+  Zip::File.open(zip_filename, Zip::File::CREATE) do |zipfile|
+    xml_files.each do |file|
+      zipfile.add(File.basename(file), file) unless zipfile.find_entry(File.basename(file))
+    end
+  end
+
+  # Trimiteți fișierul ZIP ca răspuns
+  logger.info "Trimitem fișierul ZIP către browser: #{zip_filename}"
+  send_file zip_filename, type: 'application/zip', disposition: 'attachment', filename: 'facturas_xml.zip'
+
+  # Ștergerea fișierelor temporare după descărcare
+  #FileUtils.rm_rf(temp_folder)
+  #FileUtils.rm(zip_filename)
+end
+
+
+
 
   
   
@@ -455,24 +535,30 @@ end
           end
         end
     
-        total_without_vat = factura.pret_unitar * factura.cantitate
-        vat_amount = (total_without_vat * (factura.valoare_tva / 100)).round(2)
-        total_with_vat = (total_without_vat + vat_amount).round(2)
-    
-        invoice.cac :TaxTotal do |tax_total|
-          tax_total.cbc :TaxAmount, vat_amount, currencyID: 'RON'
-          tax_total.cac :TaxSubtotal do |tax_subtotal|
-            tax_subtotal.cbc :TaxableAmount, total_without_vat, currencyID: 'RON'
-            tax_subtotal.cbc :TaxAmount, vat_amount, currencyID: 'RON'
-            tax_subtotal.cac :TaxCategory do |tax_category|
-              tax_category.cbc :ID, 'S'
-              tax_category.cbc :Percent, factura.valoare_tva
-              tax_category.cac :TaxScheme do |tax_scheme|
-                tax_scheme.cbc :ID, 'VAT'
-              end
+        # Totalul inclusiv TVA
+      total_with_vat = factura.valoare_totala
+
+      # Calculează valoarea fără TVA
+      total_without_vat = (total_with_vat / 1.19).round(2)
+
+      # Calculează TVA-ul ca diferența dintre total și valoarea fără TVA
+      vat_amount = (total_with_vat - total_without_vat).round(2)
+
+      # Generează XML-ul
+      invoice.cac :TaxTotal do |tax_total|
+        tax_total.cbc :TaxAmount, vat_amount, currencyID: 'RON'
+        tax_total.cac :TaxSubtotal do |tax_subtotal|
+          tax_subtotal.cbc :TaxableAmount, total_without_vat, currencyID: 'RON'
+          tax_subtotal.cbc :TaxAmount, vat_amount, currencyID: 'RON'
+          tax_subtotal.cac :TaxCategory do |tax_category|
+            tax_category.cbc :ID, 'S'
+            tax_category.cbc :Percent, 19.0
+            tax_category.cac :TaxScheme do |tax_scheme|
+              tax_scheme.cbc :ID, 'VAT'
             end
           end
         end
+      end
     
         invoice.cac :LegalMonetaryTotal do |total|
           total.cbc :LineExtensionAmount, total_without_vat, currencyID: 'RON'
@@ -570,7 +656,7 @@ end
           party.cac :PostalAddress do |address|
             address.cbc :StreetName, "#{factura.strada}, NR. #{factura.numar_adresa}"
             address.cbc :CityName, factura.localitate
-            address.cbc :CountrySubentity, "RO-#{factura.judet}"
+            address.cbc :CountrySubentity, "RO-#{factura.abr_jud}"
             address.cac :Country do |country|
               country.cbc :IdentificationCode, 'RO'
             end
@@ -596,10 +682,16 @@ end
         end
       end
   
-      total_without_vat = factura.pret_unitar * factura.cantitate
-      vat_amount = (total_without_vat * (factura.valoare_tva / 100)).round(2)
-      total_with_vat = (total_without_vat + vat_amount).round(2)
-  
+      # Totalul inclusiv TVA
+      total_with_vat = factura.valoare_totala
+
+      # Calculează valoarea fără TVA
+      total_without_vat = (total_with_vat / 1.19).round(2)
+
+      # Calculează TVA-ul ca diferența dintre total și valoarea fără TVA
+      vat_amount = (total_with_vat - total_without_vat).round(2)
+
+      # Generează XML-ul
       invoice.cac :TaxTotal do |tax_total|
         tax_total.cbc :TaxAmount, vat_amount, currencyID: 'RON'
         tax_total.cac :TaxSubtotal do |tax_subtotal|
@@ -607,7 +699,7 @@ end
           tax_subtotal.cbc :TaxAmount, vat_amount, currencyID: 'RON'
           tax_subtotal.cac :TaxCategory do |tax_category|
             tax_category.cbc :ID, 'S'
-            tax_category.cbc :Percent, factura.valoare_tva
+            tax_category.cbc :Percent, 19.0
             tax_category.cac :TaxScheme do |tax_scheme|
               tax_scheme.cbc :ID, 'VAT'
             end

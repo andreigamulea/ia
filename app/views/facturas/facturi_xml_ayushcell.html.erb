@@ -1,0 +1,63 @@
+<div style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+  <div style="width: 80%; max-width: 1200px; margin: auto; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background: #fff; border-radius: 8px;">
+    <h2 style="text-align: center;">Toate Facturile</h2>
+    <table class="table" style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Număr</th>
+          <th>Data Emiterii</th>
+          <th>Client</th>
+          <th>Firma</th>
+          <th>Cui</th>
+          <th>Cnp</th>
+          <th>Download XML</th>
+          <th>Download PDF</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @facturas.each_with_index do |factura, index| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= factura.numar %></td>
+            <td><%= factura.created_at.strftime('%Y-%m-%d') %></td>
+            <td><%= factura.prenume %> <%= factura.nume %></td>
+            <td><%= factura.nume_companie %></td>
+            <td><%= factura.cui %></td>
+            <td><%= factura.cnp.present? ? factura.cnp[0] : "N/A" %></td>
+            <td>
+              <%= link_to 'Descarcă XML', download_xml_factura_path(factura), method: :get, class: 'btn btn-primary' %>
+            </td>
+            <td>
+              <%= link_to 'Descarcă PDF', factura_path(factura, format: :pdf), class: "btn btn-primary" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<h2>Selectează luna</h2>
+
+<%= form_with url: facturas_download_zip_path, method: :get, local: true do %>
+    <div>
+      <label for="luna">Luna:</label>
+      <%= select_tag :luna, 
+          options_for_select((1..12).map { |m| [Date::MONTHNAMES[m], m] }, Date.today.month), 
+          class: 'form-control' %>
+    </div>
+    <div>
+      <label for="an">An:</label>
+      <%= select_tag :an, 
+          options_for_select((2020..Date.today.year).to_a.reverse, Date.today.year), 
+          class: 'form-control' %>
+    </div>
+    <br>
+    <%= submit_tag 'Descarcă XML-urile', class: 'btn btn-primary' %>
+  <% end %>
+  
+  
+  
+
+
+

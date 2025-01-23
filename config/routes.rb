@@ -257,11 +257,18 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get 'facturas/:id/download_xml_company', to: 'facturas#download_xml_company', as: 'download_xml_company_factura'
   get 'facturas/:id/download_xml_individual', to: 'facturas#download_xml_individual', as: 'download_xml_individual_factura'
 
+  get 'facturas/download_zip', to: 'facturas#download_all_xml', as: 'facturas_download_zip'
+  
+
+
+  get 'facturas/facturi_xml_ayushcell', to: 'facturas#facturi_xml_ayushcell', as: 'facturi_xml_ayushcell'#pt xml
   # Root route
   get 'facturas/generate_pdf', to: 'facturas#generate_pdf', as: 'generate_pdf_facturas'
   #get 'facturas/download_all', to: 'facturas#download_all', defaults: { format: 'pdf' } 
   #get 'facturas/download_all', to: 'facturas#download_all', as: 'download_all_facturas'
-  get 'facturas/download_all', to: 'facturas#download_all', as: 'download_all_facturas', defaults: { format: 'pdf' }  
+  get 'facturas/download_all', to: 'facturas#download_all', as: 'download_all_facturas', defaults: { format: 'pdf' } 
+  get 'facturas/download_all_xml', to: 'facturas#download_all_xml', as: 'download_all_facturas_xml', defaults: { format: 'xml' }
+ 
   get 'facturas/download1', to: 'facturas#download1', as: 'download1_factura'
   get 'facturas/:id/download', to: 'facturas#download', as: 'download_factura'
   get 'facturicomenzi', to: 'facturas#facturicomenzi'
