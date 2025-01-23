@@ -80,14 +80,14 @@ class FacturasController < ApplicationController
   def facturi_xml_ayushcell
     unless user_signed_in?
       flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
-      #redirect_to new_user_session_path
-      #return false
+      redirect_to new_user_session_path
+      return false
     end
   
     unless current_user.role == 1
       flash[:alert] = "Nu aveți permisiunea de a accesa această pagină."
-      #redirect_to root_path
-      #return false
+      redirect_to root_path
+      return false
     end
     @facturas = Factura.order(created_at: :desc)
     @facturas_pe_firma = @facturas.select { |factura| factura.cui =~ /\d{2,}/ }
@@ -95,6 +95,17 @@ class FacturasController < ApplicationController
   end
 
   def download_xml
+    unless user_signed_in?
+      flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+      redirect_to new_user_session_path
+      return false
+    end
+  
+    unless current_user.role == 1
+      flash[:alert] = "Nu aveți permisiunea de a accesa această pagină."
+      redirect_to root_path
+      return false
+    end
     factura = Factura.find(params[:id])
     xml = factura.cui =~ /\d{2,}/ ? generate_invoice_xml_company(factura) : generate_invoice_xml_individual(factura)
     supplier_cui = '5509227'  # Codul fiscal al furnizorului
