@@ -1,3 +1,43 @@
+<div style="width: 50%; margin: 0 auto; text-align: center; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #f9f9f9;">
+  <h2 style="margin-bottom: 20px;">Selectează luna</h2>
+
+  <div style="margin-bottom: 15px;">
+    <label for="luna" style="display: block; font-weight: bold;">Luna:</label>
+    <select id="luna" class="form-control" style="width: 100%; padding: 5px;">
+      <% (1..12).each do |m| %>
+        <option value="<%= m %>" <%= 'selected' if m == Date.today.month %>><%= Date::MONTHNAMES[m] %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <label for="an" style="display: block; font-weight: bold;">An:</label>
+    <select id="an" class="form-control" style="width: 100%; padding: 5px;">
+      <% (2020..Date.today.year).to_a.reverse.each do |y| %>
+        <option value="<%= y %>" <%= 'selected' if y == Date.today.year %>><%= y %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <!-- Buton pentru descărcarea XML-urilor -->
+  <button 
+    onclick="window.location.href='<%= download_all_facturas_xml_path %>?luna=' + document.getElementById('luna').value + '&an=' + document.getElementById('an').value" 
+    class="btn btn-primary" style="margin: 10px; padding: 10px 20px;">
+    Descarcă XML-urile
+  </button>
+
+  <!-- Buton pentru descărcarea PDF-urilor -->
+  <button 
+    onclick="window.location.href='<%= download_all_facturas_path %>?luna=' + document.getElementById('luna').value + '&an=' + document.getElementById('an').value" 
+    class="btn btn-secondary" style="margin: 10px; padding: 10px 20px;">
+    Descarcă PDF-urile
+  </button>
+</div>
+
+
+
+
+
 <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
   <div style="width: 80%; max-width: 1200px; margin: auto; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background: #fff; border-radius: 8px;">
     <h2 style="text-align: center;">Toate Facturile</h2>
@@ -37,24 +77,9 @@
     </table>
   </div>
 </div>
-<h2>Selectează luna</h2>
 
-<%= form_with url: facturas_download_zip_path, method: :get, local: true do %>
-    <div>
-      <label for="luna">Luna:</label>
-      <%= select_tag :luna, 
-          options_for_select((1..12).map { |m| [Date::MONTHNAMES[m], m] }, Date.today.month), 
-          class: 'form-control' %>
-    </div>
-    <div>
-      <label for="an">An:</label>
-      <%= select_tag :an, 
-          options_for_select((2020..Date.today.year).to_a.reverse, Date.today.year), 
-          class: 'form-control' %>
-    </div>
-    <br>
-    <%= submit_tag 'Descarcă XML-urile', class: 'btn btn-primary' %>
-  <% end %>
+
+
   
   
   

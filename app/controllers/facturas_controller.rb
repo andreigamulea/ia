@@ -89,7 +89,7 @@ class FacturasController < ApplicationController
       #redirect_to root_path
       #return false
     end
-    @facturas = Factura.order(created_at: :asc)
+    @facturas = Factura.order(created_at: :desc)
     @facturas_pe_firma = @facturas.select { |factura| factura.cui =~ /\d{2,}/ }
     @facturas_persoana_fizica = @facturas - @facturas_pe_firma
   end
@@ -240,118 +240,137 @@ class FacturasController < ApplicationController
   end
   
   def download_all
-    ## Crearea unui folder temporar pentru stocarea PDF-urilor
+    # Preluarea parametrilor din request
+    luna = params[:luna]&.to_i || Date.today.month
+    an = params[:an]&.to_i || Date.today.year
+    logger.info "Luna: #{luna}, An: #{an}"
+  
+    # Obține numele complet al lunii
+    nume_luna = Date::MONTHNAMES[luna]
+  
+    # Crearea unui folder temporar pentru stocarea PDF-urilor
     temp_folder = Rails.root.join('tmp', 'pdfs')
     FileUtils.mkdir_p(temp_folder)
-    
-    ##Extrageți facturile pe care doriți să le includeți
-    #facturas = Factura.where(numar: 1204..1542)#octombrie
-    #facturas = Factura.where(numar: 1536..1654)#noiembrie
-    #facturas = Factura.where(numar: 1649..1716)#decembrie
-    #facturas = Factura.where(numar: 1713..1782)#ianuarie
-    #facturas = Factura.where(numar: 1780..1922)#februarie
-    #facturas = Factura.where(numar: 1918..2037)#martie
-    #facturas = Factura.where(numar: 2035..2118)#aprilie
-    #facturas = Factura.where(numar: 2118..2250)#amai
-    #facturas = Factura.where(numar: 2249..2329)#iunie
-    #facturas = Factura.where(numar: 2328..2549)#iulie
-    #facturas = Factura.where(numar: 2548..2605)#august
-    #facturas = Factura.where(numar: 2604..2722)#septembrie
-    #facturas = Factura.where(numar: 2721..2886)#octombrie
-    #facturas = Factura.where(numar: 2885..3079)#noiembrie
-    #facturas = Factura.where(numar: 3078..3171)#decembrie
-    facturas = Factura.where(numar: 3170..3200)#ianuarie5
-    # Generați PDF-uri pentru fiecare factură
+  
+    # Selectarea facturilor din luna și anul specificate
+    facturas = Factura.where('extract(month from data_emiterii) = ? AND extract(year from data_emiterii) = ?', luna, an)
+    logger.info "Facturi găsite: #{facturas.count}"
+  
+    # Generarea PDF-urilor pentru fiecare factură
     pdf_files = facturas.map do |factura|
+      logger.info "Generăm PDF pentru factura #{factura.numar}"
       @factura = factura
+  
+      # Generarea HTML-ului pentru factură
       html = render_to_string(
         template: 'facturas/show',
         locals: { factura: factura },
         encoding: 'UTF8'
       )
+  
+      # Conversia HTML-ului în PDF
       pdf = PDFKit.new(html).to_pdf
-      if factura.id + 1000<=1308
-        file_path = temp_folder.join("Factura_#{factura.id + 1000}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.pdf")
-      else
-        file_path = temp_folder.join("Factura_#{factura.id + 999}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.pdf")
-      end  
-
+  
+      # Generarea numelui fișierului
+      file_path = if factura.id + 1000 <= 1308
+                    temp_folder.join("Factura_#{factura.id + 1000}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.pdf")
+                  else
+                    temp_folder.join("Factura_#{factura.id + 999}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.pdf")
+                  end
+  
+      # Scrierea fișierului PDF pe disc
       File.open(file_path, 'wb') do |file|
         file << pdf
       end
+  
       file_path
     end
-    
+  
     # Crearea fișierului ZIP
-    zip_filename = Rails.root.join('tmp', 'facturas.zip')
-    
-    # Ștergeți fișierul ZIP preexistent dacă există
+    zip_filename = Rails.root.join('tmp', "Facturi_luna_#{nume_luna}_#{an}.zip")
+  
+    # Ștergerea fișierului ZIP existent, dacă există
     File.delete(zip_filename) if File.exist?(zip_filename)
-
+  
+    # Adăugarea fișierelor PDF în arhiva ZIP
     Zip::File.open(zip_filename, Zip::File::CREATE) do |zipfile|
       pdf_files.each do |file|
-        # Verificați dacă intrarea există înainte de a adăuga
         zipfile.add(File.basename(file), file) unless zipfile.find_entry(File.basename(file))
       end
     end
-    
+  
     # Trimiteți fișierul ZIP ca răspuns
-    send_file zip_filename, type: 'application/zip', disposition: 'attachment', filename: 'facturas.zip'
+    logger.info "Trimitem fișierul ZIP către browser: #{zip_filename}"
+    send_file zip_filename,
+              type: 'application/zip',
+              disposition: 'attachment',
+              filename: "Facturi_PDF_luna_#{nume_luna}_#{an}.zip"
+  
+    # Opțional: Curățarea fișierelor temporare după descărcare
+    # FileUtils.rm_rf(temp_folder)
+    # FileUtils.rm(zip_filename)
+  end
+  
     
-    # Curățarea fișierelor temporare (păstrați această parte dacă doriți să ștergeți fișierele după descărcare)
-    #FileUtils.rm_rf(temp_folder)
-    #FileUtils.rm(zip_filename)
-end
+    
 
-def download_all_xml
-  # Preluarea parametrilor din request
-  luna = params[:luna].to_i
-  an = params[:an].to_i
-  logger.info "Luna: #{luna}, An: #{an}"
-
-  # Crearea unui folder temporar pentru stocarea XML-urilor
-  temp_folder = Rails.root.join('tmp', 'xmls')
-  FileUtils.mkdir_p(temp_folder)
-
-  # Selectarea facturilor doar din luna și anul specificate
-  facturas = Factura.where('extract(month from data_emiterii) = ? AND extract(year from data_emiterii) = ?', luna, an)
-  logger.info "Facturi găsite: #{facturas.count}"
-
-  # Generarea XML-urilor pentru fiecare factură
-  xml_files = facturas.map do |factura|
-    logger.info "Generăm XML pentru factura #{factura.numar}"
-    xml_content = factura.cui =~ /\d{2,}/ ? generate_invoice_xml_company(factura) : generate_invoice_xml_individual(factura)
-
-    # Generarea numelui fișierului
-    file_path = temp_folder.join("Factura_#{factura.numar}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.xml")
-
-    # Scrierea conținutului XML în fișier
-    File.open(file_path, 'wb') do |file|
-      file << xml_content
+  def download_all_xml
+    # Preluarea parametrilor din request
+    luna = params[:luna]&.to_i || Date.today.month
+    an = params[:an]&.to_i || Date.today.year
+    logger.info "Luna: #{luna}, An: #{an}"
+  
+    # Obține numele complet al lunii
+    nume_luna = Date::MONTHNAMES[luna]
+  
+    # Crearea unui folder temporar pentru stocarea XML-urilor
+    temp_folder = Rails.root.join('tmp', 'xmls')
+    FileUtils.mkdir_p(temp_folder)
+  
+    # Selectarea facturilor doar din luna și anul specificate
+    facturas = Factura.where('extract(month from data_emiterii) = ? AND extract(year from data_emiterii) = ?', luna, an)
+    logger.info "Facturi găsite: #{facturas.count}"
+  
+    # Generarea XML-urilor pentru fiecare factură
+    xml_files = facturas.map do |factura|
+      logger.info "Generăm XML pentru factura #{factura.numar}"
+      xml_content = factura.cui =~ /\d{2,}/ ? generate_invoice_xml_company(factura) : generate_invoice_xml_individual(factura)
+  
+      # Generarea numelui fișierului
+      file_path = temp_folder.join("Factura_#{factura.numar}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.xml")
+  
+      # Scrierea conținutului XML în fișier
+      File.open(file_path, 'wb') do |file|
+        file << xml_content
+      end
+      file_path
     end
-    file_path
-  end
-
-  # Crearea fișierului ZIP
-  zip_filename = Rails.root.join('tmp', 'facturas_xml.zip')
-
-  # Ștergeți fișierul ZIP preexistent dacă există
-  File.delete(zip_filename) if File.exist?(zip_filename)
-
-  Zip::File.open(zip_filename, Zip::File::CREATE) do |zipfile|
-    xml_files.each do |file|
-      zipfile.add(File.basename(file), file) unless zipfile.find_entry(File.basename(file))
+  
+    # Crearea fișierului ZIP
+    zip_filename = Rails.root.join('tmp', "Facturi_XML_luna_#{nume_luna}_#{an}.zip")
+  
+    # Ștergeți fișierul ZIP preexistent dacă există
+    File.delete(zip_filename) if File.exist?(zip_filename)
+  
+    Zip::File.open(zip_filename, Zip::File::CREATE) do |zipfile|
+      xml_files.each do |file|
+        zipfile.add(File.basename(file), file) unless zipfile.find_entry(File.basename(file))
+      end
     end
+  
+    # Trimiteți fișierul ZIP către browser
+    logger.info "Trimitem fișierul ZIP către browser: #{zip_filename}"
+    send_file zip_filename,
+              type: 'application/zip',
+              disposition: 'attachment',
+              filename: "Facturi_XML_luna_#{nume_luna}_#{an}.zip"
+  
+    # Ștergerea fișierelor temporare după descărcare (opțional)
+    # FileUtils.rm_rf(temp_folder)
+    # FileUtils.rm(zip_filename)
   end
+  
 
-  # Trimiteți fișierul ZIP ca răspuns
-  logger.info "Trimitem fișierul ZIP către browser: #{zip_filename}"
-  send_file zip_filename, type: 'application/zip', disposition: 'attachment', filename: 'facturas_xml.zip'
-
-  # Ștergerea fișierelor temporare după descărcare
-  #FileUtils.rm_rf(temp_folder)
-  #FileUtils.rm(zip_filename)
-end
 
 
 

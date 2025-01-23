@@ -90,7 +90,8 @@ h1.display-4{
   <div class="jumbotron">
     <h1 class="display-4">Preluare SAGA</h1>
     <p class="lead">
-    <%= link_to 'Facturi XML Ayush Cell  S.R.L.', facturi_xml_path %><br>
+    <%= link_to 'Facturi (varianta veche)', facturi_xml_path %><br>
+    <%= link_to 'Facturi XML Ayush Cell  S.R.L.', facturi_xml_ayushcell_path %><br>
     <%= link_to 'Importă județele', '#', style: 'pointer-events: none; color: gray; text-decoration: none;' %><br>
     <%= link_to 'Importă țările', '#', style: 'pointer-events: none; color: gray; text-decoration: none;' %><br>
     <%= link_to 'Importă localitățile', '#', style: 'pointer-events: none; color: gray; text-decoration: none;' %><br>
@@ -198,7 +199,7 @@ h1.display-4{
     <%= link_to "Export fisier xlsx plata vajikarana modul 1", export_to_xlsx_plata_vajikarana_modul1_path, class: "btn btn-secondary" %></br></br>
     <%= link_to "Exporta Toate Facturile - un singur pdf cu toate facturile (nerecomandat)", download1_factura_path(format: 'pdf'), class: "btn btn-secondary" %></br></br>
     <%= link_to "Descarcă toate facturile pdf-uri separate (zip) - recomandat", download_all_facturas_path, class: "btn btn-secondary" %></br></br>
-    <%= link_to "Descarcă toate facturile XML-uri separate (zip)", download_all_facturas_xml_path, class: "btn btn-secondary" %></br></br>
+    <%= link_to "Descarcă toate facturile XML-uri separate (zip) - recomandat", download_all_facturas_xml_path, class: "btn btn-secondary" %></br></br>
 
     
 
