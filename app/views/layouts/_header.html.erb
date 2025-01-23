@@ -170,6 +170,9 @@
                 <% if current_user && current_user.role == 1 %>  
                 <li class="nav-item">
                     <%= link_to 'Admin', panouadmin_path, class: 'no-turbo' %>
+                    <li><%= link_to 'PC', show_crypto_price_path, class: 'nav-item no-turbo' %> </li>                       
+                        
+                        <li><%= link_to 'Voluntariat', voluntariat_path, class: 'nav-item no-turbo' %></li>
                 </li>
                 <% end %>
                 <% if user_signed_in? %>
@@ -219,9 +222,7 @@
                         <% end %>
                         <% if current_user && (current_user.role==1 || current_user.email=='dorincontabilitate@gmail.com') %>
                         <li><%= link_to 'Facturi XML Ayush Cell  S.R.L.', facturi_xml_ayushcell_path %></li>
-                        <li><%= link_to 'PC', show_crypto_price_path, class: 'nav-item no-turbo' %> </li>                       
                         
-                        <li><%= link_to 'Voluntariat', voluntariat_path, class: 'nav-item no-turbo' %></li>
                         <% end %>
 
 
