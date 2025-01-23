@@ -538,10 +538,10 @@ class FacturasController < ApplicationController
             end
             party.cac :PostalAddress do |address|
               address.cbc :StreetName, "#{factura.strada}, NR. #{factura.numar_adresa}"
-              address.cbc :CityName, factura.localitate
-              address.cbc :CountrySubentity, "RO-#{factura.judet}"
+              address.cbc :CityName, factura.localitate              
+              address.cbc :CountrySubentity, "#{get_country_abbreviation(factura.tara)}-#{factura.abr_jud}"
               address.cac :Country do |country|
-                country.cbc :IdentificationCode, 'RO'
+                country.cbc :IdentificationCode, get_country_abbreviation(factura.tara)
               end
             end
             party.cac :PartyTaxScheme do |tax_scheme|
@@ -681,14 +681,14 @@ class FacturasController < ApplicationController
       invoice.cac :AccountingCustomerParty do |customer|
         customer.cac :Party do |party|
           party.cac :PartyIdentification do |identification|
-            identification.cbc :ID, factura.cui
+            identification.cbc :ID, factura.cnp
           end
           party.cac :PostalAddress do |address|
             address.cbc :StreetName, "#{factura.strada}, NR. #{factura.numar_adresa}"
             address.cbc :CityName, factura.localitate
-            address.cbc :CountrySubentity, "RO-#{factura.abr_jud}"
+            address.cbc :CountrySubentity, "#{get_country_abbreviation(factura.tara)}-#{factura.abr_jud}"
             address.cac :Country do |country|
-              country.cbc :IdentificationCode, 'RO'
+              country.cbc :IdentificationCode, get_country_abbreviation(factura.tara)
             end
           end
           party.cac :PartyTaxScheme do |tax_scheme|
@@ -768,6 +768,10 @@ class FacturasController < ApplicationController
     builder.target!
   end
   
+  def get_country_abbreviation(country_name)
+    country = Tari.find_by(nume: country_name)
+    country&.abr || 'RO' # Returnează abrevierea sau 'RO' ca fallback
+  end
   
   ###metoda PF final
   
