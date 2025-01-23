@@ -67,7 +67,7 @@ class FacturasController < ApplicationController
       return false
     end
   
-    unless current_user.role == 1
+    unless current_user.role == 1 || current_user.email=='dorincontabilitate@gmail.com'
       flash[:alert] = "Nu aveți permisiunea de a accesa această pagină."
       redirect_to root_path
       return false
@@ -84,7 +84,7 @@ class FacturasController < ApplicationController
       return false
     end
   
-    unless current_user.role == 1
+    unless current_user.role == 1 || current_user.email=='dorincontabilitate@gmail.com'
       flash[:alert] = "Nu aveți permisiunea de a accesa această pagină."
       redirect_to root_path
       return false
@@ -101,7 +101,7 @@ class FacturasController < ApplicationController
       return false
     end
   
-    unless current_user.role == 1
+    unless current_user.role == 1 || current_user.email=='dorincontabilitate@gmail.com'
       flash[:alert] = "Nu aveți permisiunea de a accesa această pagină."
       redirect_to root_path
       return false
@@ -229,7 +229,7 @@ class FacturasController < ApplicationController
   # GET /facturas/1 or /facturas/1.json
   def show
     @factura = Factura.find(params[:id])
-    unless @factura.user_id == @user.id || @user.role == 1
+    unless @factura.user_id == @user.id || @user.role == 1 || current_user.email=='dorincontabilitate@gmail.com'
       redirect_to root_path, alert: "Nu aveți permisiunea de a vizualiza această factură"
       return
     end
@@ -267,6 +267,9 @@ class FacturasController < ApplicationController
     facturas = Factura.where('extract(month from data_emiterii) = ? AND extract(year from data_emiterii) = ?', luna, an)
     logger.info "Facturi găsite: #{facturas.count}"
   
+    # Codul fiscal al furnizorului
+    supplier_cui = '5509227'
+  
     # Generarea PDF-urilor pentru fiecare factură
     pdf_files = facturas.map do |factura|
       logger.info "Generăm PDF pentru factura #{factura.numar}"
@@ -282,12 +285,9 @@ class FacturasController < ApplicationController
       # Conversia HTML-ului în PDF
       pdf = PDFKit.new(html).to_pdf
   
-      # Generarea numelui fișierului
-      file_path = if factura.id + 1000 <= 1308
-                    temp_folder.join("Factura_#{factura.id + 1000}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.pdf")
-                  else
-                    temp_folder.join("Factura_#{factura.id + 999}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.pdf")
-                  end
+      # Generarea numelui fișierului conform formatului dorit
+      filename = "F_#{supplier_cui}_ACDA#{factura.numar}_#{factura.data_emiterii.strftime('%d-%m-%Y')}.pdf"
+      file_path = temp_folder.join(filename)
   
       # Scrierea fișierului PDF pe disc
       File.open(file_path, 'wb') do |file|
@@ -298,7 +298,7 @@ class FacturasController < ApplicationController
     end
   
     # Crearea fișierului ZIP
-    zip_filename = Rails.root.join('tmp', "Facturi_luna_#{nume_luna}_#{an}.zip")
+    zip_filename = Rails.root.join('tmp', "Facturi_PDF_luna_#{nume_luna}_#{an}.zip")
   
     # Ștergerea fișierului ZIP existent, dacă există
     File.delete(zip_filename) if File.exist?(zip_filename)
@@ -322,6 +322,7 @@ class FacturasController < ApplicationController
     # FileUtils.rm(zip_filename)
   end
   
+  
     
     
 
@@ -342,13 +343,17 @@ class FacturasController < ApplicationController
     facturas = Factura.where('extract(month from data_emiterii) = ? AND extract(year from data_emiterii) = ?', luna, an)
     logger.info "Facturi găsite: #{facturas.count}"
   
+    # Codul fiscal al furnizorului
+    supplier_cui = '5509227'
+  
     # Generarea XML-urilor pentru fiecare factură
     xml_files = facturas.map do |factura|
       logger.info "Generăm XML pentru factura #{factura.numar}"
       xml_content = factura.cui =~ /\d{2,}/ ? generate_invoice_xml_company(factura) : generate_invoice_xml_individual(factura)
   
       # Generarea numelui fișierului
-      file_path = temp_folder.join("Factura_#{factura.numar}_din_#{factura.data_emiterii.strftime('%d.%m.%Y')}.xml")
+      filename = "F_#{supplier_cui}_ACDA#{factura.numar}_#{factura.data_emiterii.strftime('%d-%m-%Y')}.xml"
+      file_path = temp_folder.join(filename)
   
       # Scrierea conținutului XML în fișier
       File.open(file_path, 'wb') do |file|
@@ -380,6 +385,7 @@ class FacturasController < ApplicationController
     # FileUtils.rm_rf(temp_folder)
     # FileUtils.rm(zip_filename)
   end
+  
   
 
 
@@ -468,7 +474,7 @@ class FacturasController < ApplicationController
         redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
         return
       end  
-      unless current_user.role == 1
+      unless current_user.role == 1 || current_user.email=='dorincontabilitate@gmail.com'
         redirect_to root_path, alert: "Nu ai permisiunea de a accesa această pagină."
         return
       end

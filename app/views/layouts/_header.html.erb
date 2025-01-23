@@ -217,7 +217,7 @@
                         <% if current_user && (current_user.role == 1 || allowed_emails.include?(current_user.email)) %>                
                         <li><%= link_to 'Documente', documente_path, class: 'nav-item no-turbo' %></li>
                         <% end %>
-                        <% if current_user && current_user.role==1 %>
+                        <% if current_user && (current_user.role==1 || current_user.email=='dorincontabilitate@gmail.com') %>
                         <li><%= link_to 'Facturi XML Ayush Cell  S.R.L.', facturi_xml_ayushcell_path %></li>
                         <li><%= link_to 'PC', show_crypto_price_path, class: 'nav-item no-turbo' %> </li>                       
                         
