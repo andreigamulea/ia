@@ -229,7 +229,9 @@ class FacturasController < ApplicationController
   # GET /facturas/1 or /facturas/1.json
   def show
     @factura = Factura.find(params[:id])
-    unless @factura.user_id == @user.id || @user.role == 1 || current_user.email=='dorincontabilitate@gmail.com'
+  
+    # Verificarea permisiunilor pentru utilizatorul curent
+    unless @factura.user_id == @user.id || @user.role == 1 || current_user.email == 'dorincontabilitate@gmail.com'
       redirect_to root_path, alert: "Nu aveți permisiunea de a vizualiza această factură"
       return
     end
@@ -237,18 +239,26 @@ class FacturasController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
+        # Generarea conținutului HTML al facturii
         html = render_to_string(
           template: 'facturas/show',
           locals: { factura: @factura },
           encoding: 'UTF8'
         )
+  
+        # Conversia HTML-ului în PDF
         pdf = PDFKit.new(html).to_pdf
-        filename_prefix = @factura.id + 1000 <= 1308 ? @factura.id + 1000 : @factura.id + 999
-        filename = "Factura_#{filename_prefix}_din_#{@factura.data_emiterii.strftime('%d.%m.%Y')}.pdf"
+  
+        # Generarea numelui fișierului în formatul dorit
+        supplier_cui = '5509227' # Codul fiscal al furnizorului
+        filename = "F_#{supplier_cui}_ACDA#{@factura.numar}_#{@factura.data_emiterii.strftime('%d-%m-%Y')}.pdf"
+  
+        # Trimiterea fișierului PDF către browser
         send_data pdf, filename: filename, type: 'application/pdf', disposition: 'attachment'
       end
     end
   end
+  
   
   def download_all
     # Preluarea parametrilor din request
