@@ -332,7 +332,7 @@ post '/stripe-webhooks', to: 'stripe_webhooks#create'
   get '/plata_nutritie3/export', to: 'paginisites#export_to_xlsx_plata_nutritie3', as: 'export_plata_nutritie3'
   get '/plata_amnaya/export', to: 'paginisites#export_to_xlsx_plata_amnaya', as: 'export_plata_amnaya'
   get '/plata_vajikarana_modul1/export', to: 'paginisites#export_to_xlsx_plata_vajikarana_modul1', as: 'export_to_xlsx_plata_vajikarana_modul1'
-  
+  get '/plata_vajikarana_modul2/export', to: 'paginisites#export_to_xlsx_plata_vajikarana_modul2', as: 'export_to_xlsx_plata_vajikarana_modul2'
   get '/plata_tayv2/export', to: 'paginisites#export_to_xlsx_plata_tayv2', as: 'export_plata_tayv2'
   get '/plata_tayt12/export', to: 'paginisites#export_to_xlsx_plata_tayt12', as: 'export_plata_tayt12'
   get '/export_to_xlsx_plata_sesiunevara/export', to: 'paginisites#export_to_xlsx_plata_sesiunevara', as: 'export_to_xlsx_plata_sesiunevara'
