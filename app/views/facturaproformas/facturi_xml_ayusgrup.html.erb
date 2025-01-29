@@ -1,0 +1,65 @@
+<div style="width: 80%; margin: 0 auto; text-align: center; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #f9f9f9;"><h2 style="margin-bottom: 20px;">Selectează luna</h2>
+
+<div style="margin-bottom: 15px;">
+  <label for="luna" style="display: block; font-weight: bold;">Luna:</label>
+  <select id="luna" class="form-control" style="width: 100%; padding: 5px;">
+    <% (1..12).each do |m| %>
+      <option value="<%= m %>" <%= 'selected' if m == Date.today.month %>><%= Date::MONTHNAMES[m] %></option>
+    <% end %>
+  </select>
+</div>
+
+<div style="margin-bottom: 15px;">
+  <label for="an" style="display: block; font-weight: bold;">An:</label>
+  <select id="an" class="form-control" style="width: 100%; padding: 5px;">
+    <% (2023..Date.today.year).to_a.reverse.each do |y| %>
+      <option value="<%= y %>" <%= 'selected' if y == Date.today.year %>><%= y %></option>
+    <% end %>
+  </select>
+</div>
+
+<!-- Buton pentru descărcarea XML-urilor -->
+<button 
+  onclick="window.location.href='<%= facturi_xml_lunar_path %>?luna=' + document.getElementById('luna').value + '&an=' + document.getElementById('an').value" 
+  class="btn btn-primary" style="margin: 10px; padding: 10px 20px;">
+  Descarcă XML-urile
+</button>
+
+
+
+<div style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+<div style="width: 80%; max-width: 1200px; margin: auto; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background: #fff; border-radius: 8px;">
+    
+    <h2 style="text-align: center;">Toate Facturile Proforma</h2>
+    <table class="table" style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Număr</th>
+          <th>Data Emiterii</th>
+          <th>Client</th>
+          <th>Firma</th>
+          <th>CUI</th>
+          <th>CNP</th>
+          <th>Download XML</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @facturaproformas.each_with_index do |factura, index| %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= factura.numar_factura %></td>
+            <td><%= factura.data_emiterii.strftime('%Y-%m-%d') %></td>
+            <td><%= factura.nume %></td>
+            <td><%= factura.nume_companie %></td>
+            <td><%= factura.cui %></td>
+            <td><%= factura.cnp || 'N/A' %></td>
+            <td>
+              <%= link_to 'Descarcă XML', download_xml_ayusgrup_path(id: factura.id), class: 'btn btn-primary' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

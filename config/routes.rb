@@ -32,6 +32,13 @@ Rails.application.routes.draw do
   get 'tabere/tayv24', to: 'tabere#tayv24', as: 'tayv24'
   get 'tabere/tayt24', to: 'tabere#tayt24', as: 'tayt24'
   get 'facturas/raport_accesare_facturi', to: 'facturas#raport_accesare_facturi', as: 'raport_accesare_facturi'
+ 
+  get 'facturaproformas/facturi_xml_ayusgrup', to: 'facturaproformas#facturi_xml_ayusgrup', as: 'facturi_xml_ayusgrup'
+  get 'facturaproformas/:id/download_xml_ayusgrup', to: 'facturaproformas#download_xml_ayusgrup', as: 'download_xml_ayusgrup'
+  get 'facturaproformas/facturi_xml_lunar', to: 'facturaproformas#facturi_xml_lunar', as: 'facturi_xml_lunar'
+
+
+
   resources :facturaproformas do
     collection do
       get :generare_facturi
@@ -41,6 +48,7 @@ Rails.application.routes.draw do
       get :situatii_lunare
       get :analiza_lunara
       get :download_analiza_lunara
+      
     end
   
     member do
@@ -49,6 +57,7 @@ Rails.application.routes.draw do
       post :create_stripe_session
     end
   end
+  
   
   
   

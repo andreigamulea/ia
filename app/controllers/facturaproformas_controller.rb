@@ -14,10 +14,87 @@ class FacturaproformasController < ApplicationController
   
   # GET /facturaproformas or /facturaproformas.json
   def index
-    @facturaproformas = Facturaproforma.all
+    @facturaproformas = Facturaproforma.order(data_emiterii: :desc)
   end
 
+########################  XML
+def facturi_xml_ayusgrup
+  @facturaproformas = Facturaproforma.order(created_at: :desc) # Sau aplicați un filtru specific
+end
 
+
+def download_xml_ayusgrup
+  factura = Facturaproforma.find(params[:id])
+  xml = generate_invoice_xml_individual_ayusgrup(factura)
+
+  supplier_cif = '15768237'  # Codul fiscal al furnizorului
+  filename = "F_#{supplier_cif}_AYUSGRUP_#{factura.numar_factura}_#{factura.created_at.strftime('%d-%m-%Y')}.xml"
+
+  send_data xml, type: 'application/xml', filename: filename
+end
+
+def facturi_xml_lunar
+  Rails.logger.info "Am intrat în metoda facturi_xml_lunar"
+
+  # Preia luna și anul din parametri sau folosește luna și anul curent
+  luna = params[:luna]&.to_i || Date.today.month
+  an = params[:an]&.to_i || Date.today.year
+  Rails.logger.info "Parametri primiți: luna=#{luna}, an=#{an}"
+
+  # Calcularea ultimei zile a lunii pentru numele fișierului
+  ultima_zi = Date.new(an, luna, -1).strftime('%d.%m.%Y')
+  Rails.logger.info "Ultima zi a lunii: #{ultima_zi}"
+
+  # Generarea conținutului XML
+  begin
+    xml_content = generate_monthly_invoices_xml(luna, an)
+    Rails.logger.info "XML generat cu succes"
+
+    # Creează numele fișierului
+    filename = "F_15768237_multiple_#{ultima_zi}.xml"
+
+    # Trimite fișierul XML pentru descărcare
+    send_data xml_content,
+              type: 'application/xml; charset=UTF-8',
+              filename: filename
+  rescue => e
+    Rails.logger.error "Eroare la generarea XML-ului: #{e.message}"
+    redirect_to root_path, alert: "Eroare la generarea XML-ului: #{e.message}"
+  end
+end
+
+
+def generate_monthly_invoices_xml(luna, an)
+  require 'builder'
+
+  # Selectează facturile pentru luna și anul specificat
+  facturi = Facturaproforma.where('extract(month from data_emiterii) = ? AND extract(year from data_emiterii) = ?', luna, an)
+  .order(id: :desc)
+
+  if facturi.empty?
+    raise "Nu există facturi pentru luna #{luna} și anul #{an}."
+  end
+  ultima_zi = Date.new(an, luna, -1).strftime('%d.%m.%Y')
+  puts("Ultima zi este: #{ultima_zi}")
+  # Construiește XML-ul
+  builder = Builder::XmlMarkup.new(indent: 2)
+  builder.Facturi do |facturi_node| # Nod principal <Facturi>
+    facturi.each do |factura|
+      facturi_node.Factura do |factura_node| # Nod individual <Factura>
+        build_antet(factura_node, factura)
+        build_detalii(factura_node, factura)
+        build_sumar(factura_node, factura)
+        build_observatii(factura_node, factura)
+      end
+    end
+  end
+
+  builder.target!
+end
+
+
+
+########################
 
 
 
@@ -545,5 +622,108 @@ class FacturaproformasController < ApplicationController
       end
     end
     
+
+
+
+
+
+
+    ########################### XML
+    def generate_invoice_xml_individual_ayusgrup(factura)
+      require 'builder'
+    
+      builder = Builder::XmlMarkup.new(indent: 2)
+      builder.Facturi do |facturi|
+        facturi.Factura do |factura_node|
+          build_antet(factura_node, factura)
+          build_detalii(factura_node, factura)
+          build_sumar(factura_node, factura)
+          build_observatii(factura_node, factura)
+        end
+      end
+    
+      builder.target!
+    end
+    
+    # Construiește secțiunea Antet
+    def build_antet(node, factura)
+      node.Antet do |antet|
+        antet.FurnizorNume 'AYUS GRUP SRL'
+        antet.FurnizorCIF '15768237'
+        antet.FurnizorNrRegCom 'J40/12819/2003'
+        antet.FurnizorCapital '200 Lei'
+        antet.FurnizorTara
+        antet.FurnizorJudet
+        antet.FurnizorAdresa 'Municipiul Bucureşti, Sector 5, Intr. Ferentari, Nr.72, Bl.4b, Sc.D, Et.3, Ap.32'
+        antet.FurnizorBanca 'ING BANK'
+        antet.FurnizorIBAN 'RO86INGB0000999902964556'
+        antet.FurnizorInformatiiSuplimentare
+    
+        antet.ClientNume factura.nume || 'Client necunoscut'
+        antet.ClientInformatiiSuplimentare
+        antet.ClientCIF factura.cnp || '-'
+        antet.ClientNrRegCom
+        antet.ClientTara factura.tara || 'România'
+        antet.ClientJudet factura.abr_jud || 'N/A'
+        antet.ClientAdresa [factura.strada, factura.numar_adresa, factura.altedate].compact.join(' ')
+        antet.ClientBanca
+        antet.ClientIBAN
+        antet.ClientTelefon
+        antet.ClientMail
+    
+        antet.FacturaNumar "AYGR#{factura.numar_factura}"
+        antet.FacturaData factura.data_emiterii.strftime('%d.%m.%Y')
+        antet.FacturaScadenta
+        antet.FacturaTaxareInversa 'Nu'
+        antet.FacturaTVAIncasare 'Nu'
+        antet.FacturaTip
+        antet.FacturaInformatiiSuplimentare
+    
+        antet.FacturaMoneda 'RON'
+        antet.FacturaCotaTVA '0'
+        antet.FacturaID
+        antet.FacturaGreutate
+      end
+    end
+    
+    # Construiește secțiunea Detalii
+    def build_detalii(node, factura)
+      node.Detalii do |detalii|
+        detalii.Continut do |continut|
+          continut.Linie do |linie_node|
+            linie_node.LinieNrCrt 1
+            linie_node.Descriere factura.produs || 'Produs necunoscut'
+            linie_node.UM 'buc'
+            linie_node.Cantitate factura.cantitate || 0
+            linie_node.Pret format('%.2f', factura.pret_unitar || 0)
+            linie_node.Valoare format('%.2f', factura.valoare_totala || 0)
+            linie_node.CotaTVA '0'
+            linie_node.TVA format('%.2f', factura.valoare_tva || 0)
+          end
+        end
+      end
+    end
+    
+    # Construiește secțiunea Sumar
+    def build_sumar(node, factura)
+      node.Sumar do |sumar|
+        sumar.Total format('%.2f', factura.valoare_totala || 0)
+        sumar.TotalTVA format('%.2f', factura.valoare_tva || 0)
+        sumar.TotalValoare format('%.2f', (factura.valoare_totala || 0) - (factura.valoare_tva || 0))
+      end
+    end
+    
+    # Construiește secțiunea Observații
+    def build_observatii(node, factura)
+      node.Observatii do |observatii|
+        observatii.txtObservatii factura.obs || "Comanda online #{factura.numar_comanda || 'necunoscută'}"
+      end
+    end
+    
+    
+    
+    
+
+    ###########################
    
 end

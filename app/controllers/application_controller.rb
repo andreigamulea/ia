@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
     before_action :configure_permitted_parameters, if: :devise_controller?
     before_action :check_user_active
     skip_before_action :check_user_active, only: [:after_sign_in_path_for]
+    
     before_action :check_sign_in_token
     before_action :set_stripe_key
     before_action :set_security_headers

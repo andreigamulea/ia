@@ -21,7 +21,7 @@ class FacturasController < ApplicationController
 
       #@facturas = @user.facturas
     elsif @user.role == 0
-      @facturas = @user.facturas.where(status: "Achitata")
+      @facturas = @user.facturas.where(status: "Achitata").order(id: :desc)
     
     else
       #@facturas = @user.facturas
