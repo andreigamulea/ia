@@ -658,7 +658,7 @@ end
         antet.FurnizorBanca 'ING BANK'
         antet.FurnizorIBAN 'RO86INGB0000999902964556'
         antet.FurnizorInformatiiSuplimentare
-    
+        
         antet.ClientNume factura.nume || 'Client necunoscut'
         antet.ClientInformatiiSuplimentare
         antet.ClientCIF factura.cnp || '-'
@@ -680,7 +680,7 @@ end
         antet.FacturaInformatiiSuplimentare
     
         antet.FacturaMoneda 'RON'
-        antet.FacturaCotaTVA '0'
+        antet.FacturaCotaTVA
         antet.FacturaID
         antet.FacturaGreutate
       end
@@ -694,10 +694,11 @@ end
             linie_node.LinieNrCrt 1
             linie_node.Descriere factura.produs || 'Produs necunoscut'
             linie_node.UM 'buc'
-            linie_node.Cantitate factura.cantitate || 0
+            linie_node.Cantitate format('%.2f', factura.cantitate || 0)
             linie_node.Pret format('%.2f', factura.pret_unitar || 0)
             linie_node.Valoare format('%.2f', factura.valoare_totala || 0)
             linie_node.CotaTVA '0'
+            linie_node.ProcTVA '0'
             linie_node.TVA format('%.2f', factura.valoare_tva || 0)
           end
         end

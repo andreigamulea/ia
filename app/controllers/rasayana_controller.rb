@@ -97,4 +97,7 @@ class RasayanaController < ApplicationController
     puts("Prods este: #{@prods}")
     puts("@nr_luni_achitate=#{@nr_luni_achitate}")
   end
+  def seminarii_rasayana
+
+  end 
 end
