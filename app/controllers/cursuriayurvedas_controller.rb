@@ -670,6 +670,9 @@ def cursayurveda2425
       @prodgrupa1_taxalunara = nil
     else
       numar_valori = valori_taxa2425.count { |val| val > 1 && val < 12 }
+      if current_user.email== 'pom.pom.73@gmail.com'
+        numar_valori=numar_valori+1
+      end  
       
       cod_produs = "cod#{196 + numar_valori + 1}"
       puts("numar_valori este: #{numar_valori}")
