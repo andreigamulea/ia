@@ -126,6 +126,8 @@ class VajikaranaController < ApplicationController
   
   
   def modul2
+    @myvideo1 = 'zAe3zVVT6Cw'
+    @myvideo = @myvideo1 if @myvideo1
     @has_access = current_user&.role == 1
     if current_user  
       # Obține ID-urile produselor cumpărate de current_user, care sunt valide și a căror datasfarsit este azi sau în viitor

@@ -184,10 +184,23 @@
               </p>
               </br>
           </section>
-          <section>
-        <%end%> 
+        <%end%>     
+        
+        <section>
+       <h2 class="name">Prezentare introductiva - Curs Vajikarana Modulul 2</h2>
+  <p style="text-align:center;">Pentru a vă familiariza cu temele acestui modul, vă invităm să vizionați înregistrarea introductivă de mai jos. Evenimentul, organizat online pe 25.01.2025, oferă o perspectivă detaliată asupra conținutului cursului și a subiectelor abordate.”</p>
+  <!-- for non autoplay video //-->
+  <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+    <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
+      <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+      <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+      <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+      <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+    </div>
+  </div>
+  </br>
           
-          </section>
+        </section>
           <%if current_user && @a_cumparat_macar_un_cod%> 
           <h2 class="alimente-nutritionale" id="Vajikarana" style="text-align: center;font-size:28px;">Înregistrări video si materiale PDF</h2>
           <div id="videos">
