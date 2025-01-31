@@ -86,7 +86,9 @@ Rails.application.routes.draw do
  get 'tvs/canal2', to: 'tvs#canal2'
  get 'tvs/canal3', to: 'tvs#canal3'
  get 'tvs/rasayana1', to: 'tvs#rasayana1' #rasayana1
+ get 'tvs/reprogramare_curs', to: 'tvs#reprogramare_curs' #reprogramari video-uri -Thalia
  get 'tvs/seminarii', to: 'tvs#seminarii'
+
   
 
  get 'tvs/listacanal1', to: 'tvs#listacanal1', as: 'listacanal1'
@@ -258,6 +260,7 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get 'videos/:id/myvideo21', to: 'videos#myvideo21', as: 'myvideo21'
   get 'videos/:id/myvideo22', to: 'videos#myvideo22', as: 'myvideo22'
   get 'videos/:id/myvideo23', to: 'videos#myvideo23', as: 'myvideo23'
+  get 'videos/:id/myvideo24', to: 'videos#myvideo24', as: 'myvideo24'
   get 'videos/tayv2', to: 'videos#tayv2', as: 'tayv2'
   get 'tabara_de_ayurveda_toamna1', to: 'videos#tayt12', as: 'tayt12'
   get 'tabara_de_ayurveda_toamna2', to: 'videos#tayt122', as: 'tayt122'

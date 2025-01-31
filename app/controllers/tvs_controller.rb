@@ -236,7 +236,75 @@ class TvsController < ApplicationController
     end
   end
   
+  def reprogramare_curs
+    unless user_signed_in?
+      puts("autentificareee")
+      flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+      redirect_to new_user_session_path
+      return false
+    end
+    tabel_useri = ['geishauly@yahoo.com']
+    unless tabel_useri.include?(current_user.email) || current_user.role == 1
+      flash[:alert] = "Nu aveți permisiunea de a accesa acest curs."
+      redirect_to root_path
+      return false
+    end
   
+    now_bucharest = Time.current.in_time_zone('Europe/Bucharest')
+    @now_bucharest = now_bucharest
+    data_curenta = @now_bucharest.to_date
+    @orare_inceput_sfarsit_azi = Tv.where(datainceput: data_curenta, canal: 102).pluck(:orainceput, :orasfarsit).flat_map { |orainceput, orasfarsit| [orainceput, orasfarsit] }.uniq
+  
+    @orare_inceput_sfarsit_azi = @orare_inceput_sfarsit_azi.map { |ora| ora.strftime('%H:%M') }
+  
+    @myvideo1 = Tv.where(canal: 102)
+                  .where("datainceput <= ? AND datasfarsit >= ?", now_bucharest.to_date, now_bucharest.to_date)
+                  .to_a
+                  .detect do |tv|
+                    ora_inceput_ajustata = tv.orainceput.change(year: now_bucharest.year, month: now_bucharest.month, day: now_bucharest.day, zone: 'Europe/Bucharest')
+                    
+                    if tv.datasfarsit == tv.datainceput
+                      ora_sfarsit_ajustata = tv.orasfarsit.change(year: now_bucharest.year, month: now_bucharest.month, day: now_bucharest.day, zone: 'Europe/Bucharest')
+                    else
+                      ora_sfarsit_ajustata = tv.orasfarsit.change(year: tv.datasfarsit.year, month: tv.datasfarsit.month, day: tv.datasfarsit.day, zone: 'Europe/Bucharest')
+                    end
+  
+                    now_bucharest >= ora_inceput_ajustata && now_bucharest <= ora_sfarsit_ajustata
+                  end
+  
+    puts "Video selectat: #{@myvideo1 ? @myvideo1.id : 'Niciunul'}"
+  
+    # Dacă @myvideo1 există, căutăm videouri cu același cod în tabela Video
+    if @myvideo1
+      # Găsim videoclipul în tabela Video care are același link ca @myvideo1
+      video_gasit = Video.find_by(link: @myvideo1.link)
+  
+      if video_gasit
+        # Căutăm toate videourile cu același cod
+        @myvideos = Video.where(cod: video_gasit.cod)
+        @nr_video_gasite = @myvideos.count
+        puts("Numarul de videouri gasite cu acelasi cod este de : #{@nr_video_gasite}")
+      else
+        @nr_video_gasite = 0
+        puts("Nu a fost găsit niciun video cu același link în tabela Video.")
+      end
+    else
+      @nr_video_gasite = 0
+      puts("Nu a fost selectat niciun video pentru verificarea codului.")
+    end
+  
+    # Restul codului
+    if @myvideo1
+      @myvideo = @myvideo1.link
+      @exista_video = true
+      @denumire = @myvideo1.denumire
+      @data_sfarsit = @myvideo1.datasfarsit.strftime("%d.%m.%Y") if @myvideo1&.datasfarsit
+      @valabilitate_ora_sfarsit = @myvideo1.orasfarsit.strftime("%H:%M") if @myvideo1.orasfarsit
+    else
+      @myvideo1 = nil
+      @exista_video = false
+    end
+  end
 
 
 

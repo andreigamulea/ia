@@ -61,14 +61,22 @@
                       <%= link_to 'Ayush Cell 2', '/tvs/canal2', class: 'no-turbo' %>
                     </li>
                     <% end %>
+
                     <% if current_user && (current_user.role == 1 || Listacanal3.exists?(email: current_user.email)) %>
                     <li class="nav-item">
                       <%= link_to 'Ayush Cell 3', '/tvs/canal3', class: 'no-turbo' %>
                     </li>
                     <% end %>
+                    
                     <li class="nav-item">
                        <%= link_to 'Ayush Cell Seminarii', '/tvs/seminarii', class: 'no-turbo' %>
                     </li>
+                    <% allowed_emails1 = ["geishauly@yahoo.com"] %>
+                    <% if current_user && (current_user.role == 1 || allowed_emails1.include?(current_user.email)) %>
+                      <li class="nav-item">
+                        <%= link_to 'Reprogramare cursuri', '/tvs/reprogramare_curs', class: 'no-turbo' %>
+                      </li>
+                    <% end %>
                 </ul>
               </li>
  

@@ -33,6 +33,7 @@ class VideosController < ApplicationController
   before_action :set_user21, only: %i[myvideo21] #este pt revizionari an 3 24-25
   before_action :set_user22, only: %i[myvideo22] #este pt revizionari an 4 24-25
   before_action :set_user23, only: %i[myvideo23] #este pt tayt24
+  before_action :set_user24, only: %i[myvideo24]
   before_action :require_admin, only: %i[index new edit update create]  
   # GET /videos or /videos.json
   def index
@@ -327,6 +328,11 @@ end
     render 'myvideo1'
   end
   def myvideo23 #pt tayt24
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo24 #pt revizionari diverse
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
@@ -2083,7 +2089,21 @@ def set_user23
   true
 end
 
+def set_user24
+  puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
 
+  tabel_useri = ['geishauly@yahoo.com']
+    unless tabel_useri.include?(current_user.email) || current_user.role == 1
+      flash[:alert] = "Nu aveți permisiunea de a accesa acest curs."
+      redirect_to root_path
+      return false
+    end
+end
 
 
     def require_admin
