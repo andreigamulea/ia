@@ -1,3 +1,8 @@
+
+<!-- app/views/cursuriayurvedas/cursayurveda2425.html.erb -->
+<% content_for :custom_js do %>
+  <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
+<% end %>
 <style>
   #vajikarana .cm h2 {
     font-size: 22px;
@@ -250,3 +255,6 @@
           </div>
   </div>
 </div>
+<script>
+  <%= yield :custom_js %>
+</script>
