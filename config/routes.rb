@@ -1,4 +1,7 @@
 Rails.application.routes.draw do 
+  get "set_language", to: "language#set"
+
+
   get '/autocomplete_tara', to: 'detaliifacturares#autocomplete_tara'
   get '/autocomplete_judet', to: 'detaliifacturares#autocomplete_judet'
   get '/autocomplete_localitate', to: 'detaliifacturares#autocomplete_localitate'

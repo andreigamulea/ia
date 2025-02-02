@@ -9,7 +9,7 @@ class DeeplService
   end
 
   def translate(text, target_lang = "EN", source_lang = "RO")
-    return unless text.present?
+    return text unless text.present? && target_lang != source_lang  # Nu traduce dacă limba este aceeași
 
     response = Faraday.post(BASE_URL) do |req|
       req.headers['Authorization'] = "DeepL-Auth-Key #{@api_key}"
@@ -25,7 +25,7 @@ class DeeplService
       JSON.parse(response.body)["translations"].first["text"]
     else
       Rails.logger.error "DeepL API error: #{response.body}"
-      nil
+      text  # Dacă API-ul eșuează, returnează textul original
     end
   end
 end

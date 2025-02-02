@@ -236,8 +236,8 @@ class TvsController < ApplicationController
     end
   end
   
-  def reprogramare_curs
-    unless user_signed_in?
+  def reprogramare_curs #Thalia ; daca vreau un videopt oricine il pun in array aici dar si la 
+    unless user_signed_in? #_controller si la _header ; dai cautare dupa geishauly si pui acolo
       puts("autentificareee")
       flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
       redirect_to new_user_session_path

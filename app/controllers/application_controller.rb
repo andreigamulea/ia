@@ -2,6 +2,10 @@ class ApplicationController < ActionController::Base
     rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_root
     rescue_from ActionController::RoutingError, with: :redirect_to_root
     puts("111111")
+    before_action :set_locale
+
+  helper ApplicationHelper
+
     before_action :set_facturare_access
     before_action :redirect_if_exists, if: :date_facturare_controller?
     before_action :track_ahoy_visit
@@ -304,5 +308,18 @@ end
         controller_name == 'date_facturares'
       end
       
+
+      def set_locale
+        session[:locale] ||= "ro"
+      end
+    
+      def translate_text(text)
+        return text unless text.present?
+        target_lang = session[:locale] == "en" ? "EN" : "RO"
+    
+        Rails.cache.fetch(["deepl_translation", text, target_lang], expires_in: 24.hours) do
+          DeeplService.new.translate(text, target_lang)
+        end
+      end
       
 end
