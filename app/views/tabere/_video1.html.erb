@@ -1,3 +1,4 @@
+<tr>
 <td style="width: 40px;">
     <% if video.ordine >= 1000 && video.ordine < 2000 %>
       <%= video.ordine - 1000 %>
@@ -30,4 +31,5 @@
       <%= link_to "Vezi video", myvideo14_path(id: video.id, link: video.link), class: "btn btn-primary" %>
     <%end%>
   </td>  
+
 </tr>
