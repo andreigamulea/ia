@@ -72,37 +72,23 @@
     </head>
 
     <body> 
-    
-  
-    <% unless @hide_header %>
-      <%= translate_html(render 'layouts/header') %>
-  
-    <% end %>
-    
-    <%if current_user && current_user.role == 1%>
-    <nav>
-      <ul>
-        <li><%= link_to "Română", set_language_path(locale: "ro") %></li>
-        <li><%= link_to "English", set_language_path(locale: "en") %></li>
-      </ul>
-    </nav>
-    <%end%>
-    
-    <%= translate_html(yield) %>
-    
-    <%= translate_html(render 'layouts/newsleter') %>
+  <% unless @hide_header %>
+    <%= translate_html(render 'layouts/header') %>
+  <% end %>
 
-   
-    <%= translate_html(render 'layouts/footer') %>
+  <%if current_user && current_user.role == 1%>
+  <nav>
+    <ul>
+      <li><%= link_to "Română", set_language_path(locale: "ro") %></li>
+      <li><%= link_to "English", set_language_path(locale: "en") %></li>
+    </ul>
+  </nav>
+  <%end%>
 
-    
-    
-    <script type='text/javascript' src='//www.youtube.com/iframe_api'></script>
+  <%= translate_html(yield) %>
 
-
-
-
-    
-  </body>
+  <%= translate_html(render 'layouts/newsleter') %>
+  <%= translate_html(render 'layouts/footer') %>
+</body>
   
 </html> 

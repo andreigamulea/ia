@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_23_124337) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_02_233857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -768,6 +768,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_23_124337) do
     t.integer "idxcp"
     t.string "cp"
     t.string "explicatie"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "translations", force: :cascade do |t|
+    t.text "original_text"
+    t.text "translated_text"
+    t.text "manual_text"
+    t.string "locale"
+    t.string "hash_value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,0 +1,16 @@
+<h1>✍️ Editare Traducere Manuală</h1>
+
+<%= form_with model: @translation, local: true do |f| %>
+  <p>
+    <strong>Text original (română):</strong> <%= @translation.original_text %>
+  </p>
+  <p>
+    <strong>Traducere automată:</strong> <%= @translation.translated_text %>
+  </p>
+  <p>
+    <strong>Editează manual traducerea:</strong>
+    <%= f.text_area :manual_text, rows: 4 %>
+  </p>
+
+  <%= f.submit "Salvează modificarea" %>
+<% end %>
