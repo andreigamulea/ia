@@ -230,7 +230,11 @@
               <tbody>
               <% @myvideo.each do |video| %>
                 <tr>
+                <%if video.ordine>1000%>
                 <td><%= video.ordine-1000 %></td>
+                <%elsif video.ordine<1000%>
+                <td><%= video.ordine %></td>
+                <% end %> 
                 <td><%= video.nume %></td>
                 <td><%= video.descriere %></td>           
                 <td><%= link_to "Vezi video", myvideo25_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
