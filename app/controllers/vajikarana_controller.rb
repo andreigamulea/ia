@@ -165,10 +165,12 @@ puts("produsele cumparate sunt: #{purchased_prod_coduri}")
 
       elsif purchased_prod_coduri.include?('cod306')
         @prods = Prod.where(cod: 'cod307')
+        @has_access = false
       
       else
         # Dacă nu a cumpărat niciunul, afișează produsele cu cod=cod108 și cod=cod110
         @prods = Prod.where(cod: ['cod306', 'cod308'], status: 'activ')
+        @has_access = false
       end
   
       @prods_cumparate = Prod.where(cod: purchased_prod_coduri)
@@ -180,20 +182,23 @@ puts("produsele cumparate sunt: #{purchased_prod_coduri}")
       @videos_correspondente = Video.none
     end
 
-      if @a_cumparat_macar_un_cod
-              if current_user && current_user.limba=='EN'
-                @myvideo13 = Video.where(tip: 'vajikarana2').where('ordine > ? AND ordine < ?', 4000, 5000).order(ordine: :asc)
-              else  
-                    @myvideo13 = Video.where(tip: 'vajikarana2').where('ordine <= ?', 1000).order(ordine: :asc)
-              end  
-      else  
-                @myvideo13 = Video.none
-      end
+     
 
-
-
+      if current_user && current_user.role==1
+        @has_access = true
+      end  
       puts("Are acces? : #{@has_access}")
-  end
+      if @has_access
+                    if current_user && current_user.limba=='EN'
+                      @myvideo = Video.where(tip: 'vajikarana2').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
+                    else  
+                          @myvideo = Video.where(tip: 'vajikarana2').where('ordine <= ?', 1000).order(ordine: :asc)
+                    end  
+            else  
+                      @myvideo = Video.none
+            end
+            
+        end
 
 
 end

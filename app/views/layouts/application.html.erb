@@ -67,29 +67,31 @@
       
       
 
-     
+       
 
     </head>
 
     <body> 
-  <% unless @hide_header %>
-    <%= translate_html(render 'layouts/header') %>
-  <% end %>
+    
+  
+    <% unless @hide_header %>
+      <%= render 'layouts/header' %>  
+    <% end %>
+    
+    
+    <%= yield %>
+    
+    <%= render 'layouts/newsleter' %>  
+   
+    <%= render 'layouts/footer' %> 
+    
+    
+    <script type='text/javascript' src='//www.youtube.com/iframe_api'></script>
 
-  <%if current_user && current_user.role == 1%>
-  <nav>
-    <ul>
-      <li><%= link_to "Română", set_language_path(locale: "ro") %></li>
-      <li><%= link_to "English", set_language_path(locale: "en") %></li>
-    </ul>
-  </nav>
-  <%end%>
 
-  <%= translate_html(yield) %>
 
-  <%= translate_html(render 'layouts/newsleter') %>
-  <%= translate_html(render 'layouts/footer') %>
-  <script type='text/javascript' src='//www.youtube.com/iframe_api'></script>
-</body>
+
+    
+  </body>
   
 </html> 

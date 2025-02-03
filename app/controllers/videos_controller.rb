@@ -34,6 +34,8 @@ class VideosController < ApplicationController
   before_action :set_user22, only: %i[myvideo22] #este pt revizionari an 4 24-25
   before_action :set_user23, only: %i[myvideo23] #este pt tayt24
   before_action :set_user24, only: %i[myvideo24]
+  before_action :set_user25, only: %i[myvideo25] #este pt vajikarana2
+
   before_action :require_admin, only: %i[index new edit update create]  
   # GET /videos or /videos.json
   def index
@@ -333,6 +335,11 @@ end
     render 'myvideo1'
   end
   def myvideo24 #pt revizionari diverse
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo25 #pt vajikarana1
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
@@ -2104,6 +2111,65 @@ def set_user24
       return false
     end
 end
+
+
+
+
+
+def set_user25
+  puts "================= Verificare acces utilizator ================="
+
+  # 1️⃣ Verifică dacă utilizatorul este autentificat
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+
+  # 2️⃣ Adminii (role == 1) au acces automat
+  return true if current_user.role == 1
+
+  # 3️⃣ Verifică produsele cumpărate pentru utilizatorii obișnuiți (role == 0)
+  purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                               .joins(:prod)
+                               .where(prods: { curslegatura: 'vajikarana2' })
+                               .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+  purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                 .joins(:prod)
+                                 .where(prods: { curslegatura: 'vajikarana2' })
+                                 .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+  # 4️⃣ Combină toate produsele cumpărate într-un singur array
+  all_purchased_prods = purchased_prods + purchased_prods1
+
+  puts "📌 Produse cumpărate cu date: #{all_purchased_prods}"
+
+  # 5️⃣ Extrage doar codurile produselor pentru validare
+  valid_prod_codes = all_purchased_prods.map(&:first)
+
+  puts "✅ Produse valabile (doar coduri): #{valid_prod_codes.inspect}"
+
+  # 6️⃣ Verifică condițiile pentru acces:
+  has_cod308 = valid_prod_codes.include?('cod308')
+  has_cod306 = valid_prod_codes.include?('cod306')
+  has_cod307 = valid_prod_codes.include?('cod307')
+
+  has_access = has_cod308 || (has_cod306 && has_cod307)
+
+  puts "🔑 Condiții acces -> cod308: #{has_cod308}, cod306: #{has_cod306}, cod307: #{has_cod307}"
+  puts "🔓 has_access este: #{has_access}"
+
+  unless has_access
+    flash[:alert] = "Nu aveți acces la acest curs."
+    redirect_to root_path
+    return false
+  end
+
+  # 7️⃣ Dacă toate verificările sunt trecute, utilizatorul are acces
+  true
+end
+
 
 
     def require_admin
