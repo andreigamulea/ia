@@ -1,5 +1,5 @@
 class RasayanaController < ApplicationController
-  def modul1
+  def modul1  # #ATENTIE nu e facaut pana cand au acces!!! s-a incheiat la 31 Ianuarie si o sa pun pana la datasfarsit
     @myvideo1 = Video.find_by(link: 'suMeHXOiYtk') #prezentare rasayana
     @myvideo = @myvideo1.link if @myvideo1
 

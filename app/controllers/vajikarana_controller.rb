@@ -125,7 +125,7 @@ class VajikaranaController < ApplicationController
   
   
   
-  def modul2
+  def modul2 #ATENTIE nu e facaut pana cand au acces!!! 4.02.2025
     @myvideo1 = 'zAe3zVVT6Cw'
     #@myvideo = @myvideo1 if @myvideo1
     @myvideo = 'zAe3zVVT6Cw' 

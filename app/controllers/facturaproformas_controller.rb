@@ -371,38 +371,22 @@ end
   #daca in An32324  la pret este trecut gr. va fi preluat cu 0 deci nu se va factura
   #AS VREA sa preaiau nume+prenume din ce pun userii pt ca acum preiau din An32324 dati de Nina (are doar nume)
   def creareproforma
-    
-
-
     begin
       produs_id = params[:produs_id]
       @prod = Prod.find(produs_id)
   
-      # Setăm datele în funcție de codul produsului
-      case @prod.cod     
-      # Adding a one-month gap after 'cod37', so cod214 starts from August
-      when 'cod214'
-        datacomenzii = Date.new(2024, 8, 31)
-      when 'cod215'
-        datacomenzii = Date.new(2024, 9, 30)
-      when 'cod216'
-        datacomenzii = Date.new(2024, 10, 31)
-      when 'cod217'
-        datacomenzii = Date.new(2024, 11, 30)
-      when 'cod218'
-        datacomenzii = Date.new(2024, 12, 27)
-      when 'cod219'
-        datacomenzii = Date.new(2025, 1, 31)
-      when 'cod220'
-        datacomenzii = Date.new(2025, 2, 28)
-      when 'cod221'
-        datacomenzii = Date.new(2025, 3, 31)
-      when 'cod222'
-        datacomenzii = Date.new(2025, 4, 30)
-      when 'cod223'
-        datacomenzii = Date.new(2025, 5, 31)
-      when 'cod224'
-        datacomenzii = Date.new(2025, 6, 30)
+      case @prod.cod
+      when 'cod214' then datacomenzii = Date.new(2024, 8, 31)
+      when 'cod215' then datacomenzii = Date.new(2024, 9, 30)
+      when 'cod216' then datacomenzii = Date.new(2024, 10, 31)
+      when 'cod217' then datacomenzii = Date.new(2024, 11, 30)
+      when 'cod218' then datacomenzii = Date.new(2024, 12, 27)
+      when 'cod219' then datacomenzii = Date.new(2025, 1, 31)
+      when 'cod220' then datacomenzii = Date.new(2025, 2, 28)
+      when 'cod221' then datacomenzii = Date.new(2025, 3, 31)
+      when 'cod222' then datacomenzii = Date.new(2025, 4, 30)
+      when 'cod223' then datacomenzii = Date.new(2025, 5, 31)
+      when 'cod224' then datacomenzii = Date.new(2025, 6, 30)
       else
         raise "Codul produsului nu este recunoscut"
       end
@@ -413,20 +397,17 @@ end
   
       An32324.find_each do |an_entry|
         user = User.find_by(email: an_entry.email)
-        next unless user # Sarim daca utilizatorul nu este găsit
+        next unless user
   
-        # Verifică prețul din tabela An32324
         pret = an_entry.pret
-        next if pret.nil? || pret.to_f == 0.0 # Sarim dacă prețul este nul sau 0
+        next if pret.nil? || pret.to_f == 0.0
   
-        # Verifică dacă există deja o factură proforma pentru acest user și produs
         if Facturaproforma.exists?(user_id: user.id, prod_id: produs_id)
           puts "Există deja o factură proforma pentru utilizatorul #{user.id} și produsul #{produs_id}."
           next
         end
   
         ActiveRecord::Base.transaction do
-          # Creează înregistrarea în tabela Comanda
           comanda = Comanda.create!(
             datacomenzii: datacomenzii,
             statecomanda1: 'Initiata',
@@ -443,11 +424,9 @@ end
             prodcod: @prod.cod
           )
   
-          # Actualizează numărul comenzii
-          numar_comanda = Comanda.maximum(:id).to_i #asta asigura ca id este la fel cu numar_comanda
+          numar_comanda = Comanda.maximum(:id).to_i
           comanda.update!(numar: numar_comanda)
   
-          # Creează înregistrarea în tabela ComenziProd
           ComenziProd.create!(
             comanda_id: comanda.id,
             prod_id: @prod.id,
@@ -461,10 +440,8 @@ end
             obs: "fara"
           )
   
-          ## Găsește datele de facturare
           df = DateFacturare.find_by(email: an_entry.email)
   
-          # Setează valorile implicite dacă datele de facturare nu sunt găsite
           nume = an_entry.nume
           localitate = "Bucuresti"
   
@@ -480,6 +457,7 @@ end
             cod_postal = df.codpostal
             altedate = df.altedate
             telefon = df.telefon
+            cnp = df.cnp
           else
             nume_companie = nil
             cui = nil
@@ -490,18 +468,28 @@ end
             cod_postal = nil
             altedate = nil
             telefon = an_entry.telefon
+            cnp = nil
           end
   
-          # Obține numărul de factură
+          # Setăm abr_jud
+          if tara.present? && tara != "Romania"
+            abr_jud = "B"
+          else
+            judet_entry = Judet.find_by(denjud: judet)
+            abr_jud = judet_entry&.cod
+          end
+  
+          # Setăm abr_tara
+          tara_entry = Tari.find_by(nume: tara)
+          abr_tara = tara_entry&.abr
+  
           last_factura = Facturaproforma.maximum(:numar_factura).to_i
           numar_factura = last_factura == 0 ? 240001 : last_factura + 1
           numar_factura = numar_factura.to_s
   
-          # Obține detaliile firmei
           firma = Firmeproforma.find_by(cod: 'cod1')
           raise ActiveRecord::RecordNotFound, "Firma nu a fost găsită" unless firma
   
-          # Creează înregistrarea în tabela Facturaproforma
           Facturaproforma.create!(
             comanda_id: comanda.id,
             user_id: user.id,
@@ -527,20 +515,23 @@ end
             valoare_totala: pret,
             cod_firma: firma.cod,
             status: "Proforma",
-            serie_factura: firma.serie
+            serie_factura: firma.serie,
+            cnp: cnp,
+            abr_jud: abr_jud,
+            abr_tara: abr_tara
           )
         end
       end
   
       flash[:success] = "Facturile proforma au fost create cu succes."
-      redirect_to panouadmin_path # Înlocuiește cu calea corespunzătoare
+      redirect_to panouadmin_path
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
       puts "Eroare: #{e.message}"
       flash[:error] = "A apărut o eroare: #{e.message}"
-      redirect_to root_path # Înlocuiește cu calea corespunzătoare
+      redirect_to root_path
     end
   end
-
+  
   def not_in_users #lista userilor de an 3 care nu au cont
     listacanal3_emails = Listacanal3.pluck(:email)
     user_emails = User.pluck(:email)
