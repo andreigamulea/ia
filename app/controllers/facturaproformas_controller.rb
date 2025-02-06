@@ -363,7 +363,7 @@ end
                 .order(Arel.sql("CASE cod " + cods.map.with_index { |cod, index| "WHEN '#{cod}' THEN #{index}" }.join(' ') + " END"))
     
   end  
-  # POST /facturaproformas/creareproforma
+  ## POST /facturaproformas/creareproforma
   #DESCRIERE metoda de mai jos: Daca userul nu are cont si este in tabela An32324 NU i se va face 
   #factura- nu se vor crea inregistrari in cele 3 tabele : Comanda, ComenziProd si Facturaproforma
   #daca in tabela An32324 pret == nil sau 0 nu se creaza inregistrari si deci nici factura
