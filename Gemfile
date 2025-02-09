@@ -127,5 +127,5 @@ gem 'ed25519', '~> 1.3'
 gem 'bcrypt_pbkdf', '~> 1.1', '>= 1.1.1'
 gem 'timeout', '~> 0.4.3'
 gem 'google-cloud-translate', '~> 3.7'
-gem 'derailed_benchmarks', '~> 2.2', '>= 2.2.1' #pentrua vedea de ceconsuma ram
+gem 'derailed_benchmarks', '~> 2.2', '>= 2.2.1' #pentrua vedea de ce consuma ram
 gem 'sys-proctable', '~> 1.3' # pentru a functiona gem-ul de deasupra

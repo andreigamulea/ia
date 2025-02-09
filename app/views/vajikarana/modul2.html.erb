@@ -214,7 +214,7 @@
   </br>
           
         </section>
-          <%if current_user && @has_access%> 
+          <%if current_user && @a_cumparat_macar_un_cod%> 
           <h2 class="alimente-nutritionale" id="Vajikarana" style="text-align: center;font-size:28px;">Înregistrări video si materiale PDF</h2>
           <div id="videos">
             <table class="table">
@@ -224,24 +224,32 @@
                   <th>Curs</th>
                   <th>Descriere</th>
                   <th>Actiune</th>
+                  <th>Acces fisiere PDF</th>
                   
                 </tr>
               </thead>
               <tbody>
               <% @myvideo.each do |video| %>
                 <tr>
-                <%if video.ordine>1000%>
-                <td><%= video.ordine-1000 %></td>
-                <%elsif video.ordine<1000%>
-                <td><%= video.ordine %></td>
-                <% end %> 
-                <td><%= video.nume %></td>
-                <td><%= video.descriere %></td>           
-                <td><%= link_to "Vezi video", myvideo25_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
+                  <% if video.ordine > 1000 %>
+                    <td><%= video.ordine - 1000 %></td>
+                  <% elsif video.ordine < 1000 %>
+                    <td><%= video.ordine %></td>
+                  <% end %> 
+                  <td><%= video.nume %></td>
+                  <td><%= video.descriere %></td>           
+                  <td>
+                    <%= link_to "Vezi video", 
+                        myvideo25_path(id: video.id, link: video.link), 
+                        class: "btn btn-primary #{'disabled' unless @has_access}" %>
+                  </td>
+                  <td>
+                    <%= link_to "Descarcă arhiva (.rar)", vajikarana_download_path(linkzip: video.linkpdf), class: "btn btn-primary" %>
+                  </td>
                 </tr>
-          
-              
-              </tbody><% end %> 
+              <% end %>
+            </tbody>
+
         
         </table>
           </div>

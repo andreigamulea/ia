@@ -137,7 +137,8 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get 'vajikarana/modul2', to: 'vajikarana#modul2', as: 'vajikarana_modul2'
   #get 'vajikarana/download/:linkzip', to: 'vajikarana#download', as: 'vajikarana_download'
   get 'vajikarana/download/*linkzip', to: 'vajikarana#download', as: 'vajikarana_download', format: false
-    
+  get 'vajikarana/download2/*linkzip', to: 'vajikarana#download2', as: 'vajikarana_download2', format: false  
+
   get 'traditia_ayurvedica/amnaya', to: 'traditia_ayurvedica#amnaya', as: 'amnaya'
   get 'traditia_ayurvedica/jivaka', to: 'traditia_ayurvedica#jivaka', as: 'jivaka'
   get 'traditia_ayurvedica/asita', to: 'traditia_ayurvedica#asita', as: 'asita'
