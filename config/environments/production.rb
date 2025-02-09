@@ -82,6 +82,8 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "ia_production"
 
   config.action_mailer.perform_caching = false
+  config.active_record.cache_versioning = false
+  GC.start(full_mark: true, immediate_sweep: true)
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
