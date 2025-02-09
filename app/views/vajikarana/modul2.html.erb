@@ -243,9 +243,13 @@
                         myvideo25_path(id: video.id, link: video.link), 
                         class: "btn btn-primary #{'disabled' unless @has_access}" %>
                   </td>
+                  <% if video.tip == 'vajikarana2' && video.linkpdf.present? %>
                   <td>
                     <%= link_to "Descarcă arhiva (.rar)", vajikarana_download2_path(linkzip: video.linkpdf), class: "btn btn-primary" %>
                   </td>
+                  <% else %>
+                  <td></td>
+                  <% end %>
                 </tr>
               <% end %>
             </tbody>
