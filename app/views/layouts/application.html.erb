@@ -92,6 +92,15 @@
 
 
     
+
+    <script>
+  document.addEventListener("turbo:load", function() {
+    document.querySelectorAll("a").forEach(function(link) {
+      link.setAttribute("data-turbo", "false");
+    });
+  });
+</script>
+
   </body>
   
 </html> 
