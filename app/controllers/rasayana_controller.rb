@@ -97,7 +97,31 @@ class RasayanaController < ApplicationController
     puts("Prods este: #{@prods}")
     puts("@nr_luni_achitate=#{@nr_luni_achitate}")
   end
-  def seminarii_rasayana
 
-  end 
+  def seminarii_rasayana
+    if current_user.nil?
+      @prods = Prod.where(curslegatura: 'rasayana1-seminarii')
+      @valid_prods = []
+    else
+      purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                   .joins(:prod)
+                                   .where(prods: { curslegatura: 'rasayana1-seminarii', status: 'activ' })
+                                   .pluck('prods.cod')
+  
+      valid_product_codes = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                       .where('datasfarsit > ?', Date.today)
+                                       .joins(:prod)
+                                       .where(prods: { curslegatura: 'rasayana1-seminarii', status: 'activ' })
+                                       .pluck('prods.cod')
+  
+      @valid_prods = valid_product_codes.any? ? Prod.where(cod: valid_product_codes) : []
+  
+      @prods = @valid_prods.any? ? Prod.none : Prod.where(curslegatura: 'rasayana1-seminarii')
+      #@prods = @valid_prods.any?  || current_user.role==1 ? Prod.none : Prod.where(curslegatura: 'rasayana1-seminarii')
+    end
+  end
+  
+
+  
+  
 end
