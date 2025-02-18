@@ -110,7 +110,7 @@ class RasayanaController < ApplicationController
                                    .pluck('prods.cod')
   
       valid_product_codes = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
-                                       .where('datasfarsit > ?', Date.today)
+                                       .where('datasfarsit >= ?', Date.today)
                                        .joins(:prod)
                                        .where(prods: { curslegatura: 'rasayana1-seminarii', status: 'activ' })
                                        .pluck('prods.cod')
