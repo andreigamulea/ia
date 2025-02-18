@@ -48,7 +48,7 @@
           <div class="r1c2">
             <p>Practicile de tip Rasayana, apreciate pentru beneficiile lor asupra sănătății, vitalității, memoriei și longevității, implică un parcurs gradat, necesitând pregătire și dedicare, cu scopul final de a atinge o stare plenară de regenerare și echilibru.</p>
             <% if !current_user %> <div class="r1c2">
-            <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('rasayana1'), class: 'register' %> </div>
+            <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('rasayana1-seminarii'), class: 'register' %> </div>
             <%elsif current_user%><%= link_to 'Vizionează acum', '#rasayana', class: 'register' %>
             <%end%>
           </div>
@@ -69,7 +69,7 @@
     </ul>
           <% if !user_signed_in? || (current_user && !@has_access) %><% if !current_user %> 
           
-          <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('rasayana1'), class: 'register' %> </div><%elsif current_user && !@has_access%> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', '#rasayana', class: 'register' %> </div><%end%> <br>
+          <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('rasayana1-seminarii'), class: 'register' %> </div><%elsif current_user && !@has_access%> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', '#rasayana', class: 'register' %> </div><%end%> <br>
 
 
     
@@ -112,7 +112,7 @@
             <tbody><% @prods.each do |prod| %> <tr>
                 <td><%= prod.nume %> </td>
                 <td><%= prod.detalii %> </td>
-                <td><%= prod.pret.to_i %> lei </td><% if current_user %> <td style="text-align:center;"><%= link_to 'Acceseaza cursul', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td><% else %> <td style="text-align:center;"><%= link_to 'Acceseaza cursul', new_user_session_with_return_path('rasayana1'), class: 'btn btn-primary' %> </td><% end %>
+                <td><%= prod.pret.to_i %> lei </td><% if current_user %> <td style="text-align:center;"><%= link_to 'Acceseaza cursul', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td><% else %> <td style="text-align:center;"><%= link_to 'Acceseaza cursul', new_user_session_with_return_path('rasayana1-seminarii'), class: 'btn btn-primary' %> </td><% end %>
               </tr><% end %> </tbody>
           </table>
         </div>

@@ -229,6 +229,8 @@ end
         ayurveda_padartha_path 
       elsif return_to == "rasayana1"   
         rasayana_modul1_path  
+      elsif return_to == "rasayana1-seminarii"   
+        rasayana_seminarii_path
       elsif return_to == "optimizarea_performanțelor_cognitive" 
         optimizarea_performantelor_cognitive_path
       elsif return_to == "voluntar" 
