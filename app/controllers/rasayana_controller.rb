@@ -102,6 +102,7 @@ class RasayanaController < ApplicationController
     if current_user.nil?
       @prods = Prod.where(curslegatura: 'rasayana1-seminarii')
       @valid_prods = []
+      @has_access = false
     else
       purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
                                    .joins(:prod)
@@ -115,11 +116,16 @@ class RasayanaController < ApplicationController
                                        .pluck('prods.cod')
   
       @valid_prods = valid_product_codes.any? ? Prod.where(cod: valid_product_codes) : []
+      @has_access = @valid_prods.any?  # Dacă există produse valide, @has_access = true
   
-      @prods = @valid_prods.any? ? Prod.none : Prod.where(curslegatura: 'rasayana1-seminarii')
-      #@prods = @valid_prods.any?  || current_user.role==1 ? Prod.none : Prod.where(curslegatura: 'rasayana1-seminarii')
+      @prods = @has_access ? Prod.none : Prod.where(curslegatura: 'rasayana1-seminarii')
+  
+      @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1')
+                                            .where('ordine > ? AND ordine < ?', 1000, 2000)
+                                            .order(ordine: :asc).to_a
     end
   end
+  
   
 
   

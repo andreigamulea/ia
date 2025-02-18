@@ -35,7 +35,7 @@ class VideosController < ApplicationController
   before_action :set_user23, only: %i[myvideo23] #este pt tayt24
   before_action :set_user24, only: %i[myvideo24]
   before_action :set_user25, only: %i[myvideo25] #este pt vajikarana2
-
+  before_action :set_user26, only: %i[myvideo26] #este pt rasayana seminarii modul 1
   before_action :require_admin, only: %i[index new edit update create]  
   # GET /videos or /videos.json
   def index
@@ -340,6 +340,11 @@ end
     render 'myvideo1'
   end
   def myvideo25 #pt vajikarana1
+    @myvideo1 = Video.find(params[:id])
+    @myvideo = Video.find(params[:id])[:link]
+    render 'myvideo1'
+  end
+  def myvideo26 #pt vajikarana1
     @myvideo1 = Video.find(params[:id])
     @myvideo = Video.find(params[:id])[:link]
     render 'myvideo1'
@@ -2170,6 +2175,40 @@ def set_user25
   true
 end
 
+def set_user26
+  puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+  
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+
+  return true if current_user.role == 1  # Adminul are acces direct
+
+  # Verifică produsele cumpărate și valide
+  purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                               .joins(:prod)
+                               .where(prods: { curslegatura: 'rasayana1-seminarii', status: 'activ' })
+                               .pluck('prods.cod')
+
+  valid_product_codes = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                   .where('datasfarsit > ?', Date.today)
+                                   .joins(:prod)
+                                   .where(prods: { curslegatura: 'rasayana1-seminarii', status: 'activ' })
+                                   .pluck('prods.cod')
+
+  @valid_prods = valid_product_codes.any? ? Prod.where(cod: valid_product_codes) : []
+  @has_access = @valid_prods.any?  # True dacă există produse valide
+
+  if @has_access
+    return true
+  else
+    flash[:alert] = "Nu aveți acces la acest curs."
+    redirect_to root_path # Înlocuiește cu ruta unde vrei să redirecționezi utilizatorii fără acces
+    return false
+  end
+end
 
 
     def require_admin

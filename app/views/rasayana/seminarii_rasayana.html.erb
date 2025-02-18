@@ -121,7 +121,33 @@
 
        <br><br>
 
-
+<%if current_user && (current_user.role==1 || @has_acces)%>
+         <h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Rasayana - seminarii</h2></br>
+        <div id="videos">
+        <table class="table">
+          <thead>
+          <tr>
+              <th>Nr</th>
+              <th>Nume</th>
+              <th>Descriere</th>       
+              <th>Actiune</th>
+              
+          </tr>
+          </thead>
+          <tbody>
+          <% @myvideo_rasayana_m1_seminarii.each do |video| %>
+            <tr>
+            <td><%= video.ordine-1000 %></td>
+            <td><%= video.nume %></td>
+            <td><%= video.descriere %></td>           
+            <td><%= link_to "Vezi video", myvideo26_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
+            </tr>
+      
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+<%end%> 
 </section>
         
         
