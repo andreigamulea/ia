@@ -2056,50 +2056,50 @@ def set_user23
   if current_user.role == 1
     return true
   elsif current_user.role == 0
-    data_prag = Date.new(2024, 11, 19)
-
-    # Obține codurile produselor cumpărate și datele de început și sfârșit
     purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
                                  .joins(:prod)
-                                 .where(prods: { curslegatura: 'tayt24' })
+                                 .where(prods: { curslegatura: 'tayt24', cod: ['cod264', 'cod265', 'cod266', 'cod267', 'cod268'] })
                                  .pluck('prods.cod', 'datainceput', 'datasfarsit')
 
     purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
                                    .joins(:prod)
-                                   .where(prods: { curslegatura: 'tayt24' })
+                                   .where(prods: { curslegatura: 'tayt24', cod: ['cod264', 'cod265', 'cod266', 'cod267', 'cod268'] })
                                    .pluck('prods.cod', 'datainceput', 'datasfarsit')
 
-    # Dacă nu există produse cumpărate, inițializează array-ul cu produse cumpărate ca gol
-    purchased_prods ||= []
-    purchased_prods1 ||= []
-
-    # Combină listele de produse
-    all_purchased_prods = purchased_prods + purchased_prods1
+    all_purchased_prods = (purchased_prods + purchased_prods1).uniq
 
     puts("Produse cumpărate cu date: #{all_purchased_prods}")
 
-    # Filtrare produse valabile
-    valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput + 90.days >= Date.today }.map(&:first)
+    data_prag = Date.new(2024, 12, 8)
+    all_purchased_prods.each do |_, datainceput, _|
+      data_prag = datainceput if datainceput && datainceput > data_prag
+    end
+
+    valid_prods = all_purchased_prods.select { |_, _, datasfarsit| datasfarsit && datasfarsit >= data_prag }.map(&:first)
+    expired_prods = all_purchased_prods.select { |_, _, datasfarsit| datasfarsit && datasfarsit < data_prag }.map(&:first)
 
     puts("Produse valabile: #{valid_prods}")
+    puts("Produse expirate: #{expired_prods}")
 
-    has_access = valid_prods.include?('cod266') || valid_prods.include?('cod267') || valid_prods.include?('cod268')
+    has_access = valid_prods.any?
 
     puts("has_access este: #{has_access}")
 
     unless has_access
       flash[:alert] = "Nu aveți acces la acest curs."
-      redirect_to root_path # Schimbați cu calea dorită
+      redirect_to root_path
       return false
     end
   else
     flash[:alert] = "Nu aveți permisiuni suficiente pentru a accesa acest curs."
-    redirect_to root_path # Schimbați cu calea dorită
+    redirect_to root_path
     return false
   end
 
   true
 end
+
+
 
 def set_user24
   puts("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")

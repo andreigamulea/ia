@@ -114,131 +114,95 @@ class TabereController < ApplicationController
     end  
 end
   
-  def tayt24
-    data_prag = Date.new(2024, 11, 19)
-    @myvideo01 = "tDYGbQMGTNE"
-  
-    if current_user
-      puts("User logat: #{current_user.id}")
-  
-      if current_user.role == 1
-        # Utilizator cu role 1 are acces direct la video-uri
-        @has_access = true
-        valid_prods = ['cod266', 'cod267']
-        expired_prods = []
-        all_purchased = ['cod266', 'cod267']
-        @a_cumparat_macar_un_cod = true
-        @prods = Prod.where(cod: ['cod264', 'cod265', 'cod266', 'cod267']).order(:id)
-        @prods_cumparate = Prod.where(cod: all_purchased)
-        @platit = true # Utilizator cu role 1 are acces direct
-      else
-        # Obține codurile produselor cumpărate și datele de început și sfârșit
-        purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
-                                     .joins(:prod)
-                                     .where(prods: { curslegatura: 'tayt24', status: 'activ' })
-                                     .pluck('prods.cod', 'datainceput', 'datasfarsit')
-  
-        purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
-                                       .joins(:prod)
-                                       .where(prods: { curslegatura: 'tayt24', status: 'activ' })
-                                       .pluck('prods.cod', 'datainceput', 'datasfarsit')
-  
-        purchased_prods ||= []
-        purchased_prods1 ||= []
-  
-        all_purchased_prods = purchased_prods + purchased_prods1
-  
-        puts("Produse cumpărate cu date: #{all_purchased_prods}")
-  
-        valid_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 90.days >= Date.today }.map(&:first)
-        expired_prods = all_purchased_prods.select { |_, datainceput, _| datainceput && datainceput + 90.days < Date.today }.map(&:first)
-  
-        puts("Produse valabile: #{valid_prods}")
-  
-        all_purchased = all_purchased_prods.map(&:first).uniq
-        @a_cumparat_macar_un_cod = all_purchased.any?
-  
-        # Determină dacă utilizatorul are acces în funcție de data prag și data plății
-        @platit = all_purchased_prods.any? do |_, datainceput, _|
-          if datainceput < data_prag
-            datainceput + 90.days >= Date.today
-          else
-            datainceput + 90.days >= Date.today
-          end
-        end
-  
-        if @a_cumparat_macar_un_cod
-          if (all_purchased.include?('cod264') || all_purchased.include?('cod265')) && all_purchased.include?('cod268')
-            puts "Condiția 1: Are cod264 sau cod265 și cod268"
-            @prods = Prod.none
-            @has_access = true
-          elsif all_purchased.include?('cod266') || all_purchased.include?('cod267')
-            puts "Condiția 2: Are cod266 sau cod267"
-            @has_access = true
-            @prods = Prod.none
-          elsif (all_purchased.include?('cod264') || all_purchased.include?('cod265')) && !all_purchased.include?('cod268')
-            puts "Condiția 3: Are doar cod264 sau cod265, fără cod268"
-            @prods = Prod.where(cod: 'cod268').order(:id)
-            @has_access = false  # Setați @has_access la false explicit aici
-          else
-            puts "Condiția 4: Nu îndeplinește nicio condiție specială, afișează toate codurile"
-            @prods = Prod.where(cod: ['cod264', 'cod265', 'cod266', 'cod267']).order(:id)
-          end
-        else
-          puts "Condiția 5: Nu a cumpărat nimic"
-          @prods = Prod.where(cod: ['cod266', 'cod267']).order(:id)
-        end
-        
-        puts "Produse afișate: #{@prods.pluck(:cod)}"
-        puts "Are acces? : #{@has_access}"
-        
-        
-        
-        
-        
-        
-  
-        @has_access ||= valid_prods.include?('cod266') || valid_prods.include?('cod267') || valid_prods.include?('cod268')
-        @prods_cumparate = Prod.where(cod: all_purchased)
-      end
-  
-      puts("Produse afișate: #{@prods.pluck(:cod) if @prods}")
-      puts("Are acces? : #{@has_access}")
-      puts("Produse cumpărate: #{@prods_cumparate.pluck(:cod) if @prods_cumparate}")
-  
-     
-  
-      if @has_access
-        puts("sunt in has acces")
-        if current_user.limba == 'EN'
-          @myvideo23 = Video.where(tip: 'tayt24').where('(ordine >= ? AND ordine <= ?)', 0, 2000).order(ordine: :asc)
-        else
-          @myvideo23 = Video.where(tip: 'tayt24').where('ordine <= ?', 1000).order(ordine: :asc)
-        end
-        puts("Numarul: #{@myvideo23.count}")
-      else
-        puts("sunt in has acces NU")
-        @myvideo23 = Video.none
-        #@myvideo = Video.none
-      end
+def tayt24
+  @myvideo01 = "tDYGbQMGTNE"
+
+  if current_user
+    puts("User logat: #{current_user.id}")
+
+    if current_user.role == 1
+      @has_access = true
+      valid_prods = ['cod266', 'cod267']
+      expired_prods = []
+      all_purchased = ['cod266', 'cod267']
+      @a_cumparat_macar_un_cod = true
+      @prods = Prod.where(cod: ['cod264', 'cod265', 'cod266', 'cod267']).order(:id)
+      @prods_cumparate = Prod.where(cod: all_purchased)
+      @platit = true
     else
-      # Utilizator neautentificat
-      puts("User nelogat")
-      @prods = Prod.where(curslegatura: 'tayt24', status: 'activ').where(cod: ['cod266', 'cod267']).order(:id)
-      @has_access = false
-      @prods_cumparate = Prod.none
-      @videos_correspondente = Video.none
+      purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                   .joins(:prod)
+                                   .where(prods: { curslegatura: 'tayt24', status: 'activ', cod: ['cod264', 'cod265', 'cod266', 'cod267', 'cod268'] })
+                                   .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      purchased_prods1 = ComenziProd1.where(user_id: current_user.id, validat: 'Finalizata')
+                                     .joins(:prod)
+                                     .where(prods: { curslegatura: 'tayt24', status: 'activ', cod: ['cod264', 'cod265', 'cod266', 'cod267', 'cod268'] })
+                                     .pluck('prods.cod', 'datainceput', 'datasfarsit')
+
+      all_purchased_prods = (purchased_prods + purchased_prods1).uniq
+      all_purchased = all_purchased_prods.map(&:first)
+      @a_cumparat_macar_un_cod = all_purchased.any?
+
+      data_prag = Date.new(2024, 12, 8)
+      all_purchased_prods.each do |_, datainceput, _|
+        data_prag = datainceput if datainceput && datainceput > data_prag
+      end
+
+      valid_prods = all_purchased_prods.select { |_, _, datasfarsit| datasfarsit && datasfarsit >= data_prag }.map(&:first)
+      expired_prods = all_purchased_prods.select { |_, _, datasfarsit| datasfarsit && datasfarsit < data_prag }.map(&:first)
+
+      puts("Produse valabile: #{valid_prods}")
+      puts("Produse expirate: #{expired_prods}")
+
+      @platit = valid_prods.any?
+
+      if @a_cumparat_macar_un_cod
+        if (all_purchased.include?('cod264') || all_purchased.include?('cod265')) && all_purchased.include?('cod268')
+          @prods = Prod.none
+          @has_access = true
+        elsif all_purchased.include?('cod266') || all_purchased.include?('cod267')
+          @has_access = true
+          @prods = Prod.none
+        elsif (all_purchased.include?('cod264') || all_purchased.include?('cod265')) && !all_purchased.include?('cod268')
+          @prods = Prod.where(cod: 'cod268').order(:id)
+          @has_access = false
+        else
+          @prods = Prod.where(cod: ['cod264', 'cod265', 'cod266', 'cod267']).order(:id)
+        end
+      else
+        @prods = Prod.where(cod: ['cod266', 'cod267']).order(:id)
+      end
+      
+      @has_access ||= valid_prods.any?
+      @prods_cumparate = Prod.where(cod: all_purchased)
+    end
+
+    puts("Produse afișate: #{@prods.pluck(:cod) if @prods}")
+    puts("Are acces? : #{@has_access}")
+    puts("Produse cumpărate: #{@prods_cumparate.pluck(:cod) if @prods_cumparate}")
+
+    if @has_access
+      @myvideo23 = current_user.limba == 'EN' ? Video.where(tip: 'tayt24').where('(ordine >= ? AND ordine <= ?)', 0, 2000).order(ordine: :asc) : Video.where(tip: 'tayt24').where('ordine <= ?', 1000).order(ordine: :asc)
+    else
       @myvideo23 = Video.none
-      @a_cumparat_macar_un_cod = false
     end
-  
-    if data_prag
-      puts("Data prag + 90 zile= : #{data_prag + 90.days}")
-    end
-    if current_user && current_user.email == "kalianasundara@protonmail.com"
-      @prods = Prod.where(curslegatura: 'tayt24', status: 'activ').where(cod: ['cod264', 'cod265', 'cod266', 'cod267']).order(:id)
-    end
+  else
+    @prods = Prod.where(curslegatura: 'tayt24', status: 'activ').where(cod: ['cod266', 'cod267']).order(:id)
+    @has_access = false
+    @prods_cumparate = Prod.none
+    @videos_correspondente = Video.none
+    @myvideo23 = Video.none
+    @a_cumparat_macar_un_cod = false
   end
+
+  puts("Data prag + 90 zile= : #{data_prag + 90.days}") if data_prag
+
+  if current_user && current_user.email == "kalianasundara@protonmail.com"
+    @prods = Prod.where(curslegatura: 'tayt24', status: 'activ').where(cod: ['cod264', 'cod265', 'cod266', 'cod267']).order(:id)
+  end
+end
+
   
   
 
