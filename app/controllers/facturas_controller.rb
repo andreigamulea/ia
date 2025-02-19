@@ -619,7 +619,7 @@ class FacturasController < ApplicationController
           line.cbc :LineExtensionAmount, total_without_vat, currencyID: 'RON'
           line.cac :Item do |item|
             item.cbc :Description, "Comanda nr. #{factura.comanda_id}"
-            item.cbc :Name, "SERVICII ONLINE: #{factura.produs}"
+            item.cbc :Name, "SERVICII ONLINE #{factura.produs}"
             item.cac :ClassifiedTaxCategory do |tax_category|
               tax_category.cbc :ID, 'S'
               tax_category.cbc :Percent, factura.valoare_tva
