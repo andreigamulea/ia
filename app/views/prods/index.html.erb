@@ -17,6 +17,7 @@
       <th scope="col">Link stripe </th>
       <th scope="col">Status </th>
       <th scope="col">Cod</th>
+      <th scope="col">Tva</th>
       <th scope="col">Actiune</th>
     </tr>
   </thead>
@@ -33,6 +34,7 @@
         <td><%= prod.linkstripe %></td>
         <td><%= prod.status %></td>
         <td><%= prod.cod %></td>
+        <td><%= prod.tva %></td>
         <td>
           <%= link_to "Show", prod, class: "btn btn-primary", style: "margin: 3px;" %>
           <%= link_to "Edit", edit_prod_path(prod), class: "btn btn-secondary", style: "margin: 3px;" %>
