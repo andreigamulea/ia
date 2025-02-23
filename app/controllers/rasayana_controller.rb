@@ -98,7 +98,7 @@ class RasayanaController < ApplicationController
     puts("@nr_luni_achitate=#{@nr_luni_achitate}")
   end
 
-  def seminarii_rasayana
+  def seminarii_rasayana #
     if current_user.nil?
       @prods = Prod.where(curslegatura: 'rasayana1-seminarii')
       @valid_prods = []

@@ -115,7 +115,8 @@ class TvsController < ApplicationController
     # Dacă @myvideo1 există, căutăm videouri cu același cod în tabela Video
     if @myvideo1
       # Găsim videoclipul în tabela Video care are același link ca @myvideo1
-      video_gasit = Video.find_by(link: @myvideo1.link)
+      #video_gasit = Video.find_by(link: @myvideo1.link)
+      video_gasit = Video.where(link: @myvideo1.link, tip: 'an3_2425').first
   
       if video_gasit
         # Căutăm toate videourile cu același cod
@@ -207,7 +208,8 @@ class TvsController < ApplicationController
     # Dacă @myvideo1 există, căutăm videouri cu același cod în tabela Video
     if @myvideo1
       # Găsim videoclipul în tabela Video care are același link ca @myvideo1
-      video_gasit = Video.find_by(link: @myvideo1.link)
+      #video_gasit = Video.find_by(link: @myvideo1.link)
+      video_gasit = Video.where(link: @myvideo1.link, tip: 'an4_2425').first
   
       if video_gasit
         # Căutăm toate videourile cu același cod
@@ -273,11 +275,19 @@ class TvsController < ApplicationController
                   end
   
     puts "Video selectat: #{@myvideo1 ? @myvideo1.id : 'Niciunul'}"
+    puts "ID-ul selectat: #{@myvideo1.id}, Link: #{@myvideo1.link}, Cod: #{@myvideo1.cod if @myvideo1.respond_to?(:cod)}"
+
   
     # Dacă @myvideo1 există, căutăm videouri cu același cod în tabela Video
     if @myvideo1
       # Găsim videoclipul în tabela Video care are același link ca @myvideo1
-      video_gasit = Video.find_by(link: @myvideo1.link)
+      video_gasit = Video.where(link: @myvideo1.link, tip: 'an2_2425').first
+
+      if video_gasit
+        puts "Video găsit cu link #{@myvideo1.link}: #{video_gasit.id}, cod: #{video_gasit.cod}"
+      else
+        puts "Nu a fost găsit niciun video cu acest link în tabela Video."
+      end
   
       if video_gasit
         # Căutăm toate videourile cu același cod

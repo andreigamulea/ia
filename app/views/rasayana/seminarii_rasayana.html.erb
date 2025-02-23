@@ -92,9 +92,21 @@
             <strong>Costul participării</strong>
           </h3>
           <p>Participarea la acest pachet de seminarii, care aprofundează informațiile din modulul 1 de specializare în Rasayana, reprezintă o investiție valoroasă pentru cei interesați de aplicarea practică a noțiunilor din Ayurveda. Costul întregului pachet este de doar 250 de lei, o alegere avantajoasă având în vedere complexitatea și valoarea deosebită a informațiilor oferite. Participanții beneficiază de acces nelimitat, 24/7, timp de 120 de zile la înregistrările video, având astfel posibilitatea de a studia în ritm propriu și de a aprofunda materialele prezentate.</p>
+<br>
+  <h2 class="name">Prezentare introductiva a celor 16 seminarii</h2>
+  <p style="text-align:center;">Vă invităm să vizionați înregistrarea de mai jos, care prezintă structura și obiectivele pachetului de aprofundare practică în Rasayana, destinat celor care au parcurs primul modul al cursului de specializare. Materialul oferă detalii despre cele 16 seminarii, evidențiind aspectele esențiale ale aplicării practice, metodele de autoevaluare și integrarea principiilor Rasayana în viața cotidiană, pentru o înțelegere mai profundă și o utilizare eficientă a cunoștințelor acumulate.</p>
+  <!-- for non autoplay video //-->
+  <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+    <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
+      <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+      <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+      <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+      <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+    </div>
+  </div>
+  <br>
 
-
-        </section></br></br></br></br>
+        </section><br>
         
         
         
