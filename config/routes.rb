@@ -1,4 +1,5 @@
 Rails.application.routes.draw do 
+  get 'xml/animaplant', to: 'xml#animaplant'
   get "set_language", to: "language#set"
 
 

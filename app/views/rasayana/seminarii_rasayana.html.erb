@@ -67,7 +67,7 @@
         <li><strong>Celor care au participat la module separate de Rasayana</strong> organizate in diferite formate de-a lungul timpului și vor să își completeze cunoștințele cu detalii noi și clarificări.</li>
         <li><strong>Celor care au studiat modulul 1 de Rasayana online, pe platforma ayushcell.ro</strong> și doresc să revadă aceste înregistrări pentru a înțelege mai bine aplicabilitatea principiilor Rasayana.</li>
     </ul>
-          <% if !user_signed_in? || (current_user && !@has_access) %><% if !current_user %> 
+          <% if !user_signed_in? || current_user %><% if !current_user %> 
           
           <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('rasayana1-seminarii'), class: 'register' %> </div><%elsif current_user && !@has_access%> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', '#rasayana', class: 'register' %> </div><%end%> <br>
 
@@ -132,8 +132,8 @@
       
 
        <br><br>
-
-<%if current_user && (current_user.role==1 || @has_acces)%>
+      
+<%if current_user && (current_user.role==1 || @has_access)%>
          <h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Rasayana - seminarii</h2></br>
         <div id="videos">
         <table class="table">

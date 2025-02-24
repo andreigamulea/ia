@@ -125,6 +125,9 @@ class RasayanaController < ApplicationController
                                             .where('ordine > ? AND ordine < ?', 1000, 2000)
                                             .order(ordine: :asc).to_a
     end
+
+    puts("Produse valide: #{@valid_prods.first}")
+    puts("HAS_ACCES: #{@has_access}") 
   end
   
   
