@@ -171,17 +171,22 @@ class XmlController < ApplicationController
       end
 
       def animaplant_api
-        api_url = "https://animaplant.ro/wp-json/custom-api/v1/export-invoices/?start_date=2025-02-01&end_date=2025-02-10"
-        username = "costelaioanei@yahoo.com"
-        application_password = "uf89Km8dPdC7rDDu2HxEKBwa" # Înlocuiește cu parola generată
+        api_key = "KjS2IWZgx3BUdY790g3VJys9"
+        start_date = "2025-02-01"
+        end_date = "2025-02-10"
+        
+        api_url = "https://animaplant.ro/wp-json/custom-api/v1/export-invoices/?api_key=#{api_key}&start_date=#{start_date}&end_date=#{end_date}"
     
-        response = HTTParty.get(api_url, basic_auth: { username: username, password: application_password })
+        uri = URI(api_url)
+        response = Net::HTTP.get_response(uri)
     
-        if response.success?
-          render json: { success: true, data: response.parsed_response }
+        if response.is_a?(Net::HTTPSuccess)
+          @invoices = JSON.parse(response.body)
         else
-          render json: { success: false, error: response.message, status: response.code }
+          @error_message = "Eroare la preluarea datelor: #{response.message}"
         end
+    
+        #render :animaplant_view
       end
       
 end

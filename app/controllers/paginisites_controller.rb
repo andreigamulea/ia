@@ -1359,10 +1359,19 @@ def export_to_xlsx_plata_an2_2425
     produse_eligibile = Prod.where(cod: ['cod25', 'cod15'])
     
     # Găsim utilizatorii care au cumpărat cod25 sau cod15
-    utilizatori_eligibili_ids = ComenziProd.where(prod_id: produse_eligibile.ids, validat: "Finalizata").pluck(:user_id).uniq
+    email_de_exclus = 'mileamihaela1975@gmail.com'
+    user_de_exclus_id = User.where(email: email_de_exclus).pluck(:id).first
+    
+    utilizatori_eligibili_ids = ComenziProd.where(prod_id: produse_eligibile.ids, validat: "Finalizata")
+                                           .where.not(user_id: user_de_exclus_id)
+                                           .pluck(:user_id)
+                                           .uniq
 
     # Array cu utilizatori pentru cazuri particulare (inițial gol)
-    user_array_particulari = ['ce.hermkens@gmail.com','maria_mocica@yahoo.com'] # Poți adăuga aici cazuri particulare de eligibilitate
+    user_array_particulari = ['ce.hermkens@gmail.com', 'maria_mocica@yahoo.com']
+
+    # Eliminăm utilizatorul de exclus și din lista particulară
+    user_array_particulari.delete(email_de_exclus)
 
     # Produsele pentru anul universitar 2024-2025
     produse_an2 = Prod.where(cod: ['cod196', 'cod207', 'cod213'] + (197..206).map { |n| "cod#{n}" })
@@ -1372,7 +1381,8 @@ def export_to_xlsx_plata_an2_2425
     # Selectăm comenzile pentru produsele din anul universitar 2024-2025
     @comenzi_prod = ComenziProd.includes(:user, :prod, comanda: :adresa_comenzi)
                                .where(prod_id: mapare_valori_an2.keys, validat: "Finalizata")
-                               .where(user_id: utilizatori_eligibili_ids + User.where(email: user_array_particulari).pluck(:id)).order(:comanda_id)
+                               .where(user_id: utilizatori_eligibili_ids + User.where(email: user_array_particulari).pluck(:id))
+                               .order(:comanda_id)
 
     # Eliminăm duplicatele (în caz că un utilizator e atât în array, cât și a cumpărat codurile eligibile)
     @comenzi_prod = @comenzi_prod.uniq
@@ -1445,6 +1455,7 @@ rescue => e
   logger.error "Error generating Excel: #{e.message}"
   redirect_to root_path, alert: "There was an error generating the report. Please try again later."
 end
+
 
 
 def export_to_xlsx_plata_rasayana_modul1

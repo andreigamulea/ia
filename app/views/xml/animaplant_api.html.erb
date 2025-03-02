@@ -1,1 +1,7 @@
-salut
+<h1>Facturi Exportate</h1>
+
+<% if @invoices %>
+  <pre><%= JSON.pretty_generate(@invoices) %></pre>
+<% else %>
+  <p><%= @error_message || "Nu există date disponibile." %></p>
+<% end %>
