@@ -1,4 +1,54 @@
-<h1>Facturi Exportate</h1>
+<h1 style="text-align: center;">Facturi Importate</h1>
+<div style="width: 80%; margin: 0 auto; text-align: center; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #f9f9f9;">
+  <h2 style="margin-bottom: 20px;">Selectează perioada</h2>
+  
+  <form id="facturiForm" method="get" action="<%= animaplant_api_path %>">
+    <div style="margin-bottom: 15px;">
+      <label for="data_inceput" style="display: block; font-weight: bold;">Data de început:</label>
+      <input type="date" id="data_inceput" name="data_inceput" class="form-control" style="width: 100%; padding: 5px;">
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+      <label for="data_sfarsit" style="display: block; font-weight: bold;">Data de sfârșit:</label>
+      <input type="date" id="data_sfarsit" name="data_sfarsit" class="form-control" style="width: 100%; padding: 5px;">
+    </div>
+    
+    <!-- Buton pentru afișarea facturilor -->
+    <button type="submit" class="btn btn-primary" style="margin: 10px; padding: 10px 20px;">
+      Afișează facturile
+    </button>
+  </form>
+</div>
+
+<% if @invoices %>
+  <div style="width: 80%; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #fff;">
+    <h2>Facturi</h2>
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid #ddd; padding: 8px;">Comanda</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Data Comandă</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Număr Factură</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Data Factură</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @invoices.each do |invoice| %>
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 8px;"><%= invoice["numar_comanda"] %></td>
+            <td style="border: 1px solid #ddd; padding: 8px;"><%= invoice["data_comanda"] %></td>
+            <td style="border: 1px solid #ddd; padding: 8px;"><%= invoice["numar_factura"] %></td>
+            <td style="border: 1px solid #ddd; padding: 8px;"><%= invoice["data_factura"] %></td>
+            <td style="border: 1px solid #ddd; padding: 8px;"><%= invoice["total"] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% elsif @error_message %>
+  <p style="color: red; text-align: center;"><%= @error_message %></p>
+<% end %>
 
 <% if @invoices %>
   <pre><%= JSON.pretty_generate(@invoices) %></pre>

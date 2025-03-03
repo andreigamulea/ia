@@ -172,22 +172,30 @@ class XmlController < ApplicationController
 
       def animaplant_api
         api_key = "KjS2IWZgx3BUdY790g3VJys9"
-        start_date = "2025-02-01"
-        end_date = "2025-02-10"
-        
+        start_date = params[:data_inceput]
+        end_date = params[:data_sfarsit]
+      
+        if start_date.blank? || end_date.blank?
+          @error_message = "Selectează o perioadă înainte de a afișa facturile."
+          return render :animaplant_api
+        end
+      
         api_url = "https://animaplant.ro/wp-json/custom-api/v1/export-invoices/?api_key=#{api_key}&start_date=#{start_date}&end_date=#{end_date}"
-    
         uri = URI(api_url)
         response = Net::HTTP.get_response(uri)
-    
+      
         if response.is_a?(Net::HTTPSuccess)
           @invoices = JSON.parse(response.body)
         else
           @error_message = "Eroare la preluarea datelor: #{response.message}"
         end
-    
-        #render :animaplant_view
+      
+        render :animaplant_api
       end
+      
+      
+      
+      
       
 end
 
