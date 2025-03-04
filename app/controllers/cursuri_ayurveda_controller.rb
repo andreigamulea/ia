@@ -2,7 +2,7 @@ class CursuriAyurvedaController < ApplicationController
     def ayurveda_padartha
       #ATENTIE!!!!!!!  nu este facuta valabilitatea. Trebuie vazut pana cand au valibilitate codurile cumparate
       #dupa ce fac valabilitaea pot sterge acest mesaj
-      @myvideo1 = Video.find_by(link: 'RK6M5wTiAhk') #prezentare rasayana
+      @myvideo1 = Video.find_by(link: 'QzP2bAmqbwc') #prezentare ayurveda padartha
       @myvideo = @myvideo1.link if @myvideo1
   
       @nr_luni_achitate = 0 # Valoare implicită
