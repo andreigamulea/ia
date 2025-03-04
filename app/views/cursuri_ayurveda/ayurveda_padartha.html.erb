@@ -102,13 +102,33 @@
 </ul>
 
 
-
+<br>
+  <h2 class="name">Prezentare introductivă Curs de Ayurveda</h2>
+  <p style="text-align:center; max-width:720px; margin:0 auto; margin-bottom:20px; margin-top:-15px;">Vă invităm să urmăriți această înregistrare introductivă pentru a vă familiariza cu structura și conținutul cursurilor și pentru a descoperi temele principale care vor fi abordate.</p>
+  <!-- for non autoplay video //-->
+  <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
+    <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
+      <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
+      <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+      <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
+      <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
+    </div>
+  </div>
+  <br>
 
 
 
 
           
           <% if !user_signed_in? || (current_user && !@has_access) %><% if !current_user %> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('ayurveda-padartha'), class: 'register' %> </div><%elsif current_user && !@has_access%> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', '#Ayurveda-padartha', class: 'register' %> </div><%end%> <br>
+
+
+
+
+
+
+
+
           <h2>Înscriere și participare</h2>
           <br>
           <h3>Cine poate participa?</h3>

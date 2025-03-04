@@ -186,12 +186,19 @@ class XmlController < ApplicationController
       
         if response.is_a?(Net::HTTPSuccess)
           @invoices = JSON.parse(response.body)
+      
+          # Filtrarea facturilor care au `data_factura` în intervalul selectat
+          @invoices1 = @invoices.select do |invoice|
+            invoice_date = Date.parse(invoice["data_factura"]) rescue nil
+            invoice_date && invoice_date >= Date.parse(start_date) && invoice_date <= Date.parse(end_date)
+          end
         else
           @error_message = "Eroare la preluarea datelor: #{response.message}"
         end
       
         render :animaplant_api
       end
+      
       
       
       
