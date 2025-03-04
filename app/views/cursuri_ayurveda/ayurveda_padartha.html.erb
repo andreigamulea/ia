@@ -2,6 +2,22 @@
     <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
     <% end %>
   <style>
+  .responsive-iframe-container {
+    position: relative;
+    padding-bottom: 56.25%; /* Aspect ratio 16:9 */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+  }
+
+  .responsive-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
     #ayurveda-padartha .cm h2 {
       font-size: 22px;
     }
@@ -103,17 +119,23 @@
 
 
 <br>
-  <h2 class="name">Prezentare introductiva a unei noi serii Ayurveda-Padartha</h2>
-  <p style="text-align:center; max-width:720px; margin:0 auto; margin-bottom:20px; margin-top:-15px;">Vă invităm să urmăriți această înregistrare introductivă pentru a vă familiariza cu structura și conținutul cursurilor și pentru a descoperi temele principale care vor fi abordate.</p>
-  <div class="responsive-iframe-container" style="margin-top:0px;">
-  <iframe
+<div style="text-align: center; max-width: 920px; margin: 0 auto;">
+  <h2 class="name" style="font-size: 22px;">Prezentare introductivă a unei noi serii Ayurveda-Padartha</h2>
+  <p style="margin-bottom: 20px; margin-top: -15px;">
+    Vă invităm să urmăriți această înregistrare introductivă pentru a vă familiariza cu structura și conținutul cursurilor și pentru a descoperi temele principale care vor fi abordate.
+  </p>
+  <h2 style="font-size: 22px;">Prezentare video</h2>
+  
+  <div class="responsive-iframe-container">
+    <iframe
       src="https://www.youtube.com/embed/QzP2bAmqbwc"
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowfullscreen>
-  </iframe>
+    </iframe>
+  </div>
 </div>
-  <br>
+
 
 
 
