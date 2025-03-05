@@ -530,7 +530,7 @@ def ayurveda_padartha
   @orare_inceput_sfarsit_azi = @orare_inceput_sfarsit_azi.map { |ora| ora.strftime('%H:%M') }
   
 
-  @myvideo1 = Tv.where(canal: 102)
+  @myvideo1 = Tv.where(canal: 103)
             .where("datainceput <= ? AND datasfarsit >= ?", now_bucharest.to_date, now_bucharest.to_date)
             .to_a
             .detect do |tv|
