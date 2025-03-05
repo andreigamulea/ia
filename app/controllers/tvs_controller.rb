@@ -489,6 +489,92 @@ end
 
 
 
+
+def ayurveda_padartha
+  unless user_signed_in?
+    flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
+    redirect_to new_user_session_path
+    return false
+  end
+  # Select the 5 products based on curslegatura and cod fields
+  products = Prod.where(curslegatura: 'modul_ayurveda_padartha', cod: ['cod315', 'cod316', 'cod317'])
+    
+  # User not logged in case
+  if current_user.nil?
+    # Display only the first and last products (p1 and p5)
+    @prods = products.where(cod: ['cod315', 'cod316', 'cod317'])
+    @nr_luni_achitate = 0 # No purchases, no months paid
+  else
+    # User is logged in, check purchases in ComenziProd
+    purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                 .joins(:prod)
+                                 .where(prods: { curslegatura: 'modul_ayurveda_padartha', status: 'activ' })
+                                 .pluck('prods.cod')
+
+    # Determine which products to show based on what has been purchased
+   
+  puts("Produse cumparate: #{purchased_prods}")
+  @purchased_prods=purchased_prods
+  
+  ###############################
+
+  now_bucharest = Time.current.in_time_zone('Europe/Bucharest')
+  @now_bucharest = now_bucharest
+  data_curenta = @now_bucharest.to_date
+  # Colectează toate 'orainceput' pentru înregistrările din data curentă
+  #@orare_inceput_azi = Tv.where(datainceput: data_curenta).pluck(:orainceput, :orasfarsit)
+  @orare_inceput_sfarsit_azi = Tv.where(datainceput: data_curenta, canal: 101).pluck(:orainceput, :orasfarsit).flat_map { |orainceput, orasfarsit| [orainceput, orasfarsit] }.uniq
+
+ 
+  # Convertim fiecare ora de inceput in format HH:MM pentru a facilita comparatia in JavaScript
+  @orare_inceput_sfarsit_azi = @orare_inceput_sfarsit_azi.map { |ora| ora.strftime('%H:%M') }
+  
+
+  @myvideo1 = Tv.where(canal: 102)
+            .where("datainceput <= ? AND datasfarsit >= ?", now_bucharest.to_date, now_bucharest.to_date)
+            .to_a
+            .detect do |tv|
+              # Ajustăm orainceput la data curentă
+              ora_inceput_ajustata = tv.orainceput.change(year: now_bucharest.year, month: now_bucharest.month, day: now_bucharest.day, zone: 'Europe/Bucharest')
+              
+              # Dacă datasfarsit este aceeași zi cu datainceput, ajustăm orasfarsit la aceeași zi
+              if tv.datasfarsit == tv.datainceput
+                ora_sfarsit_ajustata = tv.orasfarsit.change(year: now_bucharest.year, month: now_bucharest.month, day: now_bucharest.day, zone: 'Europe/Bucharest')
+              else
+                # Dacă datasfarsit este diferită, ajustăm orasfarsit la datasfarsit
+                ora_sfarsit_ajustata = tv.orasfarsit.change(year: tv.datasfarsit.year, month: tv.datasfarsit.month, day: tv.datasfarsit.day, zone: 'Europe/Bucharest')
+              end
+
+              # Comparam acum cu orele ajustate
+              result = now_bucharest >= ora_inceput_ajustata && now_bucharest <= ora_sfarsit_ajustata
+              puts "Comparând: Acum - #{now_bucharest}, Început ajustat - #{ora_inceput_ajustata}, Sfârșit ajustat - #{ora_sfarsit_ajustata}. Rezultat: #{result}"
+              
+              result
+            end
+
+    puts "Video selectat: #{@myvideo1 ? @myvideo1.id : 'Niciunul'}"
+    # Setează variabilele în funcție de rezultatul interogării
+    if @myvideo1
+      @myvideo = @myvideo1.link
+      @exista_video = true
+      @denumire = @myvideo1.denumire      
+      @data_inceput = @myvideo1.datainceput.strftime("%d.%m.%Y") if @myvideo1&.datainceput
+      @data_sfarsit = @myvideo1.datasfarsit.strftime("%d.%m.%Y") if @myvideo1&.datasfarsit
+      @ora_inceput = @myvideo1.orainceput if @myvideo1&.orainceput
+      @valabilitate_ora_inceput = @myvideo1.orainceput.strftime("%H:%M") if @myvideo1.orainceput  
+      @valabilitate_ora_sfarsit = @myvideo1.orasfarsit.strftime("%H:%M") if @myvideo1.orasfarsit   
+      @myvideo2 = Video.find_by(link: @myvideo1.link)
+
+    else
+      @myvideo1 = nil
+      @exista_video = false
+    end
+  end
+
+end
+
+
+
   def listacanal1
     unless current_user&.role == 1
       redirect_to root_path, alert: "Acces restricționat!" and return

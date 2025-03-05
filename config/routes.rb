@@ -93,6 +93,7 @@ Rails.application.routes.draw do
  get 'tvs/canal2', to: 'tvs#canal2'
  get 'tvs/canal3', to: 'tvs#canal3'
  get 'tvs/rasayana1', to: 'tvs#rasayana1' #rasayana1
+ get 'tvs/ayurveda_padartha', to: 'tvs#ayurveda_padartha' #ayurveda_padartha
  get 'tvs/reprogramare_curs', to: 'tvs#reprogramare_curs' #reprogramari video-uri -Thalia
  get 'tvs/seminarii', to: 'tvs#seminarii'
 

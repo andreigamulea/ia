@@ -37,6 +37,8 @@ class CursuriAyurvedaController < ApplicationController
                                        .joins(:prod)
                                        .where(prods: { curslegatura: 'modul_ayurveda_padartha', status: 'activ' })
                                        .pluck('prods.cod')
+
+          puts("Produsele cumparate: #{purchased_prods}")                             
     
           if purchased_prods.include?('cod317')
             @a_cumparat_macar_un_cod = true
