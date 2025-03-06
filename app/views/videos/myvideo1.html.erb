@@ -21,7 +21,13 @@
 <section class="c1" style="padding: 0 10px;"></br>
 
 <div class="cont">
-<h1 style="text-align: center; padding: 0 10px; font-size:1.8em;"><%= @myvideo1.nume %></h1></br>
+<h1 style="text-align: center; padding: 0 10px; font-size:1.8em;">
+  <%= @custom_title || @myvideo1.nume %>
+</h1>
+</br>
+
+
+
 
 <!-- Player principal -->
 <div style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>); background-size: 100%;">

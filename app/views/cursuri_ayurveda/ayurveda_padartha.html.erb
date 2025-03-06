@@ -222,8 +222,31 @@
         <% end %>
         
   
-         
+          <%if current_user && (@a_cumparat_digital || current_user.role==1)%>
+        <h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Ayurveda Padartha </h2></br>
   
+  
+  
+        <div id="videos">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nume</th>
+                <th>Actiune</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @myvideo_ayurveda_padartha.each_with_index do |video, index| %>
+                <tr>
+                  <td> Ayurveda Padartha Curs <%= format('%02d', index + 1) %> </td>
+                  <td><%= link_to "Vezi video", myvideo27_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+        </div>
+          <% end %>
   
   
   
