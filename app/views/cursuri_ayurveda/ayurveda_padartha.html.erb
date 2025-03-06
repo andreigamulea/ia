@@ -231,6 +231,7 @@
           <table class="table">
             <thead>
               <tr>
+                <th>Nr</th>
                 <th>Nume</th>
                 <th>Actiune</th>
               </tr>
@@ -238,6 +239,7 @@
             <tbody>
               <% @myvideo_ayurveda_padartha.each_with_index do |video, index| %>
                 <tr>
+                <td> <%= format('%2d', index + 1) %> </td>
                   <td> Ayurveda Padartha Curs <%= format('%02d', index + 1) %> </td>
                   <td><%= link_to "Vezi video", myvideo27_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
                 </tr>
