@@ -87,19 +87,21 @@ function getFactura(numarComanda) {
     if (!response.ok) {
       throw new Error('Eroare la generarea XML-ului');
     }
-    return response.blob(); // Preia răspunsul ca blob (fișier binar)
+    return response.json(); // Preia răspunsul ca JSON
   })
-  .then(blob => {
-    // Creează un URL temporar pentru blob
+  .then(data => {
+    // Creează un blob din conținutul XML
+    const blob = new Blob([data.xml], { type: 'application/xml' });
     const url = window.URL.createObjectURL(blob);
-    // Creează un element <a> invizibil pentru descărcare
+
+    // Creează link-ul temporar și setează numele fișierului
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = url;
-    a.download = `factura_${numarComanda}.xml`; // Numele fișierului descărcat
+    a.download = data.filename; // Folosește numele din răspunsul JSON
     document.body.appendChild(a);
-    a.click(); // Declansează descărcarea
-    window.URL.revokeObjectURL(url); // Eliberează URL-ul temporar
+    a.click();
+    window.URL.revokeObjectURL(url);
   })
   .catch(error => console.error('Eroare:', error));
 }

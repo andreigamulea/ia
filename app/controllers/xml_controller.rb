@@ -10,21 +10,50 @@ class XmlController < ApplicationController
   def animaplant
     numar_comanda = params[:numar_comanda]
     facturi_json = params[:facturi_json]
-    
-    # Găsim factura selectată bazată pe numar_comanda
-    factura_selectata = facturi_json.find { |factura| factura["numar_comanda"] == numar_comanda }
   
-    # Verificăm dacă factura a fost găsită
-    if factura_selectata.nil?
-      render json: { error: "Factura cu numărul de comandă #{numar_comanda} nu a fost găsită." }, status: :not_found
+    # Verificăm dacă facturi_json este valid
+    unless facturi_json.is_a?(Array)
+      render json: { error: "facturi_json nu este valid" }, status: :unprocessable_entity
       return
     end
   
-    # Generăm XML-ul cu factura găsită
+    # Găsim factura
+    factura_selectata = facturi_json.find { |factura| factura["numar_comanda"] == numar_comanda }
+    if factura_selectata.nil?
+      render json: { error: "Factura nu a fost găsită" }, status: :not_found
+      return
+    end
+  
+    # Verificăm datele necesare
+    unless factura_selectata["numar_factura"] && factura_selectata["data_factura"]
+      render json: { error: "Datele facturii sunt incomplete" }, status: :unprocessable_entity
+      return
+    end
+  
+    # Generăm XML-ul (presupunem că această metodă există)
     xml_output = generate_invoice_xml_individual(factura_selectata)
   
-    # Returnăm fișierul XML ca descărcare
-    send_data xml_output, filename: "factura_#{numar_comanda}.xml", type: 'application/xml', disposition: 'attachment'
+    # Construim numele fișierului
+    cod_furnizor = "17430290"
+    prefix_factura = "APFS"
+    numar_factura = factura_selectata["numar_factura"]
+    data_factura = factura_selectata["data_factura"]
+  
+    # Gestionăm formatul datei
+    begin
+      data_formatata = Date.parse(data_factura).strftime("%d-%m-%Y")
+    rescue ArgumentError
+      render json: { error: "Data facturii este invalidă" }, status: :unprocessable_entity
+      return
+    end
+  
+    nume_fisier = "F_#{cod_furnizor}_#{prefix_factura}#{numar_factura}_#{data_formatata}.xml"
+  
+    # Returnăm un răspuns JSON
+    render json: {
+      xml: xml_output,
+      filename: nume_fisier
+    }
   end
 
   def generate_invoice_xml_individual(factura)
