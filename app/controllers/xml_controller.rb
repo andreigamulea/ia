@@ -122,8 +122,8 @@ class XmlController < ApplicationController
             id.cbc :ID, '0000000000000'
           end
           party.cac :PostalAddress do |address|
-            address.cbc :StreetName, factura['adresa'].upcase
-            address.cbc :CityName, factura['oras'].upcase
+            address.cbc :StreetName, remove_diacritics(factura['adresa'].upcase)
+            address.cbc :CityName, remove_diacritics(factura['oras'].upcase)
             address.cbc :CountrySubentity, "RO-#{factura['judet']}"
             address.cac :Country do |country|
               country.cbc :IdentificationCode, 'RO'
@@ -196,6 +196,14 @@ class XmlController < ApplicationController
       end
     end
     builder.target!
+  end
+
+  def remove_diacritics(text)
+    return text unless text.is_a?(String)
+    text.tr(
+      "ăâîșțĂÂÎȘȚ",
+      "aaistAAIST"
+    )
   end
 
   def animaplant_api
