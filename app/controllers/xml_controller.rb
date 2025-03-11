@@ -181,7 +181,7 @@ class XmlController < ApplicationController
           line.cbc :InvoicedQuantity, sprintf('%.3f', produs['Cantitate'].to_f), unitCode: 'H87'
           line.cbc :LineExtensionAmount, sprintf('%.2f', produs['Total'].to_f), currencyID: 'RON'
           line.cac :Item do |item|
-            item.cbc :Name, produs['Nume'].upcase
+            item.cbc :Name, remove_diacritics(produs['Nume'].upcase)
             item.cac :ClassifiedTaxCategory do |tax|
               tax.cbc :ID, 'O'
               tax.cac :TaxScheme do |scheme|
