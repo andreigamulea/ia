@@ -123,7 +123,7 @@ class XmlController < ApplicationController
           end
           party.cac :PostalAddress do |address|
             address.cbc :StreetName, remove_diacritics(factura['adresa'].upcase)
-            address.cbc :CityName, remove_diacritics(factura['oras'].upcase)
+            address.cbc :CityName, replace_bucharest_sectors(remove_diacritics(factura['oras'].upcase))
             address.cbc :CountrySubentity, "RO-#{factura['judet']}"
             address.cac :Country do |country|
               country.cbc :IdentificationCode, 'RO'
@@ -206,6 +206,26 @@ class XmlController < ApplicationController
     )
   end
 
+  def replace_bucharest_sectors(text)
+    return text unless text.is_a?(String)
+    case text
+    when "S1"
+      "BUCURESTI SECTOR 1"
+    when "S2"
+      "BUCURESTI SECTOR 2"
+    when "S3"
+      "BUCURESTI SECTOR 3"
+    when "S4"
+      "BUCURESTI SECTOR 4"
+    when "S5"
+      "BUCURESTI SECTOR 5"
+    when "S6"
+      "BUCURESTI SECTOR 6"
+    else
+      text
+    end
+  end
+  
   def animaplant_api
     api_key = "KjS2IWZgx3BUdY790g3VJys9"
     start_date = params[:data_inceput]
