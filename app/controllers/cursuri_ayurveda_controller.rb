@@ -88,6 +88,7 @@ class CursuriAyurvedaController < ApplicationController
             @a_cumparat_macar_un_cod = true
             @a_cumparat_digital = false
             @prods = products.where(cod: ['cod316'])
+            puts("daaaaaaaaa")
             #@myvideo_ayurveda_padartha = Video.none
             @myvideo_ayurveda_padartha_seminarii = Video.none
           else

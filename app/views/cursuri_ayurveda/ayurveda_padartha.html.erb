@@ -198,10 +198,12 @@
           <p>Pentru a oferi mai multă flexibilitate în gestionarea programului personal, punem la dispoziție opțiunea de a viziona înregistrările cursurilor direct pe site, oricând, la orice oră. Această opțiune permite accesul complet la materialele video, atât pe durata cursului, cât și pentru o perioadă extinsă de 150 de zile după finalizarea cursului, oferind timp suficient pentru a înțelege și revizui în profunzime materialele studiate. Opțiunea presupune un cost suplimentar de 380 lei și oferă acces progresiv la înregistrările cursului, fiecare lecție devenind disponibilă săptămânal, pe măsură ce programul se desfășoară.</p>
 
 
-          <h2 id="Ayurveda-padartha" style= "text-align: center;padding: 0 10px;">Acces Curs de Ayurveda: Modulul Ayurveda Padartha</h2><br>
-
+          
         </section><%end%> <section>
-        <% if !user_signed_in? || !@a_cumparat_macar_un_cod %>
+        <% if !user_signed_in? || @prods.count>0 %>
+        <h2 id="Ayurveda-padartha" style= "text-align: center;padding: 0 10px;">Acces Curs de Ayurveda: Modulul Ayurveda Padartha</h2><br>
+
+
           <div  class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
               <thead class="thead-dark">
