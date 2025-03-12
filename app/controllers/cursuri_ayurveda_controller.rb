@@ -190,5 +190,37 @@ class CursuriAyurvedaController < ApplicationController
       logger.error "Error generating Excel: #{e.message}"
       redirect_to root_path, alert: "There was an error generating the report. Please try again later."
     end
+
+
+    def download2
+      linkzip = params[:linkzip]
+      Rails.logger.debug "Parametrul linkzip este: #{linkzip}"
+      decoded_linkzip = URI.decode_www_form_component(linkzip)
+    
+      # Determină tipul fișierului și setează tipul MIME corespunzător
+      file_extension = File.extname(decoded_linkzip).downcase
+      content_type = case file_extension
+                     when ".rar"
+                       'application/rar'
+                     when ".7z"
+                       'application/x-7z-compressed'
+                     when ".pdf"
+                       'application/pdf'
+                     else
+                       'application/octet-stream' # Tip generic, pentru cazul în care extensia fișierului nu este recunoscută
+                     end
+      
+      # Construiește calea corectă
+      file_path = Rails.root.join('public', 'pdf', 'ayurveda_padartha', File.basename(decoded_linkzip))
+      
+      Rails.logger.debug "Calea este: #{file_path}"
+      
+      if File.exist?(file_path)
+        send_file file_path, type: content_type, disposition: 'attachment'
+      else
+        redirect_to(root_url, alert: "Fișierul nu a fost găsit.")
+      end
+    end
+
   end
   

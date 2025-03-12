@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   get 'cursuri_ayurveda/ayurveda_padartha', to: 'cursuri_ayurveda#ayurveda_padartha', as: 'ayurveda_padartha'
   get 'cursuri_ayurveda/export_to_xlsx_plata_ayurveda_padartha', to: 'cursuri_ayurveda#export_to_xlsx_plata_ayurveda_padartha', as: 'export_xlsx_plata_ayurveda_padartha'
-
+  get 'cursuri_ayurveda/download2/*linkzip', to: 'cursuri_ayurveda#download2', as: 'cursuri_ayurveda_download2', format: false
 
   get 'rasayana/modul1', to: 'rasayana#modul1', as: 'rasayana_modul1'
   get 'rasayana/seminarii', to: 'rasayana#seminarii_rasayana', as: 'rasayana_seminarii'
