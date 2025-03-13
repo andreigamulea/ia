@@ -12,8 +12,8 @@ border_style = defined?(previous_video_tip) && previous_video_tip == 'nutritie2'
 
   <% if video.ordine > 0 && video.ordine < 1000 %>
     <td><%= video.ordine %></td>
-  <% elsif  video.ordine > 4000 && video.ordine < 5000%>
-    <td><%= video.ordine-4000 %></td>
+  <% elsif  video.ordine > 2000 && video.ordine < 3000%>
+    <td><%= video.ordine-2000 %></td>
   <% end %>
   <td><%= video.nume %></td>
   <td><%= video.descriere %></td>

@@ -191,18 +191,22 @@ puts("produsele cumparate sunt: #{purchased_prod_coduri}")
       if @a_cumparat_macar_un_cod
                     if current_user && current_user.limba=='EN'
                       @myvideo = Video.where(tip: 'vajikarana2').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
+                      @myvideo_cursuri_tiparite = Video.none
                     else  
                           @myvideo = Video.where(tip: 'vajikarana2').where('ordine <= ?', 1000).order(ordine: :asc)
-                    end  
+                          @myvideo_cursuri_tiparite = Video.where(tip: 'vajikarana2').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
+                       
+                        end  
             else  
                       @myvideo = Video.none
+                      @myvideo_cursuri_tiparite = Video.none
             end
             
         end
-        puts("Are acces2? : #{@has_access}")
+        
 
 
-        def download2
+    def download2
           linkzip = params[:linkzip]
           Rails.logger.debug "Parametrul linkzip este: #{linkzip}"
           decoded_linkzip = URI.decode_www_form_component(linkzip)
