@@ -267,8 +267,9 @@
                   <th>Curs</th>
                   <th>Descriere</th>
                   <th>Actiune</th>
+                  <% if @has_access %>
                   <th>Acces fisiere PDF</th>
-                  
+                  <% end %>
                 </tr>
               </thead>
               <tbody>
@@ -285,13 +286,16 @@
                         myvideo25_path(id: video.id, link: video.link), 
                         class: "btn btn-primary #{'disabled' unless @has_access}" %>
                   </td>
-                  <% if video.tip == 'vajikarana2' && video.linkpdf.present? %>
-                  <td>
-                    <%= link_to "Descarcă arhiva (.rar)", vajikarana_download2_path(linkzip: video.linkpdf), class: "btn btn-primary" %>
-                  </td>
-                  <% else %>
-                  <td></td>
+                  
+                  <% if @has_access %>
+                    <td>
+                      <%= link_to "Descarcă arhiva (.rar)", 
+                          vajikarana_download2_path(linkzip: video.linkpdf), 
+                          class: "btn btn-primary" %>
+                    </td>
                   <% end %>
+                  
+                  
                 </tr>
               <% end %>
             </tbody>
