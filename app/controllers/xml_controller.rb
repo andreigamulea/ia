@@ -30,7 +30,7 @@ class XmlController < ApplicationController
       return
     end
   
-    # Generăm XML-ul (presupunem că această metodă există)
+    # Generăm XML-ul
     xml_output = generate_invoice_xml_individual(factura_selectata)
   
     # Construim numele fișierului
@@ -119,23 +119,28 @@ class XmlController < ApplicationController
       invoice.cac :AccountingCustomerParty do |customer|
         customer.cac :Party do |party|
           party.cac :PartyIdentification do |id|
-            id.cbc :ID, '0000000000000'
+            id.cbc :ID, '0000000000000' # Fixat la 0000000000000 pentru toate cazurile
           end
           party.cac :PostalAddress do |address|
             address.cbc :StreetName, remove_diacritics(factura['adresa'].upcase)
-            address.cbc :CityName, replace_bucharest_sectors(remove_diacritics(factura['oras'].upcase))
+            address.cbc :CityName, remove_diacritics(factura['oras'].upcase)
             address.cbc :CountrySubentity, "RO-#{factura['judet']}"
             address.cac :Country do |country|
               country.cbc :IdentificationCode, 'RO'
             end
           end
           party.cac :PartyTaxScheme do |tax_scheme|
-            tax_scheme.cbc :CompanyID, '0000000000000'
+            tax_scheme.cbc :CompanyID, factura['CUI'] == 'N/A' ? '0000000000000' : factura['CUI']
             tax_scheme.cac :TaxScheme # Element gol
           end
           party.cac :PartyLegalEntity do |legal|
-            legal.cbc :RegistrationName, factura['nume_client'].upcase
-            legal.cbc :CompanyID, '0000000000000' 
+            legal.cbc :RegistrationName, factura['CUI'] == 'N/A' ? factura['nume_client'].upcase : factura['companie'].upcase
+            legal.cbc :CompanyID, factura['CUI'] == 'N/A' ? '0000000000000' : factura['CUI']
+          end
+          party.cac :Contact do |contact|
+            contact.cbc :Name, factura['nume_client'].upcase
+            contact.cbc :Telephone, factura['telefon']
+            contact.cbc :ElectronicMail, factura['email']
           end
         end
       end
@@ -178,10 +183,13 @@ class XmlController < ApplicationController
       factura['produse'].each_with_index do |produs, i|
         invoice.cac :InvoiceLine do |line|
           line.cbc :ID, i + 1
-          line.cbc :InvoicedQuantity, sprintf('%.3f', produs['Cantitate'].to_f), unitCode: 'H87'
+          unit_code = produs['Nume'].downcase.include?('transport') ? 'E48' : 'H87'
+          line.cbc :InvoicedQuantity, sprintf('%.3f', produs['Cantitate'].to_f), unitCode: unit_code
           line.cbc :LineExtensionAmount, sprintf('%.2f', produs['Total'].to_f), currencyID: 'RON'
           line.cac :Item do |item|
-            item.cbc :Name, remove_diacritics(produs['Nume'].upcase)
+            product_name = produs['Nume'].upcase.gsub(' + ', '+')
+            product_name = 'CARGUS NATIONAL' if product_name == 'TRANSPORT'
+            item.cbc :Name, remove_diacritics(product_name)
             item.cac :ClassifiedTaxCategory do |tax|
               tax.cbc :ID, 'O'
               tax.cac :TaxScheme do |scheme|
