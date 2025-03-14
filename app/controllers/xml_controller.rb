@@ -123,7 +123,7 @@ class XmlController < ApplicationController
           end
           party.cac :PostalAddress do |address|
             address.cbc :StreetName, remove_diacritics(factura['adresa'].upcase)
-            address.cbc :CityName, remove_diacritics(factura['oras'].upcase)
+            address.cbc :CityName, replace_bucharest_sectors(remove_diacritics(factura['oras'].upcase))
             address.cbc :CountrySubentity, "RO-#{factura['judet']}"
             address.cac :Country do |country|
               country.cbc :IdentificationCode, 'RO'
@@ -134,11 +134,11 @@ class XmlController < ApplicationController
             tax_scheme.cac :TaxScheme # Element gol
           end
           party.cac :PartyLegalEntity do |legal|
-            legal.cbc :RegistrationName, factura['CUI'] == 'N/A' ? factura['nume_client'].upcase : factura['companie'].upcase
+            legal.cbc :RegistrationName, factura['CUI'] == 'N/A' ? remove_diacritics(factura['nume_client'].upcase) : remove_diacritics(factura['companie'].upcase)
             legal.cbc :CompanyID, factura['CUI'] == 'N/A' ? '0000000000000' : factura['CUI']
           end
           party.cac :Contact do |contact|
-            contact.cbc :Name, factura['nume_client'].upcase
+            contact.cbc :Name, remove_diacritics(factura['nume_client'].upcase)
             contact.cbc :Telephone, factura['telefon']
             contact.cbc :ElectronicMail, factura['email']
           end
