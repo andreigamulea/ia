@@ -129,13 +129,15 @@ class XmlController < ApplicationController
               country.cbc :IdentificationCode, 'RO'
             end
           end
+          # Verificăm dacă CUI este valid pentru PJ: [A-Z]+\d+ sau doar cifre (nu doar zerouri), excluzând "-"
+          is_legal_entity = factura['CUI'] && factura['CUI'] != '-' && (factura['CUI'] =~ /^[A-Z]+\d+$/ || (factura['CUI'] =~ /^\d+$/ && factura['CUI'] !~ /^0+$/))
           party.cac :PartyTaxScheme do |tax_scheme|
-            tax_scheme.cbc :CompanyID, factura['CUI'] == 'N/A' ? '0000000000000' : factura['CUI']
+            tax_scheme.cbc :CompanyID, is_legal_entity ? factura['CUI'] : '0000000000000'
             tax_scheme.cac :TaxScheme # Element gol
           end
           party.cac :PartyLegalEntity do |legal|
-            legal.cbc :RegistrationName, factura['CUI'] == 'N/A' ? remove_diacritics(factura['nume_client'].upcase) : remove_diacritics(factura['companie'].upcase)
-            legal.cbc :CompanyID, factura['CUI'] == 'N/A' ? '0000000000000' : factura['CUI']
+            legal.cbc :RegistrationName, is_legal_entity ? remove_diacritics(factura['companie'].upcase) : remove_diacritics(factura['nume_client'].upcase)
+            legal.cbc :CompanyID, is_legal_entity ? factura['CUI'] : '0000000000000'
           end
           party.cac :Contact do |contact|
             contact.cbc :Name, remove_diacritics(factura['nume_client'].upcase)

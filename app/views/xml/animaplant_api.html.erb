@@ -20,8 +20,6 @@
   </form>
 </div>
 
-
-
 <% if @invoices1.present? %>
   <div style="width: 80%; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #fff;">
     <h2>Facturi Filtrate (După Perioadă)</h2>
@@ -34,13 +32,15 @@
           <th style="border: 1px solid #ddd; padding: 8px;">Data Factură</th>
           <th style="border: 1px solid #ddd; padding: 8px;">Total</th>
           <th style="border: 1px solid #ddd; padding: 8px;">Tip Persoană</th>
-          <th style="border: 1px solid #ddd; padding: 8px;">Denumire</th> <!-- Coloana nouă -->
+          <th style="border: 1px solid #ddd; padding: 8px;">Denumire</th>
           <th style="border: 1px solid #ddd; padding: 8px;">CUI</th>
-          <th style="border: 1px solid #ddd; padding: 8px;">Descarcă XML</th> 
+          <th style="border: 1px solid #ddd; padding: 8px;">Descarcă XML</th>
         </tr>
       </thead>
       <tbody>
         <% @invoices1.each do |invoice| %>
+          <% # Verificăm dacă CUI este valid pentru PJ %>
+          <% is_legal_entity = invoice["CUI"] && invoice["CUI"] != "-" && invoice["CUI"] != "N/A" && invoice["CUI"] !~ /^0+$/ && (invoice["CUI"] =~ /^[A-Z]+\d+$/ || invoice["CUI"] =~ /^\d+$/) %>
           <tr>
             <td style="border: 1px solid #ddd; padding: 8px;"><%= invoice["numar_comanda"] %></td>
             <td style="border: 1px solid #ddd; padding: 8px;"><%= invoice["data_comanda"] %></td>
@@ -48,13 +48,13 @@
             <td style="border: 1px solid #ddd; padding: 8px;"><%= invoice["data_factura"] %></td>
             <td style="border: 1px solid #ddd; padding: 8px;"><%= invoice["total"] %></td>
             <td style="border: 1px solid #ddd; padding: 8px;">
-              <%= invoice["CUI"] != "N/A" && invoice["CUI"] != "0000000000000" ? "Persoana Juridică" : "Persoana Fizică" %>
+              <%= is_legal_entity ? "Persoana Juridică" : "Persoana Fizică" %>
             </td>
             <td style="border: 1px solid #ddd; padding: 8px;">
-              <%= invoice["CUI"] != "N/A" && invoice["CUI"] != "0000000000000" ? invoice["companie"].gsub(/^SC\s+/i, "").upcase : invoice["nume_client"].upcase %>
-            </td> <!-- Denumire -->
+              <%= is_legal_entity ? invoice["companie"].gsub(/^SC\s+/i, "").upcase : invoice["nume_client"].upcase %>
+            </td>
             <td style="border: 1px solid #ddd; padding: 8px;">
-              <%= invoice["CUI"] == "N/A" ? "0000000000000" : invoice["CUI"] %>
+              <%= (invoice["CUI"] == "N/A" || invoice["CUI"] == "-" || invoice["CUI"] =~ /^0+$/) ? "0000000000000" : invoice["CUI"] %>
             </td>
             <td style="border: 1px solid #ddd; padding: 8px;">
               <button class="btn btn-info" onclick="getFactura('<%= invoice['numar_comanda'] %>')">
@@ -67,12 +67,12 @@
     </table>
   </div>
 <% end %>
-<!--
+
 <% if @invoices %>
   <pre><%= JSON.pretty_generate(@invoices) %></pre>
 <% else %>
   <p><%= @error_message || "Nu există date disponibile." %></p>
-<% end %> -->
+<% end %>
 
 <script>
 function getFactura(numarComanda) {
@@ -96,15 +96,12 @@ function getFactura(numarComanda) {
     return response.json(); // Preia răspunsul ca JSON
   })
   .then(data => {
-    // Creează un blob din conținutul XML
     const blob = new Blob([data.xml], { type: 'application/xml' });
     const url = window.URL.createObjectURL(blob);
-
-    // Creează link-ul temporar și setează numele fișierului
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = url;
-    a.download = data.filename; // Folosește numele din răspunsul JSON
+    a.download = data.filename;
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
