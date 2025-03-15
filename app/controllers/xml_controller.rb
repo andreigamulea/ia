@@ -5,7 +5,7 @@ require 'uri'
 require 'httparty'
 
 class XmlController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:animaplant]
+  skip_before_action :verify_authenticity_token, only: [:animaplant, :proxy_pdf]
 
   def animaplant
     numar_comanda = params[:numar_comanda]
@@ -261,5 +261,31 @@ class XmlController < ApplicationController
     end
 
     render :animaplant_api
+  end
+
+  def proxy_pdf
+    id_comanda = params[:id_comanda]
+    puts "id_comanda este #{id_comanda}"  # Depanare: Verificăm valoarea
+    api_key = "KjS2IWZgx3BUdY790g3VJys9"
+    pdf_url = "https://animaplant.ro/wp-json/custom-api/v1/export-invoice-to-pdf/?document_id=#{id_comanda}&api_key=#{api_key}"
+    puts "URL apelat: #{pdf_url}"  # Depanare: Verificăm URL-ul construit
+
+    begin
+      response = HTTParty.get(pdf_url, 
+        headers: { 
+          'Accept' => 'application/pdf',
+          'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        },
+        follow_redirects: true,
+        timeout: 30
+      )
+      if response.success?
+        send_data response.body, filename: "Factura_#{id_comanda}.pdf", type: 'application/pdf', disposition: 'attachment'
+      else
+        render plain: "Eroare la preluarea PDF-ului: #{response.code} - #{response.message} - Body: #{response.body}", status: response.code
+      end
+    rescue StandardError => e
+      render plain: "Eroare la proxy: #{e.message}", status: :internal_server_error
+    end
   end
 end

@@ -1,5 +1,5 @@
 <h1 style="text-align: center;">Facturi Importate</h1>
-<div style="width: 100%; max-width: 500px;  margin: 0 auto; text-align: center; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #f9f9f9;">
+<div style="width: 100%; max-width: 500px; margin: 0 auto; text-align: center; padding: 20px; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background-color: #f9f9f9;">
   <h2 style="margin-bottom: 20px;">Selectează perioada</h2>
   
   <form id="facturiForm" method="get" action="<%= animaplant_api_path %>">
@@ -35,11 +35,11 @@
           <th style="border: 1px solid #ddd; padding: 8px;">Denumire</th>
           <th style="border: 1px solid #ddd; padding: 8px;">CUI</th>
           <th style="border: 1px solid #ddd; padding: 8px;">Descarcă XML</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Descarcă PDF</th>
         </tr>
       </thead>
       <tbody>
         <% @invoices1.each do |invoice| %>
-          <% # Verificăm dacă CUI este valid pentru PJ %>
           <% is_legal_entity = invoice["CUI"] && invoice["CUI"] != "-" && invoice["CUI"] != "N/A" && invoice["CUI"] !~ /^0+$/ && (invoice["CUI"] =~ /^[A-Z]+\d+$/ || invoice["CUI"] =~ /^\d+$/) %>
           <tr>
             <td style="border: 1px solid #ddd; padding: 8px;"><%= invoice["numar_comanda"] %></td>
@@ -61,18 +61,23 @@
                 Factură XML
               </button>
             </td>
+            <td style="border: 1px solid #ddd; padding: 8px;">
+              <button class="btn btn-success" onclick="getFacturaPDF('<%= invoice['id_comanda'] %>')">
+                Factură PDF
+              </button>
+            </td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
 <% end %>
-<!--
+
 <% if @invoices %>
   <pre><%= JSON.pretty_generate(@invoices) %></pre>
 <% else %>
   <p><%= @error_message || "Nu există date disponibile." %></p>
-<% end %>  -->
+<% end %>  
 
 <script>
 function getFactura(numarComanda) {
@@ -93,7 +98,7 @@ function getFactura(numarComanda) {
     if (!response.ok) {
       throw new Error('Eroare la generarea XML-ului');
     }
-    return response.json(); // Preia răspunsul ca JSON
+    return response.json();
   })
   .then(data => {
     const blob = new Blob([data.xml], { type: 'application/xml' });
@@ -106,6 +111,44 @@ function getFactura(numarComanda) {
     a.click();
     window.URL.revokeObjectURL(url);
   })
-  .catch(error => console.error('Eroare:', error));
+  .catch(error => {
+    console.error('Eroare la generarea XML:', error);
+    alert('A apărut o eroare la descărcarea XML-ului: ' + error.message);
+  });
+}
+
+function getFacturaPDF(idComanda) {
+  fetch('/xml/proxy_pdf', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+    body: JSON.stringify({
+      id_comanda: idComanda
+    })
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response.text().then(text => {
+        throw new Error(`Eroare la generarea PDF-ului: ${response.status} - ${text}`);
+      });
+    }
+    return response.blob();
+  })
+  .then(blob => {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = `Factura_${idComanda}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+  })
+  .catch(error => {
+    console.error('Eroare la generarea PDF:', error);
+    alert('A apărut o eroare la descărcarea PDF-ului: ' + error.message);
+  });
 }
 </script>

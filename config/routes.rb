@@ -1,6 +1,12 @@
 Rails.application.routes.draw do 
   get 'xml/animaplant_api', to: 'xml#animaplant_api'
   get 'xml/animaplant_api', to: 'xml#animaplant_api', as: :animaplant_api
+  post 'xml/animaplant', to: 'xml#animaplant', as: :xml_animaplant
+  post 'xml/proxy_pdf', to: 'xml#proxy_pdf'  # Schimbăm din GET în POST
+
+  get '/animaplant_api', to: 'xml#animaplant_api'
+  post '/xml_animaplant', to: 'xml#animaplant'
+  post '/generate_pdf', to: 'xml#generate_pdf'
 
   get 'xml/animaplant', to: 'xml#animaplant'
   post 'xml/animaplant', to: 'xml#animaplant'
