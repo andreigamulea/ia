@@ -130,7 +130,7 @@ class XmlController < ApplicationController
             end
           end
           # Verificăm dacă CUI este valid pentru PJ: [A-Z]+\d+ sau doar cifre (nu doar zerouri), excluzând "-"
-          is_legal_entity = factura['CUI'] && factura['CUI'] != '-' && (factura['CUI'] =~ /^[A-Z]+\d+$/ || (factura['CUI'] =~ /^\d+$/ && factura['CUI'] !~ /^0+$/))
+          is_legal_entity = factura['CUI'] && factura['CUI'] != '-' && factura['CUI'] != 'N/A' && factura['CUI'] !~ /^0+$/ && (factura['CUI'].gsub(/[^0-9]/, '').chars.uniq.reject { |c| c == '0' }.size >= 3)
           party.cac :PartyTaxScheme do |tax_scheme|
             tax_scheme.cbc :CompanyID, is_legal_entity ? factura['CUI'] : '0000000000000'
             tax_scheme.cac :TaxScheme # Element gol
