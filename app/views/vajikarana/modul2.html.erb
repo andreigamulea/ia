@@ -267,7 +267,7 @@
                   <th>Curs</th>
                   <th>Descriere</th>
                   <th>Actiune</th>
-                  <% if @has_access %>
+                  <% if @a_cumparat_macar_un_cod %>
                   <th>Acces fisiere PDF</th>
                   <% end %>
                 </tr>
@@ -284,10 +284,10 @@
                   <td>
                     <%= link_to "Vezi video", 
                         myvideo25_path(id: video.id, link: video.link), 
-                        class: "btn btn-primary #{'disabled' unless @has_access}" %>
+                        class: "btn btn-primary #{'disabled' unless @a_cumparat_macar_un_cod}" %>
                   </td>
                   
-                  <% if @has_access %>
+                  <% if @a_cumparat_macar_un_cod %>
                     <td>
                       <%= link_to "Descarcă arhiva (.rar)", vajikarana_download2_path(linkzip: video.linkpdf), class: "btn btn-primary" if video.linkpdf.present? %>
                     </td>

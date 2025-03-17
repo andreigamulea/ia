@@ -2131,18 +2131,16 @@ end
 
 def set_user25
   puts "================= Verificare acces utilizator ================="
+  puts "Params: #{params.inspect}" # Adaugă debug pentru a vedea params
 
-  # 1️⃣ Verifică dacă utilizatorul este autentificat
   unless user_signed_in?
     flash[:alert] = "Trebuie să vă autentificați pentru a accesa acest curs."
     redirect_to new_user_session_path
     return false
   end
 
-  # 2️⃣ Adminii (role == 1) au acces automat
   return true if current_user.role == 1
 
-  # 3️⃣ Verifică produsele cumpărate pentru utilizatorii obișnuiți (role == 0)
   purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
                                .joins(:prod)
                                .where(prods: { curslegatura: 'vajikarana2' })
@@ -2153,25 +2151,60 @@ def set_user25
                                  .where(prods: { curslegatura: 'vajikarana2' })
                                  .pluck('prods.cod', 'datainceput', 'datasfarsit')
 
-  # 4️⃣ Combină toate produsele cumpărate într-un singur array
   all_purchased_prods = purchased_prods + purchased_prods1
-
   puts "📌 Produse cumpărate cu date: #{all_purchased_prods}"
 
-  # 5️⃣ Extrage doar codurile produselor pentru validare
   valid_prod_codes = all_purchased_prods.map(&:first)
-
   puts "✅ Produse valabile (doar coduri): #{valid_prod_codes.inspect}"
 
-  # 6️⃣ Verifică condițiile pentru acces:
-  has_cod308 = valid_prod_codes.include?('cod308')
-  has_cod306 = valid_prod_codes.include?('cod306')
-  has_cod307 = valid_prod_codes.include?('cod307')
+  # Verifică dacă params[:id] există
+  unless params[:id].present?
+    puts "❌ Eroare: params[:id] nu este prezent"
+    flash[:alert] = "ID-ul videoului lipsește."
+    redirect_to root_path
+    return false
+  end
 
-  has_access = has_cod308 || (has_cod306 && has_cod307)
+  # Obținerea ordinii videoului
+  begin
+    video_order = Video.find(params[:id]).ordine
+    puts "🎥 Ordinea videoului: #{video_order}"
+  rescue ActiveRecord::RecordNotFound => e
+    puts "❌ Eroare: #{e.message}"
+    flash[:alert] = "Videoul nu a fost găsit."
+    redirect_to root_path
+    return false
+  rescue => e
+    puts "❌ Eroare neașteptată: #{e.message}"
+    flash[:alert] = "A apărut o eroare la verificarea accesului."
+    redirect_to root_path
+    return false
+  end
 
-  puts "🔑 Condiții acces -> cod308: #{has_cod308}, cod306: #{has_cod306}, cod307: #{has_cod307}"
-  puts "🔓 has_access este: #{has_access}"
+  if video_order.between?(1, 1000)
+    has_cod308 = valid_prod_codes.include?('cod308')
+    has_cod306 = valid_prod_codes.include?('cod306')
+    has_cod307 = valid_prod_codes.include?('cod307')
+    has_access = has_cod308 || (has_cod306 && has_cod307)
+
+    puts "🔑 Condiții acces (1-1000) -> cod308: #{has_cod308}, cod306: #{has_cod306}, cod307: #{has_cod307}"
+    puts "🔓 has_access este: #{has_access}"
+  elsif video_order.between?(2000, 3000)
+    has_cod308 = valid_prod_codes.include?('cod308')
+    has_cod306 = valid_prod_codes.include?('cod306')
+    has_cod307 = valid_prod_codes.include?('cod307')
+    has_access = has_cod308 || (has_cod306 && has_cod307)
+    has_any_purchase = valid_prod_codes.any?
+
+    has_access = has_access || has_any_purchase
+
+    puts "🔑 Condiții acces (2000-3000) -> cod308: #{has_cod308}, cod306: #{has_cod306}, cod307: #{has_cod307}"
+    puts "🔑 Are orice achiziție: #{has_any_purchase}"
+    puts "🔓 has_access este: #{has_access}"
+  else
+    has_access = false
+    puts "🚫 Ordinea videoului (#{video_order}) nu se încadrează în niciun interval permis"
+  end
 
   unless has_access
     flash[:alert] = "Nu aveți acces la acest curs."
@@ -2179,7 +2212,6 @@ def set_user25
     return false
   end
 
-  # 7️⃣ Dacă toate verificările sunt trecute, utilizatorul are acces
   true
 end
 
