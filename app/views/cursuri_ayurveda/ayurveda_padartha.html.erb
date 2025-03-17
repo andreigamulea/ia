@@ -245,9 +245,11 @@
                 <td> <%= format('%2d', index + 1) %> </td>
                   <td> Ayurveda Padartha Curs <%= format('%02d', index + 1) %> </td>
                   <td><%= link_to "Vezi video", myvideo27_path(id: video.id, link: video.link), class: "btn btn-primary" %></td>
-                <td>
-                    <%= link_to "Descarcă arhiva (.rar)", cursuri_ayurveda_download2_path(linkzip: video.linkpdf), class: "btn btn-primary" %>
+                
+                  <td>
+                    <%= link_to "Descarcă arhiva (.rar)", cursuri_ayurveda_download2_path(linkzip: video.linkpdf), class: "btn btn-primary" if video.linkpdf.present? %>
                   </td>
+
                   </tr>
               <% end %>
             </tbody>

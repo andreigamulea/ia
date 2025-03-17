@@ -289,9 +289,7 @@
                   
                   <% if @has_access %>
                     <td>
-                      <%= link_to "Descarcă arhiva (.rar)", 
-                          vajikarana_download2_path(linkzip: video.linkpdf), 
-                          class: "btn btn-primary" %>
+                      <%= link_to "Descarcă arhiva (.rar)", vajikarana_download2_path(linkzip: video.linkpdf), class: "btn btn-primary" if video.linkpdf.present? %>
                     </td>
                   <% end %>
                   
