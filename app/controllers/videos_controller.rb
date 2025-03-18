@@ -2189,6 +2189,14 @@ def set_user25
 
     puts "🔑 Condiții acces (1-1000) -> cod308: #{has_cod308}, cod306: #{has_cod306}, cod307: #{has_cod307}"
     puts "🔓 has_access este: #{has_access}"
+  elsif video_order.between?(1000, 2000)
+    has_cod308 = valid_prod_codes.include?('cod308')
+    has_cod306 = valid_prod_codes.include?('cod306')
+    has_cod307 = valid_prod_codes.include?('cod307')
+    has_access = has_cod308 || (has_cod306 && has_cod307)
+
+    puts "🔑 Condiții acces (1000-2000) -> cod308: #{has_cod308}, cod306: #{has_cod306}, cod307: #{has_cod307}"
+    puts "🔓 has_access este: #{has_access}"
   elsif video_order.between?(2000, 3000)
     has_cod308 = valid_prod_codes.include?('cod308')
     has_cod306 = valid_prod_codes.include?('cod306')
