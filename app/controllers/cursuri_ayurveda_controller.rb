@@ -25,7 +25,7 @@ class CursuriAyurvedaController < ApplicationController
             # Transformă rezultatele într-un hash indexat după link
             videos_hash = videos.index_by(&:link)
 
-            @video_limit = 3  # cate video apar in pagina
+            @video_limit = 4  # cate video apar in pagina
 
             # Creează o listă de obiecte Video în aceeași ordine ca links și limitează la @video_limit
             @myvideo_ayurveda_padartha = links.map { |link| videos_hash[link] }.compact.first(@video_limit)
