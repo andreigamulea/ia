@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   get 'cursuri_ayurveda/download2/*linkzip', to: 'cursuri_ayurveda#download2', as: 'cursuri_ayurveda_download2', format: false
 
   get 'rasayana/modul1', to: 'rasayana#modul1', as: 'rasayana_modul1'
+  get 'rasayana/modul2', to: 'rasayana#modul2', as: 'rasayana_modul2'
   get 'rasayana/seminarii', to: 'rasayana#seminarii_rasayana', as: 'rasayana_seminarii'
 
 
