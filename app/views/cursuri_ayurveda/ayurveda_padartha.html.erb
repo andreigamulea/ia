@@ -269,7 +269,7 @@
         </section>
         <section style="text-align:center;">
         
-          <%if current_user && (current_user.role==1 ||  @a_cumparat_macar_un_cod)%> 
+          <%if current_user && current_user.role==1%> 
           <h3 style="font-size:22px; margin-bottom:30px; margin-top:30px;">Accesează pagina pentru vizionare cursuri:</h3><%= link_to 'Vezi Video', tvs_ayurveda_padartha_path, class: 'register', style: 'background-color:#4b0082;' %> <br>
           <br><% end %>
         </section>

@@ -1,108 +1,75 @@
 class CursuriAyurvedaController < ApplicationController
-    def ayurveda_padartha
-      #ATENTIE!!!!!!!  nu este facuta valabilitatea. Trebuie vazut pana cand au valibilitate codurile cumparate
-      #dupa ce fac valabilitaea pot sterge acest mesaj
-      @myvideo1 = Video.find_by(link: 'QzP2bAmqbwc') #prezentare ayurveda padartha
-      @myvideo = @myvideo1.link if @myvideo1
+  def ayurveda_padartha
+    #ATENTIE!!!!!!! nu este facuta valabilitatea. Trebuie vazut pana cand au valibilitate codurile cumparate
+    #dupa ce fac valabilitatea pot sterge acest mesaj
+    @myvideo1 = Video.find_by(link: 'QzP2bAmqbwc') #prezentare ayurveda padartha
+    @myvideo = @myvideo1.link if @myvideo1
   
-      @nr_luni_achitate = 0 # Valoare implicită
-      @has_acces_video = 0 # Implicit, fără acces video
-      data_prag = Date.new(2025, 4, 30)
-      current_date = Date.today
+    @nr_luni_achitate = 0 # Valoare implicită
+    @has_acces_video = 0 # Implicit, fără acces video
+    data_prag = Date.new(2025, 4, 30)
+    current_date = Date.today
   
-      links = [
-              "57y2-QyoZ5M", "AjVnUco3WKY", "Z4IURVQPE0Q", "XoUaDndHZJ0", "pNDm6swMCtQ",
-              "V_zV_C-SMu0", "mDLsLNagmqA", "s11I0cT1hXc", "50LvPIU87m4", "S4C0zZW8Vvw",
-              "Tu57BiFwp2s", "TZobDqACl0Q", "dTrhsNaCGjs", "-byk3qgc_A0", "SWzAE6PB3qg",
-              "SWzAE6PB3qg", "yqZCP-59PYQ", "0-XBYgJhmus", "SKh6s4fYhGI"
-            ]
-
-            unique_links = links.uniq  
-
-            # Găsește toate rândurile din Video care corespund link-urilor
-            videos = Video.where(link: unique_links)
-
-            # Transformă rezultatele într-un hash indexat după link
-            videos_hash = videos.index_by(&:link)
-
-            @video_limit = 4  # cate video apar in pagina
-
-            # Creează o listă de obiecte Video în aceeași ordine ca links și limitează la @video_limit
-            @myvideo_ayurveda_padartha = links.map { |link| videos_hash[link] }.compact.first(@video_limit)
-              
-      # Verificăm dacă utilizatorul are rolul 1 pentru acces complet
-      if current_user&.role == 1
-        @a_cumparat_macar_un_cod = true
-        @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1')
-                                    .where('ordine >= ? AND ordine <= ?', 0, 1000)
-                                    .order(ordine: :asc).to_a
-        @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1')
-                                              .where('ordine > ? AND ordine < ?', 1000, 2000)
-                                              .order(ordine: :asc).to_a
-        @prods = [] ## Nu afișăm alte produse
-        products = Prod.where(curslegatura: 'modul_ayurveda_padartha', cod: ['cod315', 'cod316', 'cod317'])
-        @prods = products.where(cod: ['cod315',  'cod317'])
-        @has_acces_video = 4
-        @nr_luni_achitate = 4
+    links = [
+      "57y2-QyoZ5M", "AjVnUco3WKY", "Z4IURVQPE0Q", "XoUaDndHZJ0", "pNDm6swMCtQ",
+      "V_zV_C-SMu0", "mDLsLNagmqA", "s11I0cT1hXc", "50LvPIU87m4", "S4C0zZW8Vvw",
+      "Tu57BiFwp2s", "TZobDqACl0Q", "dTrhsNaCGjs", "-byk3qgc_A0", "SWzAE6PB3qg",
+      "SWzAE6PB3qg", "yqZCP-59PYQ", "0-XBYgJhmus", "SKh6s4fYhGI"
+    ]
+  
+    unique_links = links.uniq  
+  
+    # Găsește toate rândurile din Video care corespund link-urilor
+    videos = Video.where(link: unique_links)
+  
+    # Transformă rezultatele într-un hash indexat după link
+    videos_hash = videos.index_by(&:link)
+  
+    @video_limit = 4  # cate video apar in pagina
+  
+    # Creează o listă de obiecte Video în aceeași ordine ca links și limitează la @video_limit
+    @myvideo_ayurveda_padartha = links.map { |link| videos_hash[link] }.compact.first(@video_limit)
+            
+    # Verificăm dacă utilizatorul are rolul 1 pentru acces complet
+    if current_user&.role == 1
+      @a_cumparat_macar_un_cod = true
+      @a_cumparat_digital = true
+      @myvideo_rasayana_m1 = Video.where(tip: 'rasayana1')
+                                  .where('ordine >= ? AND ordine <= ?', 0, 1000)
+                                  .order(ordine: :asc).to_a
+      @myvideo_rasayana_m1_seminarii = Video.where(tip: 'rasayana1')
+                                            .where('ordine > ? AND ordine < ?', 1000, 2000)
+                                            .order(ordine: :asc).to_a
+      @prods = [] # Nu afișăm alte produse
+      @has_acces_video = 4
+      @nr_luni_achitate = 4
+    else
+      products = Prod.where(curslegatura: 'modul_ayurveda_padartha', cod: ['cod317'])
+      
+      if current_user.nil?
+        @prods = products.where(cod: ['cod317'])
       else
-        products = Prod.where(curslegatura: 'modul_ayurveda_padartha', cod: ['cod315', 'cod316', 'cod317'])
-    
-        if current_user.nil?
-          @prods = products.where(cod: ['cod315',  'cod317'])
-        else
-          purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
-                                       .joins(:prod)
-                                       .where(prods: { curslegatura: 'modul_ayurveda_padartha', status: 'activ' })
-                                       .pluck('prods.cod')
-
-          puts("Produsele cumparate: #{purchased_prods}")                             
-    
-          if purchased_prods.include?('cod317')
-            @a_cumparat_macar_un_cod = true
-            @a_cumparat_digital = true
-            @prods = []
-
-                        
-
-
+        purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
+                                     .joins(:prod)
+                                     .where(prods: { curslegatura: 'modul_ayurveda_padartha', status: 'activ' })
+                                     .pluck('prods.cod')
   
-
-            #@myvideo_ayurveda_padartha = Video.where(tip: 'modul_ayurveda_padartha')
-                                        #.where('ordine >= ? AND ordine <= ?', 0, 1000)
-                                        #.order(ordine: :asc).to_a
-            @myvideo_ayurveda_padartha_seminarii = Video.where(tip: 'modul_ayurveda_padartha')
-                                                  .where('ordine > ? AND ordine < ?', 1000, 2000)
-                                                  .order(ordine: :asc).to_a
-          elsif purchased_prods.include?('cod316')
-            puts("sunt aici1")
-            @a_cumparat_macar_un_cod = true
-            @a_cumparat_digital = true
-            @prods = Prod.none
-            #@myvideo_ayurveda_padartha = Video.where(tip: 'modul_ayurveda_padartha')
-                                        #.where('ordine >= ? AND ordine <= ?', 0, 1000)
-                                        #.order(ordine: :asc).to_a
-            @myvideo_ayurveda_padartha_seminarii = Video.where(tip: 'modul_ayurveda_padartha')
-                                                  .where('ordine > ? AND ordine < ?', 1000, 2000)
-                                                  .order(ordine: :asc).to_a
-          elsif purchased_prods.include?('cod315')
-            @a_cumparat_macar_un_cod = true
-            @a_cumparat_digital = false
-            @prods = products.where(cod: ['cod316'])
-            puts("daaaaaaaaa")
-            #@myvideo_ayurveda_padartha = Video.none
-            @myvideo_ayurveda_padartha_seminarii = Video.none
-          else
-            @prods = products.where(cod: ['cod315', 'cod317'])
-            #@myvideo_ayurveda_padartha = Video.none
-            @myvideo_ayurveda_padartha_seminarii = Video.none
-            end
-          end
-    
-         
+        puts("Produsele cumparate: #{purchased_prods}")                             
+      
+        if purchased_prods.any? { |cod| ['cod315', 'cod316', 'cod317'].include?(cod) }
+          @a_cumparat_macar_un_cod = true
+          @a_cumparat_digital = true
+          @prods = []
+          @myvideo_ayurveda_padartha_seminarii = Video.where(tip: 'modul_ayurveda_padartha')
+                                                .where('ordine > ? AND ordine < ?', 1000, 2000)
+                                                .order(ordine: :asc).to_a
+        else
+          @prods = products.where(cod: ['cod317'])
+          @myvideo_ayurveda_padartha_seminarii = Video.none
         end
-      
-      
-    end    
+      end
+    end
+  end   
     
 
     def export_to_xlsx_plata_ayurveda_padartha

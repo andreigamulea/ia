@@ -2270,14 +2270,14 @@ def set_user27
 
   return true if current_user.role == 1  # Adminul are acces direct
 
-  # Verifică dacă utilizatorul a cumpărat produsele cu codurile 'cod316' sau 'cod317'
+  # Verifică dacă utilizatorul a cumpărat produsele cu codurile 'cod315', 'cod316' sau 'cod317'
   purchased_prods = ComenziProd.where(user_id: current_user.id, validat: 'Finalizata')
                                .joins(:prod)
                                .where(prods: { curslegatura: 'modul_ayurveda_padartha', status: 'activ' })
                                .pluck('prods.cod')
 
-  # Verifică dacă utilizatorul are codurile 'cod316' sau 'cod317'
-  @has_access = purchased_prods.any? { |cod| ['cod316', 'cod317'].include?(cod) }
+  # Verifică dacă utilizatorul are oricare dintre codurile 'cod315', 'cod316' sau 'cod317'
+  @has_access = purchased_prods.any? { |cod| ['cod315', 'cod316', 'cod317'].include?(cod) }
 
   if @has_access
     return true
