@@ -76,7 +76,7 @@
                     <li class="nav-item">
                        <%= link_to 'Ayush Cell Seminarii', '/tvs/seminarii', class: 'no-turbo' %>
                     </li>
-                    <% allowed_emails1 = ["geishauly@yahoo.com"] %>
+                    <% allowed_emails1 = ["geishauly@yahoo.com","dr.monicanferreira@gmail.com"] %>
                     <% if current_user && (current_user.role == 1 || allowed_emails1.include?(current_user.email)) %>
                       <li class="nav-item">
                         <%= link_to 'Reprogramare cursuri', '/tvs/reprogramare_curs', class: 'no-turbo' %>

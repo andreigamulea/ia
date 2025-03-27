@@ -245,7 +245,7 @@ class TvsController < ApplicationController
       redirect_to new_user_session_path
       return false
     end
-    tabel_useri = ['geishauly@yahoo.com']
+    tabel_useri = ['geishauly@yahoo.com','dr.monicanferreira@gmail.com']
     unless tabel_useri.include?(current_user.email) || current_user.role == 1
       flash[:alert] = "Nu aveți permisiunea de a accesa acest curs."
       redirect_to root_path
@@ -274,14 +274,34 @@ class TvsController < ApplicationController
                     now_bucharest >= ora_inceput_ajustata && now_bucharest <= ora_sfarsit_ajustata
                   end
   
-    puts "Video selectat: #{@myvideo1 ? @myvideo1.id : 'Niciunul'}"
-    puts "ID-ul selectat: #{@myvideo1.id}, Link: #{@myvideo1.link}, Cod: #{@myvideo1.cod if @myvideo1.respond_to?(:cod)}"
+    #puts "Video selectat: #{@myvideo1 ? @myvideo1.id : 'Niciunul'}"
+    #puts "ID-ul selectat: #{@myvideo1.id}, Link: #{@myvideo1.link}, Cod: #{@myvideo1.cod if @myvideo1.respond_to?(:cod)}"
 
   
     # Dacă @myvideo1 există, căutăm videouri cu același cod în tabela Video
     if @myvideo1
-      # Găsim videoclipul în tabela Video care are același link ca @myvideo1
-      video_gasit = Video.where(link: @myvideo1.link, tip: 'an2_2425').first
+      if @myvideo1
+        tip = case current_user.email
+              when 'geishauly@yahoo.com' then 'an2_2425'
+              when 'dr.monicanferreira@gmail.com' then 'an3_2425'
+              else
+                redirect_to root_path, notice: "Acces neautorizat" and return
+              end
+        video_gasit = Video.where(link: @myvideo1.link, tip: tip).first
+    
+        if video_gasit
+          @myvideos = Video.where(link: @myvideo1.link) # sau altă logică pentru a seta @myvideos
+        else
+          @exista_video = false # Setăm variabila pentru a indica că videoul nu există
+          render 'reprogramare_curs' and return # Randăm view-ul și ieșim din metodă
+        end
+      else
+        @exista_video = false # Setăm variabila pentru caz de link invalid
+        render 'reprogramare_curs' and return # Randăm view-ul și ieșim din metodă
+      end
+
+
+
 
       if video_gasit
         puts "Video găsit cu link #{@myvideo1.link}: #{video_gasit.id}, cod: #{video_gasit.cod}"

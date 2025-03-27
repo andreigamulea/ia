@@ -2117,7 +2117,7 @@ def set_user24
     return false
   end
 
-  tabel_useri = ['geishauly@yahoo.com']
+  tabel_useri = ['geishauly@yahoo.com','dr.monicanferreira@gmail.com']
     unless tabel_useri.include?(current_user.email) || current_user.role == 1
       flash[:alert] = "Nu aveți permisiunea de a accesa acest curs."
       redirect_to root_path
