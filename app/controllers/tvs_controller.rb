@@ -281,19 +281,25 @@ class TvsController < ApplicationController
     # Dacă @myvideo1 există, căutăm videouri cu același cod în tabela Video
     if @myvideo1
       if @myvideo1
-        tip = case current_user.email
-              when 'geishauly@yahoo.com' then 'an2_2425'
-              when 'dr.monicanferreira@gmail.com' then 'an3_2425'
-              else
-                redirect_to root_path, notice: "Acces neautorizat" and return
-              end
-        video_gasit = Video.where(link: @myvideo1.link, tip: tip).first
-    
-        if video_gasit
+        if current_user.role == 1
+          # Pentru role == 1, sărim peste verificarea tip și permitem acces la toate videourile
           @myvideos = Video.where(link: @myvideo1.link) # sau altă logică pentru a seta @myvideos
         else
-          @exista_video = false # Setăm variabila pentru a indica că videoul nu există
-          render 'reprogramare_curs' and return # Randăm view-ul și ieșim din metodă
+          # Logica existentă pentru ceilalți utilizatori
+          tip = case current_user.email
+                when 'geishauly@yahoo.com' then 'an2_2425'
+                when 'dr.monicanferreira@gmail.com' then 'an3_2425'
+                else
+                  redirect_to root_path, notice: "Acces neautorizat" and return
+                end
+          video_gasit = Video.where(link: @myvideo1.link, tip: tip).first
+      
+          if video_gasit
+            @myvideos = Video.where(link: @myvideo1.link) # sau altă logică pentru a seta @myvideos
+          else
+            @exista_video = false # Setăm variabila pentru a indica că videoul nu există
+            render 'reprogramare_curs' and return # Randăm view-ul și ieșim din metodă
+          end
         end
       else
         @exista_video = false # Setăm variabila pentru caz de link invalid
