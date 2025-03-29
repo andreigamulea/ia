@@ -189,5 +189,83 @@ class CursuriAyurvedaController < ApplicationController
       end
     end
 
+    def curs4saptamani 
+      @myvideo1 = 'zAe3zVVT6Cw'
+      #@myvideo = @myvideo1 if @myvideo1
+      @myvideo = 'zAe3zVVT6Cw' 
+  
+      @has_access = current_user&.role == 1
+      if current_user  
+        # Obține ID-urile produselor cumpărate de current_user, care sunt valide și a căror datasfarsit este azi sau în viitor
+        purchased_prod_coduri = ComenziProd.where(user_id: current_user.id, 
+                                            validat: 'Finalizata', 
+                                            datainceput: Date.new(2025, 1, 7)..)                                           
+                                     .joins(:prod)
+                                     .where(prods: { curslegatura: 'vajikarana2' })
+                                     .pluck('prods.cod')
+  
+        purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
+                                     validat: 'Finalizata', 
+                                     datainceput: Date.new(2025, 1, 7)..)
+                              .joins(:prod)
+                              .where(prods: { curslegatura: 'vajikarana2' })
+                              .pluck('prods.cod')
+                              
+  # Adaugă codurile la array-ul existent și elimină duplicatele
+  purchased_prod_coduri.concat(purchased_prod_coduri1)
+  purchased_prod_coduri.concat(purchased_prod_coduri1).uniq!
+  puts("produsele cumparate sunt: #{purchased_prod_coduri}")
+  @a_cumparat_macar_un_cod = purchased_prod_coduri.any? || current_user.role == 1
+  
+  
+    
+        # Logica pentru determinarea produselor de afișat în funcție de ce a cumpărat current_user
+        if purchased_prod_coduri.include?('cod306') && purchased_prod_coduri.include?('cod307')
+          @prods = Prod.none
+          @has_access = true
+        elsif purchased_prod_coduri.include?('cod308')
+                @has_access = true
+                @prods = Prod.none
+  
+        elsif purchased_prod_coduri.include?('cod306')
+          @prods = Prod.where(cod: 'cod307')
+          @has_access = false
+        
+        else
+          # Dacă nu a cumpărat niciunul, afișează produsele cu cod=cod108 și cod=cod110
+          @prods = Prod.where(cod: ['cod306', 'cod308'], status: 'activ')
+          @has_access = false
+        end
+    
+        @prods_cumparate = Prod.where(cod: purchased_prod_coduri)
+               
+      else
+        # Dacă nu există un current_user, afișează produsele cu cod=cod108 și cod=cod110
+        @prods = Prod.where(curslegatura: 'vajikarana2', status: 'activ').where(cod: ['cod306', 'cod308']).order(:id)
+        @prods_cumparate = Prod.none
+        @videos_correspondente = Video.none
+      end
+  
+       
+  
+        if current_user && current_user.role==1
+          @has_access = true
+        end  
+        puts("Are acces? : #{@has_access}")
+        if @a_cumparat_macar_un_cod
+                      if current_user && current_user.limba=='EN'
+                        @myvideo = Video.where(tip: 'vajikarana2').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
+                        @myvideo_cursuri_tiparite = Video.none
+                      else  
+                            @myvideo = Video.where(tip: 'vajikarana2').where('ordine <= ?', 1000).order(ordine: :asc)
+                            @myvideo_cursuri_tiparite = Video.where(tip: 'vajikarana2').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
+                         
+                          end  
+              else  
+                        @myvideo = Video.none
+                        @myvideo_cursuri_tiparite = Video.none
+              end
+              
+          end
   end
   
