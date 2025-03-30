@@ -116,7 +116,7 @@
             <div class="r1c2">
               <p>Natura practicii vak-shudhi face parte din domeniul foarte vast și deosebit de valoros și generos al practicilor de tip sattva-vajaya, ansamblul mijloacelor de vindecare ce pun în valoare resursele tainice ale conștiinței. </p><p>Practica vak-sudhi  afirmată și dezvoltată de către înțeleptul Vamadeva se poate transpune în limbajul terminologic și conceptual occidental prin termenul compus psihofonoterapie (psyhon înseamnă conștiință, la modul general, phono se referă la sunet, voce sau vibrație, iar terapia implică demersul vindecător, echilibrant sau restructurant).</p>
               <% if !current_user %> 
-              <div class="r1c2"><%= link_to 'Înscrie-te acum', new_user_session_with_return_path('vajikarana2'), class: 'register' %> </div>
+              <div class="r1c2"><%= link_to 'Înscrie-te acum', new_user_session_with_return_path('curs4saptamani'), class: 'register' %> </div>
               <%elsif current_user && !@has_access%>
                     <%= link_to 'Participă la curs', '#psihofonoterapie', class: 'register' %>
               <%end%>
@@ -211,7 +211,7 @@
         
         <section>
   
-  <h2 class="name">Prezentare introductiva - Curs psihofonoterapie Modulul 2</h2>
+  <h2 class="name">Prezentare introductiva - Curs psihofonoterapie</h2>
   <p style="text-align:center;">Pentru a vă familiariza cu tema abordată în cadrul acestui modul, vă invităm să vizionați înregistrarea introductivă de mai jos. Evenimentul, organizat online pe 29.03.2025, oferă o perspectivă clară asupra conținutului cursului și a subiectelor abordate.</p>
   <!-- for non autoplay video //-->
   <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
@@ -225,7 +225,7 @@
   </br>
           
         </section>
-
+<%if current_user && current_user.role==2%>
 
           <%if current_user && @a_cumparat_macar_un_cod%> 
           <h2 class="alimente-nutritionale" id="psihofonoterapie" style="text-align: center;font-size:28px;">Înregistrări video</h2>
@@ -316,7 +316,7 @@
           </div>
           <%end%>
 
-
+<%end%>
 
 
 
@@ -340,7 +340,7 @@
                     
                   <%= link_to 'Acceseaza cursul', datefacturare_path(s: prod.id), class: 'btn btn-primary' %> </td>
                   
-                  <% else %> <td style="text-align:center;"><%= link_to 'Acceseaza cursul', new_user_session_with_return_path('vajikarana2'), class: 'btn btn-primary' %> </td>
+                  <% else %> <td style="text-align:center;"><%= link_to 'Acceseaza cursul', new_user_session_with_return_path('curs4saptamani'), class: 'btn btn-primary' %> </td>
                   <% end %>
                 </tr>
                 <% end %>

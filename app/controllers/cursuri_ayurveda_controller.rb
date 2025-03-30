@@ -25,7 +25,7 @@ class CursuriAyurvedaController < ApplicationController
     # Transformă rezultatele într-un hash indexat după link
     videos_hash = videos.index_by(&:link)
   
-    @video_limit = 4  # cate video apar in pagina
+    @video_limit = 5  # cate video apar in pagina
   
     # Creează o listă de obiecte Video în aceeași ordine ca links și limitează la @video_limit
     @myvideo_ayurveda_padartha = links.map { |link| videos_hash[link] }.compact.first(@video_limit)
@@ -193,6 +193,9 @@ class CursuriAyurvedaController < ApplicationController
       @myvideo1 = 'zAe3zVVT6Cw'
       #@myvideo = @myvideo1 if @myvideo1
       @myvideo = 'zAe3zVVT6Cw' 
+
+      @myvideo1 = Video.find_by(link: 'zAe3zVVT6Cw') #prezentare ayurveda padartha
+      @myvideo = @myvideo1.link if @myvideo1
   
       @has_access = current_user&.role == 1
       if current_user  
@@ -201,14 +204,14 @@ class CursuriAyurvedaController < ApplicationController
                                             validat: 'Finalizata', 
                                             datainceput: Date.new(2025, 1, 7)..)                                           
                                      .joins(:prod)
-                                     .where(prods: { curslegatura: 'vajikarana2' })
+                                     .where(prods: { curslegatura: 'psihofonoterapie' })
                                      .pluck('prods.cod')
   
         purchased_prod_coduri1 = ComenziProd1.where(user_id: current_user.id, 
                                      validat: 'Finalizata', 
                                      datainceput: Date.new(2025, 1, 7)..)
                               .joins(:prod)
-                              .where(prods: { curslegatura: 'vajikarana2' })
+                              .where(prods: { curslegatura: 'psihofonoterapie' })
                               .pluck('prods.cod')
                               
   # Adaugă codurile la array-ul existent și elimină duplicatele
@@ -220,20 +223,20 @@ class CursuriAyurvedaController < ApplicationController
   
     
         # Logica pentru determinarea produselor de afișat în funcție de ce a cumpărat current_user
-        if purchased_prod_coduri.include?('cod306') && purchased_prod_coduri.include?('cod307')
+        if purchased_prod_coduri.include?('cod365') && purchased_prod_coduri.include?('cod366')
           @prods = Prod.none
           @has_access = true
-        elsif purchased_prod_coduri.include?('cod308')
+        elsif purchased_prod_coduri.include?('cod367')
                 @has_access = true
                 @prods = Prod.none
   
-        elsif purchased_prod_coduri.include?('cod306')
-          @prods = Prod.where(cod: 'cod307')
+        elsif purchased_prod_coduri.include?('cod365')
+          @prods = Prod.where(cod: 'cod366')
           @has_access = false
         
         else
           # Dacă nu a cumpărat niciunul, afișează produsele cu cod=cod108 și cod=cod110
-          @prods = Prod.where(cod: ['cod306', 'cod308'], status: 'activ')
+          @prods = Prod.where(cod: ['cod365', 'cod367'], status: 'activ')
           @has_access = false
         end
     
@@ -241,7 +244,7 @@ class CursuriAyurvedaController < ApplicationController
                
       else
         # Dacă nu există un current_user, afișează produsele cu cod=cod108 și cod=cod110
-        @prods = Prod.where(curslegatura: 'vajikarana2', status: 'activ').where(cod: ['cod306', 'cod308']).order(:id)
+        @prods = Prod.where(curslegatura: 'psihofonoterapie', status: 'activ').where(cod: ['cod365', 'cod367']).order(:id)
         @prods_cumparate = Prod.none
         @videos_correspondente = Video.none
       end
@@ -254,11 +257,11 @@ class CursuriAyurvedaController < ApplicationController
         puts("Are acces? : #{@has_access}")
         if @a_cumparat_macar_un_cod
                       if current_user && current_user.limba=='EN'
-                        @myvideo = Video.where(tip: 'vajikarana2').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
+                        @myvideo = Video.where(tip: 'psihofonoterapie').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
                         @myvideo_cursuri_tiparite = Video.none
                       else  
-                            @myvideo = Video.where(tip: 'vajikarana2').where('ordine <= ?', 1000).order(ordine: :asc)
-                            @myvideo_cursuri_tiparite = Video.where(tip: 'vajikarana2').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
+                            @myvideo = Video.where(tip: 'psihofonoterapie').where('ordine <= ?', 1000).order(ordine: :asc)
+                            @myvideo_cursuri_tiparite = Video.where(tip: 'psihofonoterapie').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
                          
                           end  
               else  

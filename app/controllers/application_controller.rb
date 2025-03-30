@@ -225,6 +225,8 @@ end
         vajikarana_modul1_path 
       elsif return_to == "vajikarana2"   
         vajikarana_modul2_path 
+      elsif return_to == "curs4saptamani"   
+        curs4saptamani_path  
       elsif return_to == "ayurveda-padartha"   
         ayurveda_padartha_path 
       elsif return_to == "rasayana1"   
