@@ -252,7 +252,7 @@
                 </tr>
               </thead>
               <tbody>
-              <% @myvideo.each do |video| %>
+              <% @myvideo1.each do |video| %>
                 <tr>
                   <% if video.ordine > 1000 %>
                     <td><%= video.ordine - 1000 %></td>
@@ -361,6 +361,9 @@
           </div>
   </div>
 </div>
+
+
+
 <script>
   <%= yield :custom_js %>
 </script>

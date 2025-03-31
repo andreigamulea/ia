@@ -198,6 +198,7 @@ class CursuriAyurvedaController < ApplicationController
       #@myvideo = @myvideo1.link if @myvideo1
       #@myvideo = 'Ph4YXZnoEsk'
       @myvideo = 'Ph4YXZnoEsk'
+      
       @has_access = current_user&.role == 1
       if current_user  
         # Obține ID-urile produselor cumpărate de current_user, care sunt valide și a căror datasfarsit este azi sau în viitor
@@ -258,15 +259,15 @@ class CursuriAyurvedaController < ApplicationController
         puts("Are acces? : #{@has_access}")
         if @a_cumparat_macar_un_cod
                       if current_user && current_user.limba=='EN'
-                        @myvideo = Video.where(tip: 'psihofonoterapie').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
+                        @myvideo1 = Video.where(tip: 'psihofonoterapie').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
                         @myvideo_cursuri_tiparite = Video.none
                       else  
-                            @myvideo = Video.where(tip: 'psihofonoterapie').where('ordine <= ?', 1000).order(ordine: :asc)
+                            @myvideo1 = Video.where(tip: 'psihofonoterapie').where('ordine <= ?', 1000).order(ordine: :asc)
                             @myvideo_cursuri_tiparite = Video.where(tip: 'psihofonoterapie').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
                          
                           end  
               else  
-                        @myvideo = Video.none
+                        @myvideo1 = Video.none
                         @myvideo_cursuri_tiparite = Video.none
               end
               
