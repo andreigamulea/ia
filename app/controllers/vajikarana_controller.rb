@@ -126,7 +126,7 @@ class VajikaranaController < ApplicationController
   
   
   def modul2 #ATENTIE nu e facaut pana cand au acces!!! 4.02.2025
-    @myvideo1 = 'zAe3zVVT6Cw'
+   
     #@myvideo = @myvideo1 if @myvideo1
     @myvideo = 'zAe3zVVT6Cw' 
 
@@ -190,15 +190,15 @@ puts("produsele cumparate sunt: #{purchased_prod_coduri}")
       puts("Are acces? : #{@has_access}")
       if @a_cumparat_macar_un_cod
                     if current_user && current_user.limba=='EN'
-                      @myvideo = Video.where(tip: 'vajikarana2').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
+                      @myvideo1 = Video.where(tip: 'vajikarana2').where('ordine > ? AND ordine < ?', 1000, 2000).order(ordine: :asc)
                       @myvideo_cursuri_tiparite = Video.none
                     else  
-                          @myvideo = Video.where(tip: 'vajikarana2').where('ordine <= ?', 1000).order(ordine: :asc)
+                          @myvideo1 = Video.where(tip: 'vajikarana2').where('ordine <= ?', 1000).order(ordine: :asc)
                           @myvideo_cursuri_tiparite = Video.where(tip: 'vajikarana2').where('ordine > ? AND ordine < ?', 2000, 3000).order(ordine: :asc)
                        
                         end  
             else  
-                      @myvideo = Video.none
+                      @myvideo1 = Video.none
                       @myvideo_cursuri_tiparite = Video.none
             end
             
