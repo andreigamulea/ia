@@ -1,5 +1,5 @@
 
-<!-- app/views/cursuriayurvedas/cursayurveda2425.html.erb -->
+
 <% content_for :custom_js do %>
   <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
 <% end %>
@@ -64,9 +64,7 @@
     position: relative;
     overflow: hidden;
     width: 100%;
-    /* Setează un raport de aspect implicit */
     padding-top: 56.25%;
-    /* Raport de aspect 16:9 */
   }
 
   .responsive-iframe-container iframe {
@@ -93,7 +91,7 @@
   }
 </style>
 
-<% content_for :title, "Vajikarana - ştiinţa substanţelor afrodiziace | Ayush Cell Romania" %>
+<% content_for :title, "Psihofonoterapie | Ayush Cell Romania" %>
 
 <% content_for :meta_tags do %>
 <meta name="description" content="Descoperă Psihofonoterapia – o practică ayurvedică unică bazată pe vak-shuddhi, pentru purificarea conștiinței prin vorbire, sunet și intenție verbală. Participă la cursul susținut in cadrul Ayush Cell Romania.">
@@ -107,11 +105,11 @@
 
 <div class="cr" style="background-color: white; ">
     <h1 class="first-tittle">Ayush Cell Romania: Elemente fundamentale de psihofonoterapie<h1>
-        <h2 class="main-title">Elemente fundamentale de psihofonoterapie, bazate pe învățătura vak-shudhi a înțeleptului Vamadeva </h2>
+        <h2 class="main-title">Elemente fundamentale de psihofonoterapie, bazate pe învățăturile vak-shudhi a înțeleptului Vamadeva </h2>
         <section>
           <div class="row1 center" style="max-width:920px; margin:0 auto;">
             <div class="r1c1" style="height: 350px;">
-              <img src="<%= image_url('vajikarana modul 2.webp') %>" alt="psihofonoterapie - ştiinţa substanţelor afrodiziace">
+              <img src="<%= image_url('psihofonoterapie.webp') %>" alt="psihofonoterapie - purificarea conștiinței prin vorbire">
             </div>
             <div class="r1c2">
               <p>Natura practicii vak-shudhi face parte din domeniul foarte vast și deosebit de valoros și generos al practicilor de tip sattva-vajaya, ansamblul mijloacelor de vindecare ce pun în valoare resursele tainice ale conștiinței. </p><p>Practica vak-sudhi  afirmată și dezvoltată de către înțeleptul Vamadeva se poate transpune în limbajul terminologic și conceptual occidental prin termenul compus psihofonoterapie (psyhon înseamnă conștiință, la modul general, phono se referă la sunet, voce sau vibrație, iar terapia implică demersul vindecător, echilibrant sau restructurant).</p>
@@ -159,7 +157,7 @@
               <h3>
                 <strong>Cum particip?</strong>
               </h3>
-              <p>Pentru a vă înscrie la acest modul, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul atît la linkurile de ZOOM cît si la vizionarea inregistrarilor se va face direct in această pagină de site.</p>
+              <p>Pentru a vă înscrie la acest modul, vă invităm să efectuați plata aferentă. Dupa finalizarea platii, accesul atît la linkurile de ZOOM cît si la vizionarea inregistrarilor se va face direct din această pagină de site.</p>
                <!--<h3>
                 <strong>Se oferă suport de curs?</strong>
               </h3>
@@ -222,7 +220,7 @@
         <section>
   
   <h2 class="name">Prezentare introductiva - Curs psihofonoterapie</h2>
-  <p style="text-align:center;">Pentru a vă familiariza cu tema abordată în cadrul acestui modul, vă invităm să vizionați înregistrarea introductivă de mai jos. Evenimentul, organizat online pe 29.03.2025, oferă o perspectivă clară asupra conținutului cursului și a subiectelor abordate.</p>
+  <p style="text-align:center;">Pentru a vă introduce în tematica acestui curs, vă recomandăm să urmăriți înregistrarea introductivă de mai jos. Aceasta oferă o prezentare clară a conținutului și a principalelor subiecte care vor fi discutate pe parcurs.</p>
   <!-- for non autoplay video //-->
   <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">

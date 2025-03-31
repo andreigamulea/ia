@@ -190,11 +190,11 @@ class CursuriAyurvedaController < ApplicationController
     end
 
     def psihofonoterapie 
-      @myvideo1 = 'zAe3zVVT6Cw'
+      #@myvideo1 = 'zAe3zVVT6Cw'
       #@myvideo = @myvideo1 if @myvideo1
-      @myvideo = 'zAe3zVVT6Cw' 
+      #@myvideo = 'zAe3zVVT6Cw' 
 
-      @myvideo1 = Video.find_by(link: 'zAe3zVVT6Cw') #prezentare ayurveda padartha
+      @myvideo1 = Video.find_by(link: 'Ph4YXZnoEsk') #prezentare psihofonoterapie
       @myvideo = @myvideo1.link if @myvideo1
   
       @has_access = current_user&.role == 1
