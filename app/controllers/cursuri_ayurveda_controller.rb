@@ -189,7 +189,7 @@ class CursuriAyurvedaController < ApplicationController
       end
     end
 
-    def curs4saptamani 
+    def psihofonoterapie 
       @myvideo1 = 'zAe3zVVT6Cw'
       #@myvideo = @myvideo1 if @myvideo1
       @myvideo = 'zAe3zVVT6Cw' 
