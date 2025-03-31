@@ -194,9 +194,10 @@ class CursuriAyurvedaController < ApplicationController
       #@myvideo = @myvideo1 if @myvideo1
       #@myvideo = 'zAe3zVVT6Cw' 
 
-      @myvideo1 = Video.find_by(link: 'Ph4YXZnoEsk') #prezentare psihofonoterapie
-      @myvideo = @myvideo1.link if @myvideo1
-  
+      #@myvideo1 = Video.find_by(link: 'Ph4YXZnoEsk') #prezentare psihofonoterapie
+      #@myvideo = @myvideo1.link if @myvideo1
+      #@myvideo = 'Ph4YXZnoEsk'
+      @myvideo = 'Ph4YXZnoEsk'
       @has_access = current_user&.role == 1
       if current_user  
         # Obține ID-urile produselor cumpărate de current_user, care sunt valide și a căror datasfarsit este azi sau în viitor

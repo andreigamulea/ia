@@ -3,6 +3,8 @@
 <% content_for :custom_js do %>
   <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
 <% end %>
+
+
 <style>
   #psihofonoterapie .cm h2 {
     font-size: 22px;
@@ -362,3 +364,4 @@
 <script>
   <%= yield :custom_js %>
 </script>
+
