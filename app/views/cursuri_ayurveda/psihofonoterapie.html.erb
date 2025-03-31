@@ -122,16 +122,17 @@
               <%end%>
             </div>
           </div>
+          <br>
           <section class="cm">
-          <h2>🎶 Ce este psihofonoterapia?</h2> 
+          <h3>🎶 Ce este psihofonoterapia?</h3> 
           <p> Psihofonoterapia este acea formă de terapie integrativă neconvențională care utilizează puterea conștientă a cuvântului rostit, dar și a tăcerii, dar și a sunetelor sacre rostite lăuntric în spațiul conștiinței, precum și a intenției lăuntrice verbalizate, toate acestea fiind folosite ca mijloace de armonizare a conștiinței operative, a emoțiilor și a structurii subtile a ființei. </p> 
           <p> Psihofonoterapia se bazează pe principiul că vorbirea – principiu afirmat de către înțeleptul Vamadeva – este o extensie a conștiinței, iar purificarea și sacralizarea acesteia pot genera transformări profunde în plan psihic, relațional, energetic și, în general, în sfera conștiinței personale. Psihofonoterapia este un derivat al științei tradiționale ayurvedice, dar folosește în această privință și elemente fundamentale din cadrul sistemului yoga sau din psihologie. </p> 
-          <h2>💬 Beneficiile psihofonoterapiei</h2> 
+          <h3>💬 Beneficiile psihofonoterapiei</h3> 
           <p> În lumea modernă, în care vorbirea a devenit grăbită, mecanică, rutinantă și chiar distructivă adeseori, practica psihofonoterapiei oferă o veritabilă reîntoarcere conștientă la cuvântul viu, rostit cu prezență, cu autenticitate, cu blândețe și cu claritate. </p> 
           <p> Psihofonoterapia nu este despre a vorbi frumos, ci este despre a rosti într-un spațiu interior curat, unde conștiința ghidează exprimarea, iar vocea – atunci când vorbim de aspecte ce se exprimă verbal – devine un canal veritabil al vindecării. Aici, până și tăcerea atentă devine un mijloc activ de transformare interioară. </p> 
-          <h2>🌿 Pentru cine este psihofonoterapia?</h2> 
+          <h3>🌿 Pentru cine este psihofonoterapia?</h3> 
           <p> Psihofonoterapia este potrivită pentru toți cei care doresc să-și vindece, de exemplu, relația cu propria voce, dar și cu exprimarea de sine, pentru a reduce stresul și pentru a face să dispară așa-numitul zgomot mental – psiho-mental  – prin modalități de verbalizare sau de vocalizare lăuntrică înțeleaptă. </p> 
-          <h2>🕉️ Viziunea tradițională asupra lui vak-shuddhi</h2> 
+          <h3>🕉️ Viziunea tradițională asupra lui vak-shuddhi</h3> 
           <p> Expresia vak-shuddhi este și ea o expresie compusă (Vak înseamnă vorbire, cuvânt sau exprimare verbală, iar termenul shuddhi se referă la un proces general de purificare sau de curățare prin intermediul a ceva anume) care înseamnă curățarea, purificarea, rafinarea și chiar sacralizarea rostirii, atât a celei exprimate verbal, cât și a celei gândite, pe care ființa umană o poate realiza pornind chiar de la nivelul formulării lăuntrice tăcute, în sfera conștiinței, a intențiilor. </p> 
           <p> În viziunea înțeleptului Vamadeva, practica numită vak-shuddhi este considerată chiar a fi o formă de autoterapie, în care practicantul poate alege cuvinte frumoase, cuvinte clare, cuvinte caracterizate de blândețe, cuvinte pure, poate să le asocieze cu intenții clare, cu afirmații încărcate de semnificație spirituală și cu formule sacre, rostite cu autenticitate. Astfel, întregul ansamblu al acestei convergențe de disciplinare a instrumentului vorbirii ajunge să transforme profund ființa și să-i ofere un cadru net superior de existență personală. </p>
          
@@ -199,7 +200,7 @@
         
         <section>
   
-  <h2 class="name">Prezentare introductiva - Curs Psihofonoterapie</h2>
+  <h2 class="name" style="font-size:22px!important;">Prezentare introductiva - Curs Psihofonoterapie</h2>
   <p style="text-align:center;">Pentru a vă introduce în tematica acestui curs, vă recomandăm să urmăriți înregistrarea introductivă de mai jos. Aceasta oferă o prezentare clară a conținutului și a principalelor subiecte care vor fi prezentate pe parcurs.</p>
   <!-- for non autoplay video //-->
   <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
@@ -216,7 +217,7 @@
 <%if current_user && current_user.role==2%>
 
           <%if current_user && @a_cumparat_macar_un_cod%> 
-          <h2 class="alimente-nutritionale" id="psihofonoterapie" style="text-align: center;font-size:28px;">Înregistrări video</h2>
+          <h2 class="alimente-nutritionale" id="psihofonoterapie" style="text-align: center;font-size:22px;">Înregistrări video</h2>
           <div id="videos">
             <table class="table">
               <thead>
@@ -259,7 +260,7 @@
 
 
 <%if current_user && @a_cumparat_macar_un_cod%> 
-          <h2 class="alimente-nutritionale" id="psihofonoterapie" style="text-align: center;font-size:28px;">Înregistrări video</h2>
+          <h2 class="alimente-nutritionale" id="psihofonoterapie" style="text-align: center;font-size:22px;">Înregistrări video</h2>
           <div id="videos">
             <table class="table">
               <thead>
@@ -310,7 +311,7 @@
 
 
 
-          <%if !current_user || @prods.count>0%> <h1 class="alimente-nutritionale" id="psihofonoterapie1" style="font-size:28px;">Acces curs Psihofonoterapie</h1>
+          <%if !current_user || @prods.count>0%> <h2 class="alimente-nutritionale" id="psihofonoterapie1" style="font-size:22px;">Acces curs Psihofonoterapie</h2>
           <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
               <thead class="thead-dark">
