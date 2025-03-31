@@ -83,7 +83,7 @@
     .responsive-iframe-container {
       margin-top: -20px;
     }
-  }
+  }    
 </style>
 <% content_for :title, "Psihofonoterapie | Ayush Cell Romania"  %>
 <% content_for :description, "Descoperă Psihofonoterapia – o practică ayurvedică unică bazată pe vak-shuddhi, pentru purificarea conștiinței prin vorbire, sunet și intenție verbală. Participă la cursul susținut in cadrul Ayush Cell Romania." %>
@@ -177,9 +177,7 @@
         <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
           <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');">
           </div>
-          <img id="epytvImage[
-															
-														<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" alt="video" />
+          <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" alt="video" />
           <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0">
           </div>
           <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10 </div>
