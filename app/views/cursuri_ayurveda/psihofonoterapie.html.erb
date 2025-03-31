@@ -1,5 +1,4 @@
 
-
 <% content_for :custom_js do %>
   <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
 <% end %>
@@ -93,18 +92,14 @@
   }
 </style>
 
+<% content_for :title, "Psihofonoterapie | Ayush Cell Romania" %>
 
+<% content_for :meta_tags do %>
+<meta name="description" content="Descoperă Psihofonoterapia – o practică ayurvedică unică bazată pe vak-shuddhi, pentru purificarea conștiinței prin vorbire, sunet și intenție verbală. Participă la cursul susținut in cadrul Ayush Cell Romania.">
+<meta name="keywords" content="psihofonoterapie, vak-shuddhi, ayurveda, Ayush Cell Romania, terapie prin voce, conștiință, sunet terapeutic, cursuri de autovindecare, Andrei Gămulea, terapii alternative, purificarea vorbirii, medicina holistică, spiritualitate și vindecare, curs ayurvedic România">
 
-<% content_for :title, "Psihofonoterapie | Ayush Cell Romania"  %>
-<% content_for :description, "Descoperă Psihofonoterapia – o practică ayurvedică unică bazată pe vak-shuddhi, pentru purificarea conștiinței prin vorbire, sunet și intenție verbală. Participă la cursul susținut in cadrul Ayush Cell Romania." %>
-<% content_for :keywords, "psihofonoterapie, vak-shuddhi, ayurveda, Ayush Cell Romania, terapie prin voce, conștiință, sunet terapeutic, cursuri de autovindecare, Andrei Gămulea, terapii alternative, purificarea vorbirii, medicina holistică, spiritualitate și vindecare, curs ayurvedic România"%>
-
-<% content_for :canonical do %>
-  <link rel="canonical" href="https://www.ayushcell.ro/psihoponoterapie">
-<% end %>
-
-
-
+<link rel="canonical" href="https://www.ayushcell.ro/psihoponoterapie">
+<% end %> 
 
 <div class="container" id="psihofonoterapie">
 <%= render 'layouts/sideleft' %> 
@@ -139,7 +134,9 @@
           <h2>🕉️ Viziunea tradițională asupra lui vak-shuddhi</h2> 
           <p> Expresia vak-shuddhi este și ea o expresie compusă (Vak înseamnă vorbire, cuvânt sau exprimare verbală, iar termenul shuddhi se referă la un proces general de purificare sau de curățare prin intermediul a ceva anume) care înseamnă curățarea, purificarea, rafinarea și chiar sacralizarea rostirii, atât a celei exprimate verbal, cât și a celei gândite, pe care ființa umană o poate realiza pornind chiar de la nivelul formulării lăuntrice tăcute, în sfera conștiinței, a intențiilor. </p> 
           <p> În viziunea înțeleptului Vamadeva, practica numită vak-shuddhi este considerată chiar a fi o formă de autoterapie, în care practicantul poate alege cuvinte frumoase, cuvinte clare, cuvinte caracterizate de blândețe, cuvinte pure, poate să le asocieze cu intenții clare, cu afirmații încărcate de semnificație spirituală și cu formule sacre, rostite cu autenticitate. Astfel, întregul ansamblu al acestei convergențe de disciplinare a instrumentului vorbirii ajunge să transforme profund ființa și să-i ofere un cadru net superior de existență personală. </p>
-         </section>
+         
+
+
 
 <!--
 <br>
@@ -162,8 +159,9 @@
                   </div>
               <%end%>             
               
+</section>
 
-
+<section class="cm">
 
               <br>
               <h2>Înscriere și participare</h2>
@@ -207,7 +205,7 @@
   <div class="video" style="width: 100%; max-width: 640px; max-height: 360px; margin: 0 auto; background-image: url(<%= asset_path 'player.png' %>);background-size: 100%;">
     <div class="epyv-video-container" id="epyv-container[<%= @myvideo %>]">
       <div id="epytvPlayButton[<%= @myvideo %>]" class="play-button" onClick="clickToPlay('<%= @myvideo %>');"></div>
-      <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" />
+      <img id="epytvImage[<%= @myvideo %>]" src="/thumbnails/video-thumbnail-filename" alt="video" />
       <div class="epyv-video-player" id="<%= @myvideo %>" data-params="controls=1,rel=1,autoplay=0"></div>
       <div id="epytvPlayerCounter[<%= @myvideo %>]" class="playerCounter" style="visibility: hidden;">10</div>
     </div>
