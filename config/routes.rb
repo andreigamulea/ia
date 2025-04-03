@@ -179,6 +179,8 @@ patch 'listacanal3s/:id', to: 'listacanal3s#update', as: :update_listacanal3
   get 'nutritie4/index'
   get 'nutritie4/export_to_xlsx', to: 'nutritie4#export_to_xlsx_plata_nutritie4', as: 'export_nutritie4_xlsx'
   
+  get 'nutritie5', to: 'nutritie5#index'
+  get 'nutritie5/export_to_xlsx', to: 'nutritie5#export_to_xlsx_plata_nutritie5', as: 'export_nutritie5_xlsx'
   get 'contract/contract_voluntar', to: 'contractes#semneaza_contract', as: 'contract_voluntar'
   get 'contract/contract_voluntar1', to: 'contractes#semneaza_contract1', as: 'contract_voluntar1'
 

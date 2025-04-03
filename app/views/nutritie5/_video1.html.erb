@@ -1,0 +1,42 @@
+<% border_style = (defined?(previous_video_tip) && previous_video_tip == 'nutritie2' && video.tip == 'nutritie3') ? 'border-top: 3px solid #000;' : '' %>
+
+<tr style="<%= border_style %>">
+
+
+
+
+<td><%= video.nume.gsub('EN', '<span style="color: red;">EN</span>').gsub('RO', '<span style="color: blue;">RO</span>').html_safe %></td>
+
+  <td><%= video.descriere %></td>
+ 
+  <td>   
+  <% if (video.ordine > 1000 && video.ordine < 2000) || (video.ordine > 2000 && video.ordine < 3000)%>
+  <%= link_to "Vezi video", myvideo122_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+  <% elsif video.ordine > 3000 && video.ordine < 4000 %>
+      <%if current_user.role==1%>
+        <%= link_to "Vezi video", myvideo12_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+        
+        <% elsif current_user.nutritieabsolvit.nil? || current_user.nutritieabsolvit < 2 %>
+      
+      
+        <% else %>
+        <%= link_to "Vezi video", myvideo12_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+      <% end %>
+
+  
+  <% else %>
+    <%= link_to "Vezi video", myvideo12_path(id: video.id, link: video.link), class: "btn btn-primary" %>
+    <% end %>
+  </td>
+  <% if defined?(previous_video_tip) %>
+
+  <td>
+  <% if video.linkpdf!="-" %>
+  <%= link_to "Descarcă PDF", video.linkpdf, class: "btn btn-primary", download: '' %>
+  <% else %>
+  -
+  <%end%>
+
+  </td>
+  <%end%>
+</tr>
