@@ -2,32 +2,32 @@
     <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
     <% end %>
   <style>
-    #rasayana1 .cm h2 {
+    #rasayana2 .cm h2 {
       font-size: 22px;
     }
   
-    #rasayana1 .register {
+    #rasayana2 .register {
       border: 1px solid #4b0082;
       background-color: #4b0082;
     }
   
-    #rasayana1 .cm h3 {
+    #rasayana2 .cm h3 {
       font-size: 18px;
       font-weight: 800;
       margin-bottom: 0;
     }
   
-    #rasayana1 .register {
+    #rasayana2 .register {
       margin: 0;
       margin-top: 20px;
     }
   
-    #rasayana1 .table td {
+    #rasayana2 .table td {
       text-align: center;
     }
   
     @media screen and (max-width: 720px) {
-      #rasayana1 .register {
+      #rasayana2 .register {
         margin: 0 auto;
         margin-top: 20px;
       }
@@ -47,25 +47,26 @@
   <% end %> 
   <meta property="og:image" content="<%= image_url('RasayanaM02.webp') %>">
 
-  <div class="container" id="rasayana1"><%= render 'layouts/sideleft' %> 
+  <div class="container" id="rasayana2"><%= render 'layouts/sideleft' %> 
   
   <div class="cr" style="background-color: white; ">
       <h1 class="first-tittle">Ayush Cell Romania: Rasayana – Ştiinţa regenerării şi a redinamizării eficiente a potenţialului longeviv</h1>
       <h2 class="main-title">Rasayana – modulul 2</h2>
   
 <section>
-        <div class="row1 center" style="max-width:920px; margin:0 auto;">
-          <div class="r1c1" style="height: 350px;">
-            <img src="<%= image_url('RasayanaM02.webp') %>" alt="Curs de Rasayana modul 2">
-          </div>
-          <div class="r1c2">
-            <p>Practicile de tip Rasayana, apreciate pentru beneficiile lor asupra sănătății, vitalității, memoriei și longevității, implică un parcurs gradat, necesitând pregătire și dedicare, cu scopul final de a atinge o stare plenară de regenerare și echilibru.</p>
-            <% if !current_user %> 
-            <div class="r1c2">
-            <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('rasayana2'), class: 'register' %> </div>
-            <%elsif current_user%><%= link_to 'Înscrie-te acum', '#prasayana', class: 'register' %><%end%>
-          </div>
-        </div>
+  <div class="row1 center" style="max-width: 920px; margin: 0 auto;">
+    <div class="r1c1" style="height: 350px;">
+      <img src="<%= image_url('RasayanaM02.webp') %>" alt="Curs de Rasayana modul 2">
+    </div>
+    <div class="r1c2">
+      <p>Practicile de tip Rasayana, apreciate pentru beneficiile lor asupra sănătății, vitalității, memoriei și longevității, implică un parcurs gradat, necesitând pregătire și dedicare, cu scopul final de a atinge o stare plenară de regenerare și echilibru.</p>
+      <% if !current_user %>
+        <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('rasayana2'), class: 'register' %>
+      <% elsif current_user %>
+        <%= link_to 'Înscrie-te acum', '#prasayana', class: 'register' %>
+      <% end %>
+    </div>
+  </div>
 </section>
       
       
