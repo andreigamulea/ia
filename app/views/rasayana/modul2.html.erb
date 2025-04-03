@@ -84,7 +84,7 @@
         </blockquote>
         
       <% if !user_signed_in? || (current_user && !@has_access) %><% if !current_user %> 
-      <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('rasayana1'), class: 'register' %> 
+      <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('rasayana2'), class: 'register' %> 
       </div>
       <%elsif current_user && !@has_access%> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', '#prasayana', class: 'register' %> 
       </div>
