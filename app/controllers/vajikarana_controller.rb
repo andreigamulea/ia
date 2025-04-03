@@ -125,9 +125,8 @@ class VajikaranaController < ApplicationController
   
   
   
-  def modul2 #ATENTIE nu e facaut pana cand au acces!!! 4.02.2025
-   
-    #@myvideo = @myvideo1 if @myvideo1
+  def modul2 #ATENTIE nu e facaut pana cand au acces!!!cursul s-a incheiat pe 30.3.2025 deci valabilitatea este +90 zile
+                                   #29.6.2025
     @myvideo = 'zAe3zVVT6Cw' 
 
     @has_access = current_user&.role == 1

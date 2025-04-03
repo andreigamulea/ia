@@ -62,7 +62,7 @@
             <p>Practicile de tip Rasayana, apreciate pentru beneficiile lor asupra sănătății, vitalității, memoriei și longevității, implică un parcurs gradat, necesitând pregătire și dedicare, cu scopul final de a atinge o stare plenară de regenerare și echilibru.</p>
             <% if !current_user %> 
             <div class="r1c2">
-            <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('rasayana1'), class: 'register' %> </div>
+            <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('rasayana2'), class: 'register' %> </div>
             <%elsif current_user%><%= link_to 'Înscrie-te acum', '#prasayana', class: 'register' %><%end%>
           </div>
         </div>
@@ -219,7 +219,7 @@
          Numarul lunilor achitate: <%=@nr_luni_achitate%> <br>
           has_acces_video=<%=@has_acces_video%> <br>
           <% end %>
-          <%if current_user && (current_user.role==1 || @nr_luni_achitate>3)%> 
+          <%if current_user && (current_user.role==1)%> 
           <h3 style="font-size:22px; margin-bottom:30px; margin-top:30px;">Accesează pagina pentru vizionare cursuri:</h3><%= link_to 'Vezi Video', tvs_rasayana1_path, class: 'register', style: 'background-color:#4b0082;' %> <br>
           <br>
           <% end %>
