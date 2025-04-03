@@ -45,7 +45,8 @@
   <% content_for :canonical do %>
   <link rel="canonical" href="https://www.ayushcell.ro/rasayana/modul1">
   <% end %> 
-  
+  <meta property="og:image" content="<%= image_url('RasayanaM02.webp') %>">
+
   <div class="container" id="rasayana1"><%= render 'layouts/sideleft' %> 
   
   <div class="cr" style="background-color: white; ">
@@ -58,7 +59,11 @@
             <img src="<%= image_url('RasayanaM02.webp') %>" alt="Curs de Rasayana modul 2">
           </div>
           <div class="r1c2">
-            <p>Practicile de tip Rasayana, apreciate pentru beneficiile lor asupra sănătății, vitalității, memoriei și longevității, implică un parcurs gradat, necesitând pregătire și dedicare, cu scopul final de a atinge o stare plenară de regenerare și echilibru.</p><% if !current_user %> <div class="r1c2"><%= link_to 'Înscrie-te acum', new_user_session_with_return_path('rasayana1'), class: 'register' %> </div><%elsif current_user%><%= link_to 'Înscrie-te acum', '#prasayana', class: 'register' %><%end%>
+            <p>Practicile de tip Rasayana, apreciate pentru beneficiile lor asupra sănătății, vitalității, memoriei și longevității, implică un parcurs gradat, necesitând pregătire și dedicare, cu scopul final de a atinge o stare plenară de regenerare și echilibru.</p>
+            <% if !current_user %> 
+            <div class="r1c2">
+            <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('rasayana1'), class: 'register' %> </div>
+            <%elsif current_user%><%= link_to 'Înscrie-te acum', '#prasayana', class: 'register' %><%end%>
           </div>
         </div>
 </section>
@@ -76,7 +81,16 @@
         <blockquote>
           <p style="text-align:center;max-width:720px;margin:0 auto;">„Practica eficientă a acestor procedee de tip rasayana permite ființei umane să ajungă la o condiție în care aceasta poate să mențină nealterată starea de echilibru a fiecărei dosha-e în parte (vata-dosha, kapha-dosha și pitta-dosha), precum și a sistemului de coordonare vitală (tridosha) pe care cele trei forțe subtile vitale îl reprezintă.”</p>
           <!-- <cite>— Sutra 3, Charaka-Samhita, Rasayana, capitolul 2</cite> -->
-        </blockquote><% if !user_signed_in? || (current_user && !@has_access) %><% if !current_user %> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('rasayana1'), class: 'register' %> </div><%elsif current_user && !@has_access%> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', '#prasayana', class: 'register' %> </div><%end%> <br>
+        </blockquote>
+        
+      <% if !user_signed_in? || (current_user && !@has_access) %><% if !current_user %> 
+      <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('rasayana1'), class: 'register' %> 
+      </div>
+      <%elsif current_user && !@has_access%> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', '#prasayana', class: 'register' %> 
+      </div>
+      <%end%> 
+      
+      <br>
         <h2>Înscriere și participare</h2>
         <br>
         <h3>Cine poate participa?</h3>
@@ -140,7 +154,7 @@
   
         
   
-          <%if current_user && (current_user.role==1 || @has_acces_video>0)%>
+          <%if current_user && current_user.role==1%>
           <h2 style= "text-align: center;padding: 0 10px;">Înregistrări video Rasayana </h2></br>
     
     
@@ -157,7 +171,7 @@
               </tr>
               </thead>
               <tbody>
-              <% @myvideo_rasayana_m1.each do |video| %>
+              <% @myvideo_rasayana_m2.each do |video| %>
                 <tr>
                 <td><%= video.ordine %></td>
                 <td><%= video.nume %></td>
@@ -183,7 +197,7 @@
             </tr>
             </thead>
             <tbody>
-            <% @myvideo_rasayana_m1_seminarii.each do |video| %>
+            <% @myvideo_rasayana_m2_seminarii.each do |video| %>
               <tr>
               <td><%= video.ordine-1000 %></td>
               <td><%= video.nume %></td>
