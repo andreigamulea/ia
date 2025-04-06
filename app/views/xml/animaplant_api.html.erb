@@ -62,7 +62,7 @@
             </button>
           </td>
           <td style="border: 1px solid #ddd; padding: 8px;">
-            <button class="btn btn-success" onclick="getFacturaPDF('<%= invoice['id_comanda'] %>')">
+            <button class="btn btn-success" onclick="getFacturaPDF('<%= invoice['numar_comanda'] %>')">
               Factură PDF
             </button>
           </td>
@@ -134,14 +134,24 @@ function getFacturaPDF(idComanda) {
         throw new Error(`Eroare la generarea PDF-ului: ${response.status} - ${text}`);
       });
     }
-    return response.blob();
+    // Extragem numele fișierului din Content-Disposition
+    const disposition = response.headers.get('Content-Disposition');
+    let filename = `Factura_${idComanda}.pdf`; // Fallback
+    if (disposition) {
+      const match = disposition.match(/filename="([^"]+)"/) || disposition.match(/filename=([^;\s]+)/);
+      if (match) {
+        filename = match[1]; // Luăm doar numele fișierului
+      }
+    }
+    console.log("Nume fișier extras: ", filename); // Pentru debug
+    return response.blob().then(blob => ({ blob, filename }));
   })
-  .then(blob => {
+  .then(({ blob, filename }) => {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = url;
-    a.download = `Factura_${idComanda}.pdf`;
+    a.download = filename; // Folosim numele curat
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);

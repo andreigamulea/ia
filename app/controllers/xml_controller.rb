@@ -264,12 +264,58 @@ class XmlController < ApplicationController
   end
 
   def proxy_pdf
-    id_comanda = params[:id_comanda]
-    puts "id_comanda este #{id_comanda}"  # Depanare: Verificăm valoarea
+    id_comanda = params[:id_comanda] # Aici primim numar_comanda (ex. 3344)
     api_key = "KjS2IWZgx3BUdY790g3VJys9"
-    pdf_url = "https://animaplant.ro/wp-json/custom-api/v1/export-invoice-to-pdf/?document_id=#{id_comanda}&api_key=#{api_key}"
-    puts "URL apelat: #{pdf_url}"  # Depanare: Verificăm URL-ul construit
-
+  
+    prefix_fisier = "F_17430290_APFS"
+  
+    Rails.logger.info "ID comandă primit: #{id_comanda}"
+  
+    # Obținem datele facturii din API
+    api_url = "https://animaplant.ro/wp-json/custom-api/v1/export-invoices/?api_key=#{api_key}&start_date=2020-01-01&end_date=#{Date.today.strftime('%Y-%m-%d')}"
+    response_invoices = HTTParty.get(api_url)
+  
+    if response_invoices.success?
+      facturi_json = JSON.parse(response_invoices.body)
+      Rails.logger.info "Număr facturi găsite: #{facturi_json.length}"
+  
+      # Căutăm factura după numar_comanda
+      factura_selectata = facturi_json.find { |factura| factura["numar_comanda"] == id_comanda }
+  
+      if factura_selectata.nil?
+        Rails.logger.error "Factura cu numar_comanda #{id_comanda} nu a fost găsită"
+        nume_fisier = "Factura_#{id_comanda}.pdf"
+        document_id = id_comanda # Fallback, dar probabil va eșua
+      else
+        Rails.logger.info "Factura găsită: #{factura_selectata.inspect}"
+        numar_factura = factura_selectata["numar_factura"]
+        data_factura = factura_selectata["data_factura"]
+        document_id = factura_selectata["id_comanda"] # Extragem id_comanda (ex. 7473)
+  
+        unless numar_factura && data_factura
+          Rails.logger.error "Datele facturii sunt incomplete - numar_factura: #{numar_factura}, data_factura: #{data_factura}"
+          nume_fisier = "Factura_#{id_comanda}.pdf"
+        else
+          begin
+            data_formatata = Date.parse(data_factura).strftime("%d-%m-%Y")
+            nume_fisier = "#{prefix_fisier}#{numar_factura}_#{data_formatata}.pdf"
+            Rails.logger.info "Nume fișier generat: #{nume_fisier}"
+          rescue ArgumentError => e
+            Rails.logger.error "Eroare la parsarea datei: #{e.message}"
+            nume_fisier = "Factura_#{id_comanda}.pdf"
+          end
+        end
+      end
+    else
+      Rails.logger.error "Eroare API: #{response_invoices.code} - #{response_invoices.message}"
+      nume_fisier = "Factura_#{id_comanda}.pdf"
+      document_id = id_comanda # Fallback
+    end
+  
+    # Construim URL-ul cu document_id corect (id_comanda)
+    pdf_url = "https://animaplant.ro/wp-json/custom-api/v1/export-invoice-to-pdf/?document_id=#{document_id}&api_key=#{api_key}"
+    Rails.logger.info "URL PDF: #{pdf_url}"
+  
     begin
       response = HTTParty.get(pdf_url, 
         headers: { 
@@ -280,11 +326,16 @@ class XmlController < ApplicationController
         timeout: 30
       )
       if response.success?
-        send_data response.body, filename: "Factura_#{id_comanda}.pdf", type: 'application/pdf', disposition: 'attachment'
+        send_data response.body, 
+                  filename: nume_fisier, 
+                  type: 'application/pdf', 
+                  disposition: 'attachment'
       else
-        render plain: "Eroare la preluarea PDF-ului: #{response.code} - #{response.message} - Body: #{response.body}", status: response.code
+        Rails.logger.error "Eroare la preluarea PDF: #{response.code} - #{response.message}"
+        render plain: "Eroare la preluarea PDF-ului: #{response.code} - #{response.message}", status: response.code
       end
     rescue StandardError => e
+      Rails.logger.error "Eroare la proxy: #{e.message}"
       render plain: "Eroare la proxy: #{e.message}", status: :internal_server_error
     end
   end
