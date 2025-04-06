@@ -429,7 +429,7 @@ end
     elsif emailuri_90.include?(metadata[:email]) && ['cod207','cod197', 'cod198', 'cod199', 'cod200', 'cod201', 'cod202', 'cod203',
         'cod204', 'cod205', 'cod206'].include?(produs.cod)
       
-      pret_unitar_fara_tva = 75.63 # custom pentru emailurile din array
+      pret_unitar_fara_tva = 75.63 ## custom pentru emailurile din array
       produs.pret = 90
     end
     end
