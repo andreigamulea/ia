@@ -270,7 +270,9 @@ class CursuriAyurvedaController < ApplicationController
                         @myvideo1 = Video.none
                         @myvideo_cursuri_tiparite = Video.none
               end
-              
+              puts("HAS ACCES has_access: #{@has_access}")
+              puts("@a_cumparat_macar_un_cod #{@a_cumparat_macar_un_cod}")
           end
+          
   end
   

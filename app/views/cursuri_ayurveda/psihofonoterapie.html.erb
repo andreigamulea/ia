@@ -200,7 +200,9 @@
           
         </section>
     
-    <%if current_user && current_user.role==2%><%if current_user && @a_cumparat_macar_un_cod%> <h2 class="alimente-nutritionale" id="psihofonoterapie" style="text-align: center;font-size:22px;">Înregistrări video</h2>
+    <%if current_user && (current_user.role==1 || @has_access)%>
+    
+     <h2 class="alimente-nutritionale" id="psihofonoterapie1" style="text-align: center;font-size:22px;">Înregistrări video</h2>
     <div id="videos">
       <table class="table">
         <thead>
@@ -211,36 +213,28 @@
             <th>Actiune</th>
           </tr>
         </thead>
-        <tbody><% @myvideo1.each do |video| %> <tr><% if video.ordine > 1000 %> <td><%= video.ordine - 1000 %> </td><% elsif video.ordine < 1000 %> <td><%= video.ordine %> </td><% end %> <td><%= video.nume %> </td>
+        <tbody><% @myvideo1.each do |video| %> <tr>
+          <% if video.ordine > 1000 %>
+                  <td><%= video.ordine - 1000 %> </td>
+                  <% elsif video.ordine < 1000 %>
+                    <td><%= video.ordine %> </td>
+            <% end %>
+             <td><%= video.nume %> </td>
             <td><%= video.descriere %> </td>
             <td><%= link_to "Vezi video", 
-                        myvideo25_path(id: video.id, link: video.link), 
+                        myvideo28_path(id: video.id, link: video.link), 
                         class: "btn btn-primary #{'disabled' unless @has_access}" %> </td>
           </tr><% end %> </tbody>
       </table>
     </div>
     
-    <%end%><%if current_user && @a_cumparat_macar_un_cod%> <h2 class="alimente-nutritionale" id="psihofonoterapie" style="text-align: center;font-size:22px;">Înregistrări video</h2>
-    <div id="videos">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Nr</th>
-            <th>Curs</th>
-            <th>Descriere</th>
-            <th>Actiune</th><% if @a_cumparat_macar_un_cod %> <th>Acces fisiere PDF</th><% end %>
-          </tr>
-        </thead>
-        <tbody><% @myvideo_cursuri_tiparite.each do |video| %> <tr><% if video.ordine > 2000 %> <td><%= video.ordine - 2000 %> </td><% end %> <td><%= video.nume %> </td>
-            <td><%= video.descriere %> </td>
-            <td><%= link_to "Vezi video", 
-                        myvideo25_path(id: video.id, link: video.link), 
-                        class: "btn btn-primary #{'disabled' unless @a_cumparat_macar_un_cod}" %> </td><% if @a_cumparat_macar_un_cod %> <td><%= link_to "Descarcă arhiva (.rar)", vajikarana_download2_path(linkzip: video.linkpdf), class: "btn btn-primary" if video.linkpdf.present? %> </td><% end %>
-          </tr><% end %> </tbody>
-      </table>
-    </div>
     
-    <%end%><%end%><%if !current_user || @prods.count>0%> <h2 class="alimente-nutritionale" id="psihofonoterapie1" style="font-size:22px;">Acces curs Psihofonoterapie</h2>
+    
+   
+    
+    <%end%>
+    
+    <%if !current_user || @prods.count>0%> <h2 class="alimente-nutritionale" id="psihofonoterapie1" style="font-size:22px;">Acces curs Psihofonoterapie</h2>
     <div class="table-responsive">
       <table class="table table-striped table-bordered table-hover">
         <thead class="thead-dark">
