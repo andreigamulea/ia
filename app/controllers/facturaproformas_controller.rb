@@ -32,7 +32,65 @@ def download_xml_ayusgrup
 
   send_data xml, type: 'application/xml', filename: filename
 end
+##########
+def download_cbc_xml_ayusgrup
+  factura = Facturaproforma.find(params[:id])
+  xml = generate_cbc_compatible_xml([factura])
+  supplier_cif = '15768237'
+  filename = "F_CBC_#{supplier_cif}_AYUSGRUP_#{factura.numar_factura}_#{factura.created_at.strftime('%d-%m-%Y')}.xml"
+  send_data xml, type: 'application/xml', filename: filename
+end
 
+def facturi_xml_lunar_cbc
+  luna = params[:luna].to_i
+  an = params[:an].to_i
+  @facturi = Facturaproforma.where("EXTRACT(MONTH FROM data_emiterii) = ? AND EXTRACT(YEAR FROM data_emiterii) = ?", luna, an)
+  xml = generate_cbc_compatible_xml(@facturi)
+  supplier_cif = '15768237'
+  filename = "F_CBC_#{supplier_cif}_AYUSGRUP_#{luna}_#{an}.xml"
+  send_data xml, type: 'application/xml', filename: filename
+end
+
+# Noua acțiune pentru CBC text
+def facturi_cbc_lunar
+  luna = params[:luna].to_i
+  an = params[:an].to_i
+  @facturi = Facturaproforma.where("EXTRACT(MONTH FROM data_emiterii) = ? AND EXTRACT(YEAR FROM data_emiterii) = ?", luna, an)
+  cbc_text = generate_cbc_text(@facturi)
+  supplier_cif = '15768237'
+  filename = "F_CBC_#{supplier_cif}_AYUSGRUP_#{luna}_#{an}.cbc"
+  send_data cbc_text, type: 'text/plain', filename: filename
+end
+ # Noua acțiune pentru XML doar cu România
+ def facturi_xml_lunar_romania
+  luna = params[:luna].to_i
+  an = params[:an].to_i
+  @facturi = Facturaproforma.where("EXTRACT(MONTH FROM data_emiterii) = ? AND EXTRACT(YEAR FROM data_emiterii) = ? AND tara = ?", luna, an, "Romania")
+  xml = generate_xml_romania_only(@facturi)
+  supplier_cif = '15768237'
+  filename = "F_RO_#{supplier_cif}_AYUSGRUP_#{luna}_#{an}.xml"
+  send_data xml, type: 'application/xml', filename: filename
+end
+
+def facturi_non_romania_clients
+  luna = params[:luna].to_i
+  an = params[:an].to_i
+  @facturi = Facturaproforma.where("EXTRACT(MONTH FROM data_emiterii) = ? AND EXTRACT(YEAR FROM data_emiterii) = ? AND tara != ?", luna, an, "Romania")
+  client_list = generate_non_romania_client_list(@facturi)
+  supplier_cif = '15768237'
+  filename = "NonRomania_Clients_#{supplier_cif}_#{luna}_#{an}.txt"
+  send_data client_list, type: 'text/plain', filename: filename
+end
+def facturi_xml_lunar_non_romania
+  luna = params[:luna].to_i
+  an = params[:an].to_i
+  @facturi = Facturaproforma.where("EXTRACT(MONTH FROM data_emiterii) = ? AND EXTRACT(YEAR FROM data_emiterii) = ? AND tara != ?", luna, an, "Romania")
+  xml = generate_xml_for_multiple(@facturi)
+  supplier_cif = '15768237'
+  filename = "F_NON_RO_#{supplier_cif}_AYUSGRUP_#{luna}_#{an}.xml"
+  send_data xml, type: 'application/xml', filename: filename
+end
+##################
 def facturi_xml_lunar
   Rails.logger.info "Am intrat în metoda facturi_xml_lunar"
 
@@ -717,5 +775,147 @@ end
     
 
     ###########################
+
+
+    def generate_cbc_compatible_xml(facturi)
+      require 'builder'
+    
+      builder = Builder::XmlMarkup.new(indent: 2)
+      builder.instruct! :xml, version: "1.0", encoding: "UTF-8"
+      builder.Facturi do |facturi_node|
+        facturi.each do |factura|
+          facturi_node.Factura do |factura_node|
+            # ANTET
+            factura_node.Antet do |antet|
+              antet.FurnizorNume 'AYUS GRUP SRL'
+              antet.FurnizorCIF '15768237'
+              antet.FurnizorNrRegCom 'J40/12819/2003'
+              antet.FurnizorAdresa 'Municipiul Bucureşti, Sector 5, Intr. Ferentari, Nr.72, Bl.4b, Sc.D, Et.3, Ap.32'
+              antet.FurnizorIBAN 'RO86INGB0000999902964556'
+              antet.ClientNume factura.nume || 'Client necunoscut'
+              antet.ClientCIF factura.cnp || '-'
+              antet.ClientAdresa [factura.strada, factura.numar_adresa, factura.altedate].compact.join(' ')
+              antet.FacturaNumar "AYGR#{factura.numar_factura}"
+              antet.FacturaData factura.data_emiterii.strftime('%d.%m.%Y')
+              antet.FacturaMoneda 'RON'
+            end
+    
+            # DETALII
+            factura_node.Detalii do |detalii|
+              detalii.Linie do |linie|
+                linie.LinieNrCrt 1
+                linie.Descriere factura.produs || 'Produs necunoscut'
+                linie.UM 'buc'
+                linie.Cantitate format('%.2f', factura.cantitate || 0)
+                linie.Pret format('%.2f', factura.pret_unitar || 0)
+                linie.Valoare format('%.2f', factura.valoare_totala || 0)
+                linie.TVA format('%.2f', factura.valoare_tva || 0)
+              end
+            end
+    
+            # SUMAR
+            factura_node.Sumar do |sumar|
+              sumar.Total format('%.2f', factura.valoare_totala || 0)
+              sumar.TotalTVA format('%.2f', factura.valoare_tva || 0)
+              sumar.TotalValoare format('%.2f', (factura.valoare_totala || 0) - (factura.valoare_tva || 0))
+            end
+    
+            # OBSERVATII
+            factura_node.Observatii do |observatii|
+              observatii.txtObservatii factura.obs || "Comanda online #{factura.numar_comanda || 'necunoscută'}"
+            end
+          end
+        end
+      end
+    
+      builder.target!
+    end
    
+
+    ##########################
+# Noua metodă pentru generarea CBC text
+def generate_cbc_text(facturi)
+  output = ""
+  facturi.each do |factura|
+    output << "ANTET\n"
+    output << "FurnizorNume;AYUS GRUP SRL\n"
+    output << "FurnizorCIF;15768237\n"
+    output << "FurnizorNrRegCom;J40/12819/2003\n"
+    output << "FurnizorAdresa;Municipiul Bucureşti, Sector 5, Intr. Ferentari, Nr.72, Bl.4b, Sc.D, Et.3, Ap.32\n"
+    output << "FurnizorIBAN;RO86INGB0000999902964556\n"
+    output << "ClientNume;#{factura.nume || 'Client necunoscut'}\n"
+    output << "ClientCIF;#{factura.cnp || '-'}\n"
+    output << "ClientAdresa;#{[factura.strada, factura.numar_adresa, factura.altedate].compact.join(' ')}\n"
+    output << "FacturaNumar;AYGR#{factura.numar_factura}\n"
+    output << "FacturaData;#{factura.data_emiterii.strftime('%d.%m.%Y')}\n"
+    output << "FacturaMoneda;RON\n"
+
+    output << "DETALII\n"
+    output << "LinieNrCrt;1\n"
+    output << "Descriere;#{factura.produs || 'Produs necunoscut'}\n"
+    output << "UM;buc\n"
+    output << "Cantitate;#{format('%.2f', factura.cantitate || 0)}\n"
+    output << "Pret;#{format('%.2f', factura.pret_unitar || 0)}\n"
+    output << "Valoare;#{format('%.2f', factura.valoare_totala || 0)}\n"
+    output << "TVA;#{format('%.2f', factura.valoare_tva || 0)}\n"
+
+    output << "SUMAR\n"
+    output << "Total;#{format('%.2f', factura.valoare_totala || 0)}\n"
+    output << "TotalTVA;#{format('%.2f', factura.valoare_tva || 0)}\n"
+    output << "TotalValoare;#{format('%.2f', (factura.valoare_totala || 0) - (factura.valoare_tva || 0))}\n"
+
+    output << "OBSERVATII\n"
+    output << "txtObservatii;#{factura.obs || "Comanda online #{factura.numar_comanda || 'necunoscută'}"}\n"
+    output << "END\n"
+  end
+  output
+end
+    ##########################
+
+##########################
+# Noua metodă pentru XML doar cu România
+def generate_xml_romania_only(facturi)
+  require 'builder'
+  builder = Builder::XmlMarkup.new(indent: 2)
+  builder.instruct! :xml, version: "1.0", encoding: "UTF-8"
+  builder.Facturi do |facturi_node|
+    facturi.each do |factura|
+      facturi_node.Factura do |factura_node|
+        build_antet(factura_node, factura)
+        build_detalii(factura_node, factura)
+        build_sumar(factura_node, factura)
+        build_observatii(factura_node, factura)
+      end
+    end
+  end
+  builder.target!
+end
+
+def generate_non_romania_client_list(facturi)
+  output = ""
+  facturi.each_with_index do |factura, index|
+    output << "#{index + 1}. #{factura.nume || 'Client necunoscut'}\n"
+  end
+  output
+end
+
+def generate_xml_for_multiple(facturi)
+  require 'builder'
+  builder = Builder::XmlMarkup.new(indent: 2)
+  builder.instruct! :xml, version: "1.0", encoding: "UTF-8"
+  builder.Facturi do |facturi_node|
+    facturi.each do |factura|
+      facturi_node.Factura do |factura_node|
+        build_antet(factura_node, factura)
+        build_detalii(factura_node, factura)
+        build_sumar(factura_node, factura)
+        build_observatii(factura_node, factura)
+      end
+    end
+  end
+  builder.target!
+end
+############################
+
+
 end

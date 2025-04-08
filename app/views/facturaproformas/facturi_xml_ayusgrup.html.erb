@@ -24,9 +24,32 @@
   class="btn btn-primary" style="margin: 10px; padding: 10px 20px;">
   Descarcă XML-urile
 </button>
-
-
-
+<!-- Buton nou pentru descărcarea XML-urilor în format CBC -->
+  <button 
+    onclick="window.location.href='<%= facturi_xml_lunar_cbc_path %>?luna=' + document.getElementById('luna').value + '&an=' + document.getElementById('an').value" 
+    class="btn btn-secondary" style="margin: 10px; padding: 10px 20px;">
+    Descarcă XML-urile CBC
+  </button>
+  <button 
+  onclick="window.location.href='<%= facturi_cbc_lunar_path %>?luna=' + document.getElementById('luna').value + '&an=' + document.getElementById('an').value" 
+  class="btn btn-success" style="margin: 10px; padding: 10px 20px;">
+  Descarcă CBC Text
+</button>
+<button 
+    onclick="window.location.href='<%= facturi_xml_lunar_romania_path %>?luna=' + document.getElementById('luna').value + '&an=' + document.getElementById('an').value" 
+    class="btn btn-info" style="margin: 10px; padding: 10px 20px;">
+    Descarcă XML (România)
+  </button>
+  <button 
+    onclick="window.location.href='<%= facturi_xml_lunar_non_romania_path %>?luna=' + document.getElementById('luna').value + '&an=' + document.getElementById('an').value" 
+    class="btn btn-danger" style="margin: 10px; padding: 10px 20px;">
+    Descarcă XML (Non-România)
+  </button>
+  <button 
+    onclick="window.location.href='<%= facturi_non_romania_clients_path %>?luna=' + document.getElementById('luna').value + '&an=' + document.getElementById('an').value" 
+    class="btn btn-warning" style="margin: 10px; padding: 10px 20px;">
+    Lista Clienți Non-România
+  </button>
 <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
 <div style="width: 80%; max-width: 1200px; margin: auto; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); background: #fff; border-radius: 8px;">
     
