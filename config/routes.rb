@@ -60,12 +60,15 @@ Rails.application.routes.draw do
   get 'facturaproformas/:id/download_xml_ayusgrup', to: 'facturaproformas#download_xml_ayusgrup', as: 'download_xml_ayusgrup'
   get 'facturaproformas/facturi_xml_lunar', to: 'facturaproformas#facturi_xml_lunar', as: 'facturi_xml_lunar'
 
+
   get 'facturaproformas/:id/download_cbc_xml_ayusgrup', to: 'facturaproformas#download_cbc_xml_ayusgrup', as: 'download_cbc_xml_ayusgrup'
   get 'facturaproformas/facturi_xml_lunar_cbc', to: 'facturaproformas#facturi_xml_lunar_cbc', as: 'facturi_xml_lunar_cbc'
   get 'facturaproformas/facturi_cbc_lunar', to: 'facturaproformas#facturi_cbc_lunar', as: 'facturi_cbc_lunar' 
   get 'facturaproformas/facturi_xml_lunar_romania', to: 'facturaproformas#facturi_xml_lunar_romania', as: 'facturi_xml_lunar_romania'
   get 'facturaproformas/facturi_non_romania_clients', to: 'facturaproformas#facturi_non_romania_clients', as: 'facturi_non_romania_clients'
   get 'facturaproformas/facturi_xml_lunar_non_romania', to: 'facturaproformas#facturi_xml_lunar_non_romania', as: 'facturi_xml_lunar_non_romania'
+  #get 'download_xml_zip_ayusgrup', to: 'facturaproformas#download_xml_zip_ayusgrup'
+  get '/download_xml_zip_ayusgrup', to: 'facturaproformas#download_xml_zip_ayusgrup', as: 'download_xml_zip_ayusgrup'
   resources :facturaproformas do
     collection do
       get :generare_facturi

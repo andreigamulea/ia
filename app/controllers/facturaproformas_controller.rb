@@ -17,6 +17,69 @@ class FacturaproformasController < ApplicationController
     @facturaproformas = Facturaproforma.order(data_emiterii: :desc)
   end
 
+#facturi zip
+###########################
+def download_xml_zip_ayusgrup
+  # Preluarea parametrilor din request
+  luna = params[:luna].to_i
+  an = params[:an].to_i
+  logger.info "Luna: #{luna}, An: #{an}"
+
+  # Obține numele complet al lunii
+  nume_luna = Date::MONTHNAMES[luna]
+
+  # Crearea unui folder temporar pentru stocarea XML-urilor
+  temp_folder = Rails.root.join('tmp', 'xmls_ayusgrup')
+  FileUtils.mkdir_p(temp_folder)
+
+  # Selectarea facturilor proforma doar din luna și anul specificate
+  facturi = Facturaproforma.where('extract(month from data_emiterii) = ? AND extract(year from data_emiterii) = ?', luna, an)
+  logger.info "Facturi proforma găsite: #{facturi.count}"
+
+  # Verificăm dacă există facturi; dacă nu, redirecționăm cu un mesaj
+  if facturi.empty?
+    redirect_to facturi_xml_ayusgrup_path, alert: "Nu există facturi proforma pentru luna și anul selectate."
+    return
+  end
+
+  # Codul fiscal al furnizorului
+  supplier_cif = '15768237'
+
+  # Generarea XML-urilor pentru fiecare factură proforma
+  xml_files = facturi.map do |factura|
+    logger.info "Generăm XML pentru factura proforma #{factura.numar_factura}"
+    xml_content = generate_invoice_xml_individual_ayusgrup(factura)
+
+    # Generarea numelui fișierului
+    filename = "F_#{supplier_cif}_AYUSGRUP_#{factura.numar_factura}_#{factura.created_at.strftime('%d-%m-%Y')}.xml"
+    file_path = temp_folder.join(filename)
+
+    # Scrierea conținutului XML în fișier
+    File.open(file_path, 'wb') do |file|
+      file << xml_content
+    end
+    file_path
+  end
+
+  # Crearea fișierului ZIP
+  zip_filename = Rails.root.join('tmp', "Facturi_Proforma_XML_luna_#{nume_luna}_#{an}.zip")
+
+  # Ștergem fișierul ZIP preexistent dacă există
+  File.delete(zip_filename) if File.exist?(zip_filename)
+
+  Zip::File.open(zip_filename, Zip::File::CREATE) do |zipfile|
+    xml_files.each do |file|
+      zipfile.add(File.basename(file), file) unless zipfile.find_entry(File.basename(file))
+    end
+  end
+
+  # Trimitem fișierul ZIP către browser
+  logger.info "Trimitem fișierul ZIP către browser: #{zip_filename}"
+  send_file zip_filename,
+            type: 'application/zip',
+            disposition: 'attachment',
+            filename: "Facturi_Proforma_XML_luna_#{nume_luna}_#{an}.zip"
+end
 ########################  XML
 def facturi_xml_ayusgrup
   @facturaproformas = Facturaproforma.order(created_at: :desc) # Sau aplicați un filtru specific
@@ -703,7 +766,7 @@ end
         antet.FurnizorCapital '200 Lei'
         antet.FurnizorTara
         antet.FurnizorJudet
-        antet.FurnizorAdresa 'Municipiul Bucureşti, Sector 5, Intr. Ferentari, Nr.72, Bl.4b, Sc.D, Et.3, Ap.32'
+        antet.FurnizorAdresa 'Municipiul Bucuresti, Sector 5, Intr. Ferentari, Nr.72, Bl.4b, Sc.D, Et.3, Ap.32'
         antet.FurnizorBanca 'ING BANK'
         antet.FurnizorIBAN 'RO86INGB0000999902964556'
         antet.FurnizorInformatiiSuplimentare
@@ -712,7 +775,16 @@ end
         antet.ClientInformatiiSuplimentare
         antet.ClientCIF factura.cnp || '-'
         antet.ClientNrRegCom
-        antet.ClientTara factura.tara || 'România'
+        # Modificare pentru factura.tara cu coduri ISO specifice
+        antet.ClientTara case factura.tara
+                         when 'Romania' then 'Romania'
+                         when 'Franta' then 'FR'
+                         when 'Elvetia' then 'CH'
+                         when 'Statele Unite ale Americii' then 'US'
+                         when 'Moldova (Republica)', 'Moldova' then 'MD'
+                         when 'Finlanda' then 'FI'
+                         else factura.tara || 'Romania'
+                         end
         antet.ClientJudet factura.abr_jud || 'N/A'
         antet.ClientAdresa [factura.strada, factura.numar_adresa, factura.altedate].compact.join(' ')
         antet.ClientBanca
