@@ -82,7 +82,7 @@
         <br>
         <h2 style="font-size:22px;">Din subiectele abordate in cadrul acestui curs:</h2>
         <br>
-        <p>🌟 Modulul 2 de Rasayana cuprinde prezentări ale capitolului doi de Rasayana din lucrarea de Ayurveda Charaka-Samhita. Acest tip de Rasayana este numit Pramakama-Rasayana sau Pranakamiya-Rasayana.</p>
+        <p>🌟 Modulul 2 de Rasayana cuprinde prezentări ale capitolului doi de Rasayana din lucrarea de Ayurveda Charaka-Samhita. Acest tip de Rasayana este numit Pranakama-Rasayana sau Pranakamiya-Rasayana.</p>
         <p>🌱 Cuvântul sanscrit pranakama înseamnă „plăcere elevată superioară, pe care practicantul o poate experimenta atunci când în ființa sa se manifestă în mod plenar energia subtilă fundamentală a vieții (prana).</p>
         <p>Practicantul este necesar să fie „doritor de vitalitate” sau, altfel spus, practicantul este necesar să fie cel care are dorința, dispoziția lăuntrică, în care să vrea să dobândească un statut existențial superior în ceea ce privește vehicularea în propriul univers lăuntric a energiei fundamentale a vieții (prana) sau a oricăreia dintre ipostazele acesteia (ayus, dhari, jivita, nityada și anubandha).</p>
         <p>🍃 În acest caz se manifestă în ființă o stare de aspirație către a experimenta o savoare inefabilă a prezenței în propriul univers lăuntric a energiilor subtile prana-ice. Energia subtilă prana-ică sau energia chi, așa cum este numită în tradiția chineză, are o multitudine de fațete sau de nuanțe, o multitudine de reflectări care conferă astfel o complexitate vitală cu totul remarcabilă unei ființe umane sănătoase, care este totodată plină de aspirație către a-și îmbunătăți condiția existențială.</p>
@@ -92,12 +92,13 @@
           <!-- <cite>— Sutra 3, Charaka-Samhita, Rasayana, capitolul 2</cite> -->
         </blockquote>
         
-      <% if !user_signed_in? || (current_user && !@has_access) %><% if !current_user %> 
-      <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('rasayana2'), class: 'register' %> 
-      </div>
-      <%elsif current_user && !@has_access%> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', '#prasayana', class: 'register' %> 
-      </div>
-      <%end%> 
+      
+          <% if !current_user %> 
+          <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('rasayana2'), class: 'register' %> 
+          </div>
+          <%elsif current_user && !@has_access%> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', '#prasayana', class: 'register' %> 
+          </div>
+          <%end%> 
       
       <br>
         <h2>Înscriere și participare</h2>
@@ -138,7 +139,7 @@
         </ul>
 </section>
       
-      <%end%>
+      
         
 <section>
           <div id="prasayana" class="table-responsive">
