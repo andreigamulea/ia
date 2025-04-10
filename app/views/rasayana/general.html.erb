@@ -1,0 +1,151 @@
+<% content_for :custom_js do %>
+    <%= raw File.read(Rails.root.join('app', 'javascript', 'epytv.js')) %>
+    <% end %>
+  <style>
+    #rasayana2 .cm h2 {
+      font-size: 22px;
+    }
+  
+    #rasayana2 .register {
+      border: 1px solid #4b0082;
+      background-color: #4b0082;
+    }
+  
+    #rasayana2 .cm h3 {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 0;
+    }
+  
+    #rasayana2 .register {
+      margin: 0;
+      margin-top: 20px;
+    }
+  
+    #rasayana2 .table td {
+      text-align: center;
+    }
+  
+    @media screen and (max-width: 720px) {
+      #rasayana2 .register {
+        margin: 0 auto;
+        margin-top: 20px;
+      }
+  
+      .cm {
+        text-align: center;
+      }
+    }
+  </style>
+  
+  <% content_for :title, "Rasayana | Ayush Cell Romania" %>
+  <% content_for :description, "Descoperă Rasayana, știința reîntineririi conform Ayurveda. Practică tehnici reîntineritoare și echilibrante pentru sănătate, vitalitate și longevitate." %>
+  <% content_for :keywords, "Rasayana, Ayurveda, longevitate, nutriție ayurvedică, regenerare, sănătate, vitalitate, reîntinerire, metode ayurvedice, echilibru, prelungirea vieții, practici ayurvedice, plante medicinale, tehnici de regenerare, rețete ayurvedice, memorie, imunitate, echilibru metabolic" %>
+  
+  <% content_for :canonical do %>
+    <link rel="canonical" href="https://www.ayushcell.ro/rasayana/modul2">
+  <% end %>
+  
+  <!-- Esențial pentru imagine și SEO -->
+  <meta property="og:image" content="<%= image_url('RasayanaM02.webp') %>">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="288">
+  <meta property="og:title" content="Rasayana | Ayush Cell Romania">
+  <meta property="og:description" content="Descoperă Rasayana, știința reîntineririi conform Ayurveda. Practică tehnici reîntineritoare și echilibrante pentru sănătate, vitalitate și longevitate.">
+  <meta property="og:url" content="https://www.ayushcell.ro/rasayana/modul2">
+ 
+
+  <div class="container" id="rasayana2"><%= render 'layouts/sideleft' %> 
+  
+  <div class="cr" style="background-color: white; ">
+      <h1 class="first-tittle">Ayush Cell Romania: Rasayana – Ştiinţa regenerării şi a redinamizării eficiente a potenţialului longeviv</h1>
+      <h2 class="main-title">Rasayana – General</h2>
+  
+<section>
+  <div class="row1 center" style="max-width: 920px; margin: 0 auto;">
+    <div class="r1c1" style="height: 350px;">
+      <img src="<%= image_url('RasayanaM02.webp') %>" alt="Curs de Rasayana modul 2">
+    </div>
+    <div class="r1c2">
+      <p>Practicile de tip Rasayana, apreciate pentru beneficiile lor asupra sănătății, vitalității, memoriei și longevității, implică un parcurs gradat, necesitând pregătire și dedicare, cu scopul final de a atinge o stare plenară de regenerare și echilibru.</p>
+      <% if !current_user %>
+        <%= link_to 'Înscrie-te acum', new_user_session_with_return_path('rasayana2'), class: 'register' %>
+      <% elsif current_user %>
+        <%= link_to 'Înscrie-te acum', '#prasayana', class: 'register' %>
+      <% end %>
+    </div>
+  </div>
+</section>
+      
+      
+<section class="cm">
+        <br>
+        <h2 style="font-size:22px;">Din subiectele abordate in cadrul acestui curs:</h2>
+        <br>
+        <p>🌟 Modulul 2 de Rasayana cuprinde prezentări ale capitolului doi de Rasayana din lucrarea de Ayurveda Charaka-Samhita. Acest tip de Rasayana este numit Pranakama-Rasayana sau Pranakamiya-Rasayana.</p>
+        <p>🌱 Cuvântul sanscrit pranakama înseamnă „plăcere elevată superioară, pe care practicantul o poate experimenta atunci când în ființa sa se manifestă în mod plenar energia subtilă fundamentală a vieții (prana).</p>
+        <p>Practicantul este necesar să fie „doritor de vitalitate” sau, altfel spus, practicantul este necesar să fie cel care are dorința, dispoziția lăuntrică, în care să vrea să dobândească un statut existențial superior în ceea ce privește vehicularea în propriul univers lăuntric a energiei fundamentale a vieții (prana) sau a oricăreia dintre ipostazele acesteia (ayus, dhari, jivita, nityada și anubandha).</p>
+        <p>🍃 În acest caz se manifestă în ființă o stare de aspirație către a experimenta o savoare inefabilă a prezenței în propriul univers lăuntric a energiilor subtile prana-ice. Energia subtilă prana-ică sau energia chi, așa cum este numită în tradiția chineză, are o multitudine de fațete sau de nuanțe, o multitudine de reflectări care conferă astfel o complexitate vitală cu totul remarcabilă unei ființe umane sănătoase, care este totodată plină de aspirație către a-și îmbunătăți condiția existențială.</p>
+        <p>🧘 În sutra 3 (Charaka-Samhita, Rasayana, capitolul 2) se spune:</p>
+        <blockquote>
+          <p style="text-align:center;max-width:720px;margin:0 auto;">„Practica eficientă a acestor procedee de tip rasayana permite ființei umane să ajungă la o condiție în care aceasta poate să mențină nealterată starea de echilibru a fiecărei dosha-e în parte (vata-dosha, kapha-dosha și pitta-dosha), precum și a sistemului de coordonare vitală (tridosha) pe care cele trei forțe subtile vitale îl reprezintă.”</p>
+          <!-- <cite>— Sutra 3, Charaka-Samhita, Rasayana, capitolul 2</cite> -->
+        </blockquote>
+        
+      
+          <% if !current_user %> 
+          <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', new_user_session_with_return_path('rasayana2'), class: 'register' %> 
+          </div>
+          <%elsif current_user && !@has_access%> <div class="r1c2" style="align-items: center; width:100%;"><%= link_to 'Vizionează înregistrările', '#prasayana', class: 'register' %> 
+          </div>
+          <%end%> 
+      
+      <br>
+        <h2>Înscriere și participare</h2>
+        <br>
+        <h3>Cine poate participa?</h3>
+        <p>Cursul este deschis tuturor celor interesați de Ayurveda, indiferent de nivelul de cunoștințe. Structura acestuia acoperă conceptele fundamentale și oferă o pregătire detaliată. Cunoștințele preliminare în Ayurveda pot constitui însă un avantaj. Modulul are ca scop o înțelegere clară a materiei, facilitând aplicarea practică a elementelor procedurale prezentate.</p>
+        <p>Recomandăm parcurgerea prealabilă a Modulului 1 de Rasayana, deoarece oferă bazele necesare pentru înțelegerea și aplicarea corectă a informațiilor din acest modul. Astfel, veți beneficia de o învățare mai fluentă și coerentă, în concordanță cu structura cursului.</p>
+        <h3>
+          <strong>Structura cursului</strong>
+        </h3>
+        <p>Modulul 2 al cursului de Rasayana a fost structurat pe baza versiunii inițiale a înregistrărilor acestui curs, la care, de-a lungul timpului, s-au adăugat două tipuri esențiale de completări. Pe de o parte, au fost incluse precizările suplimentare, detaliate în cadrul numeroaselor seminarii organizate ulterior, oferind clarificări și perspective noi. Pe de altă parte, completările au fost generate de întrebările și relatarile participanților, care au contribuit la o mai bună înțelegere a subiectelor. Aceste îmbogățiri succesive au transformat cursul într-un material mult mai amplu și complex, oferindu-le participanților ocazia de a aprofunda subiectele într-un mod clar și aplicat, facilitând o învățare practică și profundă.</p>
+        <h3>
+          <strong>Modalitatea de desfășurare a cursului</strong>
+        </h3>
+        <p>Modulul 2 cuprinde 9 lecții, câte una în fiecare săptămână, pe baza de înregistrări. În acest timp, participanții vor parcurge un conținut complex și bine detaliat. Fiecare lecție durează în medie aproximativ 3 ore, fiind menită să deschidă noi orizonturi de cunoaștere și să aducă o înțelegere profundă a subiectelor abordate. Pe lângă materialele prezentate în cadrul fiecărei lecții, participanții vor avea ocazia să participe la seminarii interactive, care vor aprofunda subiectele discutate și vor oferi posibilitatea de a pune întrebări și de a explora în detaliu conceptele prezentate. Astfel, fiecare săptămână devine o oportunitate de învățare, reflecție și dialog activ.</p>
+        <p>
+          <strong>Prima zi de curs: </strong>Modulul 2 se desfășoară în perioada mai – iulie 2025 și cuprinde 9 lecții săptămânale, disponibile sub formă de înregistrări în fiecare miercuri, vineri și duminică, între orele 16:00 și 24:00. Prima lecție va fi disponibilă începând cu data de miercuri 21 mai, iar următoarele vor urma ritmic, în zilele de: 28 mai, 4 iunie, 11 iunie, 18 iunie, 25 iunie, 2 iulie, 9 iulie și 16 iulie, fiecare având reluări în zilele de vineri și duminică din aceeași săptămână.
+        </p>
+        <p>
+          <strong>Vizionarea cursurilor: </strong>Fiecare lecție înregistrată va putea fi vizionată de trei ori pe săptămână, în zilele de miercuri, vineri și duminică, între orele 16:00 și 24:00, direct in pagina de site. Fiecare dintre aceste înregistrări poate fi accesată de mai multe ori, în cele 3 zile diferite, pentru a permite înțelegerea, reluarea și aprofundarea informațiilor prezentate în timpul fiecărei lecții.Lecțiile următoare vor deveni accesibile treptat, în funcție de ritmul săptămânal de desfășurare.
+        </p>
+        <p><strong>Seminar săptămânal: </strong>În fiecare duminică seară, de la ora 21:00, va avea loc un seminar live interactiv, în care participanții pot adresa întrebări și primi explicații suplimentare. Întâlnirea oferă un cadru propice pentru dialog cu lectorul acestui curs pentru o înțelegere mai clară și aplicată a conținutului.</p>
+        
+        <h3>
+          <strong>Procesul de înscriere</strong>
+        </h3>
+        <p>Pentru a vă înscrie la acest modul, vă invităm să efectuați plata aferentă. După finalizarea plății, accesul la vizionarea înregistrărilor se va face direct dîn pagina de site.</p>
+        <h3>
+          <strong>Costul participării</strong>
+        </h3>
+        <p>Participarea la acest modul de specializare reprezintă o investiție valoroasă pentru cei interesați de aprofundarea cunoștințelor în Ayurveda. Costul pentru întregul modul este de 390 lei – o sumă accesibilă, având în vedere complexitatea și valoarea informațiilor oferite pe parcursul celor 9 lecții intensive.</p>
+        <h3>
+          <strong>Extinderea perioadei de vizionare</strong>
+        </h3>
+        <ul>
+          <li>Pentru a oferi mai multă flexibilitate în gestionarea programului personal, punem la dispoziție opțiunea de a viziona înregistrările cursurilor direct pe site, oricând, la orice oră. Această opțiune permite accesul la materialele video oricând, atât pe durata cursului, cât și pentru o perioadă extinsă de 90 de zile după finalizarea modulului, oferind astfel spațiu suficient pentru a înțelege și revizui în profunzime materialele studiate.</li>
+          <li>Cum accesez: Opțiunea presupune un cost suplimentar de 130 lei și oferă acces exclusiv la înregistrările disponibile până la data respectivă, urmând ca lecțiile următoare să devină accesibile treptat, conform ritmului de desfășurare săptămânal.</li>
+        </ul>
+</section>
+      
+      
+        
+
+
+    </div>
+  </div>
+  <script>
+    <%= yield :custom_js %>
+  </script>
+  

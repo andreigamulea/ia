@@ -251,4 +251,10 @@ puts("produsele cumparate sunt: #{purchased_prod_coduri}")
             end
             
         end
-end
+
+
+        def general
+   
+        end
+
+      end
