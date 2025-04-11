@@ -237,7 +237,7 @@ class XmlController < ApplicationController
   end
   
   def animaplant_api
-    api_key = "KjS2IWZgx3BUdY790g3VJys9"
+    api_key = Rails.application.credentials.dig(:animaplant, :api_key)
     start_date = params[:data_inceput]
     end_date = params[:data_sfarsit]
   
@@ -300,7 +300,7 @@ class XmlController < ApplicationController
 
   def proxy_pdf
     id_comanda = params[:id_comanda] # Aici primim numar_comanda (ex. 3348)
-    api_key = "KjS2IWZgx3BUdY790g3VJys9"
+    api_key = Rails.application.credentials.dig(:animaplant, :api_key)
     prefix_fisier = "F_17430290_APFS"
   
     Rails.logger.info "ID comandă primit: #{id_comanda}"
